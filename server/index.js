@@ -2,7 +2,6 @@ import express from 'express';
 
 const app = express();
 
-app.use('/src', express.static('src'));
 app.use('/public', express.static('public'));
 
 app.get('/', (_, response) => {

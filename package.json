@@ -4,7 +4,8 @@
   "description": "Репозиторий команды \"Davai Davai Deploy\". Проект: Кинопоиск",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/index.js -e html,js,css,hbs --ignore src/build/"
+    "build": "npx globstar -- npx handlebars public/src/**/*.hbs -m -f public/build/precompiled.js",
+    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/"
   },
   "repository": {
     "type": "git",
