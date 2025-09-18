@@ -14,6 +14,6 @@ export default defineConfig([
       'no-undef': 'error',
       curly: 'error',
     },
-    ignores: ['node_modules/'],
+    ignores: ['node_modules/', 'public/src/handlebars/**'],
   },
 ])
