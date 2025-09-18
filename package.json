@@ -1,31 +1,24 @@
 {
-  "name": "2025_2_davaidavaideploy",
-  "version": "1.0.0",
-  "description": "Репозиторий команды \"Davai Davai Deploy\". Проект: Кинопоиск",
-  "type": "module",
-  "main": "index.js",
   "scripts": {
-    "build": "node scripts/build.js",
-    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/"
+    "build": "mkdir -p public/build && npx globstar -- npx handlebars public/src/**/*.hbs -m -f public/build/precompiled.js",
+    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/",
+    "lint:eslint": "npx eslint .",
+    "lint:eslint:fix": "npx eslint . --fix",
+    "lint:prettier": "npx prettier . --check",
+    "lint:prettier:fix": "npx prettier . --write",
+    "lint:stylelint": "npx stylelint \"**/*.css\"",
+    "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy/issues"
-  },
-  "homepage": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy#readme",
   "dependencies": {
-    "express": "^5.1.0",
-    "handlebars": "^4.7.8"
+    "stylelint": "^16.24.0",
+    "stylelint-config-standard": "^39.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10",
-    "reload": "^3.4.2",
-    "globstar": "^1.0.0"
+    "@eslint/js": "^9.35.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.4.0",
+    "prettier": "3.6.2"
   }
 }
