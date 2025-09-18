@@ -56,7 +56,7 @@ class Router {
         let normalizedPath = normalize(path);
         let route = this.routes[normalizedPath];
         if (addToHistory) {
-            window.history.pushState({ path }, '', path);
+            window.history.pushState({ normalizedPath  }, '', normalizedPath);
         }
         const page = new route.component(this.parent);
         page.render();
