@@ -1,3 +1,4 @@
+import { normalize } from '../helpers/normalizeHelper.js';
 class Router {
     constructor() {
         if (Router.instance) {
@@ -52,7 +53,8 @@ class Router {
     }
 
     handleRouteChange(path, addToHistory = true) {
-        let route = this.routes[path];
+        let normalizedPath = normalize(path);
+        let route = this.routes[normalizedPath];
         if (addToHistory) {
             window.history.pushState({ path }, '', path);
         }
