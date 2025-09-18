@@ -10,8 +10,8 @@ export default defineConfig([
     extends: ['js/recommended', eslintConfigPrettier],
     languageOptions: { globals: globals.browser },
     rules: {
-      'no-unused-vars': 'warn',
-      'no-undef': 'warn',
+      'no-unused-vars': 'error',
+      'no-undef': 'error',
       curly: 'error',
     },
     ignores: ['node_modules/'],
