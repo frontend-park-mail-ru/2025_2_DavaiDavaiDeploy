@@ -6,7 +6,14 @@
   "main": "index.js",
   "scripts": {
     "build": "mkdir -p public/build && npx globstar -- npx handlebars public/src/**/*.hbs -m -f public/build/precompiled.js",
-    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/"
+    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/",
+    "lint:eslint": "npx eslint .",
+    "lint:eslint:fix": "npx eslint . --fix",
+    "lint:prettier": "npx prettier . --check",
+    "lint:prettier:fix": "npx prettier . --write",
+    "lint:stylelint": "npx stylelint \"**/*.css\"",
+    "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix",
+    "lint:all": "npm run lint:stylelint:fix && npm run lint:eslint:fix && npm run lint:prettier:fix"
   },
   "repository": {
     "type": "git",
