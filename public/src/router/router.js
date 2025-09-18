@@ -16,8 +16,20 @@ class Router {
     }
 
     configurate(routes) {
-        this.routes = routes;
+        this.routes = new Proxy(routes, this.routesHandler);
     }
+
+    routesHandler = {
+        get: function (target, path) {
+            let routeName = Object.keys(target).find(key =>
+                target[key].href === path
+            );
+            if (routeName in target) {
+                return target[routeName];
+            }
+            return target['error404'];
+        }
+    };
 
     createContainer() {
         this.contentContainer = document.createElement('div');
@@ -45,23 +57,14 @@ class Router {
     }
 
     async handleRouteChange(path, addToHistory = true) {
-        let routeName = Object.keys(this.routes).find(key =>
-            this.routes[key].href === path
-        );
-
-        let route = this.routes[routeName];
-
-        if (route) {
-            if (addToHistory) {
-                window.history.pushState({ path }, '', path);
-            }
-            this.contentContainer.innerHTML = '';
-            const page = new route.class(this.contentContainer);
-            page.render();
-            return true;
+        let route = this.routes[path];
+        if (addToHistory) {
+            window.history.pushState({ path }, '', path);
         }
-
-        return false;
+        this.contentContainer.innerHTML = '';
+        const page = new route.class(this.contentContainer);
+        page.render();
+        return true;
     }
 
     start() {
