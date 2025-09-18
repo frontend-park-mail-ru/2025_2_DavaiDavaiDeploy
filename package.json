@@ -25,7 +25,11 @@
     "stylelint-config-prettier": "^9.0.5"
   },
   "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.4.0",
     "nodemon": "^3.1.10",
     "prettier": "3.6.2",
     "reload": "^3.4.2"
