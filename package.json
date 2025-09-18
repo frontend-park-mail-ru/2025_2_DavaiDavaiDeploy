@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "mkdir -p public/build && npx globstar -- npx handlebars public/src/**/*.hbs -m -f public/build/precompiled.js",
+    "build": "node -e \"require('fs').mkdirSync('public/build', { recursive: true });\" && npx globstar -- npx handlebars public/src/**/*.hbs -m -f public/build/precompiled.js",
     "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/"
   },
   "repository": {
