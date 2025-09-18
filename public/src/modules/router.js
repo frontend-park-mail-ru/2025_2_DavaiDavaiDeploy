@@ -6,17 +6,18 @@ class Router {
 
         Router.instance = this;
         this.routes = {};
+        this.parent = null;
 
         this.handleRouteChange = this.handleRouteChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handlePopState = this.handlePopState.bind(this);
 
-        this.createContainer();
         this.initEventListeners();
     }
 
-    configurate(routes) {
+    configurate(routes, parent) {
         this.routes = new Proxy(routes, this.routesHandler);
+        this.parent = parent;
     }
 
     routesHandler = {
@@ -30,12 +31,6 @@ class Router {
             return target['error404'];
         }
     };
-
-    createContainer() {
-        this.contentContainer = document.createElement('div');
-        this.contentContainer.id = 'app';
-        document.body.appendChild(this.contentContainer);
-    }
 
     initEventListeners() {
         window.addEventListener('popstate', this.handlePopState);
@@ -56,15 +51,13 @@ class Router {
         }
     }
 
-    async handleRouteChange(path, addToHistory = true) {
+    handleRouteChange(path, addToHistory = true) {
         let route = this.routes[path];
         if (addToHistory) {
             window.history.pushState({ path }, '', path);
         }
-        this.contentContainer.innerHTML = '';
-        const page = new route.class(this.contentContainer);
+        const page = new route.component(this.parent);
         page.render();
-        return true;
     }
 
     start() {
