@@ -21,10 +21,13 @@
   "homepage": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy#readme",
   "dependencies": {
     "express": "^5.1.0",
-    "handlebars": "^4.7.8"
+    "handlebars": "^4.7.8",
+    "stylelint-config-prettier": "^9.0.5"
   },
   "devDependencies": {
+    "eslint-config-prettier": "^10.1.8",
     "nodemon": "^3.1.10",
+    "prettier": "3.6.2",
     "reload": "^3.4.2"
   }
 }
