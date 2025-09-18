@@ -7,28 +7,28 @@
  * @param {Object} state - Состояние компонента.
  */
 export default class Component {
-    #state;
+  #state
 
-    constructor(parent, props, templateName, state = {}) {
-        this.parent = parent;
-        this.props = props
-        this.templateName = templateName;
-        this.#state = state;
-    }
+  constructor(parent, props, templateName, state = {}) {
+    this.parent = parent
+    this.props = props
+    this.templateName = templateName
+    this.#state = state
+  }
 
-    get self() {
-        return document.getElementById(this.props.id);
-    }
+  get self() {
+    return document.getElementById(this.props.id)
+  }
 
-    get state() {
-        return this.#state;
-    }
+  get state() {
+    return this.#state
+  }
 
-    setState(newState) {
-        this.#state = newState;
-    }
+  setState(newState) {
+    this.#state = newState
+  }
 
-    html(context) {
-        return Handlebars.templates[`${this.templateName}.hbs`](context);
-    }
+  html(context) {
+    return Handlebars.templates[`${this.templateName}.hbs`](context)
+  }
 }
