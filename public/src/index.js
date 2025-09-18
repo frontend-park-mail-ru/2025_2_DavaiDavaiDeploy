@@ -1,9 +1,32 @@
 import '../build/precompiled.js';
-import Test from './test/test.js';
+import router from './modules/router.js';
+import HomePage from './pages/homePage/homePage.js';
+import LoginPage from './pages/loginPage/loginPage.js';
+import RegistrationPage from './pages/registrationPage/registrationPage.js';
+import Error404 from './pages/404/404.js';
 
-const root = document.createElement('div');
-root.id = 'root';
-document.body.appendChild(root);
+const routes = {
+    home: {
+        href: '/',
+        component: HomePage
+    },
+    login: {
+        href: '/login',
+        component: LoginPage
+    },
+    register: {
+        href: '/register',
+        component: RegistrationPage
+    },
+    error404: {
+        href: '/error',
+        component: Error404
+    },
+}
 
-const test = new Test(root, {text: 'Working'});
-test.render();
+let contentContainer = document.createElement('div');
+contentContainer.id = 'app';
+document.body.appendChild(contentContainer);
+
+router.configurate(routes, contentContainer);
+router.start();

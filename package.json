@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "mkdir -p public/build && npx globstar -- npx handlebars public/src/**/*.hbs -m -f public/build/precompiled.js",
+    "build": "node scripts/build.js",
     "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/"
   },
   "repository": {
@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.10",
-    "reload": "^3.4.2"
+    "reload": "^3.4.2",
+    "globstar": "^1.0.0"
   }
 }
