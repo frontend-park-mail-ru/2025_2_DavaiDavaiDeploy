@@ -38,7 +38,7 @@ class Router {
         window.addEventListener('click', this.handleClick);
     }
 
-    handlePopState(event) {
+    handlePopState(_event) {
         const path = window.location.pathname;
         this.handleRouteChange(path, false);
     }
