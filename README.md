@@ -24,7 +24,7 @@ TODO - _UX_
 
 ### Ссылки
 
-[Репозиторий бэкенда](TODO)
+[Репозиторий бэкенда](https://github.com/go-park-mail-ru/2025_2_DavaiDavaiDeploy)
 
 [Деплой](TODO)
 
