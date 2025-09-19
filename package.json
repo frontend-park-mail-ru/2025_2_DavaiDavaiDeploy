@@ -6,7 +6,13 @@
   "main": "index.js",
   "scripts": {
     "build": "node scripts/build.js",
-    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/"
+    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/",
+    "lint:eslint": "npx eslint .",
+    "lint:eslint:fix": "npx eslint . --fix",
+    "lint:prettier": "npx prettier . --check",
+    "lint:prettier:fix": "npx prettier . --write",
+    "lint:stylelint": "npx stylelint \"**/*.css\"",
+    "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix"
   },
   "repository": {
     "type": "git",
@@ -26,6 +32,15 @@
   "devDependencies": {
     "nodemon": "^3.1.10",
     "reload": "^3.4.2",
-    "globstar": "^1.0.0"
+    "globstar": "^1.0.0",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "stylelint": "^16.24.0",
+    "stylelint-config-standard": "^39.0.0",
+    "@eslint/js": "^9.35.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "3.6.2",
+    "globals": "^16.4.0"
   }
 }
