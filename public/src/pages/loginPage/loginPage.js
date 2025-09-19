@@ -1,20 +1,20 @@
 export default class LoginPage {
-    #parent;
-    #self;
+	#parent
+	#self
 
-    constructor(rootElement) {
-        this.#parent = rootElement;
-    }
-        
-    get template() {
-        return  Handlebars.templates[`loginPage.hbs`]({ text: 'Login' });
-    }
+	constructor(rootElement) {
+		this.#parent = rootElement
+	}
 
-    render() {
-        this.#parent.innerHTML = '';
-        this.#self = document.createElement('div');
-        this.#self.id = 'login-page';
-        this.#parent.appendChild(this.#self);
-        this.#self.insertAdjacentHTML('afterbegin', this.template);
-    }
+	get template() {
+		return Handlebars.templates[`loginPage.hbs`]({ text: 'Login' })
+	}
+
+	render() {
+		this.#parent.innerHTML = ''
+		this.#self = document.createElement('div')
+		this.#self.id = 'login-page'
+		this.#parent.appendChild(this.#self)
+		this.#self.insertAdjacentHTML('afterbegin', this.template)
+	}
 }
