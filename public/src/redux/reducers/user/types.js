@@ -1,0 +1,9 @@
+const USER_CREATE = 'USER_CREATE'
+const USER_UPDATE = 'USER_UPDATE'
+const USER_DELETE = 'USER_DELETE'
+
+export default {
+	USER_CREATE,
+	USER_UPDATE,
+	USER_DELETE,
+}
