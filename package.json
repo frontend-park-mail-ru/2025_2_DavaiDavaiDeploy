@@ -12,7 +12,9 @@
     "lint:prettier": "npx prettier . --check",
     "lint:prettier:fix": "npx prettier . --write",
     "lint:stylelint": "npx stylelint \"**/*.css\"",
-    "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix"
+    "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix",
+    "prepare": "husky",
+    "pre-commit": "npm run lint:stylelint:fix && npm run lint:eslint:fix && npm run lint:prettier:fix"
   },
   "repository": {
     "type": "git",
@@ -30,17 +32,18 @@
     "handlebars": "^4.7.8"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10",
-    "reload": "^3.4.2",
-    "globstar": "^1.0.0",
-    "prettier-plugin-organize-imports": "^4.3.0",
-    "stylelint": "^16.24.0",
-    "stylelint-config-standard": "^39.0.0",
     "@eslint/js": "^9.35.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.4.0",
+    "globstar": "^1.0.0",
+    "husky": "^9.1.7",
+    "nodemon": "^3.1.10",
     "prettier": "3.6.2",
-    "globals": "^16.4.0"
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "reload": "^3.4.2",
+    "stylelint": "^16.24.0",
+    "stylelint-config-standard": "^39.0.0"
   }
 }
