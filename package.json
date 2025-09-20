@@ -12,7 +12,7 @@
     "lint:prettier": "npx prettier . --check",
     "lint:prettier:fix": "npx prettier . --write",
     "lint:stylelint": "npx stylelint \"**/*.css\"",
-    "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix",
+    "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix --allow-empty-input",
     "prepare": "husky",
     "pre-commit": "npm run lint:stylelint:fix && npm run lint:eslint:fix && npm run lint:prettier:fix"
   },
@@ -35,6 +35,7 @@
     "@eslint/js": "^9.35.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-hbs": "^1.0.3",
     "eslint-plugin-prettier": "^5.5.4",
     "globals": "^16.4.0",
     "globstar": "^1.0.0",
