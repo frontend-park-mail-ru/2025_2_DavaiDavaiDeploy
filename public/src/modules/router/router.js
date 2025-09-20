@@ -1,4 +1,4 @@
-import { normalize } from '../helpers/normalizeHelper.js'
+import { normalize } from '../../helpers/normalizeHelper.js'
 class Router {
 	constructor() {
 		if (Router.instance) {
