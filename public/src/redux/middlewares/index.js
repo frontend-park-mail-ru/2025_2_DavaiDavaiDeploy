@@ -1,3 +1,3 @@
-import thunk from '../thunk/index.js'
+import thunk from '../../modules/redux-thunk/thunk'
 
 export const middlewares = [thunk]

@@ -1,4 +1,4 @@
-function createThunkMiddleware(extraArgument) {
+export function createThunkMiddleware(extraArgument) {
 	return ({ dispatch, getState }) =>
 		next =>
 		action => {
@@ -9,8 +9,3 @@ function createThunkMiddleware(extraArgument) {
 			return next(action)
 		}
 }
-
-const thunk = createThunkMiddleware()
-thunk.withExtraArgument = createThunkMiddleware
-
-export default thunk
