@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { execSync } from 'child_process'
 import express from 'express'
 import reload from 'reload'
@@ -31,3 +33,5 @@ app.listen(3000, () => {
 reload(app).then(function () {
 	execSync('npm run build', { stdio: 'inherit', shell: true })
 })
+
+/* eslint-enable no-console */
