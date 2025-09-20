@@ -1,13 +1,12 @@
 import js from '@eslint/js'
 import eslintConfigPrettier from 'eslint-config-prettier'
-import hbs from 'eslint-plugin-hbs'
 import { defineConfig } from 'eslint/config'
 import globals from 'globals'
 
 export default defineConfig([
 	{
 		files: ['**/*.{js,mjs,cjs}'],
-		plugins: { js, hbs },
+		plugins: { js},
 		extends: ['js/recommended', eslintConfigPrettier],
 		languageOptions: {
 			globals: {
@@ -19,8 +18,7 @@ export default defineConfig([
 			'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 			'no-undef': 'error',
 			curly: 'error',
-			'hbs/check-hbs-template-literals': 2,
 		},
-		ignores: ['node_modules/', 'public/src/handlebars/**', 'public/build/**'],
+		ignores: ['node_modules/', 'public/src/handlebars/**', 'public/build/**', '.template-lintrc.js'],
 	},
 ])
