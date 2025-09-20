@@ -13,6 +13,11 @@ module.exports = {
 		'no-html-comments': 'error',
 		'no-triple-curlies': 'error',
 		'no-unused-block-params': 'error',
+		'linebreak-style': 'off',
+		'eol-last': 'always',
+		'no-multiple-empty-lines': 'error',
+		'no-trailing-spaces': 'error',
+		quotes: ['error', 'double'],
 	},
 
 	ignore: ['public/build/**', 'node_modules/**'],

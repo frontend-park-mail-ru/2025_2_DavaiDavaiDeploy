@@ -1,12 +1,13 @@
 import js from '@eslint/js'
 import eslintConfigPrettier from 'eslint-config-prettier'
+import compatPlugin from 'eslint-plugin-compat'
 import { defineConfig } from 'eslint/config'
 import globals from 'globals'
 
 export default defineConfig([
 	{
 		files: ['**/*.{js,mjs,cjs}'],
-		plugins: { js},
+		plugins: { js, compat: compatPlugin },
 		extends: ['js/recommended', eslintConfigPrettier],
 		languageOptions: {
 			globals: {
@@ -18,7 +19,13 @@ export default defineConfig([
 			'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 			'no-undef': 'error',
 			curly: 'error',
+			'compat/compat': 'error',
 		},
-		ignores: ['node_modules/', 'public/src/handlebars/**', 'public/build/**', '.template-lintrc.js'],
+		ignores: [
+			'node_modules/',
+			'src/handlebars/**',
+			'build/**',
+			'.template-lintrc.js',
+		],
 	},
 ])

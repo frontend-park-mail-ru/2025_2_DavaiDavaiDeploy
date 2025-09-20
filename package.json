@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node scripts/build.js",
-    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/",
+    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore build/",
     "lint:eslint": "npx eslint .",
     "lint:eslint:fix": "npx eslint . --fix",
     "lint:prettier": "npx prettier . --check",
@@ -19,12 +19,19 @@
     "pre-commit": "npm run lint:stylelint:fix && npm run lint:eslint:fix && npm run lint:hbs:fix && npm run lint:prettier:fix"
   },
   "_moduleAliases": {
-    "@": "." 
+    "@": ".",
+    "@components": "src/components",
+    "@pages": "src/pages",
+    "@helpers": "src/helpers",
+    "@modules": "src/modules"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy.git"
   },
+  "browserslist": [
+    "defaults"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -33,6 +40,7 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy#readme",
   "dependencies": {
+    "eslint-plugin-compat": "^6.0.2",
     "express": "^5.1.0",
     "handlebars": "^4.7.8",
     "module-alias": "^2.2.3"

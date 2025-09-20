@@ -1,9 +1,9 @@
+import router from '@modules/router.js'
+import Error404 from '@pages/404/404.js'
+import HomePage from '@pages/homePage/homePage.js'
+import LoginPage from '@pages/loginPage/loginPage.js'
+import RegistrationPage from '@pages/registrationPage/registrationPage.js'
 import '../build/precompiled.js'
-import router from './modules/router.js'
-import Error404 from './pages/404/404.js'
-import HomePage from './pages/homePage/homePage.js'
-import LoginPage from './pages/loginPage/loginPage.js'
-import RegistrationPage from './pages/registrationPage/registrationPage.js'
 
 const routes = {
 	home: {

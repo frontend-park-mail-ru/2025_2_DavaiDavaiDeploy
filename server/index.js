@@ -11,10 +11,10 @@ app.use((req, res, next) => {
 	next()
 })
 
-app.use('/public', express.static('public'))
+app.use('/src', express.static('src'))
 
 app.get('/', (_, response) => {
-	response.sendFile('/index.html', { root: './' })
+	response.sendFile('src/index.html', { root: './' })
 })
 
 app.get('{/*path}', (req, response, next) => {
