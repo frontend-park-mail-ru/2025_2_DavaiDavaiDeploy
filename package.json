@@ -13,8 +13,10 @@
     "lint:prettier:fix": "npx prettier . --write",
     "lint:stylelint": "npx stylelint \"**/*.css\"",
     "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix --allow-empty-input",
+    "lint:hbs": "ember-template-lint .",
+    "lint:hbs:fix": "ember-template-lint . --fix",
     "prepare": "husky",
-    "pre-commit": "npm run lint:stylelint:fix && npm run lint:eslint:fix && npm run lint:prettier:fix"
+    "pre-commit": "npm run lint:stylelint:fix && npm run lint:eslint:fix && npm run lint:hbs:fix && npm run lint:prettier:fix"
   },
   "repository": {
     "type": "git",
@@ -33,6 +35,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
+    "ember-template-lint": "^3.6.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-hbs": "^1.0.3",
