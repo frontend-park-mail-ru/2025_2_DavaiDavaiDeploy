@@ -1,40 +1,55 @@
-class httpClient {
+export class httpClient {
 	constructor(defaultConfig) {
 		this.default = { baseUrl: defaultConfig.baseUrl }
+		this.METHODS = Object.freeze({
+			GET: 'GET',
+			POST: 'POST',
+			PUT: 'PUT',
+			PATCH: 'PATCH',
+			DELETE: 'DELETE',
+			HEAD: 'HEAD',
+			OPTIONS: 'OPTIONS',
+		})
 	}
 
 	get(url, config = {}) {
-		return this.request({ ...config, method: 'GET', url })
+		return this.request({ ...config, method: this.METHODS.GET, url })
 	}
 
 	post(url, data, config = {}) {
-		return this.request({ ...config, method: 'POST', url, data })
+		return this.request({ ...config, method: this.METHODS.POST, url, data })
 	}
 
 	put(url, data, config = {}) {
-		return this.request({ ...config, method: 'PUT', url, data })
+		return this.request({ ...config, method: this.METHODS.PUT, url, data })
 	}
 
 	patch(url, data, config = {}) {
-		return this.request({ ...config, method: 'PATCH', url, data })
+		return this.request({ ...config, method: this.METHODS.PATCH, url, data })
 	}
 
 	delete(url, config = {}) {
-		return this.request({ ...config, method: 'DELETE', url })
+		return this.request({ ...config, method: this.METHODS.DELETE, url })
 	}
 
 	head(url, config = {}) {
-		return this.request({ ...config, method: 'HEAD', url })
+		return this.request({ ...config, method: this.METHODS.HEAD, url })
 	}
 
 	options(url, config = {}) {
-		return this.request({ ...config, method: 'OPTIONS', url })
+		return this.request({ ...config, method: this.METHODS.OPTIONS, url })
 	}
 
 	async request(config) {
-		const { url, method = 'GET', headers = {}, params = {}, data = {} } = config
+		const {
+			url,
+			method = this.METHODS.GET,
+			headers = {},
+			params = {},
+			data = {},
+		} = config
 
-		let requestMethod = this.formReqMethod(method)
+		let requestMethod = method.toUpperCase()
 		let requestUrl = this.formReqUrl(url, params)
 		let { requestHeaders, requestBody } = this.formReqHeadersAndBody(
 			headers,
@@ -79,33 +94,34 @@ class httpClient {
 		}
 	}
 
-	formReqMethod(method) {
-		return method.toUpperCase()
-	}
-
 	formReqUrl(url, params) {
-		let requestUrl = this.default.baseUrl + url
+		let requestUrl = new URL(url, this.default.baseUrl)
 
 		const queryParams = new URLSearchParams()
-		Object.entries(params).forEach(([key, value]) => {
-			if (value !== null && value !== undefined) {
+
+		for (const [key, value] of Object.entries(params)) {
+			if (value != null) {
 				queryParams.append(key, value.toString())
 			}
-		})
+		}
 
 		const queryString = queryParams.toString()
 		if (queryString) {
 			requestUrl += (requestUrl.includes('?') ? '&' : '?') + queryString
 		}
 
-		return requestUrl
+		return requestUrl.toString()
 	}
 
 	formReqHeadersAndBody(headers, data, requestMethod) {
 		let requestHeaders = new Headers(headers)
 		let requestBody = undefined
 
-		if (data && requestMethod !== 'GET' && requestMethod !== 'HEAD') {
+		if (
+			data &&
+			requestMethod !== this.METHODS.GET &&
+			requestMethod !== this.METHODS.HEAD
+		) {
 			if (typeof data === 'object') {
 				requestHeaders.set('Content-Type', 'application/json')
 				requestBody = JSON.stringify(data)
@@ -117,5 +133,3 @@ class httpClient {
 		return { requestHeaders, requestBody }
 	}
 }
-
-export default httpClient()
