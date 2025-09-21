@@ -1,4 +1,13 @@
-import { METHODS } from './http-methods.js'
+const METHODS = Object.freeze({
+	GET: 'GET',
+	POST: 'POST',
+	PUT: 'PUT',
+	PATCH: 'PATCH',
+	DELETE: 'DELETE',
+	HEAD: 'HEAD',
+	OPTIONS: 'OPTIONS',
+})
+
 export class HTTPClient {
 	constructor() {
 		this.default = {}
