@@ -5,15 +5,35 @@ class httpClient {
 
 	async request(config) {
 		const baseUrl = this.default.baseUrl
-		const { url, method = 'GET', headers = {}, data } = config
-		const fullUrl = baseUrl + url
+		const { url, method = 'GET', headers = {}, params = {}, data } = config
 
 		let requestMethod = method.toUpperCase()
-		let requestHeaders = headers
-		let requestBody = data
 
-		if (method === 'GET') {
-			requestBody = undefined
+		let fullUrl = baseUrl + url
+
+		const queryParams = new URLSearchParams()
+		Object.entries(params).forEach(([key, value]) => {
+			if (value !== null && value !== undefined) {
+				queryParams.append(key, value.toString())
+			}
+		})
+
+		const queryString = queryParams.toString()
+		if (queryString) {
+			fullUrl += (fullUrl.includes('?') ? '&' : '?') + queryString
+		}
+
+		let requestHeaders = new Headers(headers)
+
+		let requestBody = undefined
+
+		if (data && requestMethod !== 'GET') {
+			if (typeof data === 'object') {
+				requestHeaders.set('Content-Type', 'application/json')
+				requestBody = JSON.stringify(data)
+			} else {
+				requestBody = data
+			}
 		}
 
 		try {
@@ -63,4 +83,4 @@ export default httpClient()
 // 	data: { text: 'hello' },
 // })
 
-// console.log(res)
+// res.then(console.log(), null)
