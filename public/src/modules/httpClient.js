@@ -3,41 +3,47 @@ class httpClient {
 		this.default = { baseUrl: defaultConfig.baseUrl }
 	}
 
+	get(url, config = {}) {
+		return this.request({ ...config, method: 'GET', url })
+	}
+
+	post(url, data, config = {}) {
+		return this.request({ ...config, method: 'POST', url, data })
+	}
+
+	put(url, data, config = {}) {
+		return this.request({ ...config, method: 'PUT', url, data })
+	}
+
+	patch(url, data, config = {}) {
+		return this.request({ ...config, method: 'PATCH', url, data })
+	}
+
+	delete(url, config = {}) {
+		return this.request({ ...config, method: 'DELETE', url })
+	}
+
+	head(url, config = {}) {
+		return this.request({ ...config, method: 'HEAD', url })
+	}
+
+	options(url, config = {}) {
+		return this.request({ ...config, method: 'OPTIONS', url })
+	}
+
 	async request(config) {
-		const baseUrl = this.default.baseUrl
-		const { url, method = 'GET', headers = {}, params = {}, data } = config
+		const { url, method = 'GET', headers = {}, params = {}, data = {} } = config
 
-		let requestMethod = method.toUpperCase()
-
-		let fullUrl = baseUrl + url
-
-		const queryParams = new URLSearchParams()
-		Object.entries(params).forEach(([key, value]) => {
-			if (value !== null && value !== undefined) {
-				queryParams.append(key, value.toString())
-			}
-		})
-
-		const queryString = queryParams.toString()
-		if (queryString) {
-			fullUrl += (fullUrl.includes('?') ? '&' : '?') + queryString
-		}
-
-		let requestHeaders = new Headers(headers)
-
-		let requestBody = undefined
-
-		if (data && requestMethod !== 'GET') {
-			if (typeof data === 'object') {
-				requestHeaders.set('Content-Type', 'application/json')
-				requestBody = JSON.stringify(data)
-			} else {
-				requestBody = data
-			}
-		}
+		let requestMethod = this.formReqMethod(method)
+		let requestUrl = this.formReqUrl(url, params)
+		let { requestHeaders, requestBody } = this.formReqHeadersAndBody(
+			headers,
+			data,
+			requestMethod,
+		)
 
 		try {
-			const response = await fetch(fullUrl, {
+			const response = await fetch(requestUrl, {
 				method: requestMethod,
 				headers: requestHeaders,
 				body: requestBody,
@@ -72,15 +78,44 @@ class httpClient {
 			throw error
 		}
 	}
+
+	formReqMethod(method) {
+		return method.toUpperCase()
+	}
+
+	formReqUrl(url, params) {
+		let requestUrl = this.default.baseUrl + url
+
+		const queryParams = new URLSearchParams()
+		Object.entries(params).forEach(([key, value]) => {
+			if (value !== null && value !== undefined) {
+				queryParams.append(key, value.toString())
+			}
+		})
+
+		const queryString = queryParams.toString()
+		if (queryString) {
+			requestUrl += (requestUrl.includes('?') ? '&' : '?') + queryString
+		}
+
+		return requestUrl
+	}
+
+	formReqHeadersAndBody(headers, data, requestMethod) {
+		let requestHeaders = new Headers(headers)
+		let requestBody = undefined
+
+		if (data && requestMethod !== 'GET' && requestMethod !== 'HEAD') {
+			if (typeof data === 'object') {
+				requestHeaders.set('Content-Type', 'application/json')
+				requestBody = JSON.stringify(data)
+			} else {
+				requestBody = data
+			}
+		}
+
+		return { requestHeaders, requestBody }
+	}
 }
 
 export default httpClient()
-
-// let client = new httpClient({ baseUrl: 'http://localhost:8080' })
-// let res = client.request({
-// 	method: 'GET',
-// 	url: '/users/1',
-// 	data: { text: 'hello' },
-// })
-
-// res.then(console.log(), null)
