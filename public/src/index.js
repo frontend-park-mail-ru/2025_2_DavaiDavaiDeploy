@@ -1,5 +1,5 @@
 import '../build/precompiled.js'
-import router from './modules/router.js'
+import router from './modules/router/index.js'
 import Error404 from './pages/404/404.js'
 import HomePage from './pages/homePage/homePage.js'
 import LoginPage from './pages/loginPage/loginPage.js'

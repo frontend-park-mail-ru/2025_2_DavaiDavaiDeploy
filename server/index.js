@@ -2,28 +2,36 @@
 
 import { execSync } from 'child_process'
 import express from 'express'
+import path from 'path'
 import reload from 'reload'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 
 app.use((req, res, next) => {
 	res.setHeader('X-Powered-By', 'Express')
-	res.statusCode = 200
-	console.log(`[${req.method}] ${req.url} ${res.statusCode}`)
+	console.log(`[${req.method}] ${req.url}`)
 	next()
 })
 
+// Обслуживаем статические файлы
 app.use('/public', express.static('public'))
+app.use('/reload', express.static('node_modules/reload'))
 
+// Только для не-статических путей отправляем index.html
 app.get('/', (_, response) => {
-	response.sendFile('/index.html', { root: './' })
+	response.sendFile(path.join(__dirname, '../index.html'))
 })
 
-app.get('{/*path}', (req, response, next) => {
-	if (req.url.startsWith('/reload')) {
+app.get('/*path', (req, response, next) => {
+	// Пропускаем статические файлы и reload
+	if (req.url.startsWith('/public/') || req.url.startsWith('/reload/')) {
 		return next()
 	}
-	response.sendFile('/index.html', { root: './' })
+	response.sendFile(path.join(__dirname, '../index.html'))
 })
 
 app.listen(3000, () => {

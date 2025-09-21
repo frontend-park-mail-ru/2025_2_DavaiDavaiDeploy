@@ -1,4 +1,4 @@
-import { filmsMock } from '../../../mock/films'
+import { filmsMock } from '../../../mocks/films'
 import { FILMS_ERROR, FILMS_LOADED, FILMS_LOADING } from './types'
 
 const setFilmsLoadingAction = () => {

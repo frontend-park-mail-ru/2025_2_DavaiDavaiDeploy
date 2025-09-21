@@ -21,6 +21,6 @@ export default defineConfig([
 			'no-console': 'error',
 			'no-multiple-empty-lines': 'error',
 		},
-		ignores: ['node_modules/', 'public/src/handlebars/**', 'public/build/**'],
+		ignores: ['node_modules/', 'public/src/handlebars/**', 'build/**'],
 	},
 ])
