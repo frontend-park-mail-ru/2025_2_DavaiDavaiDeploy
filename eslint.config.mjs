@@ -26,6 +26,7 @@ export default defineConfig([
 			'src/handlebars/**',
 			'build/**',
 			'.template-lintrc.js',
+			'.lintstagedrc.js',
 		],
 	},
 ])

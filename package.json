@@ -55,6 +55,7 @@
     "globals": "^16.4.0",
     "globstar": "^1.0.0",
     "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
     "nodemon": "^3.1.10",
     "prettier": "3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
