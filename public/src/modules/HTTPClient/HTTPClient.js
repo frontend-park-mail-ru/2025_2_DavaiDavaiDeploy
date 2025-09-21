@@ -1,49 +1,45 @@
-export class httpClient {
-	constructor(defaultConfig) {
+import { METHODS } from './http-methods.js'
+export class HTTPClient {
+	constructor() {
+		this.default = {}
+	}
+
+	configurate(defaultConfig) {
 		this.default = { baseUrl: defaultConfig.baseUrl }
-		this.METHODS = Object.freeze({
-			GET: 'GET',
-			POST: 'POST',
-			PUT: 'PUT',
-			PATCH: 'PATCH',
-			DELETE: 'DELETE',
-			HEAD: 'HEAD',
-			OPTIONS: 'OPTIONS',
-		})
 	}
 
 	get(url, config = {}) {
-		return this.request({ ...config, method: this.METHODS.GET, url })
+		return this.request({ ...config, method: METHODS.GET, url })
 	}
 
 	post(url, data, config = {}) {
-		return this.request({ ...config, method: this.METHODS.POST, url, data })
+		return this.request({ ...config, method: METHODS.POST, url, data })
 	}
 
 	put(url, data, config = {}) {
-		return this.request({ ...config, method: this.METHODS.PUT, url, data })
+		return this.request({ ...config, method: METHODS.PUT, url, data })
 	}
 
 	patch(url, data, config = {}) {
-		return this.request({ ...config, method: this.METHODS.PATCH, url, data })
+		return this.request({ ...config, method: METHODS.PATCH, url, data })
 	}
 
 	delete(url, config = {}) {
-		return this.request({ ...config, method: this.METHODS.DELETE, url })
+		return this.request({ ...config, method: METHODS.DELETE, url })
 	}
 
 	head(url, config = {}) {
-		return this.request({ ...config, method: this.METHODS.HEAD, url })
+		return this.request({ ...config, method: METHODS.HEAD, url })
 	}
 
 	options(url, config = {}) {
-		return this.request({ ...config, method: this.METHODS.OPTIONS, url })
+		return this.request({ ...config, method: METHODS.OPTIONS, url })
 	}
 
 	async request(config) {
 		const {
 			url,
-			method = this.METHODS.GET,
+			method = METHODS.GET,
 			headers = {},
 			params = {},
 			data = {},
@@ -97,17 +93,10 @@ export class httpClient {
 	formReqUrl(url, params) {
 		let requestUrl = new URL(url, this.default.baseUrl)
 
-		const queryParams = new URLSearchParams()
-
 		for (const [key, value] of Object.entries(params)) {
 			if (value != null) {
-				queryParams.append(key, value.toString())
+				requestUrl.searchParams.append(key, value.toString())
 			}
-		}
-
-		const queryString = queryParams.toString()
-		if (queryString) {
-			requestUrl += (requestUrl.includes('?') ? '&' : '?') + queryString
 		}
 
 		return requestUrl.toString()
@@ -119,8 +108,8 @@ export class httpClient {
 
 		if (
 			data &&
-			requestMethod !== this.METHODS.GET &&
-			requestMethod !== this.METHODS.HEAD
+			requestMethod !== METHODS.GET &&
+			requestMethod !== METHODS.HEAD
 		) {
 			if (typeof data === 'object') {
 				requestHeaders.set('Content-Type', 'application/json')
