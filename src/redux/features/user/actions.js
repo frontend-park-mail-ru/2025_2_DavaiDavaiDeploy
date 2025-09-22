@@ -1,22 +1,22 @@
-import { USER_CREATE, USER_DELETE, USER_UPDATE } from './types'
+import types from './types'
 
 const createUserAction = user => {
 	return {
-		type: USER_CREATE,
+		type: types.USER_CREATE,
 		payload: { user },
 	}
 }
 
 const updateUserAction = user => {
 	return {
-		type: USER_UPDATE,
+		type: types.USER_UPDATE,
 		payload: { user },
 	}
 }
 
 const deleteUserAction = userId => {
 	return {
-		type: USER_DELETE,
+		type: types.USER_DELETE,
 		payload: { userId },
 	}
 }

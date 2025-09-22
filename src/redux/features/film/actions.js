@@ -1,22 +1,22 @@
 import { filmsMock } from '../../../mocks/films'
-import { FILMS_ERROR, FILMS_LOADED, FILMS_LOADING } from './types'
+import types from './types'
 
 const setFilmsLoadingAction = () => {
 	return {
-		type: FILMS_LOADING,
+		type: types.FILMS_LOADING,
 	}
 }
 
 const returnFilmsAction = data => {
 	return {
-		type: FILMS_LOADED,
+		type: types.FILMS_LOADED,
 		payload: { films: data },
 	}
 }
 
 const returnFilmsErrorAction = error => {
 	return {
-		type: FILMS_ERROR,
+		type: types.FILMS_ERROR,
 		payload: { films: [], error: error },
 	}
 }

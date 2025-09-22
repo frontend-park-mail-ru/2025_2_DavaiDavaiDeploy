@@ -1,4 +1,4 @@
-import { createThunkMiddleware } from '../createThunkMiddleware'
+import { createThunkMiddleware } from '../createThunkMiddleware/index.js'
 
 const thunk = createThunkMiddleware()
 

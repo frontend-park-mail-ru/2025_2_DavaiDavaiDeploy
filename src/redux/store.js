@@ -1,9 +1,7 @@
-import { applyMiddleware, combineReducers, createStore } from '@modules/redux'
-import filmReducer from 'film/reducers.js'
-import userReducer from 'user/reducers.js'
+import { applyMiddleware } from '../modules/redux/applyMiddleware/index.js'
+import { createStore } from '../modules/redux/createStore/index.js'
+import { reducer } from './features/index.js'
 import { middlewares } from './middlewares/index.js'
-
-const reducer = combineReducers({ film: filmReducer, user: userReducer })
 
 const initialState = {}
 

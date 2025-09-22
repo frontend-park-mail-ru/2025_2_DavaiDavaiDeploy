@@ -1,4 +1,4 @@
-import { FILMS_ERROR, FILMS_LOADED, FILMS_LOADING } from './types'
+import types from './types.js'
 
 const initialState = {
 	loading: false,
@@ -10,18 +10,18 @@ const filmReducer = (state = initialState, action) => {
 	const { type, payload } = action
 
 	switch (type) {
-		case FILMS_LOADING:
+		case types.FILMS_LOADING:
 			return {
 				...state,
 				loading: true,
 			}
-		case FILMS_LOADED:
+		case types.FILMS_LOADED:
 			return {
 				...state,
 				loading: false,
 				films: payload.films,
 			}
-		case FILMS_ERROR:
+		case types.FILMS_ERROR:
 			return {
 				...state,
 				loading: false,
@@ -33,6 +33,4 @@ const filmReducer = (state = initialState, action) => {
 	}
 }
 
-export default {
-	filmReducer,
-}
+export default filmReducer
