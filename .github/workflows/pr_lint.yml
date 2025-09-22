@@ -14,25 +14,21 @@ jobs:
     name: Install cache
     runs-on: ubuntu-latest
     outputs:
-      cache-key: ${{ steps.set-cache-key.outputs.cache-key }}
+      cache-key: ${{ steps.cache-ci.outputs.cache-key }}
     steps:
       - name: Get the repository code
         uses: actions/checkout@v5
-
-      - name: Set cache key
-        id: set-cache-key
-        run: echo "cache-key=node-modules-${{ hashFiles('**/package-lock.json') }}" >> $GITHUB_OUTPUT
 
       - name: Cache npm dependencies
         id: cache-ci
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ steps.set-cache-key.outputs.cache-key }}
-
-      - name: Install dependencies
-        if: steps.cache-ci.outputs.cache-hit != 'true'
-        run: npm ci
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
 
   eslint-check:
     name: Eslint check
@@ -43,7 +39,9 @@ jobs:
       - name: Restore npm cache
         uses: actions/cache@v4
         with:
-          path: node_modules
+          path: |
+            node_modules
+            ~/.npm
           key: ${{ needs.install-cache.outputs.cache-key }}
       - name: Run ESLint
         uses: wearerequired/lint-action@v2
@@ -62,7 +60,9 @@ jobs:
       - name: Restore npm cache
         uses: actions/cache@v4
         with:
-          path: node_modules
+          path: |
+            node_modules
+            ~/.npm
           key: ${{ needs.install-cache.outputs.cache-key }}
       - name: Run Prettier
         uses: wearerequired/lint-action@v2
@@ -81,7 +81,9 @@ jobs:
       - name: Restore npm cache
         uses: actions/cache@v4
         with:
-          path: node_modules
+          path: |
+            node_modules
+            ~/.npm
           key: ${{ needs.install-cache.outputs.cache-key }}
       - name: Run Stylelint
         run: npm run lint:stylelint
