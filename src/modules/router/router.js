@@ -1,4 +1,4 @@
-import { normalize } from '../helpers/normalizeHelper.js'
+import { normalize } from '../../helpers/normalizeHelper.js'
 class Router {
 	constructor() {
 		if (Router.instance) {
@@ -36,7 +36,7 @@ class Router {
 		window.addEventListener('click', this.handleClick)
 	}
 
-	handlePopState(_event) {
+	handlePopState() {
 		const path = window.location.pathname
 		this.handleRouteChange(path, false)
 	}

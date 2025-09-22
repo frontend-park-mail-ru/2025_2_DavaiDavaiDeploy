@@ -1,6 +1,6 @@
 import '../build/precompiled.js'
 import HTTPClient from './modules/HTTPClient/index.js'
-import router from './modules/router.js'
+import router from './modules/router/index.js'
 import Error404 from './pages/404/404.js'
 import HomePage from './pages/homePage/apiTestPage.js'
 import TestPage from './pages/homePage/homePage.js'

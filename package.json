@@ -30,7 +30,8 @@
     "url": "git+https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy.git"
   },
   "browserslist": [
-    "defaults"
+    "defaults",
+    "not op_mini all"
   ],
   "keywords": [],
   "author": "",
@@ -51,6 +52,7 @@
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-hbs": "^1.0.3",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
     "globals": "^16.4.0",
     "globstar": "^1.0.0",
