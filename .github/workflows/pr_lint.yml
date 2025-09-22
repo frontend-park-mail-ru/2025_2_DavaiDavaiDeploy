@@ -1,0 +1,81 @@
+name: Linter
+
+on:
+  push:
+  pull_request:
+    types: [opened]
+jobs:
+  install-cache:
+    name: Install cache
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-ci.outputs.key }}
+    steps:
+      - name: Get the repository code
+        uses: actions/checkout@v5
+      - name: Set cache key
+        id: cache-ci
+        run: echo "key=node-modules-${{ hashFiles('**/package-lock.json') }}" >> $GITHUB_OUTPUT
+
+      - name: Cache ci dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ steps.cache-ci.outputs.key }}
+  eslint-check:
+    name: Eslint check
+    runs-on: ubuntu-latest
+    needs: ['install-cache']
+    steps:
+      - name: Get the repository code
+        uses: actions/checkout@v5
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ needs.install-cache.outputs.cache-key }}
+      - name: Run eslint check
+        run: npm run lint:eslint
+  prettier-check:
+    name: Prettier check
+    runs-on: ubuntu-latest
+    needs: ['install-cache']
+    steps:
+      - name: Get the repository code
+        uses: actions/checkout@v5
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ needs.install-cache.outputs.cache-key }}
+      - name: Run prettier
+        run: npm run lint:prettier
+  stylelint-check:
+    name: Stylelint check
+    needs: ['install-cache']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the repository code
+        uses: actions/checkout@v5
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ needs.install-cache.outputs.cache-key }}
+      - name: Run stylelint
+        run: npm run lint:stylelint
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs:
+      ['install-cache', 'eslint-check', 'prettier-check', 'stylelint-check']
+    steps:
+      - name: Get the repository code
+        uses: actions/checkout@v5
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ needs.install-cache.outputs.cache-key }}
+      - name: Run build
+        run: npm run build
