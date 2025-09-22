@@ -9,20 +9,25 @@ jobs:
     name: Install cache
     runs-on: ubuntu-latest
     outputs:
-      cache-key: ${{ steps.cache-ci.outputs.key }}
+      cache-key: ${{ steps.set-cache-key.outputs.cache-key }}
     steps:
       - name: Get the repository code
         uses: actions/checkout@v5
+
+      - name: Set cache key
+        id: set-cache-key
+        run: echo "cache-key=node-modules-${{ hashFiles('**/package-lock.json') }}" >> $GITHUB_OUTPUT
+
       - name: Cache npm dependencies
         id: cache-ci
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
+          key: ${{ steps.set-cache-key.outputs.cache-key }}
+
+      - name: Install dependencies
         if: steps.cache-ci.outputs.cache-hit != 'true'
         run: npm ci
-
   eslint-check:
     name: Eslint check
     runs-on: ubuntu-latest
