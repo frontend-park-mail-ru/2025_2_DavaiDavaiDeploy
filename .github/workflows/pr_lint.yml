@@ -4,6 +4,11 @@ on:
   push:
   pull_request:
     types: [opened]
+
+permissions:
+  checks: write
+  contents: write
+
 jobs:
   install-cache:
     name: Install cache
@@ -28,50 +33,70 @@ jobs:
       - name: Install dependencies
         if: steps.cache-ci.outputs.cache-hit != 'true'
         run: npm ci
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
+          prettier: true
+          stylelint: true
+          auto_fix: true
+
   eslint-check:
     name: Eslint check
     runs-on: ubuntu-latest
-    needs: ['install-cache']
+    needs: install-cache
     steps:
-      - name: Get the repository code
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
       - name: Restore npm cache
         uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ needs.install-cache.outputs.cache-key }}
-      - name: Run eslint check
-        run: npm run lint:eslint
+      - name: Run ESLint
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
+          prettier: false
+          stylelint: false
+          auto_fix: true
 
   prettier-check:
     name: Prettier check
     runs-on: ubuntu-latest
-    needs: ['install-cache']
+    needs: install-cache
     steps:
-      - name: Get the repository code
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
       - name: Restore npm cache
         uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ needs.install-cache.outputs.cache-key }}
-      - name: Run prettier
-        run: npm run lint:prettier
+      - name: Run Prettier
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: false
+          prettier: true
+          stylelint: false
+          auto_fix: true
 
   stylelint-check:
     name: Stylelint check
-    needs: ['install-cache']
     runs-on: ubuntu-latest
+    needs: install-cache
     steps:
-      - name: Get the repository code
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
       - name: Restore npm cache
         uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ needs.install-cache.outputs.cache-key }}
-      - name: Run stylelint
-        run: npm run lint:stylelint
+      - name: Run Stylelint
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: false
+          prettier: false
+          stylelint: true
+          auto_fix: true
 
   build:
     name: Build
