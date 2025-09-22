@@ -84,12 +84,7 @@ jobs:
           path: node_modules
           key: ${{ needs.install-cache.outputs.cache-key }}
       - name: Run Stylelint
-        uses: wearerequired/lint-action@v2
-        with:
-          eslint: false
-          prettier: false
-          stylelint: true
-          stylelint_extensions: 'css,scss'
+        run: npm run lint:stylelint
 
   build:
     name: Build
