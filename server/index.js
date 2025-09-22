@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 })
 
 // Обслуживаем статические файлы
-app.use('/public', express.static('public'))
+app.use('/src', express.static('src'))
 app.use('/reload', express.static('node_modules/reload'))
 
 // Только для не-статических путей отправляем index.html

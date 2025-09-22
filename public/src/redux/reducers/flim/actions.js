@@ -24,24 +24,19 @@ const returnFilmsErrorAction = error => {
 const getFilmsAction = () => {
 	return async dispatch => {
 		dispatch(setFilmsLoadingAction())
-
-		try {
-			const response = await new Promise(resolve => {
-				setTimeout(() => {
-					resolve({ data: filmsMock })
-				}, 1000)
-			})
-
-			dispatch(returnFilmsAction(response.data))
-		} catch (error) {
-			dispatch(returnFilmsErrorAction(error.message))
-		}
+		setTimeout(() => {
+			try {
+				dispatch(returnFilmsAction(filmsMock))
+			} catch (error) {
+				dispatch(returnFilmsErrorAction(error.message))
+			}
+		}, 1000)
 	}
 }
 
 export default {
 	getFilmsAction,
 	setFilmsLoadingAction,
-    returnFilmsAction,
-    returnFilmsErrorAction,
+	returnFilmsAction,
+	returnFilmsErrorAction,
 }

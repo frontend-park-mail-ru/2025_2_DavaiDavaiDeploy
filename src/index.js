@@ -1,7 +1,9 @@
 import '../build/precompiled.js'
-import router from './modules/router/index.js'
+import HTTPClient from './modules/HTTPClient/index.js'
+import router from './modules/router.js'
 import Error404 from './pages/404/404.js'
-import HomePage from './pages/homePage/homePage.js'
+import HomePage from './pages/homePage/apiTestPage.js'
+import TestPage from './pages/homePage/homePage.js'
 import LoginPage from './pages/loginPage/loginPage.js'
 import RegistrationPage from './pages/registrationPage/registrationPage.js'
 
@@ -9,6 +11,10 @@ const routes = {
 	home: {
 		href: '/',
 		component: HomePage,
+	},
+	apitest: {
+		href: '/test',
+		component: TestPage,
 	},
 	login: {
 		href: '/login',
@@ -23,6 +29,8 @@ const routes = {
 		component: Error404,
 	},
 }
+
+HTTPClient.configurate({ baseUrl: 'https://dummyjson.com' })
 
 let contentContainer = document.createElement('div')
 contentContainer.id = 'app'

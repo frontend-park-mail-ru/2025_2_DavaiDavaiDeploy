@@ -6,18 +6,33 @@
   "main": "index.js",
   "scripts": {
     "build": "node scripts/build.js",
-    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/",
+    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore build/",
     "lint:eslint": "npx eslint .",
     "lint:eslint:fix": "npx eslint . --fix",
     "lint:prettier": "npx prettier . --check",
     "lint:prettier:fix": "npx prettier . --write",
     "lint:stylelint": "npx stylelint \"**/*.css\"",
-    "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix"
+    "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix --allow-empty-input",
+    "lint:hbs": "ember-template-lint .",
+    "lint:hbs:fix": "ember-template-lint . --fix",
+    "prepare": "husky",
+    "pre-commit": "npm run lint:stylelint:fix && npm run lint:eslint:fix && npm run lint:hbs:fix && npm run lint:prettier:fix"
+  },
+  "_moduleAliases": {
+    "@": ".",
+    "@components": "src/components",
+    "@pages": "src/pages",
+    "@helpers": "src/helpers",
+    "@modules": "src/modules"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy.git"
   },
+  "browserslist": [
+    "defaults",
+    "not op_mini all"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -26,17 +41,23 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy#readme",
   "dependencies": {
+    "eslint-plugin-compat": "^6.0.2",
     "express": "^5.1.0",
-    "handlebars": "^4.7.8"
+    "handlebars": "^4.7.8",
+    "module-alias": "^2.2.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
+    "ember-template-lint": "^3.6.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-hbs": "^1.0.3",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
     "globals": "^16.4.0",
     "globstar": "^1.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
     "nodemon": "^3.1.10",
     "prettier": "3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
