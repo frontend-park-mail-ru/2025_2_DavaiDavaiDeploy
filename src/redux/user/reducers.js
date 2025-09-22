@@ -4,7 +4,7 @@ const initialState = {
 	users: [],
 }
 
-const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action) => {
 	const { type, payload } = action
 
 	switch (type) {

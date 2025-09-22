@@ -1,4 +1,4 @@
-import { compose } from './compose'
+import { compose } from '../compose'
 
 export function applyMiddleware(middlewares) {
 	return function createStoreWithMiddleware(createStore) {
