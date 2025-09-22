@@ -14,11 +14,14 @@ jobs:
     name: Install cache
     runs-on: ubuntu-latest
     outputs:
-      cache-key: ${{ steps.cache-ci.outputs.cache-key }}
+      cache-key: ${{ steps.set-cache-key.outputs.cache-key }}
     steps:
       - name: Get the repository code
         uses: actions/checkout@v5
 
+      - name: Set cache key
+        id: set-cache-key
+        run: echo "cache-key=${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}" >> $GITHUB_OUTPUT
       - name: Cache npm dependencies
         id: cache-ci
         uses: actions/cache@v4
@@ -26,9 +29,10 @@ jobs:
           path: |
             node_modules
             ~/.npm
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ steps.set-cache-key.outputs.cache-key }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
+
       - name: Install dependencies
         if: steps.cache-ci.outputs.cache-hit != 'true'
         run: npm ci
