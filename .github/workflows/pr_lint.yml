@@ -13,11 +13,14 @@ jobs:
   install-cache:
     name: Install cache
     runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-ci.outputs.cache-hit }}
     steps:
       - name: Get the repository code
         uses: actions/checkout@v5
 
       - name: Cache npm dependencies
+        id: cache-ci
         uses: actions/cache@v4
         with:
           path: |
@@ -26,13 +29,14 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
-
       - name: Install dependencies
+        if: steps.cache-ci.outputs.cache-hit != 'true'
         run: npm ci
 
   eslint-check:
     name: Eslint check
     runs-on: ubuntu-latest
+    needs: install-cache
     steps:
       - uses: actions/checkout@v5
       - name: Restore npm cache
@@ -41,18 +45,19 @@ jobs:
           path: |
             node_modules
             ~/.npm
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
+          key: ${{ needs.install-cache.outputs.cache-key }}
       - name: Run ESLint
         uses: wearerequired/lint-action@v2
         with:
           eslint: true
+          prettier: false
+          stylelint: false
           auto_fix: true
 
   prettier-check:
     name: Prettier check
     runs-on: ubuntu-latest
+    needs: install-cache
     steps:
       - uses: actions/checkout@v5
       - name: Restore npm cache
@@ -61,18 +66,19 @@ jobs:
           path: |
             node_modules
             ~/.npm
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
+          key: ${{ needs.install-cache.outputs.cache-key }}
       - name: Run Prettier
         uses: wearerequired/lint-action@v2
         with:
+          eslint: false
           prettier: true
+          stylelint: false
           auto_fix: true
 
   stylelint-check:
     name: Stylelint check
     runs-on: ubuntu-latest
+    needs: install-cache
     steps:
       - uses: actions/checkout@v5
       - name: Restore npm cache
@@ -81,9 +87,7 @@ jobs:
           path: |
             node_modules
             ~/.npm
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
+          key: ${{ needs.install-cache.outputs.cache-key }}
       - name: Run Stylelint
         run: npm run lint:stylelint
 
@@ -91,19 +95,14 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     needs:
-      - eslint-check
-      - prettier-check
-      - stylelint-check
+      ['install-cache', 'eslint-check', 'prettier-check', 'stylelint-check']
     steps:
-      - uses: actions/checkout@v5
+      - name: Get the repository code
+        uses: actions/checkout@v5
       - name: Restore npm cache
         uses: actions/cache@v4
         with:
-          path: |
-            node_modules
-            ~/.npm
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
+          path: ~/.node_modules
+          key: ${{ needs.install-cache.outputs.cache-key }}
       - name: Run build
         run: npm run build
