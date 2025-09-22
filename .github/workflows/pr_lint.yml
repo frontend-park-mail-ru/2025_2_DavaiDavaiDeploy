@@ -33,13 +33,6 @@ jobs:
       - name: Install dependencies
         if: steps.cache-ci.outputs.cache-hit != 'true'
         run: npm ci
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
-        with:
-          eslint: true
-          prettier: true
-          stylelint: true
-          auto_fix: true
 
   eslint-check:
     name: Eslint check
