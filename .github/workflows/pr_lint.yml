@@ -89,6 +89,7 @@ jobs:
           eslint: false
           prettier: false
           stylelint: true
+          stylelint_args: '--allow-empty-input'
           auto_fix: true
 
   build:
