@@ -1,0 +1,119 @@
+name: Lint and Build
+
+on:
+  push:
+  pull_request:
+    types: [opened]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  install-cache:
+    name: Install cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Commit
+        uses: actions/checkout@v5
+
+      - name: Cache npm dependencies
+        id: cache-ci
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Install Dependencies
+        if: steps.cache-ci.outputs.cache-hit != 'true'
+        run: npm ci
+
+  eslint-check:
+    name: Eslint check
+    runs-on: ubuntu-latest
+    needs: install-cache
+    steps:
+      - uses: actions/checkout@v5
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        id: cache-ci
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Run ESLint
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
+          prettier: false
+          stylelint: false
+          auto_fix: false
+
+  prettier-check:
+    name: Prettier check
+    runs-on: ubuntu-latest
+    needs: install-cache
+    steps:
+      - uses: actions/checkout@v5
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        id: cache-ci
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Run Prettier
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: false
+          prettier: true
+          stylelint: false
+          auto_fix: false
+
+  stylelint-check:
+    name: Stylelint check
+    runs-on: ubuntu-latest
+    needs: install-cache
+    steps:
+      - uses: actions/checkout@v5
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        id: cache-ci
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Run Stylelint
+        run: npm run lint:stylelint
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs:
+      - install-cache
+      - eslint-check
+      - prettier-check
+      - stylelint-check
+    steps:
+      - name: Checkout Commit
+        uses: actions/checkout@v5
+
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        id: cache-ci
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Build project
+        run: npm run build

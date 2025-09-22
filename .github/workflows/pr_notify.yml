@@ -7,7 +7,7 @@ on:
 
 jobs:
   notify:
-    name: Build
+    name: Notify
     runs-on: ubuntu-latest
     steps:
       - name: Notify github action on Telegram
