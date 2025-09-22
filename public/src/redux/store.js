@@ -1,5 +1,4 @@
-import { applyMiddleware } from '../modules/redux'
-import { createStore } from '../modules/redux'
+import { applyMiddleware, createStore } from '../modules/redux'
 import { middlewares } from './middlewares/index.js'
 import { reducer } from './reducers/index.js'
 

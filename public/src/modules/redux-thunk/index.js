@@ -1,7 +1,7 @@
-import { createThunkMiddleware } from './createThunkMiddleware';
-import thunk from './thunk';
+import { createThunkMiddleware } from './createThunkMiddleware'
+import thunk from './thunk'
 
 export default {
-    createThunkMiddleware,
-    thunk
+	createThunkMiddleware,
+	thunk,
 }
