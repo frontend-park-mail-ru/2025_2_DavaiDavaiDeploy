@@ -13,7 +13,7 @@ export default class Home {
 	render() {
 		this.#parent.innerHTML = ''
 		this.#self = document.createElement('div')
-		this.#self.id = 'home-page'
+		this.#self.class = 'home-page'
 		this.#parent.appendChild(this.#self)
 		this.#self.insertAdjacentHTML('afterbegin', this.template)
 	}
