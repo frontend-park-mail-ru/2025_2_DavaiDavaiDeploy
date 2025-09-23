@@ -13,23 +13,44 @@ export default class Home {
 		return Handlebars.templates[`homePage.hbs`]({ text: 'Home' })
 	}
 
+	get grid() {
+		return this.#self.querySelector('.grid')
+	}
+
+	get main() {
+		return this.#self.querySelector('.main')
+	}
+
 	render() {
 		this.#parent.innerHTML = ''
 		this.#self = document.createElement('div')
 		this.#self.class = 'home-page'
 		this.#parent.appendChild(this.#self)
 		this.#self.insertAdjacentHTML('afterbegin', this.template)
-		const container = this.#self
-		const grid = container.querySelector('.grid')
-		const main = container.querySelector('.main')
-		films.forEach(film => {
-			let filmCard = new FilmCard(grid)
-			filmCard.render()
-			film.genres.forEach(genre => {
-				console.log(` - жанр: ${genre.title}`)
+
+		let grid = this.grid
+
+		for (let i = 0; i < 10; i++) {
+			FILMS.forEach(film => {
+				let filmCard = new FilmCard(grid, {
+					id: film.id,
+					image: '/src/assets/img/1+1.webp',
+					title: film.title,
+					info: `${film.year}, ${film.genres[1].title}`,
+				})
+				filmCard.render()
 			})
+		}
+
+		let topFilm = new TopFilm(this.main, {
+			id: TOPFILM.id,
+			image: TOPFILM.image,
+			title: TOPFILM.title,
+			year: TOPFILM.year,
+			genre: TOPFILM.genre,
+			duration: TOPFILM.duration,
+			desription: TOPFILM.desription,
 		})
-		let topFilm = new TopFilm(main)
 		topFilm.render()
 	}
 
@@ -38,7 +59,18 @@ export default class Home {
 	}
 }
 
-const films = [
+const TOPFILM = {
+	id: 2,
+	image: '/src/assets/img/dune.webp',
+	title: 'Дюна: Часть вторая',
+	year: '2024',
+	genre: 'Фантастика',
+	duration: 169,
+	desription:
+		'Продолжение эпической саги о Полу Атрейдесе. Он продолжает путь к тому, чтобы стать МуадДибом, в то время как его враги плетут заговоры против него.',
+}
+
+const FILMS = [
 	{
 		id: 1,
 		title: 'Интерстеллар',
@@ -52,7 +84,7 @@ const films = [
 		rating: 8.6,
 		budget: 165000000,
 		fees: 677000000,
-		premierDate: new Date(2014, 9, 26), // месяцы в JS начинаются с 0
+		premierDate: new Date(2014, 9, 26),
 		duration: 169,
 		createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
 		updatedAt: new Date(),

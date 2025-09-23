@@ -1,5 +1,4 @@
 @import url('./pages/homePage/homePage.css');
-@import url('./components/header/header.css');
 @import url('./constants.css');
 
 * {
@@ -14,27 +13,28 @@ body {
 
 h1 {
 	font-size: 48px;
-	font-family: 'Rubik', Arial, sans-serif;
+	font-family: Rubik, Arial, sans-serif;
 	color: var(--white);
 	font-weight: 400;
 }
 
 h2 {
 	font-size: 32px;
-	font-family: 'Rubik', Arial, sans-serif;
+	font-family: Rubik, Arial, sans-serif;
 	color: var(--white);
 	font-weight: 400;
 }
 
 h3 {
 	font-size: 20px;
-	font-family: 'Rubik', Arial, sans-serif;
+	font-family: Rubik, Arial, sans-serif;
 	color: var(--white);
 	font-weight: 400;
 }
 
 p {
 	font-size: 16px;
+	font-family: Lato, Arial, sans-serif;
 	color: var(--text-grey);
 	font-weight: 400;
 }

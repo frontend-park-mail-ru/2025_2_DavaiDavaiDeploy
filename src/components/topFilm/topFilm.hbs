@@ -1,15 +1,14 @@
-<section class="top-film">
-    <div class="top-film__content">
-        <h1 class="top-film__title">Дюна: Часть вторая</h1>
-        <ul class="top-film__info">
-            <li class="top-film__item">2024</li>
-            <li class="top-film__item">Фантастика</li>
-            <li class="top-film__item">2ч 46м</li>
-        </ul>
-        <p class="top-film__description">
-            Продолжение истории Пола Атрейдеса, который объединяет силы с фременами, чтобы отомстить заговорщикам, уничтожившим его семью.
-        </p>
-    </div>
-    <img src="/src/assets/img/dune.webp" alt="Дюна" class="top-film__image">
-</section>
-<section class="genre-slider"></section>
+<a href="#" class="top-film">
+    <section>
+        <div class="top-film__content">
+            <h1 class="top-film__title">{{title}}</h1>
+            <ul class="top-film__info">
+                <li class="top-film__item">{{year}}</li>
+                <li class="top-film__item">{{genre}}</li>
+                <li class="top-film__item">{{duration}}</li>
+            </ul>
+            <h3 class="top-film__description">{{desription}}</h3>
+        </div>
+        <img src={{image}} alt={{title}} class="top-film__image">
+    </section>
+</a>

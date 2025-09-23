@@ -5,7 +5,18 @@ export default class FilmCard extends Component {
 		super(parent, props, 'filmCard')
 	}
 
+	get self() {
+		return document.querySelector(`#film-${this.props.id}`)
+	}
+
 	render() {
-		this.parent.insertAdjacentHTML('afterbegin', this.html())
+		let context = {
+			id: this.props.id,
+			image: this.props.image,
+			href: '#',
+			title: this.props.title,
+			info: this.props.info,
+		}
+		this.parent.insertAdjacentHTML('afterbegin', this.html(context))
 	}
 }
