@@ -14,7 +14,7 @@
 
 [Кочкарова Лейла](https://github.com/k-t-l-h) - _Backend_
 
-TODO - _UX_
+[Дарья Ченцова](https://t.me/dewon_d) - _UX_
 
 ### Правила оформления Pull Requests
 1. Ветка создается с названием `ddd-###`, где ### - номер задачи в Jira.
@@ -28,4 +28,4 @@ TODO - _UX_
 
 [Деплой](TODO)
 
-[Figma](TODO)
+[Figma](https://www.figma.com/design/jR26e56TaU1xmJP69bHDtj/DDD--%D0%9A%D0%B8%D0%BD%D0%BE%D0%BF%D0%BE%D0%B8%D1%81%D0%BA-?node-id=0-1&t=VwqqrCNFesSkrBGv-1)
