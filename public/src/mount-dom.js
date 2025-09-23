@@ -1,6 +1,6 @@
-import {DOM_TYPES} from './h';
-import {setAttributes} from './attributes';
-import {addEventListeners} from './events';
+import {DOM_TYPES} from './h.js';
+import {setAttributes} from './attributes.js';
+import {addEventListeners} from './events.js';
 
 export function mountDOM(vdom, parentEl) {
   switch (vdom.type) {

@@ -1,5 +1,5 @@
-import {removeEventListeners} from './events';
-import {DOM_TYPES} from './h';
+import {removeEventListeners} from './events.js';
+import {DOM_TYPES} from './h.js';
 
 export function destroyDOM(vdom) {
   const {type} = vdom;
