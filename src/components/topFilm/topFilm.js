@@ -6,11 +6,6 @@ export default class TopFilm extends Component {
 		super(parent, props, 'topFilm')
 	}
 
-	render() {
-		this.parent.insertAdjacentHTML('afterbegin', this.html())
-		this.addEventListeners()
-	}
-
 	get self() {
 		return document.querySelector(`.top-film`)
 	}
@@ -25,7 +20,6 @@ export default class TopFilm extends Component {
 			duration: formatDuration(this.props.duration),
 			desription: this.props.desription,
 		}
-		console.log(this.props.desription)
 		this.parent.insertAdjacentHTML('afterbegin', this.html(context))
 	}
 }

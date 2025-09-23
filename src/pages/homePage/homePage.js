@@ -1,5 +1,5 @@
 import FilmCard from '../../components/filmCard/filmCard.js'
-import TopFilm from '../../components/topFilm/topfilm.js'
+import TopFilm from '../../components/topFilm/topFilm.js'
 export default class Home {
 	#parent
 	#self

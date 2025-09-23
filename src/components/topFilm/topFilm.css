@@ -1,16 +1,16 @@
 a.top-film {
 	display: block;
-	text-decoration: none;
-	color: inherit;
 	position: relative;
 	overflow: hidden;
+	text-decoration: none;
+	color: inherit;
 }
 
 .top-film > section {
 	display: flex;
-	min-height: 65vh;
-	width: 100%;
 	position: relative;
+	width: 100%;
+	min-height: 65vh;
 }
 
 .top-film::after {
@@ -46,7 +46,6 @@ a.top-film {
 }
 
 .top-film__title {
-	margin: 0;
 	text-decoration: none;
 }
 
@@ -56,21 +55,19 @@ a.top-film {
 	justify-content: space-between;
 	padding: 0;
 	list-style: none;
-	margin: 0;
 }
 
 .top-film__item {
-	background: transparent;
-	font-size: 32px;
-	color: var(--white);
 	font-family: Rubik, Arial, sans-serif;
+	font-size: 32px;
 	font-weight: 400;
+	color: var(--white);
+	background: transparent;
 	text-decoration: none;
 }
 
 .top-film__description {
 	font-size: 20px;
-	margin: 0;
 	color: var(--text-grey);
 	text-decoration: none;
 }
@@ -83,4 +80,10 @@ a.top-film {
 	height: 100%;
 	object-fit: cover;
 	z-index: 0;
+	transition: filter 0.3s ease;
+}
+
+.top-film:hover .top-film__image {
+	filter: brightness(1.2);
+	transition: filter 0.4s ease;
 }
