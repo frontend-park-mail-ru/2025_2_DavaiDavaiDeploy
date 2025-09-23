@@ -1,3 +1,4 @@
+import { getRatingType } from '../../helpers/formatHelper.js'
 import Component from '../core/baseComponent.js'
 
 export default class FilmCard extends Component {
@@ -16,6 +17,8 @@ export default class FilmCard extends Component {
 			href: '#',
 			title: this.props.title,
 			info: this.props.info,
+			rating: this.props.rating.toFixed(1),
+			ratingType: getRatingType(this.props.rating),
 		}
 		this.parent.insertAdjacentHTML('afterbegin', this.html(context))
 	}

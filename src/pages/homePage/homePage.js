@@ -37,6 +37,7 @@ export default class Home {
 					image: '/src/assets/img/1+1.webp',
 					title: film.title,
 					info: `${film.year}, ${film.genres[1].title}`,
+					rating: film.rating,
 				})
 				filmCard.render()
 			})
@@ -81,7 +82,7 @@ const FILMS = [
 		],
 		year: 2014,
 		country: 'США',
-		rating: 8.6,
+		rating: 7.8,
 		budget: 165000000,
 		fees: 677000000,
 		premierDate: new Date(2014, 9, 26),
@@ -98,7 +99,7 @@ const FILMS = [
 		],
 		year: 1972,
 		country: 'США',
-		rating: 9.2,
+		rating: 3,
 		budget: 6000000,
 		fees: 245000000,
 		premierDate: new Date(1972, 2, 15),
@@ -152,7 +153,7 @@ const FILMS = [
 		],
 		year: 1985,
 		country: 'США',
-		rating: 8.5,
+		rating: 6,
 		budget: 19000000,
 		fees: 381000000,
 		premierDate: new Date(1985, 6, 3),
@@ -188,7 +189,7 @@ const FILMS = [
 		],
 		year: 2019,
 		country: 'Великобритания',
-		rating: 8.5,
+		rating: 2.0,
 		budget: 22000000,
 		fees: 115000000,
 		premierDate: new Date(2019, 11, 3),
