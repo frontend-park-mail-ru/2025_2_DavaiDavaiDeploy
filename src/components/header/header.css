@@ -1,0 +1,140 @@
+.header {
+	width: 100%;
+	background-color: var(--light);
+	padding: 15px 30px;
+	box-sizing: border-box;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	gap: 20px;
+}
+
+.header__logo {
+	height: 40px;
+	object-fit: contain;
+	flex-shrink: 0;
+}
+
+.header__sections {
+	display: flex;
+	gap: 32px;
+	justify-content: center;
+}
+
+.header__sections-link {
+	font-size: 18px;
+	font-family: Rubik, Arial, sans-serif;
+	color: var(--white);
+	text-decoration: none;
+	transition: all 0.4s ease;
+	padding: 8px 12px;
+	border-radius: 6px;
+}
+
+.header__sections-link:hover {
+	transform: translateY(-1px);
+	color: var(--accent);
+}
+
+.search {
+	display: flex;
+	align-items: center;
+	background-color: var(--dark);
+	border: 1px solid transparent;
+	border-radius: 20px;
+	padding: 8px 16px;
+	width: 100%;
+	max-width: 650px;
+	height: 40px;
+	box-sizing: border-box;
+	transition: all 0.4s ease;
+}
+
+.search:focus-within {
+	border-color: var(--accent);
+	transform: translateY(-1px);
+	box-shadow: 0 0 15px #00f5ff4d;
+}
+
+.search:hover {
+	border-color: var(--accent);
+	transform: translateY(-1px);
+	box-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
+}
+
+.search__input {
+	flex: 1;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: var(--white);
+	font-size: 16px;
+	font-family: Lato, Arial, sans-serif;
+	height: 100%;
+	padding: 0;
+}
+
+.search__input::placeholder {
+	color: var(--text-secondary);
+	font-size: 16px;
+	font-family: Lato, Arial, sans-serif;
+}
+
+.search__icon {
+	width: 20px;
+	height: 20px;
+	color: var(--accent);
+	margin-left: 10px;
+	cursor: pointer;
+	transition: color 0.3s;
+	flex-shrink: 0;
+}
+
+.user {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	flex-shrink: 0;
+}
+
+.user__login-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 12px 24px;
+	background: var(--accent);
+	border: 1px solid var(--accent);
+	border-radius: 8px;
+	font-family: Rubik, Arial, sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+	color: var(--white);
+	cursor: pointer;
+	transition: all 0.4s ease;
+	height: 40px;
+	min-width: 120px;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+.user__login-button:hover {
+	background: transparent;
+	color: var(--accent);
+	transform: translateY(-1px);
+	box-shadow: var(--shadow);
+}
+
+.user__avatar {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.user__name {
+	font-size: 14px;
+}
