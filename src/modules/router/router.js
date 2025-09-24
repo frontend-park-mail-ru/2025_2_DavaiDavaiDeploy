@@ -77,8 +77,8 @@ class Router {
 
 	renderHeader() {
 		const headerInstance = new Header(this.parent, {
-			avatar: '',
-			login: '',
+			avatar: '/src/assets/img/1+1.webp',
+			login: 'Alex',
 			id: 'header',
 		})
 		headerInstance.render()
