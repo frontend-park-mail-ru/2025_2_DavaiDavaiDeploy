@@ -40,12 +40,6 @@
 
 @media (width <= 768px) {
 	.main {
-		padding: 0 20px;
-	}
-}
-
-@media (width <= 480px) {
-	.main {
-		padding: 0 10px;
+		padding: 0 30px;
 	}
 }
