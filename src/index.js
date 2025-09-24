@@ -1,5 +1,5 @@
 import '../build/precompiled.js'
-import Layout from './layoutes/page/pageLayout.js'
+import Layout from './components/layout/layout.js'
 import HTTPClient from './modules/HTTPClient/index.js'
 import router from './modules/router/index.js'
 import { routes } from './routes/index.js'

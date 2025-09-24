@@ -1,4 +1,4 @@
-import Component from '../../components/core/baseComponent.js'
+import Component from '../core/baseComponent.js'
 
 /**
  * Макет
@@ -11,7 +11,7 @@ class Layout extends Component {
 	 * @param {Element} parent - родительский элемент
 	 */
 	constructor(parent) {
-		super(parent, { id: 'layout' }, 'pageLayout')
+		super(parent, { id: 'layout' }, 'layout')
 		this.#parent = parent
 	}
 
