@@ -20,7 +20,8 @@ export default class Header extends Component {
 	}
 
 	render() {
-		this.parent.innerHTML = ''
+		const header = document.querySelector('#header')
+		header?.remove()
 
 		let context = {
 			authorized: this.state.authorized,
