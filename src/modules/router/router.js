@@ -76,9 +76,10 @@ class Router {
 	}
 
 	renderHeader() {
-		const headerInstance = new Header({
-			parent: this.parent,
-			navigate: this.handleRouteChange.bind(this),
+		const headerInstance = new Header(this.parent, {
+			avatar: '',
+			login: '',
+			id: 'header',
 		})
 		headerInstance.render()
 	}

@@ -3,23 +3,32 @@
 @import url('/src/layoutes/page/pageLayout.css');
 
 :root {
-	--bg: #0a0a1f;
-	--dark: #0f1b40;
-	--light: #15204a;
-	--white: #fff;
-	--text-secondary: #ccc;
-	--accent: #28b0ff;
-	--rating-high: #23b862;
-	--rating-middle: #f39c12;
-	--rating-low: #e74c3c;
-	--error: #db0732;
-	--icons: #1e2a5e;
-	--gradient-film: linear-gradient(to right, #141428, #0d0d1a);
-	--shadow: 0 0 15px #28b0ff4d;
+	--color-bg: #0a0a1f;
+	--color-dark: #0f1b40;
+	--color-light: #15204a;
+	--color-white: #fff;
+	--color-text-secondary: #ccc;
+	--color-accent: #28b0ff;
+	--color-rating-high: #23b862;
+	--color-rating-middle: #f39c12;
+	--color-rating-low: #e74c3c;
+	--color-error: #db0732;
+	--color-icons: #1e2a5e;
+	--color-shadow-hover: rgb(0 245 255 / 50%);
+	--color-shadow-focus: #00f5ff4d;
+	--color-gradient-film: linear-gradient(to right, #141428, #0d0d1a);
+	--shadow: 0 0 1rem #28b0ff4d;
 }
 
 * {
 	padding: 0;
 	margin: 0;
+	font-family: Rubik, Arial, sans-serif;
 	box-sizing: border-box;
+	font-weight: 400;
+	font-size: 1rem;
+}
+
+.lato-family {
+	font-family: Lato, Arial, sans-serif;
 }
