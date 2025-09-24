@@ -1,12 +1,25 @@
 @import url('/src/components/header/header.css');
+@import url('/src/components/footer/footer.css');
 @import url('/src/layoutes/page/pageLayout.css');
+
+:root {
+	--bg: #0a0a1f;
+	--dark: #0f1b40;
+	--light: #15204a;
+	--white: #fff;
+	--text-secondary: #ccc;
+	--accent: #28b0ff;
+	--rating-high: #23b862;
+	--rating-middle: #f39c12;
+	--rating-low: #e74c3c;
+	--error: #db0732;
+	--icons: #1e2a5e;
+	--gradient-film: linear-gradient(to right, #141428, #0d0d1a);
+	--shadow: 0 0 15px #28b0ff4d;
+}
 
 * {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-}
-
-header {
-	background: green;
 }

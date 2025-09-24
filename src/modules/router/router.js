@@ -1,3 +1,4 @@
+import Footer from '../../components/footer/footer.js'
 import Header from '../../components/header/header.js'
 import { normalize } from '../../helpers/normalizeHelper.js'
 
@@ -53,15 +54,6 @@ class Router {
 	}
 
 	/**
-	 * Проверяет, нужно ли показывать header для текущего пути
-	 * @param {string} path - текущий путь
-	 * @returns {boolean}
-	 */
-	shouldShowHeader() {
-		return true
-	}
-
-	/**
 	 * Очищает контент и header
 	 */
 	clearLayout() {
@@ -71,22 +63,39 @@ class Router {
 		}
 
 		// Удаляем существующий header если он есть
-		const oldHeader = document.querySelector('.header')
+		const oldHeader = document.querySelector('#header')
 		if (oldHeader) {
 			oldHeader.remove()
 		}
+
+		// Удаляем существующий footer если он есть
+		const oldFooter = document.querySelector('#footer')
+		if (oldFooter) {
+			oldFooter.remove()
+		}
 	}
 
-	/**
-	 * Рендерит header если нужно
-	 * @param {string} path - текущий путь
-	 */
 	renderHeader() {
 		const headerInstance = new Header({
 			parent: this.parent,
 			navigate: this.handleRouteChange.bind(this),
 		})
 		headerInstance.render()
+	}
+
+	renderFooter() {
+		const footerInstance = new Footer(this.parent)
+		footerInstance.render()
+	}
+
+	renderContent(route) {
+		const contentContainer = document.createElement('div')
+		contentContainer.className = 'content'
+		this.parent.appendChild(contentContainer)
+
+		// Рендерим страницу
+		const page = new route.component(contentContainer)
+		page.render()
 	}
 
 	handleRouteChange(path, addToHistory = true) {
@@ -102,20 +111,11 @@ class Router {
 			window.history.pushState({ normalizedPath }, '', normalizedPath)
 		}
 
-		// Очищаем layout перед рендером
 		this.clearLayout()
 
-		// Рендерим header если нужно
 		this.renderHeader()
-
-		// Создаем контейнер для контента
-		const contentContainer = document.createElement('div')
-		contentContainer.className = 'content'
-		this.parent.appendChild(contentContainer)
-
-		// Рендерим страницу
-		const page = new route.component(contentContainer)
-		page.render()
+		this.renderContent(route)
+		this.renderFooter()
 	}
 
 	start() {

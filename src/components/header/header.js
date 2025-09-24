@@ -15,7 +15,7 @@ class Header extends Component {
 	constructor({ parent, navigate }) {
 		super(parent, { id: 'header' }, 'header')
 		this.#navigate = navigate
-		this.#parent = document.getElementById('layout')
+		this.#parent = parent
 		// Привязываем контекст для обработчиков
 		this.handleLoginClick = this.handleLoginClick.bind(this)
 		this.handleLinkClick = this.handleLinkClick.bind(this)
