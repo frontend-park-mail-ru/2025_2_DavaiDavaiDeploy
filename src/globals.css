@@ -1,4 +1,5 @@
 @import url('./pages/homePage/homePage.css');
+@import url('./components/header/header.css');
 @import url('./constants.css');
 
 * {
