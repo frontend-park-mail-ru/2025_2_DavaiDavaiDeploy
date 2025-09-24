@@ -1,0 +1,22 @@
+<header class="header">
+    <img src="/src/assets/img/logo1.png" alt="Поиск" class="header__logo">
+    <nav class="sections">
+        <a href="#" class="header__link">Главная</a>
+        <a href="#" class="header__link">Фильмы</a>
+        <a href="#" class="header__link">Сериалы</a>
+    </nav>
+    <div class="search">
+        <input type="text" class="search__input" placeholder="Поиск фильмов, актеров...">
+        <img src="/src/assets/img/loupe.svg" alt="Поиск" class="search__icon">
+    </div>
+    {{#if authorized}}
+        <a href="#" class="user">
+            <span class="user__name">{{login}}</span>
+            <img src="{{avatar}}" alt="Аватар" class="user__avatar">
+        </a>
+    {{else}}
+        <div class="user">
+            <button class="user__login-button">Войти</button>
+        </div>
+    {{/if}}
+</header>
