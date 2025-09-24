@@ -12,10 +12,6 @@ class Router {
 		this.routes = {}
 		this.parent = null
 
-		this.handleRouteChange = this.handleRouteChange.bind(this)
-		this.handleClick = this.handleClick.bind(this)
-		this.handlePopState = this.handlePopState.bind(this)
-
 		this.initEventListeners()
 	}
 
@@ -76,17 +72,17 @@ class Router {
 	}
 
 	renderHeader() {
-		const headerInstance = new Header(this.parent, {
+		const header = new Header(this.parent, {
 			avatar: '/src/assets/img/1+1.webp',
 			login: 'Alex',
 			id: 'header',
 		})
-		headerInstance.render()
+		header.render()
 	}
 
 	renderFooter() {
-		const footerInstance = new Footer(this.parent)
-		footerInstance.render()
+		const footer = new Footer(this.parent)
+		footer.render()
 	}
 
 	renderContent(route) {

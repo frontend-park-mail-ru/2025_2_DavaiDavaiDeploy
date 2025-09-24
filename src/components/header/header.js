@@ -3,7 +3,7 @@ import Component from '../core/baseComponent.js'
 export default class Header extends Component {
 	constructor(parent, props = {}) {
 		super(parent, props, 'header', {
-			authorized: true,
+			authorized: false,
 		})
 	}
 
@@ -20,11 +20,24 @@ export default class Header extends Component {
 	}
 
 	render() {
+		this.parent.innerHTML = ''
+
 		let context = {
 			authorized: this.state.authorized,
 			avatar: this.props.avatar,
 			login: this.props.login,
 		}
 		this.parent.insertAdjacentHTML('afterbegin', this.html(context))
+
+		const loginButton = document.querySelector('#login-button')
+		if (loginButton) {
+			loginButton.addEventListener('click', () => {
+				this.handleLogIn({
+					avatar: '/src/assets/img/1+1.webp',
+					login: 'Alex',
+				})
+				this.render()
+			})
+		}
 	}
 }
