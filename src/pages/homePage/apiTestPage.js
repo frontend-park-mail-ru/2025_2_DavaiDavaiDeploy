@@ -1,7 +1,7 @@
 import { fetchTodos } from '../../redux/features/todos/actions.js'
 import { store } from '../../redux/store.js'
 
-export default class Home {
+export default class TestPage {
 	#parent
 	#self
 	#unsubscribe

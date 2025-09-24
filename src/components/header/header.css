@@ -12,6 +12,7 @@
 	top: 0;
 	z-index: 1000;
 	gap: 1.25rem;
+	margin-bottom: 1.875rem;
 }
 
 .header__logo {
@@ -50,20 +51,14 @@
 	width: 100%;
 	max-width: 40.625rem;
 	height: 2.5rem;
-	box-sizing: border-box;
 	transition: all 0.4s ease;
 }
 
-.search:focus-within {
-	border-color: var(--color-accent);
-	transform: translateY(-1px);
-	box-shadow: 0 0 1rem var(--color-shadow-focus);
-}
-
+.search:focus-within,
 .search:hover {
 	border-color: var(--color-accent);
 	transform: translateY(-1px);
-	box-shadow: 0 0 1rem var(--color-shadow-hover);
+	box-shadow: 0 0 1rem var(--color-shadow-focus);
 }
 
 .search__input {
@@ -97,6 +92,7 @@
 	align-items: center;
 	gap: 0.875rem;
 	flex-shrink: 0;
+	text-decoration: none;
 }
 
 .user__login-button {
@@ -132,4 +128,14 @@
 
 .user__name {
 	font-size: 0.875rem;
+	padding: 0.5rem 0.75rem;
+	color: var(--color-white);
+	text-decoration: none;
+	border-radius: 0.375rem;
+	transition: all 0.4s ease;
+}
+
+.user__name:hover {
+	color: var(--accent);
+	transform: translateY(-1px);
 }
