@@ -1,5 +1,8 @@
 import { GENRES } from '../../mocks/films.js'
 import Component from '../core/baseComponent.js'
+
+import { createPeriodFunction } from '../../helpers/launchHelper.js'
+
 export default class GenreSlider extends Component {
 	constructor(parent, props = {}) {
 		super(parent, props, 'genreSlider', {
@@ -10,6 +13,8 @@ export default class GenreSlider extends Component {
 			curGenre: 0,
 			prevGenre: 0,
 			isAnimating: false,
+			autoSlider: null,
+			inactivityTimer: null,
 		})
 	}
 
@@ -37,6 +42,10 @@ export default class GenreSlider extends Component {
 		this.parent.insertAdjacentHTML('afterbegin', this.html())
 		this.renderGenres()
 		this.initSlider()
+
+		this.autoSlider = createPeriodFunction(this.showNextSlide, 5000)
+		this.autoSlider.start()
+
 		this.addEventListeners()
 	}
 
@@ -54,6 +63,30 @@ export default class GenreSlider extends Component {
 	addEventListeners = () => {
 		this.nextBtn.addEventListener('click', this.showNextSlide)
 		this.prevBtn.addEventListener('click', this.showPreviousSlide)
+		this.self.addEventListener('click', this.updateAutoSlide)
+	}
+
+	updateAutoSlide = () => {
+		this.autoSlider.stop()
+		if (this.inactivityTimer) {
+			clearTimeout(this.inactivityTimer)
+		}
+		this.inactivityTimer = setTimeout(() => {
+			if (!this.autoSlider.isWorking()) {
+				this.autoSlider.start()
+			}
+		}, 30000)
+	}
+
+	initSlider = () => {
+		this.genres.forEach(genre => {
+			genre.style.display = 'none'
+		})
+
+		for (let index = 0; index < this.state.slideCapacity; index++) {
+			const idx = (this.state.curGenre + index) % this.state.genresCount
+			this.genres[idx].style.display = 'block'
+		}
 	}
 
 	showNextSlide = () => {
@@ -72,17 +105,6 @@ export default class GenreSlider extends Component {
 					this.state.genresCount
 				: this.state.curGenre - this.state.slideCapacity
 		this.animateSlider(-1)
-	}
-
-	initSlider = () => {
-		this.genres.forEach(genre => {
-			genre.style.display = 'none'
-		})
-
-		for (let index = 0; index < this.state.slideCapacity; index++) {
-			const idx = (this.state.curGenre + index) % this.state.genresCount
-			this.genres[idx].style.display = 'block'
-		}
 	}
 
 	animateSlider = direction => {
