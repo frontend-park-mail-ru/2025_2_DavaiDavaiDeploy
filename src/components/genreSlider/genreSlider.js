@@ -36,10 +36,10 @@ export default class GenreSlider extends Component {
 	render() {
 		this.parent.insertAdjacentHTML('afterbegin', this.html())
 		this.initSlider()
-		this.AddEventListeners()
+		this.addEventListeners()
 	}
 
-	AddEventListeners = () => {
+	addEventListeners = () => {
 		this.nextBtn.addEventListener('click', this.showNextSlide)
 		this.prevBtn.addEventListener('click', this.showPreviousSlide)
 	}

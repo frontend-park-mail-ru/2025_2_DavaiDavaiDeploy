@@ -43,7 +43,7 @@ export default class Home {
 			})
 		}
 
-		let genreSlider = new GenreSlider(this.main, {})
+		const genreSlider = new GenreSlider(this.main)
 		genreSlider.render()
 
 		let topFilm = new TopFilm(this.main, {
