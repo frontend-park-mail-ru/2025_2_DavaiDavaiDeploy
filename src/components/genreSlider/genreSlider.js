@@ -1,4 +1,4 @@
-import { GENRES } from '../../mocks/films.js'
+import { GENRES } from '../../mocks/genres.js'
 import Component from '../core/baseComponent.js'
 
 import { createPeriodFunction } from '../../helpers/launchHelper.js'
@@ -64,7 +64,7 @@ export default class GenreSlider extends Component {
 			image.className = 'slider__image'
 			image.alt = genre.title
 			image.src = genre.image
-			image.dataset = genre.id
+			image.setAttribute('data-id', genre.id)
 			this.slider.appendChild(image)
 		})
 	}
@@ -83,7 +83,7 @@ export default class GenreSlider extends Component {
 		// const target = event.target
 
 		// if (target.classList.contains('slider__image')) {
-		// 	const id = target.dataset.id
+		// 	const id = target.dataset.data-id
 		// }
 	}
 
