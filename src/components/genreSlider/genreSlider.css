@@ -79,12 +79,6 @@
 	transform: rotate(180deg);
 }
 
-@media (width <= 75rem) {
-	.slider {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-}
-
 .slider a {
 	display: block;
 	text-decoration: none;
@@ -93,4 +87,10 @@
 
 .slider a:hover .slider__image {
 	filter: brightness(1.2);
+}
+
+@media (width <= 75rem) {
+	.slider {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
 }

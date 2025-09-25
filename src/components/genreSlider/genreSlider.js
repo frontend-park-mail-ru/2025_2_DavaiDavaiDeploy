@@ -2,7 +2,15 @@ import Component from '../core/baseComponent.js'
 
 export default class GenreSlider extends Component {
 	constructor(parent, props = {}) {
-		super(parent, props, 'genreSlider')
+		super(parent, props, 'genreSlider', {
+			curSlide: 0,
+			slideCapacity: 8,
+			slideСount: 3,
+			genresCount: 24,
+			curGenre: 0,
+			prevGenre: 0,
+			isAnimating: false,
+		})
 	}
 
 	get self() {
@@ -27,100 +35,92 @@ export default class GenreSlider extends Component {
 
 	render() {
 		this.parent.insertAdjacentHTML('afterbegin', this.html())
-		this.curSlide = 0
-		this.slideCapacity = 8
-		this.slideСount = 3
-		this.genresCount = this.genres.length
-		this.curGenre = 0
-		this.prevGenre = 0
-		this.isAnimating = false
 		this.initSlider()
 		this.AddEventListeners()
 	}
 
-	AddEventListeners() {
+	AddEventListeners = () => {
 		this.nextBtn.addEventListener('click', this.showNextSlide)
 		this.prevBtn.addEventListener('click', this.showPreviousSlide)
-		let timeout
-		window.addEventListener('resize', () => {
-			clearTimeout(timeout)
-			timeout = setTimeout(() => {
-				this.resizeSlider()
-			}, 100)
-		})
 	}
 
 	showNextSlide = () => {
-		this.prevGenre = this.curGenre
-		this.curGenre = (this.curGenre + this.slideCapacity) % this.genresCount
+		this.state.prevGenre = this.state.curGenre
+		this.state.curGenre =
+			(this.state.curGenre + this.state.slideCapacity) % this.state.genresCount
 		this.animateSlider(1)
 	}
 
 	showPreviousSlide = () => {
-		this.prevGenre = this.curGenre
-		this.curGenre =
-			this.curGenre - this.slideCapacity < 0
-				? this.curGenre - this.slideCapacity + this.genresCount
-				: this.curGenre - this.slideCapacity
+		this.state.prevGenre = this.state.curGenre
+		this.state.curGenre =
+			this.state.curGenre - this.state.slideCapacity < 0
+				? this.state.curGenre -
+					this.state.slideCapacity +
+					this.state.genresCount
+				: this.state.curGenre - this.state.slideCapacity
 		this.animateSlider(-1)
 	}
 
 	initSlider = () => {
-		for (let i = 0; i < this.genresCount; i++) {
-			this.genres[i].style.display = 'none'
-		}
+		this.genres.forEach(genre => {
+			genre.style.display = 'none'
+		})
 
-		for (let i = 0; i < this.slideCapacity; i++) {
-			const idx = (this.curGenre + i) % this.genresCount
+		for (let index = 0; index < this.state.slideCapacity; index++) {
+			const idx = (this.state.curGenre + index) % this.state.genresCount
 			this.genres[idx].style.display = 'block'
 		}
 	}
 
 	animateSlider = direction => {
-		if (this.isAnimating) {
+		if (this.state.isAnimating) {
 			return
 		}
-		this.isAnimating = true
+
+		this.state.isAnimating = true
 		this.nextBtn.disabled = true
 		this.prevBtn.disabled = true
 
-		this.genres.forEach((img, i) => {
-			const wasVisible =
-				i >= this.prevGenre && i < this.prevGenre + this.slideCapacity
-			const isVisible =
-				i >= this.curGenre && i < this.curGenre + this.slideCapacity
-
-			if (wasVisible && !isVisible) {
-				img.style.opacity = '0'
-				img.style.transform = `translateX(${-direction * 100}%)`
+		this.genres.forEach((genre, index) => {
+			const inCurSlide =
+				index >= this.state.prevGenre &&
+				index < this.state.prevGenre + this.state.slideCapacity
+			if (inCurSlide) {
+				genre.style.opacity = '0'
+				genre.style.transform = `translateX(${-direction * 100}%)`
 			}
 		})
 
 		setTimeout(() => {
-			this.genres.forEach((img, i) => {
-				const isVisible =
-					i >= this.curGenre && i < this.curGenre + this.slideCapacity
-				img.style.display = isVisible ? 'block' : 'none'
+			this.genres.forEach((genre, index) => {
+				const inNewSlide =
+					index >= this.state.curGenre &&
+					index < this.state.curGenre + this.state.slideCapacity
 
-				if (isVisible) {
-					img.style.opacity = '0'
-					img.style.transform = `translateX(${direction * 100}%)`
+				genre.style.display = inNewSlide ? 'block' : 'none'
+
+				if (inNewSlide) {
+					genre.style.opacity = '0'
+					genre.style.transform = `translateX(${direction * 100}%)`
 				}
 			})
 
 			setTimeout(() => {
-				this.genres.forEach((img, i) => {
-					const isVisible =
-						i >= this.curGenre && i < this.curGenre + this.slideCapacity
-					if (isVisible) {
-						img.style.opacity = '1'
-						img.style.transform = 'translateX(0)'
+				this.genres.forEach((genre, index) => {
+					const inNewSlide =
+						index >= this.state.curGenre &&
+						index < this.state.curGenre + this.state.slideCapacity
+
+					if (inNewSlide) {
+						genre.style.opacity = '1'
+						genre.style.transform = 'translateX(0)'
 					}
 				})
 			}, 20)
 
 			setTimeout(() => {
-				this.isAnimating = false
+				this.state.isAnimating = false
 				this.nextBtn.disabled = false
 				this.prevBtn.disabled = false
 			}, 300)
