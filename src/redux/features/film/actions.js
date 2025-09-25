@@ -1,5 +1,5 @@
-import { filmsMock } from '../../../mocks/films'
-import types from './types'
+import HTTPClient from '../../../modules/HTTPClient/index.js'
+import types from './types.js'
 
 const setFilmsLoadingAction = () => {
 	return {
@@ -21,16 +21,13 @@ const returnFilmsErrorAction = error => {
 	}
 }
 
-const getFilmsAction = () => {
-	return async dispatch => {
-		dispatch(setFilmsLoadingAction())
-		setTimeout(() => {
-			try {
-				dispatch(returnFilmsAction(filmsMock))
-			} catch (error) {
-				dispatch(returnFilmsErrorAction(error.message))
-			}
-		}, 1000)
+const getFilmsAction = () => async dispatch => {
+	dispatch(setFilmsLoadingAction())
+	try {
+		const response = await HTTPClient.get('/api/films')
+		dispatch(returnFilmsAction(response.data))
+	} catch (error) {
+		dispatch(returnFilmsErrorAction(error.message || 'Error'))
 	}
 }
 

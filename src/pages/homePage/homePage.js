@@ -1,7 +1,10 @@
 import FilmCard from '../../components/filmCard/filmCard.js'
 import GenreSlider from '../../components/genreSlider/genreSlider.js'
 import TopFilm from '../../components/topFilm/topFilm.js'
-import { FILMS, TOPFILM } from '../../mocks/films.js'
+import { TOPFILM } from '../../mocks/films.js'
+import filmActions from '../../redux/features/film/actions.js'
+import { store } from '../../redux/store.js'
+
 export default class Home {
 	#parent
 	#self
@@ -30,18 +33,12 @@ export default class Home {
 		this.#parent.appendChild(this.#self)
 		this.#self.insertAdjacentHTML('afterbegin', this.template)
 
-		for (let i = 0; i < 10; i++) {
-			FILMS.forEach(film => {
-				let filmCard = new FilmCard(this.grid, {
-					id: film.id,
-					image: '/src/assets/img/1+1.webp',
-					title: film.title,
-					info: `${film.year}, ${film.genres[1].title}`,
-					rating: film.rating,
-				})
-				filmCard.render()
-			})
-		}
+		store.dispatch(filmActions.getFilmsAction())
+
+		this.#unsubscribe = store.subscribe(() => {
+			const { films } = store.getState().film
+			this.update(films)
+		})
 
 		const genreSlider = new GenreSlider(this.main)
 		genreSlider.render()
@@ -56,6 +53,32 @@ export default class Home {
 			desription: TOPFILM.desription,
 		})
 		topFilm.render()
+	}
+
+	update(state) {
+		const container = this.#self
+		container.querySelectorAll('.todo-item').forEach(el => el.remove())
+
+		if (state.loading) {
+			container.insertAdjacentHTML('beforeend', '<p>Загрузка...</p>')
+			return
+		}
+
+		if (state.error) {
+			container.insertAdjacentHTML('beforeend', `<p>Ошибка: ${state.error}</p>`)
+			return
+		}
+
+		state.forEach(film => {
+			let filmCard = new FilmCard(this.grid, {
+				id: film.id,
+				image: '/src/assets/img/1+1.webp',
+				title: film.title,
+				info: `${film.year}, ${film.title}`,
+				rating: film.rating,
+			})
+			filmCard.render()
+		})
 	}
 
 	destroy() {

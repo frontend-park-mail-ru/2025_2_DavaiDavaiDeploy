@@ -83,7 +83,6 @@ export class HTTPClient {
 			} else {
 				responseData = await response.text()
 			}
-
 			return {
 				data: responseData,
 				status: response.status,

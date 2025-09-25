@@ -5,6 +5,7 @@ import router from './modules/router/index.js'
 import { routes } from './routes/index.js'
 
 HTTPClient.configurate({ baseUrl: 'https://dummyjson.com' })
+HTTPClient.configurate({ baseUrl: 'http://localhost:5458' })
 
 let contentContainer = document.createElement('div')
 contentContainer.id = 'app'
