@@ -1,9 +1,11 @@
+import { rating as ratingConsts } from '../consts/raiting.js'
+
 export const getRatingType = rating => {
 	if (rating >= 8) {
-		return 'high'
+		return ratingConsts.high
 	}
 	if (rating >= 5) {
-		return 'medium'
+		return ratingConsts.medium
 	}
-	return 'low'
+	return ratingConsts.low
 }

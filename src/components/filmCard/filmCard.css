@@ -72,13 +72,13 @@
 
 .film-card__rating,
 .film-card__rating-high {
-	background-color: var(--rating-high);
+	background-color: var(--color-rating-high);
 }
 
 .film-card__rating-medium {
-	background-color: var(--rating-medium);
+	background-color: var(--color-rating-middle);
 }
 
 .film-card__rating-low {
-	background-color: var(--rating-low);
+	background-color: var(--color-rating-low);
 }
