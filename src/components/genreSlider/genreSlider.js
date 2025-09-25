@@ -1,19 +1,5 @@
 import Component from '../core/baseComponent.js'
 
-function getGridColumnCount(element) {
-	if (!element) {
-		return 0
-	}
-
-	const style = window.getComputedStyle(element)
-	const columns = style.gridTemplateColumns
-	if (!columns) {
-		return 0
-	}
-
-	return columns.split(' ').filter(col => col.trim() !== '').length
-}
-
 export default class GenreSlider extends Component {
 	constructor(parent, props = {}) {
 		super(parent, props, 'genreSlider')
@@ -48,7 +34,7 @@ export default class GenreSlider extends Component {
 		this.curGenre = 0
 		this.prevGenre = 0
 		this.isAnimating = false
-		this.resizeSlider()
+		this.initSlider()
 		this.AddEventListeners()
 	}
 
@@ -60,14 +46,14 @@ export default class GenreSlider extends Component {
 			clearTimeout(timeout)
 			timeout = setTimeout(() => {
 				this.resizeSlider()
-			}, 0)
+			}, 100)
 		})
 	}
 
 	showNextSlide = () => {
 		this.prevGenre = this.curGenre
 		this.curGenre = (this.curGenre + this.slideCapacity) % this.genresCount
-		this.updateSlider(1)
+		this.animateSlider(1)
 	}
 
 	showPreviousSlide = () => {
@@ -76,16 +62,10 @@ export default class GenreSlider extends Component {
 			this.curGenre - this.slideCapacity < 0
 				? this.curGenre - this.slideCapacity + this.genresCount
 				: this.curGenre - this.slideCapacity
-		this.updateSlider(-1)
+		this.animateSlider(-1)
 	}
 
-	resizeSlider = () => {
-		let column = getGridColumnCount(this.slider)
-		this.slideCapacity = column * 2
-		this.updateSlider(0)
-	}
-
-	updateSliderr = () => {
+	initSlider = () => {
 		for (let i = 0; i < this.genresCount; i++) {
 			this.genres[i].style.display = 'none'
 		}
@@ -96,7 +76,7 @@ export default class GenreSlider extends Component {
 		}
 	}
 
-	updateSlider = direction => {
+	animateSlider = direction => {
 		if (this.isAnimating) {
 			return
 		}
@@ -137,13 +117,13 @@ export default class GenreSlider extends Component {
 						img.style.transform = 'translateX(0)'
 					}
 				})
-			}, 10)
+			}, 20)
 
 			setTimeout(() => {
 				this.isAnimating = false
 				this.nextBtn.disabled = false
 				this.prevBtn.disabled = false
-			}, 900)
-		}, 450)
+			}, 300)
+		}, 300)
 	}
 }

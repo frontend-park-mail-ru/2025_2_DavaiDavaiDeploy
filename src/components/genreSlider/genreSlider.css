@@ -15,10 +15,11 @@
 .slider {
 	display: grid;
 	gap: 1.875rem;
-	grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
+	grid-template-columns: repeat(4, minmax(0, 1fr));
 	width: 100%;
 	box-sizing: border-box;
 	position: relative;
+	overflow-x: hidden;
 }
 
 .slider__image {
@@ -28,7 +29,7 @@
 	object-fit: cover;
 	border-radius: 0.625rem;
 	cursor: pointer;
-	transition: all 0.3s ease;
+	transition: all 0.25s ease;
 }
 
 .prev-button,
@@ -76,4 +77,10 @@
 
 .next-button__icon {
 	transform: rotate(180deg);
+}
+
+@media (width <= 75rem) {
+	.slider {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
 }
