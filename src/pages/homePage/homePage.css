@@ -1,5 +1,6 @@
 @import url('../../components/filmCard/filmCard.css');
 @import url('../../components/topFilm/topFilm.css');
+@import url('../../components/genreSlider/genreSlider.css');
 
 .page {
 	display: flex;

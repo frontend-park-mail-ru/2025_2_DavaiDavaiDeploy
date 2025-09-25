@@ -1,4 +1,5 @@
 import FilmCard from '../../components/filmCard/filmCard.js'
+import GenreSlider from '../../components/genreSlider/genreSlider.js'
 import TopFilm from '../../components/topFilm/topFilm.js'
 import { FILMS, TOPFILM } from '../../mocks/films.js'
 export default class Home {
@@ -41,6 +42,9 @@ export default class Home {
 				filmCard.render()
 			})
 		}
+
+		let genreSlider = new GenreSlider(this.main, {})
+		genreSlider.render()
 
 		let topFilm = new TopFilm(this.main, {
 			id: TOPFILM.id,
