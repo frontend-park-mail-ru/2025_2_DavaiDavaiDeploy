@@ -1,4 +1,4 @@
-import { rating as ratingConsts } from '../consts/raiting'
+import { rating as ratingConsts } from '../consts/raiting.js'
 
 export const formatDuration = minutes => {
 	const hours = Math.floor(minutes / 60)
