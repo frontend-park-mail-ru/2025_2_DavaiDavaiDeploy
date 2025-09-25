@@ -1,33 +1,33 @@
-.slider__image {
-	display: flex;
-	width: 100%;
-	aspect-ratio: 66 / 25;
-	object-fit: cover;
-	border-radius: 10px;
-	cursor: pointer;
-}
-
 .genre-slider {
 	display: flex;
 	flex-direction: column;
-	gap: 30px;
+	gap: 1.875rem;
 	position: relative;
 }
 
 .slider-container {
 	display: flex;
 	flex-direction: row;
-	gap: 30px;
+	gap: 1.875rem;
 	position: relative;
 }
 
 .slider {
 	display: grid;
-	gap: 30px;
-	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 1.875rem;
+	grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
 	width: 100%;
 	box-sizing: border-box;
 	position: relative;
+}
+
+.slider__image {
+	display: flex;
+	width: 100%;
+	aspect-ratio: 2.64 / 1;
+	object-fit: cover;
+	border-radius: 0.625rem;
+	cursor: pointer;
 }
 
 .prev-button,
@@ -38,22 +38,41 @@
 	background: none;
 	border: none;
 	cursor: pointer;
-	z-index: 10;
+	transition:
+		transform 0.4s ease,
+		scale 0.4s ease;
 }
 
 .prev-button {
-	left: -40px;
+	left: -2.5rem;
+
+	&:hover {
+		transform: translateY(-50%) translateX(-0.3rem) scale(1.1);
+	}
+
+	&:active {
+		transform: translateY(-50%) translateX(-1rem) scale(1.15);
+	}
 }
 
 .next-button {
-	right: -40px;
+	right: -2.5rem;
+
+	&:hover {
+		transform: translateY(-50%) translateX(0.3rem) scale(1.1);
+	}
+
+	&:active {
+		transform: translateY(-50%) translateX(1rem) scale(1.15);
+	}
 }
 
-.prev-button__icon {
-	height: 50px;
+.prev-button__icon,
+.next-button__icon {
+	height: 3.125rem;
+	transition: transform 0.2s ease;
 }
 
 .next-button__icon {
-	height: 50px;
 	transform: rotate(180deg);
 }
