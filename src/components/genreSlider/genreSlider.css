@@ -90,3 +90,7 @@
 	text-decoration: none;
 	transition: all 0.25s ease;
 }
+
+.slider a:hover .slider__image {
+	filter: brightness(1.2);
+}
