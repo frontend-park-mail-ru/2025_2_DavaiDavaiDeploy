@@ -22,7 +22,7 @@ export default class GenreSlider extends Component {
 	}
 
 	get genres() {
-		return Array.from(this.slider.querySelectorAll('img'))
+		return Array.from(this.slider.querySelectorAll('a'))
 	}
 
 	render() {
