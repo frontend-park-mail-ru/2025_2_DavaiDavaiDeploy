@@ -1,4 +1,4 @@
-import { getRatingType } from '../../helpers/formatHelper.js'
+import { getRatingType } from '../../helpers/ratingTypeHelper.js'
 import Component from '../core/baseComponent.js'
 
 export default class FilmCard extends Component {
@@ -14,7 +14,6 @@ export default class FilmCard extends Component {
 		let context = {
 			id: this.props.id,
 			image: this.props.image,
-			href: '#',
 			title: this.props.title,
 			info: this.props.info,
 			rating: this.props.rating.toFixed(1),

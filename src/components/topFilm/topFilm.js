@@ -12,7 +12,6 @@ export default class TopFilm extends Component {
 
 	render() {
 		let context = {
-			href: '#',
 			image: this.props.image,
 			title: this.props.title,
 			year: this.props.year,
