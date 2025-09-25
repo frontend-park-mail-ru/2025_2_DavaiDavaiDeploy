@@ -46,6 +46,8 @@ export default class GenreSlider extends Component {
 		this.slideСount = 3
 		this.genresCount = this.genres.length
 		this.curGenre = 0
+		this.prevGenre = 0
+		this.isAnimating = false
 		this.resizeSlider()
 		this.AddEventListeners()
 	}
@@ -63,25 +65,27 @@ export default class GenreSlider extends Component {
 	}
 
 	showNextSlide = () => {
+		this.prevGenre = this.curGenre
 		this.curGenre = (this.curGenre + this.slideCapacity) % this.genresCount
-		this.updateSlider()
+		this.updateSlider(1)
 	}
 
 	showPreviousSlide = () => {
+		this.prevGenre = this.curGenre
 		this.curGenre =
 			this.curGenre - this.slideCapacity < 0
 				? this.curGenre - this.slideCapacity + this.genresCount
 				: this.curGenre - this.slideCapacity
-		this.updateSlider()
+		this.updateSlider(-1)
 	}
 
 	resizeSlider = () => {
 		let column = getGridColumnCount(this.slider)
 		this.slideCapacity = column * 2
-		this.updateSlider()
+		this.updateSlider(0)
 	}
 
-	updateSlider = () => {
+	updateSliderr = () => {
 		for (let i = 0; i < this.genresCount; i++) {
 			this.genres[i].style.display = 'none'
 		}
@@ -90,5 +94,56 @@ export default class GenreSlider extends Component {
 			const idx = (this.curGenre + i) % this.genresCount
 			this.genres[idx].style.display = 'block'
 		}
+	}
+
+	updateSlider = direction => {
+		if (this.isAnimating) {
+			return
+		}
+		this.isAnimating = true
+		this.nextBtn.disabled = true
+		this.prevBtn.disabled = true
+
+		this.genres.forEach((img, i) => {
+			const wasVisible =
+				i >= this.prevGenre && i < this.prevGenre + this.slideCapacity
+			const isVisible =
+				i >= this.curGenre && i < this.curGenre + this.slideCapacity
+
+			if (wasVisible && !isVisible) {
+				img.style.opacity = '0'
+				img.style.transform = `translateX(${-direction * 100}%)`
+			}
+		})
+
+		setTimeout(() => {
+			this.genres.forEach((img, i) => {
+				const isVisible =
+					i >= this.curGenre && i < this.curGenre + this.slideCapacity
+				img.style.display = isVisible ? 'block' : 'none'
+
+				if (isVisible) {
+					img.style.opacity = '0'
+					img.style.transform = `translateX(${direction * 100}%)`
+				}
+			})
+
+			setTimeout(() => {
+				this.genres.forEach((img, i) => {
+					const isVisible =
+						i >= this.curGenre && i < this.curGenre + this.slideCapacity
+					if (isVisible) {
+						img.style.opacity = '1'
+						img.style.transform = 'translateX(0)'
+					}
+				})
+			}, 10)
+
+			setTimeout(() => {
+				this.isAnimating = false
+				this.nextBtn.disabled = false
+				this.prevBtn.disabled = false
+			}, 900)
+		}, 450)
 	}
 }
