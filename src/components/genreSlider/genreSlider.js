@@ -3,12 +3,17 @@ import Component from '../core/baseComponent.js'
 
 import { createPeriodFunction } from '../../helpers/launchHelper.js'
 
+const AUTO_SLIDE_DURATION = 5000
+const AUTO_SLIDE_RESTART_DURATION = 30000
+const ANIMATION_DURATION = 300
+const CHANGE_DURATION = 20
+
 export default class GenreSlider extends Component {
 	constructor(parent, props = {}) {
 		super(parent, props, 'genreSlider', {
 			curSlide: 0,
 			slideCapacity: 8,
-			slideСount: 3,
+			slideCount: 3,
 			genresCount: 0,
 			curGenre: 0,
 			prevGenre: 0,
@@ -43,7 +48,10 @@ export default class GenreSlider extends Component {
 		this.renderGenres()
 		this.initSlider()
 
-		this.autoSlider = createPeriodFunction(this.showNextSlide, 5000)
+		this.autoSlider = createPeriodFunction(
+			this.onNextBthClick,
+			AUTO_SLIDE_DURATION,
+		)
 		this.autoSlider.start()
 
 		this.addEventListeners()
@@ -56,17 +64,30 @@ export default class GenreSlider extends Component {
 			image.className = 'slider__image'
 			image.alt = genre.title
 			image.src = genre.image
+			image.dataset = genre.id
 			this.slider.appendChild(image)
 		})
 	}
 
 	addEventListeners = () => {
-		this.nextBtn.addEventListener('click', this.showNextSlide)
-		this.prevBtn.addEventListener('click', this.showPreviousSlide)
-		this.self.addEventListener('click', this.updateAutoSlide)
+		this.nextBtn.addEventListener('click', this.onNextBthClick)
+		this.prevBtn.addEventListener('click', this.onPrevBthClick)
+		this.self.addEventListener('click', this.onSliderClick)
+		this.slider.addEventListener('click', this.onGenreClick)
 	}
 
-	updateAutoSlide = () => {
+	onGenreClick = event => {
+		event.preventDefault()
+		event.stopPropagation()
+
+		// const target = event.target
+
+		// if (target.classList.contains('slider__image')) {
+		// 	const id = target.dataset.id
+		// }
+	}
+
+	onSliderClick = () => {
 		this.autoSlider.stop()
 		if (this.inactivityTimer) {
 			clearTimeout(this.inactivityTimer)
@@ -75,7 +96,7 @@ export default class GenreSlider extends Component {
 			if (!this.autoSlider.isWorking()) {
 				this.autoSlider.start()
 			}
-		}, 30000)
+		}, AUTO_SLIDE_RESTART_DURATION)
 	}
 
 	initSlider = () => {
@@ -89,14 +110,14 @@ export default class GenreSlider extends Component {
 		}
 	}
 
-	showNextSlide = () => {
+	onNextBthClick = () => {
 		this.state.prevGenre = this.state.curGenre
 		this.state.curGenre =
 			(this.state.curGenre + this.state.slideCapacity) % this.state.genresCount
 		this.animateSlider(1)
 	}
 
-	showPreviousSlide = () => {
+	onPrevBthClick = () => {
 		this.state.prevGenre = this.state.curGenre
 		this.state.curGenre =
 			this.state.curGenre - this.state.slideCapacity < 0
@@ -151,13 +172,13 @@ export default class GenreSlider extends Component {
 						genre.style.transform = 'translateX(0)'
 					}
 				})
-			}, 20)
+			}, CHANGE_DURATION)
 
 			setTimeout(() => {
 				this.state.isAnimating = false
 				this.nextBtn.disabled = false
 				this.prevBtn.disabled = false
-			}, 300)
-		}, 300)
+			}, ANIMATION_DURATION)
+		}, ANIMATION_DURATION)
 	}
 }
