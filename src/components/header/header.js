@@ -33,11 +33,7 @@ export default class Header extends Component {
 		const loginButton = document.querySelector('#login-button')
 		if (loginButton) {
 			loginButton.addEventListener('click', () => {
-				this.handleLogIn({
-					avatar: '/src/assets/img/1+1.webp',
-					login: 'Alex',
-				})
-				this.render()
+				window.location.href = '/login'
 			})
 		}
 	}
