@@ -1,20 +1,18 @@
 import Component from '../core/baseComponent.js'
 
-// function getGridColumnCount(element) {
-// 	if (!element) return 0
+function getGridColumnCount(element) {
+	if (!element) {
+		return 0
+	}
 
-// 	const style = window.getComputedStyle(element)
+	const style = window.getComputedStyle(element)
+	const columns = style.gridTemplateColumns
+	if (!columns) {
+		return 0
+	}
 
-// 	if (style.display !== 'grid') {
-// 		console.warn('Элемент не является grid контейнером')
-// 		return 0
-// 	}
-
-// 	const columns = style.gridTemplateColumns
-// 	if (!columns) return 0
-
-// 	return columns.split(' ').filter(col => col.trim() !== '').length
-// }
+	return columns.split(' ').filter(col => col.trim() !== '').length
+}
 
 export default class GenreSlider extends Component {
 	constructor(parent, props = {}) {
@@ -46,37 +44,51 @@ export default class GenreSlider extends Component {
 		this.curSlide = 0
 		this.slideCapacity = 8
 		this.slideСount = 3
-		this.updateSlider()
+		this.genresCount = this.genres.length
+		this.curGenre = 0
+		this.resizeSlider()
 		this.AddEventListeners()
 	}
 
 	AddEventListeners() {
 		this.nextBtn.addEventListener('click', this.showNextSlide)
 		this.prevBtn.addEventListener('click', this.showPreviousSlide)
+		let timeout
+		window.addEventListener('resize', () => {
+			clearTimeout(timeout)
+			timeout = setTimeout(() => {
+				this.resizeSlider()
+			}, 0)
+		})
 	}
 
 	showNextSlide = () => {
-		this.curSlide = (this.curSlide + 1) % this.slideСount
+		this.curGenre = (this.curGenre + this.slideCapacity) % this.genresCount
 		this.updateSlider()
 	}
 
 	showPreviousSlide = () => {
-		this.curSlide =
-			this.curSlide - 1 < 0
-				? this.slideСount + this.curSlide - 1
-				: this.curSlide - 1
+		this.curGenre =
+			this.curGenre - this.slideCapacity < 0
+				? this.curGenre - this.slideCapacity + this.genresCount
+				: this.curGenre - this.slideCapacity
+		this.updateSlider()
+	}
+
+	resizeSlider = () => {
+		let column = getGridColumnCount(this.slider)
+		this.slideCapacity = column * 2
 		this.updateSlider()
 	}
 
 	updateSlider = () => {
-		let startIndex = this.curSlide * this.slideCapacity
-		this.genres.forEach((genre, index) => {
-			if (index < startIndex || startIndex + this.slideCapacity - 1 < index) {
-				genre.style.display = 'none'
-			} else {
-				genre.style.display = 'block'
-			}
-		})
-		// for (const [key, value] of Object.entries(params)) {...}
+		for (let i = 0; i < this.genresCount; i++) {
+			this.genres[i].style.display = 'none'
+		}
+
+		for (let i = 0; i < this.slideCapacity; i++) {
+			const idx = (this.curGenre + i) % this.genresCount
+			this.genres[idx].style.display = 'block'
+		}
 	}
 }

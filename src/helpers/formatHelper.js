@@ -5,7 +5,11 @@ export const formatDuration = minutes => {
 }
 
 export const getRatingType = rating => {
-	if (rating >= 8) return 'high'
-	if (rating >= 5) return 'medium'
+	if (rating >= 8) {
+		return 'high'
+	}
+	if (rating >= 5) {
+		return 'medium'
+	}
 	return 'low'
 }
