@@ -1,12 +1,12 @@
+import { GENRES } from '../../mocks/films.js'
 import Component from '../core/baseComponent.js'
-
 export default class GenreSlider extends Component {
 	constructor(parent, props = {}) {
 		super(parent, props, 'genreSlider', {
 			curSlide: 0,
 			slideCapacity: 8,
 			slideСount: 3,
-			genresCount: 24,
+			genresCount: 0,
 			curGenre: 0,
 			prevGenre: 0,
 			isAnimating: false,
@@ -30,13 +30,25 @@ export default class GenreSlider extends Component {
 	}
 
 	get genres() {
-		return Array.from(this.slider.querySelectorAll('a'))
+		return Array.from(this.slider.querySelectorAll('.slider__image'))
 	}
 
 	render() {
 		this.parent.insertAdjacentHTML('afterbegin', this.html())
+		this.renderGenres()
 		this.initSlider()
 		this.addEventListeners()
+	}
+
+	renderGenres = () => {
+		this.state.genresCount = GENRES.length
+		GENRES.forEach(genre => {
+			const image = document.createElement('img')
+			image.className = 'slider__image'
+			image.alt = genre.title
+			image.src = genre.image
+			this.slider.appendChild(image)
+		})
 	}
 
 	addEventListeners = () => {

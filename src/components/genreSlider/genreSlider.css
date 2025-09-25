@@ -30,6 +30,10 @@
 	border-radius: 0.625rem;
 	cursor: pointer;
 	transition: all 0.25s ease;
+
+	&:hover {
+		filter: brightness(1.2);
+	}
 }
 
 .prev-button,
@@ -77,16 +81,6 @@
 
 .next-button__icon {
 	transform: rotate(180deg);
-}
-
-.slider a {
-	display: block;
-	text-decoration: none;
-	transition: all 0.25s ease;
-}
-
-.slider a:hover .slider__image {
-	filter: brightness(1.2);
 }
 
 @media (width <= 75rem) {
