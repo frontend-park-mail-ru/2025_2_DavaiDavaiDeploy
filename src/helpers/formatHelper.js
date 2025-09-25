@@ -1,3 +1,5 @@
+import { rating as ratingConsts } from '../consts/raiting'
+
 export const formatDuration = minutes => {
 	const hours = Math.floor(minutes / 60)
 	const mins = minutes % 60
@@ -6,10 +8,10 @@ export const formatDuration = minutes => {
 
 export const getRatingType = rating => {
 	if (rating >= 8) {
-		return 'high'
+		return ratingConsts.high
 	}
 	if (rating >= 5) {
-		return 'medium'
+		return ratingConsts.medium
 	}
-	return 'low'
+	return ratingConsts.low
 }
