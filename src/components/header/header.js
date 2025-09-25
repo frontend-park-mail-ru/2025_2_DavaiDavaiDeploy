@@ -36,5 +36,11 @@ export default class Header extends Component {
 				window.location.href = '/login'
 			})
 		}
+
+		const logo_a = document.querySelector('#logo__a')
+		logo_a?.addEventListener('click', e => {
+			e.preventDefault()
+			window.location.href = '/'
+		})
 	}
 }
