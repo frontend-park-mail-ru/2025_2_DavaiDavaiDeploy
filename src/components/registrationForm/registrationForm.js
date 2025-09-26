@@ -1,5 +1,6 @@
 import Button from '../../shared/button/button.js'
 import Input from '../../shared/input/input.js'
+import PasswordInput from '../../shared/passwordInput/passwordInput.js'
 import Component from '../core/baseComponent.js'
 import registrationFormUsecase from './registrationForm.usecase.js'
 
@@ -50,13 +51,13 @@ class RegistrationForm extends Component {
 		)
 		this.#loginInput.render()
 
-		this.#passwordInput = new Input(
+		this.#passwordInput = new PasswordInput(
 			this.self,
 			registrationFormUsecase.inputs.password,
 		)
 		this.#passwordInput.render()
 
-		this.#passwordConfirmInput = new Input(
+		this.#passwordConfirmInput = new PasswordInput(
 			this.self,
 			registrationFormUsecase.inputs.passwordConfirm,
 		)
