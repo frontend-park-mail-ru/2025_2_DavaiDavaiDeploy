@@ -1,3 +1,5 @@
+@import url('/src/shared/input/input.css');
+
 .login-page {
 	height: 100%;
 	width: 100%;

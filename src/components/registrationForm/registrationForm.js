@@ -34,6 +34,11 @@ class RegistrationForm extends Component {
 	}
 
 	/**
+	 * Отображает ошибку
+	 * @param {String} errorMessage - сообщение ошибки
+	 */
+
+	/**
 	 * Рендеринг компонента
 	 */
 	render() {
