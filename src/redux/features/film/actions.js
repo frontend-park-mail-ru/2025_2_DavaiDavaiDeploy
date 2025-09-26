@@ -21,10 +21,12 @@ const returnFilmsErrorAction = error => {
 	}
 }
 
-const getFilmsAction = () => async dispatch => {
+const getFilmsAction = (limit, offset) => async dispatch => {
 	dispatch(setFilmsLoadingAction())
 	try {
-		const response = await HTTPClient.get('/api/films')
+		const response = await HTTPClient.get('/api/films', {
+			params: { count: limit, offset },
+		})
 		dispatch(returnFilmsAction(response.data))
 	} catch (error) {
 		dispatch(returnFilmsErrorAction(error.message || 'Error'))

@@ -33,7 +33,7 @@ export default class Home {
 		this.#parent.appendChild(this.#self)
 		this.#self.insertAdjacentHTML('afterbegin', this.template)
 
-		store.dispatch(filmActions.getFilmsAction())
+		store.dispatch(filmActions.getFilmsAction(5, 0))
 
 		this.#unsubscribe = store.subscribe(() => {
 			const { films } = store.getState().film
