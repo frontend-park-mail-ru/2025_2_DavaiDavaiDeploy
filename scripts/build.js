@@ -3,6 +3,8 @@ import fs from 'fs'
 
 fs.mkdirSync('build', { recursive: true })
 
+fs.mkdirSync('build/partials', { recursive: true })
+
 execSync(
 	'npx handlebars src/components/logo/logo.hbs -f build/partials/logo.js -p',
 	{ stdio: 'inherit' },
