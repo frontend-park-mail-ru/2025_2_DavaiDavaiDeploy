@@ -35,12 +35,12 @@ class Router {
 		window.addEventListener('click', this.handleClick)
 	}
 
-	handlePopState() {
+	handlePopState = () => {
 		const path = window.location.pathname
 		this.handleRouteChange(path, false)
 	}
 
-	handleClick(event) {
+	handleClick = event => {
 		const link = event.target.closest('a')
 		if (link) {
 			event.preventDefault()
