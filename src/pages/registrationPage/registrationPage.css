@@ -68,13 +68,13 @@
 
 .registration__title {
 	font-weight: 600;
-	font-size: var(--font-size-2xl);
+	font-size: clamp(var(--font-size-2xl), 2.5vw, var(--font-size-3xl));
 	color: var(--color-white);
 	margin-bottom: 0.5rem;
 }
 
 .registration__subtitle {
-	font-size: var(--font-size-lg);
+	font-size: clamp(var(--font-size-lg), 2.5vw, var(--font-size-xl));
 	color: var(--color-text-secondary);
 	margin-bottom: 2.2rem;
 }
@@ -137,13 +137,13 @@
 
 .form__label {
 	color: var(--color-white);
-	font-size: var(--font-size-base);
+	font-size: clamp(var(--font-size-base), 1.25vw, var(--font-size-lg));
 }
 
 .form__input {
 	width: 100%;
-	height: 2rem;
-	font-size: var(--font-size-base);
+	height: clamp(2rem, 5vh, 3rem);
+	font-size: clamp(var(--font-size-base), 1.25vw, var(--font-size-lg));
 	color: var(--color-white);
 	border: none;
 	background-color: transparent;
@@ -161,6 +161,7 @@
 	cursor: pointer;
 	color: var(--color-white);
 	background-color: var(--color-accent);
+	font-size: clamp(var(--font-size-base), 1.25vw, var(--font-size-lg));
 	margin-bottom: 0.5rem;
 	outline: none;
 	transition:
@@ -178,6 +179,8 @@
 
 .form__footer {
 	display: flex;
+	flex-direction: column-reverse;
+	gap: 1rem;
 	align-items: center;
 	justify-content: center;
 	width: 100%;
@@ -190,6 +193,7 @@
 
 .form__footer-link {
 	color: var(--color-white);
+	font-size: clamp(var(--font-size-base), 1.25vw, var(--font-size-lg));
 	text-decoration: none;
 	font-weight: 500;
 	margin-left: 0.25rem;
@@ -213,6 +217,7 @@
 	top: 1rem;
 	right: 2rem;
 	border-radius: var(--border-radius-2xl);
+	font-size: clamp(var(--font-size-base), 1.25vw, var(--font-size-lg));
 	display: flex;
 	gap: 0.5rem;
 	color: var(--color-white);
@@ -247,4 +252,8 @@
 	background: rgb(0 0 0 / 10%);
 	border-radius: var(--border-radius-2xl);
 	z-index: 1;
+}
+
+.form__fields {
+	width: 100%;
 }

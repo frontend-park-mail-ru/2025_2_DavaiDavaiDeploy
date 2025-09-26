@@ -3,7 +3,7 @@ import Component from '../core/baseComponent.js'
 import Input from '../input/input.js'
 import registrationFormUsecase from './registrationForm.usecase.js'
 
-class registrationForm extends Component {
+class RegistrationForm extends Component {
 	#parent
 	#loginInput
 	#passwordInput
@@ -74,7 +74,10 @@ class registrationForm extends Component {
 	render() {
 		this.#parent.insertAdjacentHTML(
 			'beforeend',
-			this.html({ action: registrationFormUsecase.action }),
+			this.html({
+				action: registrationFormUsecase.action,
+				id: registrationFormUsecase.id,
+			}),
 		)
 
 		this.#loginInput = new Input(
@@ -96,15 +99,12 @@ class registrationForm extends Component {
 		this.#passwordConfirmInput.render()
 
 		this.#button = new Button(
-			this.self,
+			document.querySelector('#form__footer'),
 			registrationFormUsecase.buttons.submitBtn,
 		)
 		this.#button.render()
-		// this.#button.self.addEventListener('click', e => {
-		// 	console.log('я кликнул на кнопку')
-		// })
 		this.#addEventListeners()
 	}
 }
 
-export default registrationForm
+export default RegistrationForm
