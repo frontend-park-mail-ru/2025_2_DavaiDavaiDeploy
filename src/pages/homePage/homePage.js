@@ -51,6 +51,7 @@ export default class Home {
 			genre: TOPFILM.genre,
 			duration: TOPFILM.duration,
 			desription: TOPFILM.desription,
+			rating: 9.7,
 		})
 		topFilm.render()
 	}
@@ -74,7 +75,7 @@ export default class Home {
 				id: film.id,
 				image: '/src/assets/img/1+1.webp',
 				title: film.title,
-				info: `${film.year}, ${film.title}`,
+				info: `genre, ${film.year}`,
 				rating: film.rating,
 			})
 			filmCard.render()

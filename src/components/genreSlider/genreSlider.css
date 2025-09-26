@@ -3,6 +3,7 @@
 	flex-direction: column;
 	gap: 1.875rem;
 	position: relative;
+	padding: 0 7.5rem;
 }
 
 .slider-container {

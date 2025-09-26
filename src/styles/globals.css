@@ -38,7 +38,7 @@ h3 {
 p {
 	font-size: 1rem;
 	font-family: Lato, Arial, sans-serif;
-	color: var(--color-text-grey);
+	color: var(--color-text-secondary);
 }
 
 .app {
@@ -46,7 +46,7 @@ p {
 	max-width: 100vw;
 	margin: 0 auto;
 	box-sizing: border-box;
-	padding: 0 10px;
+	padding: 0 0.625rem;
 	display: flex;
 	flex-direction: column;
 }
