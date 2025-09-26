@@ -1,34 +1,9 @@
+import '../build/partials/logo.js'
 import '../build/precompiled.js'
+import Layout from './components/layout/layout.js'
 import HTTPClient from './modules/HTTPClient/index.js'
 import router from './modules/router/index.js'
-import Error404 from './pages/404/404.js'
-import TestPage from './pages/homePage/apiTestPage.js'
-import HomePage from './pages/homePage/homePage.js'
-import LoginPage from './pages/loginPage/loginPage.js'
-import RegistrationPage from './pages/registrationPage/registrationPage.js'
-
-const routes = {
-	home: {
-		href: '/',
-		component: HomePage,
-	},
-	apitest: {
-		href: '/test',
-		component: TestPage,
-	},
-	login: {
-		href: '/login',
-		component: LoginPage,
-	},
-	register: {
-		href: '/register',
-		component: RegistrationPage,
-	},
-	error404: {
-		href: '/error',
-		component: Error404,
-	},
-}
+import { routes } from './routes/index.js'
 
 HTTPClient.configurate({ baseUrl: 'https://dummyjson.com' })
 
@@ -36,5 +11,8 @@ let contentContainer = document.createElement('div')
 contentContainer.id = 'app'
 document.body.appendChild(contentContainer)
 
-router.configurate(routes, contentContainer)
+const layout = new Layout(contentContainer)
+layout.render()
+
+router.configurate(routes, layout.self)
 router.start()

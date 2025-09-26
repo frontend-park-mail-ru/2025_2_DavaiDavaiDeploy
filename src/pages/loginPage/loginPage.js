@@ -16,5 +16,11 @@ export default class LoginPage {
 		this.#self.id = 'login-page'
 		this.#parent.appendChild(this.#self)
 		this.#self.insertAdjacentHTML('afterbegin', this.template)
+
+		document
+			.querySelector('#loginPage__loginbtn')
+			.addEventListener('click', () => {
+				window.location.href = '/login'
+			})
 	}
 }

@@ -68,7 +68,7 @@ a.top-film {
 
 .top-film__description {
 	font-size: 20px;
-	color: var(--text-grey);
+	color: var(--color-text-secondary);
 	text-decoration: none;
 }
 
