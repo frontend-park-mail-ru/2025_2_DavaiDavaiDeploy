@@ -10,7 +10,7 @@
 	align-items: center;
 	width: 100%;
 	height: 100%;
-	background-color: var(--color-purple-light);
+	background-color: var(--color-bg);
 }
 
 .registration__wrapper {
@@ -20,8 +20,8 @@
 	max-height: 60rem;
 	border-radius: var(--border-radius-3xl);
 	display: flex;
-	border: 1px solid var(--color-purple-dark);
-	background-color: var(--color-purple-dark);
+	border: 1px solid var(--color-dark);
+	background-color: var(--color-dark);
 	overflow: hidden;
 	padding: 1rem;
 }
@@ -30,6 +30,7 @@
 	width: 50%;
 	height: 100%;
 	max-height: 100dvh;
+	position: relative;
 }
 
 .registration__img {
@@ -37,17 +38,31 @@
 	object-position: center center;
 	width: 100%;
 	height: 100%;
-	max-height: 100dvh;
+	max-height: 100%;
 	border-radius: var(--border-radius-2xl);
+}
+
+.registration__logo {
+	position: absolute;
+	top: 1rem;
+	left: 50%;
+	transform: translateX(-50%);
+	height: 4rem;
+	width: auto;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	z-index: 2;
 }
 
 .registration__form {
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	justify-content: space-around;
 	align-self: center;
 	width: 50%;
-	padding: 1rem 4rem;
+	padding: 1rem 2rem;
 	height: 100%;
 }
 
@@ -103,9 +118,9 @@
 
 .form__input-wrapper {
 	display: flex;
-	gap: 0.5rem;
-	background-color: var(--color-purple-placeholder);
-	border: 1px solid var(--color-purple-dark);
+	gap: 1rem;
+	background-color: var(--color-light);
+	border: 1px solid var(--color-dark);
 	border-radius: var(--border-radius-2xl);
 	padding: 0.75rem 1rem;
 	width: 100%;
@@ -115,8 +130,8 @@
 
 	&:focus-within {
 		outline: none;
-		border: 1px solid var(--color-purple-border);
-		box-shadow: 0 0 2rem var(--color-purple-border);
+		border: 1px solid var(--color-blue-accent-dark);
+		box-shadow: 0 0 1.5rem var(--color-blue-accent-dark);
 	}
 }
 
@@ -141,7 +156,7 @@
 .form__button {
 	width: 100%;
 	border-radius: var(--border-radius-2xl);
-	border: 1px solid var(--color-accent);
+	border: 1px solid var(--color-light);
 	padding: 1rem 0;
 	cursor: pointer;
 	color: var(--color-white);
@@ -157,7 +172,7 @@
 		background: transparent;
 		color: var(--color-accent);
 		transform: translateY(-1px);
-		box-shadow: var(--shadow);
+		box-shadow: 0 0 1rem var(--color-blue-accent-dark);
 	}
 }
 
@@ -191,4 +206,45 @@
 
 .watch-icon {
 	cursor: pointer;
+}
+
+.registration__backBtn {
+	position: absolute;
+	top: 1rem;
+	right: 2rem;
+	border-radius: var(--border-radius-2xl);
+	display: flex;
+	gap: 0.5rem;
+	color: var(--color-white);
+	padding: 0.5rem 1rem;
+	align-items: center;
+	background-color: transparent;
+	border: 1px solid var(--color-blue-accent-dark);
+	cursor: pointer;
+	transition: box-shadow 0.4s ease;
+	z-index: 2;
+	text-decoration: none;
+
+	&:hover {
+		box-shadow: 0 0 1.5rem var(--color-blue-accent-dark);
+	}
+}
+
+.backBtn__img {
+	height: 1rem;
+	width: 2rem;
+	rotate: 180deg;
+}
+
+.registration__img-blur {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+	background: rgb(0 0 0 / 10%);
+	border-radius: var(--border-radius-2xl);
+	z-index: 1;
 }

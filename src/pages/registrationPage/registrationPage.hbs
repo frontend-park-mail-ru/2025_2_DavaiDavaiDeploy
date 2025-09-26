@@ -2,13 +2,17 @@
     <main class="registration">
 		<div class='registration__wrapper'>
 			<section class="registration__bg">
-			<img src="/src/assets/img/registration_background.webp" alt="background" class="registration__img">
+				{{!-- <img src="/src/assets/img/registration_background.webp" alt="background" class="registration__img"> --}}
+				<video alt="background" class="registration__img" src="/src/assets/video/registration_background.mp4" autoplay loop muted></video>
+				<div class='registration__img-blur'></div>
+				<img class="registration__logo" src="/src/assets/img/logo1.png" alt="logo">
 			</section>
 			<section class="registration__form">
-				<div class='registration__container'>
+				<a href='/' class='registration__backBtn'>Вернуться на сайт<img class="backBtn__img" src="/src/assets/img/arrow.svg" alt="arrow_back"></a>
+				<div class="registration__container">
 					<div>
 						<h2 class="registration__title">Регистрация</h2>
-						<h3 class="registration__subtitle">Добро пожаловать на Davai Davai Films</h3>
+						<h3 class="registration__subtitle">Добро пожаловать на сайт</h3>
 					</div>
 				</div>
 				<form action='/' id="registration-form" class="form">
@@ -42,10 +46,8 @@
 				<div class='form__bottom'>
 					<button type="submit" class="form__button">Зарегистрироваться</button>
 					<div class="form__footer">
-						<p class="form__footer-text">Уже есть аккаунт? <a href="/login" class="form__footer-link">Войти</a></p>
+						<a href="/login" class="form__footer-link">Уже есть аккаунт? Войти</a>
 					</div>
-				</div>
-					
 				</div>
 			</section>
 		</div>

@@ -6,6 +6,7 @@
 	--color-gray-light: #eee;
 	--color-text-secondary: #ccc;
 	--color-accent: #28b0ff;
+	--color-blue-accent-dark: #28b0ff4d;
 	--color-accent-hover: #1a8bbf;
 	--color-rating-high: #23b862;
 	--color-rating-middle: #f39c12;
@@ -14,6 +15,8 @@
 	--color-purple-border: #82799c;
 	--color-purple-placeholder: #3c364c;
 	--color-purple-dark: #2c2638;
+	--color-purple-super-dark: #201c29;
+	--color-purple-accent: #8127cf;
 	--color-error: #db0732;
 	--color-icons: #1e2a5e;
 	--color-shadow-hover: rgb(0 245 255 / 50%);
