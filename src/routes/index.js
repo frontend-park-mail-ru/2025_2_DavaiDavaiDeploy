@@ -7,8 +7,6 @@ export const routes = {
 	home: {
 		href: '/',
 		component: HomePage,
-		hasHeader: true,
-		hasFooter: true,
 	},
 	login: {
 		href: '/login',

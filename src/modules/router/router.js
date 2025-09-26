@@ -110,9 +110,13 @@ class Router {
 
 		this.clearLayout()
 
-		this.renderHeader()
+		if (route.hasHeader !== false) {
+			this.renderHeader()
+		}
 		this.renderContent(route)
-		this.renderFooter()
+		if (route.hasFooter !== false) {
+			this.renderFooter()
+		}
 	}
 
 	start() {
