@@ -17,6 +17,7 @@
 }
 
 body {
+	width: 100dvw;
 	background-color: var(--color-bg);
 }
 
