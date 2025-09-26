@@ -50,7 +50,7 @@ export default class GenreSlider extends Component {
 
 		this.#unsubscribe = store.subscribe(() => {
 			const { genres } = store.getState().genre
-			if (genres.length !== 0) {
+			if (genres.length !== 0 && genres !== this.genres) {
 				this.update(genres)
 			}
 		})

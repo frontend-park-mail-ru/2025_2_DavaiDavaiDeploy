@@ -19,6 +19,6 @@ export default class FilmCard extends Component {
 			rating: this.props.rating.toFixed(1),
 			ratingType: getRatingType(this.props.rating),
 		}
-		this.parent.insertAdjacentHTML('afterbegin', this.html(context))
+		this.parent.insertAdjacentHTML('beforeend', this.html(context))
 	}
 }

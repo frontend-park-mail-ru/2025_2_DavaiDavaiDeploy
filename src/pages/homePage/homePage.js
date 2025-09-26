@@ -1,6 +1,8 @@
 import FilmCard from '../../components/filmCard/filmCard.js'
 import GenreSlider from '../../components/genreSlider/genreSlider.js'
 import TopFilm from '../../components/topFilm/topFilm.js'
+import { getGridColumnCount } from '../../helpers/columnCountHelper.js'
+import { throttle } from '../../helpers/throttleHelper.js'
 import { TOPFILM } from '../../mocks/films.js'
 import filmActions from '../../redux/features/film/actions.js'
 import { store } from '../../redux/store.js'
@@ -9,6 +11,9 @@ export default class Home {
 	#parent
 	#self
 	#unsubscribe
+	#offset = 0
+	#limit = 12
+	#loading = false
 
 	constructor(rootElement) {
 		this.#parent = rootElement
@@ -26,6 +31,10 @@ export default class Home {
 		return this.#self.querySelector('.main')
 	}
 
+	get trigger() {
+		return this.#self.querySelector('.load-more-trigger')
+	}
+
 	render() {
 		this.#parent.innerHTML = ''
 		this.#self = document.createElement('div')
@@ -33,12 +42,14 @@ export default class Home {
 		this.#parent.appendChild(this.#self)
 		this.#self.insertAdjacentHTML('afterbegin', this.template)
 
-		store.dispatch(filmActions.getFilmsAction(5, 0))
-
 		this.#unsubscribe = store.subscribe(() => {
 			const { films } = store.getState().film
 			this.update(films)
 		})
+
+		this.#limit = getGridColumnCount(this.grid) * 2
+
+		store.dispatch(filmActions.getFilmsActionFake(this.#limit, this.#offset))
 
 		const genreSlider = new GenreSlider(this.main)
 		genreSlider.render()
@@ -53,11 +64,26 @@ export default class Home {
 			desription: TOPFILM.desription,
 		})
 		topFilm.render()
+
+		const handleIntersect = throttle(async entries => {
+			if (entries[0].isIntersecting && !this.#loading) {
+				this.#loading = true
+				store.dispatch(
+					filmActions.getFilmsActionFake(this.#limit, this.#offset),
+				)
+				this.#offset += this.#limit
+				this.#loading = false
+			}
+		}, 100)
+
+		const observer = new IntersectionObserver(handleIntersect, {
+			threshold: 0.2,
+		})
+		observer.observe(this.trigger)
 	}
 
 	update(state) {
 		const container = this.#self
-		container.querySelectorAll('.todo-item').forEach(el => el.remove())
 
 		if (state.loading) {
 			container.insertAdjacentHTML('beforeend', '<p>Загрузка...</p>')
