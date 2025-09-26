@@ -18,6 +18,8 @@
 
 body {
 	width: 100dvw;
+	max-width: 100dvw;
+	overflow-x: hidden;
 	background-color: var(--color-bg);
 }
 
