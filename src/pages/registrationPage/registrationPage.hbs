@@ -7,7 +7,7 @@
 				<div class='registration__img-blur'></div>
 				<img class="registration__logo" src="/src/assets/img/logo1.png" alt="logo">
 			</section>
-			<section class="registration__form">
+			<section id='registration-form-container' class="registration__form">
 				<a href='/' class='registration__backBtn'>Вернуться на сайт<img class="backBtn__img" src="/src/assets/img/arrow.svg" alt="arrow_back"></a>
 				<div class="registration__container">
 					<div>
@@ -15,40 +15,7 @@
 						<h3 class="registration__subtitle">Добро пожаловать на сайт</h3>
 					</div>
 				</div>
-				<form action='/' id="registration-form" class="form">
-				<div class='form__info'>
-					<div class="form__group">
-						<label for="login" class="form__label">Имя пользователя</label>
-						<div class="form__input-wrapper">
-							<img src="/src/assets/img/user.svg" alt="user">
-							<input placeholder='Введите имя пользователя' type="text" id="login" name="login" class="form__input" required>
-						</div>
-						
-					</div>
-					<div class="form__group">
-						<label for="password" class="form__label">Пароль</label>
-						<div class="form__input-wrapper" >
-							<img src="/src/assets/img/lock.svg" alt="lock">
-							<input placeholder='Введите пароль' type="password" id="password" name="password" class="form__input" required>
-							<img class="watch-icon" id="password-icon" src="/src/assets/img/eye_open.svg" alt="eye_open">
-						</div>
-					</div>
-					<div class="form__group">
-						<label for="confirm-password" class="form__label">Подтверждение пароля</label>
-						<div class="form__input-wrapper">
-							<img id="confirm-password-icon-lock" src="/src/assets/img/lock.svg" alt="lock">
-							<input placeholder='Введите пароль' type="password" id="confirm-password" name="confirm-password" class="form__input" required>
-							<img class="watch-icon" id="confirm-password-icon" src="/src/assets/img/eye_open.svg" alt="eye_open">
-						</div>
-						
-					</div>
-				</div>
-				<div class='form__bottom'>
-					<button type="submit" class="form__button">Зарегистрироваться</button>
-					<div class="form__footer">
-						<a href="/login" class="form__footer-link">Уже есть аккаунт? Войти</a>
-					</div>
-				</div>
+
 			</section>
 		</div>
 		

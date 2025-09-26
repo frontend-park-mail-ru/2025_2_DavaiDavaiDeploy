@@ -1,0 +1,14 @@
+<div action="{{ action }}" id="{{ formGroupID }}" class="form__group">
+    {{#if label}}
+    <label for="{{ inputID }}" class="form__label">{{ label }}</label>
+    {{/if}}
+    <div class="form__input-wrapper">
+        {{#if preIconSrc}}
+        <img class="{{ preIconClass }}" src="{{ preIconSrc }}" alt="{{ preIconClass }}">
+        {{/if}}
+        <input placeholder="{{ placeholder }}" type="{{ type }}" id="{{ inputID }}" name="{{ name }}" class="form__input" required="{{ required }}">
+        {{#if postIconSrc}}
+        <img class="watch-icon" id="{{ postIconID }}" src="{{ postIconSrc }}" alt="lock">
+        {{/if}}
+    </div>
+</div>

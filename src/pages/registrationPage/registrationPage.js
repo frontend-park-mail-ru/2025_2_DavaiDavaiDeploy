@@ -1,3 +1,5 @@
+import registrationForm from '../../components/registrationForm/registrationForm.js'
+
 export default class RegistrationPage {
 	#parent
 	#self
@@ -20,30 +22,9 @@ export default class RegistrationPage {
 		this.#parent.appendChild(this.#self)
 		this.#self.insertAdjacentHTML('afterbegin', this.template)
 
-		document.querySelector('#password-icon').addEventListener('click', () => {
-			const passwordInput = document.querySelector('#password')
-			const passwordType =
-				passwordInput.getAttribute('type') === 'password' ? 'text' : 'password'
-			passwordInput.setAttribute('type', passwordType)
-			document.querySelector('#password-icon').src =
-				passwordType === 'password'
-					? '/src/assets/img/eye_close.svg'
-					: '/src/assets/img/eye_open.svg'
-		})
-
-		document
-			.querySelector('#confirm-password-icon')
-			.addEventListener('click', () => {
-				const passwordInput = document.querySelector('#confirm-password')
-				const passwordType =
-					passwordInput.getAttribute('type') === 'password'
-						? 'text'
-						: 'password'
-				passwordInput.setAttribute('type', passwordType)
-				document.querySelector('#confirm-password-icon').src =
-					passwordType === 'password'
-						? '/src/assets/img/eye_close.svg'
-						: '/src/assets/img/eye_open.svg'
-			})
+		const form = new registrationForm(
+			document.querySelector('#registration-form-container'),
+		)
+		form.render()
 	}
 }
