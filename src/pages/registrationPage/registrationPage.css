@@ -1,0 +1,134 @@
+.page {
+	width: 100%;
+	overflow-y: hidden;
+}
+
+.registration {
+	display: flex;
+	width: 100%;
+	margin: 0 auto;
+	background-color: #fff;
+}
+
+.registration__bg {
+	width: 55%;
+	max-width: 55%;
+	height: 100%;
+	max-height: 100dvh;
+}
+
+.registration__img {
+	object-fit: cover;
+	object-position: center center;
+	width: 100%;
+	height: 100%;
+	max-height: 100dvh;
+}
+
+.registration__form {
+	display: flex;
+	flex-direction: column;
+	justify-content: end;
+	align-self: center;
+	width: 45%;
+	max-width: 45%;
+	padding: 4rem;
+}
+
+.registration__title {
+	font-weight: 600;
+	font-size: var(--font-size-2xl);
+	color: var(--color-bg);
+	margin-bottom: 0.5rem;
+}
+
+.registration__subtitle {
+	font-size: var(--font-size-lg);
+	color: var(--color-text-secondary);
+	margin-bottom: 3.2rem;
+}
+
+.form__group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	align-items: start;
+	justify-content: center;
+	width: 100%;
+	margin-bottom: 1.5rem;
+}
+
+.form__label {
+	color: var(--color-bg);
+	font-size: var(--font-size-base);
+}
+
+.form__input {
+	background-color: var(--color-gray-light);
+	width: 100%;
+	border: 1px solid var(--color-gray-light);
+	border-radius: var(--border-radius-2xl);
+	padding: 0.75rem 1rem;
+	font-size: var(--font-size-base);
+	color: var(--color-bg);
+	transition:
+		border 0.4s ease,
+		box-shadow 0.4s ease;
+
+	&:focus {
+		outline: none;
+		border: 1px solid var(--color-accent);
+		box-shadow: var(--color-shadow-focus);
+	}
+}
+
+.form__button {
+	width: 100%;
+	border-radius: var(--border-radius-2xl);
+	border: 1px solid var(--color-accent);
+	padding: 1rem 0;
+	cursor: pointer;
+	color: var(--color-white);
+	background-color: var(--color-accent);
+	margin-bottom: 0.5rem;
+	outline: none;
+	transition:
+		background-color 0.4s ease,
+		transform 0.4s ease;
+
+	&:hover,
+	&:focus {
+		background: transparent;
+		color: var(--color-accent);
+		transform: translateY(-1px);
+		box-shadow: var(--shadow);
+	}
+}
+
+.form__footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.form__footer-text {
+	font-size: var(--font-size-lg);
+	color: var(--color-bg);
+}
+
+.form__footer-link {
+	color: var(--color-bg);
+	text-decoration: none;
+	font-weight: 500;
+	margin-left: 0.25rem;
+	outline: none;
+	transition:
+		color 0.4s ease,
+		transform 0.4s ease;
+
+	&:hover,
+	&:focus {
+		color: var(--color-accent);
+	}
+}
