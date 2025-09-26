@@ -1,4 +1,4 @@
-import Component from '../core/baseComponent.js'
+import Component from '../../components/core/baseComponent.js'
 
 class Button extends Component {
 	#parent

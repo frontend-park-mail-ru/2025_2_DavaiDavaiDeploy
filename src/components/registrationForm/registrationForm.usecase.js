@@ -3,7 +3,7 @@ export default {
 	id: 'registration-form',
 	inputs: {
 		login: {
-			inputID: 'login',
+			id: 'login',
 			label: 'Имя пользователя',
 			name: 'login',
 			type: 'text',
@@ -13,7 +13,7 @@ export default {
 			formGroupID: 'login-form-group',
 		},
 		password: {
-			inputID: 'password',
+			id: 'password',
 			label: 'Пароль',
 			name: 'password',
 			type: 'password',
@@ -25,7 +25,7 @@ export default {
 			postIconID: 'password-icon',
 		},
 		passwordConfirm: {
-			inputID: 'confirm-password',
+			id: 'confirm-password',
 			label: 'Подтверждение пароля',
 			name: 'confirm-password',
 			type: 'password',
