@@ -9,6 +9,7 @@ HTTPClient.configurate({ baseUrl: 'https://dummyjson.com' })
 
 let contentContainer = document.createElement('div')
 contentContainer.id = 'app'
+contentContainer.classList.add('app')
 document.body.appendChild(contentContainer)
 
 const layout = new Layout(contentContainer)

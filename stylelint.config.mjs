@@ -4,5 +4,6 @@ export default {
 	rules: {
 		'selector-class-pattern': null,
 		'color-function-alias-notation': null,
+		'property-no-vendor-prefix': null,
 	},
 }
