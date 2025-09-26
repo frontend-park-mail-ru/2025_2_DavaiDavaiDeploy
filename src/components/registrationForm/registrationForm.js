@@ -1,6 +1,6 @@
-import Button from '../button/button.js'
+import Button from '../../shared/button/button.js'
+import Input from '../../shared/input/input.js'
 import Component from '../core/baseComponent.js'
-import Input from '../input/input.js'
 import registrationFormUsecase from './registrationForm.usecase.js'
 
 class RegistrationForm extends Component {
@@ -30,42 +30,6 @@ class RegistrationForm extends Component {
 		this.#passwordInput.remove()
 		this.#passwordConfirmInput.remove()
 		this.#button.remove()
-	}
-
-	#togglePasswordVisibility(passwordInputId, iconId) {
-		const passwordInput = document.querySelector('#' + passwordInputId)
-		const iconElement = document.querySelector('#' + iconId)
-
-		const passwordType =
-			passwordInput.getAttribute('type') === 'password' ? 'text' : 'password'
-
-		passwordInput.setAttribute('type', passwordType)
-		iconElement.src =
-			passwordType === 'password'
-				? '/src/assets/img/eye_close.svg'
-				: '/src/assets/img/eye_open.svg'
-	}
-
-	#addEventListeners() {
-		document
-			.querySelector('#' + registrationFormUsecase.inputs.password.postIconID)
-			.addEventListener('click', () => {
-				this.#togglePasswordVisibility(
-					registrationFormUsecase.inputs.password.inputID,
-					registrationFormUsecase.inputs.password.postIconID,
-				)
-			})
-
-		document
-			.querySelector(
-				'#' + registrationFormUsecase.inputs.passwordConfirm.postIconID,
-			)
-			.addEventListener('click', () => {
-				this.#togglePasswordVisibility(
-					registrationFormUsecase.inputs.passwordConfirm.inputID,
-					registrationFormUsecase.inputs.passwordConfirm.postIconID,
-				)
-			})
 	}
 
 	/**
@@ -103,7 +67,6 @@ class RegistrationForm extends Component {
 			registrationFormUsecase.buttons.submitBtn,
 		)
 		this.#button.render()
-		this.#addEventListeners()
 	}
 }
 

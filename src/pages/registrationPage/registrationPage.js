@@ -3,6 +3,7 @@ import registrationForm from '../../components/registrationForm/registrationForm
 export default class RegistrationPage {
 	#parent
 	#self
+	#unsubscribe
 
 	constructor(rootElement) {
 		this.#parent = rootElement
@@ -26,5 +27,9 @@ export default class RegistrationPage {
 			document.querySelector('#registration-form-container'),
 		)
 		form.render()
+	}
+
+	destroy() {
+		this.#unsubscribe?.()
 	}
 }
