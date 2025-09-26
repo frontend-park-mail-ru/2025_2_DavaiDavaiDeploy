@@ -15,13 +15,13 @@ class Router {
 		this.initEventListeners()
 	}
 
-	configurate(routes, parent) {
+	configurate = (routes, parent) => {
 		this.routes = new Proxy(routes, this.routesHandler)
 		this.parent = parent
 	}
 
 	routesHandler = {
-		get: function (target, path) {
+		get: (target, path) => {
 			let routeName = Object.keys(target).find(key => target[key].href === path)
 			if (routeName in target) {
 				return target[routeName]
@@ -30,21 +30,24 @@ class Router {
 		},
 	}
 
-	initEventListeners() {
+	initEventListeners = () => {
 		window.addEventListener('popstate', this.handlePopState)
 		window.addEventListener('click', this.handleClick)
 	}
 
-	handlePopState() {
+	handlePopState = () => {
 		const path = window.location.pathname
 		this.handleRouteChange(path, false)
 	}
 
-	handleClick(event) {
+	handleClick = event => {
 		const link = event.target.closest('a')
 		if (link) {
 			event.preventDefault()
 			const url = new URL(link.href)
+			if (url.pathname === window.location.pathname) {
+				return
+			}
 			this.handleRouteChange(url.pathname)
 		}
 	}
@@ -52,7 +55,7 @@ class Router {
 	/**
 	 * Очищает контент и header
 	 */
-	clearLayout() {
+	clearLayout = () => {
 		const oldContent = this.parent.querySelector('.content')
 		if (oldContent) {
 			oldContent.remove()
@@ -71,7 +74,7 @@ class Router {
 		}
 	}
 
-	renderHeader() {
+	renderHeader = () => {
 		const header = new Header(this.parent, {
 			avatar: '/src/assets/img/1+1.webp',
 			login: 'Alex',
@@ -80,12 +83,12 @@ class Router {
 		header.render()
 	}
 
-	renderFooter() {
+	renderFooter = () => {
 		const footer = new Footer(this.parent)
 		footer.render()
 	}
 
-	renderContent(route) {
+	renderContent = route => {
 		const contentContainer = document.createElement('div')
 		contentContainer.className = 'content'
 		this.parent.appendChild(contentContainer)
@@ -95,7 +98,7 @@ class Router {
 		page.render()
 	}
 
-	handleRouteChange(path, addToHistory = true) {
+	handleRouteChange = (path, addToHistory = true) => {
 		let normalizedPath = normalize(path)
 		let route = this.routes[normalizedPath]
 
@@ -115,7 +118,7 @@ class Router {
 		this.renderFooter()
 	}
 
-	start() {
+	start = () => {
 		this.handleRouteChange(window.location.pathname)
 	}
 }
