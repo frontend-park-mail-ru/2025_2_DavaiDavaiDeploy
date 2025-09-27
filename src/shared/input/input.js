@@ -1,5 +1,7 @@
 import Component from '../../components/core/baseComponent.js'
-import { hideError, showError, validate } from '../../helpers/validateHelper.js'
+import { validateHideError } from '../../helpers/validateHideError/validateHideError.js'
+import { validateProducer } from '../../helpers/validateProducer/validateProducer.js'
+import { validateShowError } from '../../helpers/validateShowError/validateShowError.js'
 
 class Input extends Component {
 	#parent
@@ -12,14 +14,14 @@ class Input extends Component {
 	}
 
 	#validateInput() {
-		const result = validate(this.self.value, this.config.validator)
+		const result = validateProducer(this.self.value, this.config.validator)
 
 		if (!result.isValid) {
-			showError(this.#errorElement, result.message)
+			validateShowError(this.#errorElement, result.message)
 			this.self.attributes.ifd = 3
 			return false
 		} else {
-			hideError(this.#errorElement)
+			validateHideError(this.#errorElement)
 			this.self.attributes.ifd = 5
 			return true
 		}

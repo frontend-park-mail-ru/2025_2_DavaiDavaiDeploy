@@ -1,7 +1,5 @@
-import {
-	ValidateLogin,
-	ValidatePassword,
-} from '../../helpers/validateHelper.js'
+import { ValidateLogin } from '../../helpers/validateLogin/validateLogin.js'
+import { ValidatePassword } from '../../helpers/validatePassword/validatePassword.js'
 
 export default {
 	action: '/',

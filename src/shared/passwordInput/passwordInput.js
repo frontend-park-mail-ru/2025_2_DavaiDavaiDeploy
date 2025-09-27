@@ -1,6 +1,7 @@
 import Component from '../../components/core/baseComponent.js'
-import { hideError, showError, validate } from '../../helpers/validateHelper.js'
-
+import { validateHideError } from '../../helpers/validateHideError/validateHideError.js'
+import { validateProducer } from '../../helpers/validateProducer/validateProducer.js'
+import { validateShowError } from '../../helpers/validateShowError/validateShowError.js'
 class PasswordInput extends Component {
 	#parent
 	#passwordInput
@@ -31,20 +32,20 @@ class PasswordInput extends Component {
 	#validateInput() {
 		let result
 		if (this.config.isConfirm) {
-			result = validate(
+			result = validateProducer(
 				this.self.value,
 				this.config.validator,
 				this.#extraValue,
 			)
 		} else {
-			result = validate(this.self.value, this.config.validator)
+			result = validateProducer(this.self.value, this.config.validator)
 		}
 
 		if (!result.isValid) {
-			showError(this.#errorElement, result.message)
+			validateShowError(this.#errorElement, result.message)
 			return false
 		} else {
-			hideError(this.#errorElement)
+			validateHideError(this.#errorElement)
 			return true
 		}
 	}
