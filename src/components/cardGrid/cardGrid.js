@@ -98,7 +98,7 @@ export default class CardGrid extends Component {
 		const rowsBeforeStart = Math.floor(invisibleTopHeight / cardHeight)
 		const rowsInViewPort = Math.ceil(viewportHeight / cardHeight)
 
-		const bufferRows = 20
+		const bufferRows = 2
 		const startRow = Math.max(0, rowsBeforeStart)
 		const endRow = rowsBeforeStart + rowsInViewPort + bufferRows
 
@@ -148,16 +148,12 @@ export default class CardGrid extends Component {
 	}
 
 	renderNewCards = state => {
-		const container = this.self
-
 		if (state.loading) {
-			container.insertAdjacentHTML('beforeend', '<p>Загрузка...</p>')
 			return
 		}
 
 		if (state.error) {
 			this.#uploadAllFilms = true
-			container.insertAdjacentHTML('beforeend', `<p>Ошибка: ${state.error}</p>`)
 			return
 		}
 	}
