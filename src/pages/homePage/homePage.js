@@ -14,6 +14,7 @@ export default class Home {
 	#offset = 0
 	#limit = 12
 	#loading = false
+	#lastShownFilmIndex = 0
 
 	constructor(rootElement) {
 		this.#parent = rootElement
@@ -41,6 +42,9 @@ export default class Home {
 		this.#self.class = 'home-page'
 		this.#parent.appendChild(this.#self)
 		this.#self.insertAdjacentHTML('afterbegin', this.template)
+
+		this.fakeCard = document.createElement('div')
+		this.fakeCard.class = 'film-card'
 
 		this.#unsubscribe = store.subscribe(() => {
 			const { films } = store.getState().film
@@ -83,6 +87,8 @@ export default class Home {
 	}
 
 	update(state) {
+		// this.grid.appendChild(a)
+
 		const container = this.#self
 
 		if (state.loading) {
@@ -95,7 +101,8 @@ export default class Home {
 			return
 		}
 
-		state.forEach(film => {
+		for (let i = this.#lastShownFilmIndex + 1; i < state.length; i++) {
+			let film = state[i]
 			let filmCard = new FilmCard(this.grid, {
 				id: film.id,
 				image: '/src/assets/img/1+1.webp',
@@ -104,7 +111,7 @@ export default class Home {
 				rating: film.rating,
 			})
 			filmCard.render()
-		})
+		}
 	}
 
 	destroy() {
