@@ -4,7 +4,6 @@ import PasswordInput from '../../shared/passwordInput/passwordInput.js'
 import Component from '../core/baseComponent.js'
 import registrationFormUsecase from './registrationForm.usecase.js'
 
-/* eslint-disable no-console */
 class RegistrationForm extends Component {
 	#parent
 	#loginInput
@@ -42,28 +41,28 @@ class RegistrationForm extends Component {
 		}
 	}
 
-	#addFormSubmitListener() {
-		this.self.addEventListener('submit', event => {
-			event.preventDefault()
+	/**
+	 * Валидация данных формы
+	 */
+	#validateData() {
+		const isLoginValid = this.#loginInput.isValid()
+		const isPasswordValid = this.#passwordInput.isValid()
+		const isConfirmValid = this.#passwordConfirmInput.isValid()
 
-			const isLoginValid = this.#loginInput?.isValid() || false
-			const isPasswordValid = this.#passwordInput?.isValid() || false
-			const isConfirmValid = this.#passwordConfirmInput?.isValid() || false
-			console.log(
-				'я пошел отправлть форму и у меня данные ' +
-					isLoginValid +
-					' ' +
-					isPasswordValid +
-					' ' +
-					isConfirmValid,
-			)
+		return isLoginValid && isPasswordValid && isConfirmValid
+	}
 
-			if (isLoginValid && isPasswordValid && isConfirmValid) {
-				console.log('Форма валидна, отправляем данные')
-			} else {
-				console.log('Форма содержит ошибки')
-			}
-		})
+	/**
+	 * Обработчик отправки формы
+	 */
+	#handleSubmit = e => {
+		const isValid = this.#validateData()
+
+		if (!isValid) {
+			e.preventDefault()
+			e.stopPropagation()
+			e.target.blur()
+		}
 	}
 
 	#addEventListeners() {
@@ -72,14 +71,7 @@ class RegistrationForm extends Component {
 				this.#updatePasswordConfirmValidation()
 			})
 		}
-
-		this.#addFormSubmitListener()
 	}
-
-	/**
-	 * Отображает ошибку
-	 * @param {String} errorMessage - сообщение ошибки
-	 */
 
 	/**
 	 * Рендеринг компонента
@@ -112,10 +104,10 @@ class RegistrationForm extends Component {
 		)
 		this.#passwordConfirmInput.render()
 
-		this.#button = new Button(
-			document.querySelector('#form__footer'),
-			registrationFormUsecase.buttons.submitBtn,
-		)
+		this.#button = new Button(document.querySelector('#form__footer'), {
+			...registrationFormUsecase.buttons.submitBtn,
+			onSubmit: this.#handleSubmit,
+		})
 		this.#button.render()
 
 		this.#addEventListeners()
@@ -123,5 +115,3 @@ class RegistrationForm extends Component {
 }
 
 export default RegistrationForm
-
-/* eslint-enable no-console */
