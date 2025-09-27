@@ -1,6 +1,6 @@
-@import url('../../components/filmCard/filmCard.css');
 @import url('../../components/topFilm/topFilm.css');
 @import url('../../components/genreSlider/genreSlider.css');
+@import url('../../components/cardGrid/cardGrid.css');
 
 .page {
 	display: flex;
@@ -25,17 +25,6 @@
 	flex-direction: column;
 	gap: 1.875rem;
 	padding: 1.25rem 0;
-}
-
-.grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(15.625rem, 1fr));
-	gap: 1.25rem;
-}
-
-.load-more-trigger {
-	height: 1px;
-	width: 1px;
 }
 
 @media (width <= 75rem) {

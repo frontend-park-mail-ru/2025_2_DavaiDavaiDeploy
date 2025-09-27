@@ -18,12 +18,13 @@ export function getFilms(limit, offset = 0) {
 
 	for (let i = 0; i < limit; i++) {
 		const index = (offset + i) % length
+		FILMS[index].id = offset + i
 		result.push(FILMS[index])
 	}
 	return result
 }
 
-export const FILMS = [
+export let FILMS = [
 	{
 		id: 1,
 		title: 'Интерстеллар',
