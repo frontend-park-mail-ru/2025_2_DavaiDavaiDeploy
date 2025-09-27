@@ -7,8 +7,8 @@ import Component from '../core/baseComponent.js'
 export default class CardGrid extends Component {
 	#unsubscribe
 	#offset = 0
-	#lastScrollY = 0
 	#uploadAllFilms = false
+	#cards = {}
 
 	constructor(parent, props = {}) {
 		super(parent, props, 'cardGrid')
@@ -22,14 +22,6 @@ export default class CardGrid extends Component {
 		return this.self.querySelector('.grid')
 	}
 
-	get trigger() {
-		return this.self.querySelector('.load-more-trigger')
-	}
-
-	get topSpacer() {
-		return this.self.querySelector('.top-spacer')
-	}
-
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', this.html())
 
@@ -38,102 +30,52 @@ export default class CardGrid extends Component {
 			this.renderNewCards(films)
 		})
 
-		this.updateViewport()
+		const cardsPerRow = getGridColumnCount(this.grid)
+		store.dispatch(filmActions.getFilmsAction(cardsPerRow * 3, this.#offset))
+		this.#offset += cardsPerRow * 3
 
 		window.addEventListener('scroll', throttle(this.updateViewport, 100))
 	}
 
 	updateViewport = () => {
-		let { startIndex, endIndex, topSpacerHeight } = this.getVisibleCards()
-
-		let renderWay = 'afterbegin'
-		if (window.scrollY > this.#lastScrollY) {
-			renderWay = 'beforeend'
-		}
-
-		this.#lastScrollY = window.scrollY
+		let { startIndex, endIndex } = this.getVisibleCards()
 
 		let films = store.getState().film.films
+
 		for (let i = 0; i < films.length; i++) {
 			if (startIndex <= i && i < endIndex) {
-				this.renderFilm(films[i], renderWay)
+				this.renderFilm(films[i])
 			} else {
 				this.removeFilm(films[i])
 			}
 		}
-		this.topSpacer.style.height = `${topSpacerHeight}px`
 	}
 
 	removeFilm = film => {
 		let filmCard = document.querySelector(`#film-${film.id}`)
 		if (filmCard) {
-			filmCard.remove()
-		}
-	}
-
-	getVisibleCards = () => {
-		const cards = this.grid.querySelectorAll('.film-card')
-		let maxHeight = 0
-		if (cards.length > 0) {
-			maxHeight = Math.max(...Array.from(cards).map(card => card.offsetHeight))
-		}
-
-		const cardsPerRow = getGridColumnCount(this.grid)
-		const films = store.getState().film.films
-
-		if (cards.length == 0 && !this.#uploadAllFilms) {
-			store.dispatch(filmActions.getFilmsAction(cardsPerRow, this.#offset))
-			this.#offset += cardsPerRow
-			return { startIndex: 0, endIndex: cardsPerRow, topSpacerHeight: 0 }
-		}
-
-		const cardHeight = maxHeight
-		const gridRect = this.grid.getBoundingClientRect()
-		const gridTop = gridRect.top + window.pageYOffset
-
-		const scrollTop = window.pageYOffset
-		const viewportHeight = window.innerHeight
-
-		const invisibleTopHeight = Math.max(0, scrollTop - gridTop)
-		const rowsBeforeStart = Math.floor(invisibleTopHeight / cardHeight)
-		const rowsInViewPort = Math.ceil(viewportHeight / cardHeight)
-
-		const bufferRows = 2
-		const startRow = Math.max(0, rowsBeforeStart)
-		const endRow = rowsBeforeStart + rowsInViewPort + bufferRows
-
-		const startIndex = startRow * cardsPerRow
-		const endIndex = endRow * cardsPerRow
-
-		if (endIndex > films.length && !this.#uploadAllFilms) {
-			const neededCardsCount = endIndex - films.length
-			store.dispatch(
-				filmActions.getFilmsAction(neededCardsCount * 2, this.#offset),
-			)
-			this.#offset += neededCardsCount
-		}
-
-		let height = 0
-		for (let row = 0; row < startRow; row++) {
-			const startIdx = row * cardsPerRow
-			const endIdx = startIdx + cardsPerRow
-			const rowCards = Array.from(cards).slice(startIdx, endIdx)
-
-			if (rowCards.length > 0) {
-				const rowHeight = Math.max(...rowCards.map(card => card.offsetHeight))
-				height += rowHeight
+			const сhild = filmCard.querySelector('.placeholder')
+			if (!сhild) {
+				const cardStyles = getComputedStyle(filmCard)
+				const cardWidth = filmCard.offsetWidth + 'px'
+				const cardHeight = filmCard.offsetHeight + 'px'
+				const placeholder = document.createElement('div')
+				placeholder.className = 'placeholder'
+				placeholder.style.width = cardWidth
+				placeholder.style.height = cardHeight
+				placeholder.style.backgroundColor = 'transparent'
+				placeholder.style.display = 'block'
+				placeholder.style.borderRadius = cardStyles.borderRadius
+				filmCard.innerHTML = ''
+				filmCard.appendChild(placeholder)
 			}
 		}
-
-		return {
-			startIndex,
-			endIndex,
-			height,
-		}
 	}
 
-	renderFilm = (film, renderWay) => {
-		if (document.querySelector(`#film-${film.id}`)) {
+	renderFilm = film => {
+		let card = document.querySelector(`#film-${film.id}`)
+		if (card) {
+			this.#cards[film.id].rerender()
 			return
 		}
 		let filmCard = new FilmCard(this.grid, {
@@ -142,9 +84,48 @@ export default class CardGrid extends Component {
 			title: film.title,
 			info: `${film.year}, ${film.title}`,
 			rating: film.rating,
-			renderWay,
 		})
+		this.#cards[film.id] = filmCard
 		filmCard.render()
+	}
+
+	getVisibleCards = () => {
+		const cards = this.grid.querySelectorAll('.film-card')
+		let minHeight = 0
+		if (cards.length > 0) {
+			minHeight = Math.min(
+				...Array.from(cards).map(filmCard => filmCard.offsetHeight),
+			)
+		}
+		const cardHeight = minHeight
+
+		const cardsPerRow = getGridColumnCount(this.grid)
+		const films = store.getState().film.films
+
+		const gridRect = this.grid.getBoundingClientRect()
+		const gridTop = gridRect.top + window.pageYOffset
+
+		const scrollTop = window.pageYOffset
+
+		const invisibleTopHeight = Math.max(0, scrollTop - gridTop)
+		const rowsBeforeStart = Math.max(
+			Math.floor(invisibleTopHeight / cardHeight) - 1,
+			0,
+		)
+		const rowsInViewPort = 3
+
+		const startIndex = rowsBeforeStart * cardsPerRow
+		const endIndex = startIndex + rowsInViewPort * cardsPerRow
+
+		if (endIndex > films.length && !this.#uploadAllFilms) {
+			store.dispatch(filmActions.getFilmsAction(cardsPerRow * 3, this.#offset))
+			this.#offset += cardsPerRow * 3
+		}
+
+		return {
+			startIndex,
+			endIndex,
+		}
 	}
 
 	renderNewCards = state => {
@@ -156,6 +137,11 @@ export default class CardGrid extends Component {
 			this.#uploadAllFilms = true
 			return
 		}
+
+		for (let i = 0; i < state.films.length; i++) {
+			this.renderFilm(state.films[i])
+		}
+		this.updateViewport()
 	}
 
 	destroy() {
