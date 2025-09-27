@@ -1,4 +1,5 @@
 import Component from '../../components/core/baseComponent.js'
+import { hideError, showError, validate } from '../../helpers/validateHelper.js'
 
 class Input extends Component {
 	#parent
@@ -10,40 +11,26 @@ class Input extends Component {
 		this.config = config
 	}
 
-	showError(message) {
-		this.#errorElement.textContent = message
-		this.#errorElement.style.display = 'block'
-		this.self.classList.add('input-error')
-	}
-
-	hideError() {
-		if (this.#errorElement) {
-			this.#errorElement.style.display = 'none'
-		}
-		this.self.classList.remove('input-error')
-	}
-
-	validate(value, validator, extraValue = null) {
-		if (!validator) {
-			return { isValid: true, message: '' }
-		}
-
-		if (extraValue !== null) {
-			return validator(value, extraValue)
-		}
-		return validator(value)
-	}
-
 	#validateInput() {
-		const result = this.validate(this.self.value, this.config.validator)
+		const result = validate(this.self.value, this.config.validator)
 
 		if (!result.isValid) {
-			this.showError(result.message)
+			showError(this.#errorElement, result.message)
+			this.self.attributes.ifd = 3
 			return false
 		} else {
-			this.hideError()
+			hideError(this.#errorElement)
+			this.self.attributes.ifd = 5
 			return true
 		}
+	}
+
+	getValue() {
+		return this.self.value ? this.self.value : ''
+	}
+
+	isValid() {
+		return this.#validateInput()
 	}
 
 	#addEventListener() {
@@ -51,7 +38,6 @@ class Input extends Component {
 			this.#validateInput()
 		})
 
-		// Валидация при потере фокуса
 		this.self.addEventListener('blur', () => {
 			this.#validateInput()
 		})

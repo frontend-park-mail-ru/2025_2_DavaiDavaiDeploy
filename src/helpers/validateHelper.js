@@ -56,3 +56,25 @@ export function ValidatePasswordConfirm(passwordValue, confirmValue) {
 	}
 	return { isValid: true, message: '' }
 }
+
+export function validate(value, validator, extraValue = null) {
+	if (!validator) {
+		return { isValid: true, message: '' }
+	}
+
+	if (extraValue !== null) {
+		return validator(value, extraValue)
+	}
+	return validator(value)
+}
+
+export function showError(element, message) {
+	element.textContent = message
+	element.style.display = 'block'
+}
+
+export function hideError(element) {
+	if (element) {
+		element.style.display = 'none'
+	}
+}

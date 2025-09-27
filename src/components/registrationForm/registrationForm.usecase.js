@@ -35,6 +35,7 @@ export default {
 			name: 'confirm-password',
 			placeholder: 'Введите пароль',
 			required: true,
+			isConfirm: true,
 			validator: ValidatePasswordConfirm,
 			formGroupID: 'confirm-password-form-group',
 			postIconID: 'confirm-password-icon',

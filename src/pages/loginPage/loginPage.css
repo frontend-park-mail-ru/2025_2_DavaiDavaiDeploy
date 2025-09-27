@@ -1,4 +1,5 @@
 @import url('/src/shared/input/input.css');
+@import url('/src/shared/passwordInput/passwordInput.css');
 
 .login-page {
 	height: 100%;
