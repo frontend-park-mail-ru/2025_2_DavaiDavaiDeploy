@@ -117,11 +117,11 @@
 .form__group {
 	display: flex;
 	flex-direction: column;
-	gap: 0.5rem;
+	gap: clamp(0.2rem, 0.3vw, 0.5rem);
 	align-items: start;
 	justify-content: center;
 	width: 100%;
-	margin-bottom: 1.5rem;
+	margin-bottom: clamp(0rem, 0.1vw, 1.5rem);
 }
 
 .form__input-wrapper {
