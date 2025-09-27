@@ -8,7 +8,6 @@ class LoginForm extends Component {
 	#parent
 	#loginInput
 	#passwordInput
-	#passwordConfirmInput
 	#button
 
 	constructor(parent) {
@@ -22,15 +21,36 @@ class LoginForm extends Component {
 		this.#parent = parent
 		this.#loginInput = null
 		this.#passwordInput = null
-		this.#passwordConfirmInput = null
 		this.#button = null
 	}
 
 	remove() {
-		this.#loginInput.remove()
-		this.#passwordInput.remove()
-		this.#passwordConfirmInput.remove()
-		this.#button.remove()
+		this.#loginInput?.remove()
+		this.#passwordInput?.remove()
+		this.#button?.remove()
+	}
+
+	/**
+	 * Валидация данных формы
+	 */
+	#validateData() {
+		const isLoginValid = this.#loginInput.isValid()
+		const isPasswordValid = this.#passwordInput.isValid()
+
+		return isLoginValid && isPasswordValid
+	}
+
+	/**
+	 * Обработчик отправки формы
+	 */
+	#handleSubmit = e => {
+		const isValid = this.#validateData()
+
+		if (!isValid) {
+			e.preventDefault()
+			e.stopPropagation()
+			e.target.blur()
+		}
 	}
 
 	/**
@@ -54,10 +74,10 @@ class LoginForm extends Component {
 		)
 		this.#passwordInput.render()
 
-		this.#button = new Button(
-			document.querySelector('#form__footer'),
-			loginFormUsecase.buttons.submitBtn,
-		)
+		this.#button = new Button(document.querySelector('#form__footer'), {
+			...loginFormUsecase.buttons.submitBtn,
+			onSubmit: this.#handleSubmit,
+		})
 		this.#button.render()
 	}
 }
