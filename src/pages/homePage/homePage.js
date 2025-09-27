@@ -1,6 +1,7 @@
 import FilmCard from '../../components/filmCard/filmCard.js'
 import GenreSlider from '../../components/genreSlider/genreSlider.js'
 import TopFilm from '../../components/topFilm/topFilm.js'
+import { serverAddr } from '../../consts/serverAddr.js'
 import { TOPFILM } from '../../mocks/films.js'
 import filmActions from '../../redux/features/film/actions.js'
 import { store } from '../../redux/store.js'
@@ -33,7 +34,7 @@ export default class Home {
 		this.#parent.appendChild(this.#self)
 		this.#self.insertAdjacentHTML('afterbegin', this.template)
 
-		store.dispatch(filmActions.getFilmsAction(5, 0))
+		store.dispatch(filmActions.getFilmsAction(100, 0))
 
 		this.#unsubscribe = store.subscribe(() => {
 			const { films } = store.getState().film
@@ -73,9 +74,9 @@ export default class Home {
 		state.forEach(film => {
 			let filmCard = new FilmCard(this.grid, {
 				id: film.id,
-				image: '/src/assets/img/1+1.webp',
+				image: `${serverAddr}${film.icon}`,
 				title: film.title,
-				info: `genre, ${film.year}`,
+				info: `${film.genres[0].title}, ${film.year}`,
 				rating: film.rating,
 			})
 			filmCard.render()
