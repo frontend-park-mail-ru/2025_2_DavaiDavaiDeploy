@@ -1,5 +1,5 @@
 export function validateHideError(element) {
 	if (element) {
-		element.style.display = 'none'
+		element.style.opacity = 0
 	}
 }
