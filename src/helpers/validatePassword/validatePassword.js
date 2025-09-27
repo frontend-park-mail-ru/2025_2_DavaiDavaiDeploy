@@ -3,24 +3,21 @@ export function ValidatePassword(value) {
 		return { isValid: false, message: 'Пароль обязателен' }
 	}
 	if (value.length < 6) {
-		return { isValid: false, message: 'Пароль должен быть не менее 6 символов' }
-	}
-	if (value.length > 30) {
 		return {
 			isValid: false,
-			message: 'Пароль должен быть не более 30 символов',
+			message: 'Пароль должен быть не менее 6 символов',
 		}
 	}
-	if (!/(?=.*[a-z])(?=.*[A-Z])/.test(value)) {
+	if (value.length > 20) {
 		return {
 			isValid: false,
-			message: 'Пароль должен содержать заглавные и строчные буквы',
+			message: 'Пароль должен быть не более 20 символов',
 		}
 	}
-	if (!/(?=.*\d)/.test(value)) {
+	if (!/^[a-zA-Z0-9]+$/.test(value)) {
 		return {
 			isValid: false,
-			message: 'Пароль должен содержать хотя бы одну цифру',
+			message: 'Пароль может содержать только латинские буквы и цифры',
 		}
 	}
 	return { isValid: true, message: '' }

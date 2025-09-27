@@ -18,11 +18,9 @@ class Input extends Component {
 
 		if (!result.isValid) {
 			validateShowError(this.#errorElement, result.message)
-			this.self.attributes.ifd = 3
 			return false
 		} else {
 			validateHideError(this.#errorElement)
-			this.self.attributes.ifd = 5
 			return true
 		}
 	}
