@@ -8,6 +8,8 @@ import Plaseholder from '../placeholder/placeholder.js'
 
 const UPLOADING_ROWS_COUNT = 3
 const ROWS_IN_BUFFER = 2
+const MIN_CARD_HEIGHT = 300
+const THROTTLE_DELAY = 100
 
 export default class CardGrid extends Component {
 	#unsubscribe
@@ -44,8 +46,14 @@ export default class CardGrid extends Component {
 		)
 		this.#offset += cardsPerRow * UPLOADING_ROWS_COUNT
 
-		window.addEventListener('scroll', throttle(this.updateViewport, 100))
-		window.addEventListener('resize', throttle(this.updateViewport, 100))
+		window.addEventListener(
+			'scroll',
+			throttle(this.updateViewport, THROTTLE_DELAY),
+		)
+		window.addEventListener(
+			'resize',
+			throttle(this.updateViewport, THROTTLE_DELAY),
+		)
 	}
 
 	updateViewport = () => {
@@ -63,7 +71,7 @@ export default class CardGrid extends Component {
 	}
 
 	removeFilm = film => {
-		let filmCard = document.querySelector(`#film-${film.id}`)
+		const filmCard = document.querySelector(`#film-${film.id}`)
 		if (!filmCard) {
 			return
 		}
@@ -104,7 +112,7 @@ export default class CardGrid extends Component {
 			)
 		}
 
-		const cardHeight = minHeight !== 0 ? minHeight : 300
+		const cardHeight = minHeight !== 0 ? minHeight : MIN_CARD_HEIGHT
 
 		const cardsPerRow = getGridColumnCount(this.grid)
 		const films = store.getState().film.films
@@ -125,7 +133,15 @@ export default class CardGrid extends Component {
 		const startIndex = rowsBeforeStart * cardsPerRow
 		const endIndex = startIndex + rowsInViewPort * cardsPerRow
 
-		if (endIndex > films.length && !this.#uploadAllFilms) {
+		const length = films.length
+
+		if (endIndex > length) {
+			if (this.#uploadAllFilms) {
+				return {
+					startIndex: length - cardsPerRow * rowsInViewPort,
+					endIndex: length,
+				}
+			}
 			store.dispatch(
 				filmActions.getFilmsAction(
 					cardsPerRow * UPLOADING_ROWS_COUNT,
@@ -133,6 +149,10 @@ export default class CardGrid extends Component {
 				),
 			)
 			this.#offset += cardsPerRow * UPLOADING_ROWS_COUNT
+			return {
+				startIndex: length - cardsPerRow * rowsInViewPort,
+				endIndex: length,
+			}
 		}
 
 		return {

@@ -16,8 +16,6 @@ export default class Plaseholder extends Component {
 		this.parent.insertAdjacentHTML('beforeend', this.html())
 		this.self.style.width = Width
 		this.self.style.height = Height
-		this.self.style.backgroundColor = 'transparent'
-		this.self.style.display = 'block'
 		this.self.style.borderRadius = Styles.borderRadius
 	}
 }
