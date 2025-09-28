@@ -1,5 +1,6 @@
-import { filmsMock } from '../../../mocks/films'
-import types from './types'
+import { getFilmsMocks } from '../../../mocks/films.js'
+import HTTPClient from '../../../modules/HTTPClient/index.js'
+import types from './types.js'
 
 const setFilmsLoadingAction = () => {
 	return {
@@ -21,17 +22,20 @@ const returnFilmsErrorAction = error => {
 	}
 }
 
-const getFilmsAction = () => {
-	return async dispatch => {
-		dispatch(setFilmsLoadingAction())
-		setTimeout(() => {
-			try {
-				dispatch(returnFilmsAction(filmsMock))
-			} catch (error) {
-				dispatch(returnFilmsErrorAction(error.message))
-			}
-		}, 1000)
+const getFilmsAction = (limit, offset) => async dispatch => {
+	dispatch(setFilmsLoadingAction())
+	try {
+		const response = await HTTPClient.get('/api/films', {
+			params: { count: limit, offset },
+		})
+		dispatch(returnFilmsAction(response.data))
+	} catch (error) {
+		dispatch(returnFilmsErrorAction(error.message || 'Error'))
 	}
+}
+
+const getFilmsActionFake = (limit, offset) => async dispatch => {
+	dispatch(returnFilmsAction(getFilmsMocks(limit, offset)))
 }
 
 export default {
@@ -39,4 +43,5 @@ export default {
 	setFilmsLoadingAction,
 	returnFilmsAction,
 	returnFilmsErrorAction,
+	getFilmsActionFake,
 }

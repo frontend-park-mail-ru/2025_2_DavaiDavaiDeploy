@@ -54,9 +54,9 @@ export class HTTPClient {
 			data = {},
 		} = config
 
-		let requestMethod = method.toUpperCase()
-		let requestUrl = this.formReqUrl(url, params)
-		let { requestHeaders, requestBody } = this.formReqHeadersAndBody(
+		const requestMethod = method.toUpperCase()
+		const requestUrl = this.formReqUrl(url, params)
+		const { requestHeaders, requestBody } = this.formReqHeadersAndBody(
 			headers,
 			data,
 			requestMethod,
@@ -74,14 +74,19 @@ export class HTTPClient {
 				responseHeaders[key] = value
 			})
 
-			const contentType = response.headers.get('content-type')
-
 			let responseData
+			const contentType = response.headers.get('content-type')
 
 			if (contentType?.includes('application/json')) {
 				responseData = await response.json()
 			} else {
 				responseData = await response.text()
+			}
+
+			if (!response.ok) {
+				throw new Error(
+					`HTTP error! status: ${response.status}, message: ${JSON.stringify(responseData)}`,
+				)
 			}
 
 			return {
@@ -94,7 +99,6 @@ export class HTTPClient {
 			if (error.name === 'TypeError' && error.message.includes('fetch')) {
 				throw new Error('Network error')
 			}
-
 			throw error
 		}
 	}

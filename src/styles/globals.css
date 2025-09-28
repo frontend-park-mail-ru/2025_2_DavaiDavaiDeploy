@@ -20,7 +20,6 @@
 body,
 html {
 	width: 100dvw;
-	height: 100%;
 	max-width: 100dvw;
 	overflow-x: hidden;
 	background-color: var(--color-bg);

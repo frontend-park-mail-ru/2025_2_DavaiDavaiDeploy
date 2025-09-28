@@ -32,7 +32,8 @@
   },
   "browserslist": [
     "defaults",
-    "not op_mini all"
+    "not op_mini all",
+    "not KaiOS > 0"
   ],
   "keywords": [],
   "author": "",

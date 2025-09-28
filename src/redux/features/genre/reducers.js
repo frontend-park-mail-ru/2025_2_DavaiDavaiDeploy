@@ -2,29 +2,30 @@ import types from './types.js'
 
 const initialState = {
 	loading: false,
-	films: [],
+	genres: [],
 	error: null,
 }
 
-const filmReducer = (state = initialState, action) => {
+const genreReducer = (state = initialState, action) => {
 	const { type, payload } = action
 
 	switch (type) {
-		case types.FILMS_LOADING:
+		case types.GENRES_LOADING:
 			return {
 				...state,
 				loading: true,
 			}
-		case types.FILMS_LOADED:
+		case types.GENRES_LOADED:
 			return {
 				...state,
 				loading: false,
-				films: [...state.films, ...payload.films],
+				genres: payload.genres,
 			}
-		case types.FILMS_ERROR:
+		case types.GENRES_ERROR:
 			return {
 				...state,
 				loading: false,
+				genres: [],
 				error: payload.error,
 			}
 		default:
@@ -32,4 +33,4 @@ const filmReducer = (state = initialState, action) => {
 	}
 }
 
-export default filmReducer
+export default genreReducer

@@ -1,7 +1,8 @@
-import FilmCard from '../../components/filmCard/filmCard.js'
+import CardGrid from '../../components/cardGrid/cardGrid.js'
 import GenreSlider from '../../components/genreSlider/genreSlider.js'
 import TopFilm from '../../components/topFilm/topFilm.js'
-import { FILMS, TOPFILM } from '../../mocks/films.js'
+import { TOPFILM } from '../../mocks/films.js'
+
 export default class Home {
 	#parent
 	#self
@@ -15,12 +16,12 @@ export default class Home {
 		return Handlebars.templates[`homePage.hbs`]({ text: 'Home' })
 	}
 
-	get grid() {
-		return this.#self.querySelector('.grid')
-	}
-
 	get main() {
 		return this.#self.querySelector('.main')
+	}
+
+	get films() {
+		return this.#self.querySelector('.films')
 	}
 
 	render() {
@@ -30,21 +31,11 @@ export default class Home {
 		this.#parent.appendChild(this.#self)
 		this.#self.insertAdjacentHTML('afterbegin', this.template)
 
-		for (let i = 0; i < 10; i++) {
-			FILMS.forEach(film => {
-				let filmCard = new FilmCard(this.grid, {
-					id: film.id,
-					image: '/src/assets/img/1+1.webp',
-					title: film.title,
-					info: `${film.year}, ${film.genres[1].title}`,
-					rating: film.rating,
-				})
-				filmCard.render()
-			})
-		}
-
 		const genreSlider = new GenreSlider(this.main)
 		genreSlider.render()
+
+		const cardGrid = new CardGrid(this.films)
+		cardGrid.render()
 
 		let topFilm = new TopFilm(this.main, {
 			id: TOPFILM.id,

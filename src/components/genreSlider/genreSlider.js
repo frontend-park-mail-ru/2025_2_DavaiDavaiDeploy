@@ -1,7 +1,7 @@
-import { GENRES } from '../../mocks/genres.js'
-import Component from '../core/baseComponent.js'
-
 import { createPeriodFunction } from '../../helpers/launchHelper.js'
+import genreActions from '../../redux/features/genre/actions.js'
+import { store } from '../../redux/store.js'
+import Component from '../core/baseComponent.js'
 
 const AUTO_SLIDE_DURATION = 5000
 const AUTO_SLIDE_RESTART_DURATION = 30000
@@ -9,6 +9,7 @@ const ANIMATION_DURATION = 300
 const CHANGE_DURATION = 20
 
 export default class GenreSlider extends Component {
+	#unsubscribe
 	constructor(parent, props = {}) {
 		super(parent, props, 'genreSlider', {
 			curSlide: 0,
@@ -45,7 +46,27 @@ export default class GenreSlider extends Component {
 
 	render() {
 		this.parent.insertAdjacentHTML('afterbegin', this.html())
-		this.renderGenres()
+		store.dispatch(genreActions.getGenresAction())
+
+		this.#unsubscribe = store.subscribe(() => {
+			const { genres } = store.getState().genre
+			if (genres.length !== 0 && genres !== this.genres) {
+				this.update(genres)
+			}
+		})
+	}
+
+	update = genres => {
+		this.state.genresCount = genres.length
+		genres.forEach(genre => {
+			const image = document.createElement('img')
+			image.className = 'slider__image'
+			image.alt = genre.title
+			image.src = '/src/assets/img/genres/Ужасы.png'
+			image.setAttribute('data-id', genre.id)
+			this.slider.appendChild(image)
+		})
+
 		this.initSlider()
 
 		this.autoSlider = createPeriodFunction(
@@ -55,18 +76,6 @@ export default class GenreSlider extends Component {
 		this.autoSlider.start()
 
 		this.addEventListeners()
-	}
-
-	renderGenres = () => {
-		this.state.genresCount = GENRES.length
-		GENRES.forEach(genre => {
-			const image = document.createElement('img')
-			image.className = 'slider__image'
-			image.alt = genre.title
-			image.src = genre.image
-			image.setAttribute('data-id', genre.id)
-			this.slider.appendChild(image)
-		})
 	}
 
 	addEventListeners = () => {
@@ -106,7 +115,9 @@ export default class GenreSlider extends Component {
 
 		for (let index = 0; index < this.state.slideCapacity; index++) {
 			const idx = (this.state.curGenre + index) % this.state.genresCount
-			this.genres[idx].style.display = 'block'
+			if (this.genres[idx]) {
+				this.genres[idx].style.display = 'block'
+			}
 		}
 	}
 
@@ -180,5 +191,9 @@ export default class GenreSlider extends Component {
 				this.prevBtn.disabled = false
 			}, ANIMATION_DURATION)
 		}, ANIMATION_DURATION)
+	}
+
+	destroy() {
+		this.#unsubscribe?.()
 	}
 }
