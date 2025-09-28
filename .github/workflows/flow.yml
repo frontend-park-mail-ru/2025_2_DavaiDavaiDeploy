@@ -117,7 +117,7 @@ jobs:
 
       - name: Create .env.js config file
         run: |
-          echo "export const isProduction = true" >> src/env.js
+          echo "export const isProduction = true" > src/env.js
           cat src/env.js
 
       - name: Build project
