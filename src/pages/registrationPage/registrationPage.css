@@ -67,7 +67,7 @@
 	display: flex;
 	position: relative;
 	flex-direction: column;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-self: center;
 	width: 50%;
 	padding: 1rem 2rem;
@@ -84,7 +84,7 @@
 .registration__subtitle {
 	font-size: clamp(var(--font-size-lg), 2.5vw, var(--font-size-xl));
 	color: var(--color-text-secondary);
-	margin-bottom: 2.2rem;
+	margin-bottom: 1.5rem;
 }
 
 .form {
@@ -267,5 +267,9 @@
 @media (width <= 80rem) {
 	.form__footer {
 		gap: 0.1rem;
+	}
+
+	.registration__form {
+		padding: 0 2rem;
 	}
 }
