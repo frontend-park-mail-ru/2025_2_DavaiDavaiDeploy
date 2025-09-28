@@ -3,6 +3,7 @@
 @import url('/src/components/layout/layout.css');
 @import url('/src/pages/homePage/homePage.css');
 @import url('/src/pages/registrationPage/registrationPage.css');
+@import url('/src/pages/loginPage/loginPage.css');
 
 * {
 	padding: 0;
@@ -23,11 +24,6 @@ html {
 	max-width: 100dvw;
 	overflow-x: hidden;
 	background-color: var(--color-bg);
-}
-
-.registration-page {
-	height: 100%;
-	width: 100%;
 }
 
 h1 {

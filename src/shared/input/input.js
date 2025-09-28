@@ -1,9 +1,11 @@
 import Component from '../../components/core/baseComponent.js'
+import { validateHideError } from '../../helpers/validateHideError/validateHideError.js'
+import { validateProducer } from '../../helpers/validateProducer/validateProducer.js'
+import { validateShowError } from '../../helpers/validateShowError/validateShowError.js'
 
 class Input extends Component {
 	#parent
-	#passwordInput
-	#iconElement
+	#errorElement
 
 	constructor(parent, config = {}) {
 		super(parent, { id: config.id }, 'input')
@@ -11,35 +13,45 @@ class Input extends Component {
 		this.config = config
 	}
 
-	#togglePasswordVisibility() {
-		const passwordType =
-			this.#passwordInput.getAttribute('type') === 'password'
-				? 'text'
-				: 'password'
+	#validateInput() {
+		const result = validateProducer(this.self.value, this.config.validator)
 
-		this.#passwordInput.setAttribute('type', passwordType)
-		this.#iconElement.src =
-			passwordType === 'password'
-				? '/src/assets/img/eye_close.svg'
-				: '/src/assets/img/eye_open.svg'
+		if (!result.isValid) {
+			validateShowError(this.#errorElement, result.message)
+			return false
+		} else {
+			validateHideError(this.#errorElement)
+			return true
+		}
 	}
 
-	#addEventListeners() {
-		if (!this.config.postIconID) {
-			return
-		}
-		this.#iconElement.addEventListener('click', () => {
-			this.#togglePasswordVisibility()
+	getValue() {
+		return this.self.value ? this.self.value : ''
+	}
+
+	isValid() {
+		return this.#validateInput()
+	}
+
+	#addEventListener() {
+		this.self.addEventListener('input', () => {
+			this.#validateInput()
+		})
+
+		this.self.addEventListener('blur', () => {
+			this.#validateInput()
 		})
 	}
+
 	/**
 	 * Рендеринг компонента
 	 */
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.html(this.config))
-		this.#passwordInput = document.querySelector('#' + this.config.id)
-		this.#iconElement = document.querySelector('#' + this.config.postIconID)
-		this.#addEventListeners()
+		this.#errorElement = document.querySelector(
+			'#input-error-' + this.config.id,
+		)
+		this.#addEventListener()
 	}
 }
 

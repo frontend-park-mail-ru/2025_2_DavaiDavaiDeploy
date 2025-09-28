@@ -1,10 +1,9 @@
 import { validateLogin } from '../../helpers/validateLogin/validateLogin.js'
 import { validatePassword } from '../../helpers/validatePassword/validatePassword.js'
-import { validatePasswordConfirm } from '../../helpers/validatePasswordConfirm/validatePasswordConfirm.js'
 
 export default {
 	action: '/',
-	id: 'registration-form',
+	id: 'login-form',
 	inputs: {
 		login: {
 			id: 'login',
@@ -27,22 +26,11 @@ export default {
 			formGroupID: 'password-form-group',
 			postIconID: 'password-icon',
 		},
-		passwordConfirm: {
-			id: 'confirm-password',
-			label: 'Подтверждение пароля',
-			name: 'confirm-password',
-			placeholder: 'Введите пароль',
-			required: true,
-			isConfirm: true,
-			validator: validatePasswordConfirm,
-			formGroupID: 'confirm-password-form-group',
-			postIconID: 'confirm-password-icon',
-		},
 	},
 	buttons: {
 		submitBtn: {
 			id: 'form__line__login_button',
-			text: 'Зарегистрироваться',
+			text: 'Войти',
 			type: 'submit',
 			class: 'form__button',
 		},

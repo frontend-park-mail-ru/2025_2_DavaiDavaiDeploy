@@ -1,5 +1,6 @@
 import Button from '../../shared/button/button.js'
 import Input from '../../shared/input/input.js'
+import PasswordInput from '../../shared/passwordInput/passwordInput.js'
 import Component from '../core/baseComponent.js'
 import registrationFormUsecase from './registrationForm.usecase.js'
 
@@ -32,6 +33,46 @@ class RegistrationForm extends Component {
 		this.#button.remove()
 	}
 
+	#updatePasswordConfirmValidation() {
+		if (this.#passwordInput && this.#passwordConfirmInput) {
+			const passwordValue = this.#passwordInput.getValue()
+			this.#passwordConfirmInput.updateExtraValue(passwordValue)
+			this.#passwordConfirmInput.isValid()
+		}
+	}
+
+	/**
+	 * Валидация данных формы
+	 */
+	#validateData() {
+		const isLoginValid = this.#loginInput.isValid()
+		const isPasswordValid = this.#passwordInput.isValid()
+		const isConfirmValid = this.#passwordConfirmInput.isValid()
+
+		return isLoginValid && isPasswordValid && isConfirmValid
+	}
+
+	/**
+	 * Обработчик отправки формы
+	 */
+	#handleSubmit = e => {
+		const isValid = this.#validateData()
+
+		if (!isValid) {
+			e.preventDefault()
+			e.stopPropagation()
+			e.target.blur()
+		}
+	}
+
+	#addEventListeners() {
+		if (this.#passwordInput.self) {
+			this.#passwordInput.self.addEventListener('input', () => {
+				this.#updatePasswordConfirmValidation()
+			})
+		}
+	}
+
 	/**
 	 * Рендеринг компонента
 	 */
@@ -50,23 +91,26 @@ class RegistrationForm extends Component {
 		)
 		this.#loginInput.render()
 
-		this.#passwordInput = new Input(
+		this.#passwordInput = new PasswordInput(
 			this.self,
 			registrationFormUsecase.inputs.password,
 		)
 		this.#passwordInput.render()
 
-		this.#passwordConfirmInput = new Input(
+		this.#passwordConfirmInput = new PasswordInput(
 			this.self,
 			registrationFormUsecase.inputs.passwordConfirm,
+			this.#passwordInput.getValue(),
 		)
 		this.#passwordConfirmInput.render()
 
-		this.#button = new Button(
-			document.querySelector('#form__footer'),
-			registrationFormUsecase.buttons.submitBtn,
-		)
+		this.#button = new Button(document.querySelector('#form__footer'), {
+			...registrationFormUsecase.buttons.submitBtn,
+			onSubmit: this.#handleSubmit,
+		})
 		this.#button.render()
+
+		this.#addEventListeners()
 	}
 }
 
