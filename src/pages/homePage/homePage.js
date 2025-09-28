@@ -34,7 +34,7 @@ export default class Home {
 			FILMS.forEach(film => {
 				let filmCard = new FilmCard(this.grid, {
 					id: film.id,
-					image: '/src/assets/img/1+1.webp',
+					image: '../../assets/img/1+1.webp',
 					title: film.title,
 					info: `${film.year}, ${film.genres[1].title}`,
 					rating: film.rating,

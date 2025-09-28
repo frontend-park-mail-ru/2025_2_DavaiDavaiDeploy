@@ -20,8 +20,8 @@ class Input extends Component {
 		this.#passwordInput.setAttribute('type', passwordType)
 		this.#iconElement.src =
 			passwordType === 'password'
-				? '/src/assets/img/eye_close.svg'
-				: '/src/assets/img/eye_open.svg'
+				? '../../assets/img/eye_close.svg'
+				: '../../assets/img/eye_open.svg'
 	}
 
 	#addEventListeners() {
