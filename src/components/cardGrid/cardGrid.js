@@ -2,11 +2,6 @@ import FilmCard from '../../components/filmCard/filmCard.js'
 import { serverAddr } from '../../consts/serverAddr.js'
 import { getGridColumnCount } from '../../helpers/columnCountHelper.js'
 import { throttle } from '../../helpers/throttleHelper.js'
-import filmActions from '../../redux/features/film/actions.js'
-import {
-	getFilms,
-	getFilmSection,
-} from '../../redux/features/film/selectors.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
 import FilmCardPlaceholder from '../filmCardPlaceholder/filmCardPlaceholder.js'
@@ -47,7 +42,7 @@ export default class CardGrid extends Component {
 			if (this.isDestroyed) {
 				return
 			}
-			const films = getFilmSection(store.getState())
+			const films = this.props.getSection(store.getState())
 			this.renderNewCards(films)
 		})
 
@@ -57,10 +52,7 @@ export default class CardGrid extends Component {
 		}
 		const cardsPerRow = getGridColumnCount(grid)
 		store.dispatch(
-			filmActions.getFilmsAction(
-				cardsPerRow * UPLOADING_ROWS_COUNT,
-				this.#offset,
-			),
+			this.props.getAction(cardsPerRow * UPLOADING_ROWS_COUNT, this.#offset),
 		)
 		this.#offset += cardsPerRow * UPLOADING_ROWS_COUNT
 
@@ -79,7 +71,7 @@ export default class CardGrid extends Component {
 		}
 
 		const { startIndex, endIndex } = this.getVisibleCards()
-		const films = getFilms(store.getState())
+		const films = this.props.getFilms(store.getState())
 
 		for (let i = 0; i < films.length; i++) {
 			if (startIndex <= i && i < endIndex) {
@@ -154,7 +146,7 @@ export default class CardGrid extends Component {
 
 		const cardHeight = minHeight || MIN_CARD_HEIGHT
 		const cardsPerRow = getGridColumnCount(grid)
-		const films = getFilms(store.getState())
+		const films = this.props.getFilms(store.getState())
 
 		const scrollTop = window.scrollY
 		const gridRect = grid.getBoundingClientRect()
@@ -178,7 +170,7 @@ export default class CardGrid extends Component {
 				endIndex = length
 			} else {
 				store.dispatch(
-					filmActions.getFilmsAction(
+					this.props.getAction(
 						cardsPerRow * UPLOADING_ROWS_COUNT,
 						this.#offset,
 					),
