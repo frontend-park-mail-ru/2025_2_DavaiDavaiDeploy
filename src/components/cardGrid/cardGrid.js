@@ -109,10 +109,10 @@ export default class CardGrid extends Component {
 
 		const invisibleTopHeight = Math.max(0, scrollTop - gridTop)
 		const rowsBeforeStart = Math.max(
-			Math.floor(invisibleTopHeight / cardHeight) - 1,
+			Math.floor(invisibleTopHeight / cardHeight) - 2,
 			0,
 		)
-		const rowsInViewPort = 3
+		const rowsInViewPort = Math.ceil(window.innerHeight / cardHeight) + 2
 
 		const startIndex = rowsBeforeStart * cardsPerRow
 		const endIndex = startIndex + rowsInViewPort * cardsPerRow
