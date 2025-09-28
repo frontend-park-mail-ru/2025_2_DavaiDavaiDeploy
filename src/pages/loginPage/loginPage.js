@@ -1,4 +1,6 @@
 import LoginForm from '../../components/loginForm/loginForm.js'
+import actions from '../../redux/features/user/actions.js'
+import { store } from '../../redux/store.js'
 
 export default class LoginPage {
 	#parent
@@ -14,11 +16,18 @@ export default class LoginPage {
 		})
 	}
 
+	#onSubmit = (login, password) => {
+		store.dispatch(actions.loginUserAction(login, password))
+	}
+
 	render() {
 		this.#parent.innerHTML = ''
 		this.#parent.insertAdjacentHTML('afterbegin', this.template)
 
-		const form = new LoginForm(document.querySelector('#login-form-container'))
+		const form = new LoginForm(
+			document.querySelector('#login-form-container'),
+			this.#onSubmit,
+		)
 		form.render()
 	}
 

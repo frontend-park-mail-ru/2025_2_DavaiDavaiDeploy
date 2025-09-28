@@ -1,4 +1,6 @@
 import registrationForm from '../../components/registrationForm/registrationForm.js'
+import actions from '../../redux/features/user/actions.js'
+import { store } from '../../redux/store.js'
 
 export default class RegistrationPage {
 	#parent
@@ -14,12 +16,17 @@ export default class RegistrationPage {
 		})
 	}
 
+	#onSubmit = (login, password) => {
+		store.dispatch(actions.registerUserAction(login, password))
+	}
+
 	render() {
 		this.#parent.innerHTML = ''
 		this.#parent.insertAdjacentHTML('afterbegin', this.template)
 
 		const form = new registrationForm(
 			document.querySelector('#registration-form-container'),
+			this.#onSubmit,
 		)
 		form.render()
 	}

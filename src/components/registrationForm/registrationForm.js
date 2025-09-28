@@ -10,8 +10,9 @@ class RegistrationForm extends Component {
 	#passwordInput
 	#passwordConfirmInput
 	#button
+	#onSubmit
 
-	constructor(parent) {
+	constructor(parent, onSubmit) {
 		super(
 			parent,
 			{
@@ -24,6 +25,7 @@ class RegistrationForm extends Component {
 		this.#passwordInput = null
 		this.#passwordConfirmInput = null
 		this.#button = null
+		this.#onSubmit = onSubmit
 	}
 
 	remove() {
@@ -63,6 +65,12 @@ class RegistrationForm extends Component {
 			e.stopPropagation()
 			e.target.blur()
 		}
+
+		isValid &&
+			this.#onSubmit(
+				this.#loginInput.getValue(),
+				this.#passwordInput.getValue(),
+			)
 	}
 
 	#addEventListeners() {

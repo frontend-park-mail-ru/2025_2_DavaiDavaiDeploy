@@ -105,13 +105,11 @@ export class HTTPClient {
 
 	formReqUrl(url, params) {
 		let requestUrl = new URL(url, this.default.baseUrl)
-
 		for (const [key, value] of Object.entries(params)) {
 			if (value != null) {
 				requestUrl.searchParams.append(key, value.toString())
 			}
 		}
-
 		return requestUrl.toString()
 	}
 
