@@ -4,10 +4,12 @@ import { throttle } from '../../helpers/throttleHelper.js'
 import filmActions from '../../redux/features/film/actions.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
-import Plaseholder from '../placeholder/placeholder.js'
+import FilmCardPlaceholder from '../filmCardPlaceholder/filmCardPlaceholder.js'
 
 const UPLOADING_ROWS_COUNT = 3
-const ROWS_IN_BUFFER = 2
+const ROWS_IN_BUFFER = 3
+const MIN_CARD_HEIGHT = 300
+const THROTTLE_DELAY = 100
 
 export default class CardGrid extends Component {
 	#unsubscribe
@@ -44,8 +46,14 @@ export default class CardGrid extends Component {
 		)
 		this.#offset += cardsPerRow * UPLOADING_ROWS_COUNT
 
-		window.addEventListener('scroll', throttle(this.updateViewport, 100))
-		window.addEventListener('resize', throttle(this.updateViewport, 100))
+		window.addEventListener(
+			'scroll',
+			throttle(this.updateViewport, THROTTLE_DELAY),
+		)
+		window.addEventListener(
+			'resize',
+			throttle(this.updateViewport, THROTTLE_DELAY),
+		)
 	}
 
 	updateViewport = () => {
@@ -57,21 +65,21 @@ export default class CardGrid extends Component {
 			if (startIndex <= i && i < endIndex) {
 				this.renderFilm(films[i])
 			} else {
-				this.removeFilm(films[i])
+				this.replaceFilm(films[i])
 			}
 		}
 	}
 
-	removeFilm = film => {
-		let filmCard = document.querySelector(`#film-${film.id}`)
+	replaceFilm = film => {
+		const filmCard = document.querySelector(`#film-${film.id}`)
 		if (!filmCard) {
 			return
 		}
-		const сhild = filmCard.querySelector('.placeholder')
-		if (сhild) {
+		const child = filmCard.querySelector('.placeholder')
+		if (child) {
 			return
 		}
-		const placeholder = new Plaseholder(filmCard)
+		const placeholder = new FilmCardPlaceholder(filmCard)
 		filmCard.innerHTML = ''
 		placeholder.render()
 	}
@@ -104,7 +112,7 @@ export default class CardGrid extends Component {
 			)
 		}
 
-		const cardHeight = minHeight !== 0 ? minHeight : 300
+		const cardHeight = minHeight !== 0 ? minHeight : MIN_CARD_HEIGHT
 
 		const cardsPerRow = getGridColumnCount(this.grid)
 		const films = store.getState().film.films

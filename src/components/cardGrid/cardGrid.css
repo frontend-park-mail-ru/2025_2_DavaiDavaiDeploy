@@ -1,4 +1,5 @@
 @import url('../../components/filmCard/filmCard.css');
+@import url('../../components/filmCardPlaceholder/filmCardPlaceholder.css');
 
 .grid {
 	display: grid;
