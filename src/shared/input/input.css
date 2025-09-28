@@ -1,0 +1,4 @@
+.input-error {
+	height: 1.25rem;
+	color: var(--color-error);
+}
