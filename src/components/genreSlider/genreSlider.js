@@ -1,3 +1,4 @@
+import { serverAddr } from '../../consts/serverAddr.js'
 import { createPeriodFunction } from '../../helpers/launchHelper.js'
 import genreActions from '../../redux/features/genre/actions.js'
 import { store } from '../../redux/store.js'
@@ -62,7 +63,7 @@ export default class GenreSlider extends Component {
 			const image = document.createElement('img')
 			image.className = 'slider__image'
 			image.alt = genre.title
-			image.src = '/src/assets/img/genres/Ужасы.png'
+			image.src = `${serverAddr}${genre.icon}`
 			image.setAttribute('data-id', genre.id)
 			this.slider.appendChild(image)
 		})
