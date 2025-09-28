@@ -2,7 +2,6 @@
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
-	cursor: pointer;
 	text-align: center;
 	text-decoration: none;
 	color: inherit;
@@ -39,10 +38,10 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 	flex-grow: 1;
 	min-height: 60px;
-	gap: 5px;
+	gap: 10px;
 	padding: 15px 10px;
 	background-color: transparent;
 }
@@ -81,4 +80,17 @@
 
 .film-card__rating-low {
 	background-color: var(--color-rating-low);
+}
+
+.film-card a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.film-card a:visited,
+.film-card a:active,
+.film-card a:focus,
+.film-card a:hover {
+	text-decoration: none;
+	color: inherit;
 }
