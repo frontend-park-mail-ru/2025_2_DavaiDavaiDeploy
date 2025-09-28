@@ -1,3 +1,4 @@
+import '../build/partials/logo.js'
 import '../build/precompiled.js'
 import Layout from './components/layout/layout.js'
 import { serverAddr } from './consts/serverAddr.js'
@@ -7,8 +8,9 @@ import { routes } from './routes/index.js'
 
 HTTPClient.configurate({ baseUrl: serverAddr })
 
-let contentContainer = document.createElement('div')
+const contentContainer = document.createElement('div')
 contentContainer.id = 'app'
+contentContainer.classList.add('app')
 document.body.appendChild(contentContainer)
 
 const layout = new Layout(contentContainer)

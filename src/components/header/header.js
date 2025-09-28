@@ -1,3 +1,4 @@
+import router from '../../modules/router/index.js'
 import Component from '../core/baseComponent.js'
 
 export default class Header extends Component {
@@ -33,8 +34,12 @@ export default class Header extends Component {
 		const loginButton = document.querySelector('#login-button')
 		if (loginButton) {
 			loginButton.addEventListener('click', () => {
-				window.location.href = '/login'
+				router.handleRouteChange('/login')
 			})
 		}
+		const logo_a = document.querySelector('#logo__a')
+		logo_a?.addEventListener('click', e => {
+			router.handleClick(e)
+		})
 	}
 }

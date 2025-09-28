@@ -1,3 +1,4 @@
+import { getFilmsMocks } from '../../../mocks/films.js'
 import HTTPClient from '../../../modules/HTTPClient/index.js'
 import types from './types.js'
 
@@ -33,9 +34,14 @@ const getFilmsAction = (limit, offset) => async dispatch => {
 	}
 }
 
+const getFilmsActionFake = (limit, offset) => async dispatch => {
+	dispatch(returnFilmsAction(getFilmsMocks(limit, offset)))
+}
+
 export default {
 	getFilmsAction,
 	setFilmsLoadingAction,
 	returnFilmsAction,
 	returnFilmsErrorAction,
+	getFilmsActionFake,
 }

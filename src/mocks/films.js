@@ -9,7 +9,22 @@ export const TOPFILM = {
 		'Продолжение эпической саги о Полу Атрейдесе. Он продолжает путь к тому, чтобы стать МуадДибом, в то время как его враги плетут заговоры против него.',
 }
 
-export const FILMS = [
+export function getFilmsMocks(limit, offset = 0) {
+	const result = []
+	if (offset + limit > 300) {
+		return result
+	}
+	const length = FILMS.length
+
+	for (let i = 0; i < limit; i++) {
+		const index = (offset + i) % length
+		FILMS[index].id = offset + i
+		result.push(FILMS[index])
+	}
+	return result
+}
+
+export let FILMS = [
 	{
 		id: 1,
 		title: 'Интерстеллар',

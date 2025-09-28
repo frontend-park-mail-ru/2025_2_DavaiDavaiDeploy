@@ -25,7 +25,6 @@ const filmReducer = (state = initialState, action) => {
 			return {
 				...state,
 				loading: false,
-				films: [],
 				error: payload.error,
 			}
 		default:

@@ -1,9 +1,10 @@
+{{!< default }}
 <header id="header" class="header">
-   <a id="logo__a" href="/"><img src="/src/assets/img/logo1.png" alt="Поиск" class="header__logo"></a>
+   {{> logo.hbs }}
     {{!-- <nav class="sections">
         <a href="#" class="header__link">Фильмы</a>
         <a href="#" class="header__link">Сериалы</a>
-    </nav> --}}
+    </nav> - --}}
     {{!-- <div class="search">
         <input type="text" class="search__input" placeholder="Поиск фильмов, актеров...">
         <img src="/src/assets/img/loupe.svg" alt="Поиск" class="search__icon">
@@ -11,7 +12,7 @@
     {{#if authorized}}
         <a href="#" class="user">
             <span class="user__name">{{login}}</span>
-            <img src="{{avatar}}" alt="Аватар" class="user__avatar">
+            <img src="/src/assets/img/empty_user.svg" alt="Аватар" class="user__avatar">
         </a>
     {{else}}
         <div class="user">
