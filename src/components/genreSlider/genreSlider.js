@@ -4,7 +4,7 @@ import genreActions from '../../redux/features/genre/actions.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
 
-const AUTO_SLIDE_DURATION = 5000
+const AUTO_SLIDE_DURATION = 7000
 const AUTO_SLIDE_RESTART_DURATION = 30000
 const ANIMATION_DURATION = 300
 const CHANGE_DURATION = 20
@@ -59,6 +59,8 @@ export default class GenreSlider extends Component {
 
 	update = genres => {
 		this.state.genresCount = genres.length
+		this.slider.innerHTML = ''
+
 		genres.forEach(genre => {
 			const image = document.createElement('img')
 			image.className = 'slider__image'
@@ -67,6 +69,10 @@ export default class GenreSlider extends Component {
 			image.setAttribute('data-id', genre.id)
 			this.slider.appendChild(image)
 		})
+
+		if (this.autoSlider && this.autoSlider.isWorking()) {
+			this.autoSlider.stop()
+		}
 
 		this.initSlider()
 
@@ -89,11 +95,9 @@ export default class GenreSlider extends Component {
 	onGenreClick = event => {
 		event.preventDefault()
 		event.stopPropagation()
-
 		// const target = event.target
-
 		// if (target.classList.contains('slider__image')) {
-		// 	const id = target.dataset.data-id
+		// 	const id = target.dataset.id
 		// }
 	}
 
