@@ -1,6 +1,6 @@
 export const TOPFILM = {
 	id: 2,
-	image: '/src/assets/img/dune.webp',
+	image: '/src/assets/img/dune.jpg',
 	title: 'Дюна: Часть вторая',
 	year: '2024',
 	genre: 'Фантастика',

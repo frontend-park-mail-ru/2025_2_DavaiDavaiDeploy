@@ -1,37 +1,30 @@
 a.top-film {
 	display: block;
 	position: relative;
-	top: 0;
+	width: 100%;
 	overflow: hidden;
 	text-decoration: none;
 	color: inherit;
 	z-index: 1;
-	margin-top: -6.5rem;
+}
+
+a.top-film::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 33%;
+	background: linear-gradient(to bottom, rgb(0 0 0 / 85%), transparent);
+	z-index: 1;
+	pointer-events: none;
 }
 
 .top-film > section {
 	display: flex;
 	position: relative;
 	width: 100%;
-	min-height: 70vh;
-}
-
-.top-film::after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(
-		90deg,
-		#0a0a1fff 33%,
-		#0f122fe6 40%,
-		#141a3f99 55%,
-		#1e2a5e00 100%
-	);
-	z-index: 1;
-	pointer-events: none;
+	min-height: 100vh;
 }
 
 .top-film__content {
@@ -43,6 +36,8 @@ a.top-film {
 	justify-content: center;
 	gap: 2.25rem;
 	padding: 0 7.5rem;
+	background: #00154601;
+	backdrop-filter: blur(2px);
 }
 
 .top-film__title {
@@ -76,8 +71,8 @@ a.top-film {
 .top-film__image {
 	position: absolute;
 	top: 0;
-	left: 30%;
-	width: 70%;
+	left: 0;
+	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	z-index: 0;
@@ -85,7 +80,7 @@ a.top-film {
 }
 
 .top-film:hover .top-film__image {
-	filter: brightness(1.2);
+	filter: brightness(1.1);
 	transition: filter 0.4s ease;
 }
 
