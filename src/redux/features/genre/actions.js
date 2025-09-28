@@ -14,6 +14,13 @@ const returnGenreAction = data => {
 	}
 }
 
+const returnGenreFilmsAction = data => {
+	return {
+		type: types.GENRE_FILMS_LOADED,
+		payload: { films: data },
+	}
+}
+
 const returnGenresAction = data => {
 	return {
 		type: types.GENRES_LOADED,
@@ -48,9 +55,22 @@ const getGenresAction = () => async dispatch => {
 	}
 }
 
+const getGenreFilmsAction = (id, limit, offset) => async dispatch => {
+	dispatch(setGenreLoadingAction())
+	try {
+		const response = await HTTPClient.get(`/api/films/genre/${id}`, {
+			params: { count: limit, offset },
+		})
+		dispatch(returnGenreFilmsAction(response.data))
+	} catch (error) {
+		dispatch(returnGenreErrorAction(error.message || 'Error'))
+	}
+}
+
 export default {
 	getGenreAction,
 	getGenresAction,
+	getGenreFilmsAction,
 	setGenreLoadingAction,
 	returnGenreAction,
 	returnGenreErrorAction,

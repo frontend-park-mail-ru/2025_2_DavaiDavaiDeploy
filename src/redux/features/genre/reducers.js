@@ -4,6 +4,7 @@ const initialState = {
 	loading: false,
 	genres: [],
 	curGenre: {},
+	films: [],
 	error: null,
 }
 
@@ -21,7 +22,6 @@ const genreReducer = (state = initialState, action) => {
 				...state,
 				loading: false,
 				curGenre: payload.genre,
-				genres: payload.genres,
 			}
 		case types.GENRES_LOADED:
 			return {
@@ -29,6 +29,13 @@ const genreReducer = (state = initialState, action) => {
 				loading: false,
 				genres: payload.genres,
 			}
+		case types.GENRE_FILMS_LOADED:
+			return {
+				...state,
+				loading: false,
+				films: [...state.films, ...payload.films],
+			}
+
 		case types.GENRE_ERROR:
 			return {
 				...state,
