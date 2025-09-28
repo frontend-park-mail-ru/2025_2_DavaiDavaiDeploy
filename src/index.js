@@ -1,5 +1,5 @@
-import '../build/partials/logo.js'
-import '../build/precompiled.js'
+import './build/partials/logo.js'
+import './build/precompiled.js'
 import Layout from './components/layout/layout.js'
 import { serverAddr } from './consts/serverAddr.js'
 import HTTPClient from './modules/HTTPClient/index.js'

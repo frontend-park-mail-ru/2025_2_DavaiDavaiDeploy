@@ -1,17 +1,17 @@
 import { execSync } from 'child_process'
 import fs from 'fs'
 
-fs.mkdirSync('build', { recursive: true })
+fs.mkdirSync('src/build', { recursive: true })
 
-fs.mkdirSync('build/partials', { recursive: true })
+fs.mkdirSync('src/build/partials', { recursive: true })
 
 execSync(
-	'npx handlebars src/components/logo/logo.hbs -f build/partials/logo.js -p',
+	'npx handlebars src/components/logo/logo.hbs -f src/build/partials/logo.js -p',
 	{ stdio: 'inherit' },
 )
 
 execSync(
-	'npx globstar -- npx handlebars src/**/*.hbs -m -f build/precompiled.js ',
+	'npx globstar -- npx handlebars src/**/*.hbs -m -f src/build/precompiled.js ',
 	{
 		stdio: 'inherit',
 	},
