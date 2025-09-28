@@ -1,4 +1,5 @@
-import { formatDuration } from '../../helpers/formatHelper.js'
+import { formatDuration } from '../../helpers/durationFormatHelper.js'
+import { formatRating } from '../../helpers/ratingFormatHelper.js'
 import { getRatingType } from '../../helpers/ratingTypeHelper.js'
 import Component from '../core/baseComponent.js'
 
@@ -19,7 +20,7 @@ export default class TopFilm extends Component {
 			genre: this.props.genre,
 			duration: formatDuration(this.props.duration),
 			desription: this.props.desription,
-			rating: this.props.rating.toFixed(1),
+			rating: formatRating(this.props.rating),
 			ratingType: getRatingType(this.props.rating),
 		}
 		this.parent.insertAdjacentHTML('afterbegin', this.html(context))

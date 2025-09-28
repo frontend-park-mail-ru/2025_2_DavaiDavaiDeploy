@@ -15,7 +15,14 @@ a.top-film::before {
 	left: 0;
 	width: 100%;
 	height: 33%;
-	background: linear-gradient(to bottom, rgb(0 0 0 / 85%), transparent);
+	background: linear-gradient(
+		to bottom,
+		#000000d9 0%,
+		#0009 25%,
+		#0000004d 50%,
+		#0000001a 75%,
+		#0000 100%
+	);
 	z-index: 1;
 	pointer-events: none;
 }
@@ -30,23 +37,42 @@ a.top-film::before {
 .top-film__content {
 	position: relative;
 	z-index: 2;
-	flex: 0 0 50%;
+	flex: 0 0 45%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	gap: 2.25rem;
 	padding: 0 7.5rem;
-	background: #00154601;
-	backdrop-filter: blur(2px);
+	backdrop-filter: blur(1px);
+}
+
+.top-film__content::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		to right,
+		#000000d9 0%,
+		#0009 25%,
+		#0000004d 50%,
+		#0000001a 75%,
+		#0000 100%
+	);
+	z-index: -1;
+	pointer-events: none;
 }
 
 .top-film__title {
 	text-decoration: none;
+	background: transparent;
 }
 
 .top-film__info {
 	display: flex;
-	width: 30%;
+	width: 40%;
 	flex-wrap: wrap;
 	justify-content: space-between;
 	padding: 0;
@@ -58,8 +84,8 @@ a.top-film::before {
 	font-size: 1rem;
 	font-weight: 400;
 	color: var(--color-text-secondary);
-	background: transparent;
 	text-decoration: none;
+	background: transparent;
 }
 
 .top-film__description {
@@ -72,16 +98,10 @@ a.top-film::before {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 100%;
+	width: 110%;
 	height: 100%;
 	object-fit: cover;
 	z-index: 0;
-	transition: filter 0.3s ease;
-}
-
-.top-film:hover .top-film__image {
-	filter: brightness(1.1);
-	transition: filter 0.4s ease;
 }
 
 .top-film__header {
@@ -89,6 +109,14 @@ a.top-film::before {
 	flex-direction: row;
 	align-items: center;
 	gap: 2rem;
+}
+
+.top-film__title,
+.top-film__info,
+.top-film__description,
+.top-film__item {
+	background: none;
+	backdrop-filter: none;
 }
 
 .top-film__rating,

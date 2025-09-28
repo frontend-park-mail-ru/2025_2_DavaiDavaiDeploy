@@ -17,7 +17,7 @@
 	padding-bottom: 130%;
 	transition: all 0.3s ease;
 	overflow: hidden;
-	border-radius: 0.625rem; /* теперь все углы изображения скруглены */
+	border-radius: 0.625rem;
 }
 
 .film-card__image {

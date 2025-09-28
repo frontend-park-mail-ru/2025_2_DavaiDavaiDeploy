@@ -95,10 +95,6 @@ export default class GenreSlider extends Component {
 	onGenreClick = event => {
 		event.preventDefault()
 		event.stopPropagation()
-		// const target = event.target
-		// if (target.classList.contains('slider__image')) {
-		// 	const id = target.dataset.id
-		// }
 	}
 
 	onSliderClick = () => {
