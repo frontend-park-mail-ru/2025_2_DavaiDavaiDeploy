@@ -1,4 +1,4 @@
-import { isProduction } from './env.js'
+import { isProduction } from './../env.js'
 
 export const serverAddr = isProduction
 	? 'http://ddfilms.online/api'
