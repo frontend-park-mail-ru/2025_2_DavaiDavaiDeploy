@@ -98,7 +98,7 @@ a.top-film::before {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 110%;
+	width: 130%;
 	height: 100%;
 	object-fit: cover;
 	z-index: 0;
