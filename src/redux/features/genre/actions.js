@@ -1,9 +1,16 @@
 import HTTPClient from '../../../modules/HTTPClient/index.js'
 import types from './types.js'
 
-const setGenresLoadingAction = () => {
+const setGenreLoadingAction = () => {
 	return {
-		type: types.GENRES_LOADING,
+		type: types.GENRE_LOADING,
+	}
+}
+
+const returnGenreAction = data => {
+	return {
+		type: types.GENRE_LOADED,
+		payload: { genre: data },
 	}
 }
 
@@ -14,26 +21,37 @@ const returnGenresAction = data => {
 	}
 }
 
-const returnGenresErrorAction = error => {
+const returnGenreErrorAction = error => {
 	return {
-		type: types.GENRES_ERROR,
+		type: types.GENRE_ERROR,
 		payload: { genres: [], error: error },
 	}
 }
 
+const getGenreAction = id => async dispatch => {
+	dispatch(setGenreLoadingAction())
+	try {
+		const response = await HTTPClient.get(`/api/genres/${id}`)
+		dispatch(returnGenreAction(response.data))
+	} catch (error) {
+		dispatch(returnGenreErrorAction(error.message || 'Error'))
+	}
+}
+
 const getGenresAction = () => async dispatch => {
-	dispatch(setGenresLoadingAction())
+	dispatch(setGenreLoadingAction())
 	try {
 		const response = await HTTPClient.get('/api/genres')
 		dispatch(returnGenresAction(response.data))
 	} catch (error) {
-		dispatch(returnGenresErrorAction(error.message || 'Error'))
+		dispatch(returnGenreErrorAction(error.message || 'Error'))
 	}
 }
 
 export default {
+	getGenreAction,
 	getGenresAction,
-	setGenresLoadingAction,
-	returnGenresAction,
-	returnGenresErrorAction,
+	setGenreLoadingAction,
+	returnGenreAction,
+	returnGenreErrorAction,
 }
