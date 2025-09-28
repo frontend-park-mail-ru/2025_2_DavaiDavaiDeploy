@@ -1,11 +1,14 @@
-import '../build/partials/logo.js'
-import '../build/precompiled.js'
+import './build/partials/logo.js'
+import './build/precompiled.js'
 import Layout from './components/layout/layout.js'
+import { isProduction } from './env.js'
 import HTTPClient from './modules/HTTPClient/index.js'
 import router from './modules/router/index.js'
 import { routes } from './routes/index.js'
 
-HTTPClient.configurate({ baseUrl: 'https://dummyjson.com' })
+HTTPClient.configurate({
+	baseUrl: isProduction ? 'http://ddfilms.online' : 'localhost:8080',
+})
 
 let contentContainer = document.createElement('div')
 contentContainer.id = 'app'
