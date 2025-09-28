@@ -3,6 +3,6 @@ export const getGridColumnCount = gridElement => {
 		return 0
 	}
 	const style = window.getComputedStyle(gridElement)
-	const columns = style.getPropertyValue('grid-template-columns')
-	return columns.split(' ').length
+	const columns = style.getPropertyValue('grid-template-columns').trim()
+	return columns.split(/\s+/).length
 }

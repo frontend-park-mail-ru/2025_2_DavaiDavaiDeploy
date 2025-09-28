@@ -1,5 +1,5 @@
 import { serverAddr } from '../../consts/serverAddr.js'
-import { createPeriodFunction } from '../../helpers/launchHelper.js'
+import { createPeriodFunction } from '../../helpers/periodStartHelper/periodStartHelper.js'
 import genreActions from '../../redux/features/genre/actions.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
