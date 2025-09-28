@@ -24,6 +24,7 @@ export const routes = {
 	genre: {
 		href: '/genre',
 		component: GenrePage,
+		needProps: true,
 	},
 	error404: {
 		href: '/error',

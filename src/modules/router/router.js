@@ -96,11 +96,12 @@ class Router {
 
 		this.lastPage?.destroy()
 
-		// Рендерим страницу
 		let page = new route.component(contentContainer)
-		if (route.href == '/genre') {
+		if (route.needProps) {
 			page = new route.component(contentContainer, props)
 		}
+
+		// Рендерим страницу
 		page.render()
 		this.lastPage = page
 	}
