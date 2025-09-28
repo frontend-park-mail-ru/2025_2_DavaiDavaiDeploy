@@ -44,7 +44,7 @@ h3 {
 p {
 	font-size: 1rem;
 	font-family: Lato, Arial, sans-serif;
-	color: var(--color-text-grey);
+	color: var(--color-text-secondary);
 }
 
 .app {

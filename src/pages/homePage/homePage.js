@@ -45,6 +45,7 @@ export default class Home {
 			genre: TOPFILM.genre,
 			duration: TOPFILM.duration,
 			desription: TOPFILM.desription,
+			rating: 9.7,
 		})
 		topFilm.render()
 	}

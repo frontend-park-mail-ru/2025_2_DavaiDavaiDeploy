@@ -37,7 +37,6 @@ export default class Header extends Component {
 				router.handleRouteChange('/login')
 			})
 		}
-
 		const logo_a = document.querySelector('#logo__a')
 		logo_a?.addEventListener('click', e => {
 			router.handleClick(e)

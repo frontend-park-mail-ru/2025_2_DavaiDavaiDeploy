@@ -1,3 +1,4 @@
+import { formatRating } from '../../helpers/ratingFormatHelper.js'
 import { getRatingType } from '../../helpers/ratingTypeHelper.js'
 import Component from '../core/baseComponent.js'
 
@@ -29,7 +30,7 @@ export default class FilmCard extends Component {
 			image: this.props.image,
 			title: this.props.title,
 			info: this.props.info,
-			rating: this.props.rating.toFixed(1),
+			rating: formatRating(this.props.rating),
 			ratingType: getRatingType(this.props.rating),
 		}
 		this.self.outerHTML = this.html(context)

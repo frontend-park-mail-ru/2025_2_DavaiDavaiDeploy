@@ -1,14 +1,6 @@
 {{!< default }}
 <header id="header" class="header">
    {{> logo.hbs }}
-    <nav class="sections">
-        <a href="#" class="header__link">Фильмы</a>
-        <a href="#" class="header__link">Сериалы</a>
-    </nav>
-    {{!-- <div class="search">
-        <input type="text" class="search__input" placeholder="Поиск фильмов, актеров...">
-        <img src="/src/assets/img/loupe.svg" alt="Поиск" class="search__icon">
-    </div> --}}
     {{#if authorized}}
         <a href="#" class="user">
             <span class="user__name">{{login}}</span>
