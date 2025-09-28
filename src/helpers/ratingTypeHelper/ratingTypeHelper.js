@@ -1,4 +1,4 @@
-import { rating as ratingConsts } from '../consts/raiting.js'
+import { rating as ratingConsts } from '../../consts/raiting.js'
 
 export const getRatingType = rating => {
 	if (rating >= 8) {
