@@ -8,5 +8,5 @@ export default {
 		'npm run lint:prettier:fix',
 	],
 	'*.{json,md,html,yaml,yml}': ['npm run lint:prettier:fix'],
-	'*.hbs': ['npm run lint:hbs:fix', 'npm run lint:prettier:fix'],
+	'*.hbs': 'npm run lint:prettier:fix',
 }
