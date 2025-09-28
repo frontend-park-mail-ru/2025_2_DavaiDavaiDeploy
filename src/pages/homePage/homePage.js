@@ -31,11 +31,11 @@ export default class Home {
 		this.#parent.appendChild(this.#self)
 		this.#self.insertAdjacentHTML('afterbegin', this.template)
 
-		const genreSlider = new GenreSlider(this.main)
-		genreSlider.render()
+		this.genreSlider = new GenreSlider(this.main)
+		this.genreSlider.render()
 
-		const cardGrid = new CardGrid(this.films)
-		cardGrid.render()
+		this.cardGrid = new CardGrid(this.films)
+		this.cardGrid.render()
 
 		let topFilm = new TopFilm(this.main, {
 			id: TOPFILM.id,
@@ -52,5 +52,7 @@ export default class Home {
 
 	destroy() {
 		this.#unsubscribe?.()
+		this.cardGrid.destroy()
+		this.genreSlider.destroy()
 	}
 }

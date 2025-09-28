@@ -1,5 +1,6 @@
 import { serverAddr } from '../../consts/serverAddr.js'
 import { createPeriodFunction } from '../../helpers/launchHelper.js'
+import router from '../../modules/router/index.js'
 import genreActions from '../../redux/features/genre/actions.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
@@ -30,7 +31,7 @@ export default class GenreSlider extends Component {
 	}
 
 	get slider() {
-		return this.self.querySelector('.slider')
+		return this.self?.querySelector('.slider')
 	}
 
 	get nextBtn() {
@@ -42,6 +43,9 @@ export default class GenreSlider extends Component {
 	}
 
 	get genres() {
+		if (!this.slider) {
+			return []
+		}
 		return Array.from(this.slider.querySelectorAll('.slider__image'))
 	}
 
@@ -51,13 +55,16 @@ export default class GenreSlider extends Component {
 
 		this.#unsubscribe = store.subscribe(() => {
 			const { genres } = store.getState().genre
-			if (genres.length !== 0 && genres !== this.genres) {
+			if (genres && genres.length !== 0 && genres !== this.genres) {
 				this.update(genres)
 			}
 		})
 	}
 
 	update = genres => {
+		if (!this.slider) {
+			return
+		}
 		this.state.genresCount = genres.length
 		this.slider.innerHTML = ''
 
@@ -95,6 +102,11 @@ export default class GenreSlider extends Component {
 	onGenreClick = event => {
 		event.preventDefault()
 		event.stopPropagation()
+		const target = event.target
+		if (target.classList.contains('slider__image')) {
+			const id = target.dataset.id
+			router.handleRouteChange('/genre', true, { id })
+		}
 	}
 
 	onSliderClick = () => {
@@ -196,5 +208,14 @@ export default class GenreSlider extends Component {
 
 	destroy() {
 		this.#unsubscribe?.()
+
+		if (this.autoSlider && this.autoSlider.isWorking()) {
+			this.autoSlider.stop()
+			this.autoSlider = null
+		}
+		if (this.inactivityTimer) {
+			clearTimeout(this.inactivityTimer)
+			this.inactivityTimer = null
+		}
 	}
 }

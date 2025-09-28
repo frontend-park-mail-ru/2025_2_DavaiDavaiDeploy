@@ -17,28 +17,41 @@ export default class CardGrid extends Component {
 	#offset = 0
 	#uploadAllFilms = false
 	#cards = {}
+	isDestroyed = false
 
 	constructor(parent, props = {}) {
 		super(parent, props, 'cardGrid')
+		this.throttledUpdateViewport = throttle(this.updateViewport, THROTTLE_DELAY)
 	}
 
 	get self() {
-		return document.querySelector(`.card-grid`)
+		return document.querySelector(`.card-grid`) || null
 	}
 
 	get grid() {
-		return this.self.querySelector('.grid')
+		const self = this.self
+		if (!self) {
+			return null
+		}
+		return self.querySelector('.grid')
 	}
 
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', this.html())
 
 		this.#unsubscribe = store.subscribe(() => {
+			if (this.isDestroyed) {
+				return
+			}
 			const films = store.getState().film
 			this.renderNewCards(films)
 		})
 
-		const cardsPerRow = getGridColumnCount(this.grid)
+		const grid = this.grid
+		if (!grid) {
+			return
+		}
+		const cardsPerRow = getGridColumnCount(grid)
 		store.dispatch(
 			filmActions.getFilmsAction(
 				cardsPerRow * UPLOADING_ROWS_COUNT,
@@ -47,19 +60,21 @@ export default class CardGrid extends Component {
 		)
 		this.#offset += cardsPerRow * UPLOADING_ROWS_COUNT
 
-		window.addEventListener(
-			'scroll',
-			throttle(this.updateViewport, THROTTLE_DELAY),
-		)
-		window.addEventListener(
-			'resize',
-			throttle(this.updateViewport, THROTTLE_DELAY),
-		)
+		window.addEventListener('scroll', this.throttledUpdateViewport)
+		window.addEventListener('resize', this.throttledUpdateViewport)
 	}
 
 	updateViewport = () => {
-		const { startIndex, endIndex } = this.getVisibleCards()
+		if (this.isDestroyed) {
+			return
+		}
 
+		const grid = this.grid
+		if (!grid) {
+			return
+		}
+
+		const { startIndex, endIndex } = this.getVisibleCards()
 		const films = store.getState().film.films
 
 		for (let i = 0; i < films.length; i++) {
@@ -72,26 +87,40 @@ export default class CardGrid extends Component {
 	}
 
 	replaceFilm = film => {
+		if (this.isDestroyed) {
+			return
+		}
+
 		const filmCard = document.querySelector(`#film-${film.id}`)
 		if (!filmCard) {
 			return
 		}
-		const child = filmCard.querySelector('.placeholder')
-		if (child) {
+		if (filmCard.querySelector('.placeholder')) {
 			return
 		}
+
 		const placeholder = new FilmCardPlaceholder(filmCard)
 		filmCard.innerHTML = ''
 		placeholder.render()
 	}
 
 	renderFilm = film => {
+		if (this.isDestroyed) {
+			return
+		}
+
+		const grid = this.grid
+		if (!grid) {
+			return
+		}
+
 		let card = document.querySelector(`#film-${film.id}`)
-		if (card) {
+		if (card && this.#cards[film.id]) {
 			this.#cards[film.id].rerender()
 			return
 		}
-		let filmCard = new FilmCard(this.grid, {
+
+		const filmCard = new FilmCard(grid, {
 			id: film.id,
 			image: `${serverAddr}${film.icon}`,
 			title: film.title,
@@ -103,26 +132,29 @@ export default class CardGrid extends Component {
 	}
 
 	getVisibleCards = () => {
-		const cards = this.grid.querySelectorAll('.film-card')
-		let minHeight = 0
-		if (cards.length > 0) {
-			minHeight = Math.min(
-				...Array.from(cards).map(
-					filmCard => filmCard.getBoundingClientRect().height,
-				),
-			)
+		if (this.isDestroyed) {
+			return { startIndex: 0, endIndex: 0 }
 		}
 
-		const cardHeight = minHeight !== 0 ? minHeight : MIN_CARD_HEIGHT
+		const grid = this.grid
+		if (!grid) {
+			return { startIndex: 0, endIndex: 0 }
+		}
 
-		const cardsPerRow = getGridColumnCount(this.grid)
+		const cards = grid.querySelectorAll('.film-card')
+		const minHeight = cards.length
+			? Math.min(
+					...Array.from(cards).map(c => c.getBoundingClientRect().height),
+				)
+			: MIN_CARD_HEIGHT
+
+		const cardHeight = minHeight || MIN_CARD_HEIGHT
+		const cardsPerRow = getGridColumnCount(grid)
 		const films = store.getState().film.films
 
 		const scrollTop = window.scrollY
-
-		const gridRect = this.grid.getBoundingClientRect()
+		const gridRect = grid.getBoundingClientRect()
 		const gridTop = gridRect.top + scrollTop
-
 		const invisibleTopHeight = Math.max(0, scrollTop - gridTop)
 		const rowsBeforeStart = Math.max(
 			Math.floor(invisibleTopHeight / cardHeight) - ROWS_IN_BUFFER,
@@ -131,42 +163,38 @@ export default class CardGrid extends Component {
 		const rowsInViewPort =
 			Math.ceil(window.innerHeight / cardHeight) + ROWS_IN_BUFFER
 
-		const startIndex = rowsBeforeStart * cardsPerRow
-		const endIndex = startIndex + rowsInViewPort * cardsPerRow
+		let startIndex = rowsBeforeStart * cardsPerRow
+		let endIndex = startIndex + rowsInViewPort * cardsPerRow
 
 		const length = films.length
 
 		if (endIndex > length) {
 			if (this.#uploadAllFilms) {
-				return {
-					startIndex: length - cardsPerRow * rowsInViewPort,
-					endIndex: length,
-				}
-			}
-			store.dispatch(
-				filmActions.getFilmsAction(
-					cardsPerRow * UPLOADING_ROWS_COUNT,
-					this.#offset,
-				),
-			)
-			this.#offset += cardsPerRow * UPLOADING_ROWS_COUNT
-			return {
-				startIndex: length - cardsPerRow * rowsInViewPort,
-				endIndex: length,
+				startIndex = Math.max(length - rowsInViewPort * cardsPerRow, 0)
+				endIndex = length
+			} else {
+				store.dispatch(
+					filmActions.getFilmsAction(
+						cardsPerRow * UPLOADING_ROWS_COUNT,
+						this.#offset,
+					),
+				)
+				this.#offset += cardsPerRow * UPLOADING_ROWS_COUNT
+				startIndex = Math.max(length - rowsInViewPort * cardsPerRow, 0)
+				endIndex = length
 			}
 		}
 
-		return {
-			startIndex,
-			endIndex,
-		}
+		return { startIndex, endIndex }
 	}
 
 	renderNewCards = state => {
+		if (this.isDestroyed) {
+			return
+		}
 		if (state.loading) {
 			return
 		}
-
 		if (state.error) {
 			this.#uploadAllFilms = true
 			return
@@ -179,6 +207,18 @@ export default class CardGrid extends Component {
 	}
 
 	destroy() {
+		this.isDestroyed = true
+
 		this.#unsubscribe?.()
+		window.removeEventListener('scroll', this.throttledUpdateViewport)
+		window.removeEventListener('resize', this.throttledUpdateViewport)
+
+		this.#cards = {}
+		this.#offset = 0
+		this.#uploadAllFilms = false
+
+		if (this.self) {
+			this.self.innerHTML = ''
+		}
 	}
 }

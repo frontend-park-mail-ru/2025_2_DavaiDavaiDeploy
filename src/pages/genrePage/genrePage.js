@@ -1,4 +1,3 @@
-import CardGrid from '../../components/cardGrid/cardGrid.js'
 import genreActions from '../../redux/features/genre/actions.js'
 import { store } from '../../redux/store.js'
 
@@ -7,13 +6,14 @@ export default class GenrePage {
 	#self
 	#unsubscribe
 	#props = {
-		id: '836c0da0-7862-4cca-8123-6aa73666fcab',
+		id: '',
 		title: '',
 		description: '',
 	}
 
-	constructor(rootElement) {
+	constructor(rootElement, props) {
 		this.#parent = rootElement
+		this.#props = { ...this.#props, ...props }
 	}
 
 	get template() {
@@ -42,8 +42,8 @@ export default class GenrePage {
 
 		store.dispatch(genreActions.getGenreAction(this.#props.id))
 
-		const cardGrid = new CardGrid(this.films)
-		cardGrid.render()
+		// const cardGrid = new CardGrid(this.films)
+		// cardGrid.render()
 	}
 
 	update = state => {

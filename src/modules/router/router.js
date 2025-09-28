@@ -11,6 +11,7 @@ class Router {
 		Router.instance = this
 		this.routes = {}
 		this.parent = null
+		this.lastPage = null
 
 		this.initEventListeners()
 	}
@@ -88,17 +89,23 @@ class Router {
 		footer.render()
 	}
 
-	renderContent = route => {
+	renderContent = (route, props) => {
 		const contentContainer = document.createElement('div')
 		contentContainer.className = 'content'
 		this.parent.appendChild(contentContainer)
 
+		this.lastPage?.destroy()
+
 		// Рендерим страницу
-		const page = new route.component(contentContainer)
+		let page = new route.component(contentContainer)
+		if (route.href == '/genre') {
+			page = new route.component(contentContainer, props)
+		}
 		page.render()
+		this.lastPage = page
 	}
 
-	handleRouteChange = (path, addToHistory = true) => {
+	handleRouteChange = (path, addToHistory = true, props = {}) => {
 		let normalizedPath = normalize(path)
 		let route = this.routes[normalizedPath]
 
@@ -116,7 +123,7 @@ class Router {
 		if (route.hasHeader !== false) {
 			this.renderHeader()
 		}
-		this.renderContent(route)
+		this.renderContent(route, props)
 		if (route.hasFooter !== false) {
 			this.renderFooter()
 		}
