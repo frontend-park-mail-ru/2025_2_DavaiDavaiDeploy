@@ -133,7 +133,15 @@ export default class CardGrid extends Component {
 		const startIndex = rowsBeforeStart * cardsPerRow
 		const endIndex = startIndex + rowsInViewPort * cardsPerRow
 
-		if (endIndex > films.length && !this.#uploadAllFilms) {
+		const length = films.length
+
+		if (endIndex > length) {
+			if (this.#uploadAllFilms) {
+				return {
+					startIndex: length - cardsPerRow * rowsInViewPort,
+					endIndex: length,
+				}
+			}
 			store.dispatch(
 				filmActions.getFilmsAction(
 					cardsPerRow * UPLOADING_ROWS_COUNT,
@@ -141,6 +149,10 @@ export default class CardGrid extends Component {
 				),
 			)
 			this.#offset += cardsPerRow * UPLOADING_ROWS_COUNT
+			return {
+				startIndex: length - cardsPerRow * rowsInViewPort,
+				endIndex: length,
+			}
 		}
 
 		return {

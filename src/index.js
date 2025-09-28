@@ -8,7 +8,7 @@ import { routes } from './routes/index.js'
 
 HTTPClient.configurate({ baseUrl: serverAddr })
 
-let contentContainer = document.createElement('div')
+const contentContainer = document.createElement('div')
 contentContainer.id = 'app'
 contentContainer.classList.add('app')
 document.body.appendChild(contentContainer)
