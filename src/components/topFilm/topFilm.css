@@ -18,7 +18,7 @@ a.top-film::before {
 	background: linear-gradient(
 		to bottom,
 		#000000d9 0%,
-		#0009 25%,
+		#0009 20%,
 		#0000004d 50%,
 		#0000001a 75%,
 		#0000 100%
@@ -56,10 +56,9 @@ a.top-film::before {
 	background: linear-gradient(
 		to right,
 		#000000d9 0%,
-		#0009 25%,
-		#0000004d 50%,
-		#0000001a 75%,
-		#0000 100%
+		#0009 60%,
+		#0000001a 88%,
+		#0000 95%
 	);
 	z-index: -1;
 	pointer-events: none;
