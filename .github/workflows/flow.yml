@@ -139,7 +139,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-output
-          path: ./src
+          path: src
 
       - name: Deploy to server via SCP
         uses: appleboy/scp-action@master
