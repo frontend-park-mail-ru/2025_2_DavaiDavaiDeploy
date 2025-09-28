@@ -1,4 +1,4 @@
-export function ValidateLogin(value) {
+export function validateLogin(value) {
 	if (!value || value.trim() === '') {
 		return { isValid: false, message: 'Логин обязателен' }
 	}

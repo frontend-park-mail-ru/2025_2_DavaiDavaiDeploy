@@ -121,7 +121,7 @@
 	align-items: start;
 	justify-content: center;
 	width: 100%;
-	margin-bottom: clamp(0rem, 0.1vw, 1.5rem);
+	margin-bottom: clamp(0rem, 1vw, 1.5rem);
 }
 
 .form__input-wrapper {
@@ -264,4 +264,10 @@
 
 .form__fields {
 	width: 100%;
+}
+
+@media (width <= 80rem) {
+	.form__footer {
+		gap: 0.1rem;
+	}
 }

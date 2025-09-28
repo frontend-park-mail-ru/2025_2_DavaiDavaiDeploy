@@ -1,5 +1,5 @@
-import { ValidateLogin } from '../../helpers/validateLogin/validateLogin.js'
-import { ValidatePassword } from '../../helpers/validatePassword/validatePassword.js'
+import { validateLogin } from '../../helpers/validateLogin/validateLogin.js'
+import { validatePassword } from '../../helpers/validatePassword/validatePassword.js'
 
 export default {
 	action: '/',
@@ -12,7 +12,7 @@ export default {
 			type: 'text',
 			placeholder: 'Введите имя пользователя',
 			required: true,
-			validator: ValidateLogin,
+			validator: validateLogin,
 			preIconSrc: '/src/assets/img/user.svg',
 			formGroupID: 'login-form-group',
 		},
@@ -22,7 +22,7 @@ export default {
 			name: 'password',
 			placeholder: 'Введите пароль',
 			required: true,
-			validator: ValidatePassword,
+			validator: validatePassword,
 			formGroupID: 'password-form-group',
 			postIconID: 'password-icon',
 		},

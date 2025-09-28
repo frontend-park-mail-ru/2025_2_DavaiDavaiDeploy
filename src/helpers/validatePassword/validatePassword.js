@@ -1,4 +1,4 @@
-export function ValidatePassword(value) {
+export function validatePassword(value) {
 	if (!value || value.trim() === '') {
 		return { isValid: false, message: 'Пароль обязателен' }
 	}
