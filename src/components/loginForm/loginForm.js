@@ -11,7 +11,7 @@ class LoginForm extends Component {
 	#button
 	#onSubmit
 
-	constructor(parent, onSubmit) {
+	constructor(parent, props) {
 		super(
 			parent,
 			{
@@ -23,7 +23,7 @@ class LoginForm extends Component {
 		this.#loginInput = null
 		this.#passwordInput = null
 		this.#button = null
-		this.#onSubmit = onSubmit
+		this.#onSubmit = props.onSubmit
 	}
 
 	remove() {
@@ -53,11 +53,12 @@ class LoginForm extends Component {
 			e.stopPropagation()
 			e.target.blur()
 		}
-		isValid &&
+		if (isValid) {
 			this.#onSubmit(
 				this.#loginInput.getValue(),
 				this.#passwordInput.getValue(),
 			)
+		}
 	}
 
 	/**

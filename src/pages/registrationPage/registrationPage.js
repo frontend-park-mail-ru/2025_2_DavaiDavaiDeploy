@@ -26,7 +26,9 @@ export default class RegistrationPage {
 
 		const form = new registrationForm(
 			document.querySelector('#registration-form-container'),
-			this.#onSubmit,
+			{
+				onSubmit: this.#onSubmit,
+			},
 		)
 		form.render()
 	}

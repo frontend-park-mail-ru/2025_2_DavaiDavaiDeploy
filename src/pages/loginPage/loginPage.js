@@ -26,7 +26,9 @@ export default class LoginPage {
 
 		const form = new LoginForm(
 			document.querySelector('#login-form-container'),
-			this.#onSubmit,
+			{
+				onSubmit: this.#onSubmit,
+			},
 		)
 		form.render()
 	}
