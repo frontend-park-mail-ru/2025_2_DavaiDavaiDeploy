@@ -9,7 +9,7 @@ export const TOPFILM = {
 		'Продолжение эпической саги о Полу Атрейдесе. Он продолжает путь к тому, чтобы стать МуадДибом, в то время как его враги плетут заговоры против него.',
 }
 
-export function getFilms(limit, offset = 0) {
+export function getFilmsMocks(limit, offset = 0) {
 	const result = []
 	if (offset + limit > 300) {
 		return result

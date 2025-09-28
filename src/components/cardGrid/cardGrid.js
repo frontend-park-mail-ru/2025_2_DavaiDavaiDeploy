@@ -4,6 +4,11 @@ import { throttle } from '../../helpers/throttleHelper.js'
 import filmActions from '../../redux/features/film/actions.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
+import Plaseholder from '../placeholder/placeholder.js'
+
+const UPLOADING_ROWS_COUNT = 3
+const ROWS_IN_BUFFER = 2
+
 export default class CardGrid extends Component {
 	#unsubscribe
 	#offset = 0
@@ -31,16 +36,22 @@ export default class CardGrid extends Component {
 		})
 
 		const cardsPerRow = getGridColumnCount(this.grid)
-		store.dispatch(filmActions.getFilmsAction(cardsPerRow * 3, this.#offset))
-		this.#offset += cardsPerRow * 3
+		store.dispatch(
+			filmActions.getFilmsAction(
+				cardsPerRow * UPLOADING_ROWS_COUNT,
+				this.#offset,
+			),
+		)
+		this.#offset += cardsPerRow * UPLOADING_ROWS_COUNT
 
 		window.addEventListener('scroll', throttle(this.updateViewport, 100))
+		window.addEventListener('resize', throttle(this.updateViewport, 100))
 	}
 
 	updateViewport = () => {
-		let { startIndex, endIndex } = this.getVisibleCards()
+		const { startIndex, endIndex } = this.getVisibleCards()
 
-		let films = store.getState().film.films
+		const films = store.getState().film.films
 
 		for (let i = 0; i < films.length; i++) {
 			if (startIndex <= i && i < endIndex) {
@@ -53,23 +64,16 @@ export default class CardGrid extends Component {
 
 	removeFilm = film => {
 		let filmCard = document.querySelector(`#film-${film.id}`)
-		if (filmCard) {
-			const сhild = filmCard.querySelector('.placeholder')
-			if (!сhild) {
-				const cardStyles = getComputedStyle(filmCard)
-				const cardWidth = filmCard.offsetWidth + 'px'
-				const cardHeight = filmCard.offsetHeight + 'px'
-				const placeholder = document.createElement('div')
-				placeholder.className = 'placeholder'
-				placeholder.style.width = cardWidth
-				placeholder.style.height = cardHeight
-				placeholder.style.backgroundColor = 'transparent'
-				placeholder.style.display = 'block'
-				placeholder.style.borderRadius = cardStyles.borderRadius
-				filmCard.innerHTML = ''
-				filmCard.appendChild(placeholder)
-			}
+		if (!filmCard) {
+			return
 		}
+		const сhild = filmCard.querySelector('.placeholder')
+		if (сhild) {
+			return
+		}
+		const placeholder = new Plaseholder(filmCard)
+		filmCard.innerHTML = ''
+		placeholder.render()
 	}
 
 	renderFilm = film => {
@@ -94,32 +98,41 @@ export default class CardGrid extends Component {
 		let minHeight = 0
 		if (cards.length > 0) {
 			minHeight = Math.min(
-				...Array.from(cards).map(filmCard => filmCard.offsetHeight),
+				...Array.from(cards).map(
+					filmCard => filmCard.getBoundingClientRect().height,
+				),
 			)
 		}
-		const cardHeight = minHeight
+
+		const cardHeight = minHeight !== 0 ? minHeight : 300
 
 		const cardsPerRow = getGridColumnCount(this.grid)
 		const films = store.getState().film.films
 
-		const gridRect = this.grid.getBoundingClientRect()
-		const gridTop = gridRect.top + window.pageYOffset
+		const scrollTop = window.scrollY
 
-		const scrollTop = window.pageYOffset
+		const gridRect = this.grid.getBoundingClientRect()
+		const gridTop = gridRect.top + scrollTop
 
 		const invisibleTopHeight = Math.max(0, scrollTop - gridTop)
 		const rowsBeforeStart = Math.max(
-			Math.floor(invisibleTopHeight / cardHeight) - 2,
+			Math.floor(invisibleTopHeight / cardHeight) - ROWS_IN_BUFFER,
 			0,
 		)
-		const rowsInViewPort = Math.ceil(window.innerHeight / cardHeight) + 2
+		const rowsInViewPort =
+			Math.ceil(window.innerHeight / cardHeight) + ROWS_IN_BUFFER
 
 		const startIndex = rowsBeforeStart * cardsPerRow
 		const endIndex = startIndex + rowsInViewPort * cardsPerRow
 
 		if (endIndex > films.length && !this.#uploadAllFilms) {
-			store.dispatch(filmActions.getFilmsAction(cardsPerRow * 3, this.#offset))
-			this.#offset += cardsPerRow * 3
+			store.dispatch(
+				filmActions.getFilmsAction(
+					cardsPerRow * UPLOADING_ROWS_COUNT,
+					this.#offset,
+				),
+			)
+			this.#offset += cardsPerRow * UPLOADING_ROWS_COUNT
 		}
 
 		return {
