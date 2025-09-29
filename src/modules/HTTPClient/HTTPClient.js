@@ -104,7 +104,14 @@ export class HTTPClient {
 	}
 
 	formReqUrl(url, params) {
-		let requestUrl = new URL(url, this.default.baseUrl)
+		const base = new URL(this.default.baseUrl)
+		const path = url.startsWith('/') ? url : '/' + url
+		base.pathname = base.pathname.endsWith('/')
+			? base.pathname + path.slice(1)
+			: base.pathname + path
+
+		let requestUrl = base
+
 		for (const [key, value] of Object.entries(params)) {
 			if (value != null) {
 				requestUrl.searchParams.append(key, value.toString())
