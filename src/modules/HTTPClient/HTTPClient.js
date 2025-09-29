@@ -184,7 +184,9 @@ export class HTTPClient {
 	formReqHeadersAndBody(headers, data, requestMethod) {
 		let requestHeaders = new Headers(headers)
 		let requestBody = undefined
-		requestHeaders.set('Authorization', localStorage.getItem('jwtToken'))
+		if (localStorage.getItem('jwtToken')) {
+			requestHeaders.set('Authorization', localStorage.getItem('jwtToken'))
+		}
 		if (
 			data &&
 			requestMethod !== METHODS.GET &&

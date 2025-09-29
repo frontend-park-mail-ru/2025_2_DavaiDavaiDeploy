@@ -95,8 +95,8 @@ const loginUserAction = (login, password) => async dispatch => {
 			login: login,
 			password: password,
 		})
-		if (response.headers.Authorization) {
-			localStorage.setItem('jwtToken', response.headers.Authorization)
+		if (response.headers.authorization) {
+			localStorage.setItem('jwtToken', response.headers.authorization)
 		}
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
