@@ -1,6 +1,8 @@
 import Footer from '../../components/footer/footer.js'
 import Header from '../../components/header/header.js'
 import { normalize } from '../../helpers/normalizeHelper/normalizeHelper.js'
+import actions from '../../redux/features/user/actions.js'
+import { store } from '../../redux/store.js'
 
 /**
  * Класс для клиентской маршрутизации.
@@ -19,6 +21,7 @@ class Router {
 		/** @type {HTMLElement | null} */
 		this.parent = null
 		this.lastPage = null
+		this.header = null
 
 		Router.instance = this
 		this.initEventListeners()
@@ -93,10 +96,7 @@ class Router {
 			oldContent.remove()
 		}
 
-		const oldHeader = document.querySelector('#header')
-		if (oldHeader) {
-			oldHeader.remove()
-		}
+		this.header?.destroy()
 
 		const oldFooter = document.querySelector('#footer')
 		if (oldFooter) {
@@ -108,12 +108,16 @@ class Router {
 	 * Рендерит header.
 	 */
 	renderHeader = () => {
-		const header = new Header(this.parent, {
+		const userState = store.getState().user.users
+		this.header = new Header(this.parent, {
 			avatar: './../../assets/img/1+1.webp',
-			login: 'Alex',
-			id: 'header',
+			login: userState.login,
+			id: userState.id,
 		})
-		header.render()
+		if (userState.login) {
+			this.header.handleLogIn(userState)
+		}
+		this.header.render()
 	}
 
 	/**
@@ -187,6 +191,7 @@ class Router {
 	 * Запускает роутер, обрабатывая текущий путь.
 	 */
 	start = () => {
+		store.dispatch(actions.checkUserAction())
 		this.handleRouteChange(window.location.pathname)
 	}
 }

@@ -10,8 +10,9 @@ class RegistrationForm extends Component {
 	#passwordInput
 	#passwordConfirmInput
 	#button
+	#onSubmit
 
-	constructor(parent) {
+	constructor(parent, props) {
 		super(
 			parent,
 			{
@@ -24,6 +25,7 @@ class RegistrationForm extends Component {
 		this.#passwordInput = null
 		this.#passwordConfirmInput = null
 		this.#button = null
+		this.#onSubmit = props.onSubmit
 	}
 
 	remove() {
@@ -56,12 +58,19 @@ class RegistrationForm extends Component {
 	 * Обработчик отправки формы
 	 */
 	#handleSubmit = e => {
-		const isValid = this.#validateData()
+		e.preventDefault()
+		e.stopPropagation()
 
+		const isValid = this.#validateData()
 		if (!isValid) {
-			e.preventDefault()
-			e.stopPropagation()
 			e.target.blur()
+		}
+
+		if (isValid) {
+			this.#onSubmit(
+				this.#loginInput.getValue(),
+				this.#passwordInput.getValue(),
+			)
 		}
 	}
 

@@ -1,4 +1,8 @@
 import LoginForm from '../../components/loginForm/loginForm.js'
+import router from '../../modules/router/index.js'
+import actions from '../../redux/features/user/actions.js'
+import { store } from '../../redux/store.js'
+
 /**
  * Класс для отображения страницы входа.
  */
@@ -23,15 +27,36 @@ export default class LoginPage {
 		})
 	}
 
+	#onSubmit = (login, password) => {
+		store.dispatch(actions.loginUserAction(login, password))
+	}
+
+	#handleStoreChange = () => {
+		if (!store.getState().user.users.error) {
+			router.handleRouteChange('/')
+		} else {
+			alert('Произошла ошибка ЛОГИНИЗАЦИИ: ' + store.getState().user.error)
+		}
+		this.#unsubscribe?.()
+	}
+
 	/**
 	 * Рендерит страницу входа и форму.
 	 */
+
 	render() {
 		this.#parent.innerHTML = ''
 		this.#parent.insertAdjacentHTML('afterbegin', this.template)
 
-		const form = new LoginForm(document.querySelector('#login-form-container'))
+		const form = new LoginForm(
+			document.querySelector('#login-form-container'),
+			{
+				onSubmit: this.#onSubmit,
+			},
+		)
 		form.render()
+
+		this.#unsubscribe = store.subscribe(this.#handleStoreChange)
 	}
 
 	/**
@@ -39,5 +64,8 @@ export default class LoginPage {
 	 */
 	destroy() {
 		this.#unsubscribe?.()
+		if (this.#parent) {
+			this.#parent.innerHTML = ''
+		}
 	}
 }
