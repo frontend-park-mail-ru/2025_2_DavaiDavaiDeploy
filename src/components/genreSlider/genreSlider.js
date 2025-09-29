@@ -31,24 +31,15 @@ export default class GenreSlider extends Component {
 	}
 
 	get slider() {
-		if (!this.self) {
-			return null
-		}
 		return this.self?.querySelector('.slider')
 	}
 
 	get nextBtn() {
-		if (!this.self) {
-			return null
-		}
-		return this.self.querySelector('.next-button')
+		return this.self?.querySelector('.next-button')
 	}
 
 	get prevBtn() {
-		if (!this.self) {
-			return null
-		}
-		return this.self.querySelector('.prev-button')
+		return this.self?.querySelector('.prev-button')
 	}
 
 	get genres() {
