@@ -3,16 +3,29 @@ import { validateHideError } from '../../helpers/validateHideError/validateHideE
 import { validateProducer } from '../../helpers/validateProducer/validateProducer.js'
 import { validateShowError } from '../../helpers/validateShowError/validateShowError.js'
 
+/**
+ * Класс текстового поля ввода, расширяющий базовый компонент.
+ * @extends Component
+ */
 class Input extends Component {
 	#parent
 	#errorElement
 
+	/**
+	 * @param {HTMLElement} parent - Родительский элемент для рендера.
+	 * @param {Object} [config={}] - Конфигурация поля ввода.
+	 */
 	constructor(parent, config = {}) {
 		super(parent, { id: config.id }, 'input')
 		this.#parent = parent
 		this.config = config
 	}
 
+	/**
+	 * Проверяет валидность значения поля ввода.
+	 * @private
+	 * @returns {boolean} true, если значение валидно, иначе false.
+	 */
 	#validateInput() {
 		const result = validateProducer(this.self.value, this.config.validator)
 
@@ -25,26 +38,33 @@ class Input extends Component {
 		}
 	}
 
+	/**
+	 * Получает текущее значение поля ввода.
+	 * @returns {string} Значение поля ввода.
+	 */
 	getValue() {
 		return this.self.value ? this.self.value : ''
 	}
 
+	/**
+	 * Проверка валидности поля ввода.
+	 * @returns {boolean} true, если поле валидно, иначе false.
+	 */
 	isValid() {
 		return this.#validateInput()
 	}
 
+	/**
+	 * Добавление слушателей событий для input и blur.
+	 * @private
+	 */
 	#addEventListener() {
-		this.self.addEventListener('input', () => {
-			this.#validateInput()
-		})
-
-		this.self.addEventListener('blur', () => {
-			this.#validateInput()
-		})
+		this.self.addEventListener('input', () => this.#validateInput())
+		this.self.addEventListener('blur', () => this.#validateInput())
 	}
 
 	/**
-	 * Рендеринг компонента
+	 * Рендеринг компонента в DOM.
 	 */
 	render() {
 		this.#parent.insertAdjacentHTML('beforeend', this.html(this.config))
