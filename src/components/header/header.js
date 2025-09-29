@@ -25,13 +25,32 @@ export default class Header extends Component {
 
 	rerender() {
 		const userState = store.getState().user.users
-		// console.log(userState.login)
 		if (userState.login) {
 			this.handleLogIn(userState)
 		} else {
 			this.handleLogOut()
 		}
-		this.render()
+
+		const header = document.querySelector('#header')
+		header?.remove()
+
+		let context = {
+			authorized: this.state.authorized,
+			avatar: this.props.avatar,
+			login: this.props.login,
+		}
+		this.parent.insertAdjacentHTML('afterbegin', this.html(context))
+
+		const loginButton = document.querySelector('#login-button')
+		if (loginButton) {
+			loginButton.addEventListener('click', () => {
+				router.handleRouteChange('/login')
+			})
+		}
+		const logo_a = document.querySelector('#logo__a')
+		logo_a?.addEventListener('click', e => {
+			router.handleClick(e)
+		})
 	}
 
 	render() {
