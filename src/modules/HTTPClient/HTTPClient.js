@@ -100,6 +100,7 @@ export class HTTPClient {
 
 		const requestMethod = method.toUpperCase()
 		const requestUrl = this.formReqUrl(url, params)
+		// alert('requestUrl: ' + requestUrl)
 		const { requestHeaders, requestBody } = this.formReqHeadersAndBody(
 			headers,
 			data,
@@ -150,7 +151,7 @@ export class HTTPClient {
 	/**
 	 * Формирует полный URL с query-параметрами.
 	 * @param {string} url - Относительный путь.
-	 * @param {Object} params - Query-параметры.
+	 * @param {Object} params - Query-параметры.А
 	 * @returns {string} Полный URL.
 	 */
 	formReqUrl(url, params) {

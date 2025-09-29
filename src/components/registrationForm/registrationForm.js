@@ -58,10 +58,11 @@ class RegistrationForm extends Component {
 	 * Обработчик отправки формы
 	 */
 	#handleSubmit = e => {
+		e.preventDefault()
+		e.stopPropagation()
+
 		const isValid = this.#validateData()
 		if (!isValid) {
-			e.preventDefault()
-			e.stopPropagation()
 			e.target.blur()
 		}
 

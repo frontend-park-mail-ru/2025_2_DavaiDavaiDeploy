@@ -57,7 +57,10 @@ const deleteUserAction = userId => {
 const checkUserAction = () => async dispatch => {
 	dispatch(setUserLoadingAction())
 	try {
-		const response = await HTTPClient.get('/api/auth/check')
+		const response = await HTTPClient.get('/auth/check')
+		if (response.headers.Authorization) {
+			localStorage.setItem('jwtToken', response.headers.Authorization)
+		}
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
 		dispatch(returnUserErrorAction(error.message || 'Error'))
@@ -73,9 +76,13 @@ const checkUserAction = () => async dispatch => {
 
 const registerUserAction = (login, password) => async dispatch => {
 	try {
-		const response = await HTTPClient.get('/api/auth/signup', {
-			params: { login: login, password: password },
+		const response = await HTTPClient.post('/auth/signup', {
+			login: login,
+			password: password,
 		})
+		if (response.headers.Authorization) {
+			localStorage.setItem('jwtToken', response.headers.Authorization)
+		}
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
 		dispatch(returnUserErrorAction(error.message || 'Error'))
@@ -84,9 +91,13 @@ const registerUserAction = (login, password) => async dispatch => {
 
 const loginUserAction = (login, password) => async dispatch => {
 	try {
-		const response = await HTTPClient.get('/api/auth/signin', {
-			params: { login: login, password: password },
+		const response = await HTTPClient.post('/auth/signin', {
+			login: login,
+			password: password,
 		})
+		if (response.headers.Authorization) {
+			localStorage.setItem('jwtToken', response.headers.Authorization)
+		}
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
 		dispatch(returnUserErrorAction(error.message || 'Error'))
