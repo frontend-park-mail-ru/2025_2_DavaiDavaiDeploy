@@ -1,5 +1,3 @@
-import LocalStorageHelper from './../../helpers/LocalStorageHelper/LocalStorageHelper.js'
-
 /**
  * HTTP-методы.
  * @readonly
@@ -188,11 +186,8 @@ export class HTTPClient {
 		let requestHeaders = new Headers(headers)
 		let requestBody = undefined
 
-		if (url === '/auth/check' && LocalStorageHelper.getItem('jwtToken')) {
-			requestHeaders.set(
-				'Authorization',
-				LocalStorageHelper.getItem('jwtToken'),
-			)
+		if (url === '/auth/check' && localStorage.getItem('jwtToken')) {
+			requestHeaders.set('Authorization', localStorage.getItem('jwtToken'))
 		}
 		if (
 			data &&
