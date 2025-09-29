@@ -1,0 +1,19 @@
+@import url('../filmCard/filmCard.css');
+@import url('../filmCardPlaceholder/filmCardPlaceholder.css');
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(15.625rem, 1fr));
+	gap: 1.25rem;
+}
+
+.load-more-trigger {
+	height: 1px;
+	width: 1px;
+}
+
+.card-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 1.875rem;
+}

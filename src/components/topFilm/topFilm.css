@@ -1,0 +1,153 @@
+a.top-film {
+	display: block;
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	text-decoration: none;
+	color: inherit;
+	z-index: 1;
+}
+
+a.top-film::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		to bottom,
+		#000000d9 0%,
+		#0009 20%,
+		#0000004d 50%,
+		#0000001a 75%,
+		#0000 100%
+	);
+	z-index: 1;
+	pointer-events: none;
+}
+
+.top-film > section {
+	display: flex;
+	position: relative;
+	width: 100%;
+	min-height: 100vh;
+}
+
+.top-film__content {
+	position: relative;
+	z-index: 2;
+	flex: 0 0 45%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 2.25rem;
+	padding: 0 7.5rem;
+	backdrop-filter: blur(1px);
+}
+
+.top-film__content::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		to right,
+		#000000d9 0%,
+		#0009 60%,
+		#0000001a 88%,
+		#0000 95%
+	);
+	z-index: -1;
+	pointer-events: none;
+}
+
+.top-film__title {
+	text-decoration: none;
+	background: transparent;
+}
+
+.top-film__info {
+	display: flex;
+	width: 40%;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding: 0;
+	list-style: none;
+	margin-top: -1.875rem;
+}
+
+.top-film__item {
+	font-size: 1rem;
+	font-weight: 400;
+	color: var(--color-text-secondary);
+	text-decoration: none;
+	background: transparent;
+}
+
+.top-film__description {
+	font-size: 1.5rem;
+	color: var(--color-white);
+	text-decoration: none;
+}
+
+.top-film__image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 130%;
+	height: 100%;
+	object-fit: cover;
+	z-index: 0;
+}
+
+.top-film__header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 2rem;
+}
+
+.top-film__title,
+.top-film__info,
+.top-film__description,
+.top-film__item {
+	background: none;
+	backdrop-filter: none;
+}
+
+.top-film__rating,
+.top-film__rating-high,
+.top-film__rating-medium,
+.top-film__rating-low {
+	position: relative;
+	height: 2.3em;
+	padding: 0.3em 0.9em;
+	border-radius: 0.375rem;
+	line-height: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	white-space: nowrap;
+	margin-top: 0.25rem;
+}
+
+.top-film__rating-title {
+	font-size: 1.5rem;
+	color: var(--white);
+}
+
+.top-film__rating,
+.top-film__rating-high {
+	background-color: var(--color-rating-high);
+}
+
+.top-film__rating-medium {
+	background-color: var(--color-rating-middle);
+}
+
+.top-film__rating-low {
+	background-color: var(--color-rating-low);
+}

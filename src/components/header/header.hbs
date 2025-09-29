@@ -1,0 +1,14 @@
+{{!< default }}
+<header id="header" class="header">
+   {{> logo.hbs }}
+    {{#if authorized}}
+        <a href="#" class="user">
+            <span class="user__name">{{login}}</span>
+            <img src="./../../assets/img/empty_user.svg" alt="Аватар" class="user__avatar">
+        </a>
+    {{else}}
+        <div class="user">
+            <button id="login-button" class="user__login-button">Войти</button>
+        </div>
+    {{/if}}
+</header>

@@ -1,0 +1,12 @@
+<div id="{{ formGroupID }}" class="form__group">
+    {{#if label}}
+    <label for="{{ id }}" class="form__label">{{ label }}</label>
+    {{/if}}
+    <div class="form__input-wrapper">
+        {{#if preIconSrc}}
+        <img class="{{ preIconClass }}" src="{{ preIconSrc }}" alt="{{ preIconClass }}">
+        {{/if}}
+        <input placeholder="{{ placeholder }}" type="{{ type }}" id="{{ id }}" name="{{ name }}" class="form__input" required="{{ required }}">
+    </div>
+    <p id='input-error-{{id}}' class="input-error"></p>
+</div>
