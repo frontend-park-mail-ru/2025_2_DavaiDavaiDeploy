@@ -119,6 +119,7 @@ jobs:
       - eslint-check
       - prettier-check
       - stylelint-check
+      - unit-tests
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v5
