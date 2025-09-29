@@ -28,6 +28,12 @@ const returnUserErrorAction = error => {
 // 	}
 // }
 
+/**
+ * Создает действие для обновления существующего пользователя.
+ * @function
+ * @param {Object} user - Объект пользователя с обновленными данными.
+ * @returns {Object} Объект действия Redux с типом USER_UPDATE и полезной нагрузкой.
+ */
 const updateUserAction = (login, password) => {
 	return {
 		type: types.USER_UPDATE,
@@ -35,6 +41,12 @@ const updateUserAction = (login, password) => {
 	}
 }
 
+/**
+ * Создает действие для удаления пользователя по его идентификатору.
+ * @function
+ * @param {string|number} userId - Идентификатор пользователя для удаления.
+ * @returns {Object} Объект действия Redux с типом USER_DELETE и полезной нагрузкой.
+ */
 const deleteUserAction = userId => {
 	return {
 		type: types.USER_DELETE,
@@ -51,6 +63,13 @@ const checkUserAction = () => async dispatch => {
 		dispatch(returnUserErrorAction(error.message || 'Error'))
 	}
 }
+
+/**
+ * Создает действие для добавления нового пользователя.
+ * @function
+ * @param {Object} user - Объект пользователя для добавления.
+ * @returns {Object} Объект действия Redux с типом USER_CREATE и полезной нагрузкой.
+ */
 
 const registerUserAction = (login, password) => async dispatch => {
 	try {

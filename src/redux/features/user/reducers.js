@@ -1,9 +1,23 @@
 import types from './types.js'
 
+/**
+ * Начальное состояние редьюсера пользователей.
+ * @type {Object}
+ * @property {Array<Object>} users - Список пользователей.
+ */
 const initialState = {
 	users: [],
 }
 
+/**
+ * Редьюсер пользователей для обработки действий create, update и delete.
+ * @function
+ * @param {Object} [state=initialState] - Текущее состояние.
+ * @param {Object} action - Действие Redux.
+ * @param {string} action.type - Тип действия.
+ * @param {Object} action.payload - Полезная нагрузка действия.
+ * @returns {Object} Новое состояние после применения действия.
+ */
 export const userReducer = (state = initialState, action) => {
 	const { type, payload } = action
 

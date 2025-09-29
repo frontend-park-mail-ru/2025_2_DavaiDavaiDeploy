@@ -2,14 +2,24 @@ import LoginForm from '../../components/loginForm/loginForm.js'
 import actions from '../../redux/features/user/actions.js'
 import { store } from '../../redux/store.js'
 
+/**
+ * Класс для отображения страницы входа.
+ */
 export default class LoginPage {
 	#parent
 	#unsubscribe
 
+	/**
+	 * @param {HTMLElement} rootElement - Родительский DOM-элемент.
+	 */
 	constructor(rootElement) {
 		this.#parent = rootElement
 	}
 
+	/**
+	 * Шаблон страницы входа.
+	 * @returns {string}
+	 */
 	get template() {
 		return Handlebars.templates[`loginPage.hbs`]({
 			text: 'Login',
@@ -19,6 +29,10 @@ export default class LoginPage {
 	#onSubmit = (login, password) => {
 		store.dispatch(actions.loginUserAction(login, password))
 	}
+
+	/**
+	 * Рендерит страницу входа и форму.
+	 */
 
 	render() {
 		this.#parent.innerHTML = ''
@@ -33,6 +47,9 @@ export default class LoginPage {
 		form.render()
 	}
 
+	/**
+	 * Очистка/отписка от событий (если реализовано).
+	 */
 	destroy() {
 		this.#unsubscribe?.()
 	}
