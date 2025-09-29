@@ -18,6 +18,7 @@ class Router {
 
 		/** @type {HTMLElement | null} */
 		this.parent = null
+		this.lastPage = null
 
 		Router.instance = this
 		this.initEventListeners()
@@ -127,14 +128,23 @@ class Router {
 	 * Рендерит компонент контента маршрута.
 	 *
 	 * @param {Object} route - Объект маршрута, содержащий компонент.
+	 * @param {Object} props - Параметры для страницы.
 	 */
-	renderContent = route => {
+	renderContent = (route, props) => {
 		const contentContainer = document.createElement('div')
 		contentContainer.className = 'content'
 		this.parent.appendChild(contentContainer)
 
-		const page = new route.component(contentContainer)
+		this.lastPage?.destroy()
+
+		let page = new route.component(contentContainer)
+		if (route.needProps) {
+			page = new route.component(contentContainer, props)
+		}
+
+		// Рендерим страницу
 		page.render()
+		this.lastPage = page
 	}
 
 	/**
@@ -142,10 +152,16 @@ class Router {
 	 *
 	 * @param {string} path - Путь маршрута.
 	 * @param {boolean} [addToHistory=true] - Добавлять ли путь в историю браузера.
+	 * @param {object} [props = {}] - Параметры для страницы.
 	 */
-	handleRouteChange = (path, addToHistory = true) => {
+	handleRouteChange = (path, addToHistory = true, props = {}) => {
 		let normalizedPath = normalize(path)
 		let route = this.routes[normalizedPath]
+
+		if (route.needProps && props.id === undefined) {
+			route = this.routes['/']
+			normalizedPath = '/'
+		}
 
 		if (!route) {
 			route = this.routes['error404']
@@ -161,7 +177,7 @@ class Router {
 		if (route.hasHeader !== false) {
 			this.renderHeader()
 		}
-		this.renderContent(route)
+		this.renderContent(route, props)
 		if (route.hasFooter !== false) {
 			this.renderFooter()
 		}

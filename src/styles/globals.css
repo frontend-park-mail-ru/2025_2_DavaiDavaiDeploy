@@ -1,9 +1,10 @@
-@import url('./../components/header/header.css');
-@import url('./../components/footer/footer.css');
-@import url('./../components/layout/layout.css');
-@import url('./../pages/homePage/homePage.css');
-@import url('./../pages/registrationPage/registrationPage.css');
-@import url('./../pages/loginPage/loginPage.css');
+@import url('../components/header/header.css');
+@import url('../components/footer/footer.css');
+@import url('../components/layout/layout.css');
+@import url('../pages/homePage/homePage.css');
+@import url('../pages/genrePage/genrePage.css');
+@import url('../pages/registrationPage/registrationPage.css');
+@import url('../pages/loginPage/loginPage.css');
 
 * {
 	padding: 0;
