@@ -2,11 +2,6 @@ import CardGrid from '../../components/cardGrid/cardGrid.js'
 import GenreSlider from '../../components/genreSlider/genreSlider.js'
 import TopFilm from '../../components/topFilm/topFilm.js'
 import { TOPFILM } from '../../mocks/films.js'
-import filmActions from '../../redux/features/film/actions.js'
-import {
-	getFilmSection,
-	getFilms,
-} from '../../redux/features/film/selectors.js'
 
 export default class Home {
 	#parent
@@ -39,11 +34,7 @@ export default class Home {
 		this.genreSlider = new GenreSlider(this.main)
 		this.genreSlider.render()
 
-		this.cardGrid = new CardGrid(this.films, {
-			getFilms: getFilms,
-			getSection: getFilmSection,
-			getAction: filmActions.getFilmsAction,
-		})
+		this.cardGrid = new CardGrid(this.films)
 		this.cardGrid.render()
 
 		let topFilm = new TopFilm(this.main, {
