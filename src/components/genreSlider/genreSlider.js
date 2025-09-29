@@ -1,4 +1,4 @@
-import { serverAddr } from '../../consts/serverAddr.js'
+import { serverAddrForStatic } from '../../consts/serverAddr.js'
 import { createPeriodFunction } from '../../helpers/launchHelper.js'
 import router from '../../modules/router/index.js'
 import genreActions from '../../redux/features/genre/actions.js'
@@ -72,7 +72,7 @@ export default class GenreSlider extends Component {
 			const image = document.createElement('img')
 			image.className = 'slider__image'
 			image.alt = genre.title
-			image.src = `${serverAddr}${genre.icon}`
+			image.src = `${serverAddrForStatic}${genre.icon}`
 			image.setAttribute('data-id', genre.id)
 			this.slider.appendChild(image)
 		})

@@ -1,5 +1,5 @@
 import FilmCard from '../../components/filmCard/filmCard.js'
-import { serverAddr } from '../../consts/serverAddr.js'
+import { serverAddrForStatic } from '../../consts/serverAddr.js'
 import { getGridColumnCount } from '../../helpers/columnCountHelper.js'
 import { throttle } from '../../helpers/throttleHelper.js'
 import filmActions from '../../redux/features/film/actions.js'
@@ -100,7 +100,7 @@ export default class CardGrid extends Component {
 		}
 		const filmCard = new FilmCard(this.grid, {
 			id: film.id,
-			image: `${serverAddr}${film.icon}`,
+			image: `${serverAddrForStatic}${film.icon}`,
 			title: film.title,
 			info: `${film.genres[0].title}, ${film.year}`,
 			rating: film.rating,
