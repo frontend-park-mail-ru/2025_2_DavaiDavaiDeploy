@@ -109,15 +109,15 @@ class Router {
 	 * Рендерит header.
 	 */
 	renderHeader = () => {
-		/* eslint-disable no-console */
-		console.log('в зедере у нас')
-		console.log(store.getState().user)
-		/* eslint-enable no-console */
+		const userState = store.getState().user.users
 		const header = new Header(this.parent, {
 			avatar: './../../assets/img/1+1.webp',
-			login: store.getState().user.users.login,
-			id: store.getState().user.users.id,
+			login: userState.login,
+			id: userState.id,
 		})
+		if (userState.login) {
+			header.handleLogIn(userState)
+		}
 		header.render()
 	}
 

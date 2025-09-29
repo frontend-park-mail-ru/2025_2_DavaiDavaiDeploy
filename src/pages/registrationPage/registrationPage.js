@@ -35,18 +35,12 @@ export default class RegistrationPage {
 	 * Обработчик изменения состояния
 	 */
 	#handleStoreChange = () => {
-		/* eslint-disable no-console */
-		console.log('в субскрайбе')
-		console.log(store.getState().user)
-		/* eslint-enable no-console */
-		const userState = store.getState().user
-
-		// Проверяем успешную регистрацию
-		if (userState.error === null && userState.users) {
+		if (!store.getState().user.users.error) {
 			router.handleRouteChange('/')
-		} else if (userState.error) {
-			alert('Произошла ошибка регистрации: ' + userState.error)
+		} else {
+			alert('Произошла ошибка регистрации: ' + store.getState().user.error)
 		}
+		this.#unsubscribe?.()
 	}
 
 	/**

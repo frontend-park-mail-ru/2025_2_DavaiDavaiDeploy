@@ -21,6 +21,10 @@ export const createStore = reducer => {
 
 	const subscribe = listener => {
 		subscribes.push(listener)
+
+		return () => {
+			subscribes = subscribes.filter(l => l !== listener)
+		}
 	}
 
 	return { getState, dispatch, subscribe }
