@@ -83,6 +83,10 @@ export default class GenreSlider extends Component {
 			this.autoSlider.stop()
 		}
 
+		if (this.autoSlider) {
+			this.autoSlider.stop()
+		}
+
 		this.initSlider()
 
 		this.autoSlider = createPeriodFunction(
