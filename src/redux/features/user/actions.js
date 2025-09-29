@@ -61,7 +61,7 @@ const checkUserAction = () => async dispatch => {
 		if (response.headers.authorization) {
 			localStorage.setItem('jwtToken', response.headers.authorization)
 		}
-		dispatch(returnUserAction(response))
+		dispatch(returnUserAction(response.data))
 	} catch (error) {
 		dispatch(returnUserErrorAction(error.message || 'Error'))
 	}

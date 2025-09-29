@@ -25,11 +25,13 @@ export default class Header extends Component {
 
 	rerender() {
 		const userState = store.getState().user.users
+		// console.log(userState.login)
 		if (userState.login) {
 			this.handleLogIn(userState)
 		} else {
 			this.handleLogOut()
 		}
+		this.render()
 	}
 
 	render() {
