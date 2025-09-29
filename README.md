@@ -15,7 +15,7 @@
 
 [Кочкарова Лейла](https://github.com/k-t-l-h) - _Backend_
 
-TODO - _UX_
+[Дарья Ченцова](https://t.me/dewon_d) - _UX_
 
 ### Правила оформления Pull Requests
 
