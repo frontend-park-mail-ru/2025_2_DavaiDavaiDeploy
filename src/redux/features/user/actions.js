@@ -1,4 +1,3 @@
-import LocalStorageHelper from '../../../helpers/LocalStorageHelper/LocalStorageHelper.js'
 import HTTPClient from '../../../modules/HTTPClient/index.js'
 import types from './types.js'
 
@@ -60,7 +59,7 @@ const checkUserAction = () => async dispatch => {
 	try {
 		const response = await HTTPClient.get('/auth/check')
 		if (response.headers.authorization) {
-			LocalStorageHelper.setItem('jwtToken', response.headers.authorization)
+			localStorage.setItem('jwtToken', response.headers.authorization)
 		}
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
@@ -82,7 +81,7 @@ const registerUserAction = (login, password) => async dispatch => {
 			password: password,
 		})
 		if (response.headers.authorization) {
-			LocalStorageHelper.setItem('jwtToken', response.headers.authorization)
+			localStorage.setItem('jwtToken', response.headers.authorization)
 		}
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
@@ -97,7 +96,7 @@ const loginUserAction = (login, password) => async dispatch => {
 			password: password,
 		})
 		if (response.headers.authorization) {
-			LocalStorageHelper.setItem('jwtToken', response.headers.authorization)
+			localStorage.setItem('jwtToken', response.headers.authorization)
 		}
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
