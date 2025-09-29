@@ -19,7 +19,7 @@ const filmReducer = (state = initialState, action) => {
 			return {
 				...state,
 				loading: false,
-				films: payload.films,
+				films: [...state.films, ...payload.films],
 			}
 		case types.FILMS_ERROR:
 			return {

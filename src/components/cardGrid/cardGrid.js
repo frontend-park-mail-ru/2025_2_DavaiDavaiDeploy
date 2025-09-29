@@ -156,11 +156,12 @@ export default class CardGrid extends Component {
 		const cards = this.grid.querySelectorAll('.film-card')
 		let minHeight = 0
 		if (cards.length > 0) {
-			minHeight = Math.min(
-				...Array.from(cards).map(
-					filmCard => filmCard.getBoundingClientRect().height,
-				),
-			)
+			const heights = Array.from(cards)
+				.map(card => card.getBoundingClientRect().height)
+				.filter(h => h > 0)
+			if (heights.length > 0) {
+				minHeight = Math.min(...heights)
+			}
 		}
 
 		const cardHeight = minHeight !== 0 ? minHeight : MIN_CARD_HEIGHT
@@ -180,8 +181,8 @@ export default class CardGrid extends Component {
 			Math.floor(invisibleTopHeight / cardHeight) - ROWS_IN_BUFFER,
 			0,
 		)
-		const rowsInViewPort =
-			Math.ceil(window.innerHeight / cardHeight) + ROWS_IN_BUFFER
+		const visibleRows = Math.ceil(window.innerHeight / cardHeight)
+		const rowsInViewPort = visibleRows + 2 * ROWS_IN_BUFFER
 
 		let startIndex = rowsBeforeStart * cardsPerRow
 		let endIndex = startIndex + rowsInViewPort * cardsPerRow
@@ -189,7 +190,7 @@ export default class CardGrid extends Component {
 
 		if (endIndex > length) {
 			endIndex = length
-			startIndex = Math.max(length - rowsInViewPort * cardsPerRow, 0)
+			startIndex = Math.max(0, endIndex - rowsInViewPort * cardsPerRow)
 		}
 
 		return { startIndex, endIndex }
