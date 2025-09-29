@@ -77,7 +77,7 @@ class Router {
 
 	renderHeader = () => {
 		const header = new Header(this.parent, {
-			avatar: '/src/assets/img/1+1.webp',
+			avatar: './../../assets/img/1+1.webp',
 			login: 'Alex',
 			id: 'header',
 		})

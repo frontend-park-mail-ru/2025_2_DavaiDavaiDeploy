@@ -13,7 +13,7 @@ export default {
 			placeholder: 'Введите имя пользователя',
 			required: true,
 			validator: validateLogin,
-			preIconSrc: '/src/assets/img/user.svg',
+			preIconSrc: '../../assets/img/user.svg',
 			formGroupID: 'login-form-group',
 		},
 		password: {

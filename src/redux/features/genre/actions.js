@@ -48,7 +48,7 @@ const getGenreAction = id => async dispatch => {
 const getGenresAction = () => async dispatch => {
 	dispatch(setGenreLoadingAction())
 	try {
-		const response = await HTTPClient.get('/api/genres')
+		const response = await HTTPClient.get('/genres')
 		dispatch(returnGenresAction(response.data))
 	} catch (error) {
 		dispatch(returnGenreErrorAction(error.message || 'Error'))
