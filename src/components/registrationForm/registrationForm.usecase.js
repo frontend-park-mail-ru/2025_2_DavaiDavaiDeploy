@@ -1,3 +1,7 @@
+import { validateLogin } from '../../helpers/validateLogin/validateLogin.js'
+import { validatePassword } from '../../helpers/validatePassword/validatePassword.js'
+import { validatePasswordConfirm } from '../../helpers/validatePasswordConfirm/validatePasswordConfirm.js'
+
 export default {
 	action: '/',
 	id: 'registration-form',
@@ -9,18 +13,17 @@ export default {
 			type: 'text',
 			placeholder: 'Введите имя пользователя',
 			required: true,
-			preIconSrc: '/src/assets/img/user.svg',
+			validator: validateLogin,
+			preIconSrc: '../../assets/img/user.svg',
 			formGroupID: 'login-form-group',
 		},
 		password: {
 			id: 'password',
 			label: 'Пароль',
 			name: 'password',
-			type: 'password',
 			placeholder: 'Введите пароль',
 			required: true,
-			preIconSrc: '/src/assets/img/lock.svg',
-			postIconSrc: '/src/assets/img/eye_close.svg',
+			validator: validatePassword,
 			formGroupID: 'password-form-group',
 			postIconID: 'password-icon',
 		},
@@ -28,11 +31,10 @@ export default {
 			id: 'confirm-password',
 			label: 'Подтверждение пароля',
 			name: 'confirm-password',
-			type: 'password',
 			placeholder: 'Введите пароль',
 			required: true,
-			preIconSrc: '/src/assets/img/lock.svg',
-			postIconSrc: '/src/assets/img/eye_close.svg',
+			isConfirm: true,
+			validator: validatePasswordConfirm,
 			formGroupID: 'confirm-password-form-group',
 			postIconID: 'confirm-password-icon',
 		},

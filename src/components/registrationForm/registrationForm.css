@@ -1,0 +1,10 @@
+.form--invalid {
+	border: 2px solid #f44;
+	border-radius: 8px;
+	animation: shake 0.5s ease-in-out;
+}
+
+.button--disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}

@@ -1,3 +1,9 @@
+/**
+ * Композиция функций справа налево.
+ *
+ * @param {...Function} funcs - Функции для композиции.
+ * @returns {Function} Одна функция, полученная в результате композиции.
+ */
 export function compose(...funcs) {
 	if (funcs.length === 0) {
 		return arg => arg

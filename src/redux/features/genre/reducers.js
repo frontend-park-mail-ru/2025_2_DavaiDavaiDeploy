@@ -1,19 +1,38 @@
 import types from './types.js'
 
+/**
+ * Начальное состояние редьюсера жанров.
+ * @type {{ loading: boolean, genres: Array<Object>, error: string | null }}
+ */
 const initialState = {
 	loading: false,
 	genres: [],
+	curGenre: {},
+	films: [],
 	error: null,
 }
 
+/**
+ * Редьюсер для управления состоянием жанров.
+ *
+ * @param {typeof initialState} state - Текущее состояние.
+ * @param {{ type: string, payload?: any }} action - Action.
+ * @returns {typeof initialState} Новое состояние.
+ */
 const genreReducer = (state = initialState, action) => {
 	const { type, payload } = action
 
 	switch (type) {
-		case types.GENRES_LOADING:
+		case types.GENRE_LOADING:
 			return {
 				...state,
 				loading: true,
+			}
+		case types.GENRE_LOADED:
+			return {
+				...state,
+				loading: false,
+				curGenre: payload.genre,
 			}
 		case types.GENRES_LOADED:
 			return {
@@ -21,11 +40,17 @@ const genreReducer = (state = initialState, action) => {
 				loading: false,
 				genres: payload.genres,
 			}
-		case types.GENRES_ERROR:
+		case types.GENRE_FILMS_LOADED:
 			return {
 				...state,
 				loading: false,
-				genres: [],
+				films: [...state.films, ...payload.films],
+			}
+
+		case types.GENRE_ERROR:
+			return {
+				...state,
+				loading: false,
 				error: payload.error,
 			}
 		default:
