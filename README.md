@@ -28,6 +28,6 @@ TODO - _UX_
 
 [Репозиторий бэкенда](https://github.com/go-park-mail-ru/2025_2_DavaiDavaiDeploy)
 
-[Деплой](TODO)
+[Деплой](https://ddfilms.online)
 
-[Figma](TODO)
+[Figma](https://www.figma.com/design/jR26e56TaU1xmJP69bHDtj/DDD--%D0%9A%D0%B8%D0%BD%D0%BE%D0%BF%D0%BE%D0%B8%D1%81%D0%BA-?node-id=0-1&t=buNv5zOHlfm1X8R4-1)
