@@ -1,5 +1,5 @@
-import { formatRating } from '../../helpers/ratingFormatHelper.js'
-import { getRatingType } from '../../helpers/ratingTypeHelper.js'
+import { formatRating } from '../../helpers/ratingFormatHelper/ratingFormatHelper.js'
+import { getRatingType } from '../../helpers/ratingTypeHelper/ratingTypeHelper.js'
 import Component from '../core/baseComponent.js'
 
 export default class FilmCard extends Component {

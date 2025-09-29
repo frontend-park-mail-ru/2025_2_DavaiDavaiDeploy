@@ -44,7 +44,7 @@ const genreReducer = (state = initialState, action) => {
 			return {
 				...state,
 				loading: false,
-				films: [...state.films, ...payload.films],
+				films: payload.films,
 			}
 
 		case types.GENRE_ERROR:
@@ -52,6 +52,7 @@ const genreReducer = (state = initialState, action) => {
 				...state,
 				loading: false,
 				error: payload.error,
+				films: [],
 			}
 		default:
 			return state

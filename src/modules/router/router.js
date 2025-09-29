@@ -1,6 +1,6 @@
 import Footer from '../../components/footer/footer.js'
 import Header from '../../components/header/header.js'
-import { normalize } from '../../helpers/normalizeHelper.js'
+import { normalize } from '../../helpers/normalizeHelper/normalizeHelper.js'
 import actions from '../../redux/features/user/actions.js'
 import { store } from '../../redux/store.js'
 
