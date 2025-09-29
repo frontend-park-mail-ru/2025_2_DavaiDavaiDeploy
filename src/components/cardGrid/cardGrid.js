@@ -19,6 +19,9 @@ export default class CardGrid extends Component {
 	#cards = {}
 	#isLoading = false
 	#lastScrollTop = 0
+	#hasUserScrolled = false
+	#throttledScrollHandler
+	#throttledResizeHandler
 
 	constructor(parent, props = {}) {
 		super(parent, props, 'cardGrid')
@@ -43,14 +46,15 @@ export default class CardGrid extends Component {
 		const cardsPerRow = getGridColumnCount(this.grid)
 		this.loadMoreFilms(cardsPerRow * UPLOADING_ROWS_COUNT)
 
-		window.addEventListener(
-			'scroll',
-			throttle(this.updateViewport, THROTTLE_DELAY),
-		)
-		window.addEventListener(
-			'resize',
-			throttle(this.updateViewport, THROTTLE_DELAY),
-		)
+		this.#throttledScrollHandler = throttle(this.onScroll, THROTTLE_DELAY)
+		this.#throttledResizeHandler = throttle(this.updateViewport, THROTTLE_DELAY)
+		window.addEventListener('scroll', this.#throttledScrollHandler)
+		window.addEventListener('resize', this.#throttledResizeHandler)
+	}
+
+	onScroll = () => {
+		this.#hasUserScrolled = true
+		this.updateViewport()
 	}
 
 	loadMoreFilms = count => {
@@ -96,7 +100,7 @@ export default class CardGrid extends Component {
 			}
 		}
 
-		if (isScrollingDown) {
+		if (isScrollingDown && this.#hasUserScrolled) {
 			const cards = this.grid.querySelectorAll('.film-card')
 			let minHeight = 0
 			if (cards.length > 0) {
@@ -209,14 +213,21 @@ export default class CardGrid extends Component {
 
 	destroy() {
 		this.#unsubscribe?.()
-		window.removeEventListener('scroll', this.updateViewport)
-		window.removeEventListener('resize', this.updateViewport)
+		if (this.#throttledScrollHandler) {
+			window.removeEventListener('scroll', this.#throttledScrollHandler)
+		}
+		if (this.#throttledResizeHandler) {
+			window.removeEventListener('resize', this.#throttledResizeHandler)
+		}
 
 		this.#cards = {}
 		this.#offset = 0
 		this.#uploadAllFilms = false
 		this.#isLoading = false
 		this.#lastScrollTop = 0
+		this.#hasUserScrolled = false
+		this.#throttledScrollHandler = undefined
+		this.#throttledResizeHandler = undefined
 
 		store.dispatch(filmActions.clearFilmsAction())
 
