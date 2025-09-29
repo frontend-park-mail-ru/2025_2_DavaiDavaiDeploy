@@ -21,7 +21,7 @@ export default class FilmCard extends Component {
 			ratingType: getRatingType(this.props.rating),
 		}
 
-		this.parent.insertAdjacentHTML('beforeend', this.html(context))
+		this.parent?.insertAdjacentHTML('beforeend', this.html(context))
 	}
 
 	rerender() {
@@ -32,6 +32,9 @@ export default class FilmCard extends Component {
 			info: this.props.info,
 			rating: formatRating(this.props.rating),
 			ratingType: getRatingType(this.props.rating),
+		}
+		if (!this.self) {
+			return
 		}
 		this.self.outerHTML = this.html(context)
 	}

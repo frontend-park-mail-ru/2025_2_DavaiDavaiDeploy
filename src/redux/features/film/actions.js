@@ -39,6 +39,18 @@ const returnFilmsErrorAction = error => {
 }
 
 /**
+ * Action: очистка фильмов.
+ *
+ * @param {string} error - Сообщение об ошибке.
+ * @returns { type: string }
+ */
+const clearFilmsAction = () => {
+	return {
+		type: types.FILMS_CLEAR,
+	}
+}
+
+/**
  * Thunk: асинхронная загрузка фильмов с сервера.
  *
  * @param {number} limit - Количество фильмов.
@@ -74,4 +86,5 @@ export default {
 	returnFilmsAction,
 	returnFilmsErrorAction,
 	getFilmsActionFake,
+	clearFilmsAction,
 }
