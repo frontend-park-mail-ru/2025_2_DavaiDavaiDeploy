@@ -137,8 +137,9 @@ export default class CardGrid extends Component {
 	}
 
 	renderFilm = film => {
-		if (this.#cards[film.id]) {
-			this.#cards[film.id].rerender()
+		const card = this.#cards[film.id]
+		if (card) {
+			card.rerender()
 			return
 		}
 		const filmCard = new FilmCard(this.grid, {
