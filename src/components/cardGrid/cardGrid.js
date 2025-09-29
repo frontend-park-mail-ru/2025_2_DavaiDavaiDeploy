@@ -216,6 +216,9 @@ export default class CardGrid extends Component {
 		this.#offset = 0
 		this.#uploadAllFilms = false
 		this.#isLoading = false
+		this.#lastScrollTop = 0
+
+		store.dispatch(filmActions.clearFilmsAction())
 
 		if (this.self) {
 			this.self.innerHTML = ''

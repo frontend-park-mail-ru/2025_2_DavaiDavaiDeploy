@@ -22,6 +22,12 @@ const returnFilmsErrorAction = error => {
 	}
 }
 
+const clearFilmsAction = () => {
+	return {
+		type: types.FILMS_CLEAR,
+	}
+}
+
 const getFilmsAction = (limit, offset) => async dispatch => {
 	dispatch(setFilmsLoadingAction())
 	try {
@@ -44,4 +50,5 @@ export default {
 	returnFilmsAction,
 	returnFilmsErrorAction,
 	getFilmsActionFake,
+	clearFilmsAction,
 }
