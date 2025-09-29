@@ -38,7 +38,7 @@ const returnGenreErrorAction = error => {
 const getGenreAction = id => async dispatch => {
 	dispatch(setGenreLoadingAction())
 	try {
-		const response = await HTTPClient.get(`/api/genres/${id}`)
+		const response = await HTTPClient.get(`/genres/${id}`)
 		dispatch(returnGenreAction(response.data))
 	} catch (error) {
 		dispatch(returnGenreErrorAction(error.message || 'Error'))
@@ -58,7 +58,7 @@ const getGenresAction = () => async dispatch => {
 const getGenreFilmsAction = (id, limit, offset) => async dispatch => {
 	dispatch(setGenreLoadingAction())
 	try {
-		const response = await HTTPClient.get(`/api/films/genre/${id}`, {
+		const response = await HTTPClient.get(`/films/genre/${id}`, {
 			params: { count: limit, offset },
 		})
 		dispatch(returnGenreFilmsAction(response.data))

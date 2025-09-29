@@ -110,6 +110,11 @@ class Router {
 		let normalizedPath = normalize(path)
 		let route = this.routes[normalizedPath]
 
+		if (route.needProps && props.id === undefined) {
+			route = this.routes['/']
+			normalizedPath = '/'
+		}
+
 		if (!route) {
 			route = this.routes['error404']
 			normalizedPath = '/error'

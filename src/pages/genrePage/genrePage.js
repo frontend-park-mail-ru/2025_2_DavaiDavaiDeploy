@@ -1,5 +1,5 @@
 import FilmCard from '../../components/filmCard/filmCard.js'
-import { serverAddr } from '../../consts/serverAddr.js'
+import { serverAddrForStatic } from '../../consts/serverAddr.js'
 import genreActions from '../../redux/features/genre/actions.js'
 import { store } from '../../redux/store.js'
 
@@ -7,6 +7,7 @@ export default class GenrePage {
 	#parent
 	#self
 	#unsubscribe
+	#isLoaded = false
 	#props = {
 		id: '',
 		title: '',
@@ -43,8 +44,11 @@ export default class GenrePage {
 			this.update(state)
 		})
 
-		store.dispatch(genreActions.getGenreAction(this.#props.id))
-		store.dispatch(genreActions.getGenreFilmsAction(this.#props.id))
+		if (!this.#isLoaded) {
+			store.dispatch(genreActions.getGenreAction(this.#props.id))
+			store.dispatch(genreActions.getGenreFilmsAction(this.#props.id))
+			this.#isLoaded = true
+		}
 	}
 
 	update = state => {
@@ -78,7 +82,7 @@ export default class GenrePage {
 		state.films.forEach(film => {
 			const filmCard = new FilmCard(grid, {
 				id: film.id,
-				image: `${serverAddr}${film.icon}`,
+				image: `${serverAddrForStatic}${film.icon}`,
 				title: film.title,
 				info: `${film.genres[0].title}, ${film.year}`,
 				rating: film.rating,
@@ -89,5 +93,6 @@ export default class GenrePage {
 
 	destroy() {
 		this.#unsubscribe?.()
+		this.#isLoaded = false
 	}
 }

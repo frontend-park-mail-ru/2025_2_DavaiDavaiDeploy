@@ -31,14 +31,23 @@ export default class GenreSlider extends Component {
 	}
 
 	get slider() {
+		if (!this.self) {
+			return null
+		}
 		return this.self?.querySelector('.slider')
 	}
 
 	get nextBtn() {
+		if (!this.self) {
+			return null
+		}
 		return this.self.querySelector('.next-button')
 	}
 
 	get prevBtn() {
+		if (!this.self) {
+			return null
+		}
 		return this.self.querySelector('.prev-button')
 	}
 
@@ -59,6 +68,8 @@ export default class GenreSlider extends Component {
 				this.update(genres)
 			}
 		})
+
+		this.addEventListeners()
 	}
 
 	update = genres => {
@@ -88,8 +99,6 @@ export default class GenreSlider extends Component {
 			AUTO_SLIDE_DURATION,
 		)
 		this.autoSlider.start()
-
-		this.addEventListeners()
 	}
 
 	addEventListeners = () => {

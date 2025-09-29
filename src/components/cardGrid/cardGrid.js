@@ -28,7 +28,7 @@ export default class CardGrid extends Component {
 	}
 
 	get grid() {
-		return this.self.querySelector('.grid')
+		return this.self?.querySelector('.grid')
 	}
 
 	render() {
@@ -66,6 +66,9 @@ export default class CardGrid extends Component {
 	}
 
 	updateViewport = () => {
+		if (!this.grid) {
+			return
+		}
 		const { startIndex, endIndex } = this.getVisibleCards()
 		const films = store.getState().film.films
 
