@@ -28,7 +28,7 @@ describe('formatRating', () => {
 	it('возвращает строку для 0', () => {
 		expect(typeof formatRating(0)).toBe('string')
 	})
-	
+
 	it('корректно форматирует дробные числа', () => {
 		expect(formatRating(8.3)).toBe('8.3')
 	})

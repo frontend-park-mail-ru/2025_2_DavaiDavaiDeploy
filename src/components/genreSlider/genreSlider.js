@@ -83,6 +83,10 @@ export default class GenreSlider extends Component {
 			this.autoSlider.stop()
 		}
 
+		if (this.autoSlider) {
+			this.autoSlider.stop()
+		}
+
 		this.initSlider()
 
 		this.autoSlider = createPeriodFunction(
@@ -156,11 +160,11 @@ export default class GenreSlider extends Component {
 		if (this.state.isAnimating) {
 			return
 		}
-
-		this.state.isAnimating = true
-		this.nextBtn.disabled = true
-		this.prevBtn.disabled = true
-
+		if (this.nextBtn && this.prevBtn) {
+			this.state.isAnimating = true
+			this.nextBtn.disabled = true
+			this.prevBtn.disabled = true
+		}
 		this.genres.forEach((genre, index) => {
 			const inCurSlide =
 				index >= this.state.prevGenre &&

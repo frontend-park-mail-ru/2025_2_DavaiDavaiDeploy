@@ -69,11 +69,20 @@ export default class GenrePage {
 
 		const title = this.#self.querySelector('.genre-content__title')
 		const desc = this.#self.querySelector('.genre-content__description')
+		const err = this.#self.querySelector('.genre-content__error')
+
+		err.display = 'none'
+
 		if (title) {
 			title.textContent = `Жанры: ${this.#props.title}`
 		}
 		if (desc) {
 			desc.textContent = this.#props.description
+		}
+
+		if (!state.films || state.films.length === 0) {
+			err.display = 'block'
+			return
 		}
 
 		const grid = this.grid

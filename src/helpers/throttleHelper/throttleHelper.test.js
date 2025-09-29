@@ -56,7 +56,7 @@ describe('throttle', () => {
 	it('сохраняет контекст this', () => {
 		const context = { value: 42 }
 		let receivedContext
-		const func = function() {
+		const func = function () {
 			receivedContext = this
 		}
 		const throttledFunc = throttle(func.bind(context), 1000)
@@ -110,7 +110,7 @@ describe('throttle', () => {
 		expect(func).toHaveBeenCalledWith('first')
 
 		vi.advanceTimersByTime(1000)
-		
+
 		throttledFunc('fourth')
 		expect(func).toHaveBeenCalledTimes(2)
 		expect(func).toHaveBeenCalledWith('fourth')
@@ -123,13 +123,13 @@ describe('throttle', () => {
 		throttledFunc('call1')
 		expect(func).toHaveBeenCalledTimes(1)
 
-		vi.advanceTimersByTime(1500) 
+		vi.advanceTimersByTime(1500)
 		throttledFunc('call2')
 		expect(func).toHaveBeenCalledTimes(2)
 
-		vi.advanceTimersByTime(500) 
+		vi.advanceTimersByTime(500)
 		throttledFunc('call3')
-		expect(func).toHaveBeenCalledTimes(2) 
+		expect(func).toHaveBeenCalledTimes(2)
 
 		vi.advanceTimersByTime(500)
 		throttledFunc('call4')

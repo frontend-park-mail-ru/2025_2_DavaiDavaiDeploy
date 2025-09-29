@@ -30,15 +30,13 @@ describe('getGridColumnCount', () => {
 		expect(columnsCount).toBe(0)
 	})
 
-
-	
 	it('возвращает количество колонок для repeat() с фиксированным числом', () => {
 		const grid = document.createElement('div')
 		grid.style.display = 'grid'
 		grid.style.gridTemplateColumns = 'repeat(3, 100px)'
 
 		const columnsCount = getGridColumnCount(grid)
-		expect(columnsCount).toBe(2) 
+		expect(columnsCount).toBe(2)
 	})
 
 	it('возвращает количество колонок для auto-fit как количество слов', () => {
@@ -47,7 +45,7 @@ describe('getGridColumnCount', () => {
 		grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(100px, 1fr))'
 
 		const columnsCount = getGridColumnCount(grid)
-		expect(columnsCount).toBe(3) 
+		expect(columnsCount).toBe(3)
 	})
 
 	it('возвращает количество колонок для auto-fill как количество слов', () => {
@@ -56,7 +54,7 @@ describe('getGridColumnCount', () => {
 		grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(100px, 1fr))'
 
 		const columnsCount = getGridColumnCount(grid)
-		expect(columnsCount).toBe(3) 
+		expect(columnsCount).toBe(3)
 	})
 
 	it('возвращает количество колонок для сложных значений с разными единицами', () => {
@@ -65,7 +63,7 @@ describe('getGridColumnCount', () => {
 		grid.style.gridTemplateColumns = '100px 1fr minmax(200px, 1fr) 20%'
 
 		const columnsCount = getGridColumnCount(grid)
-		expect(columnsCount).toBe(5) 
+		expect(columnsCount).toBe(5)
 	})
 
 	it('возвращает 1 для grid с одной колонкой', () => {
@@ -94,7 +92,6 @@ describe('getGridColumnCount', () => {
 		expect(columnsCount).toBe(3)
 	})
 
-	
 	it('возвращает 2 для двух колонок с простыми значениями', () => {
 		const grid = document.createElement('div')
 		grid.style.display = 'grid'

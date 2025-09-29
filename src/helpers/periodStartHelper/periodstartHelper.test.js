@@ -60,16 +60,16 @@ describe('createPeriodperiodFunction', () => {
 		periodFunc.start()
 		const firstIntervalId = periodFunc.isWorking()
 
-		periodFunc.start() 
+		periodFunc.start()
 		const secondIntervalId = periodFunc.isWorking()
 
 		expect(firstIntervalId).toBe(secondIntervalId)
 
 		vi.advanceTimersByTime(1000)
-		expect(func).toHaveBeenCalledTimes(1) 
-  })
+		expect(func).toHaveBeenCalledTimes(1)
+	})
 
-  	it('корректно работает после остановки и повторного запуска', () => {
+	it('корректно работает после остановки и повторного запуска', () => {
 		const func = vi.fn()
 		const periodFunc = createPeriodFunction(func, 1000)
 
@@ -79,27 +79,27 @@ describe('createPeriodperiodFunction', () => {
 
 		periodFunc.stop()
 		vi.advanceTimersByTime(2000)
-		expect(func).toHaveBeenCalledTimes(1) 
+		expect(func).toHaveBeenCalledTimes(1)
 
-		periodFunc.start() 
+		periodFunc.start()
 		vi.advanceTimersByTime(1000)
 		expect(func).toHaveBeenCalledTimes(2)
-  	})
+	})
 
-  	it('не вызывает функцию до истечения первого интервала', () => {
+	it('не вызывает функцию до истечения первого интервала', () => {
 		const func = vi.fn()
 		const periodFunc = createPeriodFunction(func, 1000)
 
 		periodFunc.start()
-		
-		vi.advanceTimersByTime(500) 
+
+		vi.advanceTimersByTime(500)
 		expect(func).not.toHaveBeenCalled()
 
-		vi.advanceTimersByTime(500) 
+		vi.advanceTimersByTime(500)
 		expect(func).toHaveBeenCalledTimes(1)
-  	})
+	})
 
-  	it('корректно работает с разными периодами', () => {
+	it('корректно работает с разными периодами', () => {
 		const func = vi.fn()
 		const periodFunc = createPeriodFunction(func, 500)
 
@@ -110,9 +110,9 @@ describe('createPeriodperiodFunction', () => {
 
 		vi.advanceTimersByTime(500)
 		expect(func).toHaveBeenCalledTimes(2)
-  	})
+	})
 
-  	it('isWorking возвращает false после остановки', () => {
+	it('isWorking возвращает false после остановки', () => {
 		const func = vi.fn()
 		const periodFunc = createPeriodFunction(func, 1000)
 
@@ -121,14 +121,14 @@ describe('createPeriodperiodFunction', () => {
 
 		periodFunc.stop()
 		expect(periodFunc.isWorking()).toBe(false)
-  	})
+	})
 
-  	it('stop не вызывает ошибок если интервал не запущен', () => {
+	it('stop не вызывает ошибок если интервал не запущен', () => {
 		const func = vi.fn()
 		const periodFunc = createPeriodFunction(func, 1000)
 
 		expect(() => {
-		periodFunc.stop() 
+			periodFunc.stop()
 		}).not.toThrow()
 
 		expect(periodFunc.isWorking()).toBe(false)
