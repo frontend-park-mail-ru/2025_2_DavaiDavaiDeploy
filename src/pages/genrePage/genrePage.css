@@ -48,13 +48,13 @@
 }
 
 @media (width <= 75rem) {
-	.main {
+	.films {
 		padding: 0 3.75rem;
 	}
 }
 
 @media (width <= 48rem) {
-	.main {
+	.films {
 		padding: 0 1.875rem;
 	}
 }
