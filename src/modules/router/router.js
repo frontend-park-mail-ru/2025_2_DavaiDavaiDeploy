@@ -2,24 +2,44 @@ import Footer from '../../components/footer/footer.js'
 import Header from '../../components/header/header.js'
 import { normalize } from '../../helpers/normalizeHelper.js'
 
+/**
+ * Класс для клиентской маршрутизации.
+ * Отвечает за отрисовку страниц, header и footer на основе URL.
+ */
 class Router {
 	constructor() {
+		/** @type {Router} */
 		if (Router.instance) {
 			return Router.instance
 		}
 
-		Router.instance = this
+		/** @type {Object.<string, Object>} */
 		this.routes = {}
+
+		/** @type {HTMLElement | null} */
 		this.parent = null
 
+		Router.instance = this
 		this.initEventListeners()
 	}
 
+	/**
+	 * Конфигурирует маршруты и контейнер, в котором будет происходить рендеринг.
+	 *
+	 * @param {Object.<string, { href: string, component: any, hasHeader?: boolean, hasFooter?: boolean }>} routes
+	 * @param {HTMLElement} parent - Родительский DOM-элемент для отрисовки.
+	 */
 	configurate = (routes, parent) => {
 		this.routes = new Proxy(routes, this.routesHandler)
 		this.parent = parent
 	}
 
+	/**
+	 * Обработчик прокси-доступа к маршрутам.
+	 * Позволяет находить маршрут по `href`.
+	 *
+	 * @private
+	 */
 	routesHandler = {
 		get: (target, path) => {
 			let routeName = Object.keys(target).find(key => target[key].href === path)
@@ -30,16 +50,27 @@ class Router {
 		},
 	}
 
+	/**
+	 * Инициализирует слушателей событий `popstate` и `click`.
+	 */
 	initEventListeners = () => {
 		window.addEventListener('popstate', this.handlePopState)
 		window.addEventListener('click', this.handleClick)
 	}
 
+	/**
+	 * Обработчик изменения истории браузера.
+	 */
 	handlePopState = () => {
 		const path = window.location.pathname
 		this.handleRouteChange(path, false)
 	}
 
+	/**
+	 * Обрабатывает клики по ссылкам.
+	 *
+	 * @param {MouseEvent} event - Событие клика.
+	 */
 	handleClick = event => {
 		const link = event.target.closest('a')
 		if (link) {
@@ -53,7 +84,7 @@ class Router {
 	}
 
 	/**
-	 * Очищает контент и header
+	 * Удаляет старые элементы header, footer и .content из DOM.
 	 */
 	clearLayout = () => {
 		const oldContent = this.parent.querySelector('.content')
@@ -61,19 +92,20 @@ class Router {
 			oldContent.remove()
 		}
 
-		// Удаляем существующий header если он есть
 		const oldHeader = document.querySelector('#header')
 		if (oldHeader) {
 			oldHeader.remove()
 		}
 
-		// Удаляем существующий footer если он есть
 		const oldFooter = document.querySelector('#footer')
 		if (oldFooter) {
 			oldFooter.remove()
 		}
 	}
 
+	/**
+	 * Рендерит header.
+	 */
 	renderHeader = () => {
 		const header = new Header(this.parent, {
 			avatar: './../../assets/img/1+1.webp',
@@ -83,21 +115,34 @@ class Router {
 		header.render()
 	}
 
+	/**
+	 * Рендерит footer.
+	 */
 	renderFooter = () => {
 		const footer = new Footer(this.parent)
 		footer.render()
 	}
 
+	/**
+	 * Рендерит компонент контента маршрута.
+	 *
+	 * @param {Object} route - Объект маршрута, содержащий компонент.
+	 */
 	renderContent = route => {
 		const contentContainer = document.createElement('div')
 		contentContainer.className = 'content'
 		this.parent.appendChild(contentContainer)
 
-		// Рендерим страницу
 		const page = new route.component(contentContainer)
 		page.render()
 	}
 
+	/**
+	 * Выполняет переход на указанный маршрут.
+	 *
+	 * @param {string} path - Путь маршрута.
+	 * @param {boolean} [addToHistory=true] - Добавлять ли путь в историю браузера.
+	 */
 	handleRouteChange = (path, addToHistory = true) => {
 		let normalizedPath = normalize(path)
 		let route = this.routes[normalizedPath]
@@ -122,6 +167,9 @@ class Router {
 		}
 	}
 
+	/**
+	 * Запускает роутер, обрабатывая текущий путь.
+	 */
 	start = () => {
 		this.handleRouteChange(window.location.pathname)
 	}

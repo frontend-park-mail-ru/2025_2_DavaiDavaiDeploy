@@ -1,5 +1,11 @@
 import { compose } from '../compose/index.js'
 
+/**
+ * Применяет middleware к Redux-подобному store.
+ *
+ * @param {Function[]} middlewares - Массив middleware-функций.
+ * @returns {Function} Фабрика создания store с middleware.
+ */
 export function applyMiddleware(middlewares) {
 	return function createStoreWithMiddleware(createStore) {
 		return (reducer, initialState) => {
