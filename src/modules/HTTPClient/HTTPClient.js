@@ -100,10 +100,13 @@ export class HTTPClient {
 
 		const requestMethod = method.toUpperCase()
 		const requestUrl = this.formReqUrl(url, params)
+		// alert('requestUrl: ' + requestUrl)
+
 		const { requestHeaders, requestBody } = this.formReqHeadersAndBody(
 			headers,
 			data,
 			requestMethod,
+			url,
 		)
 
 		try {
@@ -111,6 +114,7 @@ export class HTTPClient {
 				method: requestMethod,
 				headers: requestHeaders,
 				body: requestBody,
+				credentials: 'include',
 			})
 
 			const responseHeaders = {}
@@ -119,13 +123,14 @@ export class HTTPClient {
 			})
 
 			let responseData
-			const contentType = response.headers.get('content-type')
+			// const contentType = response.headers.get('content-type')
 
-			if (contentType?.includes('application/json')) {
-				responseData = await response.json()
-			} else {
-				responseData = await response.text()
-			}
+			// if (contentType?.includes('application/json')) {
+			// 	responseData = await response.json()
+			// } else {
+			// 	responseData = await response.text()
+			// }
+			responseData = await response.json()
 
 			if (!response.ok) {
 				throw new Error(
@@ -150,7 +155,7 @@ export class HTTPClient {
 	/**
 	 * Формирует полный URL с query-параметрами.
 	 * @param {string} url - Относительный путь.
-	 * @param {Object} params - Query-параметры.
+	 * @param {Object} params - Query-параметры.А
 	 * @returns {string} Полный URL.
 	 */
 	formReqUrl(url, params) {
@@ -167,7 +172,6 @@ export class HTTPClient {
 				requestUrl.searchParams.append(key, value.toString())
 			}
 		}
-
 		return requestUrl.toString()
 	}
 
@@ -178,10 +182,13 @@ export class HTTPClient {
 	 * @param {string} requestMethod - HTTP-метод.
 	 * @returns {{ requestHeaders: Headers, requestBody: string | undefined }}
 	 */
-	formReqHeadersAndBody(headers, data, requestMethod) {
+	formReqHeadersAndBody(headers, data, requestMethod, url) {
 		let requestHeaders = new Headers(headers)
 		let requestBody = undefined
 
+		if (url === '/auth/check' && localStorage.getItem('jwtToken')) {
+			requestHeaders.set('Authorization', localStorage.getItem('jwtToken'))
+		}
 		if (
 			data &&
 			requestMethod !== METHODS.GET &&

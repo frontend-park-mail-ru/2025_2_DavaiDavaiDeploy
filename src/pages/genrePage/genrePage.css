@@ -47,6 +47,13 @@
 	color: var(--color-white);
 }
 
+.genre-content__error {
+	margin-top: 10rem;
+	font-size: 1.5rem;
+	display: none;
+	color: var(--color-white);
+}
+
 @media (width <= 75rem) {
 	.films .genre-content {
 		padding: 0 3.75rem;

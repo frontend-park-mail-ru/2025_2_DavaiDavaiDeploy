@@ -1,4 +1,4 @@
-import { rating as ratingConsts } from '../consts/raiting.js'
+import { rating as ratingConsts } from '../../consts/raiting.js'
 
 /**
  * Определяет тип рейтинга: высокий, средний или низкий.
