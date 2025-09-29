@@ -1,5 +1,5 @@
-@import url('./../../shared/input/input.css');
-@import url('./../../shared/passwordInput/passwordInput.css');
+@import url('../../shared/input/input.css');
+@import url('../../shared/passwordInput/passwordInput.css');
 
 .registration-page {
 	height: 100%;
