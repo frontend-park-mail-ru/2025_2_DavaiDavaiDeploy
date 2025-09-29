@@ -1,6 +1,7 @@
 import HTTPClient from '../../../modules/HTTPClient/index.js'
 import types from './types.js'
 
+/* eslint-disable no-console */
 const setUserLoadingAction = () => {
 	return {
 		type: types.USER_LOADING,
@@ -61,7 +62,7 @@ const checkUserAction = () => async dispatch => {
 		if (response.headers.Authorization) {
 			localStorage.setItem('jwtToken', response.headers.Authorization)
 		}
-		dispatch(returnUserAction(response.data))
+		dispatch(returnUserAction(response))
 	} catch (error) {
 		dispatch(returnUserErrorAction(error.message || 'Error'))
 	}
@@ -80,9 +81,13 @@ const registerUserAction = (login, password) => async dispatch => {
 			login: login,
 			password: password,
 		})
-		if (response.headers.Authorization) {
-			localStorage.setItem('jwtToken', response.headers.Authorization)
+		console.log('хедеры блять ' + JSON.stringify(response.headers))
+		if (response.headers.authorization) {
+			console.log('я впихнул ' + response.headers.authorization)
+			localStorage.setItem('jwtToken', response.headers.authorization)
 		}
+		console.log('Я В STORE ПИХАЮ ')
+		console.log(response.data)
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
 		dispatch(returnUserErrorAction(error.message || 'Error'))
@@ -95,6 +100,7 @@ const loginUserAction = (login, password) => async dispatch => {
 			login: login,
 			password: password,
 		})
+		console.log('хедеры блять ' + response.headers)
 		if (response.headers.Authorization) {
 			localStorage.setItem('jwtToken', response.headers.Authorization)
 		}
@@ -112,3 +118,5 @@ export default {
 	updateUserAction,
 	deleteUserAction,
 }
+
+/* eslint-enable no-console */

@@ -1,6 +1,7 @@
 import Footer from '../../components/footer/footer.js'
 import Header from '../../components/header/header.js'
 import { normalize } from '../../helpers/normalizeHelper.js'
+import { store } from '../../redux/store.js'
 
 /**
  * Класс для клиентской маршрутизации.
@@ -108,10 +109,14 @@ class Router {
 	 * Рендерит header.
 	 */
 	renderHeader = () => {
+		/* eslint-disable no-console */
+		console.log('в зедере у нас')
+		console.log(store.getState().user)
+		/* eslint-enable no-console */
 		const header = new Header(this.parent, {
 			avatar: './../../assets/img/1+1.webp',
-			login: 'Alex',
-			id: 'header',
+			login: store.getState().user.users.login,
+			id: store.getState().user.users.id,
 		})
 		header.render()
 	}

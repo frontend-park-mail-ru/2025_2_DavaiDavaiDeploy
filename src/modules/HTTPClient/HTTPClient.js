@@ -120,13 +120,14 @@ export class HTTPClient {
 			})
 
 			let responseData
-			const contentType = response.headers.get('content-type')
+			// const contentType = response.headers.get('content-type')
 
-			if (contentType?.includes('application/json')) {
-				responseData = await response.json()
-			} else {
-				responseData = await response.text()
-			}
+			// if (contentType?.includes('application/json')) {
+			// 	responseData = await response.json()
+			// } else {
+			// 	responseData = await response.text()
+			// }
+			responseData = await response.json()
 
 			if (!response.ok) {
 				throw new Error(

@@ -1,4 +1,5 @@
 import registrationForm from '../../components/registrationForm/registrationForm.js'
+import router from '../../modules/router/index.js'
 import actions from '../../redux/features/user/actions.js'
 import { store } from '../../redux/store.js'
 
@@ -31,6 +32,24 @@ export default class RegistrationPage {
 	}
 
 	/**
+	 * Обработчик изменения состояния
+	 */
+	#handleStoreChange = () => {
+		/* eslint-disable no-console */
+		console.log('в субскрайбе')
+		console.log(store.getState().user)
+		/* eslint-enable no-console */
+		const userState = store.getState().user
+
+		// Проверяем успешную регистрацию
+		if (userState.error === null && userState.users) {
+			router.handleRouteChange('/')
+		} else if (userState.error) {
+			alert('Произошла ошибка регистрации: ' + userState.error)
+		}
+	}
+
+	/**
 	 * Рендерит страницу регистрации и форму.
 	 */
 	render() {
@@ -44,6 +63,8 @@ export default class RegistrationPage {
 			},
 		)
 		form.render()
+
+		this.#unsubscribe = store.subscribe(this.#handleStoreChange)
 	}
 
 	/**
@@ -51,5 +72,8 @@ export default class RegistrationPage {
 	 */
 	destroy() {
 		this.#unsubscribe?.()
+		if (this.#parent) {
+			this.#parent.innerHTML = ''
+		}
 	}
 }
