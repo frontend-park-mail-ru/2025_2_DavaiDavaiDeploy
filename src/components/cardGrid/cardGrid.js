@@ -18,6 +18,7 @@ export default class CardGrid extends Component {
 	#uploadAllFilms = false
 	#cards = {}
 	#isLoading = false
+	#lastScrollTop = 0
 
 	constructor(parent, props = {}) {
 		super(parent, props, 'cardGrid')
@@ -69,6 +70,21 @@ export default class CardGrid extends Component {
 		if (!this.grid) {
 			return
 		}
+
+		const currentScrollTop = window.scrollY
+		const isScrollingDown = currentScrollTop >= this.#lastScrollTop
+		this.#lastScrollTop = currentScrollTop
+
+		const gridRect = this.grid.getBoundingClientRect()
+		const scrollTop = window.scrollY
+		const gridTop = gridRect.top + scrollTop
+		const viewportBottom = scrollTop + window.innerHeight
+		const isGridVisible = viewportBottom >= gridTop
+
+		if (!isGridVisible) {
+			return
+		}
+
 		const { startIndex, endIndex } = this.getVisibleCards()
 		const films = store.getState().film.films
 
@@ -77,6 +93,26 @@ export default class CardGrid extends Component {
 				this.renderFilm(films[i])
 			} else {
 				this.replaceFilm(films[i])
+			}
+		}
+
+		if (isScrollingDown) {
+			const cards = this.grid.querySelectorAll('.film-card')
+			let minHeight = 0
+			if (cards.length > 0) {
+				minHeight = Math.min(
+					...Array.from(cards).map(card => card.getBoundingClientRect().height),
+				)
+			}
+
+			const cardHeight = minHeight !== 0 ? minHeight : MIN_CARD_HEIGHT
+			const gridBottom = gridTop + this.grid.scrollHeight
+			const nearBottomThreshold = ROWS_IN_BUFFER * cardHeight
+			const isNearBottom = viewportBottom + nearBottomThreshold >= gridBottom
+
+			if (isNearBottom) {
+				const cardsPerRow = getGridColumnCount(this.grid)
+				this.loadMoreFilms(cardsPerRow * UPLOADING_ROWS_COUNT)
 			}
 		}
 	}
@@ -129,6 +165,12 @@ export default class CardGrid extends Component {
 		const scrollTop = window.scrollY
 		const gridRect = this.grid.getBoundingClientRect()
 		const gridTop = gridRect.top + scrollTop
+		const viewportBottom = scrollTop + window.innerHeight
+
+		if (viewportBottom < gridTop) {
+			return { startIndex: 0, endIndex: 0 }
+		}
+
 		const invisibleTopHeight = Math.max(0, scrollTop - gridTop)
 		const rowsBeforeStart = Math.max(
 			Math.floor(invisibleTopHeight / cardHeight) - ROWS_IN_BUFFER,
@@ -142,7 +184,6 @@ export default class CardGrid extends Component {
 		const length = films.length
 
 		if (endIndex > length) {
-			this.loadMoreFilms(cardsPerRow * UPLOADING_ROWS_COUNT)
 			endIndex = length
 			startIndex = Math.max(length - rowsInViewPort * cardsPerRow, 0)
 		}

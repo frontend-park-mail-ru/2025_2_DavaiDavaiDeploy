@@ -48,13 +48,13 @@
 }
 
 @media (width <= 75rem) {
-	.films {
+	.films .genre-content {
 		padding: 0 3.75rem;
 	}
 }
 
 @media (width <= 48rem) {
-	.films {
+	.films .genre-content {
 		padding: 0 1.875rem;
 	}
 }
