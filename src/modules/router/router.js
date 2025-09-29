@@ -1,6 +1,7 @@
 import Footer from '../../components/footer/footer.js'
 import Header from '../../components/header/header.js'
 import { normalize } from '../../helpers/normalizeHelper.js'
+import actions from '../../redux/features/user/actions.js'
 import { store } from '../../redux/store.js'
 
 /**
@@ -20,6 +21,7 @@ class Router {
 		/** @type {HTMLElement | null} */
 		this.parent = null
 		this.lastPage = null
+		this.header = null
 
 		Router.instance = this
 		this.initEventListeners()
@@ -94,10 +96,7 @@ class Router {
 			oldContent.remove()
 		}
 
-		const oldHeader = document.querySelector('#header')
-		if (oldHeader) {
-			oldHeader.remove()
-		}
+		this.header?.destroy()
 
 		const oldFooter = document.querySelector('#footer')
 		if (oldFooter) {
@@ -110,15 +109,15 @@ class Router {
 	 */
 	renderHeader = () => {
 		const userState = store.getState().user.users
-		const header = new Header(this.parent, {
+		this.header = new Header(this.parent, {
 			avatar: './../../assets/img/1+1.webp',
 			login: userState.login,
 			id: userState.id,
 		})
 		if (userState.login) {
-			header.handleLogIn(userState)
+			this.header.handleLogIn(userState)
 		}
-		header.render()
+		this.header.render()
 	}
 
 	/**
@@ -192,6 +191,7 @@ class Router {
 	 * Запускает роутер, обрабатывая текущий путь.
 	 */
 	start = () => {
+		store.dispatch(actions.checkUserAction())
 		this.handleRouteChange(window.location.pathname)
 	}
 }

@@ -101,6 +101,7 @@ export class HTTPClient {
 		const requestMethod = method.toUpperCase()
 		const requestUrl = this.formReqUrl(url, params)
 		// alert('requestUrl: ' + requestUrl)
+
 		const { requestHeaders, requestBody } = this.formReqHeadersAndBody(
 			headers,
 			data,
@@ -112,6 +113,7 @@ export class HTTPClient {
 				method: requestMethod,
 				headers: requestHeaders,
 				body: requestBody,
+				credentials: 'include',
 			})
 
 			const responseHeaders = {}
@@ -182,7 +184,7 @@ export class HTTPClient {
 	formReqHeadersAndBody(headers, data, requestMethod) {
 		let requestHeaders = new Headers(headers)
 		let requestBody = undefined
-
+		requestHeaders.set('Authorization', localStorage.getItem('jwtToken'))
 		if (
 			data &&
 			requestMethod !== METHODS.GET &&
