@@ -58,9 +58,6 @@ const checkUserAction = () => async dispatch => {
 	dispatch(setUserLoadingAction())
 	try {
 		const response = await HTTPClient.get('/auth/check')
-		if (response.headers.authorization) {
-			localStorage.setItem('jwtToken', response.headers.authorization)
-		}
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
 		dispatch(returnUserErrorAction(error.message || 'Error'))
@@ -80,9 +77,6 @@ const registerUserAction = (login, password) => async dispatch => {
 			login: login,
 			password: password,
 		})
-		if (response.headers.authorization) {
-			localStorage.setItem('jwtToken', response.headers.authorization)
-		}
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
 		dispatch(returnUserErrorAction(error.message || 'Error'))
@@ -95,9 +89,6 @@ const loginUserAction = (login, password) => async dispatch => {
 			login: login,
 			password: password,
 		})
-		if (response.headers.authorization) {
-			localStorage.setItem('jwtToken', response.headers.authorization)
-		}
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
 		dispatch(returnUserErrorAction(error.message || 'Error'))

@@ -182,13 +182,10 @@ export class HTTPClient {
 	 * @param {string} requestMethod - HTTP-метод.
 	 * @returns {{ requestHeaders: Headers, requestBody: string | undefined }}
 	 */
-	formReqHeadersAndBody(headers, data, requestMethod, url) {
+	formReqHeadersAndBody(headers, data, requestMethod) {
 		let requestHeaders = new Headers(headers)
 		let requestBody = undefined
 
-		if (url === '/auth/check' && localStorage.getItem('jwtToken')) {
-			requestHeaders.set('Authorization', localStorage.getItem('jwtToken'))
-		}
 		if (
 			data &&
 			requestMethod !== METHODS.GET &&
