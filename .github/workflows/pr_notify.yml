@@ -7,7 +7,7 @@ on:
 
 jobs:
   notify:
-    name: Build
+    name: Notify
     runs-on: ubuntu-latest
     steps:
       - name: Notify github action on Telegram
@@ -15,3 +15,4 @@ jobs:
         with:
           bot_token: '${{ secrets.TELEGRAM_TOKEN }}'
           chat_id: '${{ secrets.TELEGRAM_TO }}'
+          topic_id: '${{ secrets.TELEGRAM_TOPIC_ID }}'
