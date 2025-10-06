@@ -1,4 +1,5 @@
 import {DOM_TYPES} from './h.js';
+
 export function areNodesEqual(nodeOne, nodeTwo) {
   if (nodeOne.type !== nodeTwo.type) {
     return false;
