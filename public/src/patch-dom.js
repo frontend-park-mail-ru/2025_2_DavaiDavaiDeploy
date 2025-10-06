@@ -117,7 +117,6 @@ function patchChildren(oldVdom, newVdom, hostComponent) {
   const diffSeq = arraysDiffSequence(oldChildren, newChildren, areNodesEqual);
 
   for (const operation of diffSeq) {
-    console.log(operation);
     const {from, index, item} = operation;
     const offset = hostComponent?.offset ?? 0;
     switch (operation.op) {
