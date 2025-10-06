@@ -5,11 +5,17 @@ import types from './types.js'
  * @type {{ loading: boolean, genres: Array<Object>, error: string | null }}
  */
 const initialState = {
-	loading: false,
-	genres: [],
+	genreLoading: false,
 	curGenre: {},
-	films: [],
-	error: null,
+	genreError: null,
+
+	genresLoading: false,
+	genres: [],
+	genresError: null,
+
+	genreFilmsLoading: false,
+	genreFilms: [],
+	genreFilmsError: null,
 }
 
 /**
@@ -26,33 +32,62 @@ const genreReducer = (state = initialState, action) => {
 		case types.GENRE_LOADING:
 			return {
 				...state,
-				loading: true,
+				genreLoading: true,
+				genreError: null,
 			}
 		case types.GENRE_LOADED:
 			return {
 				...state,
-				loading: false,
+				genreLoading: false,
+				genreError: null,
 				curGenre: payload.genre,
+			}
+		case types.GENRE_ERROR:
+			return {
+				...state,
+				genreLoading: false,
+				genreError: payload.error,
+				curGenre: null,
+			}
+		case types.GENRES_LOADING:
+			return {
+				...state,
+				genresLoading: true,
+				genresError: null,
 			}
 		case types.GENRES_LOADED:
 			return {
 				...state,
-				loading: false,
+				genresLoading: false,
+				genresError: null,
 				genres: payload.genres,
+			}
+		case types.GENRES_ERROR:
+			return {
+				...state,
+				genresLoading: false,
+				genresError: payload.error,
+				genres: [],
+			}
+		case types.GENRE_FILMS_LOADING:
+			return {
+				...state,
+				genreFilmsLoading: true,
+				genreFilmsError: null,
 			}
 		case types.GENRE_FILMS_LOADED:
 			return {
 				...state,
-				loading: false,
-				films: payload.films,
+				genreFilmsLoading: false,
+				genreFilmsError: null,
+				genreFilms: payload.films,
 			}
-
-		case types.GENRE_ERROR:
+		case types.GENRE_FILMS_ERROR:
 			return {
 				...state,
-				loading: false,
-				error: payload.error,
-				films: [],
+				genreFilmsLoading: false,
+				genreFilmsError: payload.error,
+				genreFilms: [],
 			}
 		default:
 			return state
