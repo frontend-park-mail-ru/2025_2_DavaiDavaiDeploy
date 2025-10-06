@@ -2,6 +2,7 @@ import { serverAddrForStatic } from '../../consts/serverAddr.js'
 import { createPeriodFunction } from '../../helpers/periodStartHelper/periodStartHelper.js'
 import router from '../../modules/router/index.js'
 import genreActions from '../../redux/features/genre/actions.js'
+import { selectGenreSection } from '../../redux/features/genre/selectors.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
 
@@ -53,20 +54,23 @@ export default class GenreSlider extends Component {
 		this.parent.insertAdjacentHTML('afterbegin', this.html())
 		store.dispatch(genreActions.getGenresAction())
 
-		this.#unsubscribe = store.subscribe(() => {
-			const { genres } = store.getState().genre
-			if (genres && genres.length !== 0 && genres !== this.genres) {
-				this.update(genres)
-			}
-		})
+		this.#unsubscribe = store.subscribe(this.handleStoreUpdate)
 
 		this.addEventListeners()
 	}
 
-	update = genres => {
-		if (!this.slider) {
+	handleStoreUpdate = () => {
+		const state = selectGenreSection(store.getState())
+		this.update(state)
+	}
+
+	update = state => {
+		const genres = state.genres
+
+		if (!this.slider || state.genresLoading) {
 			return
 		}
+
 		this.state.genresCount = genres.length
 		this.slider.innerHTML = ''
 

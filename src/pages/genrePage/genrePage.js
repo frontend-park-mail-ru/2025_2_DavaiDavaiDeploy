@@ -10,8 +10,6 @@ export default class GenrePage {
 	#isLoaded = false
 	#props = {
 		id: '',
-		title: '',
-		description: '',
 	}
 
 	constructor(rootElement, props) {
@@ -39,57 +37,49 @@ export default class GenrePage {
 	}
 
 	render() {
-		this.#unsubscribe = store.subscribe(() => {
-			const state = store.getState().genre
-			this.update(state)
-		})
+		this.#parent.innerHTML = ''
+		this.#self = document.createElement('div')
+		this.#self.className = 'genre-page'
+		this.#parent.appendChild(this.#self)
+		this.#self.insertAdjacentHTML(
+			'afterbegin',
+			Handlebars.templates['genrePage.hbs'](),
+		)
+		window.scrollTo(0, 0)
+
+		this.#unsubscribe = store.subscribe(this.handleStoreUpdate)
 
 		if (!this.#isLoaded) {
-			store.dispatch(genreActions.getGenreAction(this.#props.id))
 			store.dispatch(genreActions.getGenreFilmsAction(this.#props.id))
+			store.dispatch(genreActions.getGenreAction(this.#props.id))
 			this.#isLoaded = true
 		}
 	}
 
-	update = state => {
-		this.#props.title = state.curGenre.title
-		this.#props.description = state.curGenre.description
+	handleStoreUpdate = () => {
+		const state = store.getState().genre
+		this.update(state)
+	}
 
-		if (!this.#self) {
-			this.#parent.innerHTML = ''
-			this.#self = document.createElement('div')
-			this.#self.className = 'genre-page'
-			this.#parent.appendChild(this.#self)
-			this.#self.insertAdjacentHTML(
-				'afterbegin',
-				Handlebars.templates['genrePage.hbs'](),
-			)
-			window.scrollTo(0, 0)
+	update = state => {
+		if (state.genreLoading || state.genreFilmsLoading) {
+			return
 		}
 
 		const title = this.#self.querySelector('.genre-content__title')
 		const desc = this.#self.querySelector('.genre-content__description')
-		const err = this.#self.querySelector('.genre-content__error')
-
-		err.display = 'none'
 
 		if (title) {
-			title.textContent = `Жанры: ${this.#props.title}`
+			title.textContent = `Жанры: ${state.curGenre.title}`
 		}
 		if (desc) {
-			desc.textContent = this.#props.description
+			desc.textContent = state.curGenre.description
 		}
 
-		if (!state.films || state.films.length === 0) {
-			err.display = 'block'
-			return
-		}
+		this.grid.innerHTML = ''
 
-		const grid = this.grid
-		grid.innerHTML = ''
-
-		state.films.forEach(film => {
-			const filmCard = new FilmCard(grid, {
+		state.genreFilms.forEach(film => {
+			const filmCard = new FilmCard(this.grid, {
 				id: film.id,
 				image: `${serverAddrForStatic}${film.icon}`,
 				title: film.title,

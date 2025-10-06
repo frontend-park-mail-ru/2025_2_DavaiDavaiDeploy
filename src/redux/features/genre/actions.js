@@ -2,12 +2,32 @@ import HTTPClient from '../../../modules/HTTPClient/index.js'
 import types from './types.js'
 
 /**
- * Action: устанавливает состояние загрузки для жанров
+ * Action: устанавливает состояние загрузки для жанра
  * @returns {{type: string}} Action с типом GENRE_LOADING
  */
 const setGenreLoadingAction = () => {
 	return {
 		type: types.GENRE_LOADING,
+	}
+}
+
+/**
+ * Action: устанавливает состояние загрузки для списка жанров
+ * @returns {{type: string}} Action с типом GENRES_LOADING
+ */
+const setGenresLoadingAction = () => {
+	return {
+		type: types.GENRES_LOADING,
+	}
+}
+
+/**
+ * Action: устанавливает состояние загрузки для фильмов жанра
+ * @returns {{type: string}} Action с типом GENRE_FILMS_LOADING
+ */
+const setGenreFilmsLoadingAction = () => {
+	return {
+		type: types.GENRE_FILMS_LOADING,
 	}
 }
 
@@ -48,14 +68,38 @@ const returnGenresAction = data => {
 }
 
 /**
- * Action: устанавливает состояние ошибки для операций с жанрами
+ * Action: устанавливает состояние ошибки для операций с конкретным жанром
  * @param {string} error - Сообщение об ошибке
- * @returns {{type: string, payload: {genres: Array, error: string}}} Action с ошибкой
+ * @returns {{type: string, payload: {error: string}}} Action с ошибкой
  */
 const returnGenreErrorAction = error => {
 	return {
 		type: types.GENRE_ERROR,
-		payload: { genres: [], error: error },
+		payload: { error: error },
+	}
+}
+
+/**
+ * Action: устанавливает состояние ошибки для операций со списком жанров
+ * @param {string} error - Сообщение об ошибке
+ * @returns {{type: string, payload: {error: string}}} Action с ошибкой
+ */
+const returnGenresErrorAction = error => {
+	return {
+		type: types.GENRES_ERROR,
+		payload: { error: error },
+	}
+}
+
+/**
+ * Action: устанавливает состояние ошибки для операций с фильмами жанра
+ * @param {string} error - Сообщение об ошибке
+ * @returns {{type: string, payload: {error: string}}} Action с ошибкой
+ */
+const returnGenreFilmsErrorAction = error => {
+	return {
+		type: types.GENRE_FILMS_ERROR,
+		payload: { error: error },
 	}
 }
 
@@ -79,12 +123,12 @@ const getGenreAction = id => async dispatch => {
  * @returns {Function} Async function для dispatch
  */
 const getGenresAction = () => async dispatch => {
-	dispatch(setGenreLoadingAction())
+	dispatch(setGenresLoadingAction())
 	try {
 		const response = await HTTPClient.get('/genres')
 		dispatch(returnGenresAction(response.data))
 	} catch (error) {
-		dispatch(returnGenreErrorAction(error.message || 'Error'))
+		dispatch(returnGenresErrorAction(error.message || 'Error'))
 	}
 }
 
@@ -96,14 +140,14 @@ const getGenresAction = () => async dispatch => {
  * @returns {Function} Async function для dispatch
  */
 const getGenreFilmsAction = (id, limit, offset) => async dispatch => {
-	dispatch(setGenreLoadingAction())
+	dispatch(setGenreFilmsLoadingAction())
 	try {
 		const response = await HTTPClient.get(`/films/genre/${id}`, {
 			params: { count: limit, offset },
 		})
 		dispatch(returnGenreFilmsAction(response.data))
 	} catch (error) {
-		dispatch(returnGenreErrorAction(error.message || 'Error'))
+		dispatch(returnGenreFilmsErrorAction(error.message || 'Error'))
 	}
 }
 
@@ -112,6 +156,12 @@ export default {
 	getGenresAction,
 	getGenreFilmsAction,
 	setGenreLoadingAction,
+	setGenresLoadingAction,
+	setGenreFilmsLoadingAction,
 	returnGenreAction,
+	returnGenresAction,
+	returnGenreFilmsAction,
 	returnGenreErrorAction,
+	returnGenresErrorAction,
+	returnGenreFilmsErrorAction,
 }

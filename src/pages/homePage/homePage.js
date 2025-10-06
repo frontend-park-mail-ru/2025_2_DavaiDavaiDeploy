@@ -8,7 +8,6 @@ import { TOPFILM } from '../../mocks/films.js'
 export default class Home {
 	#parent
 	#self
-	#unsubscribe
 
 	/**
 	 * @param {HTMLElement} rootElement - Родительский DOM-элемент.
@@ -74,7 +73,6 @@ export default class Home {
 	 * Очистка/отписка от событий (если реализовано).
 	 */
 	destroy() {
-		this.#unsubscribe?.()
 		this.cardGrid.destroy()
 		this.genreSlider.destroy()
 	}
