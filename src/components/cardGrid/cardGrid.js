@@ -3,6 +3,10 @@ import { serverAddrForStatic } from '../../consts/serverAddr.js'
 import { getGridColumnCount } from '../../helpers/columnCountHelper/columnCountHelper.js'
 import { throttle } from '../../helpers/throttleHelper/throttleHelper.js'
 import filmActions from '../../redux/features/film/actions.js'
+import {
+	selectFilmSection,
+	selectFilms,
+} from '../../redux/features/film/selectors.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
 import FilmCardPlaceholder from '../filmCardPlaceholder/filmCardPlaceholder.js'
@@ -39,7 +43,7 @@ export default class CardGrid extends Component {
 		this.parent.insertAdjacentHTML('beforeend', this.html())
 
 		this.#unsubscribe = store.subscribe(() => {
-			const films = store.getState().film
+			const films = selectFilmSection(store.getState())
 			this.renderNewCards(films)
 		})
 
@@ -90,7 +94,7 @@ export default class CardGrid extends Component {
 		}
 
 		const { startIndex, endIndex } = this.getVisibleCards()
-		const films = store.getState().film.films
+		const films = selectFilms(store.getState())
 
 		for (let i = 0; i < films.length; i++) {
 			if (startIndex <= i && i < endIndex) {
@@ -167,7 +171,7 @@ export default class CardGrid extends Component {
 
 		const cardHeight = minHeight !== 0 ? minHeight : MIN_CARD_HEIGHT
 		const cardsPerRow = getGridColumnCount(this.grid)
-		const films = store.getState().film.films
+		const films = selectFilms(store.getState())
 		const scrollTop = window.scrollY
 		const gridRect = this.grid.getBoundingClientRect()
 		const gridTop = gridRect.top + scrollTop
