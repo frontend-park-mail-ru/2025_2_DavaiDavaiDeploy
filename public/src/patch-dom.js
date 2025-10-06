@@ -117,7 +117,7 @@ function patchChildren(oldVdom, newVdom, hostComponent) {
   const diffSeq = arraysDiffSequence(oldChildren, newChildren, areNodesEqual);
 
   for (const operation of diffSeq) {
-    const {from, index, item} = operation;
+    const {from, originalIndex, index, item} = operation;
     const offset = hostComponent?.offset ?? 0;
     switch (operation.op) {
       case ARRAY_DIFF_OP.ADD: {
@@ -136,7 +136,7 @@ function patchChildren(oldVdom, newVdom, hostComponent) {
         break;
       }
       case ARRAY_DIFF_OP.NOOP: {
-        patchDOM(oldChildren[from], newChildren[index], parentEl, hostComponent);
+        patchDOM(oldChildren[originalIndex], newChildren[index], parentEl, hostComponent);
         break;
       }
     }

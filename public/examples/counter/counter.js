@@ -1,5 +1,5 @@
-import {hFragment, h} from './h.js';
-import {Component} from './component.js';
+import {hFragment, h} from '../../src/h.js';
+import {Component} from '../../src/component.js';
 
 class MyComponent extends Component {
   constructor(props) {
