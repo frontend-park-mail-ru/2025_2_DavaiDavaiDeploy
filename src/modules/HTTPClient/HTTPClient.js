@@ -6,56 +6,37 @@ const METHODS = Object.freeze({
 })
 
 export class HTTPClient {
-	constructor(config) {
-		this.default = { baseUrl: config.baseUrl }
+	constructor(config = {}) {
+		this.default = {
+			baseUrl: config.baseUrl,
+			headers: config.headers,
+		}
 	}
 
 	static create(config = {}) {
 		return new HTTPClient(config)
 	}
 
-	get({ path, data, params, headers }) {
-		return this._request({ path, data, params, headers, method: METHODS.GET })
+	get({ path, params }) {
+		return this._request({ path, params, method: METHODS.GET })
 	}
 
-	post({ path, data, headers }) {
-		return this._request({ path, data, headers, method: METHODS.POST })
+	post({ path, data }) {
+		return this._request({ path, data, method: METHODS.POST })
 	}
 
-	put({ path, params, data, headers }) {
-		return this._request({
-			path,
-			params,
-			data,
-			headers,
-			method: METHODS.PUT,
-		})
+	put({ path, data, params }) {
+		return this._request({ path, data, params, method: METHODS.PUT })
 	}
 
-	delete({ path, data, params, headers }) {
-		return this._request({
-			path,
-			data,
-			headers,
-			params,
-			method: METHODS.DELETE,
-		})
+	delete({ path, data, params }) {
+		return this._request({ path, data, params, method: METHODS.DELETE })
 	}
 
-	async _request({
-		method = METHODS.GET,
-		path,
-		params = {},
-		data = {},
-		headers = {},
-	}) {
+	async _request({ method = METHODS.GET, path, params = {}, data = {} }) {
 		const requestMethod = method.toUpperCase()
 
-		let requestUrl = new URL(this.default.baseUrl)
-		const p = path.startsWith('/') ? path : '/' + path
-		requestUrl.pathname = requestUrl.pathname.endsWith('/')
-			? requestUrl.pathname + p.slice(1)
-			: requestUrl.pathname + p
+		let requestUrl = new URL(this.default.baseUrl + path)
 
 		for (const [key, value] of Object.entries(params)) {
 			if (value != null) {
@@ -65,7 +46,12 @@ export class HTTPClient {
 
 		requestUrl = requestUrl.toString()
 
-		let requestHeaders = new Headers(headers)
+		const requestHeaders = new Headers()
+
+		for (const [headerName, header] of Object.entries(this.default.headers)) {
+			requestHeaders.set(headerName, header())
+		}
+
 		let requestBody = undefined
 
 		if (data && requestMethod !== METHODS.GET) {
@@ -76,6 +62,7 @@ export class HTTPClient {
 				requestBody = data
 			}
 		}
+
 		try {
 			const response = await fetch(requestUrl, {
 				method: requestMethod,
