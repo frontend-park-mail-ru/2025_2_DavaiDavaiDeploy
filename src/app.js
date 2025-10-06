@@ -1,6 +1,6 @@
-import {destroyDOM} from '@src/destroy-dom.js';
-import {Dispatcher} from '@src/dispatcher.js';
-import {patchDOM} from '@src/patch-dom.js';
+import {destroyDOM} from './destroy-dom.js';
+import {Dispatcher} from './dispatcher.js';
+import {patchDOM} from './patch-dom.js';
 
 export function createApp({state, view, reducers = {}}) {
   let parentEl = null;

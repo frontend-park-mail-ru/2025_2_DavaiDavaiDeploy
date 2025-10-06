@@ -1,13 +1,13 @@
-import {destroyDOM} from '@src/destroy-dom.js';
-import {removeAttribute, setAttribute, removeStyle, setStyle} from '@src/attributes.js';
-import {mountDOM} from '@src/mount-dom.js';
-import {extractChildren} from '@src/h.js';
-import {DOM_TYPES} from '@src/h.js';
-import {areNodesEqual} from '@src/nodes-equal.js';
-import {objectsDiff} from '@utils/objects.js';
-import {isNotBlankOrEmptyString} from '@utils/strings.js';
-import {arraysDiff, arraysDiffSequence, ARRAY_DIFF_OP} from '@utils/arrays.js';
-import {addEventListener} from '@src/events.js';
+import {destroyDOM} from './destroy-dom.js';
+import {removeAttribute, setAttribute, removeStyle, setStyle} from './attributes.js';
+import {mountDOM} from './mount-dom.js';
+import {extractChildren} from './h.js';
+import {DOM_TYPES} from './h.js';
+import {areNodesEqual} from './nodes-equal.js';
+import {objectsDiff} from './utils/objects.js';
+import {isNotBlankOrEmptyString} from './utils/strings.js';
+import {arraysDiff, arraysDiffSequence, ARRAY_DIFF_OP} from './utils/arrays.js';
+import {addEventListener} from './events.js';
 
 export function patchDOM(oldVdom, newVdom, parentEl, hostComponent = null) {
   if (!areNodesEqual(oldVdom, newVdom)) {
