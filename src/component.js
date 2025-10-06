@@ -1,7 +1,7 @@
-import {destroyDOM} from './destroy-dom.js';
-import {mountDOM} from './mount-dom.js';
-import {DOM_TYPES, extractChildren} from './h.js';
-import {patchDOM} from './patch-dom.js';
+import {destroyDOM} from '@src/destroy-dom.js';
+import {mountDOM} from '@src/mount-dom.js';
+import {DOM_TYPES, extractChildren} from '@src/h.js';
+import {patchDOM} from '@src/patch-dom.js';
 
 export class Component {
   #isMounted = false;

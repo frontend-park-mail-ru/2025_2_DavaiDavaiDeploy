@@ -2,7 +2,7 @@ import {defineConfig} from 'vite';
 import {resolve} from 'path';
 
 export default defineConfig({
-  root: 'public',
+  root: 'examples/counter/',
   server: {
     port: 3000,
     open: true,
@@ -13,7 +13,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'public'),
+      '@src': resolve(__dirname, 'src'),
+      '@utils': resolve(__dirname, 'src/utils'),
     },
   },
 });
