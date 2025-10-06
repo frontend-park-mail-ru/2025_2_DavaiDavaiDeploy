@@ -1,3 +1,4 @@
+import { serverAddr } from '../../consts/serverAddr.js'
 import { HTTPClient } from './HTTPClient.js'
 
-export default new HTTPClient()
+export default HTTPClient.create({ baseUrl: serverAddr })

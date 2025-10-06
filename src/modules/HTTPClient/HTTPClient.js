@@ -6,12 +6,12 @@ const METHODS = Object.freeze({
 })
 
 export class HTTPClient {
-	constructor() {
-		this.default = {}
+	constructor(config) {
+		this.default = { baseUrl: config.baseUrl }
 	}
 
-	configurate(defaultConfig) {
-		this.default = { baseUrl: defaultConfig.baseUrl }
+	static create(config = {}) {
+		return new HTTPClient(config)
 	}
 
 	get({ path, data, params, headers }) {
