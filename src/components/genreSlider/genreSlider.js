@@ -54,12 +54,14 @@ export default class GenreSlider extends Component {
 		this.parent.insertAdjacentHTML('afterbegin', this.html())
 		store.dispatch(genreActions.getGenresAction())
 
-		this.#unsubscribe = store.subscribe(() => {
-			const state = selectGenreSection(store.getState())
-			this.update(state)
-		})
+		this.#unsubscribe = store.subscribe(this.handleStoreUpdate)
 
 		this.addEventListeners()
+	}
+
+	handleStoreUpdate = () => {
+		const state = selectGenreSection(store.getState())
+		this.update(state)
 	}
 
 	update = state => {

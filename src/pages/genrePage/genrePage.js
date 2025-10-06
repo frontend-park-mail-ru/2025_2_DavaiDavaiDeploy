@@ -47,16 +47,18 @@ export default class GenrePage {
 		)
 		window.scrollTo(0, 0)
 
-		this.#unsubscribe = store.subscribe(() => {
-			const state = store.getState().genre
-			this.update(state)
-		})
+		this.#unsubscribe = store.subscribe(this.handleStoreUpdate)
 
 		if (!this.#isLoaded) {
 			store.dispatch(genreActions.getGenreFilmsAction(this.#props.id))
 			store.dispatch(genreActions.getGenreAction(this.#props.id))
 			this.#isLoaded = true
 		}
+	}
+
+	handleStoreUpdate = () => {
+		const state = store.getState().genre
+		this.update(state)
 	}
 
 	update = state => {

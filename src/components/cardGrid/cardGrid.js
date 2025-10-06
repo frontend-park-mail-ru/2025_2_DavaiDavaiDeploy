@@ -42,10 +42,7 @@ export default class CardGrid extends Component {
 	render() {
 		this.parent.insertAdjacentHTML('beforeend', this.html())
 
-		this.#unsubscribe = store.subscribe(() => {
-			const films = selectFilmSection(store.getState())
-			this.renderNewCards(films)
-		})
+		this.#unsubscribe = store.subscribe(this.handleStoreUpdate)
 
 		const cardsPerRow = getGridColumnCount(this.grid)
 		this.loadMoreFilms(cardsPerRow * UPLOADING_ROWS_COUNT)
@@ -54,6 +51,11 @@ export default class CardGrid extends Component {
 		this.#throttledResizeHandler = throttle(this.updateViewport, THROTTLE_DELAY)
 		window.addEventListener('scroll', this.#throttledScrollHandler)
 		window.addEventListener('resize', this.#throttledResizeHandler)
+	}
+
+	handleStoreUpdate = () => {
+		const films = selectFilmSection(store.getState())
+		this.renderNewCards(films)
 	}
 
 	onScroll = () => {
