@@ -57,7 +57,7 @@ const deleteUserAction = userId => {
 const checkUserAction = () => async dispatch => {
 	dispatch(setUserLoadingAction())
 	try {
-		const response = await HTTPClient.get('/auth/check')
+		const response = await HTTPClient.get({ path: '/auth/check' })
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
 		dispatch(returnUserErrorAction(error.message || 'Error'))
@@ -73,9 +73,12 @@ const checkUserAction = () => async dispatch => {
 
 const registerUserAction = (login, password) => async dispatch => {
 	try {
-		const response = await HTTPClient.post('/auth/signup', {
-			login: login,
-			password: password,
+		const response = await HTTPClient.post({
+			path: '/auth/signup',
+			data: {
+				login: login,
+				password: password,
+			},
 		})
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
@@ -85,9 +88,12 @@ const registerUserAction = (login, password) => async dispatch => {
 
 const loginUserAction = (login, password) => async dispatch => {
 	try {
-		const response = await HTTPClient.post('/auth/signin', {
-			login: login,
-			password: password,
+		const response = await HTTPClient.post({
+			path: '/auth/signin',
+			data: {
+				login: login,
+				password: password,
+			},
 		})
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
@@ -99,7 +105,6 @@ export default {
 	registerUserAction,
 	loginUserAction,
 	checkUserAction,
-	// createUserAction,
 	updateUserAction,
 	deleteUserAction,
 }

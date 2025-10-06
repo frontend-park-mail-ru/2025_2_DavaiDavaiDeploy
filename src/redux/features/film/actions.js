@@ -60,7 +60,8 @@ const clearFilmsAction = () => {
 const getFilmsAction = (limit, offset) => async dispatch => {
 	dispatch(setFilmsLoadingAction())
 	try {
-		const response = await HTTPClient.get('/films', {
+		const response = await HTTPClient.get({
+			path: '/films',
 			params: { count: limit, offset },
 		})
 		dispatch(returnFilmsAction(response.data))
