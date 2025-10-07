@@ -153,13 +153,13 @@ export class HTTPClient {
 				signal,
 			})
 
-			clearTimeout(timeout)
-
 			if (!response.ok) {
 				throw new Error(
 					`HTTP error! status: ${response.status}, message: ${JSON.stringify(responseData)}`,
 				)
 			}
+
+			clearTimeout(timeout)
 
 			const responseHeaders = {}
 			response.headers.forEach((value, key) => {
