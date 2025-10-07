@@ -19,20 +19,22 @@ const METHODS = Object.freeze({
  */
 export class HTTPClient {
 	/**
-	 * Создаёт экземпляр HTTPClient
+	 * Создаёт экземпляр HTTPClient.
 	 * @constructor
-	 * @param {Object} [config={}] - Конфигурация клиента
-	 * @param {string} config.baseUrl - Базовый URL для всех запросов
-	 * @param {Object.<string, string|Function>} config.headers - Заголовки по умолчанию (значение может быть строкой или функцией, возвращающей строку)
+	 * @param {Object} [config={}] - Конфигурация клиента.
+	 * @param {string} [config.baseUrl] - Базовый URL для всех запросов.
+	 * @param {Object.<string, string|Function>} [config.headers] - Заголовки по умолчанию (значение может быть строкой или функцией, возвращающей строку).
+	 * @param {number} [config.timeout] - Таймаут запросов в миллисекундах.
 	 */
 	constructor(config = {}) {
 		/**
-		 * Конфигурация по умолчанию
-		 * @type {{ baseUrl: string, headers: Object.<string, string|Function> }}
+		 * Конфигурация по умолчанию.
+		 * @type {{ baseUrl?: string, headers?: Object.<string, string|Function>, timeout?: number }}
 		 */
 		this.default = {
 			baseUrl: config.baseUrl,
 			headers: config.headers,
+			timeout: config.timeout,
 		}
 	}
 
@@ -135,13 +137,23 @@ export class HTTPClient {
 			}
 		}
 
+		const controller = new AbortController()
+		const signal = controller.signal
+
+		const timeout = setTimeout(() => {
+			controller.abort()
+		}, this.default.timeout)
+
 		try {
 			const response = await fetch(requestUrl, {
 				method: requestMethod,
 				headers: requestHeaders,
 				body: requestBody,
 				credentials: 'include',
+				signal,
 			})
+
+			clearTimeout(timeout)
 
 			if (!response.ok) {
 				throw new Error(
