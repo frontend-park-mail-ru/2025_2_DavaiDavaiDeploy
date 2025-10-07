@@ -115,10 +115,6 @@ export class HTTPClient {
 		const requestHeaders = new Headers()
 
 		for (const [headerName, header] of Object.entries(this.default.headers)) {
-			requestHeaders.set(headerName, header())
-		}
-
-		for (const [headerName, header] of Object.entries(this.default.headers)) {
 			if (typeof header === 'function') {
 				requestHeaders.set(headerName, header())
 			} else {
