@@ -1,113 +1,144 @@
 /**
- * HTTP-методы.
- * @readonly
- * @enum {string}
+ * Поддерживаемые HTTP-методы
+ * @constant {Object}
+ * @property {string} GET - Метод GET
+ * @property {string} POST - Метод POST
+ * @property {string} PUT - Метод PUT
+ * @property {string} DELETE - Метод DELETE
  */
 const METHODS = Object.freeze({
 	GET: 'GET',
 	POST: 'POST',
 	PUT: 'PUT',
-	PATCH: 'PATCH',
 	DELETE: 'DELETE',
-	HEAD: 'HEAD',
-	OPTIONS: 'OPTIONS',
 })
 
 /**
- * Класс для выполнения HTTP-запросов с настройкой базового URL и методом.
+ * HTTP-клиент для выполнения запросов к API
+ * @class
  */
 export class HTTPClient {
-	constructor() {
-		/** @type {{ baseUrl?: string }} */
-		this.default = {}
+	/**
+	 * Создаёт экземпляр HTTPClient.
+	 * @constructor
+	 * @param {Object} [config={}] - Конфигурация клиента.
+	 * @param {string} [config.baseUrl] - Базовый URL для всех запросов.
+	 * @param {Object.<string, string|Function>} [config.headers] - Заголовки по умолчанию (значение может быть строкой или функцией, возвращающей строку).
+	 * @param {number} [config.timeout] - Таймаут запросов в миллисекундах.
+	 */
+	constructor(config = {}) {
+		/**
+		 * Конфигурация по умолчанию.
+		 * @type {{ baseUrl?: string, headers?: Object.<string, string|Function>, timeout?: number }}
+		 */
+		this.default = {
+			baseUrl: config.baseUrl,
+			headers: config.headers,
+			timeout: config.timeout,
+		}
 	}
 
 	/**
-	 * Устанавливает базовую конфигурацию для клиента.
-	 * @param {{ baseUrl: string }} defaultConfig - Конфигурация по умолчанию.
+	 * Фабричный метод для создания экземпляра HTTPClient
+	 * @static
+	 * @param {Object} [config={}] - Конфигурация клиента
+	 * @returns {HTTPClient} Новый экземпляр HTTPClient
 	 */
-	configurate(defaultConfig) {
-		this.default = { baseUrl: defaultConfig.baseUrl }
+	static create(config = {}) {
+		return new HTTPClient(config)
 	}
 
 	/**
-	 * Выполняет GET-запрос.
-	 * @param {string} url - Адрес запроса.
-	 * @param {Object} [config] - Дополнительная конфигурация.
+	 * Выполняет GET-запрос
+	 * @param {string} path - Путь запроса
+	 * @param {Object} [config={}] - Дополнительные параметры (например, params, headers)
+	 * @returns {Promise<{data: Object, status: number, statusText: string, headers: Object}>}
 	 */
-	get(url, config = {}) {
-		return this.request({ ...config, method: METHODS.GET, url })
+	get(path, config) {
+		return this._request({ path, ...config, method: METHODS.GET })
 	}
 
 	/**
-	 * Выполняет POST-запрос.
-	 * @param {string} url - Адрес запроса.
-	 * @param {*} data - Тело запроса.
-	 * @param {Object} [config] - Дополнительная конфигурация.
+	 * Выполняет POST-запрос
+	 * @param {string} path - Путь запроса
+	 * @param {Object} [config={}] - Дополнительные параметры (например, data, headers)
+	 * @returns {Promise<{data: Object, status: number, statusText: string, headers: Object}>}
 	 */
-	post(url, data, config = {}) {
-		return this.request({ ...config, method: METHODS.POST, url, data })
+	post(path, config) {
+		return this._request({ path, ...config, method: METHODS.POST })
 	}
 
 	/**
-	 * Выполняет PUT-запрос.
+	 * Выполняет PUT-запрос
+	 * @param {string} path - Путь запроса
+	 * @param {Object} [config={}] - Дополнительные параметры (например, data, headers)
+	 * @returns {Promise<{data: Object, status: number, statusText: string, headers: Object}>}
 	 */
-	put(url, data, config = {}) {
-		return this.request({ ...config, method: METHODS.PUT, url, data })
+	put(path, config) {
+		return this._request({ path, ...config, method: METHODS.PUT })
 	}
 
 	/**
-	 * Выполняет PATCH-запрос.
+	 * Выполняет DELETE-запрос
+	 * @param {string} path - Путь запроса
+	 * @param {Object} [config={}] - Дополнительные параметры (например, params, headers)
+	 * @returns {Promise<{data: Object, status: number, statusText: string, headers: Object}>}
 	 */
-	patch(url, data, config = {}) {
-		return this.request({ ...config, method: METHODS.PATCH, url, data })
+	delete(path, config) {
+		return this._request({ path, ...config, method: METHODS.DELETE })
 	}
 
 	/**
-	 * Выполняет DELETE-запрос.
+	 * Внутренний метод для выполнения HTTP запросов
+	 * @private
+	 * @param {Object} options - Параметры запроса
+	 * @param {string} options.method - HTTP метод
+	 * @param {string} options.path - Путь запроса
+	 * @param {Object} options.params - Query параметры
+	 * @param {Object} options.data - Данные для отправки
+	 * @returns {Promise<Object>} Объект с результатом запроса
+	 * @throws {Error} Выбрасывает ошибку при сетевых проблемах или HTTP ошибках
 	 */
-	delete(url, config = {}) {
-		return this.request({ ...config, method: METHODS.DELETE, url })
-	}
-
-	/**
-	 * Выполняет HEAD-запрос.
-	 */
-	head(url, config = {}) {
-		return this.request({ ...config, method: METHODS.HEAD, url })
-	}
-
-	/**
-	 * Выполняет OPTIONS-запрос.
-	 */
-	options(url, config = {}) {
-		return this.request({ ...config, method: METHODS.OPTIONS, url })
-	}
-
-	/**
-	 * Основной метод выполнения запроса.
-	 * @param {Object} config - Конфигурация запроса.
-	 * @returns {Promise<Object>} Ответ от сервера.
-	 */
-	async request(config) {
-		const {
-			url,
-			method = METHODS.GET,
-			headers = {},
-			params = {},
-			data = {},
-		} = config
-
+	async _request({ method = METHODS.GET, path, params = {}, data = {} }) {
 		const requestMethod = method.toUpperCase()
-		const requestUrl = this.formReqUrl(url, params)
-		// alert('requestUrl: ' + requestUrl)
 
-		const { requestHeaders, requestBody } = this.formReqHeadersAndBody(
-			headers,
-			data,
-			requestMethod,
-			url,
-		)
+		let requestUrl = new URL(this.default.baseUrl + path)
+
+		for (const [key, value] of Object.entries(params)) {
+			if (value != null) {
+				requestUrl.searchParams.append(key, value.toString())
+			}
+		}
+
+		requestUrl = requestUrl.toString()
+
+		const requestHeaders = new Headers()
+
+		for (const [headerName, header] of Object.entries(this.default.headers)) {
+			if (typeof header === 'function') {
+				requestHeaders.set(headerName, header())
+			} else {
+				requestHeaders.set(headerName, header)
+			}
+		}
+
+		let requestBody = undefined
+
+		if (data && requestMethod !== METHODS.GET) {
+			if (typeof data === 'object') {
+				requestHeaders.set('Content-Type', 'application/json')
+				requestBody = JSON.stringify(data)
+			} else {
+				requestBody = data
+			}
+		}
+
+		const controller = new AbortController()
+		const signal = controller.signal
+
+		const timeout = setTimeout(() => {
+			controller.abort()
+		}, this.default.timeout)
 
 		try {
 			const response = await fetch(requestUrl, {
@@ -115,7 +146,16 @@ export class HTTPClient {
 				headers: requestHeaders,
 				body: requestBody,
 				credentials: 'include',
+				signal,
 			})
+
+			if (!response.ok) {
+				throw new Error(
+					`HTTP error! status: ${response.status}, message: ${JSON.stringify(responseData)}`,
+				)
+			}
+
+			clearTimeout(timeout)
 
 			const responseHeaders = {}
 			response.headers.forEach((value, key) => {
@@ -123,20 +163,7 @@ export class HTTPClient {
 			})
 
 			let responseData
-			// const contentType = response.headers.get('content-type')
-
-			// if (contentType?.includes('application/json')) {
-			// 	responseData = await response.json()
-			// } else {
-			// 	responseData = await response.text()
-			// }
 			responseData = await response.json()
-
-			if (!response.ok) {
-				throw new Error(
-					`HTTP error! status: ${response.status}, message: ${JSON.stringify(responseData)}`,
-				)
-			}
 
 			return {
 				data: responseData,
@@ -150,55 +177,5 @@ export class HTTPClient {
 			}
 			throw error
 		}
-	}
-
-	/**
-	 * Формирует полный URL с query-параметрами.
-	 * @param {string} url - Относительный путь.
-	 * @param {Object} params - Query-параметры.А
-	 * @returns {string} Полный URL.
-	 */
-	formReqUrl(url, params) {
-		const base = new URL(this.default.baseUrl)
-		const path = url.startsWith('/') ? url : '/' + url
-		base.pathname = base.pathname.endsWith('/')
-			? base.pathname + path.slice(1)
-			: base.pathname + path
-
-		let requestUrl = base
-
-		for (const [key, value] of Object.entries(params)) {
-			if (value != null) {
-				requestUrl.searchParams.append(key, value.toString())
-			}
-		}
-		return requestUrl.toString()
-	}
-
-	/**
-	 * Формирует заголовки и тело запроса.
-	 * @param {Object} headers - Заголовки запроса.
-	 * @param {*} data - Тело запроса.
-	 * @param {string} requestMethod - HTTP-метод.
-	 * @returns {{ requestHeaders: Headers, requestBody: string | undefined }}
-	 */
-	formReqHeadersAndBody(headers, data, requestMethod) {
-		let requestHeaders = new Headers(headers)
-		let requestBody = undefined
-
-		if (
-			data &&
-			requestMethod !== METHODS.GET &&
-			requestMethod !== METHODS.HEAD
-		) {
-			if (typeof data === 'object') {
-				requestHeaders.set('Content-Type', 'application/json')
-				requestBody = JSON.stringify(data)
-			} else {
-				requestBody = data
-			}
-		}
-
-		return { requestHeaders, requestBody }
 	}
 }

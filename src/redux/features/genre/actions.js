@@ -1,4 +1,4 @@
-import HTTPClient from '../../../modules/HTTPClient/index.js'
+import HTTPClient from '../../../api/index.js'
 import types from './types.js'
 
 /**
