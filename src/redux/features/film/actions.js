@@ -1,5 +1,5 @@
+import HTTPClient from '../../../api/index.js'
 import { getFilmsMocks } from '../../../mocks/films.js'
-import HTTPClient from '../../../modules/HTTPClient/index.js'
 import types from './types.js'
 
 /**
@@ -60,8 +60,7 @@ const clearFilmsAction = () => {
 const getFilmsAction = (limit, offset) => async dispatch => {
 	dispatch(setFilmsLoadingAction())
 	try {
-		const response = await HTTPClient.get({
-			path: '/films',
+		const response = await HTTPClient.get('/films', {
 			params: { count: limit, offset },
 		})
 		dispatch(returnFilmsAction(response.data))

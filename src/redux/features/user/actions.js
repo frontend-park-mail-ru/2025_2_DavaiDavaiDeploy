@@ -1,4 +1,4 @@
-import HTTPClient from '../../../modules/HTTPClient/index.js'
+import HTTPClient from '../../../api/index.js'
 import types from './types.js'
 
 const setUserLoadingAction = () => {
@@ -57,7 +57,7 @@ const deleteUserAction = userId => {
 const checkUserAction = () => async dispatch => {
 	dispatch(setUserLoadingAction())
 	try {
-		const response = await HTTPClient.get({ path: '/auth/check' })
+		const response = await HTTPClient.get('/auth/check')
 		dispatch(returnUserAction(response.data))
 	} catch (error) {
 		dispatch(returnUserErrorAction(error.message || 'Error'))
@@ -73,8 +73,7 @@ const checkUserAction = () => async dispatch => {
 
 const registerUserAction = (login, password) => async dispatch => {
 	try {
-		const response = await HTTPClient.post({
-			path: '/auth/signup',
+		const response = await HTTPClient.post('/auth/signup', {
 			data: {
 				login: login,
 				password: password,
@@ -88,8 +87,7 @@ const registerUserAction = (login, password) => async dispatch => {
 
 const loginUserAction = (login, password) => async dispatch => {
 	try {
-		const response = await HTTPClient.post({
-			path: '/auth/signin',
+		const response = await HTTPClient.post('/auth/signin', {
 			data: {
 				login: login,
 				password: password,

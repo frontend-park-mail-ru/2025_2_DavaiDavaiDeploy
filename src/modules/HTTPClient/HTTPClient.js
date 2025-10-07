@@ -1,10 +1,10 @@
 /**
- * HTTP методы, поддерживаемые клиентом
+ * Поддерживаемые HTTP-методы
  * @constant {Object}
- * @property {string} GET - GET метод
- * @property {string} POST - POST метод
- * @property {string} PUT - PUT метод
- * @property {string} DELETE - DELETE метод
+ * @property {string} GET - Метод GET
+ * @property {string} POST - Метод POST
+ * @property {string} PUT - Метод PUT
+ * @property {string} DELETE - Метод DELETE
  */
 const METHODS = Object.freeze({
 	GET: 'GET',
@@ -14,23 +14,21 @@ const METHODS = Object.freeze({
 })
 
 /**
- * HTTP клиент для выполнения запросов к API
+ * HTTP-клиент для выполнения запросов к API
  * @class
  */
 export class HTTPClient {
 	/**
-	 * Создает экземпляр HTTPClient
+	 * Создаёт экземпляр HTTPClient
 	 * @constructor
-	 * @param {Object} config - Конфигурация клиента
+	 * @param {Object} [config={}] - Конфигурация клиента
 	 * @param {string} config.baseUrl - Базовый URL для всех запросов
-	 * @param {Object} config.headers - Заголовки по умолчанию
+	 * @param {Object.<string, string|Function>} config.headers - Заголовки по умолчанию (значение может быть строкой или функцией, возвращающей строку)
 	 */
 	constructor(config = {}) {
 		/**
 		 * Конфигурация по умолчанию
-		 * @type {Object}
-		 * @property {string} baseUrl - Базовый URL
-		 * @property {Object} headers - Заголовки по умолчанию
+		 * @type {{ baseUrl: string, headers: Object.<string, string|Function> }}
 		 */
 		this.default = {
 			baseUrl: config.baseUrl,
@@ -41,7 +39,7 @@ export class HTTPClient {
 	/**
 	 * Фабричный метод для создания экземпляра HTTPClient
 	 * @static
-	 * @param {Object} config - Конфигурация клиента
+	 * @param {Object} [config={}] - Конфигурация клиента
 	 * @returns {HTTPClient} Новый экземпляр HTTPClient
 	 */
 	static create(config = {}) {
@@ -49,49 +47,43 @@ export class HTTPClient {
 	}
 
 	/**
-	 * Выполняет GET запрос
-	 * @param {Object} options - Параметры запроса
-	 * @param {string} options.path - Путь запроса
-	 * @param {Object} options.params - Query параметры
-	 * @returns {Promise<Object>} Результат запроса
+	 * Выполняет GET-запрос
+	 * @param {string} path - Путь запроса
+	 * @param {Object} [config={}] - Дополнительные параметры (например, params, headers)
+	 * @returns {Promise<{data: Object, status: number, statusText: string, headers: Object}>}
 	 */
-	get({ path, params }) {
-		return this._request({ path, params, method: METHODS.GET })
+	get(path, config) {
+		return this._request({ path, ...config, method: METHODS.GET })
 	}
 
 	/**
-	 * Выполняет POST запрос
-	 * @param {Object} options - Параметры запроса
-	 * @param {string} options.path - Путь запроса
-	 * @param {Object} options.data - Данные для отправки
-	 * @returns {Promise<Object>} Результат запроса
+	 * Выполняет POST-запрос
+	 * @param {string} path - Путь запроса
+	 * @param {Object} [config={}] - Дополнительные параметры (например, data, headers)
+	 * @returns {Promise<{data: Object, status: number, statusText: string, headers: Object}>}
 	 */
-	post({ path, data }) {
-		return this._request({ path, data, method: METHODS.POST })
+	post(path, config) {
+		return this._request({ path, ...config, method: METHODS.POST })
 	}
 
 	/**
-	 * Выполняет PUT запрос
-	 * @param {Object} options - Параметры запроса
-	 * @param {string} options.path - Путь запроса
-	 * @param {Object} options.data - Данные для отправки
-	 * @param {Object} options.params - Query параметры
-	 * @returns {Promise<Object>} Результат запроса
+	 * Выполняет PUT-запрос
+	 * @param {string} path - Путь запроса
+	 * @param {Object} [config={}] - Дополнительные параметры (например, data, headers)
+	 * @returns {Promise<{data: Object, status: number, statusText: string, headers: Object}>}
 	 */
-	put({ path, data, params }) {
-		return this._request({ path, data, params, method: METHODS.PUT })
+	put(path, config) {
+		return this._request({ path, ...config, method: METHODS.PUT })
 	}
 
 	/**
-	 * Выполняет DELETE запрос
-	 * @param {Object} options - Параметры запроса
-	 * @param {string} options.path - Путь запроса
-	 * @param {Object} options.data - Данные для отправки
-	 * @param {Object} options.params - Query параметры
-	 * @returns {Promise<Object>} Результат запроса
+	 * Выполняет DELETE-запрос
+	 * @param {string} path - Путь запроса
+	 * @param {Object} [config={}] - Дополнительные параметры (например, params, headers)
+	 * @returns {Promise<{data: Object, status: number, statusText: string, headers: Object}>}
 	 */
-	delete({ path, data, params }) {
-		return this._request({ path, data, params, method: METHODS.DELETE })
+	delete(path, config) {
+		return this._request({ path, ...config, method: METHODS.DELETE })
 	}
 
 	/**
@@ -124,6 +116,14 @@ export class HTTPClient {
 			requestHeaders.set(headerName, header())
 		}
 
+		for (const [headerName, header] of Object.entries(this.default.headers)) {
+			if (typeof header === 'function') {
+				requestHeaders.set(headerName, header())
+			} else {
+				requestHeaders.set(headerName, header)
+			}
+		}
+
 		let requestBody = undefined
 
 		if (data && requestMethod !== METHODS.GET) {
@@ -143,6 +143,12 @@ export class HTTPClient {
 				credentials: 'include',
 			})
 
+			if (!response.ok) {
+				throw new Error(
+					`HTTP error! status: ${response.status}, message: ${JSON.stringify(responseData)}`,
+				)
+			}
+
 			const responseHeaders = {}
 			response.headers.forEach((value, key) => {
 				responseHeaders[key] = value
@@ -150,12 +156,6 @@ export class HTTPClient {
 
 			let responseData
 			responseData = await response.json()
-
-			if (!response.ok) {
-				throw new Error(
-					`HTTP error! status: ${response.status}, message: ${JSON.stringify(responseData)}`,
-				)
-			}
 
 			return {
 				data: responseData,
