@@ -9,12 +9,12 @@ export default class GenrePage {
 	#unsubscribe
 	#isLoaded = false
 	#props = {
-		id: '',
+		context: {},
 	}
 
-	constructor(rootElement, props) {
+	constructor(rootElement, params) {
 		this.#parent = rootElement
-		this.#props = { ...this.#props, ...props }
+		this.#props = { ...this.#props, context: { ...params } }
 	}
 
 	get template() {
@@ -50,8 +50,8 @@ export default class GenrePage {
 		this.#unsubscribe = store.subscribe(this.handleStoreUpdate)
 
 		if (!this.#isLoaded) {
-			store.dispatch(genreActions.getGenreFilmsAction(this.#props.id))
-			store.dispatch(genreActions.getGenreAction(this.#props.id))
+			store.dispatch(genreActions.getGenreFilmsAction(this.#props.context.id))
+			store.dispatch(genreActions.getGenreAction(this.#props.context.id))
 			this.#isLoaded = true
 		}
 	}

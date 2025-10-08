@@ -34,7 +34,7 @@ export const routes = {
 		hasFooter: false,
 	},
 	genre: {
-		href: '/genre',
+		href: '/genre/:id',
 		component: GenrePage,
 		needProps: true,
 	},

@@ -4,77 +4,60 @@ import { normalize } from '../../helpers/normalizeHelper/normalizeHelper.js'
 import actions from '../../redux/features/user/actions.js'
 import { store } from '../../redux/store.js'
 
-/**
- * Класс для клиентской маршрутизации.
- * Отвечает за отрисовку страниц, header и footer на основе URL.
- */
 class Router {
 	constructor() {
-		/** @type {Router} */
-		if (Router.instance) {
-			return Router.instance
-		}
-
-		/** @type {Object.<string, Object>} */
 		this.routes = {}
 
-		/** @type {HTMLElement | null} */
 		this.parent = null
 		this.lastPage = null
 		this.header = null
 
-		Router.instance = this
 		this.initEventListeners()
 	}
 
-	/**
-	 * Конфигурирует маршруты и контейнер, в котором будет происходить рендеринг.
-	 *
-	 * @param {Object.<string, { href: string, component: any, hasHeader?: boolean, hasFooter?: boolean }>} routes
-	 * @param {HTMLElement} parent - Родительский DOM-элемент для отрисовки.
-	 */
 	configurate = (routes, parent) => {
 		this.routes = new Proxy(routes, this.routesHandler)
 		this.parent = parent
 	}
 
-	/**
-	 * Обработчик прокси-доступа к маршрутам.
-	 * Позволяет находить маршрут по `href`.
-	 *
-	 * @private
-	 */
 	routesHandler = {
 		get: (target, path) => {
-			let routeName = Object.keys(target).find(key => target[key].href === path)
-			if (routeName in target) {
-				return target[routeName]
+			for (const [key, route] of Object.entries(target)) {
+				const href = route.href
+				const escapedPattern = href.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
+
+				const pattern = escapedPattern.replace(/:\w+/g, '([^/]+)')
+				const regex = new RegExp(`^${pattern}$`)
+				const match = path.match(regex)
+
+				if (match) {
+					const params = {}
+					const paramNames = href.match(/:(\w+)/g)
+
+					if (paramNames) {
+						paramNames.forEach((paramName, index) => {
+							const cleanParamName = paramName.slice(1)
+							params[cleanParamName] = match[index + 1]
+						})
+					}
+
+					return { route: target[key], params }
+				}
 			}
-			return target['error404']
+			return { route: target['error404'] || null, params: {} }
 		},
 	}
 
-	/**
-	 * Инициализирует слушателей событий `popstate` и `click`.
-	 */
 	initEventListeners = () => {
 		window.addEventListener('popstate', this.handlePopState)
 		window.addEventListener('click', this.handleClick)
 	}
 
-	/**
-	 * Обработчик изменения истории браузера.
-	 */
 	handlePopState = () => {
 		const path = window.location.pathname
 		this.handleRouteChange(path, false)
 	}
 
-	/**
-	 * Обрабатывает клики по ссылкам.
-	 *
-	 * @param {MouseEvent} event - Событие клика.
-	 */
 	handleClick = event => {
 		const link = event.target.closest('a')
 		if (link) {
@@ -87,9 +70,6 @@ class Router {
 		}
 	}
 
-	/**
-	 * Удаляет старые элементы header, footer и .content из DOM.
-	 */
 	clearLayout = () => {
 		const oldContent = this.parent.querySelector('.content')
 		if (oldContent) {
@@ -104,9 +84,6 @@ class Router {
 		}
 	}
 
-	/**
-	 * Рендерит header.
-	 */
 	renderHeader = () => {
 		const userState = store.getState().user.users
 		this.header = new Header(this.parent, {
@@ -120,21 +97,12 @@ class Router {
 		this.header.render()
 	}
 
-	/**
-	 * Рендерит footer.
-	 */
 	renderFooter = () => {
 		const footer = new Footer(this.parent)
 		footer.render()
 	}
 
-	/**
-	 * Рендерит компонент контента маршрута.
-	 *
-	 * @param {Object} route - Объект маршрута, содержащий компонент.
-	 * @param {Object} props - Параметры для страницы.
-	 */
-	renderContent = (route, props) => {
+	renderContent = (route, params) => {
 		const contentContainer = document.createElement('div')
 		contentContainer.className = 'content'
 		this.parent.appendChild(contentContainer)
@@ -143,34 +111,16 @@ class Router {
 
 		let page = new route.component(contentContainer)
 		if (route.needProps) {
-			page = new route.component(contentContainer, props)
+			page = new route.component(contentContainer, params)
 		}
 
-		// Рендерим страницу
 		page.render()
 		this.lastPage = page
 	}
 
-	/**
-	 * Выполняет переход на указанный маршрут.
-	 *
-	 * @param {string} path - Путь маршрута.
-	 * @param {boolean} [addToHistory=true] - Добавлять ли путь в историю браузера.
-	 * @param {object} [props = {}] - Параметры для страницы.
-	 */
-	handleRouteChange = (path, addToHistory = true, props = {}) => {
+	handleRouteChange = (path, addToHistory = true) => {
 		let normalizedPath = normalize(path)
-		let route = this.routes[normalizedPath]
-
-		if (route.needProps && props.id === undefined) {
-			route = this.routes['/']
-			normalizedPath = '/'
-		}
-
-		if (!route) {
-			route = this.routes['error404']
-			normalizedPath = '/error'
-		}
+		let { route, params } = this.routes[normalizedPath]
 
 		if (addToHistory) {
 			window.history.pushState({ normalizedPath }, '', normalizedPath)
@@ -181,15 +131,14 @@ class Router {
 		if (route.hasHeader !== false) {
 			this.renderHeader()
 		}
-		this.renderContent(route, props)
+
+		this.renderContent(route, params)
+
 		if (route.hasFooter !== false) {
 			this.renderFooter()
 		}
 	}
 
-	/**
-	 * Запускает роутер, обрабатывая текущий путь.
-	 */
 	start = () => {
 		store.dispatch(actions.checkUserAction())
 		this.handleRouteChange(window.location.pathname)
