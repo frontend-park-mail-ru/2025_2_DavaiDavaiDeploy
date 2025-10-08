@@ -18,7 +18,7 @@ class MyComponent extends Component {
           h(
             'button',
             {
-              on: {click: this.increment}
+              on: {click: this.increment},
             },
             ['Increment'],
           ),
