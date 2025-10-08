@@ -1,30 +1,26 @@
-import {hFragment, h} from '../../../src/h.js';
-import {Component} from '../../../src/component.js';
+import {hFragment, h} from '../../../lib/src/h.js';
+import {Component} from '../../../lib/src/component.js';
 
 class MyComponent extends Component {
-  constructor(props) {
-    super(
-      props,
-      function () {
-        return {count: props.initialCount || 0};
-      },
-      function () {
-        return hFragment([
-          h('p', {}, [`Count: ${this.state.count}`]),
-          h(
-            'button',
-            {
-              on: {
-                click: () => {
-                  this.updateState({count: this.state.count + 1});
-                },
-              },
-            },
-            ['Increment'],
-          ),
-        ]);
-      },
-    );
+  state = {
+    count: 0,
+  };
+
+  increment() {
+    this.updateState({count: this.state.count + 1});
+  }
+
+  render() {
+    return hFragment([
+      h('p', {}, [`Count: ${this.state.count}`]),
+      h(
+        'button',
+        {
+          on: {click: this.increment},
+        },
+        ['Increment'],
+      ),
+    ]);
   }
 }
 
