@@ -9,20 +9,20 @@ export default class GenrePage {
 	#unsubscribe
 	#isLoaded = false
 	#props = {
-		context: {},
+		location: {},
 	}
 
-	constructor(rootElement, params) {
+	constructor(rootElement, location) {
 		this.#parent = rootElement
-		this.#props = { ...this.#props, context: { ...params } }
+		this.#props = { ...this.#props, location }
 	}
 
 	get template() {
-		const context = {
+		const location = {
 			title: this.#props.title,
 			description: this.#props.description,
 		}
-		return Handlebars.templates['genrePage.hbs'](context)
+		return Handlebars.templates['genrePage.hbs'](location)
 	}
 
 	get films() {
@@ -50,8 +50,12 @@ export default class GenrePage {
 		this.#unsubscribe = store.subscribe(this.handleStoreUpdate)
 
 		if (!this.#isLoaded) {
-			store.dispatch(genreActions.getGenreFilmsAction(this.#props.context.id))
-			store.dispatch(genreActions.getGenreAction(this.#props.context.id))
+			store.dispatch(
+				genreActions.getGenreFilmsAction(this.#props.location.params.id),
+			)
+			store.dispatch(
+				genreActions.getGenreAction(this.#props.location.params.id),
+			)
 			this.#isLoaded = true
 		}
 	}

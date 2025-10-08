@@ -8,12 +8,16 @@ import { TOPFILM } from '../../mocks/films.js'
 export default class Home {
 	#parent
 	#self
+	#props = {
+		location: {},
+	}
 
 	/**
 	 * @param {HTMLElement} rootElement - Родительский DOM-элемент.
 	 */
-	constructor(rootElement) {
+	constructor(rootElement, params) {
 		this.#parent = rootElement
+		this.#props = { ...this.#props, location: { ...params } }
 	}
 
 	/**

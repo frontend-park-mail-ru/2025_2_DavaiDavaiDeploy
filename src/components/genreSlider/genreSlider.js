@@ -113,7 +113,7 @@ export default class GenreSlider extends Component {
 		const target = event.target
 		if (target.classList.contains('slider__image')) {
 			const id = target.dataset.id
-			router.handleRouteChange(`/genre/${id}`)
+			router.navigate(`/genre/${id}`)
 		}
 	}
 

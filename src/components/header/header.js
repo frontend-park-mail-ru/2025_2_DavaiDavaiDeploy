@@ -44,7 +44,7 @@ export default class Header extends Component {
 		const loginButton = document.querySelector('#login-button')
 		if (loginButton) {
 			loginButton.addEventListener('click', () => {
-				router.handleRouteChange('/login')
+				router.navigate('/login')
 			})
 		}
 		const logo_a = document.querySelector('#logo__a')
@@ -67,7 +67,7 @@ export default class Header extends Component {
 		const loginButton = document.querySelector('#login-button')
 		if (loginButton) {
 			loginButton.addEventListener('click', () => {
-				router.handleRouteChange('/login')
+				router.navigate('/login')
 			})
 		}
 		const logo_a = document.querySelector('#logo__a')

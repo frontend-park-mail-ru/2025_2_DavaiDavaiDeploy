@@ -36,7 +36,6 @@ export const routes = {
 	genre: {
 		href: '/genre/:id',
 		component: GenrePage,
-		needProps: true,
 	},
 	error404: {
 		href: '/error',

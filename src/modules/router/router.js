@@ -55,7 +55,7 @@ class Router {
 
 	handlePopState = () => {
 		const path = window.location.pathname
-		this.handleRouteChange(path, false)
+		this.navigate(path, {}, false)
 	}
 
 	handleClick = event => {
@@ -66,7 +66,7 @@ class Router {
 			if (url.pathname === window.location.pathname) {
 				return
 			}
-			this.handleRouteChange(url.pathname)
+			this.navigate(url.pathname)
 		}
 	}
 
@@ -102,23 +102,26 @@ class Router {
 		footer.render()
 	}
 
-	renderContent = (route, params) => {
+	renderContent = (route, params, state, normalizedPath) => {
 		const contentContainer = document.createElement('div')
 		contentContainer.className = 'content'
 		this.parent.appendChild(contentContainer)
 
 		this.lastPage?.destroy()
 
-		let page = new route.component(contentContainer)
-		if (route.needProps) {
-			page = new route.component(contentContainer, params)
+		const location = {
+			pathname: normalizedPath,
+			params,
+			state,
 		}
+
+		let page = new route.component(contentContainer, location)
 
 		page.render()
 		this.lastPage = page
 	}
 
-	handleRouteChange = (path, addToHistory = true) => {
+	navigate = (path, state, addToHistory = true) => {
 		let normalizedPath = normalize(path)
 		let { route, params } = this.routes[normalizedPath]
 
@@ -132,7 +135,7 @@ class Router {
 			this.renderHeader()
 		}
 
-		this.renderContent(route, params)
+		this.renderContent(route, params, state, normalizedPath)
 
 		if (route.hasFooter !== false) {
 			this.renderFooter()
@@ -141,7 +144,7 @@ class Router {
 
 	start = () => {
 		store.dispatch(actions.checkUserAction())
-		this.handleRouteChange(window.location.pathname)
+		this.navigate(window.location.pathname)
 	}
 }
 

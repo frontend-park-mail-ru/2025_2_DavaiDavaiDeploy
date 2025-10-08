@@ -9,12 +9,16 @@ import { store } from '../../redux/store.js'
 export default class LoginPage {
 	#parent
 	#unsubscribe
+	#props = {
+		location: {},
+	}
 
 	/**
 	 * @param {HTMLElement} rootElement - Родительский DOM-элемент.
 	 */
-	constructor(rootElement) {
+	constructor(rootElement, params) {
 		this.#parent = rootElement
+		this.#props = { ...this.#props, location: { ...params } }
 	}
 
 	/**
@@ -33,7 +37,7 @@ export default class LoginPage {
 
 	#handleStoreChange = () => {
 		if (!store.getState().user.users.error) {
-			router.handleRouteChange('/')
+			router.navigate('/')
 		} else {
 			alert('Произошла ошибка ЛОГИНИЗАЦИИ: ' + store.getState().user.error)
 		}
