@@ -18,3 +18,7 @@ export function objectsDiff(oldObj, newObj) {
     updated: updated,
   };
 }
+
+export function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}

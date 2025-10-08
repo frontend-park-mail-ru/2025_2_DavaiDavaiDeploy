@@ -2,6 +2,10 @@ import {hFragment, h} from '../../../src/h.js';
 import {Component} from '../../../src/component.js';
 
 class MyComponent extends Component {
+  increment() {
+    this.updateState({count: this.state.count + 1});
+  }
+
   constructor(props) {
     super(
       props,
@@ -14,11 +18,7 @@ class MyComponent extends Component {
           h(
             'button',
             {
-              on: {
-                click: () => {
-                  this.updateState({count: this.state.count + 1});
-                },
-              },
+              on: {click: this.increment}
             },
             ['Increment'],
           ),
