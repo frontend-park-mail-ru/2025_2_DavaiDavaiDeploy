@@ -2,7 +2,6 @@ import {destroyDOM} from './destroy-dom.js';
 import {mountDOM} from './mount-dom.js';
 import {DOM_TYPES, extractChildren} from './h.js';
 import {patchDOM} from './patch-dom.js';
-import {hasOwnProperty} from './utils/objects.js';
 
 export class Component {
   #isMounted = false;
