@@ -8,9 +8,8 @@ export class Component {
   #vdom = null;
   #hostEl = null;
 
-  constructor(props, state) {
+  constructor(props) {
     this.props = props;
-    this.state = state ? state(props) : {};
   }
 
   get elements() {
