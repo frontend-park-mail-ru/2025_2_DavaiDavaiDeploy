@@ -1,4 +1,4 @@
-import HTTPClient from '../../../api/index.js'
+import HTTPClient from '../../../apiClient/index.js'
 import { getFilmsMocks } from '../../../mocks/films.js'
 import types from './types.js'
 

@@ -1,4 +1,4 @@
-import HTTPClient from '../../../api/index.js'
+import HTTPClient from '../../../apiClient/index.js'
 import types from './types.js'
 
 const setUserLoadingAction = () => {
