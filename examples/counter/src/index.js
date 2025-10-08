@@ -24,5 +24,6 @@ class MyComponent extends Component {
   }
 }
 
-const counter = new MyComponent();
+const props = {initialCount: 10};
+const counter = new MyComponent(props);
 counter.mount(document.body);
