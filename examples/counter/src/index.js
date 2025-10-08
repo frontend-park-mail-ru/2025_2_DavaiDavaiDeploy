@@ -1,5 +1,5 @@
-import {hFragment, h} from '../../../src/h.js';
-import {Component} from '../../../src/component.js';
+import {hFragment, h} from '../../../lib/src/h.js';
+import {Component} from '../../../lib/src/component.js';
 
 class MyComponent extends Component {
   state = {
