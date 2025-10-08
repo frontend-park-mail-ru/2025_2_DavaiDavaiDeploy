@@ -9,18 +9,9 @@ export class Component {
   #vdom = null;
   #hostEl = null;
 
-  constructor(props = {}, state, render = {}, ...methods) {
+  constructor(props, state) {
     this.props = props;
     this.state = state ? state(props) : {};
-    this.render = render.bind(this);
-    this.methods = methods;
-
-    for (const methodName in methods) {
-      if (hasOwnProperty(Component, methodName)) {
-        throw new Error(`Method "${methodName}()" already exists in the component.`);
-      }
-      Component.prototype[methodName] = methods[methodName];
-    }
   }
 
   get elements() {
