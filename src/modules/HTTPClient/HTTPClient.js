@@ -26,15 +26,16 @@ export class HTTPClient {
 	 * @param {Object.<string, string|Function>} [config.headers] - Заголовки по умолчанию (значение может быть строкой или функцией, возвращающей строку).
 	 * @param {number} [config.timeout] - Таймаут запросов в миллисекундах.
 	 */
-	constructor(config = {}) {
+
+	constructor({ baseUrl, headers = {}, timeout = 3000 } = {}) {
 		/**
 		 * Конфигурация по умолчанию.
 		 * @type {{ baseUrl?: string, headers?: Object.<string, string|Function>, timeout?: number }}
 		 */
 		this.default = {
-			baseUrl: config.baseUrl,
-			headers: config.headers,
-			timeout: config.timeout,
+			baseUrl,
+			headers,
+			timeout,
 		}
 	}
 
