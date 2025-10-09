@@ -1,3 +1,3 @@
-import router from './router.js'
+import { Router } from './router.js'
 
-export default router
+export default Router

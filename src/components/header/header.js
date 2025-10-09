@@ -1,4 +1,4 @@
-import router from '../../modules/router/index.js'
+import { router } from '../../index.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
 export default class Header extends Component {

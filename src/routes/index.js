@@ -1,7 +1,7 @@
-import Error404 from '../pages/404/404.js'
 import GenrePage from '../pages/genrePage/genrePage.js'
 import HomePage from '../pages/homePage/homePage.js'
 import LoginPage from '../pages/loginPage/loginPage.js'
+import NotFoundPage from '../pages/notFoundPage/notFoundPage.js'
 import RegistrationPage from '../pages/registrationPage/registrationPage.js'
 
 /**
@@ -39,7 +39,7 @@ export const routes = {
 	},
 	error404: {
 		href: '/error',
-		component: Error404,
+		component: NotFoundPage,
 		hasHeader: false,
 		hasFooter: false,
 	},

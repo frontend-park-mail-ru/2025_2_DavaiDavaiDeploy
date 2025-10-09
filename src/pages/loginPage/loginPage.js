@@ -1,5 +1,5 @@
 import LoginForm from '../../components/loginForm/loginForm.js'
-import router from '../../modules/router/index.js'
+import { router } from '../../index.js'
 import actions from '../../redux/features/user/actions.js'
 import { store } from '../../redux/store.js'
 import Page from '../core/basePage.js'

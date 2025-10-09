@@ -8,25 +8,27 @@ import { store } from '../../redux/store.js'
  * Класс Router управляет навигацией внутри SPA (Single Page Application),
  * обновляет контент без перезагрузки страницы, рендерит Header и Footer.
  */
-class Router {
+export class Router {
 	/**
 	 * Создает экземпляр Router.
 	 * Инициализирует маршруты, контейнер и слушатели событий.
 	 */
-	constructor() {
-		/** @type {Object.<string, Object>} Список маршрутов приложения */
-		this.routes = {}
-
-		/** @type {HTMLElement|null} Родительский элемент, в который рендерится контент */
-		this.parent = null
-
-		/** @type {Object|null} Текущая страница (экземпляр компонента) */
+	constructor(routes, parent) {
+		this.routes = new Proxy(routes, this.routesHandler)
+		this.parent = parent
 		this.curPage = null
-
-		/** @type {Header|null} Экземпляр компонента Header */
 		this.header = null
 
 		this.initEventListeners()
+	}
+
+	configurate = (routes, parent) => {
+		this.routes = new Proxy(routes, this.routesHandler)
+		this.parent = parent
+	}
+
+	static create(routes, parent) {
+		return new Router(routes, parent)
 	}
 
 	/**
@@ -63,16 +65,6 @@ class Router {
 			}
 			this.navigate(url.pathname + url.search)
 		}
-	}
-
-	/**
-	 * Конфигурирует маршруты и задает родительский контейнер для рендера.
-	 * @param {Object.<string, Object>} routes Объект маршрутов
-	 * @param {HTMLElement} parent Родительский контейнер DOM
-	 */
-	configurate = (routes, parent) => {
-		this.routes = new Proxy(routes, this.routesHandler)
-		this.parent = parent
 	}
 
 	/**
@@ -222,5 +214,3 @@ class Router {
 		footer.render()
 	}
 }
-
-export default new Router()

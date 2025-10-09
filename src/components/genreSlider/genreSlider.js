@@ -1,6 +1,6 @@
 import { serverAddrForStatic } from '../../consts/serverAddr.js'
 import { createPeriodFunction } from '../../helpers/periodStartHelper/periodStartHelper.js'
-import router from '../../modules/router/index.js'
+import { router } from '../../index.js'
 import genreActions from '../../redux/features/genre/actions.js'
 import { selectGenreSection } from '../../redux/features/genre/selectors.js'
 import { store } from '../../redux/store.js'

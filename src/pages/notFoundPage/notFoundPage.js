@@ -2,7 +2,7 @@ import Page from '../core/basePage.js'
 /**
  * Класс, представляющий страницу 404 (не найдено).
  */
-export default class Error404 extends Page {
+export default class NotFoundPage extends Page {
 	/**
 	 * Создает экземпляр страницы 404.
 	 * @param {HTMLElement} rootElement Родительский элемент, в который рендерится страница.

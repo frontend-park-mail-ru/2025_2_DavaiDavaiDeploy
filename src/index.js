@@ -1,7 +1,7 @@
 import './build/partials/logo.js'
 import './build/precompiled.js'
 import Layout from './components/layout/layout.js'
-import router from './modules/router/index.js'
+import Router from './modules/router/index.js'
 import { routes } from './routes/index.js'
 
 const contentContainer = document.createElement('div')
@@ -12,5 +12,5 @@ document.body.appendChild(contentContainer)
 const layout = new Layout(contentContainer)
 layout.render()
 
-router.configurate(routes, layout.self)
+export const router = Router.create(routes, layout.self)
 router.start()

@@ -1,5 +1,5 @@
-import HTTPClient from '../../../apiClient/index.js'
 import { getFilmsMocks } from '../../../mocks/films.js'
+import HTTPClient from '../../../modules/HTTPClient/index.js'
 import types from './types.js'
 
 /**

@@ -5,7 +5,7 @@
 @import url('../pages/genrePage/genrePage.css');
 @import url('../pages/registrationPage/registrationPage.css');
 @import url('../pages/loginPage/loginPage.css');
-@import url('../pages/404/404.css');
+@import url('../pages/notFoundPage/notFoundPage.css');
 
 * {
 	padding: 0;
