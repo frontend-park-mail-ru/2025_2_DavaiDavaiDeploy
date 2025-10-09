@@ -2,15 +2,33 @@ import { formatRating } from '../../helpers/ratingFormatHelper/ratingFormatHelpe
 import { getRatingType } from '../../helpers/ratingTypeHelper/ratingTypeHelper.js'
 import Component from '../core/baseComponent.js'
 
+/**
+ * Класс FilmCard представляет карточку фильма.
+ * Наследуется от базового класса Component.
+ */
 export default class FilmCard extends Component {
+	/**
+	 * Создает экземпляр FilmCard.
+	 * @param {HTMLElement} parent - Родительский DOM-элемент, в который будет добавлена карточка.
+	 * @param {Object} [props={}] - Свойства карточки фильма.
+	 */
 	constructor(parent, props = {}) {
 		super(parent, props, 'filmCard')
 	}
 
+	/**
+	 * Возвращает DOM-элемент текущей карточки фильма.
+	 * @returns {HTMLElement|null} DOM-элемент карточки фильма или null, если элемент не найден.
+	 */
 	get self() {
 		return document.querySelector(`#film-${this.props.id}`)
 	}
 
+	/**
+	 * Отрисовывает карточку фильма в родительский элемент.
+	 * Формирует HTML-контекст и вставляет его в DOM.
+	 * @returns {void}
+	 */
 	render() {
 		let context = {
 			id: this.props.id,
@@ -24,6 +42,10 @@ export default class FilmCard extends Component {
 		this.parent?.insertAdjacentHTML('beforeend', this.html(context))
 	}
 
+	/**
+	 * Повторно отрисовывает карточку фильма.
+	 * @returns {void}
+	 */
 	rerender() {
 		let context = {
 			id: this.props.id,

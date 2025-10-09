@@ -1,73 +1,75 @@
 import FilmCard from '../../components/filmCard/filmCard.js'
 import { serverAddrForStatic } from '../../consts/serverAddr.js'
 import genreActions from '../../redux/features/genre/actions.js'
+import { selectGenreSection } from '../../redux/features/genre/selectors.js'
 import { store } from '../../redux/store.js'
+import Page from '../core/basePage.js'
 
-export default class GenrePage {
-	#parent
-	#self
-	#unsubscribe
-	#isLoaded = false
-	#props = {
-		id: '',
+/**
+ * Класс страницы жанра.
+ * Загружает информацию о жанре и фильмы этого жанра.
+ */
+export default class GenrePage extends Page {
+	/**
+	 * @param {HTMLElement} rootElement Родительский контейнер
+	 * @param {Object} location Объект локации
+	 */
+	constructor(rootElement, location) {
+		super(rootElement, location, 'genrePage')
 	}
 
-	constructor(rootElement, props) {
-		this.#parent = rootElement
-		this.#props = { ...this.#props, ...props }
-	}
-
-	get template() {
-		const context = {
-			title: this.#props.title,
-			description: this.#props.description,
-		}
-		return Handlebars.templates['genrePage.hbs'](context)
-	}
-
+	/** @returns {HTMLElement} Контейнер с фильмами */
 	get films() {
-		return this.#self.querySelector('.films')
+		return this.self.querySelector('.films')
 	}
 
+	/** @returns {HTMLElement|null} Сетка фильмов */
 	get grid() {
-		if (!this.#self) {
-			return null
-		}
-		return this.#self.querySelector('.grid')
+		return this.self.querySelector('.grid')
 	}
 
+	/**
+	 * Рендер страницы: создаёт элемент, вставляет шаблон, подписывается на Redux
+	 */
 	render() {
-		this.#parent.innerHTML = ''
-		this.#self = document.createElement('div')
-		this.#self.className = 'genre-page'
-		this.#parent.appendChild(this.#self)
-		this.#self.insertAdjacentHTML(
+		this.parent.innerHTML = ''
+		this.parent.insertAdjacentHTML(
 			'afterbegin',
-			Handlebars.templates['genrePage.hbs'](),
+			this.template({
+				title: this.props.title,
+				description: this.props.description,
+			}),
 		)
 		window.scrollTo(0, 0)
 
-		this.#unsubscribe = store.subscribe(this.handleStoreUpdate)
+		this.unsubscribe = store.subscribe(this.handleStoreUpdate)
 
-		if (!this.#isLoaded) {
-			store.dispatch(genreActions.getGenreFilmsAction(this.#props.id))
-			store.dispatch(genreActions.getGenreAction(this.#props.id))
-			this.#isLoaded = true
-		}
+		store.dispatch(
+			genreActions.getGenreFilmsAction(this.props.location.params.id),
+		)
+		store.dispatch(genreActions.getGenreAction(this.props.location.params.id))
 	}
 
+	/**
+	 * Обработчик обновлений Redux.
+	 * Вызывается при изменении состояния.
+	 */
 	handleStoreUpdate = () => {
-		const state = store.getState().genre
+		const state = selectGenreSection(store.getState())
 		this.update(state)
 	}
 
+	/**
+	 * Обновляет контент страницы при изменении состояния Redux.
+	 * @param {Object} state Состояние жанра из Redux
+	 */
 	update = state => {
 		if (state.genreLoading || state.genreFilmsLoading) {
 			return
 		}
 
-		const title = this.#self.querySelector('.genre-content__title')
-		const desc = this.#self.querySelector('.genre-content__description')
+		const title = this.self.querySelector('.genre-content__title')
+		const desc = this.self.querySelector('.genre-content__description')
 
 		if (title) {
 			title.textContent = `Жанры: ${state.curGenre.title}`
@@ -88,10 +90,5 @@ export default class GenrePage {
 			})
 			filmCard.render()
 		})
-	}
-
-	destroy() {
-		this.#unsubscribe?.()
-		this.#isLoaded = false
 	}
 }

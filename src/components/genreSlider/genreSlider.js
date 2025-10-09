@@ -11,8 +11,18 @@ const AUTO_SLIDE_RESTART_DURATION = 30000
 const ANIMATION_DURATION = 300
 const CHANGE_DURATION = 20
 
+/**
+ * Класс GenreSlider отображает слайдер жанров с авто-перелистыванием.
+ * @extends Component
+ */
 export default class GenreSlider extends Component {
+	/** @type {Function} Отписка от обновлений Redux */
 	#unsubscribe
+
+	/**
+	 * @param {HTMLElement} parent Родительский элемент для рендера
+	 * @param {Object} [props={}] Дополнительные свойства компонента
+	 */
 	constructor(parent, props = {}) {
 		super(parent, props, 'genreSlider', {
 			curSlide: 0,
@@ -27,22 +37,27 @@ export default class GenreSlider extends Component {
 		})
 	}
 
+	/** @returns {HTMLElement|null} Корневой элемент слайдера */
 	get self() {
 		return document.querySelector(`.genre-slider`)
 	}
 
+	/** @returns {HTMLElement|null} Контейнер для слайдов */
 	get slider() {
 		return this.self?.querySelector('.slider')
 	}
 
+	/** @returns {HTMLElement|null} Кнопка перехода к следующему слайду */
 	get nextBtn() {
 		return this.self?.querySelector('.next-button')
 	}
 
+	/** @returns {HTMLElement|null} Кнопка перехода к предыдущему слайду */
 	get prevBtn() {
 		return this.self?.querySelector('.prev-button')
 	}
 
+	/** @returns {HTMLElement[]} Слайды жанров */
 	get genres() {
 		if (!this.slider) {
 			return []
@@ -50,6 +65,9 @@ export default class GenreSlider extends Component {
 		return Array.from(this.slider.querySelectorAll('.slider__image'))
 	}
 
+	/**
+	 * Рендерит слайдер и подписывается на обновления состояния Redux.
+	 */
 	render() {
 		this.parent.insertAdjacentHTML('afterbegin', this.html())
 		store.dispatch(genreActions.getGenresAction())
@@ -59,11 +77,16 @@ export default class GenreSlider extends Component {
 		this.addEventListeners()
 	}
 
+	/** Обработчик обновлений Redux для обновления слайдера */
 	handleStoreUpdate = () => {
 		const state = selectGenreSection(store.getState())
 		this.update(state)
 	}
 
+	/**
+	 * Обновляет содержимое слайдера.
+	 * @param {Object} state Состояние Redux
+	 */
 	update = state => {
 		const genres = state.genres
 
@@ -100,6 +123,7 @@ export default class GenreSlider extends Component {
 		this.autoSlider.start()
 	}
 
+	/** Добавляет слушатели событий для кнопок и слайдера */
 	addEventListeners = () => {
 		this.nextBtn.addEventListener('click', this.onNextBthClick)
 		this.prevBtn.addEventListener('click', this.onPrevBthClick)
@@ -107,16 +131,25 @@ export default class GenreSlider extends Component {
 		this.slider.addEventListener('click', this.onGenreClick)
 	}
 
+	/**
+	 * Обработка клика по жанру.
+	 * Переходит на страницу выбранного жанра.
+	 * @param {MouseEvent} event
+	 */
 	onGenreClick = event => {
 		event.preventDefault()
 		event.stopPropagation()
 		const target = event.target
 		if (target.classList.contains('slider__image')) {
 			const id = target.dataset.id
-			router.handleRouteChange('/genre', true, { id })
+			router.navigate(`/genre/${id}`)
 		}
 	}
 
+	/**
+	 * Останавливает авто-слайдер при взаимодействии пользователя.
+	 * Перезапускает его через AUTO_SLIDE_RESTART_DURATION.
+	 */
 	onSliderClick = () => {
 		this.autoSlider.stop()
 		if (this.inactivityTimer) {
@@ -129,6 +162,7 @@ export default class GenreSlider extends Component {
 		}, AUTO_SLIDE_RESTART_DURATION)
 	}
 
+	/** Инициализация видимых слайдов */
 	initSlider = () => {
 		this.genres.forEach(genre => {
 			genre.style.display = 'none'
@@ -142,6 +176,7 @@ export default class GenreSlider extends Component {
 		}
 	}
 
+	/** Переход к следующему слайду */
 	onNextBthClick = () => {
 		this.state.prevGenre = this.state.curGenre
 		this.state.curGenre =
@@ -149,6 +184,7 @@ export default class GenreSlider extends Component {
 		this.animateSlider(1)
 	}
 
+	/** Переход к предыдущему слайду */
 	onPrevBthClick = () => {
 		this.state.prevGenre = this.state.curGenre
 		this.state.curGenre =
@@ -160,6 +196,10 @@ export default class GenreSlider extends Component {
 		this.animateSlider(-1)
 	}
 
+	/**
+	 * Анимация слайдов при перелистывании.
+	 * @param {number} direction 1 - вперед, -1 - назад
+	 */
 	animateSlider = direction => {
 		if (this.state.isAnimating) {
 			return
@@ -214,6 +254,7 @@ export default class GenreSlider extends Component {
 		}, ANIMATION_DURATION)
 	}
 
+	/** Очищает ресурсы слайдера */
 	destroy() {
 		this.#unsubscribe?.()
 

@@ -2,26 +2,16 @@ import CardGrid from '../../components/cardGrid/cardGrid.js'
 import GenreSlider from '../../components/genreSlider/genreSlider.js'
 import TopFilm from '../../components/topFilm/topFilm.js'
 import { TOPFILM } from '../../mocks/films.js'
+import Page from '../core/basePage.js'
 /**
  * Класс для отображения главной страницы.
  */
-export default class Home {
-	#parent
-	#self
-
+export default class Home extends Page {
 	/**
 	 * @param {HTMLElement} rootElement - Родительский DOM-элемент.
 	 */
-	constructor(rootElement) {
-		this.#parent = rootElement
-	}
-
-	/**
-	 * Шаблон главной страницы.
-	 * @returns {string}
-	 */
-	get template() {
-		return Handlebars.templates[`homePage.hbs`]({ text: 'Home' })
+	constructor(rootElement, location) {
+		super(rootElement, location, 'homePage')
 	}
 
 	/**
@@ -29,7 +19,7 @@ export default class Home {
 	 * @returns {HTMLElement | null}
 	 */
 	get main() {
-		return this.#self.querySelector('.main')
+		return this.self.querySelector('.main')
 	}
 
 	/**
@@ -37,18 +27,15 @@ export default class Home {
 	 * @returns {HTMLElement | null}
 	 */
 	get films() {
-		return this.#self.querySelector('.films')
+		return this.self.querySelector('.films')
 	}
 
 	/**
 	 * Рендерит главную страницу: слайдер жанров, карточки фильмов и TopFilm.
 	 */
 	render() {
-		this.#parent.innerHTML = ''
-		this.#self = document.createElement('div')
-		this.#self.class = 'home-page'
-		this.#parent.appendChild(this.#self)
-		this.#self.insertAdjacentHTML('afterbegin', this.template)
+		this.parent.innerHTML = ''
+		this.parent.insertAdjacentHTML('afterbegin', this.template())
 
 		this.genreSlider = new GenreSlider(this.main)
 		this.genreSlider.render()

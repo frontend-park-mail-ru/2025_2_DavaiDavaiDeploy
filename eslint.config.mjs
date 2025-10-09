@@ -25,7 +25,7 @@ export default defineConfig([
 		},
 		ignores: [
 			'node_modules/',
-			'src/handlebars/**',
+			'src/modules/handlebars/**',
 			'**/build/**',
 			'.template-lintrc.js',
 			'.lintstagedrc.js',

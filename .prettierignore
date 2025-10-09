@@ -8,5 +8,5 @@ package-lock.json
 **/.hg
 **/*.hbs
 **/node_modules
-src/handlebars/**
+src/modules/handlebars/**
 src/build/

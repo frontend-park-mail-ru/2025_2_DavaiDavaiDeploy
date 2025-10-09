@@ -1,6 +1,8 @@
 import router from '../../modules/router/index.js'
+import { selectUser } from '../../redux/features/user/selectors.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
+
 export default class Header extends Component {
 	#unsubscribe
 
@@ -24,7 +26,7 @@ export default class Header extends Component {
 	}
 
 	rerender() {
-		const userState = store.getState().user.users
+		const userState = selectUser(store.getState())
 		if (userState.login) {
 			this.handleLogIn(userState)
 		} else {
@@ -44,7 +46,7 @@ export default class Header extends Component {
 		const loginButton = document.querySelector('#login-button')
 		if (loginButton) {
 			loginButton.addEventListener('click', () => {
-				router.handleRouteChange('/login')
+				router.navigate('/login')
 			})
 		}
 		const logo_a = document.querySelector('#logo__a')
@@ -67,7 +69,7 @@ export default class Header extends Component {
 		const loginButton = document.querySelector('#login-button')
 		if (loginButton) {
 			loginButton.addEventListener('click', () => {
-				router.handleRouteChange('/login')
+				router.navigate('/login')
 			})
 		}
 		const logo_a = document.querySelector('#logo__a')
