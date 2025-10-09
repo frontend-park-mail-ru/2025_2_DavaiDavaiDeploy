@@ -7,7 +7,7 @@ import RegistrationPage from '../pages/registrationPage/registrationPage.js'
 /**
  * @typedef {Object} Route
  * @property {string} href - Путь маршрута.
- * @property {React.Component} component - React-компонент, который рендерится для маршрута.
+ * @property {Class} component - Компонент, который рендерится для маршрута.
  * @property {boolean} [hasHeader=true] - Флаг отображения шапки на странице.
  * @property {boolean} [hasFooter=true] - Флаг отображения подвала на странице.
  */

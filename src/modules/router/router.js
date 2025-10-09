@@ -11,8 +11,30 @@ import { store } from '../../redux/store.js'
  */
 export class Router {
 	/**
+	 * @type {Proxy} Прокси-объект, используемый для маршрутизации.
+	 */
+	routes
+
+	/**
+	 * @type {HTMLElement} Родительский контейнер, в который рендерится содержимое.
+	 */
+	parent
+
+	/**
+	 * @type {Object|null} Текущая активная страница.
+	 */
+	curPage = null
+
+	/**
+	 * @type {Header|null} Текущий компонент заголовка.
+	 */
+	header = null
+
+	/**
 	 * Создает экземпляр Router.
 	 * Инициализирует маршруты, контейнер и слушатели событий.
+	 * @param {Object.<string, { href: string, component: any, hasHeader?: boolean, hasFooter?: boolean }>} routes Объект с маршрутами приложения.
+	 * @param {HTMLElement} parent Родительский контейнер для отображения контента.
 	 */
 	constructor(routes, parent) {
 		this.routes = new Proxy(routes, this.routesHandler)
@@ -23,11 +45,12 @@ export class Router {
 		this.initEventListeners()
 	}
 
-	configurate = (routes, parent) => {
-		this.routes = new Proxy(routes, this.routesHandler)
-		this.parent = parent
-	}
-
+	/**
+	 * Фабричный метод для создания экземпляра Router.
+	 * @param {Object} routes Объект маршрутов.
+	 * @param {HTMLElement} parent Родительский контейнер.
+	 * @returns {Router} Новый экземпляр Router.
+	 */
 	static create(routes, parent) {
 		return new Router(routes, parent)
 	}
@@ -37,6 +60,7 @@ export class Router {
 	 * - popstate: при нажатии кнопок "Назад/Вперед"
 	 * - click: для перехвата кликов по ссылкам <a>
 	 * @private
+	 * @returns {void}
 	 */
 	initEventListeners = () => {
 		window.addEventListener('popstate', this.handlePopState)
@@ -46,6 +70,7 @@ export class Router {
 	/**
 	 * Обрабатывает переход при использовании истории браузера.
 	 * @private
+	 * @returns {void}
 	 */
 	handlePopState = () => {
 		this.navigate(window.location.pathname + window.location.search, {}, false)
@@ -53,8 +78,9 @@ export class Router {
 
 	/**
 	 * Перехватывает клики по ссылкам и выполняет SPA-навигацию.
-	 * @param {MouseEvent} event Событие клика
+	 * @param {MouseEvent} event Событие клика.
 	 * @private
+	 * @returns {void}
 	 */
 	handleClick = event => {
 		const link = event.target.closest('a')
@@ -75,9 +101,9 @@ export class Router {
 	 */
 	routesHandler = {
 		/**
-		 * @param {Object} target Исходный объект маршрутов
-		 * @param {string} path Путь для поиска маршрута
-		 * @returns {{route: Object, params: Object}} Найденный маршрут и параметры
+		 * @param {Object} target Исходный объект маршрутов.
+		 * @param {string} path Путь для поиска маршрута.
+		 * @returns {{route: Object, params: Object}} Найденный маршрут и параметры.
 		 */
 		get: (target, path) => {
 			for (const route of Object.values(target)) {
@@ -104,6 +130,7 @@ export class Router {
 	 * Запускает роутер:
 	 * - Проверяет авторизацию пользователя через Redux
 	 * - Переходит на текущий URL
+	 * @returns {void}
 	 */
 	start = () => {
 		store.dispatch(actions.checkUserAction())
@@ -114,8 +141,9 @@ export class Router {
 	 * Выполняет навигацию по указанному пути.
 	 * Рендерит Header, контент и Footer.
 	 * @param {string} path Путь перехода (например, '/home?tab=1')
-	 * @param {Object} [state={}] Состояние, передаваемое странице
-	 * @param {boolean} [addToHistory=true] Добавлять ли запись в историю браузера
+	 * @param {Object} [state={}] Состояние, передаваемое странице.
+	 * @param {boolean} [addToHistory=true] Добавлять ли запись в историю браузера.
+	 * @returns {void}
 	 */
 	navigate = (path, state = {}, addToHistory = true) => {
 		const normalizedPath = normalize(path)
@@ -145,6 +173,7 @@ export class Router {
 	/**
 	 * Очищает текущий макет страницы — удаляет контент, Header и Footer.
 	 * @private
+	 * @returns {void}
 	 */
 	clearLayout = () => {
 		this.header?.destroy()
@@ -165,6 +194,7 @@ export class Router {
 	 * Рендерит Header на странице.
 	 * Использует данные пользователя из Redux store.
 	 * @private
+	 * @returns {void}
 	 */
 	renderHeader = () => {
 		const userState = selectUser(store.getState())
@@ -182,12 +212,13 @@ export class Router {
 	/**
 	 * Рендерит основной контент страницы.
 	 * Создает контейнер `.content` и инициализирует компонент страницы.
-	 * @param {Object} route Объект маршрута с компонентом
-	 * @param {string} normalizedPath Нормализованный путь
-	 * @param {Object} params Параметры пути (например, {id: '123'})
-	 * @param {Object} search Параметры строки запроса
-	 * @param {Object} state Дополнительное состояние
+	 * @param {Object} route Объект маршрута с компонентом.
+	 * @param {string} normalizedPath Нормализованный путь.
+	 * @param {Object} params Параметры пути (например, {id: '123'}).
+	 * @param {Object} search Query параметры строки запроса.
+	 * @param {Object} state Дополнительное состояние.
 	 * @private
+	 * @returns {void}
 	 */
 	renderContent = (route, normalizedPath, params, search, state) => {
 		const contentContainer = document.createElement('div')
@@ -209,6 +240,7 @@ export class Router {
 	/**
 	 * Рендерит Footer внизу страницы.
 	 * @private
+	 * @returns {void}
 	 */
 	renderFooter = () => {
 		const footer = new Footer(this.parent)
