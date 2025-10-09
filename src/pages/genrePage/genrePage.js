@@ -3,20 +3,41 @@ import { serverAddrForStatic } from '../../consts/serverAddr.js'
 import genreActions from '../../redux/features/genre/actions.js'
 import { store } from '../../redux/store.js'
 
+/**
+ * Класс страницы жанра.
+ * Загружает информацию о жанре и фильмы этого жанра.
+ */
 export default class GenrePage {
+	/** @type {HTMLElement} Родительский контейнер страницы */
 	#parent
+
+	/** @type {HTMLElement} Элемент страницы */
 	#self
+
+	/** @type {Function} Функция отписки от обновлений Redux */
 	#unsubscribe
+
+	/** @type {boolean} Флаг, указывающий, загружены ли данные */
 	#isLoaded = false
+
+	/** @type {Object} Свойства страницы */
 	#props = {
 		location: {},
 	}
 
+	/**
+	 * @param {HTMLElement} rootElement Родительский контейнер
+	 * @param {Object} location Объект локации (например, { params: { id: '1' } })
+	 */
 	constructor(rootElement, location) {
 		this.#parent = rootElement
 		this.#props = { ...this.#props, location }
 	}
 
+	/**
+	 * Шаблон страницы жанра.
+	 * @returns {string} HTML-код страницы
+	 */
 	get template() {
 		const location = {
 			title: this.#props.title,
@@ -25,10 +46,12 @@ export default class GenrePage {
 		return Handlebars.templates['genrePage.hbs'](location)
 	}
 
+	/** @returns {HTMLElement} Контейнер с фильмами */
 	get films() {
 		return this.#self.querySelector('.films')
 	}
 
+	/** @returns {HTMLElement|null} Сетка фильмов */
 	get grid() {
 		if (!this.#self) {
 			return null
@@ -36,6 +59,9 @@ export default class GenrePage {
 		return this.#self.querySelector('.grid')
 	}
 
+	/**
+	 * Рендер страницы: создаёт элемент, вставляет шаблон, подписывается на Redux
+	 */
 	render() {
 		this.#parent.innerHTML = ''
 		this.#self = document.createElement('div')
@@ -60,11 +86,19 @@ export default class GenrePage {
 		}
 	}
 
+	/**
+	 * Обработчик обновлений Redux.
+	 * Вызывается при изменении состояния.
+	 */
 	handleStoreUpdate = () => {
 		const state = store.getState().genre
 		this.update(state)
 	}
 
+	/**
+	 * Обновляет контент страницы при изменении состояния Redux.
+	 * @param {Object} state Состояние жанра из Redux
+	 */
 	update = state => {
 		if (state.genreLoading || state.genreFilmsLoading) {
 			return
@@ -94,6 +128,9 @@ export default class GenrePage {
 		})
 	}
 
+	/**
+	 * Очищает ресурсы страницы: отписка от Redux и сброс флага загрузки
+	 */
 	destroy() {
 		this.#unsubscribe?.()
 		this.#isLoaded = false
