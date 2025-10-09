@@ -8,7 +8,7 @@ export default class NotFoundPage extends Page {
 	 * @param {HTMLElement} rootElement Родительский элемент, в который рендерится страница.
 	 */
 	constructor(rootElement, location) {
-		super(rootElement, location, '404')
+		super(rootElement, location, 'notFoundPage')
 	}
 
 	/**

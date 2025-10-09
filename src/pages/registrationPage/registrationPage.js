@@ -1,5 +1,5 @@
 import registrationForm from '../../components/registrationForm/registrationForm.js'
-import { router } from '../../index.js'
+import router from '../../modules/router/index.js'
 import actions from '../../redux/features/user/actions.js'
 import {
 	selectError,

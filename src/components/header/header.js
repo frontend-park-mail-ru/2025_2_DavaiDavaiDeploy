@@ -1,4 +1,4 @@
-import { router } from '../../index.js'
+import router from '../../modules/router/index.js'
 import { selectUser } from '../../redux/features/user/selectors.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
