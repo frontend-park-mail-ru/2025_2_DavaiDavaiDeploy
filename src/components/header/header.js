@@ -1,6 +1,8 @@
 import { router } from '../../index.js'
+import { selectUser } from '../../redux/features/user/selectors.js'
 import { store } from '../../redux/store.js'
 import Component from '../core/baseComponent.js'
+
 export default class Header extends Component {
 	#unsubscribe
 
@@ -24,7 +26,7 @@ export default class Header extends Component {
 	}
 
 	rerender() {
-		const userState = store.getState().user.users
+		const userState = selectUser(store.getState())
 		if (userState.login) {
 			this.handleLogIn(userState)
 		} else {

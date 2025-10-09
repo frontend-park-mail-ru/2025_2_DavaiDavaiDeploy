@@ -1,6 +1,7 @@
 import FilmCard from '../../components/filmCard/filmCard.js'
 import { serverAddrForStatic } from '../../consts/serverAddr.js'
 import genreActions from '../../redux/features/genre/actions.js'
+import { selectGenreSection } from '../../redux/features/genre/selectors.js'
 import { store } from '../../redux/store.js'
 import Page from '../core/basePage.js'
 
@@ -54,7 +55,7 @@ export default class GenrePage extends Page {
 	 * Вызывается при изменении состояния.
 	 */
 	handleStoreUpdate = () => {
-		const state = store.getState().genre
+		const state = selectGenreSection(store.getState())
 		this.update(state)
 	}
 

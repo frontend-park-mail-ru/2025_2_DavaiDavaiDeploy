@@ -2,6 +2,7 @@ import Footer from '../../components/footer/footer.js'
 import Header from '../../components/header/header.js'
 import { normalize } from '../../helpers/normalizeHelper/normalizeHelper.js'
 import actions from '../../redux/features/user/actions.js'
+import { selectUser } from '../../redux/features/user/selectors.js'
 import { store } from '../../redux/store.js'
 
 /**
@@ -166,7 +167,7 @@ export class Router {
 	 * @private
 	 */
 	renderHeader = () => {
-		const userState = store.getState().user.users
+		const userState = selectUser(store.getState())
 		this.header = new Header(this.parent, {
 			avatar: './../../assets/img/1+1.webp',
 			login: userState.login,

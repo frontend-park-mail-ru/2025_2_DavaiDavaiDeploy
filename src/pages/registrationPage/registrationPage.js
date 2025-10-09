@@ -1,6 +1,10 @@
 import registrationForm from '../../components/registrationForm/registrationForm.js'
 import { router } from '../../index.js'
 import actions from '../../redux/features/user/actions.js'
+import {
+	selectError,
+	selectUserError,
+} from '../../redux/features/user/selectors.js'
 import { store } from '../../redux/store.js'
 import Page from '../core/basePage.js'
 
@@ -23,10 +27,10 @@ export default class RegistrationPage extends Page {
 	 * Обработчик изменения состояния
 	 */
 	handleStoreChange = () => {
-		if (!store.getState().user.users.error) {
+		if (!selectUserError(store.getState())) {
 			router.navigate('/')
 		} else {
-			alert('Произошла ошибка регистрации: ' + store.getState().user.error)
+			alert('Произошла ошибка регистрации: ' + selectError(store.getState()))
 		}
 		this.unsubscribe?.()
 	}

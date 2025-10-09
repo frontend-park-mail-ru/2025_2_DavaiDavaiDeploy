@@ -1,6 +1,10 @@
 import LoginForm from '../../components/loginForm/loginForm.js'
 import { router } from '../../index.js'
 import actions from '../../redux/features/user/actions.js'
+import {
+	selectError,
+	selectUserError,
+} from '../../redux/features/user/selectors.js'
 import { store } from '../../redux/store.js'
 import Page from '../core/basePage.js'
 
@@ -20,10 +24,10 @@ export default class LoginPage extends Page {
 	}
 
 	handleStoreChange = () => {
-		if (!store.getState().user.users.error) {
+		if (!selectUserError(store.getState())) {
 			router.navigate('/')
 		} else {
-			alert('Произошла ошибка ЛОГИНИЗАЦИИ: ' + store.getState().user.error)
+			alert('Произошла ошибка ЛОГИНИЗАЦИИ: ' + selectError(store.getState()))
 		}
 		this.unsubscribe?.()
 	}
