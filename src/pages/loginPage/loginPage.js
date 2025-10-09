@@ -2,74 +2,52 @@ import LoginForm from '../../components/loginForm/loginForm.js'
 import router from '../../modules/router/index.js'
 import actions from '../../redux/features/user/actions.js'
 import { store } from '../../redux/store.js'
+import Page from '../core/basePage.js'
 
 /**
  * Класс для отображения страницы входа.
  */
-export default class LoginPage {
-	#parent
-	#unsubscribe
-	#props = {
-		location: {},
-	}
-
+export default class LoginPage extends Page {
 	/**
 	 * @param {HTMLElement} rootElement - Родительский DOM-элемент.
 	 */
-	constructor(rootElement, params) {
-		this.#parent = rootElement
-		this.#props = { ...this.#props, location: { ...params } }
+	constructor(rootElement, location) {
+		super(rootElement, location, 'loginPage')
 	}
 
-	/**
-	 * Шаблон страницы входа.
-	 * @returns {string}
-	 */
-	get template() {
-		return Handlebars.templates[`loginPage.hbs`]({
-			text: 'Login',
-		})
-	}
-
-	#onSubmit = (login, password) => {
+	onSubmit = (login, password) => {
 		store.dispatch(actions.loginUserAction(login, password))
 	}
 
-	#handleStoreChange = () => {
+	handleStoreChange = () => {
 		if (!store.getState().user.users.error) {
 			router.navigate('/')
 		} else {
 			alert('Произошла ошибка ЛОГИНИЗАЦИИ: ' + store.getState().user.error)
 		}
-		this.#unsubscribe?.()
+		this.unsubscribe?.()
 	}
 
 	/**
 	 * Рендерит страницу входа и форму.
 	 */
-
 	render() {
-		this.#parent.innerHTML = ''
-		this.#parent.insertAdjacentHTML('afterbegin', this.template)
+		this.parent.innerHTML = ''
+		this.parent.insertAdjacentHTML(
+			'afterbegin',
+			this.template({
+				text: 'Login',
+			}),
+		)
 
 		const form = new LoginForm(
-			document.querySelector('#login-form-container'),
+			this.self.querySelector('#login-form-container'),
 			{
-				onSubmit: this.#onSubmit,
+				onSubmit: this.onSubmit,
 			},
 		)
 		form.render()
 
-		this.#unsubscribe = store.subscribe(this.#handleStoreChange)
-	}
-
-	/**
-	 * Очистка/отписка от событий (если реализовано).
-	 */
-	destroy() {
-		this.#unsubscribe?.()
-		if (this.#parent) {
-			this.#parent.innerHTML = ''
-		}
+		this.unsubscribe = store.subscribe(this.handleStoreChange)
 	}
 }
