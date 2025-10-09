@@ -9,43 +9,10 @@ class Router {
 		this.routes = {}
 
 		this.parent = null
-		this.lastPage = null
+		this.curPage = null
 		this.header = null
 
 		this.initEventListeners()
-	}
-
-	configurate = (routes, parent) => {
-		this.routes = new Proxy(routes, this.routesHandler)
-		this.parent = parent
-	}
-
-	routesHandler = {
-		get: (target, path) => {
-			for (const [key, route] of Object.entries(target)) {
-				const href = route.href
-				const escapedPattern = href.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
-
-				const pattern = escapedPattern.replace(/:\w+/g, '([^/]+)')
-				const regex = new RegExp(`^${pattern}$`)
-				const match = path.match(regex)
-
-				if (match) {
-					const params = {}
-					const paramNames = href.match(/:(\w+)/g)
-
-					if (paramNames) {
-						paramNames.forEach((paramName, index) => {
-							const cleanParamName = paramName.slice(1)
-							params[cleanParamName] = match[index + 1]
-						})
-					}
-
-					return { route: target[key], params }
-				}
-			}
-			return { route: target['error404'] || null, params: {} }
-		},
 	}
 
 	initEventListeners = () => {
@@ -54,8 +21,7 @@ class Router {
 	}
 
 	handlePopState = () => {
-		const path = window.location.pathname
-		this.navigate(path, {}, false)
+		this.navigate(window.location.pathname, {}, false)
 	}
 
 	handleClick = event => {
@@ -66,17 +32,78 @@ class Router {
 			if (url.pathname === window.location.pathname) {
 				return
 			}
-			this.navigate(url.pathname)
+			this.navigate(url.pathname + url.search)
+		}
+	}
+
+	configurate = (routes, parent) => {
+		this.routes = new Proxy(routes, this.routesHandler)
+		this.parent = parent
+	}
+
+	routesHandler = {
+		get: (target, path) => {
+			for (const route of Object.values(target)) {
+				const href = route.href
+
+				const escapedPattern = href.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
+
+				const pattern = escapedPattern.replace(/:\w+/g, '([^/]+)')
+				const regex = new RegExp(`^${pattern}$`)
+				const match = path.match(regex)
+
+				if (match) {
+					const params = {}
+					const paramNames = [...href.matchAll(/:(\w+)/g)].map(m => m[1])
+
+					paramNames.forEach((name, i) => {
+						params[name] = match[i + 1]
+					})
+
+					return { route, params }
+				}
+			}
+			return { route: target['error404'], params: {} }
+		},
+	}
+
+	start = () => {
+		store.dispatch(actions.checkUserAction())
+		this.navigate(window.location.pathname)
+	}
+
+	navigate = (path, state = {}, addToHistory = true) => {
+		const normalizedPath = normalize(path)
+		const { route, params } = this.routes[normalizedPath]
+
+		const searchParams = new URLSearchParams(window.location.search)
+		const search = Object.fromEntries(searchParams.entries())
+
+		if (addToHistory) {
+			window.history.pushState({ normalizedPath }, '', normalizedPath)
+		}
+
+		this.clearLayout()
+
+		if (route.hasHeader !== false) {
+			this.renderHeader()
+		}
+
+		this.renderContent(route, normalizedPath, params, search, state)
+
+		if (route.hasFooter !== false) {
+			this.renderFooter()
 		}
 	}
 
 	clearLayout = () => {
+		this.header?.destroy()
+		this.curPage?.destroy()
+
 		const oldContent = this.parent.querySelector('.content')
 		if (oldContent) {
 			oldContent.remove()
 		}
-
-		this.header?.destroy()
 
 		const oldFooter = document.querySelector('#footer')
 		if (oldFooter) {
@@ -97,54 +124,27 @@ class Router {
 		this.header.render()
 	}
 
-	renderFooter = () => {
-		const footer = new Footer(this.parent)
-		footer.render()
-	}
-
-	renderContent = (route, params, state, normalizedPath) => {
+	renderContent = (route, normalizedPath, params, search, state) => {
 		const contentContainer = document.createElement('div')
 		contentContainer.className = 'content'
 		this.parent.appendChild(contentContainer)
 
-		this.lastPage?.destroy()
-
 		const location = {
 			pathname: normalizedPath,
 			params,
+			search,
 			state,
 		}
 
 		let page = new route.component(contentContainer, location)
 
 		page.render()
-		this.lastPage = page
+		this.curPage = page
 	}
 
-	navigate = (path, state, addToHistory = true) => {
-		let normalizedPath = normalize(path)
-		let { route, params } = this.routes[normalizedPath]
-
-		if (addToHistory) {
-			window.history.pushState({ normalizedPath }, '', normalizedPath)
-		}
-
-		this.clearLayout()
-
-		if (route.hasHeader !== false) {
-			this.renderHeader()
-		}
-
-		this.renderContent(route, params, state, normalizedPath)
-
-		if (route.hasFooter !== false) {
-			this.renderFooter()
-		}
-	}
-
-	start = () => {
-		store.dispatch(actions.checkUserAction())
-		this.navigate(window.location.pathname)
+	renderFooter = () => {
+		const footer = new Footer(this.parent)
+		footer.render()
 	}
 }
 
