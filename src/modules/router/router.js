@@ -21,7 +21,7 @@ class Router {
 	}
 
 	handlePopState = () => {
-		this.navigate(window.location.pathname, {}, false)
+		this.navigate(window.location.pathname + window.location.search, {}, false)
 	}
 
 	handleClick = event => {
@@ -69,29 +69,31 @@ class Router {
 
 	start = () => {
 		store.dispatch(actions.checkUserAction())
-		this.navigate(window.location.pathname)
+		this.navigate(window.location.pathname + window.location.search)
 	}
 
 	navigate = (path, state = {}, addToHistory = true) => {
 		const normalizedPath = normalize(path)
-		const { route, params } = this.routes[normalizedPath]
+		const [pathname, queryString] = normalizedPath.split('?')
 
-		const searchParams = new URLSearchParams(window.location.search)
+		const { route, params } = this.routes[pathname]
+
+		const searchParams = new URLSearchParams(queryString)
 		const search = Object.fromEntries(searchParams.entries())
 
 		if (addToHistory) {
-			window.history.pushState({ normalizedPath }, '', normalizedPath)
+			window.history.pushState({ normalizedPath, state }, '', normalizedPath)
 		}
 
 		this.clearLayout()
 
-		if (route.hasHeader !== false) {
+		if (route?.hasHeader !== false) {
 			this.renderHeader()
 		}
 
 		this.renderContent(route, normalizedPath, params, search, state)
 
-		if (route.hasFooter !== false) {
+		if (route?.hasFooter !== false) {
 			this.renderFooter()
 		}
 	}
