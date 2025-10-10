@@ -47,12 +47,10 @@ export default class CardGrid extends Component {
 
 		this.loadMoreFilms(this.#cardsPerRow * UPLOADING_ROWS_COUNT)
 
-		this.#throttledScrollHandler = throttle(this.updateViewport, THROTTLE_DELAY)
 		this.#throttledResizeHandler = throttle(this.calculate, THROTTLE_DELAY)
-		window.addEventListener('scroll', this.#throttledScrollHandler)
 		window.addEventListener('resize', this.#throttledResizeHandler)
 
-		// this.tick()
+		addEventListener('DOMContentLoaded', this.tick())
 	}
 
 	handleStoreUpdate = () => {
@@ -64,6 +62,7 @@ export default class CardGrid extends Component {
 		if (this.#uploadAllFilms) {
 			return
 		}
+
 		store.dispatch(filmActions.getFilmsAction(count, this.#offset))
 		this.#offset += count
 	}
@@ -86,7 +85,6 @@ export default class CardGrid extends Component {
 	calculate = () => {
 		this.#cardsPerRow = getGridColumnCount(this.grid)
 		this.#windowHeight = window.innerHeight
-		this.updateViewport()
 	}
 
 	updateViewport = () => {
@@ -106,7 +104,7 @@ export default class CardGrid extends Component {
 	getVisibleCards = () => {
 		const cardHeight = this.grid.querySelector('.film-card')
 			? this.grid.querySelector('.film-card').offsetHeight
-			: '300'
+			: '700'
 
 		const cardsPerRow = this.#cardsPerRow
 
@@ -116,7 +114,7 @@ export default class CardGrid extends Component {
 		const viewportBottom = scrollTop + this.#windowHeight
 		const isGridVisible = viewportBottom >= gridTop
 
-		if (!isGridVisible) {
+		if (!isGridVisible || cardHeight === '700') {
 			return { startIndex: 0, endIndex: cardsPerRow * 1 }
 		}
 
@@ -142,6 +140,7 @@ export default class CardGrid extends Component {
 		if (endIndex > length) {
 			endIndex = length
 			startIndex = Math.max(0, endIndex - rowsInViewPort * cardsPerRow)
+
 			this.loadMoreFilms(cardsPerRow * UPLOADING_ROWS_COUNT)
 		}
 
@@ -181,6 +180,9 @@ export default class CardGrid extends Component {
 
 	destroy() {
 		this.#unsubscribe?.()
+
+		window.removeEventListener('scroll', this.#throttledScrollHandler)
+		window.removeEventListener('resize', this.#throttledResizeHandler)
 
 		store.dispatch(filmActions.clearFilmsAction())
 

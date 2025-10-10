@@ -40,7 +40,6 @@ const filmReducer = (state = initialState, action) => {
 			}
 		case types.FILMS_CLEAR:
 			return {
-				...state,
 				films: [],
 				error: null,
 				loading: false,
