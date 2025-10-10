@@ -22,6 +22,7 @@ export default class CardGrid extends Component {
 	#cards = {}
 	#throttledScrollHandler
 	#throttledResizeHandler
+	#animationFrameId = null
 
 	#cardsPerRow
 	#windowHeight
@@ -50,7 +51,7 @@ export default class CardGrid extends Component {
 		this.#throttledResizeHandler = throttle(this.calculate, THROTTLE_DELAY)
 		window.addEventListener('resize', this.#throttledResizeHandler)
 
-		addEventListener('DOMContentLoaded', this.tick())
+		this.tick()
 	}
 
 	handleStoreUpdate = () => {
@@ -78,7 +79,7 @@ export default class CardGrid extends Component {
 	}
 
 	tick = () => {
-		requestAnimationFrame(this.tick)
+		this.#animationFrameId = requestAnimationFrame(this.tick)
 		this.updateViewport()
 	}
 
@@ -184,9 +185,13 @@ export default class CardGrid extends Component {
 		window.removeEventListener('resize', this.#throttledResizeHandler)
 
 		store.dispatch(filmActions.clearFilmsAction())
+		this.#uploadAllFilms = false
 
 		if (this.self) {
 			this.self.innerHTML = ''
 		}
+
+		cancelAnimationFrame(this.#animationFrameId)
+		this.#animationFrameId = null
 	}
 }
