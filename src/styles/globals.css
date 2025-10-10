@@ -29,7 +29,7 @@ html {
 }
 
 h1 {
-	font-size: 3rem;
+	font-size: clamp(1rem, 3rem, 5rem);
 	color: var(--color-white);
 }
 

@@ -156,7 +156,9 @@ export default class CardGrid extends Component {
 			rating: film.rating,
 		})
 		this.#cards[film.id] = filmCard
-		filmCard.render()
+		if (film.title !== 'Побег из Шоушенка') {
+			filmCard.render()
+		}
 	}
 
 	getVisibleCards = () => {
