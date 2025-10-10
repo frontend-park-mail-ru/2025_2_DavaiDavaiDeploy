@@ -17,7 +17,7 @@ class Counter extends Component {
         {
           on: {click: this.increment},
         },
-        [hString('Increment')],
+        ['Increment'],
       ),
     ]);
   }
