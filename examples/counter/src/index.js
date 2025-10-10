@@ -1,7 +1,7 @@
 import {hFragment, h} from '../../../lib/src/h.js';
 import {Component} from '../../../lib/src/component.js';
 
-class MyComponent extends Component {
+class Counter extends Component {
   state = {
     count: 0,
   };
@@ -24,6 +24,19 @@ class MyComponent extends Component {
   }
 }
 
-const props = {initialCount: 10};
-const counter = new MyComponent(props);
-counter.mount(document.body);
+class Header extends Component {
+  render() {
+    return h('p', {}, ['Welcome to the best counter']);
+  }
+}
+
+class Page extends Component {
+  render() {
+    return hFragment([h(Header), h(Counter)]);
+  }
+}
+
+// const props = {initialCount: 10};
+const page = new Page();
+
+page.mount(document.body);
