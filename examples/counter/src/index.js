@@ -1,5 +1,4 @@
-import {hFragment, h} from '../../../lib/src/h.js';
-import {Component} from '../../../lib/src/component.js';
+import {hFragment, h, hString, Component} from '../../../lib/dist/react.js';
 
 class Counter extends Component {
   state = {
@@ -18,7 +17,7 @@ class Counter extends Component {
         {
           on: {click: this.increment},
         },
-        ['Increment'],
+        [hString('Increment')],
       ),
     ]);
   }
@@ -26,7 +25,7 @@ class Counter extends Component {
 
 class Header extends Component {
   render() {
-    return h('p', {}, ['Welcome to the best counter']);
+    return hString('Welcome to the best counter');
   }
 }
 
