@@ -174,7 +174,6 @@ export default class CardGrid extends Component {
 			return
 		}
 		const placeholder = new FilmCardPlaceholder(filmCard)
-		filmCard.innerHTML = ''
 		placeholder.render()
 	}
 
