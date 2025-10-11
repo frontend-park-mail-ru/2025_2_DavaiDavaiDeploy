@@ -1,3 +1,4 @@
+import { mergeUniqueFilms } from '../../../helpers/mergeUniqueFilmsHelper/mergeUniqueFilmsHelper.js'
 import types from './types.js'
 
 /**
@@ -30,7 +31,7 @@ const filmReducer = (state = initialState, action) => {
 			return {
 				...state,
 				loading: false,
-				films: [...state.films, ...payload.films],
+				films: mergeUniqueFilms(state.films, payload.films),
 			}
 		case types.FILMS_ERROR:
 			return {

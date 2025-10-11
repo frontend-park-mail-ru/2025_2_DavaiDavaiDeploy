@@ -22,6 +22,7 @@ export default defineConfig([
 			'compat/compat': 'error',
 			'no-console': 'error',
 			'no-multiple-empty-lines': 'error',
+			'no-useless-return': 'error',
 		},
 		ignores: [
 			'node_modules/',
