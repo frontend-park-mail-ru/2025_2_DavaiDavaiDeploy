@@ -19,7 +19,6 @@ export default class CardGrid extends Component {
 	#offset = 0
 	#uploadAllFilms = false
 	#throttledIntersectHandler
-	#receivedFilms = new Set()
 	#observer
 
 	constructor(parent, props = {}) {
@@ -88,9 +87,6 @@ export default class CardGrid extends Component {
 	}
 
 	renderFilm = film => {
-		if (this.#receivedFilms.has(film.id)) {
-			return
-		}
 		const filmCard = new FilmCard(this.grid, {
 			id: film.id,
 			image: `${serverAddrForStatic}${film.icon}`,
@@ -98,7 +94,6 @@ export default class CardGrid extends Component {
 			info: `${film.genres[0].title}, ${film.year}`,
 			rating: film.rating,
 		})
-		this.#receivedFilms.add(film.id)
 		filmCard.render()
 	}
 
