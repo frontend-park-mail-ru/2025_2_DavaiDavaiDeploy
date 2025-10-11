@@ -48,7 +48,15 @@ export default class CardGrid extends Component {
 
 		this.loadMoreFilms(this.#cardsPerRow * UPLOADING_ROWS_COUNT)
 
-		this.#throttledResizeHandler = throttle(this.calculate, THROTTLE_DELAY)
+		// this.#throttledResizeHandler = throttle(this.calculate, THROTTLE_DELAY)
+		// window.addEventListener('resize', this.#throttledResizeHandler)
+
+		this.#throttledResizeHandler = throttle(() => {
+			requestAnimationFrame(() => {
+				this.calculate()
+			})
+		}, THROTTLE_DELAY)
+
 		window.addEventListener('resize', this.#throttledResizeHandler)
 
 		this.tick()
@@ -84,8 +92,26 @@ export default class CardGrid extends Component {
 	}
 
 	calculate = () => {
+		const card = Array.from(document.querySelectorAll('.film-card')).find(
+			el => !el.querySelector('.placeholder'),
+		)
+
+		if (!card) {
+			this.#cardsPerRow = getGridColumnCount(this.grid)
+			this.#windowHeight = window.innerHeight
+			return
+		}
+
+		const cardWidth = card.offsetWidth
+		const cardHeight = card.offsetHeight
+
+		for (const card of Object.values(this.#cards)) {
+			card.resizePlaceholder(cardWidth, cardHeight)
+		}
+
 		this.#cardsPerRow = getGridColumnCount(this.grid)
 		this.#windowHeight = window.innerHeight
+		this.updateViewport()
 	}
 
 	updateViewport = () => {
@@ -107,6 +133,7 @@ export default class CardGrid extends Component {
 			? this.grid.querySelector('.film-card').offsetHeight
 			: '700'
 
+		this.#cardsPerRow = getGridColumnCount(this.grid)
 		const cardsPerRow = this.#cardsPerRow
 
 		const gridRect = this.grid.getBoundingClientRect()
@@ -119,13 +146,13 @@ export default class CardGrid extends Component {
 			return { startIndex: 0, endIndex: cardsPerRow * 1 }
 		}
 
-		const invisibleTopHeight = Math.max(0, scrollTop - gridTop)
+		const invisibleTopHeight = Math.abs(gridRect.top)
 		const rowsBeforeStart = Math.max(
 			Math.trunc(invisibleTopHeight / cardHeight) - ROWS_IN_BUFFER,
 			0,
 		)
 
-		let visibleRows = Math.ceil(this.#windowHeight / cardHeight)
+		let visibleRows = Math.ceil(window.innerHeight / cardHeight)
 
 		if (gridRect.top > 0) {
 			visibleRows = Math.ceil((this.#windowHeight - gridRect.top) / cardHeight)
@@ -150,19 +177,23 @@ export default class CardGrid extends Component {
 
 	renderFilm = film => {
 		const card = this.#cards[film.id]
-		if (card) {
+		if (!card) {
+			const filmCard = new FilmCard(this.grid, {
+				id: film.id,
+				image: `${serverAddrForStatic}${film.icon}`,
+				title: film.title,
+				info: `${film.genres[0].title}, ${film.year}`,
+				rating: film.rating,
+			})
+			this.#cards[film.id] = filmCard
+			filmCard.render()
+			return
+		}
+		const placeholder = card.self.querySelector('.placeholder')
+		if (placeholder) {
 			card.rerender()
 			return
 		}
-		const filmCard = new FilmCard(this.grid, {
-			id: film.id,
-			image: `${serverAddrForStatic}${film.icon}`,
-			title: film.title,
-			info: `${film.genres[0].title}, ${film.year}`,
-			rating: film.rating,
-		})
-		this.#cards[film.id] = filmCard
-		filmCard.render()
 	}
 
 	replaceFilm = film => {

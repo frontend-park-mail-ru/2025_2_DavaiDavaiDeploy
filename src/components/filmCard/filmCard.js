@@ -60,4 +60,13 @@ export default class FilmCard extends Component {
 		}
 		this.self.outerHTML = this.html(context)
 	}
+
+	resizePlaceholder(width, height) {
+		const placeholder = this.self.querySelector('.placeholder')
+		if (!placeholder) {
+			return
+		}
+		placeholder.style.width = width
+		placeholder.style.height = height
+	}
 }
