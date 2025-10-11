@@ -12,7 +12,7 @@ import Component from '../core/baseComponent.js'
 
 const UPLOADING_ROWS_COUNT = 3
 const THROTTLE_DELAY = 100
-const ROOTMARGIN = '500px'
+const ROOT_MARGIN = '500px'
 
 export default class CardGrid extends Component {
 	#unsubscribe
@@ -20,6 +20,7 @@ export default class CardGrid extends Component {
 	#uploadAllFilms = false
 	#throttledIntersectHandler
 	#receivedFilms = new Set()
+	#observer
 
 	constructor(parent, props = {}) {
 		super(parent, props, 'cardGrid')
@@ -47,10 +48,11 @@ export default class CardGrid extends Component {
 			THROTTLE_DELAY,
 		)
 
-		const observer = new IntersectionObserver(this.#throttledIntersectHandler, {
-			rootMargin: ROOTMARGIN,
+		this.#observer = new IntersectionObserver(this.#throttledIntersectHandler, {
+			rootMargin: ROOT_MARGIN,
 		})
-		observer.observe(this.trigger)
+
+		this.#observer.observe(this.trigger)
 	}
 
 	handleIntersect = () => {
@@ -105,6 +107,8 @@ export default class CardGrid extends Component {
 
 		store.dispatch(filmActions.clearFilmsAction())
 		this.#uploadAllFilms = false
+
+		this.#observer.unobserve(this.trigger)
 
 		if (this.self) {
 			this.self.innerHTML = ''
