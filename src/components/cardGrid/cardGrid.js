@@ -77,7 +77,6 @@ export default class CardGrid extends Component {
 		}
 		if (state.error) {
 			this.#uploadAllFilms = true
-			return
 		}
 	}
 
@@ -186,7 +185,6 @@ export default class CardGrid extends Component {
 		const placeholder = card.self.querySelector('.placeholder')
 		if (placeholder) {
 			card.rerender()
-			return
 		}
 	}
 
