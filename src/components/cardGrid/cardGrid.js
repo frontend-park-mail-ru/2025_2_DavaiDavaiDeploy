@@ -20,12 +20,9 @@ export default class CardGrid extends Component {
 	#offset = 0
 	#uploadAllFilms = false
 	#cards = {}
-	#throttledScrollHandler
+	#windowHeight
 	#throttledResizeHandler
 	#animationFrameId = null
-
-	#cardsPerRow
-	#windowHeight
 
 	constructor(parent, props = {}) {
 		super(parent, props, 'cardGrid')
@@ -44,22 +41,20 @@ export default class CardGrid extends Component {
 
 		this.#unsubscribe = store.subscribe(this.handleStoreUpdate)
 
-		this.calculate()
+		this.handleResize()
 
-		this.loadMoreFilms(this.#cardsPerRow * UPLOADING_ROWS_COUNT)
-
-		// this.#throttledResizeHandler = throttle(this.calculate, THROTTLE_DELAY)
-		// window.addEventListener('resize', this.#throttledResizeHandler)
+		const cardsPerRow = getGridColumnCount(this.grid)
+		this.loadMoreFilms(cardsPerRow * UPLOADING_ROWS_COUNT)
 
 		this.#throttledResizeHandler = throttle(() => {
 			requestAnimationFrame(() => {
-				this.calculate()
+				this.handleResize()
 			})
 		}, THROTTLE_DELAY)
 
 		window.addEventListener('resize', this.#throttledResizeHandler)
 
-		this.tick()
+		this.update()
 	}
 
 	handleStoreUpdate = () => {
@@ -86,19 +81,19 @@ export default class CardGrid extends Component {
 		}
 	}
 
-	tick = () => {
-		this.#animationFrameId = requestAnimationFrame(this.tick)
+	update = () => {
+		this.#animationFrameId = requestAnimationFrame(this.update)
 		this.updateViewport()
 	}
 
-	calculate = () => {
+	handleResize = () => {
+		this.#windowHeight = window.innerHeight
+
 		const card = Array.from(document.querySelectorAll('.film-card')).find(
 			el => !el.querySelector('.placeholder'),
 		)
 
 		if (!card) {
-			this.#cardsPerRow = getGridColumnCount(this.grid)
-			this.#windowHeight = window.innerHeight
 			return
 		}
 
@@ -109,8 +104,6 @@ export default class CardGrid extends Component {
 			card.resizePlaceholder(cardWidth, cardHeight)
 		}
 
-		this.#cardsPerRow = getGridColumnCount(this.grid)
-		this.#windowHeight = window.innerHeight
 		this.updateViewport()
 	}
 
@@ -129,34 +122,35 @@ export default class CardGrid extends Component {
 	}
 
 	getVisibleCards = () => {
-		const cardHeight = this.grid.querySelector('.film-card')
-			? this.grid.querySelector('.film-card').offsetHeight
-			: '700'
+		const cardsPerRow = getGridColumnCount(this.grid)
+		const card = this.grid.querySelector('.film-card')
 
-		this.#cardsPerRow = getGridColumnCount(this.grid)
-		const cardsPerRow = this.#cardsPerRow
-
-		const gridRect = this.grid.getBoundingClientRect()
-		const scrollTop = window.scrollY
-		const gridTop = gridRect.top + scrollTop
-		const viewportBottom = scrollTop + this.#windowHeight
-		const isGridVisible = viewportBottom >= gridTop
-
-		if (!isGridVisible || cardHeight === '700') {
-			return { startIndex: 0, endIndex: cardsPerRow * 1 }
+		if (!card) {
+			return { startIndex: 0, endIndex: cardsPerRow }
 		}
 
-		const invisibleTopHeight = Math.abs(gridRect.top)
+		const cardHeight = this.grid.querySelector('.film-card').offsetHeight
+
+		const gridRect = this.grid.getBoundingClientRect()
+		const gridRectTop = gridRect.top
+
+		if (this.#windowHeight < gridRectTop) {
+			return { startIndex: 0, endIndex: cardsPerRow }
+		}
+
+		let invisibleTopHeight = Math.abs(gridRectTop)
+		let visibleRows = Math.ceil(window.innerHeight / cardHeight)
+
+		if (gridRectTop >= 0) {
+			invisibleTopHeight = 0
+			visibleRows = Math.ceil((this.#windowHeight - gridRectTop) / cardHeight)
+		}
+
 		const rowsBeforeStart = Math.max(
 			Math.trunc(invisibleTopHeight / cardHeight) - ROWS_IN_BUFFER,
 			0,
 		)
 
-		let visibleRows = Math.ceil(window.innerHeight / cardHeight)
-
-		if (gridRect.top > 0) {
-			visibleRows = Math.ceil((this.#windowHeight - gridRect.top) / cardHeight)
-		}
 		const rowsInViewPort = visibleRows + 2 * ROWS_IN_BUFFER
 
 		let startIndex = rowsBeforeStart * cardsPerRow
@@ -212,7 +206,6 @@ export default class CardGrid extends Component {
 	destroy() {
 		this.#unsubscribe?.()
 
-		window.removeEventListener('scroll', this.#throttledScrollHandler)
 		window.removeEventListener('resize', this.#throttledResizeHandler)
 
 		store.dispatch(filmActions.clearFilmsAction())
