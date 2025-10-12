@@ -2,19 +2,15 @@ import {hFragment, h, hString, Component} from '../../../lib/dist/react.js';
 
 class Counter extends Component {
   state = {
-    count: 0,
+    isShown: true,
   };
 
-  increment() {
-    this.setState({count: this.state.count + 1});
-  }
-
-  delete() {
-    this.unmount();
+  toggleVisibility() {
+    this.setState({isShown: !this.state.isShown});
   }
 
   onWillUnmount() {
-    console.log('Counter will unmount, current state is ' + this.state.count);
+    console.log('Counter will unmount, current state is ' + this.props.count);
   }
 
   onUnmount() {
@@ -22,25 +18,27 @@ class Counter extends Component {
   }
 
   onUpdate() {
-    console.log('Counter updated, new state is ' + this.state.count);
+    console.log('Counter updated, new state is ' + this.props.count);
   }
 
   render() {
-    return hFragment([
-      h('p', {}, [`Count: ${this.state.count}`]),
+    return h('div', {}, [
+      this.state.isShown ? h('p', {}, [`Count: ${this.props.count}`]) : null,
+      this.state.isShown
+        ? h(
+            'button',
+            {
+              on: {click: this.props.onIncrement},
+            },
+            ['Increment'],
+          )
+        : null,
       h(
         'button',
         {
-          on: {click: this.increment},
+          on: {click: this.toggleVisibility},
         },
-        ['Increment'],
-      ),
-      h(
-        'button',
-        {
-          on: {click: this.delete},
-        },
-        ['delete counter'],
+        ['toggle visibility'],
       ),
     ]);
   }
@@ -59,8 +57,20 @@ class Header extends Component {
 }
 
 class Page extends Component {
+  state = {
+    count: 0,
+  };
+
+  increment = () => {
+    this.setState({count: this.state.count + 1});
+  };
+
   render() {
-    return hFragment([h(Header), h(Counter, {key: 1}), h(Counter, {key: 2})]);
+    return hFragment([
+      h(Header),
+      h(Counter, {key: 1, onIncrement: this.increment, count: this.state.count}),
+      h(Counter, {key: 2, onIncrement: this.increment, count: this.state.count}),
+    ]);
   }
 }
 
