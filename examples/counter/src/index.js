@@ -9,6 +9,10 @@ class Counter extends Component {
     this.setState({count: this.state.count + 1});
   }
 
+  onWillUnmount(){
+    console.log('Counter will unmount, current state is ' + this.state.count);
+  }
+
   onUpdate() {
     console.log('Counter updated, new state is ' + this.state.count);
   }
