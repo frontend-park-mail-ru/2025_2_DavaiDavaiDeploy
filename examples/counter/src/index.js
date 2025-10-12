@@ -31,7 +31,7 @@ class Header extends Component {
 
 class Page extends Component {
   render() {
-    return hFragment([h(Header), h(Counter)]);
+    return hFragment([h(Header), h(Counter, {key: 1}), h(Counter, {key: 2})]);
   }
 }
 
