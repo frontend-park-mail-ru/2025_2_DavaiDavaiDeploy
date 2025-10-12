@@ -1,14 +1,6 @@
 import {hFragment, h, hString, Component} from '../../../lib/dist/react.js';
 
 class Counter extends Component {
-  state = {
-    isShown: true,
-  };
-
-  toggleVisibility() {
-    this.setState({isShown: !this.state.isShown});
-  }
-
   onWillUnmount() {
     console.log('Counter will unmount, current state is ' + this.props.count);
   }
@@ -23,8 +15,8 @@ class Counter extends Component {
 
   render() {
     return h('div', {}, [
-      this.state.isShown ? h('p', {}, [`Count: ${this.props.count}`]) : null,
-      this.state.isShown
+      this.props.isShown ? h('p', {}, [`Count: ${this.props.count}`]) : null,
+      this.props.isShown
         ? h(
             'button',
             {
@@ -36,7 +28,7 @@ class Counter extends Component {
       h(
         'button',
         {
-          on: {click: this.toggleVisibility},
+          on: {click: this.props.onToggleVisibility},
         },
         ['toggle visibility'],
       ),
@@ -59,7 +51,13 @@ class Header extends Component {
 class Page extends Component {
   state = {
     count: 0,
+    firstCounterShown: true,
+    secondCounterShown: true,
   };
+
+  toggleVisibility(counter) {
+    this.setState({[counter]: !this.state[counter]});
+  }
 
   increment = () => {
     this.setState({count: this.state.count + 1});
@@ -68,8 +66,20 @@ class Page extends Component {
   render() {
     return hFragment([
       h(Header),
-      h(Counter, {key: 1, onIncrement: this.increment, count: this.state.count}),
-      h(Counter, {key: 2, onIncrement: this.increment, count: this.state.count}),
+      h(Counter, {
+        key: 1,
+        onIncrement: this.increment,
+        count: this.state.count,
+        isShown: this.state.firstCounterShown,
+        onToggleVisibility: () => this.toggleVisibility('firstCounterShown'),
+      }),
+      h(Counter, {
+        key: 2,
+        onIncrement: this.increment,
+        count: this.state.count,
+        isShown: this.state.secondCounterShown,
+        onToggleVisibility: () => this.toggleVisibility('secondCounterShown'),
+      }),
     ]);
   }
 }
