@@ -15,16 +15,14 @@ class Counter extends Component {
 
   render() {
     return h('div', {}, [
-      this.props.isShown ? h('p', {}, [`Count: ${this.props.count}`]) : null,
-      this.props.isShown
-        ? h(
-            'button',
-            {
-              on: {click: this.props.onIncrement},
-            },
-            ['Increment'],
-          )
-        : null,
+      h('p', {}, [`Count: ${this.props.count}`]),
+      h(
+        'button',
+        {
+          on: {click: this.props.onIncrement},
+        },
+        ['Increment'],
+      ),
       h(
         'button',
         {
@@ -66,20 +64,22 @@ class Page extends Component {
   render() {
     return hFragment([
       h(Header),
-      h(Counter, {
-        key: 1,
-        onIncrement: this.increment,
-        count: this.state.count,
-        isShown: this.state.firstCounterShown,
-        onToggleVisibility: () => this.toggleVisibility('firstCounterShown'),
-      }),
-      h(Counter, {
-        key: 2,
-        onIncrement: this.increment,
-        count: this.state.count,
-        isShown: this.state.secondCounterShown,
-        onToggleVisibility: () => this.toggleVisibility('secondCounterShown'),
-      }),
+      this.state.firstCounterShown
+        ? h(Counter, {
+            key: 1,
+            onIncrement: this.increment,
+            count: this.state.count,
+            onToggleVisibility: () => this.toggleVisibility('firstCounterShown'),
+          })
+        : null,
+      this.state.secondCounterShown
+        ? h(Counter, {
+            key: 2,
+            onIncrement: this.increment,
+            count: this.state.count,
+            onToggleVisibility: () => this.toggleVisibility('secondCounterShown'),
+          })
+        : null,
     ]);
   }
 }
