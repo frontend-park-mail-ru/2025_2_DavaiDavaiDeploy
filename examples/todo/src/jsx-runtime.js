@@ -1,37 +1,50 @@
 // src/jsx-runtime.js
 import {h, hFragment} from '../../../lib/dist/react.js';
 
-export function jsx(tag, props, key) {
-  if (tag === Symbol.for('react.fragment')) {
-    return hFragment(props.children || []);
+export const Fragment = Symbol('Fragment');
+
+export function jsx(tag, props, ...children) {
+  if (tag === Fragment) {
+    return hFragment(children.flat());
   }
 
-  const {children, ...otherProps} = props || {};
+  // Для компонентов передаем props как есть
+  if (typeof tag === 'function' || (typeof tag === 'object' && 'render' in tag)) {
+    const componentProps = {...props};
 
-  // Преобразуем события из camelCase в lowercase
+    // Добавляем children в props если они есть
+    if (children.length > 0) {
+      componentProps.children = children.flat().filter(child => child != null);
+    }
+
+    return h(tag, componentProps);
+  }
+
+  // Для DOM элементов обрабатываем события и атрибуты
   const events = {};
   const attributes = {};
 
-  Object.entries(otherProps).forEach(([key, value]) => {
-    if (key.startsWith('on') && typeof value === 'function') {
-      const eventName = key.slice(2).toLowerCase();
-      events[eventName] = value;
-    } else {
-      attributes[key] = value;
-    }
-  });
+  if (props) {
+    Object.entries(props).forEach(([key, value]) => {
+      if (key.startsWith('on') && typeof value === 'function') {
+        const eventName = key.slice(2).toLowerCase();
+        events[eventName] = value;
+      } else if (key === 'className') {
+        attributes['class'] = value;
+      } else if (key === 'style' && typeof value === 'object') {
+        attributes['style'] = value;
+      } else if (key !== 'children' && key !== 'key') {
+        attributes[key] = value;
+      }
+    });
+  }
 
-  const allChildren = Array.isArray(children) ? children : children ? [children] : [];
+  const flatChildren = children.flat().filter(child => child != null);
 
-  return h(tag, {...attributes, on: events, key}, allChildren);
+  return h(tag, {...attributes, on: events}, flatChildren);
 }
 
-export function jsxs(tag, props, key) {
-  return jsx(tag, props, key);
+// Алиас для jsxs (для фрагментов с несколькими детьми)
+export function jsxs(tag, props, ...children) {
+  return jsx(tag, props, ...children);
 }
-
-export function jsxDEV(tag, props, key) {
-  return jsx(tag, props, key);
-}
-
-export const Fragment = Symbol.for('react.fragment');

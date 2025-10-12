@@ -1,52 +1,8 @@
 /** @jsx jsx */
 /** @jsxFrag Fragment */
 
-import {h, hFragment, Component} from '../../../lib/dist/react.js';
-
-// JSX factory функция
-function jsx(tag, props, ...children) {
-  if (tag === Fragment) {
-    return hFragment(children.flat());
-  }
-
-  // Для компонентов передаем props как есть
-  if (typeof tag === 'function' || (typeof tag === 'object' && 'render' in tag)) {
-    const componentProps = {...props};
-
-    // Добавляем children в props если они есть
-    if (children.length > 0) {
-      componentProps.children = children.flat().filter(child => child != null);
-    }
-
-    return h(tag, componentProps);
-  }
-
-  // Для DOM элементов обрабатываем события и атрибуты
-  const events = {};
-  const attributes = {};
-
-  if (props) {
-    Object.entries(props).forEach(([key, value]) => {
-      if (key.startsWith('on') && typeof value === 'function') {
-        const eventName = key.slice(2).toLowerCase();
-        events[eventName] = value;
-      } else if (key === 'className') {
-        attributes['class'] = value;
-      } else if (key === 'style' && typeof value === 'object') {
-        attributes['style'] = value;
-      } else if (key !== 'children' && key !== 'key') {
-        attributes[key] = value;
-      }
-    });
-  }
-
-  const flatChildren = children.flat().filter(child => child != null);
-
-  return h(tag, {...attributes, on: events}, flatChildren);
-}
-
-// Fragment символ
-const Fragment = Symbol('Fragment');
+import {Component} from '../../../lib/dist/react.js';
+import {jsx, Fragment} from './jsx-runtime.js';
 
 class TodoItem extends Component {
   render() {
@@ -71,14 +27,18 @@ class TodoEditingItem extends Component {
 
   handleKeyDown = event => {
     if (event.key === 'Enter') {
-      this.props.onSave(this.state.editingText);
+      if (this.state.editingText.length > 3) {
+        this.props.onSave(this.state.editingText);
+      }
     } else if (event.key === 'Escape') {
       this.props.onCancel();
     }
   };
 
   handleSave = () => {
-    this.props.onSave(this.state.editingText);
+    if (this.state.editingText.length > 3) {
+      this.props.onSave(this.state.editingText);
+    }
   };
 
   render() {
@@ -91,7 +51,9 @@ class TodoEditingItem extends Component {
           onInput={this.handleInputChange}
           onKeydown={this.handleKeyDown}
         />
-        <button onClick={this.handleSave}>✓</button>
+        <button disabled={this.state.editingText.length < 4} onClick={this.handleSave}>
+          ✓
+        </button>
         <button onClick={onCancel}>✗</button>
       </div>
     );
