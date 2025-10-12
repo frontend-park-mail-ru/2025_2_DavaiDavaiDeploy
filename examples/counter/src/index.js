@@ -9,8 +9,16 @@ class Counter extends Component {
     this.setState({count: this.state.count + 1});
   }
 
-  onWillUnmount(){
+  delete() {
+    this.unmount();
+  }
+
+  onWillUnmount() {
     console.log('Counter will unmount, current state is ' + this.state.count);
+  }
+
+  onUnmount() {
+    console.log('Set up a destruction, the order sucks');
   }
 
   onUpdate() {
@@ -26,6 +34,13 @@ class Counter extends Component {
           on: {click: this.increment},
         },
         ['Increment'],
+      ),
+      h(
+        'button',
+        {
+          on: {click: this.delete},
+        },
+        ['delete counter'],
       ),
     ]);
   }
