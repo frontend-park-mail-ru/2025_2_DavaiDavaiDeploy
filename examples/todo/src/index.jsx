@@ -82,8 +82,9 @@ class TodoEditingItem extends Component {
   };
 
   render() {
+    const {id, onCancel} = this.props;
     return (
-      <div key={this.props.id}>
+      <div key={id}>
         <input
           type='text'
           value={this.state.editingText}
@@ -91,7 +92,7 @@ class TodoEditingItem extends Component {
           onKeydown={this.handleKeyDown}
         />
         <button onClick={this.handleSave}>✓</button>
-        <button onClick={this.props.onCancel}>✗</button>
+        <button onClick={onCancel}>✗</button>
       </div>
     );
   }
@@ -126,7 +127,7 @@ class TodoApp extends Component {
     });
   };
 
-  startEditing = (id, text) => {
+  startEditing = id => {
     this.setState({
       editingId: id,
     });
@@ -163,7 +164,6 @@ class TodoApp extends Component {
     return (
       <Fragment>
         <h1>Simple Todo</h1>
-
         <div>
           <input
             type='text'
