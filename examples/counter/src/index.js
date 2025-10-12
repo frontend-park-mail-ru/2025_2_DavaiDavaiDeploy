@@ -9,6 +9,10 @@ class Counter extends Component {
     this.setState({count: this.state.count + 1});
   }
 
+  onUpdate() {
+    console.log('Counter updated, new state is ' + this.state.count);
+  }
+
   render() {
     return hFragment([
       h('p', {}, [`Count: ${this.state.count}`]),
@@ -24,6 +28,12 @@ class Counter extends Component {
 }
 
 class Header extends Component {
+  onMount() {
+    console.log('Header mounted');
+  }
+  onUnmount() {
+    console.log('Header unmounted');
+  }
   render() {
     return hString('Welcome to the best counter');
   }
