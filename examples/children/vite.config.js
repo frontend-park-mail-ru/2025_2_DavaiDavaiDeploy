@@ -1,11 +1,12 @@
 import {defineConfig} from 'vite';
 import {resolve} from 'path';
-import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [react()],
   esbuild: {
-    jsx: 'automatic',
+    jsx: 'transform',
+    jsxFactory: 'jsx',
+    jsxFragment: 'Fragment',
+    jsxInject: "import {jsx, Fragment} from '@lib/react.js'",
   },
   server: {
     port: 3000,
@@ -17,6 +18,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      '@lib': resolve(__dirname, '../../lib/dist'),
       '@src': resolve(__dirname, 'src'),
     },
   },
