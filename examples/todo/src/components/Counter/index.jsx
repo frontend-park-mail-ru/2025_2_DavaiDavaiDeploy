@@ -14,13 +14,12 @@ export class Counter extends Component {
   }
 
   render() {
-    const {count, onIncrement, onToggleVisibility} = this.props;
+    const {count, onIncrement} = this.props;
 
     return (
       <div>
         <p>Count: {count}</p>
         <button onClick={onIncrement}>Increment</button>
-        <button onClick={onToggleVisibility}>toggle visibility</button>
       </div>
     );
   }

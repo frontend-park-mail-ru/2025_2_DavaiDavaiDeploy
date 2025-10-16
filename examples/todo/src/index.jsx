@@ -109,7 +109,7 @@ class TodoApp extends Component {
             ),
           )}
         </div>
-        <Counter />
+        <Counter onIncrement={this.increment} count={this.state.count}  />
       </>
     );
   }
