@@ -58,7 +58,7 @@ class Page extends Component {
   }
 
   increment = () => {
-    this.setState((prev, props) => ({
+    this.setState((prev) => ({
       count: prev.count + 1,
     }));
   };
