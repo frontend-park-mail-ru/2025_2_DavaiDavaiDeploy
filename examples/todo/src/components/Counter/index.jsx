@@ -18,7 +18,7 @@ export class Counter extends Component {
 
     return (
       <div>
-        <p>Count: {count}</p>
+        <p>Count: {count.toString()}</p>
         <button onClick={onIncrement}>Increment</button>
       </div>
     );
