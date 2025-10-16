@@ -1,3 +1,5 @@
+import {Component} from '@lib/react.js';
+
 export class TodoItem extends Component {
   render() {
     const {todo, onDelete, onStartEditing} = this.props;

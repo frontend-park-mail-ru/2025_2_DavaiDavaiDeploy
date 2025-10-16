@@ -1,3 +1,5 @@
+import {Component} from '@lib/react.js';
+
 export class TodoEditingItem extends Component {
   state = {
     editingText: this.props.initialText,
@@ -31,7 +33,7 @@ export class TodoEditingItem extends Component {
           type='text'
           value={this.state.editingText}
           onInput={this.handleInputChange}
-          onKeydown={this.handleKeyDown}
+          onKeyDown={this.handleKeyDown}
         />
         <button disabled={this.state.editingText.length < 4} onClick={this.handleSave}>
           ✓

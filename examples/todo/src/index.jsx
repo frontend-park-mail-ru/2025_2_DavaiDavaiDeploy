@@ -1,5 +1,7 @@
-import {TodoItem} from './components/TodoItem/index.jsx';
-import {TodoEditingItem} from './components/TodoEditingItem/index.jsx';
+import {TodoItem} from './components/TodoItem';
+import {TodoEditingItem} from './components/TodoEditingItem';
+import {Component, createApp} from '@lib/react.js';
+
 class TodoApp extends Component {
   state = {
     todos: [],
@@ -72,7 +74,7 @@ class TodoApp extends Component {
             placeholder='What needs to be done?'
             value={this.state.inputValue}
             onInput={this.handleInputChange}
-            onKeypress={this.handleKeyPress}
+            onKeyDown={this.handleKeyPress}
           />
           <button onClick={this.addTodo} disabled={this.state.inputValue.length < 4}>
             Add
