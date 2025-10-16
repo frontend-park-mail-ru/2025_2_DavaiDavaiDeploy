@@ -1,8 +1,6 @@
-@use '@/styles/constants.css';
+@use './constants';
 
 * {
-	padding: 0;
-	margin: 0;
 	font-family: Rubik, Arial, sans-serif;
 	box-sizing: border-box;
 	font-weight: 400;
