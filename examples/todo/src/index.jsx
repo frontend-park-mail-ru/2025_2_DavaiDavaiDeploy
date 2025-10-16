@@ -1,12 +1,20 @@
 import {TodoItem} from './components/TodoItem';
 import {TodoEditingItem} from './components/TodoEditingItem';
 import {Component, createApp} from '@lib/react.js';
+import {Counter} from './components/Counter';
 
 class TodoApp extends Component {
   state = {
     todos: [],
+    count: 0,
     inputValue: '',
     editingId: null,
+  };
+
+  increment = () => {
+    this.setState(prev => ({
+      count: prev.count + 1,
+    }));
   };
 
   addTodo = () => {
@@ -101,6 +109,7 @@ class TodoApp extends Component {
             ),
           )}
         </div>
+        <Counter />
       </>
     );
   }

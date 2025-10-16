@@ -14,23 +14,15 @@ class Counter extends Component {
   }
 
   render() {
-    return h('div', {}, [
-      h('p', {}, [`Count: ${this.props.count}`]),
-      h(
-        'button',
-        {
-          on: {click: this.props.onIncrement},
-        },
-        ['Increment'],
-      ),
-      h(
-        'button',
-        {
-          on: {click: this.props.onToggleVisibility},
-        },
-        ['toggle visibility'],
-      ),
-    ]);
+    const {count, onIncrement, onToggleVisibility} = this.props;
+
+    return (
+      <div>
+        <p>Count: {count}</p>
+        <button onClick={onIncrement}>Increment</button>
+        <button onClick={onToggleVisibility}>toggle visibility</button>
+      </div>
+    );
   }
 }
 
@@ -58,7 +50,7 @@ class Page extends Component {
   }
 
   increment = () => {
-    this.setState((prev) => ({
+    this.setState(prev => ({
       count: prev.count + 1,
     }));
   };
