@@ -1,4 +1,4 @@
-import { serverAddr } from '../../consts/serverAddr.js'
+import { serverAddr } from '@/consts/serverAddr.js'
 import { HTTPClient } from './HTTPClient.js'
 
 const TIMEOUT = 1000

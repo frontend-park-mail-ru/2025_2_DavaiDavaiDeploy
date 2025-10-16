@@ -12,7 +12,6 @@ export default defineConfig([
 		languageOptions: {
 			globals: {
 				...globals.browser,
-				Handlebars: 'readonly',
 			},
 		},
 		rules: {
@@ -26,10 +25,10 @@ export default defineConfig([
 		},
 		ignores: [
 			'node_modules/',
-			'src/modules/handlebars/**',
 			'**/build/**',
 			'.template-lintrc.js',
 			'.lintstagedrc.js',
+			'dist/',
 		],
 	},
 ])

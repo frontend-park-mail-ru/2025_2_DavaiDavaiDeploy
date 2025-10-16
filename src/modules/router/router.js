@@ -1,9 +1,9 @@
-import Footer from '../../components/footer/footer.js'
-import Header from '../../components/header/header.js'
-import { normalize } from '../../helpers/normalizeHelper/normalizeHelper.js'
-import actions from '../../redux/features/user/actions.js'
-import { selectUser } from '../../redux/features/user/selectors.js'
-import { store } from '../../redux/store.js'
+import Footer from '@/components/footer/footer.js'
+import Header from '@/components/header/header.js'
+import { normalize } from '@/helpers/normalizeHelper/normalizeHelper.js'
+import actions from '@/modules/features/user/actions.js'
+import { selectUser } from '@/redux/features/user/selectors.js'
+import { store } from '@/redux/store.js'
 
 /**
  * Класс Router управляет навигацией внутри SPA (Single Page Application),

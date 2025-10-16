@@ -1,0 +1,328 @@
+basePath: /api
+definitions:
+  models.Error:
+    properties:
+      message:
+        type: string
+    type: object
+  models.Film:
+    properties:
+      budget:
+        type: integer
+      country:
+        type: string
+      createdAt:
+        type: string
+      duration:
+        type: integer
+      fees:
+        type: integer
+      genres:
+        items:
+          $ref: '#/definitions/models.Genre'
+        type: array
+      icon:
+        type: string
+      id:
+        type: string
+      premierDate:
+        type: string
+      rating:
+        type: number
+      title:
+        type: string
+      updatedAt:
+        type: string
+      year:
+        type: integer
+    type: object
+  models.FilmProfessional:
+    properties:
+      birthDate:
+        type: string
+      birthPlace:
+        type: string
+      createdAt:
+        type: string
+      deathDate:
+        type: string
+      description:
+        type: string
+      icon:
+        type: string
+      id:
+        type: string
+      isActive:
+        type: boolean
+      name:
+        type: string
+      nationality:
+        type: string
+      surname:
+        type: string
+      updatedAt:
+        type: string
+      wikipediaUrl:
+        type: string
+    type: object
+  models.Genre:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      icon:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.SignInInput:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+    required:
+      - login
+      - password
+    type: object
+  models.SignUpInput:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+    type: object
+  models.User:
+    properties:
+      avatar:
+        type: string
+      country:
+        type: string
+      createdAt:
+        type: string
+      favoriteActors:
+        items:
+          $ref: '#/definitions/models.FilmProfessional'
+        type: array
+      favoriteGenres:
+        items:
+          $ref: '#/definitions/models.Genre'
+        type: array
+      id:
+        type: string
+      login:
+        type: string
+      savedFilms:
+        items:
+          $ref: '#/definitions/models.Film'
+        type: array
+      status:
+        enum:
+          - active
+          - banned
+          - deleted
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:5458
+info:
+  contact: {}
+  description: API для авторизации пользователей и получения фильмов/жанров.
+  title: Kinopoisk API
+  version: '1.0'
+paths:
+  /auth/check:
+    get:
+      description: Verify JWT token in cookie
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Check authentication
+      tags:
+        - auth
+  /auth/signin:
+    post:
+      consumes:
+        - application/json
+      description: Authenticate existing user
+      parameters:
+        - description: User credentials
+          in: body
+          name: input
+          required: true
+          schema:
+            $ref: '#/definitions/models.SignInInput'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: User login
+      tags:
+        - auth
+  /auth/signup:
+    post:
+      consumes:
+        - application/json
+      description: Register a new user
+      parameters:
+        - description: User credentials
+          in: body
+          name: input
+          required: true
+          schema:
+            $ref: '#/definitions/models.SignUpInput'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: User signup
+      tags:
+        - auth
+  /films:
+    get:
+      parameters:
+        - default: 10
+          description: Number of films
+          in: query
+          name: count
+          type: integer
+        - default: 0
+          description: Offset
+          in: query
+          name: offset
+          type: integer
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Film'
+            type: array
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: List films
+      tags:
+        - films
+  /films/{id}:
+    get:
+      parameters:
+        - description: Film ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Film'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Get film by ID
+      tags:
+        - films
+  /films/genre/{id}:
+    get:
+      parameters:
+        - description: Genre ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Film'
+            type: array
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Get films by genre ID
+      tags:
+        - films
+  /genres:
+    get:
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Genre'
+            type: array
+      summary: List all genres
+      tags:
+        - genres
+  /genres/{id}:
+    get:
+      parameters:
+        - description: Genre ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Genre'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Get genre by ID
+      tags:
+        - genres
+swagger: '2.0'
