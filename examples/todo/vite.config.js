@@ -6,7 +6,7 @@ export default defineConfig({
     jsx: 'transform',
     jsxFactory: 'jsx',
     jsxFragment: 'Fragment',
-    jsxInject: "import {jsx, Fragment, Component} from '@lib/react.js'",
+    jsxInject: "import {jsx, Fragment, Component, createApp} from '@lib/react.js'",
   },
   server: {
     port: 3000,

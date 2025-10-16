@@ -104,5 +104,5 @@ class TodoApp extends Component {
   }
 }
 
-const app = new TodoApp();
+const app = createApp(TodoApp);
 app.mount(document.body);
