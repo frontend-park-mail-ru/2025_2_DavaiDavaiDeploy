@@ -1,0 +1,18 @@
+{
+  "name": "2025-2-davaidavaideploy",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "npm run build && vite",
+    "build": "tsc && vite build",
+    "getTypes": "npx swagger-typescript-api generate -p ./src/modules/HTTPClient/swagger.yaml -o ./src/modules/HTTPClient -n apiTypes.ts --no-client"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "sass": "^1.93.2",
+    "swagger-typescript-api": "^13.2.15",
+    "typescript": "~5.9.3",
+    "vite": "^7.1.7"
+  }
+}
