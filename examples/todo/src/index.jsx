@@ -1,65 +1,5 @@
-/** @jsx jsx */
-/** @jsxFrag Fragment */
-
-import {Component} from '../../../lib/dist/react.js';
-import {jsx, Fragment} from './jsx-runtime.js';
-
-class TodoItem extends Component {
-  render() {
-    const {todo, onDelete, onStartEditing} = this.props;
-
-    return (
-      <div key={todo.id}>
-        <span onDblclick={() => onStartEditing(todo.id, todo.text)}>{todo.text}</span>
-        <button onClick={() => onDelete(todo.id)}> × </button>
-      </div>
-    );
-  }
-}
-class TodoEditingItem extends Component {
-  state = {
-    editingText: this.props.initialText,
-  };
-
-  handleInputChange = event => {
-    this.setState({editingText: event.target.value});
-  };
-
-  handleKeyDown = event => {
-    if (event.key === 'Enter') {
-      if (this.state.editingText.length > 3) {
-        this.props.onSave(this.state.editingText);
-      }
-    } else if (event.key === 'Escape') {
-      this.props.onCancel();
-    }
-  };
-
-  handleSave = () => {
-    if (this.state.editingText.length > 3) {
-      this.props.onSave(this.state.editingText);
-    }
-  };
-
-  render() {
-    const {id, onCancel} = this.props;
-    return (
-      <div key={id}>
-        <input
-          type='text'
-          value={this.state.editingText}
-          onInput={this.handleInputChange}
-          onKeydown={this.handleKeyDown}
-        />
-        <button disabled={this.state.editingText.length < 4} onClick={this.handleSave}>
-          ✓
-        </button>
-        <button onClick={onCancel}>✗</button>
-      </div>
-    );
-  }
-}
-
+import {TodoItem} from './components/TodoItem/index.jsx';
+import {TodoEditingItem} from './components/TodoEditingItem/index.jsx';
 class TodoApp extends Component {
   state = {
     todos: [],
@@ -124,7 +64,7 @@ class TodoApp extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <h1>Simple Todo</h1>
         <div>
           <input
@@ -159,11 +99,10 @@ class TodoApp extends Component {
             ),
           )}
         </div>
-      </Fragment>
+      </>
     );
   }
 }
 
-// Запуск приложения
 const app = new TodoApp();
 app.mount(document.body);
