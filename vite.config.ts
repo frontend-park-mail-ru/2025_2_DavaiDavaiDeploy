@@ -1,27 +1,16 @@
 import { defineConfig } from "vite";
-import { fileURLToPath, URL } from "url";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
-    },
-  },
+  plugins: [tsconfigPaths()],
   server: {
     host: "localhost",
     port: 3000,
   },
   build: {
-    outDir: "src/build",
+    outDir: "dist",
     emptyOutDir: true,
     assetsDir: "assets",
     sourcemap: true,
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@use "../styles/constants" as *;\n`,
-      },
-    },
   },
 });
