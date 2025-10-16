@@ -1,22 +1,70 @@
 {
   "name": "2025-2-davaidavaideploy",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Репозиторий команды \"Davai Davai Deploy\". Проект: Кинопоиск",
   "type": "module",
+  "private": true,
+  "main": "index.ts",
   "scripts": {
     "start": "npm run build && vite",
     "build": "tsc && vite build",
-    "getTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/modules/HTTPClient -n apiTypes.ts --no-client"
+    "getTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/modules/HTTPClient -n apiTypes.ts --no-client",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint:eslint": "npx eslint .",
+    "lint:eslint:fix": "npx eslint . --fix",
+    "lint:prettier": "npx prettier . --check",
+    "lint:prettier:fix": "npx prettier . --write",
+    "lint:stylelint": "npx stylelint \"**/*.css\" --allow-empty-input",
+    "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix --allow-empty-input",
+    "prepare": "husky",
+    "pre-commit": "npm run lint:stylelint:fix && npm run lint:eslint:fix && npm run lint:prettier:fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy.git"
+  },
+  "browserslist": [
+    "defaults",
+    "not op_mini all",
+    "not KaiOS > 0"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy#readme",
+  "dependencies": {
+    "eslint-plugin-compat": "^6.0.2",
+    "reset-css": "^5.0.2"
   },
   "devDependencies": {
+    "@eslint/js": "^9.35.0",
     "@types/node": "^24.7.2",
+    "@vitest/coverage-v8": "^3.2.4",
+    "ember-template-lint": "^3.6.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.4.0",
+    "husky": "^9.1.7",
+    "jsdom": "^27.0.0",
+    "lint-staged": "^16.1.6",
+    "prettier": "3.6.2",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "reload": "^3.4.2",
     "sass": "^1.93.2",
+    "stylelint": "^16.24.0",
+    "stylelint-config-standard": "^39.0.0",
+    "stylelint-config-standard-scss": "^16.0.0",
+    "stylelint-scss": "^6.12.1",
     "swagger-typescript-api": "^13.2.15",
     "typescript": "~5.9.3",
     "vite": "^7.1.7",
-    "vite-tsconfig-paths": "^5.1.4"
-  },
-  "dependencies": {
-    "reset-css": "^5.0.2"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   }
 }
