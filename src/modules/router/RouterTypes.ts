@@ -1,8 +1,6 @@
-export type ComponentInstance = InstanceType<typeof Component>
-
 export interface RouteConfig {
 	href: string
-	component: ComponentInstance
+	component: any
 	hasHeader?: boolean
 	hasFooter?: boolean
 }

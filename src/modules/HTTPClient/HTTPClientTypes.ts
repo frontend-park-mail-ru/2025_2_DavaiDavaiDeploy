@@ -11,7 +11,11 @@ export type RequestConfig = {
 	data?: any
 }
 
-export type Config = {
-	params?: Record<string | number, string | number>
-	data?: any
-}
+export type Config = Pick<RequestConfig, 'params' | 'data'>
+
+export type Response<T> = Promise<{
+	data: T
+	status: number
+	statusText: string
+	headers: Record<string, string>
+}>

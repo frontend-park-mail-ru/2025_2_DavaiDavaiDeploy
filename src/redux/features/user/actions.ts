@@ -52,12 +52,18 @@ const deleteUserAction = (userId: string | number) => {
 const checkUserAction = () => async (dispatch: Dispatch) => {
 	dispatch(setUserLoadingAction())
 	try {
-		const response = await HTTPClient.get('/auth/check')
+		const response = await HTTPClient.get<ModelsUser>('/auth/check')
 		dispatch(returnUserAction(response.data))
-	} catch (error) {
+	} catch (error: unknown) {
+		let errorMessage: string = 'Произошла ошибка'
+
 		if (error instanceof Error) {
-			dispatch(returnUserErrorAction(error.message || 'Error'))
+			errorMessage = error.message
+		} else if (typeof error === 'string') {
+			errorMessage = error
 		}
+
+		dispatch(returnUserErrorAction(errorMessage))
 	}
 }
 
@@ -71,34 +77,46 @@ const checkUserAction = () => async (dispatch: Dispatch) => {
 const registerUserAction =
 	(login: string, password: string) => async (dispatch: Dispatch) => {
 		try {
-			const response = await HTTPClient.post('/auth/signup', {
+			const response = await HTTPClient.post<ModelsUser>('/auth/signup', {
 				data: {
 					login: login,
 					password: password,
 				},
 			})
 			dispatch(returnUserAction(response.data))
-		} catch (error) {
+		} catch (error: unknown) {
+			let errorMessage: string = 'Произошла ошибка'
+
 			if (error instanceof Error) {
-				dispatch(returnUserErrorAction(error.message || 'Error'))
+				errorMessage = error.message
+			} else if (typeof error === 'string') {
+				errorMessage = error
 			}
+
+			dispatch(returnUserErrorAction(errorMessage))
 		}
 	}
 
 const loginUserAction =
 	(login: string, password: string) => async (dispatch: Dispatch) => {
 		try {
-			const response = await HTTPClient.post('/auth/signin', {
+			const response = await HTTPClient.post<ModelsUser>('/auth/signin', {
 				data: {
 					login: login,
 					password: password,
 				},
 			})
 			dispatch(returnUserAction(response.data))
-		} catch (error) {
+		} catch (error: unknown) {
+			let errorMessage: string = 'Произошла ошибка'
+
 			if (error instanceof Error) {
-				dispatch(returnUserErrorAction(error.message || 'Error'))
+				errorMessage = error.message
+			} else if (typeof error === 'string') {
+				errorMessage = error
 			}
+
+			dispatch(returnUserErrorAction(errorMessage))
 		}
 	}
 

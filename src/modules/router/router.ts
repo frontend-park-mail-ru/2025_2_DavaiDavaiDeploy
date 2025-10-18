@@ -4,13 +4,13 @@ import { normalize } from '@/helpers/normalizeHelper/normalizeHelper'
 import actions from '@/redux/features/user/actions'
 import { selectUser } from '@/redux/features/user/selectors'
 import { store } from '@/redux/store'
-import type { ComponentInstance, RouteConfig, Routes } from './RouterTypes'
+import type { RouteConfig, Routes } from './RouterTypes'
 
 export class Router {
 	routes: Routes
 	parent: Element
-	curPage: ComponentInstance | null = null
-	header: ComponentInstance | null = null
+	curPage: any = null
+	header: any = null
 
 	constructor(routes: Routes, parent: Element) {
 		this.routes = new Proxy(routes, this.routesHandler)

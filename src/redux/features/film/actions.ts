@@ -62,14 +62,20 @@ const getFilmsAction =
 	(limit: number, offset: number) => async (dispatch: Dispatch) => {
 		dispatch(setFilmsLoadingAction())
 		try {
-			const response = await HTTPClient.get('/films', {
+			const response = await HTTPClient.get<ModelsFilm[]>('/films', {
 				params: { count: limit, offset },
 			})
 			dispatch(returnFilmsAction(response.data))
-		} catch (error) {
+		} catch (error: unknown) {
+			let errorMessage: string = 'Произошла ошибка'
+
 			if (error instanceof Error) {
-				dispatch(returnFilmsErrorAction(error.message || 'Error'))
+				errorMessage = error.message
+			} else if (typeof error === 'string') {
+				errorMessage = error
 			}
+
+			dispatch(returnFilmsErrorAction(errorMessage))
 		}
 	}
 

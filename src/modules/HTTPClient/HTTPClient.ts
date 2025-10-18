@@ -1,4 +1,9 @@
-import type { Config, RequestConfig, RouterConfig } from './HTTPClientTypes'
+import type {
+	Config,
+	RequestConfig,
+	Response,
+	RouterConfig,
+} from './HTTPClientTypes'
 /**
  * Поддерживаемые HTTP-методы
  * @constant {Object}
@@ -42,28 +47,28 @@ export class HTTPClient {
 		return new HTTPClient(config)
 	}
 
-	get(path: string, config?: Config) {
-		return this._request({ path, ...config, method: METHODS.GET })
+	get<T = any>(path: string, config?: Config) {
+		return this._request<T>({ path, ...config, method: METHODS.GET })
 	}
 
-	post(path: string, config?: Config) {
-		return this._request({ path, ...config, method: METHODS.POST })
+	post<T = any>(path: string, config?: Config) {
+		return this._request<T>({ path, ...config, method: METHODS.POST })
 	}
 
-	put(path: string, config?: Config) {
-		return this._request({ path, ...config, method: METHODS.PUT })
+	put<T = any>(path: string, config?: Config) {
+		return this._request<T>({ path, ...config, method: METHODS.PUT })
 	}
 
-	delete(path: string, config?: Config) {
-		return this._request({ path, ...config, method: METHODS.DELETE })
+	delete<T = any>(path: string, config?: Config) {
+		return this._request<T>({ path, ...config, method: METHODS.DELETE })
 	}
 
-	async _request({
+	async _request<T = any>({
 		method = METHODS.GET,
 		path,
 		params = {},
 		data = {},
-	}: RequestConfig) {
+	}: RequestConfig): Response<T> {
 		const requestMethod = method.toUpperCase()
 
 		let requestUrl = new URL(this.default.baseUrl + path)
@@ -113,7 +118,7 @@ export class HTTPClient {
 				signal,
 			})
 
-			let responseData: any
+			let responseData: T
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
@@ -134,11 +139,15 @@ export class HTTPClient {
 				statusText: response.statusText,
 				headers: responseHeaders,
 			}
-		} catch (error: any) {
-			if (error.name === 'TypeError' && error.message.includes('fetch')) {
-				throw new Error('Network error')
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				if (error.name === 'TypeError' && error.message.includes('fetch')) {
+					throw new Error('Network error')
+				}
+
+				throw error
 			}
-			throw error
+			throw new Error(String(error))
 		}
 	}
 }

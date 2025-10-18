@@ -38,7 +38,7 @@ const setGenreFilmsLoadingAction = () => {
  * @param {Object} data - Данные жанра
  * @returns {{type: string, payload: {genre: Object}}} Action с данными жанра
  */
-const returnGenreAction = (data: ModelsGenre[]) => {
+const returnGenreAction = (data: ModelsGenre) => {
 	return {
 		type: types.GENRE_LOADED,
 		payload: { genre: data },
@@ -62,7 +62,7 @@ const returnGenreFilmsAction = (data: ModelsFilm[]) => {
  * @param {Object} data - Данные жанров
  * @returns {{type: string, payload: {genres: Object}}} Action со списком жанров
  */
-const returnGenresAction = (data: ModelsGenre) => {
+const returnGenresAction = (data: ModelsGenre[]) => {
 	return {
 		type: types.GENRES_LOADED,
 		payload: { genres: data },
@@ -113,12 +113,18 @@ const returnGenreFilmsErrorAction = (error: string) => {
 const getGenreAction = (id: string | number) => async (dispatch: Dispatch) => {
 	dispatch(setGenreLoadingAction())
 	try {
-		const response = await HTTPClient.get(`/genres/${id}`)
+		const response = await HTTPClient.get<ModelsGenre>(`/genres/${id}`)
 		dispatch(returnGenreAction(response.data))
-	} catch (error) {
+	} catch (error: unknown) {
+		let errorMessage: string = 'Произошла ошибка'
+
 		if (error instanceof Error) {
-			dispatch(returnGenreErrorAction(error.message || 'Error'))
+			errorMessage = error.message
+		} else if (typeof error === 'string') {
+			errorMessage = error
 		}
+
+		dispatch(returnGenreErrorAction(errorMessage))
 	}
 }
 
@@ -129,12 +135,18 @@ const getGenreAction = (id: string | number) => async (dispatch: Dispatch) => {
 const getGenresAction = () => async (dispatch: Dispatch) => {
 	dispatch(setGenresLoadingAction())
 	try {
-		const response = await HTTPClient.get('/genres')
+		const response = await HTTPClient.get<ModelsGenre[]>('/genres')
 		dispatch(returnGenresAction(response.data))
-	} catch (error) {
+	} catch (error: unknown) {
+		let errorMessage: string = 'Произошла ошибка'
+
 		if (error instanceof Error) {
-			dispatch(returnGenresErrorAction(error.message || 'Error'))
+			errorMessage = error.message
+		} else if (typeof error === 'string') {
+			errorMessage = error
 		}
+
+		dispatch(returnGenresErrorAction(errorMessage))
 	}
 }
 
@@ -150,14 +162,23 @@ const getGenreFilmsAction =
 	async (dispatch: Dispatch) => {
 		dispatch(setGenreFilmsLoadingAction())
 		try {
-			const response = await HTTPClient.get(`/films/genre/${id}`, {
-				params: { count: limit, offset },
-			})
+			const response = await HTTPClient.get<ModelsFilm[]>(
+				`/films/genre/${id}`,
+				{
+					params: { count: limit, offset },
+				},
+			)
 			dispatch(returnGenreFilmsAction(response.data))
-		} catch (error) {
+		} catch (error: unknown) {
+			let errorMessage: string = 'Произошла ошибка'
+
 			if (error instanceof Error) {
-				dispatch(returnGenreFilmsErrorAction(error.message || 'Error'))
+				errorMessage = error.message
+			} else if (typeof error === 'string') {
+				errorMessage = error
 			}
+
+			dispatch(returnGenreFilmsErrorAction(errorMessage))
 		}
 	}
 
