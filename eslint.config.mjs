@@ -29,6 +29,8 @@ export default defineConfig([
 			'.template-lintrc.js',
 			'.lintstagedrc.js',
 			'dist/',
+			'src/modules/react/dist/**',
+			'lib/dist/**',
 		],
 	},
 ])

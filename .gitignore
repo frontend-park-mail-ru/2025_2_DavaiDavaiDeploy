@@ -4,3 +4,5 @@ build/
 src/build/
 dist/
 .vite
+jsconfig.json
+types.d.ts
