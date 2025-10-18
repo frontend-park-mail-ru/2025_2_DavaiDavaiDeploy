@@ -2,15 +2,11 @@ import { compose } from '../compose/index'
 import type { Action } from '../types/actions'
 import type { Middleware } from '../types/middleware'
 import type { Reducer } from '../types/reducers'
-import type { State, Store } from '../types/store'
-
+import type { State, Store, StoreEnhancer } from '../types/store'
 /**
  * Применяет middleware к Redux-подобному store.
- *
- * @param middlewares - Массив middleware-функций.
- * @returns Фабрика создания store с middleware.
  */
-export function applyMiddleware(middlewares: Middleware[]) {
+export function applyMiddleware(middlewares: Middleware[]): StoreEnhancer {
 	return function createStoreWithMiddleware(
 		createStore: (reducer: Reducer, initialState: State) => Store,
 	) {

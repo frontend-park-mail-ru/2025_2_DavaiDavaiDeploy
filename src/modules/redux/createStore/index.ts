@@ -4,13 +4,6 @@ import type { State, Store } from '../types/store'
 
 /**
  * Создаёт простой Redux-подобный store.
- *
- * @param {Function} reducer - Редьюсер для управления состоянием.
- * @returns {{
- *   getState: Function,
- *   dispatch: Function,
- *   subscribe: Function
- * }} Интерфейс хранилища состояния.
  */
 export const createStore = (reducer: Reducer): Store => {
 	let state: State = reducer({}, { type: '__INIT__' })

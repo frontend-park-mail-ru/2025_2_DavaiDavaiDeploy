@@ -1,16 +1,19 @@
 import type { Action } from './actions'
+import type { Reducer } from './reducers'
 /**
  * Состояние Redux store.
- * @typedef {Object} State
  */
 export type State = Record<string, any>
 
 /**
  * Интерфейс Redux store.
- * @typedef {Object} Store
  */
 export type Store = {
 	getState: () => State
 	dispatch: (action: Action) => void
 	subscribe: (listener: () => void) => () => void
 }
+
+export type StoreEnhancer = (
+	createStore: (reducer: Reducer, initialState: State) => Store,
+) => (reducer: Reducer, initialState: State) => Store

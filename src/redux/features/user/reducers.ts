@@ -1,7 +1,8 @@
 import type { ModelsUser } from '@/modules/HTTPClient/types/api'
 import type { Action } from '@/modules/redux/types/actions'
+import type { Reducer } from '@/modules/redux/types/reducers'
 import type { State } from '@/modules/redux/types/store'
-import types from './types'
+import actionTypes from './actionTypes'
 
 /**
  * Начальное состояние редьюсера пользователей.
@@ -14,44 +15,41 @@ const initialState: State = {
 
 /**
  * Редьюсер пользователей для обработки действий create, update и delete.
- * @function
- * @param {Object} [state=initialState] - Текущее состояние.
- * @param {Object} action - Действие Redux.
- * @param {string} action.type - Тип действия.
- * @param {Object} action.payload - Полезная нагрузка действия.
- * @returns {Object} Новое состояние после применения действия.
  */
-export const userReducer = (state = initialState, action: Action) => {
+export const userReducer: Reducer = (
+	state = initialState,
+	action: Action,
+): State => {
 	if (typeof action == 'function') {
 		return state
 	}
 	const { type, payload } = action
 
 	switch (type) {
-		case types.USER_CREATE:
+		case actionTypes.USER_CREATE:
 			return {
 				...state,
 				users: [...state.users, payload.user],
 			}
-		case types.USER_UPDATE:
+		case actionTypes.USER_UPDATE:
 			return {
 				...state,
 				users: state.users.map((user: ModelsUser) =>
 					user.id === payload.user.id ? payload.user : user,
 				),
 			}
-		case types.USER_DELETE:
+		case actionTypes.USER_DELETE:
 			return {
 				...state,
 				users: state.users.filter(
 					(user: ModelsUser) => user.id !== payload.userId,
 				),
 			}
-		case types.USER_LOADING:
+		case actionTypes.USER_LOADING:
 			return { ...state, loading: true, error: null }
-		case types.USER_LOADED:
+		case actionTypes.USER_LOADED:
 			return { ...state, loading: false, users: action.payload.users }
-		case types.USER_ERROR:
+		case actionTypes.USER_ERROR:
 			return {
 				...state,
 				loading: false,

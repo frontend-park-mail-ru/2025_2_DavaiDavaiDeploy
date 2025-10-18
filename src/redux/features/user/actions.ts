@@ -1,14 +1,13 @@
 import type { ModelsUser } from '@/modules/HTTPClient/types/api'
-import type { Dispatch } from '@/modules/redux/types/actions'
+import type { Action, Dispatch } from '@/modules/redux/types/actions'
 import HTTPClient from '../../../modules/HTTPClient/index'
-import actionTypes from './types'
+import actionTypes from './actionTypes'
 
 /**
  * Создает действие для установки состояния загрузки пользователя.
- * @function
- * @returns {Object} Объект действия Redux с типом USER_LOADING.
+
  */
-const setUserLoadingAction = () => {
+const setUserLoadingAction = (): Action => {
 	return {
 		type: actionTypes.USER_LOADING,
 	}
@@ -17,10 +16,8 @@ const setUserLoadingAction = () => {
 /**
  * Создает действие для успешной загрузки данных пользователя.
  * @function
- * @param {ModelsUser} data - Данные пользователя.
- * @returns {Object} Объект действия Redux с типом USER_LOADED и полезной нагрузкой.
  */
-const returnUserAction = (data: ModelsUser) => {
+const returnUserAction = (data: ModelsUser): Action => {
 	return {
 		type: actionTypes.USER_LOADED,
 		payload: { users: data },
@@ -29,11 +26,8 @@ const returnUserAction = (data: ModelsUser) => {
 
 /**
  * Создает действие для обработки ошибки загрузки пользователя.
- * @function
- * @param {string} error - Сообщение об ошибке.
- * @returns {Object} Объект действия Redux с типом USER_ERROR и полезной нагрузкой.
  */
-const returnUserErrorAction = (error: string) => {
+const returnUserErrorAction = (error: string): Action => {
 	return {
 		type: actionTypes.USER_ERROR,
 		payload: { users: [], error: error },
@@ -42,11 +36,8 @@ const returnUserErrorAction = (error: string) => {
 
 /**
  * Создает действие для обновления существующего пользователя.
- * @function
- * @param {Object} user - Объект пользователя с обновленными данными.
- * @returns {Object} Объект действия Redux с типом USER_UPDATE и полезной нагрузкой.
  */
-const updateUserAction = (login: string, password: string) => {
+const updateUserAction = (login: string, password: string): Action => {
 	return {
 		type: actionTypes.USER_UPDATE,
 		payload: { login: login, password: password },
@@ -55,11 +46,8 @@ const updateUserAction = (login: string, password: string) => {
 
 /**
  * Создает действие для удаления пользователя по его идентификатору.
- * @function
- * @param {string|number} userId - Идентификатор пользователя для удаления.
- * @returns {Object} Объект действия Redux с типом USER_DELETE и полезной нагрузкой.
  */
-const deleteUserAction = (userId: string | number) => {
+const deleteUserAction = (userId: string | number): Action => {
 	return {
 		type: actionTypes.USER_DELETE,
 		payload: { userId: userId },
@@ -68,43 +56,37 @@ const deleteUserAction = (userId: string | number) => {
 
 /**
  * Создает асинхронное действие для проверки авторизации пользователя.
- * @function
- * @returns {Function} Thunk-функция для диспетчеризации.
  */
-const checkUserAction = () => async (dispatch: Dispatch) => {
-	dispatch(setUserLoadingAction())
-	try {
-		const response = await HTTPClient.get<ModelsUser>('/auth/check')
-		dispatch(returnUserAction(response.data))
-	} catch (error: unknown) {
-		let errorMessage: string = 'Произошла ошибка'
+const checkUserAction =
+	(): Action =>
+	async (dispatch: Dispatch): Promise<void> => {
+		dispatch(setUserLoadingAction())
+		try {
+			const response = await HTTPClient.get<ModelsUser>('/auth/check')
+			dispatch(returnUserAction(response.data))
+		} catch (error: unknown) {
+			let errorMessage: string = 'Произошла ошибка'
 
-		if (error instanceof Error) {
-			errorMessage = error.message
-		} else if (typeof error === 'string') {
-			errorMessage = error
+			if (error instanceof Error) {
+				errorMessage = error.message
+			} else if (typeof error === 'string') {
+				errorMessage = error
+			}
+
+			dispatch(returnUserErrorAction(errorMessage))
 		}
-
-		dispatch(returnUserErrorAction(errorMessage))
 	}
-}
 
 /**
  * Создает действие для добавления нового пользователя.
- * @function
- * @param {Object} user - Объект пользователя для добавления.
- * @returns {Object} Объект действия Redux с типом USER_CREATE и полезной нагрузкой.
  */
 
 /**
  * Создает асинхронное действие для регистрации нового пользователя.
- * @function
- * @param {string} login - Логин пользователя.
- * @param {string} password - Пароль пользователя.
- * @returns {Function} Thunk-функция для диспетчеризации.
  */
 const registerUserAction =
-	(login: string, password: string) => async (dispatch: Dispatch) => {
+	(login: string, password: string): Action =>
+	async (dispatch: Dispatch): Promise<void> => {
 		try {
 			const response = await HTTPClient.post<ModelsUser>('/auth/signup', {
 				data: {
@@ -128,13 +110,10 @@ const registerUserAction =
 
 /**
  * Создает асинхронное действие для входа пользователя в систему.
- * @function
- * @param {string} login - Логин пользователя.
- * @param {string} password - Пароль пользователя.
- * @returns {Function} Thunk-функция для диспетчеризации.
  */
 const loginUserAction =
-	(login: string, password: string) => async (dispatch: Dispatch) => {
+	(login: string, password: string): Action =>
+	async (dispatch: Dispatch): Promise<void> => {
 		try {
 			const response = await HTTPClient.post<ModelsUser>('/auth/signin', {
 				data: {

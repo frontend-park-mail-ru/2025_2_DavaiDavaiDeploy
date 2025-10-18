@@ -1,16 +1,11 @@
 /**
  * Универсальный валидатор, который делегирует проверку внешней функции.
- *
- * @param {*} value - Значение для валидации.
- * @param {Function | null} validator - Функция-валидатор. Может принимать один или два аргумента.
- * @param {*} [extraValue=null] - Дополнительное значение, если валидатор требует два параметра.
- * @returns {{ isValid: boolean, message: string }} Результат валидации.
  */
 export function validateProducer(
 	value: any,
 	validator: Function | null,
 	extraValue = null,
-) {
+): any {
 	if (!validator) {
 		return { isValid: true, message: '' }
 	}

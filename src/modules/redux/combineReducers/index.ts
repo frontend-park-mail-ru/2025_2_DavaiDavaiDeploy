@@ -4,11 +4,8 @@ import type { State } from '../types/store'
 
 /**
  * Комбинирует несколько редьюсеров в один.
- *
- * @param {Object.<string, Function>} reducersMap - Объект, где ключи — имена состояний, а значения — соответствующие редьюсеры.
- * @returns {Function} Комбинированный редьюсер.
  */
-export function combineReducers(reducersMap: Record<string, Reducer>) {
+export function combineReducers(reducersMap: Record<string, Reducer>): Reducer {
 	return function combinationReducer(state: State = {}, action: Action) {
 		const nextState: State = {}
 		Object.entries(reducersMap).forEach(([key, reducer]) => {

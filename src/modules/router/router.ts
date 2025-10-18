@@ -24,8 +24,6 @@ export class Router {
 	/**
 	 * Создаёт экземпляр Router.
 	 * @constructor
-	 * @param {Routes} routes - Конфигурация маршрутов.
-	 * @param {Element} parent - Родительский элемент для рендеринга.
 	 */
 	constructor(routes: Routes, parent: Element) {
 		this.routes = new Proxy(routes, this.routesHandler)
@@ -38,18 +36,13 @@ export class Router {
 
 	/**
 	 * Создаёт новый экземпляр Router.
-	 * @static
-	 * @param {Routes} routes - Конфигурация маршрутов.
-	 * @param {Element} parent - Родительский элемент для рендеринга.
-	 * @returns {Router} Новый экземпляр Router.
 	 */
-	static create(routes: Routes, parent: Element) {
+	static create(routes: Routes, parent: Element): Router {
 		return new Router(routes, parent)
 	}
 
 	/**
 	 * Инициализирует обработчики событий для навигации.
-	 * @returns {void}
 	 */
 	initEventListeners = (): void => {
 		window.addEventListener('popstate', this.handlePopState)
@@ -58,7 +51,6 @@ export class Router {
 
 	/**
 	 * Обрабатывает событие изменения истории браузера.
-	 * @returns {void}
 	 */
 	handlePopState = (): void => {
 		this.navigate(window.location.pathname + window.location.search, {}, false)
@@ -66,10 +58,8 @@ export class Router {
 
 	/**
 	 * Обрабатывает клики по ссылкам для навигации.
-	 * @param {MouseEvent} event - Событие клика мыши.
-	 * @returns {void}
 	 */
-	handleClick = (event: MouseEvent) => {
+	handleClick = (event: MouseEvent): void => {
 		const link = (event.target as Element).closest('a')
 		if (link) {
 			event.preventDefault()
@@ -109,7 +99,6 @@ export class Router {
 
 	/**
 	 * Запускает роутер и инициализирует приложение.
-	 * @returns {void}
 	 */
 	start = (): void => {
 		store.dispatch(actions.checkUserAction())
@@ -118,16 +107,12 @@ export class Router {
 
 	/**
 	 * Выполняет навигацию к указанному пути.
-	 * @param {string} path - Путь для навигации.
-	 * @param {Record<string, any>} [state={}] - Состояние для передачи в маршрут.
-	 * @param {boolean} [addToHistory=true] - Добавлять ли в историю браузера.
-	 * @returns {void}
 	 */
 	navigate = (
 		path: string,
 		state: Record<string, any> = {},
 		addToHistory: boolean = true,
-	) => {
+	): void => {
 		const normalizedPath = normalize(path)
 		const [pathname, queryString] = normalizedPath.split('?')
 
@@ -154,7 +139,6 @@ export class Router {
 
 	/**
 	 * Очищает текущий макет страницы.
-	 * @returns {void}
 	 */
 	clearLayout = (): void => {
 		this.header?.destroy()
@@ -173,7 +157,6 @@ export class Router {
 
 	/**
 	 * Рендерит header страницы.
-	 * @returns {void}
 	 */
 	renderHeader = (): void => {
 		const userState = selectUser(store.getState())
@@ -190,12 +173,6 @@ export class Router {
 
 	/**
 	 * Рендерит содержимое страницы.
-	 * @param {RouteConfig} route - Конфигурация маршрута.
-	 * @param {string} normalizedPath - Нормализованный путь.
-	 * @param {Record<string, string>} params - Параметры маршрута.
-	 * @param {Record<string, string>} search - Параметры поиска.
-	 * @param {Record<string, any>} state - Состояние маршрута.
-	 * @returns {void}
 	 */
 	renderContent = (
 		route: RouteConfig,
@@ -222,7 +199,6 @@ export class Router {
 
 	/**
 	 * Рендерит footer страницы.
-	 * @returns {void}
 	 */
 	renderFooter = (): void => {
 		const footer = new Footer(this.parent)

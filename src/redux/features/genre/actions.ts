@@ -1,13 +1,12 @@
 import type { ModelsFilm, ModelsGenre } from '@/modules/HTTPClient/types/api'
-import type { Dispatch } from '@/modules/redux/types/actions'
+import type { Action, Dispatch } from '@/modules/redux/types/actions'
 import HTTPClient from '../../../modules/HTTPClient/index'
-import actionTypes from './types'
+import actionTypes from './actionTypes'
 
 /**
  * Action: устанавливает состояние загрузки для жанра
- * @returns {{type: string}} Action с типом GENRE_LOADING
  */
-const setGenreLoadingAction = () => {
+const setGenreLoadingAction = (): Action => {
 	return {
 		type: actionTypes.GENRE_LOADING,
 	}
@@ -15,9 +14,8 @@ const setGenreLoadingAction = () => {
 
 /**
  * Action: устанавливает состояние загрузки для списка жанров
- * @returns {{type: string}} Action с типом GENRES_LOADING
  */
-const setGenresLoadingAction = () => {
+const setGenresLoadingAction = (): Action => {
 	return {
 		type: actionTypes.GENRES_LOADING,
 	}
@@ -25,9 +23,8 @@ const setGenresLoadingAction = () => {
 
 /**
  * Action: устанавливает состояние загрузки для фильмов жанра
- * @returns {{type: string}} Action с типом GENRE_FILMS_LOADING
  */
-const setGenreFilmsLoadingAction = () => {
+const setGenreFilmsLoadingAction = (): Action => {
 	return {
 		type: actionTypes.GENRE_FILMS_LOADING,
 	}
@@ -35,10 +32,9 @@ const setGenreFilmsLoadingAction = () => {
 
 /**
  * Action: устанавливает успешно загруженные данные жанра
- * @param {Object} data - Данные жанра
- * @returns {{type: string, payload: {genre: Object}}} Action с данными жанра
+ *  {Object} data - Данные жанра
  */
-const returnGenreAction = (data: ModelsGenre) => {
+const returnGenreAction = (data: ModelsGenre): Action => {
 	return {
 		type: actionTypes.GENRE_LOADED,
 		payload: { genre: data },
@@ -47,10 +43,8 @@ const returnGenreAction = (data: ModelsGenre) => {
 
 /**
  * Action: устанавливает успешно загруженные фильмы жанра
- * @param {Object} data - Данные фильмов
- * @returns {{type: string, payload: {films: Object}}} Action с данными фильмов
  */
-const returnGenreFilmsAction = (data: ModelsFilm[]) => {
+const returnGenreFilmsAction = (data: ModelsFilm[]): Action => {
 	return {
 		type: actionTypes.GENRE_FILMS_LOADED,
 		payload: { films: data },
@@ -59,10 +53,8 @@ const returnGenreFilmsAction = (data: ModelsFilm[]) => {
 
 /**
  * Action: устанавливает успешно загруженный список жанров
- * @param {Object} data - Данные жанров
- * @returns {{type: string, payload: {genres: Object}}} Action со списком жанров
  */
-const returnGenresAction = (data: ModelsGenre[]) => {
+const returnGenresAction = (data: ModelsGenre[]): Action => {
 	return {
 		type: actionTypes.GENRES_LOADED,
 		payload: { genres: data },
@@ -71,10 +63,8 @@ const returnGenresAction = (data: ModelsGenre[]) => {
 
 /**
  * Action: устанавливает состояние ошибки для операций с конкретным жанром
- * @param {string} error - Сообщение об ошибке
- * @returns {{type: string, payload: {error: string}}} Action с ошибкой
  */
-const returnGenreErrorAction = (error: string) => {
+const returnGenreErrorAction = (error: string): Action => {
 	return {
 		type: actionTypes.GENRE_ERROR,
 		payload: { error: error },
@@ -83,10 +73,8 @@ const returnGenreErrorAction = (error: string) => {
 
 /**
  * Action: устанавливает состояние ошибки для операций со списком жанров
- * @param {string} error - Сообщение об ошибке
- * @returns {{type: string, payload: {error: string}}} Action с ошибкой
  */
-const returnGenresErrorAction = (error: string) => {
+const returnGenresErrorAction = (error: string): Action => {
 	return {
 		type: actionTypes.GENRES_ERROR,
 		payload: { error: error },
@@ -95,10 +83,8 @@ const returnGenresErrorAction = (error: string) => {
 
 /**
  * Action: устанавливает состояние ошибки для операций с фильмами жанра
- * @param {string} error - Сообщение об ошибке
- * @returns {{type: string, payload: {error: string}}} Action с ошибкой
  */
-const returnGenreFilmsErrorAction = (error: string) => {
+const returnGenreFilmsErrorAction = (error: string): Action => {
 	return {
 		type: actionTypes.GENRE_FILMS_ERROR,
 		payload: { error: error },
@@ -107,59 +93,56 @@ const returnGenreFilmsErrorAction = (error: string) => {
 
 /**
  * Action: получает данные жанра по ID
- * @param {string|number} id - ID жанра
- * @returns {Function} Async function для dispatch
  */
-const getGenreAction = (id: string | number) => async (dispatch: Dispatch) => {
-	dispatch(setGenreLoadingAction())
-	try {
-		const response = await HTTPClient.get<ModelsGenre>(`/genres/${id}`)
-		dispatch(returnGenreAction(response.data))
-	} catch (error: unknown) {
-		let errorMessage: string = 'Произошла ошибка'
+const getGenreAction =
+	(id: string | number): Action =>
+	async (dispatch: Dispatch): Promise<void> => {
+		dispatch(setGenreLoadingAction())
+		try {
+			const response = await HTTPClient.get<ModelsGenre>(`/genres/${id}`)
+			dispatch(returnGenreAction(response.data))
+		} catch (error: unknown) {
+			let errorMessage: string = 'Произошла ошибка'
 
-		if (error instanceof Error) {
-			errorMessage = error.message
-		} else if (typeof error === 'string') {
-			errorMessage = error
+			if (error instanceof Error) {
+				errorMessage = error.message
+			} else if (typeof error === 'string') {
+				errorMessage = error
+			}
+
+			dispatch(returnGenreErrorAction(errorMessage))
 		}
-
-		dispatch(returnGenreErrorAction(errorMessage))
 	}
-}
 
 /**
  * Action: получает список всех жанров
- * @returns {Function} Async function для dispatch
  */
-const getGenresAction = () => async (dispatch: Dispatch) => {
-	dispatch(setGenresLoadingAction())
-	try {
-		const response = await HTTPClient.get<ModelsGenre[]>('/genres')
-		dispatch(returnGenresAction(response.data))
-	} catch (error: unknown) {
-		let errorMessage: string = 'Произошла ошибка'
+const getGenresAction =
+	(): Action =>
+	async (dispatch: Dispatch): Promise<void> => {
+		dispatch(setGenresLoadingAction())
+		try {
+			const response = await HTTPClient.get<ModelsGenre[]>('/genres')
+			dispatch(returnGenresAction(response.data))
+		} catch (error: unknown) {
+			let errorMessage: string = 'Произошла ошибка'
 
-		if (error instanceof Error) {
-			errorMessage = error.message
-		} else if (typeof error === 'string') {
-			errorMessage = error
+			if (error instanceof Error) {
+				errorMessage = error.message
+			} else if (typeof error === 'string') {
+				errorMessage = error
+			}
+
+			dispatch(returnGenresErrorAction(errorMessage))
 		}
-
-		dispatch(returnGenresErrorAction(errorMessage))
 	}
-}
 
 /**
  * Action: получает фильмы по жанру
- * @param {string|number} id - ID жанра
- * @param {number} limit - Количество фильмов для получения
- * @param {number} offset - Смещение для пагинации
- * @returns {Function} Async function для dispatch
  */
 const getGenreFilmsAction =
-	(id: string | number, limit: number, offset: number) =>
-	async (dispatch: Dispatch) => {
+	(id: string | number, limit: number, offset: number): Action =>
+	async (dispatch: Dispatch): Promise<void> => {
 		dispatch(setGenreFilmsLoadingAction())
 		try {
 			const response = await HTTPClient.get<ModelsFilm[]>(

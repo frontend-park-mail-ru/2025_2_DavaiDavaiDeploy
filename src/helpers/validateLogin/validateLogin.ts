@@ -1,10 +1,10 @@
 /**
  * Валидирует значение логина по нескольким критериям.
- *
- * @param {string} value - Введённый логин.
- * @returns {{ isValid: boolean, message: string }} Результат валидации и сообщение об ошибке.
  */
-export function validateLogin(value: string) {
+export function validateLogin(value: string): {
+	isValid: boolean
+	message: string
+} {
 	if (!value || value.trim() === '') {
 		return { isValid: false, message: 'Логин обязателен' }
 	}

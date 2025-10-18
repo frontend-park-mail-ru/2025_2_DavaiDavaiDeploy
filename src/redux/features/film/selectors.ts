@@ -1,15 +1,14 @@
+import type { ModelsFilm } from '@/modules/HTTPClient/types/api'
+import type { Selector } from '@/modules/redux/types/selectors'
 import type { State } from '@/modules/redux/types/store'
 
 /**
  * Селектор для получения списка фильмов из состояния.
- * @param {State} state - Состояние Redux store.
- * @returns {Array} Массив фильмов.
  */
-export const selectFilms = (state: State) => state.film.films
+export const selectFilms: Selector = (state: State): ModelsFilm[] =>
+	state.film.films
 
 /**
  * Селектор для получения всей секции фильмов из состояния.
- * @param {State} state - Состояние Redux store.
- * @returns {Object} Объект с данными о фильмах (films, loading, error).
  */
-export const selectFilmSection = (state: State) => state.film
+export const selectFilmSection: Selector = (state: State): State => state.film

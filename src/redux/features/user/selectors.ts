@@ -1,22 +1,20 @@
+import type { ModelsUser } from '@/modules/HTTPClient/types/api'
+import type { Selector } from '@/modules/redux/types/selectors'
 import type { State } from '@/modules/redux/types/store'
 
 /**
  * Селектор для получения данных пользователя из состояния.
- * @param {State} state - Состояние Redux store.
- * @returns {Array} Массив пользователей.
  */
-export const selectUser = (state: State) => state.user.users
+export const selectUser: Selector = (state: State): ModelsUser[] =>
+	state.user.users
 
 /**
  * Селектор для получения ошибки пользователя из состояния.
- * @param {State} state - Состояние Redux store.
- * @returns {string | null} Сообщение об ошибке или null.
  */
-export const selectUserError = (state: State) => state.user.users.error
+export const selectUserError: Selector = (state: State): string =>
+	state.user.users.error
 
 /**
  * Селектор для получения общей ошибки пользователя из состояния.
- * @param {State} state - Состояние Redux store.
- * @returns {string | null} Сообщение об ошибке или null.
  */
-export const selectError = (state: State) => state.user.error
+export const selectError: Selector = (state: State): string => state.user.error

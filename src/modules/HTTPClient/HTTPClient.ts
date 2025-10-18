@@ -1,20 +1,6 @@
-import type { Config, RequestConfig, RouterConfig } from './types/configs'
+import { METHODS } from './methods'
+import type { Config, DefaultConfig, RequestConfig } from './types/configs'
 import type { Response } from './types/response'
-
-/**
- * Поддерживаемые HTTP-методы
- * @constant {Object}
- * @property {string} GET - Метод GET
- * @property {string} POST - Метод POST
- * @property {string} PUT - Метод PUT
- * @property {string} DELETE - Метод DELETE
- */
-const enum METHODS {
-	GET = 'GET',
-	POST = 'POST',
-	PUT = 'PUT',
-	DELETE = 'DELETE',
-}
 
 /**
  * HTTP-клиент для выполнения запросов к API
@@ -24,15 +10,11 @@ export class HTTPClient {
 	/**
 	 * Создаёт экземпляр HTTPClient.
 	 * @constructor
-	 * @param {Object} [config={}] - Конфигурация клиента.
-	 * @param {string} [config.baseUrl] - Базовый URL для всех запросов.
-	 * @param {Object.<string, string|Function>} [config.headers] - Заголовки по умолчанию (значение может быть строкой или функцией, возвращающей строку).
-	 * @param {number} [config.timeout] - Таймаут запросов в миллисекундах.
 	 */
 
-	default: RouterConfig
+	default: DefaultConfig
 
-	constructor({ baseUrl, headers, timeout }: RouterConfig) {
+	constructor({ baseUrl, headers, timeout }: DefaultConfig) {
 		this.default = {
 			baseUrl,
 			headers,
@@ -40,23 +22,23 @@ export class HTTPClient {
 		}
 	}
 
-	static create(config: RouterConfig) {
+	static create(config: DefaultConfig): HTTPClient {
 		return new HTTPClient(config)
 	}
 
-	get<T = any>(path: string, config?: Config) {
+	get<T = any>(path: string, config?: Config): Promise<Response<T>> {
 		return this._request<T>({ path, ...config, method: METHODS.GET })
 	}
 
-	post<T = any>(path: string, config?: Config) {
+	post<T = any>(path: string, config?: Config): Promise<Response<T>> {
 		return this._request<T>({ path, ...config, method: METHODS.POST })
 	}
 
-	put<T = any>(path: string, config?: Config) {
+	put<T = any>(path: string, config?: Config): Promise<Response<T>> {
 		return this._request<T>({ path, ...config, method: METHODS.PUT })
 	}
 
-	delete<T = any>(path: string, config?: Config) {
+	delete<T = any>(path: string, config?: Config): Promise<Response<T>> {
 		return this._request<T>({ path, ...config, method: METHODS.DELETE })
 	}
 
@@ -65,7 +47,7 @@ export class HTTPClient {
 		path,
 		params = {},
 		data = {},
-	}: RequestConfig): Response<T> {
+	}: RequestConfig): Promise<Response<T>> {
 		const requestMethod = method.toUpperCase()
 
 		let requestUrl = new URL(this.default.baseUrl + path)

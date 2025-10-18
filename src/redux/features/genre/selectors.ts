@@ -1,8 +1,7 @@
+import type { Selector } from '@/modules/redux/types/selectors'
 import type { State } from '@/modules/redux/types/store'
 
 /**
  * Селектор для получения всей секции жанров из состояния.
- * @param {State} state - Состояние Redux store.
- * @returns {Object} Объект с данными о жанрах (genres, loading, error и т.д.).
  */
-export const selectGenreSection = (state: State) => state.genre
+export const selectGenreSection: Selector = (state: State): State => state.genre

@@ -1,13 +1,12 @@
 import HTTPClient from '@/modules/HTTPClient/index'
 import type { ModelsFilm } from '@/modules/HTTPClient/types/api'
-import type { Dispatch } from '@/modules/redux/types/actions'
-import actionTypes from './types'
+import type { Action, Dispatch } from '@/modules/redux/types/actions'
+import actionTypes from './actionTypes'
 
 /**
  * Action: начало загрузки фильмов.
- * @returns {{ type: string }}
  */
-const setFilmsLoadingAction = () => {
+const setFilmsLoadingAction = (): Action => {
 	return {
 		type: actionTypes.FILMS_LOADING,
 	}
@@ -16,10 +15,8 @@ const setFilmsLoadingAction = () => {
 /**
  * Action: успешная загрузка фильмов.
  *
- * @param {Array<Object>} data - Массив фильмов.
- * @returns {{ type: string, payload: { films: Array<Object> } }}
  */
-const returnFilmsAction = (data: ModelsFilm[]) => {
+const returnFilmsAction = (data: ModelsFilm[]): Action => {
 	return {
 		type: actionTypes.FILMS_LOADED,
 		payload: { films: data },
@@ -28,11 +25,8 @@ const returnFilmsAction = (data: ModelsFilm[]) => {
 
 /**
  * Action: ошибка при загрузке фильмов.
- *
- * @param {string} error - Сообщение об ошибке.
- * @returns {{ type: string, payload: { films: [], error: string } }}
  */
-const returnFilmsErrorAction = (error: string) => {
+const returnFilmsErrorAction = (error: string): Action => {
 	return {
 		type: actionTypes.FILMS_ERROR,
 		payload: { films: [], error: error },
@@ -41,11 +35,8 @@ const returnFilmsErrorAction = (error: string) => {
 
 /**
  * Action: очистка фильмов.
- *
- * @param {string} error - Сообщение об ошибке.
- * @returns { type: string }
  */
-const clearFilmsAction = () => {
+const clearFilmsAction = (): Action => {
 	return {
 		type: actionTypes.FILMS_CLEAR,
 	}
@@ -53,13 +44,10 @@ const clearFilmsAction = () => {
 
 /**
  * Thunk: асинхронная загрузка фильмов с сервера.
- *
- * @param {number} limit - Количество фильмов.
- * @param {number} offset - Смещение.
- * @returns {Function} Thunk-функция для dispatch.
  */
-const getFilmsAction =
-	(limit: number, offset: number) => async (dispatch: Dispatch) => {
+const getFilmsAction: Action =
+	(limit: number, offset: number) =>
+	async (dispatch: Dispatch): Promise<void> => {
 		dispatch(setFilmsLoadingAction())
 		try {
 			const response = await HTTPClient.get<ModelsFilm[]>('/films', {

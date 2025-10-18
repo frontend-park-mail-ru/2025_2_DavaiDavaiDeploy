@@ -1,4 +1,4 @@
-import { isProduction } from './constants'
+import { isProduction } from './ isProduction'
 
 /**
  * Базовый URL API сервера в зависимости от окружения.

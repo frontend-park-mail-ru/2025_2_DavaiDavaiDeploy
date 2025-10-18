@@ -1,13 +1,12 @@
-import type { Action } from '@/modules/redux/types/actions'
+import type { Action, Dispatch } from '@/modules/redux/types/actions'
 import type { State } from '@/modules/redux/types/store'
+import type { ThunkMiddleware } from '../types/middleware'
+
 /**
  * Создаёт middleware для поддержки Redux-thunk с возможностью передачи дополнительного аргумента.
  *
  * Позволяет `action` быть функцией вместо объекта. Если `action` — функция, она будет вызвана с аргументами:
  * `dispatch`, `getState` и `extraArgument`.
- *
- * @param {*} extraArgument - Дополнительный аргумент, передаваемый в thunk-функции.
- * @returns {Function} Redux middleware.
  *
  * @example
  * const thunk = createThunkMiddleware({ api });
@@ -20,12 +19,14 @@ import type { State } from '@/modules/redux/types/store'
  *   });
  * };
  */
-export function createThunkMiddleware(extraArgument?: any) {
+export function createThunkMiddleware(
+	extraArgument?: undefined,
+): ThunkMiddleware {
 	return ({
 			dispatch,
 			getState,
 		}: {
-			dispatch: (action: Action) => void
+			dispatch: Dispatch
 			getState: () => State
 		}) =>
 		(next: (action: Action) => any) =>

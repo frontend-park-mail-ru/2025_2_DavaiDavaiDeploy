@@ -1,8 +1,5 @@
 /**
  * Композиция функций справа налево.
- *
- * @param {...Function} funcs - Функции для композиции.
- * @returns {Function} Одна функция, полученная в результате композиции.
  */
 export function compose(...funcs: Function[]): Function {
 	if (funcs.length === 0) {

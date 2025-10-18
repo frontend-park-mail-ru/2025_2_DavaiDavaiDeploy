@@ -1,10 +1,10 @@
 /**
  * Валидирует значение пароля по длине и допустимым символам.
- *
- * @param {string} value - Введённый пароль.
- * @returns {{ isValid: boolean, message: string }} Результат валидации и сообщение об ошибке.
  */
-export function validatePassword(value: string) {
+export function validatePassword(value: string): {
+	isValid: boolean
+	message: string
+} {
 	if (!value || value.trim() === '') {
 		return { isValid: false, message: 'Пароль обязателен' }
 	}
