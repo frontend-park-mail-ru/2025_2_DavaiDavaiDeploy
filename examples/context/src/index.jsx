@@ -91,7 +91,7 @@ class ComplexHeader extends Component {
               You are viewing in {theme.theme} mode with {theme.primaryColor} accent
             </p>
 
-            <SettingsContext.Provider value={this.props.defaultNotificationValue}>
+            <SettingsContext.Provider value={this.props.settings}>
               <div style={{background: 'rgba(0,0,0,0.1)', padding: '10px', margin: '10px 0'}}>
                 <p>
                   <strong>Local Settings Area (overridden):</strong>
@@ -213,7 +213,7 @@ class ComplexApp extends Component {
           }}>
           <UserContext.Provider value={this.state.user}>
             <SettingsContext.Provider value={this.state.settings}>
-              <ComplexHeader defaultNotificationValue={this.state.settings} />
+              <ComplexHeader settings={this.state.settings} />
 
               <ControlPanel
                 onToggleTheme={this.toggleTheme}
