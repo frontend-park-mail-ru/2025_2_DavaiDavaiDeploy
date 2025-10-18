@@ -1,6 +1,21 @@
-import { METHODS } from './methods'
 import type { Config, RequestConfig, RouterConfig } from './types/configs'
 import type { Response } from './types/response'
+
+/**
+ * Поддерживаемые HTTP-методы
+ * @constant {Object}
+ * @property {string} GET - Метод GET
+ * @property {string} POST - Метод POST
+ * @property {string} PUT - Метод PUT
+ * @property {string} DELETE - Метод DELETE
+ */
+const enum METHODS {
+	GET = 'GET',
+	POST = 'POST',
+	PUT = 'PUT',
+	DELETE = 'DELETE',
+}
+
 /**
  * HTTP-клиент для выполнения запросов к API
  * @class

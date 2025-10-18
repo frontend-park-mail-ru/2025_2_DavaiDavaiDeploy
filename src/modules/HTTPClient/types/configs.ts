@@ -1,5 +1,3 @@
-import type { Method } from './methods'
-
 export type RouterConfig = {
 	baseUrl: string
 	headers?: Record<string, string | (() => string)>
@@ -7,7 +5,7 @@ export type RouterConfig = {
 }
 
 export type RequestConfig = {
-	method: Method
+	method: string
 	path: string
 	params?: Record<string | number, string | number>
 	data?: any
