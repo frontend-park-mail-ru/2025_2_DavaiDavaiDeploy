@@ -1,48 +1,70 @@
 import {Component, createApp, createContext} from '@lib/react.js';
 
-
 const ThemeContext = createContext({theme: 'light', primaryColor: 'blue'});
 const UserContext = createContext({name: 'Guest', role: 'user'});
 const SettingsContext = createContext({language: 'en', notifications: true});
 
 class UserProfile extends Component {
+  static contextType = UserContext;
+
   render() {
+    const user = this.context;
+    console.log('user', user);
     return (
-      <UserContext.Consumer>
-        {user => (
-          <SettingsContext.Consumer>
-            {settings => (
-              <div style={{padding: '10px', border: '1px solid #ccc', margin: '10px 0'}}>
-                <h3>User Profile</h3>
-                <p>Name: {user.name}</p>
-                <p>Role: {user.role}</p>
-                <p>Language: {settings.language}</p>
-                <p>Notifications: {settings.notifications ? 'On' : 'Off'}</p>
-              </div>
-            )}
-          </SettingsContext.Consumer>
-        )}
-      </UserContext.Consumer>
+      <div>
+        <div style={{padding: '10px', border: '1px solid #ccc', margin: '10px 0'}}>
+          <h3>User Profile (using contextType)</h3>
+          <p>Name: {user.name}</p>
+          <p>Role: {user.role}</p>
+        </div>
+      </div>
     );
   }
 }
 
 class ThemeSettings extends Component {
+  static contextType = ThemeContext;
+
   render() {
+    const theme = this.context;
+    console.log('в ThemeSettings theme', theme);
+    return (
+      <div
+        style={{
+          padding: '15px',
+          background: theme.theme === 'dark' ? '#2a2a2a' : '#f5f5f5',
+          color: theme.theme === 'dark' ? 'white' : 'black',
+          margin: '10px 0',
+        }}>
+        <h3>Theme Settings (using contextType)</h3>
+        <p>Current theme: {theme.theme}</p>
+        <p>Primary color: {theme.primaryColor}</p>
+        {this.props.children}
+      </div>
+    );
+  }
+}
+
+class NotificationsPanel extends Component {
+  static contextType = SettingsContext;
+
+  render() {
+    const settings = this.context;
     return (
       <ThemeContext.Consumer>
         {theme => (
           <div
             style={{
-              padding: '15px',
-              background: theme.theme === 'dark' ? '#2a2a2a' : '#f5f5f5',
-              color: theme.theme === 'dark' ? 'white' : 'black',
-              margin: '10px 0',
+              padding: '10px',
+              background: theme.theme === 'dark' ? '#333' : '#fff',
+              color: theme.theme === 'dark' ? '#fff' : '#333',
+              border: `2px solid ${theme.primaryColor}`,
             }}>
-            <h3>Theme Settings</h3>
-            <p>Current theme: {theme.theme}</p>
-            <p>Primary color: {theme.primaryColor}</p>
-            {this.props.children}
+            <h4>Notifications (using contextType)</h4>
+            <p>Status: {settings.notifications ? '🔔 Enabled' : '🔕 Disabled'}</p>
+            {settings.notifications && (
+              <div style={{color: theme.primaryColor}}>New messages available!</div>
+            )}
           </div>
         )}
       </ThemeContext.Consumer>
@@ -50,69 +72,40 @@ class ThemeSettings extends Component {
   }
 }
 
-class NotificationsPanel extends Component {
-  render() {
-    return (
-      <SettingsContext.Consumer>
-        {settings => (
-          <ThemeContext.Consumer>
-            {theme => (
-              <div
-                style={{
-                  padding: '10px',
-                  background: theme.theme === 'dark' ? '#333' : '#fff',
-                  color: theme.theme === 'dark' ? '#fff' : '#333',
-                  border: `2px solid ${theme.primaryColor}`,
-                }}>
-                <h4>Notifications</h4>
-                <p>Status: {settings.notifications ? '🔔 Enabled' : '🔕 Disabled'}</p>
-                {settings.notifications && (
-                  <div style={{color: theme.primaryColor}}>New messages available!</div>
-                )}
-              </div>
-            )}
-          </ThemeContext.Consumer>
-        )}
-      </SettingsContext.Consumer>
-    );
-  }
-}
-
-
 class ComplexHeader extends Component {
-  render() {
-    return (
-      <ThemeContext.Consumer>
-        {theme => (
-          <UserContext.Consumer>
-            {user => (
-              <header
-                style={{
-                  background: theme.theme === 'dark' ? '#1a1a1a' : '#ffffff',
-                  color: theme.theme === 'dark' ? '#ffffff' : '#000000',
-                  padding: '20px',
-                  borderBottom: `3px solid ${theme.primaryColor}`,
-                }}>
-                <h1>Welcome to Complex App, {user.name}!</h1>
-                <p>
-                  You are viewing in {theme.theme} mode with {theme.primaryColor} accent
-                </p>
+  static contextType = ThemeContext;
 
-                <SettingsContext.Provider value={{language: 'ru', notifications: false}}>
-                  <div style={{background: 'rgba(0,0,0,0.1)', padding: '10px', margin: '10px 0'}}>
-                    <p>
-                      <strong>Local Settings Area (overridden):</strong>
-                    </p>
-                    <SettingsContext.Consumer>
-                      {localSettings => <span>Language: {localSettings.language}</span>}
-                    </SettingsContext.Consumer>
-                  </div>
-                </SettingsContext.Provider>
-              </header>
-            )}
-          </UserContext.Consumer>
+  render() {
+    const theme = this.context;
+    console.log('в ComplexHeader context', this.context);
+    return (
+      <UserContext.Consumer>
+        {user => (
+          <header
+            style={{
+              background: theme.theme === 'dark' ? '#1a1a1a' : '#ffffff',
+              color: theme.theme === 'dark' ? '#ffffff' : '#000000',
+              padding: '20px',
+              borderBottom: `3px solid ${theme.primaryColor}`,
+            }}>
+            <h1>Welcome to Complex App, {user.name}! (using contextType for theme)</h1>
+            <p>
+              You are viewing in {theme.theme} mode with {theme.primaryColor} accent
+            </p>
+
+            <SettingsContext.Provider value={{language: 'ru', notifications: false}}>
+              <div style={{background: 'rgba(0,0,0,0.1)', padding: '10px', margin: '10px 0'}}>
+                <p>
+                  <strong>Local Settings Area (overridden):</strong>
+                </p>
+                <SettingsContext.Consumer>
+                  {localSettings => <span>Language: {localSettings.language}</span>}
+                </SettingsContext.Consumer>
+              </div>
+            </SettingsContext.Provider>
+          </header>
         )}
-      </ThemeContext.Consumer>
+      </UserContext.Consumer>
     );
   }
 }
@@ -132,6 +125,38 @@ class ControlPanel extends Component {
   }
 }
 
+// Новый компонент, демонстрирующий contextType
+class ContextTypeDemo extends Component {
+  static contextType = ThemeContext;
+
+  render() {
+    const theme = this.context;
+    return (
+      <div
+        style={{
+          padding: '15px',
+          margin: '10px 0',
+          border: '2px dashed #007acc',
+          background: theme.theme === 'dark' ? '#1e1e1e' : '#f0f8ff',
+          color: theme.theme === 'dark' ? '#ffffff' : '#000000',
+        }}>
+        <h4>🚀 ContextType Demo Component</h4>
+        <p>
+          This component uses <code>static contextType = ThemeContext</code>
+        </p>
+        <p>
+          Current theme: <strong>{theme.theme}</strong>
+        </p>
+        <p>
+          Primary color: <strong style={{color: theme.primaryColor}}>{theme.primaryColor}</strong>
+        </p>
+        <p>
+          Access via <code>this.context</code> - much cleaner than Consumer!
+        </p>
+      </div>
+    );
+  }
+}
 
 class ComplexApp extends Component {
   state = {
@@ -181,6 +206,7 @@ class ComplexApp extends Component {
   };
 
   render() {
+    console.log('this.state.user', this.state.user);
     return (
       <>
         <ThemeContext.Provider
@@ -206,6 +232,9 @@ class ComplexApp extends Component {
                   <ThemeSettings>
                     <UserProfile />
                   </ThemeSettings>
+
+                  {/* Новый компонент с contextType */}
+                  <ContextTypeDemo />
                 </div>
 
                 <div style={{flex: 1}}>
