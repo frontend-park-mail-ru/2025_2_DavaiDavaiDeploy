@@ -57,25 +57,23 @@ const deleteUserAction = (userId: string | number): Action => {
 /**
  * Создает асинхронное действие для проверки авторизации пользователя.
  */
-const checkUserAction =
-	(): Action =>
-	async (dispatch: Dispatch): Promise<void> => {
-		dispatch(setUserLoadingAction())
-		try {
-			const response = await HTTPClient.get<ModelsUser>('/auth/check')
-			dispatch(returnUserAction(response.data))
-		} catch (error: unknown) {
-			let errorMessage: string = 'Произошла ошибка'
+const checkUserAction = (): Action => async (dispatch: Dispatch) => {
+	dispatch(setUserLoadingAction())
+	try {
+		const response = await HTTPClient.get<ModelsUser>('/auth/check')
+		dispatch(returnUserAction(response.data))
+	} catch (error: unknown) {
+		let errorMessage: string = 'Произошла ошибка'
 
-			if (error instanceof Error) {
-				errorMessage = error.message
-			} else if (typeof error === 'string') {
-				errorMessage = error
-			}
-
-			dispatch(returnUserErrorAction(errorMessage))
+		if (error instanceof Error) {
+			errorMessage = error.message
+		} else if (typeof error === 'string') {
+			errorMessage = error
 		}
+
+		dispatch(returnUserErrorAction(errorMessage))
 	}
+}
 
 /**
  * Создает действие для добавления нового пользователя.
@@ -86,7 +84,7 @@ const checkUserAction =
  */
 const registerUserAction =
 	(login: string, password: string): Action =>
-	async (dispatch: Dispatch): Promise<void> => {
+	async (dispatch: Dispatch) => {
 		try {
 			const response = await HTTPClient.post<ModelsUser>('/auth/signup', {
 				data: {
@@ -113,7 +111,7 @@ const registerUserAction =
  */
 const loginUserAction =
 	(login: string, password: string): Action =>
-	async (dispatch: Dispatch): Promise<void> => {
+	async (dispatch: Dispatch) => {
 		try {
 			const response = await HTTPClient.post<ModelsUser>('/auth/signin', {
 				data: {

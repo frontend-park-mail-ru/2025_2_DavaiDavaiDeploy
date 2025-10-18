@@ -5,7 +5,7 @@ export function validateProducer(
 	value: any,
 	validator: Function | null,
 	extraValue = null,
-): any {
+): { isValid: boolean; message: string } {
 	if (!validator) {
 		return { isValid: true, message: '' }
 	}

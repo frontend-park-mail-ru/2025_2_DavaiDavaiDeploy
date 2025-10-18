@@ -96,7 +96,7 @@ const returnGenreFilmsErrorAction = (error: string): Action => {
  */
 const getGenreAction =
 	(id: string | number): Action =>
-	async (dispatch: Dispatch): Promise<void> => {
+	async (dispatch: Dispatch) => {
 		dispatch(setGenreLoadingAction())
 		try {
 			const response = await HTTPClient.get<ModelsGenre>(`/genres/${id}`)
@@ -117,32 +117,30 @@ const getGenreAction =
 /**
  * Action: получает список всех жанров
  */
-const getGenresAction =
-	(): Action =>
-	async (dispatch: Dispatch): Promise<void> => {
-		dispatch(setGenresLoadingAction())
-		try {
-			const response = await HTTPClient.get<ModelsGenre[]>('/genres')
-			dispatch(returnGenresAction(response.data))
-		} catch (error: unknown) {
-			let errorMessage: string = 'Произошла ошибка'
+const getGenresAction = (): Action => async (dispatch: Dispatch) => {
+	dispatch(setGenresLoadingAction())
+	try {
+		const response = await HTTPClient.get<ModelsGenre[]>('/genres')
+		dispatch(returnGenresAction(response.data))
+	} catch (error: unknown) {
+		let errorMessage: string = 'Произошла ошибка'
 
-			if (error instanceof Error) {
-				errorMessage = error.message
-			} else if (typeof error === 'string') {
-				errorMessage = error
-			}
-
-			dispatch(returnGenresErrorAction(errorMessage))
+		if (error instanceof Error) {
+			errorMessage = error.message
+		} else if (typeof error === 'string') {
+			errorMessage = error
 		}
+
+		dispatch(returnGenresErrorAction(errorMessage))
 	}
+}
 
 /**
  * Action: получает фильмы по жанру
  */
 const getGenreFilmsAction =
 	(id: string | number, limit: number, offset: number): Action =>
-	async (dispatch: Dispatch): Promise<void> => {
+	async (dispatch: Dispatch) => {
 		dispatch(setGenreFilmsLoadingAction())
 		try {
 			const response = await HTTPClient.get<ModelsFilm[]>(

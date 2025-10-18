@@ -46,8 +46,7 @@ const clearFilmsAction = (): Action => {
  * Thunk: асинхронная загрузка фильмов с сервера.
  */
 const getFilmsAction: Action =
-	(limit: number, offset: number) =>
-	async (dispatch: Dispatch): Promise<void> => {
+	(limit: number, offset: number) => async (dispatch: Dispatch) => {
 		dispatch(setFilmsLoadingAction())
 		try {
 			const response = await HTTPClient.get<ModelsFilm[]>('/films', {
