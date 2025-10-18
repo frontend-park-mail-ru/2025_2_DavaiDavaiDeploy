@@ -1,6 +1,7 @@
 import { mergeUniqueFilms } from '@/helpers/mergeUniqueFilmsHelper/mergeUniqueFilmsHelper'
-import type { ModelsFilm } from '@/modules/HTTPClient/apiTypes'
-import type { Action, State } from '@/modules/redux/ReduxTypes'
+import type { ModelsFilm } from '@/modules/HTTPClient/types/api'
+import type { Action } from '@/modules/redux/types/actions'
+import type { State } from '@/modules/redux/types/store'
 import types from './types'
 
 /**

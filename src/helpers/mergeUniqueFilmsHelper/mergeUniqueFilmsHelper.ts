@@ -1,4 +1,4 @@
-import type { ModelsFilm } from '@/modules/HTTPClient/apiTypes'
+import type { ModelsFilm } from '@/modules/HTTPClient/types/api'
 
 /**
  * Объединяет два массива фильмов, исключая дубликаты по ID.

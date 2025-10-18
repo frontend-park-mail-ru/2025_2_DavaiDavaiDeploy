@@ -1,4 +1,5 @@
-import { rating as ratingConsts } from '@/consts/raiting'
+import type { RatingType } from '@/consts/raiting'
+import { RatingValues } from '@/consts/raiting'
 
 /**
  * Определяет тип рейтинга: высокий, средний или низкий.
@@ -6,12 +7,12 @@ import { rating as ratingConsts } from '@/consts/raiting'
  * @param {number} rating - Числовое значение рейтинга.
  * @returns {string} Тип рейтинга (например, "high", "medium", "low").
  */
-export const getRatingType = (rating: number) => {
+export const getRatingType = (rating: number): RatingType => {
 	if (rating >= 8) {
-		return ratingConsts.high
+		return RatingValues.High
 	}
 	if (rating >= 5) {
-		return ratingConsts.medium
+		return RatingValues.Medium
 	}
-	return ratingConsts.low
+	return RatingValues.Low
 }

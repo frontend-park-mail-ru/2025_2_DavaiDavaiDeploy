@@ -5,14 +5,10 @@
  * @property {string} medium - Средний рейтинг.
  * @property {string} low - Низкий рейтинг.
  */
-export const rating = Object.freeze({
-	high: 'high',
-	medium: 'medium',
-	low: 'low',
-} as const)
+export const RatingValues = {
+	High: 'high',
+	Medium: 'medium',
+	Low: 'low',
+} as const
 
-/**
- * Тип рейтинга фильма.
- * @typedef {string} Rating
- */
-export type Rating = (typeof rating)[keyof typeof rating]
+export type RatingType = (typeof RatingValues)[keyof typeof RatingValues]

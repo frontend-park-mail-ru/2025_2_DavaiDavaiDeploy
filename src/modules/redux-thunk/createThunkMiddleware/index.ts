@@ -1,4 +1,5 @@
-import type { Action, State } from '@/modules/redux/ReduxTypes'
+import type { Action } from '@/modules/redux/types/actions'
+import type { State } from '@/modules/redux/types/store'
 /**
  * Создаёт middleware для поддержки Redux-thunk с возможностью передачи дополнительного аргумента.
  *

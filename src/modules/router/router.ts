@@ -4,7 +4,7 @@ import { normalize } from '@/helpers/normalizeHelper/normalizeHelper'
 import actions from '@/redux/features/user/actions'
 import { selectUser } from '@/redux/features/user/selectors'
 import { store } from '@/redux/store'
-import type { RouteConfig, Routes } from './RouterTypes'
+import type { RouteConfig, Routes } from './types/routes'
 
 /**
  * Класс для управления маршрутизацией в SPA приложении.

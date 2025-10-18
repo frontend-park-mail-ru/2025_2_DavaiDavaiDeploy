@@ -1,5 +1,8 @@
 import { compose } from '../compose/index'
-import type { Action, Middleware, Reducer, State, Store } from '../ReduxTypes'
+import type { Action } from '../types/actions'
+import type { Middleware } from '../types/middleware'
+import type { Reducer } from '../types/reducers'
+import type { State, Store } from '../types/store'
 
 /**
  * Применяет middleware к Redux-подобному store.

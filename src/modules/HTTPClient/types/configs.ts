@@ -1,3 +1,5 @@
+import type { Method } from './methods'
+
 export type RouterConfig = {
 	baseUrl: string
 	headers?: Record<string, string | (() => string)>
@@ -5,17 +7,10 @@ export type RouterConfig = {
 }
 
 export type RequestConfig = {
-	method?: string
+	method: Method
 	path: string
 	params?: Record<string | number, string | number>
 	data?: any
 }
 
 export type Config = Pick<RequestConfig, 'params' | 'data'>
-
-export type Response<T> = Promise<{
-	data: T
-	status: number
-	statusText: string
-	headers: Record<string, string>
-}>

@@ -1,7 +1,7 @@
-import type { ModelsUser } from '@/modules/HTTPClient/apiTypes'
-import type { Dispatch } from '@/modules/redux/ReduxTypes'
+import type { ModelsUser } from '@/modules/HTTPClient/types/api'
+import type { Dispatch } from '@/modules/redux/types/actions'
 import HTTPClient from '../../../modules/HTTPClient/index'
-import types from './types'
+import actionTypes from './types'
 
 /**
  * Создает действие для установки состояния загрузки пользователя.
@@ -10,7 +10,7 @@ import types from './types'
  */
 const setUserLoadingAction = () => {
 	return {
-		type: types.USER_LOADING,
+		type: actionTypes.USER_LOADING,
 	}
 }
 
@@ -22,7 +22,7 @@ const setUserLoadingAction = () => {
  */
 const returnUserAction = (data: ModelsUser) => {
 	return {
-		type: types.USER_LOADED,
+		type: actionTypes.USER_LOADED,
 		payload: { users: data },
 	}
 }
@@ -35,7 +35,7 @@ const returnUserAction = (data: ModelsUser) => {
  */
 const returnUserErrorAction = (error: string) => {
 	return {
-		type: types.USER_ERROR,
+		type: actionTypes.USER_ERROR,
 		payload: { users: [], error: error },
 	}
 }
@@ -48,7 +48,7 @@ const returnUserErrorAction = (error: string) => {
  */
 const updateUserAction = (login: string, password: string) => {
 	return {
-		type: types.USER_UPDATE,
+		type: actionTypes.USER_UPDATE,
 		payload: { login: login, password: password },
 	}
 }
@@ -61,7 +61,7 @@ const updateUserAction = (login: string, password: string) => {
  */
 const deleteUserAction = (userId: string | number) => {
 	return {
-		type: types.USER_DELETE,
+		type: actionTypes.USER_DELETE,
 		payload: { userId: userId },
 	}
 }

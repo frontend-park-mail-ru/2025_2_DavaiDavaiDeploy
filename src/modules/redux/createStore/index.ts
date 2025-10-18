@@ -1,4 +1,6 @@
-import type { Action, Reducer, State, Store } from '../ReduxTypes'
+import type { Action } from '../types/actions'
+import type { Reducer } from '../types/reducers'
+import type { State, Store } from '../types/store'
 
 /**
  * Создаёт простой Redux-подобный store.

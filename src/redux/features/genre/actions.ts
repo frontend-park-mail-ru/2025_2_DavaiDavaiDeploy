@@ -1,7 +1,7 @@
-import type { ModelsFilm, ModelsGenre } from '@/modules/HTTPClient/apiTypes'
-import type { Dispatch } from '@/modules/redux/ReduxTypes'
+import type { ModelsFilm, ModelsGenre } from '@/modules/HTTPClient/types/api'
+import type { Dispatch } from '@/modules/redux/types/actions'
 import HTTPClient from '../../../modules/HTTPClient/index'
-import types from './types'
+import actionTypes from './types'
 
 /**
  * Action: устанавливает состояние загрузки для жанра
@@ -9,7 +9,7 @@ import types from './types'
  */
 const setGenreLoadingAction = () => {
 	return {
-		type: types.GENRE_LOADING,
+		type: actionTypes.GENRE_LOADING,
 	}
 }
 
@@ -19,7 +19,7 @@ const setGenreLoadingAction = () => {
  */
 const setGenresLoadingAction = () => {
 	return {
-		type: types.GENRES_LOADING,
+		type: actionTypes.GENRES_LOADING,
 	}
 }
 
@@ -29,7 +29,7 @@ const setGenresLoadingAction = () => {
  */
 const setGenreFilmsLoadingAction = () => {
 	return {
-		type: types.GENRE_FILMS_LOADING,
+		type: actionTypes.GENRE_FILMS_LOADING,
 	}
 }
 
@@ -40,7 +40,7 @@ const setGenreFilmsLoadingAction = () => {
  */
 const returnGenreAction = (data: ModelsGenre) => {
 	return {
-		type: types.GENRE_LOADED,
+		type: actionTypes.GENRE_LOADED,
 		payload: { genre: data },
 	}
 }
@@ -52,7 +52,7 @@ const returnGenreAction = (data: ModelsGenre) => {
  */
 const returnGenreFilmsAction = (data: ModelsFilm[]) => {
 	return {
-		type: types.GENRE_FILMS_LOADED,
+		type: actionTypes.GENRE_FILMS_LOADED,
 		payload: { films: data },
 	}
 }
@@ -64,7 +64,7 @@ const returnGenreFilmsAction = (data: ModelsFilm[]) => {
  */
 const returnGenresAction = (data: ModelsGenre[]) => {
 	return {
-		type: types.GENRES_LOADED,
+		type: actionTypes.GENRES_LOADED,
 		payload: { genres: data },
 	}
 }
@@ -76,7 +76,7 @@ const returnGenresAction = (data: ModelsGenre[]) => {
  */
 const returnGenreErrorAction = (error: string) => {
 	return {
-		type: types.GENRE_ERROR,
+		type: actionTypes.GENRE_ERROR,
 		payload: { error: error },
 	}
 }
@@ -88,7 +88,7 @@ const returnGenreErrorAction = (error: string) => {
  */
 const returnGenresErrorAction = (error: string) => {
 	return {
-		type: types.GENRES_ERROR,
+		type: actionTypes.GENRES_ERROR,
 		payload: { error: error },
 	}
 }
@@ -100,7 +100,7 @@ const returnGenresErrorAction = (error: string) => {
  */
 const returnGenreFilmsErrorAction = (error: string) => {
 	return {
-		type: types.GENRE_FILMS_ERROR,
+		type: actionTypes.GENRE_FILMS_ERROR,
 		payload: { error: error },
 	}
 }

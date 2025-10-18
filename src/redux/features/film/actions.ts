@@ -1,7 +1,7 @@
-import type { ModelsFilm } from '@/modules/HTTPClient/apiTypes'
 import HTTPClient from '@/modules/HTTPClient/index'
-import type { Dispatch } from '@/modules/redux/ReduxTypes'
-import types from './types'
+import type { ModelsFilm } from '@/modules/HTTPClient/types/api'
+import type { Dispatch } from '@/modules/redux/types/actions'
+import actionTypes from './types'
 
 /**
  * Action: начало загрузки фильмов.
@@ -9,7 +9,7 @@ import types from './types'
  */
 const setFilmsLoadingAction = () => {
 	return {
-		type: types.FILMS_LOADING,
+		type: actionTypes.FILMS_LOADING,
 	}
 }
 
@@ -21,7 +21,7 @@ const setFilmsLoadingAction = () => {
  */
 const returnFilmsAction = (data: ModelsFilm[]) => {
 	return {
-		type: types.FILMS_LOADED,
+		type: actionTypes.FILMS_LOADED,
 		payload: { films: data },
 	}
 }
@@ -34,7 +34,7 @@ const returnFilmsAction = (data: ModelsFilm[]) => {
  */
 const returnFilmsErrorAction = (error: string) => {
 	return {
-		type: types.FILMS_ERROR,
+		type: actionTypes.FILMS_ERROR,
 		payload: { films: [], error: error },
 	}
 }
@@ -47,7 +47,7 @@ const returnFilmsErrorAction = (error: string) => {
  */
 const clearFilmsAction = () => {
 	return {
-		type: types.FILMS_CLEAR,
+		type: actionTypes.FILMS_CLEAR,
 	}
 }
 

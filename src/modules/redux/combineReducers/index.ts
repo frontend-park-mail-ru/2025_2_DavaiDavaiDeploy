@@ -1,4 +1,6 @@
-import type { Action, Reducer, State } from '../ReduxTypes'
+import type { Action } from '../types/actions'
+import type { Reducer } from '../types/reducers'
+import type { State } from '../types/store'
 
 /**
  * Комбинирует несколько редьюсеров в один.

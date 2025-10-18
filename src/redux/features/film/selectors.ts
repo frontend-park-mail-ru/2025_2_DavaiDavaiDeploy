@@ -1,4 +1,4 @@
-import type { State } from '@/modules/redux/ReduxTypes'
+import type { State } from '@/modules/redux/types/store'
 
 /**
  * Селектор для получения списка фильмов из состояния.
