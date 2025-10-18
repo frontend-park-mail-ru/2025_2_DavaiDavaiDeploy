@@ -7,9 +7,9 @@ export interface RouteConfig {
 	href: string
 	/** @type {any} Компонент для рендеринга */
 	component: any
-	/** @type {boolean} [hasHeader=true] Показывать ли заголовок */
+	/** @type {boolean} [hasHeader=true] Показывать ли header */
 	hasHeader?: boolean
-	/** @type {boolean} [hasFooter=true] Показывать ли подвал */
+	/** @type {boolean} [hasFooter=true] Показывать ли footer */
 	hasFooter?: boolean
 }
 

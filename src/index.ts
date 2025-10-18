@@ -9,9 +9,9 @@ import router from './modules/router/index'
 interface RouteConfig {
 	/** @type {string} Путь маршрута */
 	href: string
-	/** @type {boolean} [hasHeader=true] Показывать ли заголовок */
+	/** @type {boolean} [hasHeader=true] Показывать ли header */
 	hasHeader?: boolean
-	/** @type {boolean} [hasFooter=true] Показывать ли подвал */
+	/** @type {boolean} [hasFooter=true] Показывать ли footer */
 	hasFooter?: boolean
 }
 
