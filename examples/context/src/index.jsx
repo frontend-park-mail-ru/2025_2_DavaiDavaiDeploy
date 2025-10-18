@@ -9,7 +9,6 @@ class UserProfile extends Component {
 
   render() {
     const user = this.context;
-    console.log('user', user);
     return (
       <div>
         <div style={{padding: '10px', border: '1px solid #ccc', margin: '10px 0'}}>
@@ -27,7 +26,6 @@ class ThemeSettings extends Component {
 
   render() {
     const theme = this.context;
-    console.log('в ThemeSettings theme', theme);
     return (
       <div
         style={{
@@ -77,7 +75,7 @@ class ComplexHeader extends Component {
 
   render() {
     const theme = this.context;
-    console.log('в ComplexHeader context', this.context);
+
     return (
       <UserContext.Consumer>
         {user => (
@@ -93,7 +91,7 @@ class ComplexHeader extends Component {
               You are viewing in {theme.theme} mode with {theme.primaryColor} accent
             </p>
 
-            <SettingsContext.Provider value={{language: 'ru', notifications: false}}>
+            <SettingsContext.Provider value={this.props.defaultNotificationValue}>
               <div style={{background: 'rgba(0,0,0,0.1)', padding: '10px', margin: '10px 0'}}>
                 <p>
                   <strong>Local Settings Area (overridden):</strong>
@@ -206,7 +204,6 @@ class ComplexApp extends Component {
   };
 
   render() {
-    console.log('this.state.user', this.state.user);
     return (
       <>
         <ThemeContext.Provider
@@ -216,7 +213,7 @@ class ComplexApp extends Component {
           }}>
           <UserContext.Provider value={this.state.user}>
             <SettingsContext.Provider value={this.state.settings}>
-              <ComplexHeader />
+              <ComplexHeader defaultNotificationValue={this.state.settings} />
 
               <ControlPanel
                 onToggleTheme={this.toggleTheme}
@@ -240,7 +237,7 @@ class ComplexApp extends Component {
                 <div style={{flex: 1}}>
                   <NotificationsPanel />
 
-                  <ThemeContext.Provider value={{theme: 'light', primaryColor: 'green'}}>
+                  <ThemeContext.Provider value={{theme: this.state.theme, primaryColor: this.state.primaryColor}}>
                     <div
                       style={{
                         padding: '15px',
