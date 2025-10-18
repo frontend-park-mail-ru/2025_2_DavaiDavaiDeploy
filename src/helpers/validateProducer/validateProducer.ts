@@ -1,3 +1,5 @@
+import type { ValidationResult } from '../types/validationResult'
+
 /**
  * Универсальный валидатор, который делегирует проверку внешней функции.
  */
@@ -5,7 +7,7 @@ export function validateProducer(
 	value: any,
 	validator: Function | null,
 	extraValue = null,
-): { isValid: boolean; message: string } {
+): ValidationResult {
 	if (!validator) {
 		return { isValid: true, message: '' }
 	}

@@ -1,10 +1,9 @@
+import type { ValidationResult } from '../types/validationResult'
+
 /**
  * Валидирует значение пароля по длине и допустимым символам.
  */
-export function validatePassword(value: string): {
-	isValid: boolean
-	message: string
-} {
+export function validatePassword(value: string): ValidationResult {
 	if (!value || value.trim() === '') {
 		return { isValid: false, message: 'Пароль обязателен' }
 	}

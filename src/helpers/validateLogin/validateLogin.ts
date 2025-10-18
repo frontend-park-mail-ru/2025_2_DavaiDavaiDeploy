@@ -1,10 +1,9 @@
+import type { ValidationResult } from '../types/validationResult'
+
 /**
  * Валидирует значение логина по нескольким критериям.
  */
-export function validateLogin(value: string): {
-	isValid: boolean
-	message: string
-} {
+export function validateLogin(value: string): ValidationResult {
 	if (!value || value.trim() === '') {
 		return { isValid: false, message: 'Логин обязателен' }
 	}

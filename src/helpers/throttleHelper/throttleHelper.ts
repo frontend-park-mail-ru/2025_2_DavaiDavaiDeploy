@@ -1,12 +1,16 @@
-interface ThrottledFunction {
-	(...args: any[]): void
-}
+type ThrottledFunction<T extends (...args: any[]) => any> = (
+	...args: Parameters<T>
+) => void
+
 /**
  * Создаёт "троттлированную" версию функции, которая вызывается не чаще одного раза за указанный интервал.
  */
-export const throttle = (func: Function, wait: number): ThrottledFunction => {
+export const throttle = <T extends (...args: any[]) => any>(
+	func: T,
+	wait: number,
+): ThrottledFunction<T> => {
 	let isCalled = false
-	return function (this: any, ...args: any[]) {
+	return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
 		if (!isCalled) {
 			func.apply(this, args)
 			isCalled = true
