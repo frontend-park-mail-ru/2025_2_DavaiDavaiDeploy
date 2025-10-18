@@ -2,16 +2,32 @@ import '@/styles/globals.scss'
 import 'reset-css/reset.css'
 import router from './modules/router/index'
 
+/**
+ * Конфигурация маршрута.
+ * @interface
+ */
 interface RouteConfig {
+	/** @type {string} Путь маршрута */
 	href: string
+	/** @type {boolean} [hasHeader=true] Показывать ли заголовок */
 	hasHeader?: boolean
+	/** @type {boolean} [hasFooter=true] Показывать ли подвал */
 	hasFooter?: boolean
 }
 
+/**
+ * Коллекция маршрутов приложения.
+ * @interface
+ */
 interface Routes {
+	/** @type {RouteConfig} Конфигурация маршрута */
 	[key: string]: RouteConfig
 }
 
+/**
+ * Маршруты приложения.
+ * @type {Routes}
+ */
 export const routes: Routes = {
 	home: {
 		href: '/',
@@ -23,4 +39,7 @@ export const routes: Routes = {
 	},
 }
 
+/**
+ * Запускает роутер приложения.
+ */
 router.start()

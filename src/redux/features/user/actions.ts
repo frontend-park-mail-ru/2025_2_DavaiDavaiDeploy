@@ -3,12 +3,23 @@ import type { Dispatch } from '@/modules/redux/ReduxTypes'
 import HTTPClient from '../../../modules/HTTPClient/index'
 import types from './types'
 
+/**
+ * Создает действие для установки состояния загрузки пользователя.
+ * @function
+ * @returns {Object} Объект действия Redux с типом USER_LOADING.
+ */
 const setUserLoadingAction = () => {
 	return {
 		type: types.USER_LOADING,
 	}
 }
 
+/**
+ * Создает действие для успешной загрузки данных пользователя.
+ * @function
+ * @param {ModelsUser} data - Данные пользователя.
+ * @returns {Object} Объект действия Redux с типом USER_LOADED и полезной нагрузкой.
+ */
 const returnUserAction = (data: ModelsUser) => {
 	return {
 		type: types.USER_LOADED,
@@ -16,6 +27,12 @@ const returnUserAction = (data: ModelsUser) => {
 	}
 }
 
+/**
+ * Создает действие для обработки ошибки загрузки пользователя.
+ * @function
+ * @param {string} error - Сообщение об ошибке.
+ * @returns {Object} Объект действия Redux с типом USER_ERROR и полезной нагрузкой.
+ */
 const returnUserErrorAction = (error: string) => {
 	return {
 		type: types.USER_ERROR,
@@ -49,6 +66,11 @@ const deleteUserAction = (userId: string | number) => {
 	}
 }
 
+/**
+ * Создает асинхронное действие для проверки авторизации пользователя.
+ * @function
+ * @returns {Function} Thunk-функция для диспетчеризации.
+ */
 const checkUserAction = () => async (dispatch: Dispatch) => {
 	dispatch(setUserLoadingAction())
 	try {
@@ -74,6 +96,13 @@ const checkUserAction = () => async (dispatch: Dispatch) => {
  * @returns {Object} Объект действия Redux с типом USER_CREATE и полезной нагрузкой.
  */
 
+/**
+ * Создает асинхронное действие для регистрации нового пользователя.
+ * @function
+ * @param {string} login - Логин пользователя.
+ * @param {string} password - Пароль пользователя.
+ * @returns {Function} Thunk-функция для диспетчеризации.
+ */
 const registerUserAction =
 	(login: string, password: string) => async (dispatch: Dispatch) => {
 		try {
@@ -97,6 +126,13 @@ const registerUserAction =
 		}
 	}
 
+/**
+ * Создает асинхронное действие для входа пользователя в систему.
+ * @function
+ * @param {string} login - Логин пользователя.
+ * @param {string} password - Пароль пользователя.
+ * @returns {Function} Thunk-функция для диспетчеризации.
+ */
 const loginUserAction =
 	(login: string, password: string) => async (dispatch: Dispatch) => {
 		try {

@@ -6,12 +6,27 @@ import { selectUser } from '@/redux/features/user/selectors'
 import { store } from '@/redux/store'
 import type { RouteConfig, Routes } from './RouterTypes'
 
+/**
+ * Класс для управления маршрутизацией в SPA приложении.
+ * Обрабатывает навигацию, рендеринг компонентов и управление состоянием.
+ * @class
+ */
 export class Router {
+	/** @type {Routes} Маршруты приложения */
 	routes: Routes
+	/** @type {Element} Родительский элемент для рендеринга */
 	parent: Element
+	/** @type {any} Текущая страница */
 	curPage: any = null
+	/** @type {any} Заголовок страницы */
 	header: any = null
 
+	/**
+	 * Создаёт экземпляр Router.
+	 * @constructor
+	 * @param {Routes} routes - Конфигурация маршрутов.
+	 * @param {Element} parent - Родительский элемент для рендеринга.
+	 */
 	constructor(routes: Routes, parent: Element) {
 		this.routes = new Proxy(routes, this.routesHandler)
 		this.parent = parent
@@ -21,19 +36,39 @@ export class Router {
 		this.initEventListeners()
 	}
 
+	/**
+	 * Создаёт новый экземпляр Router.
+	 * @static
+	 * @param {Routes} routes - Конфигурация маршрутов.
+	 * @param {Element} parent - Родительский элемент для рендеринга.
+	 * @returns {Router} Новый экземпляр Router.
+	 */
 	static create(routes: Routes, parent: Element) {
 		return new Router(routes, parent)
 	}
 
+	/**
+	 * Инициализирует обработчики событий для навигации.
+	 * @returns {void}
+	 */
 	initEventListeners = (): void => {
 		window.addEventListener('popstate', this.handlePopState)
 		window.addEventListener('click', this.handleClick)
 	}
 
+	/**
+	 * Обрабатывает событие изменения истории браузера.
+	 * @returns {void}
+	 */
 	handlePopState = (): void => {
 		this.navigate(window.location.pathname + window.location.search, {}, false)
 	}
 
+	/**
+	 * Обрабатывает клики по ссылкам для навигации.
+	 * @param {MouseEvent} event - Событие клика мыши.
+	 * @returns {void}
+	 */
 	handleClick = (event: MouseEvent) => {
 		const link = (event.target as Element).closest('a')
 		if (link) {
@@ -46,6 +81,10 @@ export class Router {
 		}
 	}
 
+	/**
+	 * Proxy-обработчик для маршрутов.
+	 * @type {Object}
+	 */
 	routesHandler = {
 		get: (target: Routes, path: string) => {
 			for (const route of Object.values(target)) {
@@ -68,11 +107,22 @@ export class Router {
 		},
 	}
 
+	/**
+	 * Запускает роутер и инициализирует приложение.
+	 * @returns {void}
+	 */
 	start = (): void => {
 		store.dispatch(actions.checkUserAction())
 		this.navigate(window.location.pathname + window.location.search)
 	}
 
+	/**
+	 * Выполняет навигацию к указанному пути.
+	 * @param {string} path - Путь для навигации.
+	 * @param {Record<string, any>} [state={}] - Состояние для передачи в маршрут.
+	 * @param {boolean} [addToHistory=true] - Добавлять ли в историю браузера.
+	 * @returns {void}
+	 */
 	navigate = (
 		path: string,
 		state: Record<string, any> = {},
@@ -102,6 +152,10 @@ export class Router {
 		}
 	}
 
+	/**
+	 * Очищает текущий макет страницы.
+	 * @returns {void}
+	 */
 	clearLayout = (): void => {
 		this.header?.destroy()
 		this.curPage?.destroy()
@@ -117,6 +171,10 @@ export class Router {
 		}
 	}
 
+	/**
+	 * Рендерит header страницы.
+	 * @returns {void}
+	 */
 	renderHeader = (): void => {
 		const userState = selectUser(store.getState())
 		this.header = new Header(this.parent, {
@@ -130,6 +188,15 @@ export class Router {
 		this.header.render()
 	}
 
+	/**
+	 * Рендерит содержимое страницы.
+	 * @param {RouteConfig} route - Конфигурация маршрута.
+	 * @param {string} normalizedPath - Нормализованный путь.
+	 * @param {Record<string, string>} params - Параметры маршрута.
+	 * @param {Record<string, string>} search - Параметры поиска.
+	 * @param {Record<string, any>} state - Состояние маршрута.
+	 * @returns {void}
+	 */
 	renderContent = (
 		route: RouteConfig,
 		normalizedPath: string,
@@ -153,6 +220,10 @@ export class Router {
 		this.curPage = page
 	}
 
+	/**
+	 * Рендерит footer страницы.
+	 * @returns {void}
+	 */
 	renderFooter = (): void => {
 		const footer = new Footer(this.parent)
 		footer.render()
