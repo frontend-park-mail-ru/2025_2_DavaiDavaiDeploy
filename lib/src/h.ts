@@ -9,8 +9,6 @@ import {
 import {withoutNulls} from './utils/arrays.ts';
 import type {Component} from './component.ts';
 
-export type DOMType = (typeof DOM_TYPES)[keyof typeof DOM_TYPES];
-
 export interface ElementProps {
   [key: string]: unknown;
   on?: Record<string, Function>;
