@@ -1,5 +1,5 @@
 # Ignore artifacts:
-build
+dist
 node_modules
 package.json
 package-lock.json
@@ -8,5 +8,9 @@ package-lock.json
 **/.hg
 **/*.hbs
 **/node_modules
-src/modules/handlebars/**
-src/build/
+jsxSingleQuote: false
+bracketSameLine: false
+bracketSpacing: true
+parser: typescript
+semi: true
+arrowParens: always

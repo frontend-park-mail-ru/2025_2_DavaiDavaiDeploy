@@ -8,7 +8,7 @@ export function compose(...funcs: Function[]): Function {
 	if (funcs.length === 1) {
 		return funcs[0]
 	}
-	return funcs.reduce(
+	return funcs.reduceRight(
 		(a, b) =>
 			(...args: any[]) =>
 				a(b(...args)),

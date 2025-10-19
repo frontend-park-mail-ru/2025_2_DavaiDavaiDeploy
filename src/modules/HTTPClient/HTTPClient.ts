@@ -50,7 +50,7 @@ export class HTTPClient {
 	}: RequestConfig): Promise<Response<T>> {
 		const requestMethod = method.toUpperCase()
 
-		let requestUrl = new URL(this.default.baseUrl + path)
+		const requestUrl = new URL(this.default.baseUrl + path)
 
 		for (const [key, value] of Object.entries(params)) {
 			if (value != null) {
@@ -97,8 +97,6 @@ export class HTTPClient {
 				signal,
 			})
 
-			let responseData: T
-
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
 			}
@@ -110,7 +108,7 @@ export class HTTPClient {
 				responseHeaders[key] = value
 			})
 
-			responseData = await response.json()
+			const responseData: T = await response.json()
 
 			return {
 				data: responseData,

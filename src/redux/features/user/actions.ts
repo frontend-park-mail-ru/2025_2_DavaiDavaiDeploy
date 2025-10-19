@@ -3,6 +3,8 @@ import type { Action, Dispatch } from '@/modules/redux/types/actions'
 import HTTPClient from '../../../modules/HTTPClient/index'
 import actionTypes from './actionTypes'
 
+const DEFAULT_ERROR_MESSAGE: string = 'Произошла ошибка'
+
 /**
  * Создает действие для установки состояния загрузки пользователя.
 
@@ -63,7 +65,7 @@ const checkUserAction = (): Action => async (dispatch: Dispatch) => {
 		const response = await HTTPClient.get<ModelsUser>('/auth/check')
 		dispatch(returnUserAction(response.data))
 	} catch (error: unknown) {
-		let errorMessage: string = 'Произошла ошибка'
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE
 
 		if (error instanceof Error) {
 			errorMessage = error.message
@@ -94,7 +96,7 @@ const registerUserAction =
 			})
 			dispatch(returnUserAction(response.data))
 		} catch (error: unknown) {
-			let errorMessage: string = 'Произошла ошибка'
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE
 
 			if (error instanceof Error) {
 				errorMessage = error.message
@@ -121,7 +123,7 @@ const loginUserAction =
 			})
 			dispatch(returnUserAction(response.data))
 		} catch (error: unknown) {
-			let errorMessage: string = 'Произошла ошибка'
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE
 
 			if (error instanceof Error) {
 				errorMessage = error.message
