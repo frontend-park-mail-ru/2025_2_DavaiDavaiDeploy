@@ -4,13 +4,13 @@
  */
 export interface RouteConfig {
 	/** @type {string} Путь маршрута */
-	href: string
+	href: string;
 	/** @type {any} Компонент для рендеринга */
-	component: any
+	component: any;
 	/** @type {boolean} [hasHeader=true] Показывать ли header */
-	hasHeader?: boolean
+	hasHeader?: boolean;
 	/** @type {boolean} [hasFooter=true] Показывать ли footer */
-	hasFooter?: boolean
+	hasFooter?: boolean;
 }
 
 /**
@@ -19,5 +19,5 @@ export interface RouteConfig {
  */
 export interface Routes {
 	/** @type {RouteConfig} Конфигурация маршрута */
-	[key: string]: RouteConfig
+	[key: string]: RouteConfig;
 }

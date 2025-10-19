@@ -3,6 +3,6 @@
  */
 export function validateHideError(element: HTMLElement | null): void {
 	if (element) {
-		element.style.opacity = '0'
+		element.style.opacity = '0';
 	}
 }

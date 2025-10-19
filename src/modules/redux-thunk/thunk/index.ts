@@ -1,9 +1,9 @@
-import { createThunkMiddleware } from '../createThunkMiddleware/index'
+import { createThunkMiddleware } from '../createThunkMiddleware/index';
 
 /**
  * Готовый к использованию thunk middleware.
  * @type {Function}
  */
-const thunk = createThunkMiddleware()
+const thunk = createThunkMiddleware();
 
-export default thunk
+export default thunk;

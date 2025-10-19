@@ -3,6 +3,6 @@
  *
  */
 export function validateShowError(element: HTMLElement, message: string): void {
-	element.textContent = message
-	element.style.opacity = '1'
+	element.textContent = message;
+	element.style.opacity = '1';
 }
