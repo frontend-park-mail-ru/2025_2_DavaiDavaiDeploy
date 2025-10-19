@@ -8,9 +8,3 @@ package-lock.json
 **/.hg
 **/*.hbs
 **/node_modules
-jsxSingleQuote: false
-bracketSameLine: false
-bracketSpacing: true
-parser: typescript
-semi: true
-arrowParens: always
