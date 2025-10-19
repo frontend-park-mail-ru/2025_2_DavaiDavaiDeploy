@@ -8,4 +8,4 @@ export default {
 		'npm run lint:prettier:fix',
 	],
 	'*.{ts,tsx}': () => 'npm run tsc:check',
-}
+};

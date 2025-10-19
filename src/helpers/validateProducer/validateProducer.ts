@@ -1,4 +1,4 @@
-import type { ValidationResult } from '../types/validationResult'
+import type { ValidationResult } from '../types/validationResult';
 
 /**
  * Универсальный валидатор, который делегирует проверку внешней функции.
@@ -9,11 +9,11 @@ export function validateProducer(
 	extraValue = null,
 ): ValidationResult {
 	if (!validator) {
-		return { isValid: true, message: '' }
+		return { isValid: true, message: '' };
 	}
 
 	if (extraValue !== null) {
-		return validator(value, extraValue)
+		return validator(value, extraValue);
 	}
-	return validator(value)
+	return validator(value);
 }

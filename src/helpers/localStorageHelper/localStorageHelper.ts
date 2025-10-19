@@ -1,4 +1,4 @@
-const LOCAL_STORAGE_ERROR = 'LocalStorage is not available'
+const LOCAL_STORAGE_ERROR = 'LocalStorage is not available';
 
 /**
  * Вспомогательный класс для работы с localStorage.
@@ -11,12 +11,12 @@ class LocalStorageHelper {
 	 */
 	static setItem(key: string, value: string): void {
 		try {
-			localStorage.setItem(key, value)
+			localStorage.setItem(key, value);
 		} catch (e: unknown) {
 			if (e instanceof Error) {
-				throw new Error(`${LOCAL_STORAGE_ERROR}: ${e.message}`)
+				throw new Error(`${LOCAL_STORAGE_ERROR}: ${e.message}`);
 			} else {
-				throw new Error(LOCAL_STORAGE_ERROR)
+				throw new Error(LOCAL_STORAGE_ERROR);
 			}
 		}
 	}
@@ -26,12 +26,12 @@ class LocalStorageHelper {
 	 */
 	static getItem(key: string): string | null {
 		try {
-			return localStorage.getItem(key)
+			return localStorage.getItem(key);
 		} catch (e: unknown) {
 			if (e instanceof Error) {
-				throw new Error(`${LOCAL_STORAGE_ERROR}: ${e.message}`)
+				throw new Error(`${LOCAL_STORAGE_ERROR}: ${e.message}`);
 			} else {
-				throw new Error(LOCAL_STORAGE_ERROR)
+				throw new Error(LOCAL_STORAGE_ERROR);
 			}
 		}
 	}
@@ -41,15 +41,15 @@ class LocalStorageHelper {
 	 */
 	static removeItem(key: string): void {
 		try {
-			localStorage.removeItem(key)
+			localStorage.removeItem(key);
 		} catch (e: unknown) {
 			if (e instanceof Error) {
-				throw new Error(`${LOCAL_STORAGE_ERROR}: ${e.message}`)
+				throw new Error(`${LOCAL_STORAGE_ERROR}: ${e.message}`);
 			} else {
-				throw new Error(LOCAL_STORAGE_ERROR)
+				throw new Error(LOCAL_STORAGE_ERROR);
 			}
 		}
 	}
 }
 
-export default LocalStorageHelper
+export default LocalStorageHelper;

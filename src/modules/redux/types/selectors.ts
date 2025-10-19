@@ -1,3 +1,3 @@
-import type { State } from './store'
+import type { State } from './store';
 
-export type Selector = (state: State) => any
+export type Selector = (state: State) => any;

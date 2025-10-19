@@ -1,9 +1,9 @@
-const USER_CREATE = 'USER_CREATE'
-const USER_UPDATE = 'USER_UPDATE'
-const USER_DELETE = 'USER_DELETE'
-const USER_LOADING = 'USER_LOADING'
-const USER_LOADED = 'USER_LOADED'
-const USER_ERROR = 'USER_ERROR'
+const USER_CREATE = 'USER_CREATE';
+const USER_UPDATE = 'USER_UPDATE';
+const USER_DELETE = 'USER_DELETE';
+const USER_LOADING = 'USER_LOADING';
+const USER_LOADED = 'USER_LOADED';
+const USER_ERROR = 'USER_ERROR';
 
 export default {
 	USER_CREATE,
@@ -12,4 +12,4 @@ export default {
 	USER_LOADING,
 	USER_LOADED,
 	USER_ERROR,
-} as const
+} as const;

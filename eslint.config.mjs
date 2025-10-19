@@ -1,12 +1,12 @@
-import js from '@eslint/js'
-import stylisticPlugin from '@stylistic/eslint-plugin'
-import eslintConfigPrettier from 'eslint-config-prettier'
-import compatPlugin from 'eslint-plugin-compat'
-import importPlugin from 'eslint-plugin-import'
-import sonarjs from 'eslint-plugin-sonarjs'
-import { defineConfig } from 'eslint/config'
-import globals from 'globals'
-import tseslint from 'typescript-eslint'
+import js from '@eslint/js';
+import stylisticPlugin from '@stylistic/eslint-plugin';
+import eslintConfigPrettier from 'eslint-config-prettier';
+import compatPlugin from 'eslint-plugin-compat';
+import importPlugin from 'eslint-plugin-import';
+import sonarjs from 'eslint-plugin-sonarjs';
+import { defineConfig } from 'eslint/config';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 const Rules = {
 	curly: 'error',
@@ -48,9 +48,9 @@ const Rules = {
 	'sonarjs/no-all-duplicated-branches': 'error',
 	'sonarjs/no-duplicate-string': 'error',
 	'sonarjs/prefer-immediate-return': 'error',
-}
+};
 
-const Ignores = ['node_modules/', '**/build/**', 'dist/**']
+const Ignores = ['node_modules/', '**/build/**', 'dist/**'];
 
 export default defineConfig([
 	{
@@ -109,4 +109,4 @@ export default defineConfig([
 		},
 		ignores: Ignores,
 	},
-])
+]);
