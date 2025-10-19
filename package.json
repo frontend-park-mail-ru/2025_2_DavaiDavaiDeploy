@@ -6,7 +6,7 @@
   "private": true,
   "main": "index.ts",
   "scripts": {
-    "start": "npm run build && vite",
+    "start": "vite",
     "build": "tsc && vite build",
     "getTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/modules/HTTPClient/types -n Types.ts --no-client",
     "test": "vitest",

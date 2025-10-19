@@ -12,4 +12,4 @@ export default {
 		'media-feature-range-notation': 'prefix',
 	},
 	ignoreFiles: ['**/dist/**'],
-}
+};
