@@ -7,6 +7,5 @@ export default {
 		'npm run lint:stylelint:fix',
 		'npm run lint:prettier:fix',
 	],
-	// '**/*.{ts,tsx}': ['npm run tsc:check'],
 	'*.{ts,tsx}': () => 'npm run tsc:check',
 }

@@ -11,7 +11,7 @@
     "getTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/modules/HTTPClient/types -n Types.ts --no-client",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "tsc:check": "npx tsc --noEmit -p tsconfig.json",
+    "tsc:check": "npx tsc --noEmit",
     "lint:eslint": "npx eslint .",
     "lint:eslint:fix": "npx eslint . --fix",
     "lint:prettier": "npx prettier . --check",
