@@ -23,21 +23,29 @@ export function addEventListener<T extends Event = Event>(
 }
 
 export function addEventListeners(
-  listeners: EventListeners = {},
+  listeners: Record<string, Function> = {},
   el: HTMLElement,
   hostComponent: Component | null = null,
 ): EventListeners {
   const addedListeners: EventListeners = {};
 
   Object.entries(listeners).forEach(([eventName, handler]) => {
-    addedListeners[eventName] = addEventListener(eventName, handler, el, hostComponent);
+    addedListeners[eventName] = addEventListener(
+      eventName,
+      handler as EventHandler,
+      el,
+      hostComponent,
+    );
   });
 
   return addedListeners;
 }
 
-export function removeEventListeners(listeners: EventListeners = {}, el: HTMLElement): void {
+export function removeEventListeners(
+  listeners: Record<string, Function> = {},
+  el: HTMLElement,
+): void {
   Object.entries(listeners).forEach(([eventName, handler]) => {
-    el.removeEventListener(eventName, handler);
+    el.removeEventListener(eventName, handler as unknown as EventListener);
   });
 }

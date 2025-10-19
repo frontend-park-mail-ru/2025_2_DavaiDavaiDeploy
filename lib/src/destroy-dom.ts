@@ -1,4 +1,3 @@
-// destroy-dom.ts
 import {
   ComponentVDOMNode,
   ElementVDOMNode,

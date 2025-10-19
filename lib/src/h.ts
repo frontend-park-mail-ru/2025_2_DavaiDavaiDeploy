@@ -19,21 +19,29 @@ export interface ElementProps {
   style?: Record<string, string | number>;
 }
 
-export function h(tag: typeof Component, props?: ElementProps, children?: any[]): ElementVDOMNode;
-export function h(tag: string, props?: ElementProps, children?: any[]): ElementVDOMNode;
+export function h(
+  tag: typeof Component,
+  props?: ElementProps,
+  children?: (VDOMNode | string | null | undefined)[],
+): ElementVDOMNode;
+export function h(
+  tag: string,
+  props?: ElementProps,
+  children?: (VDOMNode | string | null | undefined)[],
+): ElementVDOMNode;
 export function h(
   tag: string | typeof Component,
   props: ElementProps = {},
-  children: any[] = [],
+  children: (VDOMNode | string | null | undefined)[] = [],
 ): ElementVDOMNode | ComponentVDOMNode {
   const type = typeof tag === 'string' ? DOM_TYPES.ELEMENT : DOM_TYPES.COMPONENT;
 
-  const vdom: any = {
+  const vdom: ElementVDOMNode | ComponentVDOMNode = {
     tag,
     props,
     type,
     children: mapTextNodes(withoutNulls(children)),
-  };
+  } as ElementVDOMNode | ComponentVDOMNode;
 
   return vdom;
 }

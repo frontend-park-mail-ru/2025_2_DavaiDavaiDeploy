@@ -1,45 +1,44 @@
-import type { Component } from '../component.ts';
-import type { IProp } from './types.ts';
-import type { EventListeners } from '../events.ts';
+import type {Component} from '../component.ts';
+import type {IProp, IEvent} from './types.ts';
+import type {EventListeners} from '../events.ts';
+import {DOM_TYPES} from './consts.ts';
+
+export type DOMType = (typeof DOM_TYPES)[keyof typeof DOM_TYPES];
 
 export interface VDOMNode {
-  type: string;
-  props?: {
-    [key: string]: any;
-    on?: IProp;
-    key?: string | number;
-  };
+  type: DOMType;
+  props?: IProp & {on?: IEvent; key?: string | number};
   children?: VDOMNode[];
-  tag?: any;
+  tag?: string | (new (...args: any[]) => Component);
   value?: string;
   component?: Component;
-  el?: Node;
+  el?: Node | null;
   listeners?: EventListeners;
 }
 
 export interface TextVDOMNode extends VDOMNode {
-  type: 'text';
+  type: (typeof DOM_TYPES)['TEXT'];
   value: string;
-  el?: Text;
+  el?: Text | null;
 }
 
 export interface ElementVDOMNode extends VDOMNode {
-  type: 'element';
+  type: (typeof DOM_TYPES)['ELEMENT'];
   tag: string;
   children?: VDOMNode[];
-  el?: HTMLElement;
+  el?: HTMLElement | null;
   listeners?: EventListeners;
 }
 
 export interface FragmentVDOMNode extends VDOMNode {
-  type: 'fragment';
+  type: (typeof DOM_TYPES)['FRAGMENT'];
   children?: VDOMNode[];
-  el?: HTMLElement;
+  el?: HTMLElement | null;
 }
 
 export interface ComponentVDOMNode extends VDOMNode {
-  type: 'component';
-  tag: any;
+  type: (typeof DOM_TYPES)['COMPONENT'];
+  tag: new (...args: any[]) => Component;
   component?: Component;
-  el?: HTMLElement;
+  el?: HTMLElement | null;
 }

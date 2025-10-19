@@ -1,10 +1,10 @@
 import type {Component} from '../component.ts';
-import type {VDOMNode, ARRAY_DIFF_OP} from './index.ts';
+import {ARRAY_DIFF_OP} from './consts.ts';
+import type { VDOMNode } from './index.ts';
 
 export type EventHandler = (...args: any[]) => void;
 export type IEvent = Record<string, EventHandler>;
-export type IProp = Record<string, any>;
-
+export type IProp = Record<string, unknown>;
 
 export interface PropsAndEvents {
   props: IProp;
@@ -44,7 +44,7 @@ export interface ElementAttributes {
   [key: string]: unknown;
 }
 
-export interface Context<T extends ContextValue> {
+export interface Context<T extends ContextValue = ContextValue> {
   Provider: typeof Component;
   Consumer: typeof Component;
   value: T;
@@ -73,3 +73,4 @@ export interface ComponentConstructor<P = ComponentProps> {
 export type CommandHandler<T = any> = (payload: T) => void;
 export type AfterCommandHandler = () => void;
 export type Unsubscribe = () => void;
+

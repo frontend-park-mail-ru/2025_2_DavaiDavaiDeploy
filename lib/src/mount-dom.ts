@@ -1,4 +1,3 @@
-// mount-dom.ts
 import {setAttributes} from './attributes.ts';
 import {addEventListeners} from './events.ts';
 import {extractPropsAndEvents} from './utils/props.ts';
@@ -87,7 +86,7 @@ function createElementNode(
 
 function addProps(el: HTMLElement, vdom: ElementVDOMNode, hostComponent: Component | null): void {
   const {props: attrs, events} = extractPropsAndEvents(vdom);
-  vdom.listeners = addEventListeners(events, el, hostComponent as any);
+  vdom.listeners = addEventListeners(events, el, hostComponent);
   setAttributes(el, attrs);
 }
 
@@ -97,8 +96,8 @@ function createComponentNode(
   index: number | null,
 ): void {
   const ComponentClass = vdom.tag;
-  const {props, events} = extractPropsAndEvents(vdom);
-  const component = new ComponentClass(props, events);
+  const {props} = extractPropsAndEvents(vdom);
+  const component = new ComponentClass(props);
   component.mount(parentEl, index);
   vdom.component = component;
   vdom.el = component.firstElement || null;

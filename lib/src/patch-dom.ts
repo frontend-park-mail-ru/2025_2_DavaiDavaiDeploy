@@ -17,6 +17,8 @@ import {
   ArrayDiffOperation,
   DOM_TYPES,
   ARRAY_DIFF_OP,
+  IProp,
+  ElementAttributes,
 } from './types';
 import type {EventListeners} from './events.ts';
 import type {Component} from './component.ts';
@@ -81,31 +83,35 @@ function patchElement(
     style: oldStyle,
     on: oldEvents,
     ...oldAttrs
-  } = oldVdom.props || ({} as Record<string, any>);
+  } = (oldVdom.props ?? {}) as IProp;
   const {
     class: newClass,
     style: newStyle,
     on: newEvents,
     ...newAttrs
-  } = newVdom.props || ({} as Record<string, any>);
+  } = (newVdom.props ?? {}) as IProp;
 
   const {listeners: oldListeners} = oldVdom as Partial<ElementVDOMNode>;
-  patchAttrs(el, oldAttrs, newAttrs);
+  patchAttrs(el, oldAttrs as ElementAttributes, newAttrs as ElementAttributes);
   patchClasses(el, oldClass as any, newClass as any);
-  patchStyles(el, oldStyle as any, newStyle as any);
+  patchStyles(
+    el,
+    oldStyle as Record<string, string | number>,
+    newStyle as Record<string, string | number>,
+  );
   newVdom.listeners = patchEvents(
     el,
     oldListeners as EventListeners | undefined,
-    oldEvents as Record<string, Function> | undefined,
-    newEvents as Record<string, Function> | undefined,
+    (oldEvents as Record<string, Function>) ?? {},
+    (newEvents as Record<string, Function>) ?? {},
     hostComponent,
   );
 }
 
 function patchAttrs(
   el: HTMLElement,
-  oldAttrs: Record<string, any> = {},
-  newAttrs: Record<string, any> = {},
+  oldAttrs: Record<string, unknown> = {},
+  newAttrs: Record<string, unknown> = {},
 ): void {
   const {added, removed, updated} = objectsDiff(oldAttrs, newAttrs);
   for (const attr of removed) {
@@ -171,12 +177,7 @@ function patchEvents(
 
   const addedListeners: EventListeners = {};
   for (const eventName of added.concat(updated)) {
-    const listener = addEventListener(
-      eventName,
-      newEvents[eventName] as any,
-      el,
-      hostComponent as any,
-    );
+    const listener = addEventListener(eventName, newEvents[eventName] as any, el, hostComponent);
     addedListeners[eventName] = listener;
   }
 

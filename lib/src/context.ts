@@ -1,4 +1,3 @@
-// context.ts
 import {hFragment} from './h.ts';
 import {Component} from './component.ts';
 import equal from 'fast-deep-equal';
