@@ -1,7 +1,7 @@
 // destroy-dom.ts
 import type { ComponentVDOMNode, ElementVDOMNode, FragmentVDOMNode, TextVDOMNode, VDOMNode } from 'lib/src/types/vdom';
 import { removeEventListeners } from './events.js';
-import { DOM_TYPES } from './h.js';
+import { DOM_TYPES } from 'lib/src/types/consts';
 
 export function destroyDOM(vdom: VDOMNode): void {
   const { type } = vdom;

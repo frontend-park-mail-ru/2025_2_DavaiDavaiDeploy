@@ -6,6 +6,7 @@ export type EventHandler = (...args: any[]) => void;
 export type IEvent = Record<string, EventHandler>;
 export type IProp = Record<string, any>;
 
+
 export interface PropsAndEvents {
   props: IProp;
   events: IEvent;

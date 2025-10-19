@@ -1,4 +1,5 @@
-import type {ElementAttributes} from 'lib/src/types';
+import type { ElementAttributes } from 'lib/src/types/types';
+
 
 export function setStyle(el: HTMLElement, name: string, value: string | number): void {
   el.style[name] = value.toString();

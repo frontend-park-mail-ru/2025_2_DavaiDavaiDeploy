@@ -17,8 +17,7 @@ export interface ElementProps {
 }
 
 // Перегрузки для функции h
-export function h(tag: string, props?: ElementProps, children?: any[]): ElementVDOMNode;
-export function h(tag: typeof Component, props?: ElementProps, children?: any[]): ComponentVDOMNode;
+export function h(tag: string | typeof Component, props?: ElementProps, children?: any[]): ElementVDOMNode;
 export function h(
   tag: string | typeof Component,
   props: ElementProps = {},
