@@ -1,5 +1,4 @@
-import { ARRAY_DIFF_OP } from '../types/consts';
-import type { ArrayDiffResult, ArrayDiffOperation } from '../types/types';
+import {ARRAY_DIFF_OP, ArrayDiffResult, ArrayDiffOperation} from '../types';
 
 
 

@@ -1,12 +1,12 @@
-import type {
+import {
   ElementVDOMNode,
   ComponentVDOMNode,
   TextVDOMNode,
   VDOMNode,
   FragmentVDOMNode,
-} from './types/vdom.ts';
+  DOM_TYPES,
+} from './types';
 import {withoutNulls} from './utils/arrays.ts';
-import {DOM_TYPES} from './types/consts.ts';
 import type {Component} from './component.ts';
 
 export type DOMType = (typeof DOM_TYPES)[keyof typeof DOM_TYPES];

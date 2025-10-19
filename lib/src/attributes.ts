@@ -1,4 +1,4 @@
-import type { ElementAttributes } from './types/types.ts';
+import type { ElementAttributes } from './types';
 
 
 

@@ -1,4 +1,4 @@
-import type { ObjectsDiffResult, PlainObject } from '../types/types';
+import type { ObjectsDiffResult, PlainObject } from '../types';
 
 
 export function objectsDiff(oldObj: PlainObject, newObj: PlainObject): ObjectsDiffResult {

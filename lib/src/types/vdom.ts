@@ -1,5 +1,5 @@
 import type { Component } from '../component.ts';
-import type { IProp } from '../types/types.ts';
+import type { IProp } from './types.ts';
 import type { EventListeners } from '../events.ts';
 
 export interface VDOMNode {

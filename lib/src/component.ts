@@ -4,11 +4,14 @@ import {extractChildren} from './h.ts';
 import {patchDOM} from './patch-dom.ts';
 import equal from 'fast-deep-equal';
 import {enqueueJob} from './scheduler.ts';
-import type {VDOMNode} from './types/vdom.ts';
-import { DOM_TYPES } from './types/consts.ts';
-import type { ComponentProps, ComponentState, Context, ContextValue } from './types/types.ts';
-
-;
+import {
+  ComponentProps,
+  ComponentState,
+  Context,
+  ContextValue,
+  DOM_TYPES,
+  VDOMNode,
+} from './types';
 
 export abstract class Component<P = ComponentProps, S = ComponentState> {
   #isMounted = false;

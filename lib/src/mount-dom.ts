@@ -1,23 +1,23 @@
 // mount-dom.ts
-import { setAttributes } from './attributes.ts';
-import { addEventListeners } from './events.ts';
-import { extractPropsAndEvents } from './utils/props.ts';
-import { enqueueJob } from './scheduler.ts';
-import { DOM_TYPES } from './types/consts.ts';
-import type {
+import {setAttributes} from './attributes.ts';
+import {addEventListeners} from './events.ts';
+import {extractPropsAndEvents} from './utils/props.ts';
+import {enqueueJob} from './scheduler.ts';
+import {
   VDOMNode,
   TextVDOMNode,
   ElementVDOMNode,
   FragmentVDOMNode,
   ComponentVDOMNode,
-} from './types/vdom.ts';
+  DOM_TYPES,
+} from './types';
 import type {Component} from './component.ts';
 
 export function mountDOM(
-  vdom: VDOMNode, 
-  parentEl: HTMLElement, 
-  index: number | null = null, 
-  hostComponent: Component | null = null
+  vdom: VDOMNode,
+  parentEl: HTMLElement,
+  index: number | null = null,
+  hostComponent: Component | null = null,
 ): void {
   switch (vdom.type) {
     case DOM_TYPES.TEXT: {
@@ -47,53 +47,57 @@ export function mountDOM(
 }
 
 function createTextNode(vdom: TextVDOMNode, parentEl: HTMLElement, index: number | null): void {
-  const { value } = vdom;
+  const {value} = vdom;
   const textNode = document.createTextNode(value);
   vdom.el = textNode;
   insert(textNode, parentEl, index);
 }
 
 function createFragmentNodes(
-  vdom: FragmentVDOMNode, 
-  parentEl: HTMLElement, 
-  index: number | null, 
-  hostComponent: Component | null
+  vdom: FragmentVDOMNode,
+  parentEl: HTMLElement,
+  index: number | null,
+  hostComponent: Component | null,
 ): void {
-  const { children } = vdom;
+  const {children} = vdom;
   vdom.el = parentEl;
-  
+
   children?.forEach((child, i) => {
     mountDOM(child, parentEl, index != null ? index + i : null, hostComponent);
   });
 }
 
 function createElementNode(
-  vdom: ElementVDOMNode, 
-  parentEl: HTMLElement, 
-  index: number | null, 
-  hostComponent: Component | null
+  vdom: ElementVDOMNode,
+  parentEl: HTMLElement,
+  index: number | null,
+  hostComponent: Component | null,
 ): void {
-  const { tag, children } = vdom;
+  const {tag, children} = vdom;
   const element = document.createElement(tag);
   addProps(element, vdom, hostComponent);
   vdom.el = element;
-  
+
   children?.forEach(child => {
     mountDOM(child, element, null, hostComponent);
   });
-  
+
   insert(element, parentEl, index);
 }
 
 function addProps(el: HTMLElement, vdom: ElementVDOMNode, hostComponent: Component | null): void {
-  const { props: attrs, events } = extractPropsAndEvents(vdom);
+  const {props: attrs, events} = extractPropsAndEvents(vdom);
   vdom.listeners = addEventListeners(events, el, hostComponent as any);
   setAttributes(el, attrs);
 }
 
-function createComponentNode(vdom: ComponentVDOMNode, parentEl: HTMLElement, index: number | null): void {
+function createComponentNode(
+  vdom: ComponentVDOMNode,
+  parentEl: HTMLElement,
+  index: number | null,
+): void {
   const ComponentClass = vdom.tag;
-  const { props, events } = extractPropsAndEvents(vdom);
+  const {props, events} = extractPropsAndEvents(vdom);
   const component = new ComponentClass(props, events);
   component.mount(parentEl, index);
   vdom.component = component;
@@ -105,11 +109,11 @@ function insert(el: Node, parentEl: HTMLElement, index: number | null): void {
     parentEl.append(el);
     return;
   }
-  
+
   if (index < 0) {
     throw new Error(`Index must be a positive integer, got ${index}`);
   }
-  
+
   const children = parentEl.childNodes;
   if (index >= children.length) {
     parentEl.append(el);

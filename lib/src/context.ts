@@ -2,8 +2,7 @@
 import {hFragment} from './h.ts';
 import {Component} from './component.ts';
 import equal from 'fast-deep-equal';
-import type {VDOMNode} from './types/vdom.ts';
-import type {ContextValue} from './types/types.ts';
+import type {ContextValue, VDOMNode} from './types';
 
 export interface ProviderProps<T extends ContextValue> {
   value: T;

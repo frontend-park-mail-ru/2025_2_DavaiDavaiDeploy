@@ -1,5 +1,4 @@
-import type {PropsAndEvents} from '../types/types.ts';
-import type {VDOMNode} from '../types/vdom.ts';
+import type {PropsAndEvents, VDOMNode} from '../types';
 
 export function extractPropsAndEvents(vdom: VDOMNode): PropsAndEvents {
   const {on: events = {}, ...props} = vdom.props;

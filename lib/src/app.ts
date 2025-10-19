@@ -2,8 +2,7 @@ import {mountDOM} from './mount-dom.ts';
 import {destroyDOM} from './destroy-dom.ts';
 import {h} from './h.ts';
 import type { Component } from './component.ts';
-import type { VDOMNode } from './types/vdom.ts';
-import type { IProp } from './types/types.ts';
+import type {VDOMNode, IProp} from './types';
 
 interface AppInstance {
   mount: (parentEl: HTMLElement) => void;

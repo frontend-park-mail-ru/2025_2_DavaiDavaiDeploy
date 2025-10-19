@@ -1,11 +1,17 @@
 // destroy-dom.ts
-import type { ComponentVDOMNode, ElementVDOMNode, FragmentVDOMNode, TextVDOMNode, VDOMNode } from './types/vdom.ts';
-import { removeEventListeners } from './events.ts';
-import {DOM_TYPES} from './types/consts.ts';
+import {
+  ComponentVDOMNode,
+  ElementVDOMNode,
+  FragmentVDOMNode,
+  TextVDOMNode,
+  VDOMNode,
+  DOM_TYPES,
+} from './types';
+import {removeEventListeners} from './events.ts';
 
 export function destroyDOM(vdom: VDOMNode): void {
-  const { type } = vdom;
-  
+  const {type} = vdom;
+
   switch (type) {
     case DOM_TYPES.TEXT: {
       removeTextNode(vdom as TextVDOMNode);
@@ -27,28 +33,28 @@ export function destroyDOM(vdom: VDOMNode): void {
       throw new Error(`Can't destroy DOM of type: ${type}`);
     }
   }
-  
+
   delete (vdom as any).el;
 }
 
 function removeTextNode(vdom: TextVDOMNode): void {
-  const { el } = vdom;
+  const {el} = vdom;
   if (el) {
     el.remove();
   }
 }
 
 function removeElementNode(vdom: ElementVDOMNode): void {
-  const { el, children, listeners } = vdom;
-  
+  const {el, children, listeners} = vdom;
+
   if (el) {
     el.remove();
   }
-  
+
   if (children) {
     children.forEach(destroyDOM);
   }
-  
+
   if (listeners && el) {
     removeEventListeners(listeners, el);
     delete (vdom as any).listeners;
@@ -56,8 +62,8 @@ function removeElementNode(vdom: ElementVDOMNode): void {
 }
 
 function removeFragmentNodes(vdom: FragmentVDOMNode): void {
-  const { children } = vdom;
-  
+  const {children} = vdom;
+
   if (children) {
     children.forEach(destroyDOM);
   }
