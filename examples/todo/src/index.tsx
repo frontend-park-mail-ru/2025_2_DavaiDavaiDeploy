@@ -2,8 +2,9 @@ import {TodoItem} from './components/TodoItem';
 import {TodoEditingItem} from './components/TodoEditingItem';
 import {Component, createApp} from '@lib/react.js';
 import {Counter} from './components/Counter';
+import type {Props} from './todoApp.props.ts';
 
-class TodoApp extends Component {
+class TodoApp extends Component<Props> {
   state = {
     todos: [],
     count: 0,

@@ -1,17 +1,10 @@
-import {destroyDOM} from './destroy-dom.ts';
-import {mountDOM} from './mount-dom.ts';
-import {extractChildren} from './h.ts';
-import {patchDOM} from './patch-dom.ts';
+import {destroyDOM} from './destroy-dom.js';
+import {mountDOM} from './mount-dom.js';
+import {extractChildren} from './h.js';
+import {patchDOM} from './patch-dom.js';
 import equal from 'fast-deep-equal';
-import {enqueueJob} from './scheduler.ts';
-import {
-  ComponentProps,
-  ComponentState,
-  Context,
-  ContextValue,
-  DOM_TYPES,
-  VDOMNode,
-} from './types';
+import {enqueueJob} from './scheduler.js';
+import {ComponentProps, ComponentState, Context, ContextValue, DOM_TYPES, VDOMNode} from './types/index.js';
 
 export abstract class Component<P = ComponentProps, S = ComponentState> {
   #isMounted = false;
@@ -32,19 +25,19 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
     this.props = props;
   }
 
-  onMount(): Promise<void> | void {
+  onMount(): void | Promise<void> {
     return Promise.resolve();
   }
 
-  onUnmount(): Promise<void> | void {
+  onUnmount(): void | Promise<void> {
     return Promise.resolve();
   }
 
-  onUpdate(): Promise<void> | void {
+  onUpdate(): void | Promise<void> {
     return Promise.resolve();
   }
 
-  onWillUnmount(): Promise<void> | void {
+  onWillUnmount(): void | Promise<void> {
     return Promise.resolve();
   }
 
