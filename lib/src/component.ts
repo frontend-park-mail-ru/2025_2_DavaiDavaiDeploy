@@ -1,13 +1,13 @@
-// component.ts
-import {destroyDOM} from './destroy-dom.js';
-import {mountDOM} from './mount-dom.js';
-import {extractChildren} from './h.js';
-import {patchDOM} from './patch-dom.js';
+import {destroyDOM} from './destroy-dom.ts';
+import {mountDOM} from './mount-dom.ts';
+import {extractChildren} from './h.ts';
+import {patchDOM} from './patch-dom.ts';
 import equal from 'fast-deep-equal';
-import {enqueueJob} from './scheduler.js';
-import type { ComponentProps, ComponentState, Context, ContextValue } from 'lib/src/types/types';
-import type { VDOMNode } from 'lib/src/types/vdom';
-import { DOM_TYPES } from 'lib/src/types/consts';
+import {enqueueJob} from './scheduler.ts';
+import type {VDOMNode} from './types/vdom.ts';
+import { DOM_TYPES } from './types/consts.ts';
+import type { ComponentProps, ComponentState, Context, ContextValue } from './types/types.ts';
+
 ;
 
 export abstract class Component<P = ComponentProps, S = ComponentState> {
@@ -111,7 +111,7 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
     }
 
     this.#vdom = this.render();
-    mountDOM(this.#vdom, hostEl, index, this);
+    mountDOM(this.#vdom, hostEl, index, this as Component);
     this.#hostEl = hostEl;
     this.#isMounted = true;
   }
@@ -145,7 +145,7 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
     }
 
     const vdom = this.render();
-    this.#vdom = patchDOM(this.#vdom, vdom, this.#hostEl, this);
+    this.#vdom = patchDOM(this.#vdom, vdom, this.#hostEl, this as Component);
     enqueueJob(() => this.onUpdate());
   }
 

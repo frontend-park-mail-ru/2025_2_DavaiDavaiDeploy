@@ -1,9 +1,9 @@
 // context.ts
-import {hFragment} from './h.js';
-import {Component} from './component.js';
+import {hFragment} from './h.ts';
+import {Component} from './component.ts';
 import equal from 'fast-deep-equal';
-import type { VDOMNode } from 'lib/src/types/vdom';
-import type { ContextValue } from 'lib/src/types/types';
+import type {VDOMNode} from './types/vdom.ts';
+import type {ContextValue} from './types/types.ts';
 
 export interface ProviderProps<T extends ContextValue> {
   value: T;

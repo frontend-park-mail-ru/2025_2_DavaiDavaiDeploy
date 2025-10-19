@@ -1,4 +1,5 @@
-import type {ObjectsDiffResult, PlainObject} from 'lib/src/types';
+import type { ObjectsDiffResult, PlainObject } from '../types/types';
+
 
 export function objectsDiff(oldObj: PlainObject, newObj: PlainObject): ObjectsDiffResult {
   const oldKeys = Object.keys(oldObj);

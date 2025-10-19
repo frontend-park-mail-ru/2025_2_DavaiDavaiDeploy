@@ -27,5 +27,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src", "src/modules"]
+  // "include": ["src", "src/modules"]
 }

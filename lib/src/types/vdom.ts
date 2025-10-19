@@ -1,5 +1,6 @@
-import type { Component } from 'lib/src/component';
-import type { IProp } from 'lib/src/types/types';
+import type { Component } from '../component.ts';
+import type { IProp } from '../types/types.ts';
+import type { EventListeners } from '../events.ts';
 
 export interface VDOMNode {
   type: string;
@@ -13,7 +14,7 @@ export interface VDOMNode {
   value?: string;
   component?: Component;
   el?: Node;
-  listeners?: {[eventName: string]: Function};
+  listeners?: EventListeners;
 }
 
 export interface TextVDOMNode extends VDOMNode {
@@ -27,7 +28,7 @@ export interface ElementVDOMNode extends VDOMNode {
   tag: string;
   children?: VDOMNode[];
   el?: HTMLElement;
-  listeners?: {[eventName: string]: Function};
+  listeners?: EventListeners;
 }
 
 export interface FragmentVDOMNode extends VDOMNode {

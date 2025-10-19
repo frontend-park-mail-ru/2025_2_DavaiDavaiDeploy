@@ -1,6 +1,6 @@
-import type {Component} from 'lib/src/component';
-import type {ARRAY_DIFF_OP} from 'lib/src/types/consts';
-import type {VDOMNode} from 'lib/src/types/vdom';
+import type {Component} from '../component.ts';
+import type {ARRAY_DIFF_OP} from '../types/consts.ts';
+import type {VDOMNode} from '../types/vdom.ts';
 
 export type EventHandler = (...args: any[]) => void;
 export type IEvent = Record<string, EventHandler>;

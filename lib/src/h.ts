@@ -1,13 +1,16 @@
-// h.ts
-import type { Component } from '@lib/react.js';
-import type { ElementVDOMNode, ComponentVDOMNode, TextVDOMNode, VDOMNode, FragmentVDOMNode } from 'lib/src/types/vdom';
-import {withoutNulls} from './utils/arrays.js';
-import { DOM_TYPES } from 'lib/src/types/consts';
-
+import type {
+  ElementVDOMNode,
+  ComponentVDOMNode,
+  TextVDOMNode,
+  VDOMNode,
+  FragmentVDOMNode,
+} from './types/vdom.ts';
+import {withoutNulls} from './utils/arrays.ts';
+import {DOM_TYPES} from './types/consts.ts';
+import type {Component} from './component.ts';
 
 export type DOMType = (typeof DOM_TYPES)[keyof typeof DOM_TYPES];
 
-// Более строгие типы для props
 export interface ElementProps {
   [key: string]: unknown;
   on?: Record<string, Function>;
@@ -16,8 +19,8 @@ export interface ElementProps {
   style?: Record<string, string | number>;
 }
 
-// Перегрузки для функции h
-export function h(tag: string | typeof Component, props?: ElementProps, children?: any[]): ElementVDOMNode;
+export function h(tag: typeof Component, props?: ElementProps, children?: any[]): ElementVDOMNode;
+export function h(tag: string, props?: ElementProps, children?: any[]): ElementVDOMNode;
 export function h(
   tag: string | typeof Component,
   props: ElementProps = {},
@@ -39,7 +42,7 @@ export function hString(str: string): TextVDOMNode {
   return {
     type: DOM_TYPES.TEXT,
     value: str,
-    props: {}, // Обязательные props
+    props: {},
   };
 }
 
@@ -47,7 +50,7 @@ export function hFragment(vNodes: (VDOMNode | string | null | undefined)[]): Fra
   return {
     type: DOM_TYPES.FRAGMENT,
     children: mapTextNodes(withoutNulls(vNodes)),
-    props: {}, // Обязательные props
+    props: {},
   };
 }
 

@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "type-check": "tsc --noEmit",
-    "build": "rollup -c",
+    "build": "npm run type-check && rollup -c",
     "build:watch": "npm run type-check && rollup -c -w",
     "dev": "npm run type-check && rollup -c -w --serve"
   },
@@ -17,6 +17,7 @@
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.2",
     "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.4",
     "@types/node": "^24.8.1",
     "fast-deep-equal": "^3.1.3",
     "rollup": "^4.52.4",

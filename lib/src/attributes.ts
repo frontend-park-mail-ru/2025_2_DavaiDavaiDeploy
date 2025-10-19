@@ -1,4 +1,6 @@
-import type { ElementAttributes } from 'lib/src/types/types';
+import type { ElementAttributes } from './types/types.ts';
+
+
 
 
 export function setStyle(el: HTMLElement, name: string, value: string | number): void {

@@ -1,4 +1,4 @@
-import type {CommandHandler, AfterCommandHandler, Unsubscribe} from 'lib/src/types/types';
+import type {CommandHandler, AfterCommandHandler, Unsubscribe} from './types/types.ts';
 
 export class Dispatcher {
   #subs = new Map<string, CommandHandler[]>();

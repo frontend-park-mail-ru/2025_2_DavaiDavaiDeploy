@@ -1,6 +1,6 @@
 import {createApp} from './app.ts';
-import {h, hFragment, hString} from './h.js';
-import {Component} from './component.js';
+import {h, hFragment, hString} from './h.ts';
+import {Component} from './component.ts';
 import {jsx, Fragment} from './jsx/jsx-runtime.js';
 import {createContext} from './context.ts';
 

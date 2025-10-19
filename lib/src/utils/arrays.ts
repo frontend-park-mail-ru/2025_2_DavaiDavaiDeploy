@@ -1,4 +1,6 @@
-import {ARRAY_DIFF_OP, type ArrayDiffOperation, type ArrayDiffResult} from 'lib/src/types';
+import { ARRAY_DIFF_OP } from '../types/consts';
+import type { ArrayDiffResult, ArrayDiffOperation } from '../types/types';
+
 
 
 export function withoutNulls<T>(arr: (T | null | undefined)[]): T[] {

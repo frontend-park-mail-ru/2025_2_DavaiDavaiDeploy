@@ -1,9 +1,9 @@
-import {mountDOM} from './mount-dom.js';
-import {destroyDOM} from './destroy-dom.js';
-import {h} from './h.js';
-import {Component} from '@lib/react';
-import type { VDOMNode } from 'lib/src/types/vdom';
-import type { IProp } from 'lib/src/types/types';
+import {mountDOM} from './mount-dom.ts';
+import {destroyDOM} from './destroy-dom.ts';
+import {h} from './h.ts';
+import type { Component } from './component.ts';
+import type { VDOMNode } from './types/vdom.ts';
+import type { IProp } from './types/types.ts';
 
 interface AppInstance {
   mount: (parentEl: HTMLElement) => void;

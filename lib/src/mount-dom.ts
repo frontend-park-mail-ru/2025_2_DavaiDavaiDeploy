@@ -1,11 +1,17 @@
 // mount-dom.ts
-import { setAttributes } from './attributes.js';
-import { addEventListeners } from './events.js';
-import { extractPropsAndEvents } from './utils/props.js';
-import { enqueueJob } from './scheduler.js';
-import type { Component } from '@lib/react.js';
-import { DOM_TYPES } from 'lib/src/types/consts';
-import type { VDOMNode, TextVDOMNode, ElementVDOMNode, FragmentVDOMNode, ComponentVDOMNode } from 'lib/src/types/vdom';
+import { setAttributes } from './attributes.ts';
+import { addEventListeners } from './events.ts';
+import { extractPropsAndEvents } from './utils/props.ts';
+import { enqueueJob } from './scheduler.ts';
+import { DOM_TYPES } from './types/consts.ts';
+import type {
+  VDOMNode,
+  TextVDOMNode,
+  ElementVDOMNode,
+  FragmentVDOMNode,
+  ComponentVDOMNode,
+} from './types/vdom.ts';
+import type {Component} from './component.ts';
 
 export function mountDOM(
   vdom: VDOMNode, 
@@ -81,7 +87,7 @@ function createElementNode(
 
 function addProps(el: HTMLElement, vdom: ElementVDOMNode, hostComponent: Component | null): void {
   const { props: attrs, events } = extractPropsAndEvents(vdom);
-  vdom.listeners = addEventListeners(events, el, hostComponent);
+  vdom.listeners = addEventListeners(events, el, hostComponent as any);
   setAttributes(el, attrs);
 }
 

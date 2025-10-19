@@ -1,6 +1,4 @@
-// events.ts
-
-import type {Component} from 'lib/src/component';
+import type {Component} from './component.ts';
 
 export type EventHandler<T extends Event = Event> = (event: T) => void;
 export type EventListeners = Record<string, EventHandler>;

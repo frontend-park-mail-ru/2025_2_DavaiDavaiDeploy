@@ -1,5 +1,5 @@
-import {DOM_TYPES} from 'lib/src/types/consts';
-import type {VDOMNode, ElementVDOMNode, ComponentVDOMNode} from 'lib/src/types/vdom';
+import {DOM_TYPES} from './types/consts.ts';
+import type {VDOMNode, ElementVDOMNode, ComponentVDOMNode} from './types/vdom.ts';
 
 export function areNodesEqual(nodeOne: VDOMNode, nodeTwo: VDOMNode): boolean {
   if (nodeOne.type !== nodeTwo.type) {
