@@ -16,6 +16,7 @@
     "vite": "^7.1.9"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^5.0.4"
+    "@vitejs/plugin-react": "^5.0.4",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

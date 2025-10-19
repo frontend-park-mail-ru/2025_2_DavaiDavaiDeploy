@@ -4,7 +4,6 @@
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["vite/client", "node"],
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -22,10 +21,15 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
+    "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "@/*": ["src/*"],
+      "@lib/react.js": ["lib/src/index.ts"],
+      "@lib/*": ["lib/src/*"]
+    },
+    "esModuleInterop": true,
+    "types": [],
   },
-  // "include": ["src", "src/modules"]
+  "include": ["lib/src", "src/modules"]
 }

@@ -1,6 +1,7 @@
 import {Component} from '@lib/react.js';
+import type {Props} from './TodoEditingItem.props.js';
 
-export class TodoEditingItem extends Component {
+export class TodoEditingItem extends Component<Props> {
   state = {
     editingText: this.props.initialText,
   };
