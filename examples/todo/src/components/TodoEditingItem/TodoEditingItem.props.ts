@@ -1,4 +1,4 @@
-export interface Props {
+export interface TodoEditingItemProps {
   initialText: string;
   onSave: (newText: string) => void;
   onCancel: () => void;

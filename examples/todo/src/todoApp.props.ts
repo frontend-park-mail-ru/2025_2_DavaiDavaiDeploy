@@ -1,4 +1,4 @@
-export interface Props {
+export interface TodoAppState {
   todos: Array<{
     id: string;
     text: string;
@@ -6,5 +6,5 @@ export interface Props {
   }>;
   count: number;
   inputValue: string;
-  editingId: string | null;
+  editingId: number | null;
 }

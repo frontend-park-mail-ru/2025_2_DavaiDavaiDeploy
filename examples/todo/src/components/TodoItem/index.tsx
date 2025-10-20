@@ -1,7 +1,7 @@
 import {Component} from '@lib/react.js';
-import type {Props} from './TodoItem.props.ts';
+import type {TodoItemProps} from './TodoItem.props.ts';
 
-export class TodoItem extends Component<Props> {
+export class TodoItem extends Component<TodoItemProps> {
   render() {
     const {todo, onDelete, onStartEditing} = this.props;
 

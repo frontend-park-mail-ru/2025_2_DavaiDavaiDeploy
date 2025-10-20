@@ -1,16 +1,16 @@
 import {Component} from '@lib/react.js';
-import type {Props} from './TodoEditingItem.props.js';
+import type {TodoEditingItemProps} from './TodoEditingItem.props.js';
 
-export class TodoEditingItem extends Component<Props> {
+export class TodoEditingItem extends Component<TodoEditingItemProps> {
   state = {
     editingText: this.props.initialText,
   };
 
-  handleInputChange = event => {
-    this.setState({editingText: event.target.value});
+  handleInputChange = (event: InputEvent) => {
+    this.setState({editingText: (event.target as HTMLInputElement).value});
   };
 
-  handleKeyDown = event => {
+  handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Enter') {
       if (this.state.editingText.length > 3) {
         this.props.onSave(this.state.editingText);

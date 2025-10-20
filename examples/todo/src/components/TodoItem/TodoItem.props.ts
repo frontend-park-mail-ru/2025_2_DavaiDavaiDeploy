@@ -1,8 +1,8 @@
-export interface Props {
+export interface TodoItemProps {
   todo: {
-    id: string;
+    id: number;
     text: string;
   };
-  onDelete: (id: string) => void;
-  onStartEditing: (id: string, text: string) => void;
+  onDelete: (id: number) => void;
+  onStartEditing: (id: number, text: string) => void;
 }
