@@ -20,6 +20,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      '@lib/react.js': resolve(__dirname, '../../lib/dist/react.d.ts'),
       '@lib': resolve(__dirname, '../../lib/dist'),
       '@types': resolve(__dirname, '../../lib/src/types'),
       '@utils': resolve(__dirname, '../../lib/src/utils'),

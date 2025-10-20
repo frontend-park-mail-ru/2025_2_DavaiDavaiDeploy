@@ -11,10 +11,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": false,
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@lib/react.js": ["./src/index.ts"],
+      "@lib/react.js": ["./dist/react.d.ts"],
       "@lib/*": ["./src/*"],
       "@types/*": ["./src/types/*"],
       "@utils/*": ["./src/utils/*"]

@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "types": "./../../lib/dist/types/react.d.ts",
   "devDependencies": {
     "vite": "^7.1.9"
   },
