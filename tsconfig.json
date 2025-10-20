@@ -23,11 +23,11 @@
 
     // Автоматический JSX runtime, источником типов/фабрики будет @lib/react
     "jsx": "react-jsx",
-    "jsxImportSource": "@lib/react.js",
+    "jsxImportSource": "@lib/jsx",
     "baseUrl": ".",
     "paths": {
       // во время разработки указываем на исходники библиотеки
-      "@lib/react.js": ["lib/src/index.ts"],
+      "@lib/react.js": ["lib/dist/index.d.ts"],
       "@lib/*": ["lib/src/*"],
       "@/*": ["src/*"]
     },
