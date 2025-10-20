@@ -27,6 +27,7 @@ export interface ElementVDOMNode extends VDOMNode {
   tag: string;
   children?: VDOMNode[];
   el?: HTMLElement | null;
+  props?: IProp & {on?: IEvent; key?: string | number};
   listeners?: EventListeners;
 }
 
@@ -39,6 +40,6 @@ export interface FragmentVDOMNode extends VDOMNode {
 export interface ComponentVDOMNode extends VDOMNode {
   type: (typeof DOM_TYPES)['COMPONENT'];
   tag: new (...args: any[]) => Component;
-  component?: Component;
+  component: Component;
   el?: HTMLElement | null;
 }

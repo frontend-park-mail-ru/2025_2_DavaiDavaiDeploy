@@ -9,17 +9,16 @@ import {arraysDiff, arraysDiffSequence} from './utils/arrays.ts';
 import {addEventListener} from './events.ts';
 import {extractPropsAndEvents} from './utils/props.ts';
 
-import {
+import type {
   VDOMNode,
+  ElementAttributes,
   TextVDOMNode,
   ElementVDOMNode,
   ComponentVDOMNode,
   ArrayDiffOperation,
-  DOM_TYPES,
-  ARRAY_DIFF_OP,
   IProp,
-  ElementAttributes,
 } from './types';
+import {DOM_TYPES, ARRAY_DIFF_OP} from './types';
 import type {EventListeners} from './events.ts';
 import type {Component} from './component.ts';
 

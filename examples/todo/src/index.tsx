@@ -2,11 +2,11 @@ import {TodoItem} from './components/TodoItem';
 import {TodoEditingItem} from './components/TodoEditingItem';
 import {Component, createApp} from '@lib/react.js';
 import {Counter} from './components/Counter';
-import type {TodoAppState} from './todoApp.props.ts';
+import type {ITodo, TodoAppState} from './todoApp.props.ts';
 
 class TodoApp extends Component<{}, TodoAppState> {
   state = {
-    todos: [],
+    todos: [] as ITodo[],
     count: 0,
     inputValue: '',
     editingId: null,
@@ -116,5 +116,5 @@ class TodoApp extends Component<{}, TodoAppState> {
   }
 }
 
-const app = createApp(TodoApp);
+const app = createApp(TodoApp as typeof Component);
 app.mount(document.body);

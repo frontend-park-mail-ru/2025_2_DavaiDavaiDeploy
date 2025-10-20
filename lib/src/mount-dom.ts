@@ -2,14 +2,14 @@ import {setAttributes} from './attributes.ts';
 import {addEventListeners} from './events.ts';
 import {extractPropsAndEvents} from './utils/props.ts';
 import {enqueueJob} from './scheduler.ts';
-import {
+import type {
   VDOMNode,
   TextVDOMNode,
   ElementVDOMNode,
   FragmentVDOMNode,
   ComponentVDOMNode,
-  DOM_TYPES,
 } from './types';
+import {DOM_TYPES} from './types';
 import type {Component} from './component.ts';
 
 export function mountDOM(

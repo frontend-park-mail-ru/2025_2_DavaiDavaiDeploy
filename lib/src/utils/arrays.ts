@@ -1,5 +1,5 @@
-import {ARRAY_DIFF_OP, ArrayDiffResult, ArrayDiffOperation} from '../types';
-
+import type {ArrayDiffResult, ArrayDiffOperation} from '../types';
+import {ARRAY_DIFF_OP} from '../types';
 
 
 export function withoutNulls<T>(arr: (T | null | undefined)[]): T[] {

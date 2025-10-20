@@ -14,10 +14,10 @@ import type {
 import {DOM_TYPES} from './types/index.js';
 
 export abstract class Component<P = ComponentProps, S = ComponentState> {
-  #isMounted = false;
-  #vdom: VDOMNode | null = null;
-  #hostEl: HTMLElement | null = null;
-  #contextValue: ContextValue = {};
+  private isMounted = false;
+  private vdom: VDOMNode | null = null;
+  private hostEl: HTMLElement | null = null;
+  private contextValue: ContextValue = {};
 
   public props: P;
   public state: S = {} as S;
@@ -25,7 +25,7 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
   static contextType?: Context<ContextValue>;
 
   get context(): ContextValue {
-    return this.#contextValue;
+    return this.contextValue;
   }
 
   constructor(props: P = {} as P) {
@@ -51,12 +51,12 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
   abstract render(): VDOMNode;
 
   get elements(): HTMLElement[] {
-    if (this.#vdom == null) {
+    if (this.vdom == null) {
       return [];
     }
 
-    if (this.#vdom.type === DOM_TYPES.FRAGMENT) {
-      return extractChildren(this.#vdom).flatMap(child => {
+    if (this.vdom.type === DOM_TYPES.FRAGMENT) {
+      return extractChildren(this.vdom).flatMap(child => {
         if (child.type === DOM_TYPES.COMPONENT && (child as any).component) {
           return (child as any).component.elements;
         }
@@ -64,7 +64,7 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
       });
     }
 
-    return (this.#vdom as any).el ? [(this.#vdom as any).el] : [];
+    return (this.vdom as any).el ? [(this.vdom as any).el] : [];
   }
 
   get firstElement(): HTMLElement | undefined {
@@ -72,8 +72,8 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
   }
 
   get offset(): number {
-    if (this.#vdom?.type === DOM_TYPES.FRAGMENT && this.#hostEl && this.firstElement) {
-      return Array.from(this.#hostEl.children).indexOf(this.firstElement);
+    if (this.vdom?.type === DOM_TYPES.FRAGMENT && this.hostEl && this.firstElement) {
+      return Array.from(this.hostEl.children).indexOf(this.firstElement);
     }
     return 0;
   }
@@ -100,7 +100,7 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
   }
 
   mount(hostEl: HTMLElement, index: number | null = null): void {
-    if (this.#isMounted) {
+    if (this.isMounted) {
       throw new Error('Component is already mounted');
     }
 
@@ -109,18 +109,18 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
     };
 
     if (constructor.contextType != null) {
-      this.#contextValue = constructor.contextType.value;
+      this.contextValue = constructor.contextType.value;
       constructor.contextType.subscribe(this as Component);
     }
 
-    this.#vdom = this.render();
-    mountDOM(this.#vdom, hostEl, index, this as Component);
-    this.#hostEl = hostEl;
-    this.#isMounted = true;
+    this.vdom = this.render();
+    mountDOM(this.vdom, hostEl, index, this as Component);
+    this.hostEl = hostEl;
+    this.isMounted = true;
   }
 
   unmount(): void {
-    if (!this.#isMounted) {
+    if (!this.isMounted) {
       throw new Error('Component is not mounted');
     }
 
@@ -131,29 +131,29 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
 
     enqueueJob(() => this.onWillUnmount());
 
-    if (this.#vdom) {
-      destroyDOM(this.#vdom);
+    if (this.vdom) {
+      destroyDOM(this.vdom);
     }
 
     enqueueJob(() => this.onUnmount());
-    this.#vdom = null;
-    this.#hostEl = null;
-    this.#isMounted = false;
+    this.vdom = null;
+    this.hostEl = null;
+    this.isMounted = false;
   }
 
   // Private methods
   #patch(): void {
-    if (!this.#isMounted || !this.#hostEl || !this.#vdom) {
+    if (!this.isMounted || !this.hostEl || !this.vdom) {
       throw new Error('Component is not mounted');
     }
 
     const vdom = this.render();
-    this.#vdom = patchDOM(this.#vdom, vdom, this.#hostEl, this as Component);
+    this.vdom = patchDOM(this.vdom, vdom, this.hostEl, this as Component);
     enqueueJob(() => this.onUpdate());
   }
 
   setContext(context: ContextValue): void {
-    this.#contextValue = context;
+    this.contextValue = context;
     this.#patch();
   }
 }

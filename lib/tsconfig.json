@@ -16,11 +16,11 @@
     "baseUrl": ".",
     "paths": {
       "@lib/react.js": ["./dist/react.d.ts"],
-      "@lib/*": ["./src/*"],
-      "@types/*": ["./src/types/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@lib/*": ["./dist/*"],
+      "@types/*": ["./dist/types/*"],
+      "@utils/*": ["./dist/utils/*"]
     },
-    "typeRoots": ["src/types"]
+    "typeRoots": ["dist/types"]
   },
   "include": ["src", "examples/**/*", "src/types/globals.d.ts"]
 }

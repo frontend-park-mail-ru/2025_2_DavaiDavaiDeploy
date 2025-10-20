@@ -27,15 +27,15 @@
     "baseUrl": ".",
     "paths": {
       // во время разработки указываем на исходники библиотеки
-      "@lib/react.js": ["lib/dist/index.d.ts"],
-      "@lib/*": ["lib/src/*"],
+      "@lib/react.js": ["lib/dist/react.d.ts"],
+      "@lib/*": ["lib/dist/*"],
       "@/*": ["src/*"]
     },
     "esModuleInterop": true,
     // не подхватываем лишние @types автоматически (опционально)
     "types": [],
     // смотреть типы в вашей папке types и в node_modules
-    "typeRoots": ["./lib/src/types", "./node_modules/@types"]
+    "typeRoots": ["./lib/dist", "./lib/dist/types", "./node_modules/@types"]
   },
-  "include": ["lib/src", "lib/src/types/globals.d.ts", "examples/**/*", "src/**/*"]
+  "include": ["lib/dist", "examples/**/*"]
 }
