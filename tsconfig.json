@@ -21,20 +21,16 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    // Автоматический JSX runtime, источником типов/фабрики будет @lib/react
     "jsx": "react-jsx",
     "jsxImportSource": "@lib/jsx",
     "baseUrl": ".",
     "paths": {
-      // во время разработки указываем на исходники библиотеки
       "@lib/react.js": ["lib/dist/react.d.ts"],
       "@lib/*": ["lib/dist/*"],
       "@/*": ["src/*"]
     },
     "esModuleInterop": true,
-    // не подхватываем лишние @types автоматически (опционально)
     "types": [],
-    // смотреть типы в вашей папке types и в node_modules
     "typeRoots": ["./lib/dist", "./lib/dist/types", "./node_modules/@types"]
   },
   "include": ["lib/dist", "examples/**/*"]
