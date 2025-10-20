@@ -52,11 +52,15 @@ export function createContext<T extends ContextValue>(defaultValue: T): Context<
     }
 
     render(): VDOMNode {
-      const children = Array.isArray(this.props.children)
-        ? this.props.children
-        : this.props.children
-          ? [this.props.children]
-          : [];
+      let children: VDOMNode[] = [];
+
+      if (Array.isArray(this.props.children)) {
+        children = this.props.children;
+      } else if (this.props.children) {
+        children = [this.props.children];
+      } else {
+        children = [];
+      }
 
       return hFragment(children);
     }

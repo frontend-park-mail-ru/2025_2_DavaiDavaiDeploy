@@ -176,8 +176,12 @@ function patchEvents(
 
   const addedListeners: EventListeners = {};
   for (const eventName of added.concat(updated)) {
-    const listener = addEventListener(eventName, newEvents[eventName] as any, el, hostComponent);
-    addedListeners[eventName] = listener;
+    addedListeners[eventName] = addEventListener(
+      eventName,
+      newEvents[eventName] as any,
+      el,
+      hostComponent,
+    );
   }
 
   return addedListeners;
