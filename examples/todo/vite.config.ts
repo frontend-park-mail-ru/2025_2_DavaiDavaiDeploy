@@ -1,5 +1,4 @@
 import {defineConfig} from 'vite';
-import {resolve} from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
@@ -8,7 +7,7 @@ export default defineConfig({
     jsx: 'transform',
     jsxFactory: 'jsx',
     jsxFragment: 'Fragment',
-    jsxInject: "import {jsx, Fragment} from '@lib/react.js'",
+    jsxInject: "import {jsx, Fragment} from '@lib/react'",
   },
   server: {
     port: 3000,
