@@ -1,9 +1,5 @@
-type VDOMNode = import('./index').VDOMNode;
-
 declare global {
   namespace JSX {
-    type Element = VDOMNode;
-
     // Base props common to most elements
     interface BaseHTMLAttributes {
       key?: string | number | null;

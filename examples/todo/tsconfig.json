@@ -25,13 +25,10 @@
     "jsxImportSource": "@lib/jsx",
     "baseUrl": ".",
     "paths": {
-      "@lib/react.js": ["lib/dist/react.d.ts"],
-      "@lib/*": ["lib/dist/*"],
+      "@lib/*": ["../../lib/dist/*"],
       "@/*": ["src/*"]
     },
-    "esModuleInterop": true,
-    "types": [],
-    "typeRoots": ["./lib/dist", "./lib/dist/types", "./node_modules/@types"]
+    "esModuleInterop": true
   },
-  "include": ["lib/dist", "examples/**/*"]
+  "include": ["src/**/*", "src/types/globals.d.ts"]
 }
