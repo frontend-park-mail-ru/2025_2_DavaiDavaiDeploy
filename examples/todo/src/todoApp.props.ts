@@ -1,9 +1,10 @@
+interface ITodo {
+  id: number;
+  text: string;
+  completed: boolean;
+}
 export interface TodoAppState {
-  todos: Array<{
-    id: string;
-    text: string;
-    completed: boolean;
-  }>;
+  todos: ITodo[];
   count: number;
   inputValue: string;
   editingId: number | null;

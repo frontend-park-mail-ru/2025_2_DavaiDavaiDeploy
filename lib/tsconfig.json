@@ -20,7 +20,7 @@
       "@types/*": ["./src/types/*"],
       "@utils/*": ["./src/utils/*"]
     },
-    "types": ["./src/types/globals.d.ts"]
+    "typeRoots": ["src/types"]
   },
-  "include": ["src", "examples/**/*"]
+  "include": ["src", "examples/**/*", "src/types/globals.d.ts"]
 }

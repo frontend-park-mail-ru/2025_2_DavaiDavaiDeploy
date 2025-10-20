@@ -21,16 +21,21 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    "jsx": "react",
+    // Автоматический JSX runtime, источником типов/фабрики будет @lib/react
+    "jsx": "react-jsx",
+    "jsxImportSource": "@lib/react.js",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
+      // во время разработки указываем на исходники библиотеки
       "@lib/react.js": ["lib/src/index.ts"],
-      "@lib/*": ["lib/src/*"]
+      "@lib/*": ["lib/src/*"],
+      "@/*": ["src/*"]
     },
     "esModuleInterop": true,
-    "types": ["globals.d.ts"],
-    "typeRoots": ["lib/src/types", "lib/src/types/globals.d.ts"]
+    // не подхватываем лишние @types автоматически (опционально)
+    "types": [],
+    // смотреть типы в вашей папке types и в node_modules
+    "typeRoots": ["./lib/src/types", "./node_modules/@types"]
   },
-  "include": ["lib/src", "src/modules", "globals.d.ts"]
+  "include": ["lib/src", "lib/src/types/globals.d.ts", "examples/**/*", "src/**/*"]
 }

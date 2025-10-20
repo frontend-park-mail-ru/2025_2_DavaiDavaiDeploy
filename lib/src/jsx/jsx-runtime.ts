@@ -1,51 +1,54 @@
-import {h, hFragment, hString} from '../h.js';
+import {h, hFragment, hString} from '../h.ts';
+import type {VDOMNode, IProp, IEvent} from '../types';
 
 export const Fragment = Symbol('Fragment');
 
+type Child = VDOMNode | string | number | boolean | null | undefined;
+
 // Функция для нормализации дочерних элементов
-function normalizeChild(child) {
+function normalizeChild(child: Child): VDOMNode | null {
   if (child == null || child === false) {
     return null;
   }
   if (typeof child === 'string' || typeof child === 'number' || typeof child === 'boolean') {
-    return hString(child.toString());
+    return hString(String(child));
   }
-  return child;
+  return child as VDOMNode;
 }
 
-export function jsx(tag, props, ...children) {
+export function jsx(tag: unknown, props?: IProp, ...children: Array<Child | Child[]>): VDOMNode {
+  // Fragment
   if (tag === Fragment) {
     const normalizedChildren = children
       .flat()
       .map(normalizeChild)
-      .filter(child => child != null);
+      .filter((c): c is VDOMNode => c != null);
     return hFragment(normalizedChildren);
   }
 
-  // Для компонентов передаем props как есть
-  if (typeof tag === 'function' || (typeof tag === 'object' && 'render' in tag)) {
-    const componentProps = {...props};
+  // Components (функция-конструктор / класс)
+  if (typeof tag === 'function' || (typeof tag === 'object' && tag != null && 'render' in tag)) {
+    const componentProps: IProp = {...(props ?? {})};
 
-    // Добавляем children в props если они есть
     if (children.length > 0) {
       componentProps.children = children
         .flat()
         .map(normalizeChild)
-        .filter(child => child != null);
+        .filter((c): c is VDOMNode => c != null);
     }
 
-    return h(tag, componentProps);
+    return h(tag as any, componentProps);
   }
 
-  // Для DOM элементов обрабатываем события и атрибуты
-  const events = {};
-  const attributes = {};
+  // DOM элементы — собираем события и атрибуты
+  const events: IEvent = {};
+  const attributes: IProp = {};
 
   if (props) {
     Object.entries(props).forEach(([key, value]) => {
       if (key.startsWith('on') && typeof value === 'function') {
         const eventName = key.slice(2).toLowerCase();
-        events[eventName] = value;
+        (events as Record<string, Function>)[eventName] = value as Function;
       } else if (key === 'className') {
         attributes['class'] = value;
       } else if (key === 'style' && typeof value === 'object') {
@@ -56,11 +59,10 @@ export function jsx(tag, props, ...children) {
     });
   }
 
-  // Нормализуем детей
   const normalizedChildren = children
     .flat()
     .map(normalizeChild)
-    .filter(child => child != null);
+    .filter((c): c is VDOMNode => c != null);
 
-  return h(tag, {...attributes, on: events}, normalizedChildren);
+  return h(tag as any, {...attributes, on: events}, normalizedChildren);
 }

@@ -1,11 +1,11 @@
-import {
+import type {
   ElementVDOMNode,
   ComponentVDOMNode,
   TextVDOMNode,
-  VDOMNode,
   FragmentVDOMNode,
-  DOM_TYPES,
+  VDOMNode,
 } from './types';
+import {DOM_TYPES} from './types';
 import {withoutNulls} from './utils/arrays.ts';
 import type {Component} from './component.ts';
 

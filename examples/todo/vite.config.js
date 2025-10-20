@@ -8,7 +8,7 @@ export default defineConfig({
     jsx: 'transform',
     jsxFactory: 'jsx',
     jsxFragment: 'Fragment',
-    jsxInject: "import {jsx, Fragment} from '@lib/react.js'",
+    jsxInject: "import {jsx, Fragment} from '@lib/index.d.ts'",
   },
   server: {
     port: 3000,
@@ -20,7 +20,6 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@lib/react.js': resolve(__dirname, '../../lib/dist/react.d.ts'),
       '@lib': resolve(__dirname, '../../lib/dist'),
       '@types': resolve(__dirname, '../../lib/src/types'),
       '@utils': resolve(__dirname, '../../lib/src/utils'),

@@ -4,7 +4,14 @@ import {extractChildren} from './h.js';
 import {patchDOM} from './patch-dom.js';
 import equal from 'fast-deep-equal';
 import {enqueueJob} from './scheduler.js';
-import {ComponentProps, ComponentState, Context, ContextValue, DOM_TYPES, VDOMNode} from './types/index.js';
+import type {
+  ComponentProps,
+  ComponentState,
+  Context,
+  ContextValue,
+  VDOMNode,
+} from './types/index.js';
+import {DOM_TYPES} from './types/index.js';
 
 export abstract class Component<P = ComponentProps, S = ComponentState> {
   #isMounted = false;

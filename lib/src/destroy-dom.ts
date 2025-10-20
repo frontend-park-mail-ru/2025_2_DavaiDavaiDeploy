@@ -1,11 +1,11 @@
-import {
+import type {
   ComponentVDOMNode,
   ElementVDOMNode,
   FragmentVDOMNode,
   TextVDOMNode,
   VDOMNode,
-  DOM_TYPES,
 } from './types';
+import {DOM_TYPES} from './types';
 import {removeEventListeners} from './events.ts';
 
 export function destroyDOM(vdom: VDOMNode): void {
