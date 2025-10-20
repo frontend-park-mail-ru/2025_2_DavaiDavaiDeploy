@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": false,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@lib/react.js": ["./dist/react.d.ts"],
+      "@lib/*": ["./dist/*"],
+      "@types/*": ["./dist/types/*"],
+      "@utils/*": ["./dist/utils/*"]
+    },
+    "typeRoots": ["dist/types"]
+  },
+  "include": ["src", "examples/**/*", "../examples/todo/src/types/globals.d.ts"]
+}

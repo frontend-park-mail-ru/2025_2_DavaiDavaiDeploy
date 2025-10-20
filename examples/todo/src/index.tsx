@@ -1,11 +1,12 @@
 import {TodoItem} from './components/TodoItem';
 import {TodoEditingItem} from './components/TodoEditingItem';
-import {Component, createApp} from '@lib/react.js';
+import {Component, render} from '@lib/react.js';
 import {Counter} from './components/Counter';
+import type {ITodo, TodoAppState} from './todoApp.props.ts';
 
-class TodoApp extends Component {
+class TodoApp extends Component<{}, TodoAppState> {
   state = {
-    todos: [],
+    todos: [] as ITodo[],
     count: 0,
     inputValue: '',
     editingId: null,
@@ -33,19 +34,19 @@ class TodoApp extends Component {
     }
   };
 
-  deleteTodo = id => {
+  deleteTodo = (id: number) => {
     this.setState({
       todos: this.state.todos.filter(todo => todo.id !== id),
     });
   };
 
-  startEditing = id => {
+  startEditing = (id: number) => {
     this.setState({
       editingId: id,
     });
   };
 
-  saveEdit = newText => {
+  saveEdit = (newText: string) => {
     if (newText.trim()) {
       this.setState({
         todos: this.state.todos.map(todo =>
@@ -62,11 +63,11 @@ class TodoApp extends Component {
     });
   };
 
-  handleInputChange = event => {
-    this.setState({inputValue: event.target.value});
+  handleInputChange = (event: InputEvent) => {
+    this.setState({inputValue: (event.target as HTMLInputElement).value});
   };
 
-  handleKeyPress = event => {
+  handleKeyPress = (event: KeyboardEvent) => {
     if (event.key === 'Enter') {
       this.addTodo();
     }
@@ -109,11 +110,10 @@ class TodoApp extends Component {
             ),
           )}
         </div>
-        <Counter onIncrement={this.increment} count={this.state.count}  />
+        <Counter onIncrement={this.increment} count={this.state.count} />
       </>
     );
   }
 }
 
-const app = createApp(TodoApp);
-app.mount(document.body);
+render(<TodoApp />, document.body);

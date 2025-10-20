@@ -3,3 +3,4 @@ node_modules/
 dist/
 jsconfig.json
 types.d.ts
+.vscode

@@ -1,15 +1,16 @@
 import {Component} from '@lib/react.js';
+import type {CounterProps} from './Counter.props.ts';
 
-export class Counter extends Component {
-  onWillUnmount() {
+export class Counter extends Component<CounterProps> {
+  onWillUnmount(): void {
     console.log('Counter will unmount, current state is ' + this.props.count);
   }
 
-  onUnmount() {
+  onUnmount(): void {
     console.log('Set up a destruction, the order sucks');
   }
 
-  onUpdate() {
+  onUpdate(): void {
     console.log('Counter updated, new state is ' + this.props.count);
   }
 
