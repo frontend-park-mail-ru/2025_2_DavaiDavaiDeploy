@@ -29,7 +29,8 @@
       "@lib/*": ["lib/src/*"]
     },
     "esModuleInterop": true,
-    "types": [],
+    "types": ["globals.d.ts"],
+    "typeRoots": ["lib/src/types", "lib/src/types/globals.d.ts"]
   },
-  "include": ["lib/src", "src/modules"]
+  "include": ["lib/src", "src/modules", "globals.d.ts"]
 }

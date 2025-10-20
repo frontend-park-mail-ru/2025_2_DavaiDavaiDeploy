@@ -1,4 +1,4 @@
-import {VDOMNode} from './index.ts';
+type VDOMNode = import('./index').VDOMNode;
 
 declare global {
   namespace JSX {

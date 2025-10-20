@@ -3,4 +3,5 @@ export interface TodoEditingItemProps {
   onSave: (newText: string) => void;
   onCancel: () => void;
   id: string;
+  key: number;
 }

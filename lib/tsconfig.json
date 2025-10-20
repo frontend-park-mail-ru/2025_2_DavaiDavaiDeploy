@@ -19,7 +19,8 @@
       "@lib/*": ["./src/*"],
       "@types/*": ["./src/types/*"],
       "@utils/*": ["./src/utils/*"]
-    }
+    },
+    "types": ["./src/types/globals.d.ts"]
   },
   "include": ["src", "examples/**/*"]
 }
