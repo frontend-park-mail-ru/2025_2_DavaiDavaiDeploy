@@ -16,7 +16,7 @@ Sentry.init({
 let btn = document.createElement('button');
 btn.addEventListener('click', () => {
 	Sentry.captureMessage('Hello, world!');
-	Sentry.captureException(new Error('Good bye'));
+	Sentry.captureException(new RangeError('Good bye'));
 });
 
 document.body.append(btn);
