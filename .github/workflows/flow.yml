@@ -138,6 +138,12 @@ jobs:
             ~/.npm
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
 
+      - name: Создание env файла
+        run: |
+          touch .env
+          echo VITE_SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> .env
+          cat .env
+
       - name: Build project
         run: npm run build
 
