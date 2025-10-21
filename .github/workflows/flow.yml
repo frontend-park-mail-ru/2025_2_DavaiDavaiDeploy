@@ -185,7 +185,7 @@ jobs:
           strip_components: 1
 
   notify_success:
-    name: Deploy to Server
+    name: Success Message
     runs-on: ubuntu-latest
     needs: deploy
     steps:
@@ -200,8 +200,8 @@ jobs:
             ${{ secrets.PRODUCTION_URL || 'Отсутствует' }}
 
   notify_failure:
-    name: Deploy to Server
-    if: ${{ needs.build.result == 'failure' }}
+    name: Failure Message
+    if: ${{ needs.deploy.result == 'failure' }}
     runs-on: ubuntu-latest
     steps:
       - name: Send Telegram Failure Message
