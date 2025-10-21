@@ -69,7 +69,7 @@
     "stylelint-config-standard-scss": "^16.0.0",
     "stylelint-scss": "^6.12.1",
     "swagger-typescript-api": "^13.2.15",
-    "typescript": "~5.8.0",
+    "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.1",
     "vite": "^7.1.7",
     "vite-tsconfig-paths": "^5.1.4",
