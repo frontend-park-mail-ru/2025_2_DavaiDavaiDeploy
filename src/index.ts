@@ -7,10 +7,7 @@ Sentry.init({
 	dsn: import.meta.env.VITE_SENTRY_DSN,
 	enabled: import.meta.env.PROD,
 	integrations: [Sentry.browserTracingIntegration()],
-	tracePropagationTargets: [
-		'localhost', // For local development
-		'https://ddfilms.online/', // For your backend domain
-	],
+	tracePropagationTargets: ['https://ddfilms.online/'],
 });
 
 let btn = document.createElement('button');
