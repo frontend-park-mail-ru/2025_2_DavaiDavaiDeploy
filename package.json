@@ -38,9 +38,9 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy#readme",
   "dependencies": {
-    "@sentry-internal/typescript": "^10.21.0",
     "@sentry/browser": "^10.21.0",
     "@sentry/core": "^10.21.0",
+    "@sentry/vite-plugin": "^2.14.1",
     "reset-css": "^5.0.2"
   },
   "devDependencies": {

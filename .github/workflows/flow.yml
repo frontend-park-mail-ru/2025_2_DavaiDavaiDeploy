@@ -142,6 +142,9 @@ jobs:
         run: |
           touch .env
           echo VITE_SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> .env
+          echo VITE_SENTRY_AUTH_TOKEN=${{ secrets.VITE_SENTRY_AUTH_TOKEN }} >> .env
+          echo VITE_SENTRY_ORG=${{ secrets.VITE_SENTRY_ORG }} >> .env
+          echo VITE_SENTRY_PROJECT=${{ secrets.VITE_SENTRY_PROJECT }} >> .env
           cat .env
 
       - name: Build project
