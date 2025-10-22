@@ -157,6 +157,13 @@ jobs:
           path: dist
           retention-days: 1
 
+      - name: Save static artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: static
+          path: static
+          retention-days: 1
+
   deploy-static:
     name: Deploy static to s3
     runs-on: ubuntu-latest
@@ -165,8 +172,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@main
         with:
-          name: build-output
-          path: static
+          name: static
       - name: Deploy static folder to S3 bucket
         uses: jakejarvis/s3-sync-action@master
         with:
