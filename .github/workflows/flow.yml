@@ -173,6 +173,7 @@ jobs:
         uses: actions/download-artifact@main
         with:
           name: static
+          path: static
       - name: Deploy static folder to S3 bucket
         uses: jakejarvis/s3-sync-action@master
         with:
