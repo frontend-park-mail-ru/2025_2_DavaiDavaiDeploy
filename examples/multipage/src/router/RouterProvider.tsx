@@ -12,9 +12,9 @@ export default class RouterProvider extends Component {
     this.state.path = window.location.pathname;
   }
 
-  navigate(to: string) {
+  navigate = (to: string) => {
     console.log('навигация к ', to);
-    if (to === window.location.pathname) {
+    if (to === this.state.path) {
       return;
     }
     window.history.pushState({}, '', to);
