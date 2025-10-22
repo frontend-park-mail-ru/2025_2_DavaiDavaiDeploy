@@ -1,6 +1,6 @@
 import type {Component} from '../component.ts';
 import {ARRAY_DIFF_OP} from './consts.ts';
-import type { VDOMNode } from './index.ts';
+import type {VDOMNode} from './index.ts';
 
 export type EventHandler = (...args: any[]) => void;
 export type IEvent = Record<string, EventHandler>;
@@ -61,9 +61,7 @@ export interface ComponentState {
   [key: string]: unknown;
 }
 
-export interface ContextValue {
-  [key: string]: unknown;
-}
+export type ContextValue = any;
 
 export interface ComponentConstructor<P = ComponentProps> {
   new (props?: P): Component<P>;
@@ -73,4 +71,6 @@ export interface ComponentConstructor<P = ComponentProps> {
 export type CommandHandler<T = any> = (payload: T) => void;
 export type AfterCommandHandler = () => void;
 export type Unsubscribe = () => void;
-
+export interface WithChildrenProps {
+  children?: VDOMNode[] | VDOMNode | string | Function;
+}

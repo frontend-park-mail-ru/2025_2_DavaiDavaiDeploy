@@ -11,20 +11,24 @@ import type {
   ContextValue,
   VDOMNode,
 } from './types/index.js';
-import {DOM_TYPES} from './types/index.js';
+import {DOM_TYPES, WithChildrenProps} from './types/index.js';
 
-export abstract class Component<P = ComponentProps, S = ComponentState> {
+export abstract class Component<
+  P = ComponentProps,
+  S = ComponentState,
+  C extends ContextValue = {},
+> {
   private isMounted = false;
   private vdom: VDOMNode | null = null;
   private hostEl: HTMLElement | null = null;
-  private contextValue: ContextValue = {};
+  private contextValue: C = {} as C;
 
-  public props: P;
+  public props: P & WithChildrenProps;
   public state: S = {} as S;
 
-  static contextType?: Context<ContextValue>;
+  static contextType?: Context;
 
-  get context(): ContextValue {
+  get context(): C {
     return this.contextValue;
   }
 
@@ -84,7 +88,7 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
       return;
     }
     this.props = newProps;
-    this.#patch();
+    this.patch();
   }
 
   setState(state: Partial<S> | ((prevState: S, props: P) => Partial<S>)): void {
@@ -96,7 +100,7 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
     } else {
       this.state = {...this.state, ...state};
     }
-    this.#patch();
+    this.patch();
   }
 
   mount(hostEl: HTMLElement, index: number | null = null): void {
@@ -105,7 +109,7 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
     }
 
     const constructor = this.constructor as typeof Component & {
-      contextType?: Context<ContextValue>;
+      contextType?: Context<C>;
     };
 
     if (constructor.contextType != null) {
@@ -125,7 +129,7 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
     }
 
     const constructor = this.constructor as typeof Component & {
-      contextType?: Context<ContextValue>;
+      contextType?: Context<C>;
     };
     constructor.contextType?.unsubscribe(this as Component);
 
@@ -141,8 +145,7 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
     this.isMounted = false;
   }
 
-  // Private methods
-  #patch(): void {
+  private patch(): void {
     if (!this.isMounted || !this.hostEl || !this.vdom) {
       throw new Error('Component is not mounted');
     }
@@ -152,8 +155,8 @@ export abstract class Component<P = ComponentProps, S = ComponentState> {
     enqueueJob(() => this.onUpdate());
   }
 
-  setContext(context: ContextValue): void {
+  setContext(context: C): void {
     this.contextValue = context;
-    this.#patch();
+    this.patch();
   }
 }

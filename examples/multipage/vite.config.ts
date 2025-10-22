@@ -1,5 +1,4 @@
 import {defineConfig} from 'vite';
-import {resolve} from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
@@ -17,11 +16,5 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
-  },
-  resolve: {
-    alias: {
-      '@lib': resolve(__dirname, '../../lib/src'),
-      '@src': resolve(__dirname, 'src'),
-    },
   },
 });
