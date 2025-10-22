@@ -1,9 +1,9 @@
 import {Component, render} from '@lib/index.ts';
-import {RouterProvider} from './router/routerProvider.tsx';
+import {RouterProvider} from './router/RouterProvider.tsx';
 import {Route} from './router/route.tsx';
 import {Link} from './router/link.tsx';
 import type {VDOMNode} from '@lib/types';
-import { Routes } from './router/routes.tsx';
+import {Routes} from './router/routes.tsx';
 
 class Home extends Component {
   render(): VDOMNode {
