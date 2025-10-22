@@ -1,11 +1,11 @@
 import {Component, render} from '@lib/index.ts';
-import {RouterProvider} from './router/RouterProvider.tsx';
 import {Route} from './router/route.tsx';
 import {Link} from './router/link.tsx';
 import type {VDOMNode} from '@lib/types';
 import {Routes} from './router/routes.tsx';
 import {RouterContext} from './router/routerContext.ts';
 import type {RouterContextValue} from './router/types/routerContext.ts';
+import { RouterProvider } from './router/routerProvider.tsx';
 
 class Home extends Component {
   render(): VDOMNode {
