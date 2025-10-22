@@ -1,4 +1,4 @@
-import {Component, createApp, createContext} from '@lib/react.js';
+import {Component, createContext, render} from '@lib/react.js';
 
 const ThemeContext = createContext({theme: 'light', primaryColor: 'blue'});
 const UserContext = createContext({name: 'Guest', role: 'user'});
@@ -237,7 +237,8 @@ class ComplexApp extends Component {
                 <div style={{flex: 1}}>
                   <NotificationsPanel />
 
-                  <ThemeContext.Provider value={{theme: this.state.theme, primaryColor: this.state.primaryColor}}>
+                  <ThemeContext.Provider
+                    value={{theme: this.state.theme, primaryColor: this.state.primaryColor}}>
                     <div
                       style={{
                         padding: '15px',
@@ -260,5 +261,4 @@ class ComplexApp extends Component {
   }
 }
 
-const app = createApp(ComplexApp);
-app.mount(document.body);
+render(<ComplexApp />, document.body);
