@@ -185,6 +185,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: 'ru-7'
           SOURCE_DIR: 'static'
+          DEST_DIR: 'static'
 
   deploy:
     name: Deploy to Server
