@@ -1,8 +1,8 @@
 import { Component } from '@lib/index';
-import type { Routes as RoutesProps } from './types/routes.ts';
+import type { RoutesConfig } from './types/routesConfig.props.ts';
 
-export class Routes extends Component<RoutesProps> {
-    constructor(props: RoutesProps) {
+export class Routes extends Component<RoutesConfig> {
+    constructor(props: RoutesConfig) {
     super(props);
   }
   render() {

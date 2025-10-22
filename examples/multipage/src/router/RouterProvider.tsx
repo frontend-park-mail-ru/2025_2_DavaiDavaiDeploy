@@ -1,25 +1,29 @@
 import { Component } from '@lib/index';
 import { RouterContext } from './routerContext.ts';
+import type {VDOMNode} from '@lib/types';
 
 export default class RouterProvider extends Component {
-  private path: string;
+  state = {
+    path: "/"
+  }
 
   constructor(props: any) {
     super(props);
-    this.path = window.location.pathname;
+    this.state.path = window.location.pathname;
   }
-  
-  navigate(to: string){
+
+  navigate(to: string) {
+    console.log('навигация к ', to);
     if (to === window.location.pathname) {
       return;
     }
     window.history.pushState({}, '', to);
-    this.path = to;
+    this.setState({ path: to });
   }
 
   handlePopState = () => {
-    this.path = window.location.pathname;
-  }
+    this.setState({ path: window.location.pathname });
+  };
 
   onMount() {
     window.addEventListener('popstate', this.handlePopState);
@@ -29,9 +33,9 @@ export default class RouterProvider extends Component {
     window.removeEventListener('popstate', this.handlePopState);
   }
 
-  render() {
+  render(): VDOMNode {
     return (
-      <RouterContext.Provider value={{ path: this.path, navigate: this.navigate }}>
+      <RouterContext.Provider value={{path: this.state.path, navigate: this.navigate}}>
         {this.props.children}
       </RouterContext.Provider>
     );

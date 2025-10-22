@@ -1,10 +1,7 @@
 import {Component} from '@lib/index';
 import {RouterContext} from './routerContext';
-
-interface LinkProps {
-  href: string;
-  children: Component;
-}
+import type { LinkProps } from './types/link.props.ts';
+import type { VDOMNode } from '@lib/types';
 
 export class Link extends Component<LinkProps> {
   href: string;
@@ -20,10 +17,11 @@ export class Link extends Component<LinkProps> {
 
   handleClick = (e: Event) => {
     e.preventDefault();
-    this.context.navigate(to);
+    console.log('я кликнул + ', this.context);
+    this.context.navigate(this.href);
   };
 
-  render(): any {
+  render(): VDOMNode {
     return (
       <a href={this.href} onClick={this.handleClick}>
         {this.props.children}
