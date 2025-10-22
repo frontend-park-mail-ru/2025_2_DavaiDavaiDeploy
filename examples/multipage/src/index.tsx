@@ -4,6 +4,8 @@ import {Route} from './router/route.tsx';
 import {Link} from './router/link.tsx';
 import type {VDOMNode} from '@lib/types';
 import {Routes} from './router/routes.tsx';
+import {RouterContext} from './router/routerContext.ts';
+import type {RouterContextValue} from './router/types/routerContext.ts';
 
 class Home extends Component {
   render(): VDOMNode {
@@ -27,12 +29,14 @@ class About extends Component {
   }
 }
 
+class AboutId extends Component<{}, {}, RouterContextValue> {
+  static contextType = RouterContext;
 
-class AboutId extends Component {
   render(): VDOMNode {
     return (
       <>
-        <div>ЕБАТЬ</div>
+        <div>About ID</div>
+        <p>{this.context.params.id}</p>
         <Link href='/'>Перейти на страницу "Главная"</Link>
       </>
     );

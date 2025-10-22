@@ -6,10 +6,13 @@ import {normalize} from './utils/normalize.ts';
 
 interface ContextProps {
   path: string;
+  params: Record<string, string>;
 }
 
 export class Routes extends Component<RoutesConfig, {}, ContextProps> {
-  private toRenderIndex: number | null = null;
+  constructor(props: RoutesConfig) {
+    super(props);
+  }
 
   static contextType = RouterContext;
 
@@ -23,51 +26,34 @@ export class Routes extends Component<RoutesConfig, {}, ContextProps> {
       if (this.props.children.length === 1) {
         return this.props.children[0];
       }
-      let tmp = null;
-      const path = window.location.pathname;
-      let index = 0;
+      const path = window.location.pathname + window.location.search;
+      const [pathname, queryString] = normalize(path).split('?');
+      const searchParams = new URLSearchParams(queryString);
+      const search = Object.fromEntries(searchParams.entries());
+
       for (const child of this.props.children) {
-        console.log(child);
-        if (!child.props?.href) {
-          continue;
-        }
-        console.log('до нормализации', child.props.href as string);
-        let href = normalize(child.props.href as string);
-        console.log('после  нормализации  ', href);
+        let href = normalize(child.props?.href as string);
         const escapedPattern = href.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
         const pattern = escapedPattern.replace(/:\w+/g, '([^/]+)');
-        console.log('паттерн', pattern);
         const regex = new RegExp(`^${pattern}$`);
-        const match = path.match(regex);
+        const match = pathname.match(regex);
 
         if (match) {
-          const params: Record<string, string> = {};
+          let params: Record<string, string> = {};
           const paramNames = [...href.matchAll(/:(\w+)/g)].map(m => m[1]);
           paramNames.forEach((name, i) => {
             params[name] = match[i + 1];
           });
-          console.log('у меня метч', params, path);
-          this.toRenderIndex = index;
-          break;
+          params = {...params, ...search};
+          this.context.params = params;
+          return child;
         }
-        index++;
       }
-      if (tmp == null) {
-        return <Route404 />;
-      }
-      return tmp;
+      return <Route404 />;
     }
   }
 
   render() {
-    this.getCurrChild();
-    if (!this.props.children || !Array.isArray(this.props.children)) {
-      return <Route404 />;
-    }
-    const currChild = this.props.children[this.toRenderIndex ?? 0];
-    if (!currChild) {
-      return <Route404 />;
-    }
-    return currChild;
+    return this.getCurrChild();
   }
 }
