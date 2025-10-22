@@ -1,13 +1,14 @@
 import {Component} from '@lib/index';
 import {RouterContext} from './routerContext.ts';
 import type {VDOMNode} from '@lib/types';
-import {Route404} from './route404.tsx';
-// import Header from '../components/header.tsx';
-// import Footer from '../components/footer.tsx';
+import {trimRoute} from './utils/trimRoute.ts';
+import {getCurrChild} from './utils/getCurrChild.tsx';
+import {extractQuery} from './utils/extractQuery.ts';
 
-export default class RouterProvider extends Component {
+export class RouterProvider extends Component {
   state = {
     path: '/',
+    params: {},
   };
 
   constructor(props: any) {
@@ -15,27 +16,24 @@ export default class RouterProvider extends Component {
     this.state.path = window.location.pathname;
   }
 
-  trimRoute(route: string): string {
-    if (route.length > 1 && route.endsWith('/')) {
-      route = route.slice(0, -1);
-    }
-
-    return route;
-  }
-
   navigate = (to: string) => {
     if (to === this.state.path) {
       return;
     }
-    window.history.pushState({}, '', to);
-    this.setState({path: to});
+    window.history.pushState({}, '', trimRoute(to));
+    this.setState({path: trimRoute(to), params: extractQuery(to)});
   };
 
   handlePopState = () => {
-    this.setState({path: window.location.pathname});
+    this.setState({path: trimRoute(window.location.pathname), params: extractQuery(window.location.href)});
   };
 
   onMount() {
+    this.setState({
+      path: trimRoute(window.location.pathname),
+      params: extractQuery(window.location.href),
+    });
+    console.log(this.state.params)
     window.addEventListener('popstate', this.handlePopState);
   }
 
@@ -43,31 +41,10 @@ export default class RouterProvider extends Component {
     window.removeEventListener('popstate', this.handlePopState);
   }
 
-  getCurrChild() {
-    if (!Array.isArray(this.props.children)) {
-      return this.props.children;
-    } else {
-      if (this.props.children.length === 1) {
-        return this.props.children[0];
-      }
-      let tmp = null;
-      this.props.children?.forEach(child => {
-        if (child.props?.href === this.state.path) {
-          tmp = child;
-          return;
-        }
-      });
-      if (tmp == null) {
-        return <Route404 />;
-      }
-      return tmp;
-    }
-  }
-
   render(): VDOMNode {
     return (
       <RouterContext.Provider value={{path: this.state.path, navigate: this.navigate}}>
-        {this.getCurrChild()}
+        {getCurrChild({children: this.props.children, currPath: this.state.path})}
       </RouterContext.Provider>
     );
   }

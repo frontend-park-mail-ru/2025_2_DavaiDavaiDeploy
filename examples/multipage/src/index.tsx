@@ -1,5 +1,5 @@
 import {Component, render} from '@lib/index.ts';
-import RouterProvider from './router/RouterProvider.tsx';
+import {RouterProvider} from './router/routerProvider.tsx';
 import {Route} from './router/route.tsx';
 import {Link} from './router/link.tsx';
 import type {VDOMNode} from '@lib/types';
