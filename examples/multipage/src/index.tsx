@@ -27,6 +27,18 @@ class About extends Component {
   }
 }
 
+
+class AboutId extends Component {
+  render(): VDOMNode {
+    return (
+      <>
+        <div>ЕБАТЬ</div>
+        <Link href='/'>Перейти на страницу "Главная"</Link>
+      </>
+    );
+  }
+}
+
 export class App extends Component {
   render() {
     return (
@@ -34,6 +46,7 @@ export class App extends Component {
         <Routes>
           <Route href='/' component={<Home />} />
           <Route href='/about' component={<About />} />
+          <Route href='/about/:id' component={<AboutId />} />
         </Routes>
       </RouterProvider>
     );

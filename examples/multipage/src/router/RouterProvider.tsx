@@ -20,20 +20,20 @@ export class RouterProvider extends Component {
       return;
     }
     window.history.pushState({}, '', trimRoute(to));
-    this.setState({path: trimRoute(to), params: extractQuery(to)});
+    this.setState({path: trimRoute(to), params: to});
   };
 
   handlePopState = () => {
     this.setState({
       path: trimRoute(window.location.pathname),
-      params: extractQuery(window.location.href),
+      params: window.location.pathname + window.location.search,
     });
   };
 
   onMount() {
     this.setState({
       path: trimRoute(window.location.pathname),
-      params: extractQuery(window.location.href),
+      params: window.location.pathname + window.location.search,
     });
     window.addEventListener('popstate', this.handlePopState);
   }
