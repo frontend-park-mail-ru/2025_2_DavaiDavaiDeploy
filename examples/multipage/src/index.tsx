@@ -30,7 +30,7 @@ export class App extends Component {
   render() {
     return (
       <RouterProvider>
-        <Route hasFooter={false} href='/' component={<Home />} />
+        <Route href='/' component={<Home />} />
         <Route href='/about' component={<About />} />
       </RouterProvider>
     );

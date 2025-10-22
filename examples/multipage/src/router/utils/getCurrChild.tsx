@@ -1,8 +1,8 @@
-import type {VDOMNode} from '../../../../../lib/src/types/vdom.ts';
 import {Route404} from '../route404.tsx';
+import type { VDOMElement } from '../types/element.ts';
 
 interface Props {
-  children: VDOMNode | VDOMNode[] | undefined;
+  children: VDOMElement;
   currPath: string;
 }
 

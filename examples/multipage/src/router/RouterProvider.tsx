@@ -2,7 +2,6 @@ import {Component} from '@lib/index';
 import {RouterContext} from './routerContext.ts';
 import type {VDOMNode} from '@lib/types';
 import {trimRoute} from './utils/trimRoute.ts';
-import {getCurrChild} from './utils/getCurrChild.tsx';
 import {extractQuery} from './utils/extractQuery.ts';
 
 export class RouterProvider extends Component {
@@ -47,7 +46,7 @@ export class RouterProvider extends Component {
     return (
       <RouterContext.Provider
         value={{path: this.state.path, navigate: this.navigate, params: this.state.params}}>
-        {getCurrChild({children: this.props.children, currPath: this.state.path})}
+        {this.props.children}
       </RouterContext.Provider>
     );
   }
