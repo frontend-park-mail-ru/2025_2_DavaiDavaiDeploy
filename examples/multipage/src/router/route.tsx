@@ -1,15 +1,20 @@
 import {Component} from '@lib/index';
 import type {RouteConfig} from './types/routeConfig';
+import type {VDOMNode} from '@lib/types';
+import {ExtraFieldsWrapper} from './extraFieldsWrapper.tsx';
 
 export class Route extends Component<RouteConfig, {}> {
   constructor(props: RouteConfig) {
     super(props);
   }
 
-  render() {
-    const {href, component} = this.props;
-    const currentPath = window.location.pathname;
-    console.log('в роуте я получил href "', href, '"и currentPath "', currentPath, "'");
-    return currentPath === href ? <>{component}</> : null;
+  render(): VDOMNode {
+    const {hasFooter = true, hasHeader = true, component} = this.props;
+
+    return (
+      <ExtraFieldsWrapper hasHeader={hasHeader} hasFooter={hasFooter}>
+        <>{component}</>
+      </ExtraFieldsWrapper>
+    );
   }
 }
