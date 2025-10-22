@@ -3,7 +3,7 @@ import type {VDOMNode, IProp, IEvent} from '../types';
 
 export const Fragment = Symbol('Fragment');
 
-type Child = VDOMNode | string | number | boolean | null | undefined;
+export type Child = VDOMNode | string | number | boolean | null | undefined;
 
 // Функция для нормализации дочерних элементов
 function normalizeChild(child: Child): VDOMNode | null {
