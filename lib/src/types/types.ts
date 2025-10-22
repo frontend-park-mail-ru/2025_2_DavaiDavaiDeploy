@@ -71,4 +71,6 @@ export interface ComponentConstructor<P = ComponentProps> {
 export type CommandHandler<T = any> = (payload: T) => void;
 export type AfterCommandHandler = () => void;
 export type Unsubscribe = () => void;
-export type Element = VDOMNode[] | VDOMNode | string | Function
+export interface WithChildrenProps {
+  children?: VDOMNode[] | VDOMNode | string | Function;
+}
