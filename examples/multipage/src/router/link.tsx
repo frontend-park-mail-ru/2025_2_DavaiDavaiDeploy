@@ -1,9 +1,10 @@
 import {Component} from '@lib/index';
 import {RouterContext} from './routerContext';
-import type { LinkProps } from './types/link.props.ts';
-import type { VDOMNode } from '@lib/types';
+import type {LinkProps} from './types/link.props.ts';
+import type {VDOMNode} from '@lib/types';
+import type {RouterContextValue} from './types/routerContext.ts';
 
-export class Link extends Component<LinkProps> {
+export class Link extends Component<LinkProps, {}, RouterContextValue> {
   href: string;
   static contextType = RouterContext;
 

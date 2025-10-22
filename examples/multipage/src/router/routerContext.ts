@@ -1,10 +1,7 @@
-import { createContext } from '@lib/index';
+import {createContext} from '@lib/index';
+import type {RouterContextValue} from './types/routerContext.ts';
 
-interface RouterContextValue {
-  path: string;
-  navigate: (to: string) => void;
-  [key: string]: any;
-}
-
-export const RouterContext = createContext<RouterContextValue>({path: '/', navigate: (_to: string) => {} });
-
+export const RouterContext = createContext<RouterContextValue>({
+  path: '/',
+  navigate: (_to: string) => {},
+});
