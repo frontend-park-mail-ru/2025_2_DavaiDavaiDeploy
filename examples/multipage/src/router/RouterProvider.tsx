@@ -1,4 +1,4 @@
-import { Component } from '@lib/dist/react';
+import { Component } from '@lib/index';
 import { RouterContext } from './routerContext.ts';
 
 export default class RouterProvider extends Component {

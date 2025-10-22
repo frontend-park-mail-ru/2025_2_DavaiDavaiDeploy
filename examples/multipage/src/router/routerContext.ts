@@ -1,4 +1,4 @@
-import { createContext } from '@lib/dist/react';
+import { createContext } from '@lib/index';
 
 interface RouterContextValue {
   path: string;

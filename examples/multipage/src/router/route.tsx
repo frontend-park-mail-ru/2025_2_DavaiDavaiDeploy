@@ -1,4 +1,4 @@
-import { Component} from '@lib/dist/react';
+import { Component} from '@lib/index';
 import type { RouteConfig } from './types/routes';
 
 export class Route extends Component<RouteConfig, {}> {
