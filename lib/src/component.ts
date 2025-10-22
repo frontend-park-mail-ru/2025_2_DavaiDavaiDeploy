@@ -11,7 +11,7 @@ import type {
   ContextValue,
   VDOMNode,
 } from './types/index.js';
-import {DOM_TYPES} from './types/index.js';
+import {DOM_TYPES, Element} from './types/index.js';
 
 export abstract class Component<
   P = ComponentProps,
@@ -23,7 +23,7 @@ export abstract class Component<
   private hostEl: HTMLElement | null = null;
   private contextValue: C = {} as C;
 
-  public props: P & {children?: VDOMNode[] | VDOMNode | string | Function};
+  public props: P & {children?: Element};
   public state: S = {} as S;
 
   static contextType?: Context;

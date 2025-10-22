@@ -1,8 +1,8 @@
+import type {Element} from '@lib/types';
 import {Route404} from '../route404.tsx';
-import type { VDOMElement } from '../types/element.ts';
 
 interface Props {
-  children: VDOMElement;
+  children: Element | undefined;
   currPath: string;
 }
 

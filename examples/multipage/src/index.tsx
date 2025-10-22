@@ -3,6 +3,7 @@ import {RouterProvider} from './router/routerProvider.tsx';
 import {Route} from './router/route.tsx';
 import {Link} from './router/link.tsx';
 import type {VDOMNode} from '@lib/types';
+import { Routes } from './router/routes.tsx';
 
 class Home extends Component {
   render(): VDOMNode {
@@ -30,8 +31,10 @@ export class App extends Component {
   render() {
     return (
       <RouterProvider>
-        <Route href='/' component={<Home />} />
-        <Route href='/about' component={<About />} />
+        <Routes>
+          <Route href='/' component={<Home />} />
+          <Route href='/about' component={<About />} />
+        </Routes>
       </RouterProvider>
     );
   }
