@@ -45,7 +45,8 @@ export class RouterProvider extends Component {
 
   render(): VDOMNode {
     return (
-      <RouterContext.Provider value={{path: this.state.path, navigate: this.navigate}}>
+      <RouterContext.Provider
+        value={{path: this.state.path, navigate: this.navigate, params: this.state.params}}>
         {getCurrChild({children: this.props.children, currPath: this.state.path})}
       </RouterContext.Provider>
     );

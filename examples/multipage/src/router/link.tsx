@@ -18,11 +18,11 @@ export class Link extends Component<LinkProps, {}, RouterContextValue> {
 
   handleClick = (e: Event) => {
     e.preventDefault();
-    console.log('я кликнул + ', this.context);
     this.context.navigate(this.href);
   };
 
   render(): VDOMNode {
+    console.log(this.context.params)
     return (
       <a href={this.href} onClick={this.handleClick}>
         {this.props.children}
