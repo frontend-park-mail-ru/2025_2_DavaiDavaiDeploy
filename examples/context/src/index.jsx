@@ -1,4 +1,4 @@
-import {Component, createContext, render} from '@lib/react.js';
+import {Component, createContext, render} from '@lib/index';
 
 const ThemeContext = createContext({theme: 'light', primaryColor: 'blue'});
 const UserContext = createContext({name: 'Guest', role: 'user'});
