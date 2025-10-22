@@ -25,7 +25,10 @@ export class RouterProvider extends Component {
   };
 
   handlePopState = () => {
-    this.setState({path: trimRoute(window.location.pathname), params: extractQuery(window.location.href)});
+    this.setState({
+      path: trimRoute(window.location.pathname),
+      params: extractQuery(window.location.href),
+    });
   };
 
   onMount() {
@@ -33,7 +36,6 @@ export class RouterProvider extends Component {
       path: trimRoute(window.location.pathname),
       params: extractQuery(window.location.href),
     });
-    console.log(this.state.params)
     window.addEventListener('popstate', this.handlePopState);
   }
 
