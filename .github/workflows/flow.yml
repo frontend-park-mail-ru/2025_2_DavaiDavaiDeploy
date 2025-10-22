@@ -165,7 +165,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@main
         with:
-          name: output
+          name: build-output
           path: static
       - name: Deploy static folder to S3 bucket
         uses: jakejarvis/s3-sync-action@master
