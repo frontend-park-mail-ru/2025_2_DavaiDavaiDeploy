@@ -2,7 +2,6 @@ import {Component} from '@lib/index';
 import {RouterContext} from './routerContext.ts';
 import type {VDOMNode} from '@lib/types';
 import {trimRoute} from './utils/trimRoute.ts';
-import {extractQuery} from './utils/extractQuery.ts';
 
 export class RouterProvider extends Component {
   state = {
