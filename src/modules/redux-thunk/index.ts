@@ -1,5 +1,5 @@
-import { createThunkMiddleware } from './createThunkMiddleware/index';
-import thunk from './thunk/index';
+import { createThunkMiddleware } from './createThunkMiddleware';
+import thunk from './thunk';
 
 /**
  * Экспорт всех функций redux-thunk.

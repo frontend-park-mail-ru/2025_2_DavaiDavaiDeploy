@@ -1,4 +1,4 @@
-import thunk from '../../modules/redux-thunk/thunk/index';
+import thunk from '../../modules/redux-thunk/thunk';
 
 /**
  * Массив middleware для Redux store.
