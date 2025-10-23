@@ -9,7 +9,7 @@ import { Routes } from '@/modules/router/routes.tsx';
 import type { RouterContextValue } from '@/modules/router/types/routerContext.ts';
 import type { VDOMNode } from '@react/types/';
 import * as Sentry from '@sentry/browser';
-import { RouterProvider } from './modules/router/routerProvider.tsx';
+import { RouterProvider } from './modules/router/RouterProvider.tsx';
 
 Sentry.init({
 	dsn: import.meta.env.VITE_SENTRY_DSN,
