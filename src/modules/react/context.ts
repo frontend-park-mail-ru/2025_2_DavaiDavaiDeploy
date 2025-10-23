@@ -1,5 +1,5 @@
-import {hFragment} from './h';
-import {Component} from './component';
+import {hFragment} from './h.ts';
+import {Component} from './component.ts';
 import equal from 'fast-deep-equal';
 import type {ContextValue, VDOMNode} from './types';
 

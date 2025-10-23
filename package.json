@@ -4,7 +4,7 @@
   "description": "Репозиторий команды \"Davai Davai Deploy\". Проект: Кинопоиск",
   "type": "module",
   "private": true,
-  "main": "index.ts",
+  "main": "index.tsx",
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",

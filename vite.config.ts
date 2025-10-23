@@ -5,6 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default ({ mode }: ConfigEnv) => {
 	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+
 	return defineConfig({
 		plugins: [
 			tsconfigPaths(),
@@ -14,6 +15,12 @@ export default ({ mode }: ConfigEnv) => {
 				authToken: process.env.SENTRY_AUTH_TOKEN,
 			}),
 		],
+		esbuild: {
+			jsx: 'transform',
+			jsxFactory: 'jsx',
+			jsxFragment: 'Fragment',
+			jsxInject: "import {jsx, Fragment} from '@react'",
+		},
 		server: {
 			host: 'localhost',
 			port: 3000,

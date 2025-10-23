@@ -52,18 +52,13 @@ export interface Context<T extends ContextValue = ContextValue> {
   unsubscribe: (comp: Component) => void;
 }
 
-export interface ComponentProps extends WithChildrenProps {
-  [key: string]: unknown;
-
-}
-
 export interface ComponentState {
   [key: string]: unknown;
 }
 
 export type ContextValue = any;
 
-export interface ComponentConstructor<P = ComponentProps> {
+export interface ComponentConstructor<P = {}> {
   new (props?: P): Component<P>;
   contextType?: Context<ContextValue>;
 }

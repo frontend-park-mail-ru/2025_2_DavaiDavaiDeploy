@@ -1,30 +1,30 @@
-import { Component } from '../react/index';
-import type { VDOMNode } from '../react/types/index';
-import { RouterContext } from './routerContext';
-import type { LinkProps } from './types/link.props.ts';
-import type { RouterContextValue } from './types/routerContext.ts';
+import {Component} from '@react/index';
+import {RouterContext} from './routerContext';
+import type {LinkProps} from './types/link.props.ts';
+import type { VDOMNode } from '@react/types';
+import type {RouterContextValue} from './types/routerContext.ts';
 
 export class Link extends Component<LinkProps, {}, RouterContextValue> {
-	static contextType = RouterContext;
 
-	constructor(props: LinkProps) {
-		super(props);
-		if (!this.context) {
-			throw Error('no context provided in Link');
-		}
-	}
+  static contextType = RouterContext;
 
-	handleClick = (e: Event) => {
-		e.preventDefault();
-		this.context.navigate(this.props.href);
-	};
+  constructor(props: LinkProps) {
+    super(props);
+    if (!this.context) {
+      throw Error('no context provided in Link');
+    }
+  }
 
-	render(): VDOMNode {
-		console.log(this.context.params);
-		return (
-			<a href={this.props.href} onClick={this.handleClick}>
-				{this.props.children}
-			</a>
-		);
-	}
+  handleClick = (e: Event) => {
+    e.preventDefault();
+    this.context.navigate(this.props.href);
+  };
+
+  render(): VDOMNode {
+    return (
+      <a href={this.props.href} onClick={this.handleClick}>
+        {this.props.children}
+      </a>
+    );
+  }
 }

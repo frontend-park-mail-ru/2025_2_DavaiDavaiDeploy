@@ -1,9 +1,5 @@
 {
 	"compilerOptions": {
-		
-		"jsx": "react-jsx",
-		"jsxImportSource": "../../modules/react/jsx",
-
 		"target": "ES2022",
 		"useDefineForClassFields": true,
 		"module": "ESNext",
@@ -25,10 +21,15 @@
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true,
 
+		// jsx
+		"jsx": "react-jsx",
+		"jsxImportSource": "@react/jsx",
+
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"],
-			"@lib/*": ["./src/modules/react/*"]
+			"@react": ["src/modules/react"],
+			"@react/*": ["src/modules/react/*"],
+			"@/*": ["src/*"]
 		}
 	},
 	"include": ["**/*.ts", "**/*.tsx"],
