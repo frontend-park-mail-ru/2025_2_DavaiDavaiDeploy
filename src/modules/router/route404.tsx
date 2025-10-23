@@ -1,7 +1,7 @@
-import {Component} from '@lib/component';
+import { Component } from '../react/component';
 
 export class Route404 extends Component {
-  render() {
-    return <>404 - Not Found</>;
-  }
+	render() {
+		return <>404 - Not Found</>;
+	}
 }
