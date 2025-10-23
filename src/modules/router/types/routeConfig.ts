@@ -1,4 +1,4 @@
-import type { Component } from '@react/index';
+import type { Component } from '@react';
 
 export interface RouteConfig {
 	href: string;

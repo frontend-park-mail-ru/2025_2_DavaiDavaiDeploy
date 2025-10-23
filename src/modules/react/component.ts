@@ -10,8 +10,8 @@ import type {
 	ContextValue,
 	VDOMNode,
 	WithChildrenProps,
-} from './types/index.js';
-import { DOM_TYPES } from './types/index.js';
+} from './types';
+import { DOM_TYPES } from './types';
 
 export abstract class Component<
 	P = {},

@@ -1,4 +1,4 @@
-import { Component } from '@react/index';
+import { Component } from '@react';
 import { Route404 } from './route404.tsx';
 import { RouterContext } from './routerContext.ts';
 import type { RoutesConfig } from './types/routesConfig.ts';

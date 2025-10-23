@@ -1,4 +1,4 @@
-import { createContext } from '@react/index';
+import { createContext } from '@react';
 import type { RouterContextValue } from './types/routerContext.ts';
 
 export const RouterContext = createContext<RouterContextValue>({
