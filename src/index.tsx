@@ -1,5 +1,5 @@
-import { Component, render } from './modules/react';
-import { connect, Provider } from './modules/redux/index.ts';
+import { Component, render } from '@react';
+import { connect, Provider } from './modules/redux';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import { store } from './redux/store.ts';
