@@ -7,16 +7,16 @@ import type { State, Store } from '../types/store';
  */
 export const createStore = (reducer: Reducer): Store => {
 	let state: State = reducer({}, { type: '__INIT__' });
-	let subscribes: (() => void)[] = [];
+	let subscribes: ((key: any) => void)[] = [];
 
 	const getState = () => state;
 
 	const dispatch = (action: Action) => {
 		state = reducer(state, action);
-		subscribes.forEach((listener) => listener());
+		subscribes.forEach((listener) => listener(action));
 	};
 
-	const subscribe = (listener: () => void) => {
+	const subscribe = (listener: (key: any) => void) => {
 		subscribes.push(listener);
 
 		return () => {

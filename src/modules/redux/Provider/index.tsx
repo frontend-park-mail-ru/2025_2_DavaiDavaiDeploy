@@ -1,0 +1,19 @@
+import { Component } from '../../react/index';
+import type { VDOMNode } from '../../react/types';
+import { StoreContext } from '../connect/index';
+import type { Store } from '../types/store';
+
+interface ProviderProps {
+	store: Store;
+	children?: VDOMNode | VDOMNode[];
+}
+
+export class Provider extends Component<ProviderProps> {
+	render(): VDOMNode {
+		return (
+			<StoreContext.Provider value={this.props.store}>
+				{this.props.children}
+			</StoreContext.Provider>
+		);
+	}
+}

@@ -1,4 +1,5 @@
 import { combineReducers } from '@/modules/redux/index';
+import counterReducer from './counter/reducers';
 import filmReducer from './film/reducers';
 import genreReducer from './genre/reducers';
 import userReducer from './user/reducers';
@@ -8,6 +9,7 @@ import userReducer from './user/reducers';
  * @type {Function}
  */
 export const reducer = combineReducers({
+	counter: counterReducer,
 	film: filmReducer,
 	user: userReducer,
 	genre: genreReducer,
