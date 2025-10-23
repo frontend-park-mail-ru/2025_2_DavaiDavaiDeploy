@@ -1,4 +1,4 @@
-import { createThunkMiddleware } from '../createThunkMiddleware/index';
+import { createThunkMiddleware } from '../createThunkMiddleware';
 
 /**
  * Готовый к использованию thunk middleware.

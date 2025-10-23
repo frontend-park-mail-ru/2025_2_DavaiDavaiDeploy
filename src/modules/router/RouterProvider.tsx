@@ -1,4 +1,4 @@
-import { Component } from '@react/index';
+import { Component } from '@react';
 import type { VDOMNode } from '@react/types';
 import { RouterContext } from './routerContext.ts';
 import { trimRoute } from './utils/trimRoute.ts';

@@ -1,4 +1,4 @@
-import HTTPClient from '@/modules/HTTPClient/index';
+import HTTPClient from '@/modules/HTTPClient';
 import type { ModelsFilm } from '@/modules/HTTPClient/types/api';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import actionTypes from './actionTypes';

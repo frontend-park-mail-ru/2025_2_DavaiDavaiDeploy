@@ -1,4 +1,4 @@
-import { Component } from '@react/index';
+import { Component } from '@react';
 import type { VDOMNode } from '@react/types';
 import { RouterContext } from './routerContext';
 import type { LinkProps } from './types/link.props.ts';
