@@ -11,7 +11,6 @@ interface MyComponentProps {
 
 class MyComponent extends Component<MyComponentProps> {
 	render() {
-		console.log(this.props);
 		return (
 			<div>
 				<p>Count: {this.props.count}</p>

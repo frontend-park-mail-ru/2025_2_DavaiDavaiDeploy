@@ -9,6 +9,11 @@ interface ProviderProps {
 }
 
 export class Provider extends Component<ProviderProps> {
+	constructor(props: ProviderProps) {
+		super(props);
+		StoreContext.value = this.props.store;
+	}
+
 	render(): VDOMNode {
 		return (
 			<StoreContext.Provider value={this.props.store}>
