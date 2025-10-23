@@ -1,6 +1,6 @@
 import { Component } from '@react/index';
 import type { VDOMNode } from '@react/types';
-import { StoreContext } from '../connect/index';
+import { StoreContext } from '../connect';
 import type { Store } from '../types/store';
 
 interface ProviderProps {

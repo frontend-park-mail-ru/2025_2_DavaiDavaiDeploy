@@ -3,7 +3,7 @@ import type { VDOMNode } from '@react/types';
 import type { Dispatch } from '../types/actions';
 import type { State, Store } from '../types/store';
 
-export const StoreContext = createContext<Store>(null as unknown as Store);
+export const StoreContext = createContext<Store | null>(null);
 
 type ComponentConstructor<
 	Props = any,
