@@ -1,6 +1,6 @@
-import type { Component } from '@lib/component';
+import type { Component } from '@react/index';
 
 export interface RouteConfig {
-  href: string;
-  component: Component
+	href: string;
+	component: Component;
 }

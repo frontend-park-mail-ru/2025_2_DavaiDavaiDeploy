@@ -5,11 +5,11 @@ import 'reset-css/reset.css';
 import { Link } from '@/modules/router/link.tsx';
 import { Route } from '@/modules/router/route.tsx';
 import { RouterContext } from '@/modules/router/routerContext.ts';
-import { RouterProvider } from '@/modules/router/routerProvider';
 import { Routes } from '@/modules/router/routes.tsx';
 import type { RouterContextValue } from '@/modules/router/types/routerContext.ts';
 import type { VDOMNode } from '@react/types/';
 import * as Sentry from '@sentry/browser';
+import { RouterProvider } from './modules/router/routerProvider.tsx';
 
 Sentry.init({
 	dsn: import.meta.env.VITE_SENTRY_DSN,

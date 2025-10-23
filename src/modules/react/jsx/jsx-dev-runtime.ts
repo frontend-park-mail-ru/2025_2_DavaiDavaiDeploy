@@ -1,4 +1,3 @@
-import {Fragment} from './jsx-runtime.ts';
-import {jsx as jsxDEV} from './jsx-runtime.ts';
+import { Fragment, jsx as jsxDEV } from './jsx-runtime.ts';
 
-export {Fragment, jsxDEV};
+export { Fragment, jsxDEV };
