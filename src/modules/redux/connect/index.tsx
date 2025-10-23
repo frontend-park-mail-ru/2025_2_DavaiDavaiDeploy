@@ -1,9 +1,8 @@
-import { Component, createContext } from '../../react/index';
-import type { VDOMNode } from '../../react/types';
+import { Component, createContext } from '@react';
+import type { VDOMNode } from '@react/types';
 import type { Dispatch } from '../types/actions';
 import type { State, Store } from '../types/store';
 
-// Создаем контекст для Redux Store
 export const StoreContext = createContext<Store>(null as unknown as Store);
 
 type ComponentConstructor<
@@ -29,11 +28,6 @@ export function connect<Props = any, ComponentState = any, Context = any>(
 			static contextType = StoreContext;
 
 			private unsubscribe?: () => void;
-
-			constructor(props: Props) {
-				super(props);
-				this.state = {};
-			}
 
 			onMount() {
 				const store = this.context;

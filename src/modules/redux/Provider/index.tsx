@@ -1,5 +1,5 @@
-import { Component } from '../../react/index';
-import type { VDOMNode } from '../../react/types';
+import { Component } from '@react/index';
+import type { VDOMNode } from '@react/types';
 import { StoreContext } from '../connect/index';
 import type { Store } from '../types/store';
 
