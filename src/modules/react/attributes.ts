@@ -1,7 +1,7 @@
 import type { ElementAttributes } from './types';
 
 export function setStyle(el: HTMLElement, name: string, value: string | number): void {
-  el.style[name] = value.toString();
+  el.style[name as any] = value.toString();
 }
 
 export function removeStyle(el: HTMLElement, name: string): void {

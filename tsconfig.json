@@ -1,5 +1,9 @@
 {
 	"compilerOptions": {
+		
+		"jsx": "react-jsx",
+		"jsxImportSource": "@lib/jsx",
+
 		"target": "ES2022",
 		"useDefineForClassFields": true,
 		"module": "ESNext",
@@ -23,7 +27,8 @@
 
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": ["src/*"],
+			"@lib/*": ["src/modules/react/*"]
 		}
 	},
 	"include": ["**/*.ts", "**/*.tsx"],
