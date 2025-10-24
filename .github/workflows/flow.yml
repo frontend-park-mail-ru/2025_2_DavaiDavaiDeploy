@@ -146,6 +146,7 @@ jobs:
           echo VITE_SENTRY_ORG=${{ secrets.VITE_SENTRY_ORG }} >> .env
           echo VITE_SENTRY_PROJECT=${{ secrets.VITE_SENTRY_PROJECT }} >> .env
           echo VITE_CDN_ADRESS=${{ secrets.VITE_CDN_ADRESS }} >> .env
+          echo VITE_SENTRY_ENABLED=${{ secrets.VITE_SENTRY_ENABLED }} >> .env
           cat .env
 
       - name: Build project
