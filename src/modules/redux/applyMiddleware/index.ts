@@ -1,4 +1,4 @@
-import { compose } from '../compose/index';
+import { compose } from '../compose';
 import type { Action } from '../types/actions';
 import type { Middleware } from '../types/middleware';
 import type { Reducer } from '../types/reducers';
