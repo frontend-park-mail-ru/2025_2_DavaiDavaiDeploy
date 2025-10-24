@@ -29,6 +29,15 @@ const mapStateToProps = (state: State) => ({
 	count: state.counter.count,
 });
 
+if (import.meta.env.VITE_SENTRY_ENABLED) {
+	Sentry.init({
+		dsn: import.meta.env.VITE_SENTRY_DSN,
+		enabled: import.meta.env.PROD,
+		integrations: [Sentry.browserTracingIntegration()],
+		tracePropagationTargets: ['https://ddfilms.online/'],
+	});
+}
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
 	increment: () => {
 		dispatch({ type: 'INCREMENT' });
