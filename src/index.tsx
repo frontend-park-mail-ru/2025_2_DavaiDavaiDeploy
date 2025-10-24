@@ -124,14 +124,14 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				{this.context.path != '/login' ? <Header /> : <></>}
+				{this.context.path != '/login' && <Header />}
 				<Routes>
 					<Route href="/" component={<MainApp />} />
 					<Route href="/about" component={<AboutApp />} />
 					<Route href="/contact/:id" component={<ContactIDApp />} />
 					<Route href="/login" component={<LoginApp />} />
 				</Routes>
-				{this.context.path != '/login' ? <Footer /> : <></>}
+				{this.context.path != '/login' && <Footer />}
 			</div>
 		);
 	}
