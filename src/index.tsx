@@ -8,7 +8,16 @@ import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { Routes } from '@/modules/router/routes.tsx';
 import { store } from '@/redux/store.ts';
 import { Component, render } from '@react';
+import * as Sentry from '@sentry/browser';
 
+if (import.meta.env.VITE_SENTRY_ENABLED) {
+	Sentry.init({
+		dsn: import.meta.env.VITE_SENTRY_DSN,
+		enabled: import.meta.env.PROD,
+		integrations: [Sentry.browserTracingIntegration()],
+		tracePropagationTargets: ['https://ddfilms.online/'],
+	});
+}
 interface MyComponentProps {
 	count: number;
 	increment: () => void;
@@ -28,15 +37,6 @@ class MyComponent extends Component<MyComponentProps> {
 const mapStateToProps = (state: State) => ({
 	count: state.counter.count,
 });
-
-if (import.meta.env.VITE_SENTRY_ENABLED) {
-	Sentry.init({
-		dsn: import.meta.env.VITE_SENTRY_DSN,
-		enabled: import.meta.env.PROD,
-		integrations: [Sentry.browserTracingIntegration()],
-		tracePropagationTargets: ['https://ddfilms.online/'],
-	});
-}
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
 	increment: () => {
