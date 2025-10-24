@@ -11,12 +11,14 @@ import type { VDOMNode } from '@react/types/';
 import * as Sentry from '@sentry/browser';
 import { RouterProvider } from './modules/router/RouterProvider.tsx';
 
-Sentry.init({
-	dsn: import.meta.env.VITE_SENTRY_DSN,
-	enabled: import.meta.env.PROD,
-	integrations: [Sentry.browserTracingIntegration()],
-	tracePropagationTargets: ['https://ddfilms.online/'],
-});
+if (import.meta.env.VITE_SENTRY_ENABLED) {
+	Sentry.init({
+		dsn: import.meta.env.VITE_SENTRY_DSN,
+		enabled: import.meta.env.PROD,
+		integrations: [Sentry.browserTracingIntegration()],
+		tracePropagationTargets: ['https://ddfilms.online/'],
+	});
+}
 
 class Home extends Component {
 	render(): VDOMNode {
