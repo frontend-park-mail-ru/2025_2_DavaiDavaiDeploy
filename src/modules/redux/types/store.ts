@@ -11,7 +11,7 @@ export type State = Record<string, any>;
 export type Store = {
 	getState: () => State;
 	dispatch: (action: Action) => void;
-	subscribe: (listener: () => void) => () => void;
+	subscribe: (listener: VoidFunction) => VoidFunction;
 };
 
 export type StoreEnhancer = (
