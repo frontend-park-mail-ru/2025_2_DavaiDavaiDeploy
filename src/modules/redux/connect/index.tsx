@@ -34,7 +34,7 @@ export function connect<Props = any, ComponentState = any, Context = any>(
 
 				if (store) {
 					this.unsubscribe = store.subscribe(() => {
-						this.setState({});
+						this.setState(store.getState());
 					});
 				}
 			}
