@@ -215,11 +215,6 @@ function patchChildren(
 		newChildren,
 		areNodesEqual,
 	) as Array<ArrayDiffOperation<VDOMNode>>;
-	if (newChildren.length > 0 && oldChildren.length > 0) {
-		console.log('был', oldChildren);
-		console.log('стал', newChildren);
-		console.log('разница', diffSeq);
-	}
 
 	const offset = (hostComponent as any)?.offset ?? 0;
 
