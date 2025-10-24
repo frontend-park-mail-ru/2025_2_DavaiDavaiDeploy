@@ -48,6 +48,8 @@ class MainApp extends Component {
 				<Link href="/about">Back to About</Link>
 				<br></br>
 				<Link href="/contact/4?foo=52">Back to contact</Link>
+				<br></br>
+				<Link href="/login">Back to login</Link>
 				<ConnectedMyComponent />
 			</div>
 		);
@@ -121,16 +123,16 @@ class App extends Component {
 	static contextType = RouterContext;
 	render() {
 		return (
-			<>
-				{this.context.path != '/login' && <Header />}
+			<div>
+				{this.context.path != '/login' ? <Header /> : <></>}
 				<Routes>
 					<Route href="/" component={<MainApp />} />
 					<Route href="/about" component={<AboutApp />} />
 					<Route href="/contact/:id" component={<ContactIDApp />} />
 					<Route href="/login" component={<LoginApp />} />
 				</Routes>
-				{this.context.path != '/login' && <Footer />}
-			</>
+				{this.context.path != '/login' ? <Footer /> : <></>}
+			</div>
 		);
 	}
 }

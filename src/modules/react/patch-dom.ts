@@ -215,20 +215,30 @@ function patchChildren(
 		newChildren,
 		areNodesEqual,
 	) as Array<ArrayDiffOperation<VDOMNode>>;
+	if (newChildren.length > 0 && oldChildren.length > 0) {
+		console.log('был', oldChildren);
+		console.log('стал', newChildren);
+		console.log('разница', diffSeq);
+	}
+
+	const offset = (hostComponent as any)?.offset ?? 0;
 
 	for (const operation of diffSeq) {
-		const { from, originalIndex, index, item } = operation as any;
-		const offset = (hostComponent as any)?.offset ?? 0;
+		if (operation.op === ARRAY_DIFF_OP.NOOP) {
+			const { originalIndex, index } = operation as any;
+			patchDOM(
+				oldChildren[originalIndex!],
+				newChildren[index],
+				parentEl,
+				hostComponent,
+			);
+		}
+	}
+
+	for (const operation of diffSeq) {
 		switch (operation.op) {
-			case ARRAY_DIFF_OP.ADD: {
-				mountDOM(item, parentEl, index + offset, hostComponent);
-				break;
-			}
-			case ARRAY_DIFF_OP.REMOVE: {
-				destroyDOM(item);
-				break;
-			}
 			case ARRAY_DIFF_OP.MOVE: {
+				const { from, index } = operation as any;
 				const el = oldChildren[from].el;
 				const elAtTargetIndex = parentEl.childNodes[index + offset];
 				if (el) {
@@ -242,13 +252,14 @@ function patchChildren(
 				}
 				break;
 			}
-			case ARRAY_DIFF_OP.NOOP: {
-				patchDOM(
-					oldChildren[originalIndex!],
-					newChildren[index],
-					parentEl,
-					hostComponent,
-				);
+			case ARRAY_DIFF_OP.REMOVE: {
+				const { item } = operation as any;
+				destroyDOM(item);
+				break;
+			}
+			case ARRAY_DIFF_OP.ADD: {
+				const { index, item } = operation as any;
+				mountDOM(item, parentEl, index + offset, hostComponent);
 				break;
 			}
 		}
