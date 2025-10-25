@@ -159,24 +159,24 @@ jobs:
           path: dist
           retention-days: 1
 
-      - name: Save static artifacts
+      - name: Save artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: static
-          path: static
+          name: assets
+          path: dist/assets
           retention-days: 1
 
-  deploy-static:
-    name: Deploy static to s3
+  deploy-to-s3:
+    name: Deploy to s3
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@main
         with:
-          name: static
-          path: static
-      - name: Deploy static folder to S3 bucket
+          name: assets
+          path: dist/assets
+      - name: Deploy assets folder to S3 bucket
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --follow-symlinks --delete --no-verify-ssl
@@ -186,8 +186,8 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: 'ru-7'
-          SOURCE_DIR: 'static'
-          DEST_DIR: 'static'
+          SOURCE_DIR: 'dist/assets'
+          DEST_DIR: 'assets'
 
   deploy:
     name: Deploy to Server
