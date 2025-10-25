@@ -31,5 +31,6 @@ export default ({ mode }: ConfigEnv) => {
 			assetsDir: 'assets',
 			sourcemap: true,
 		},
+		base: process.env.VITE_CDN_ADDRESS || '/',
 	});
 };
