@@ -1,6 +1,6 @@
-import type { ModelsFilm } from '@/modules/HTTPClient/types/api';
 import type { Selector } from '@/modules/redux/types/selectors';
 import type { State } from '@/modules/redux/types/store';
+import type { ModelsFilm } from '@/types/models';
 
 /**
  * Селектор для получения списка фильмов из состояния.

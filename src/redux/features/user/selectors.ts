@@ -1,6 +1,6 @@
-import type { ModelsUser } from '@/modules/HTTPClient/types/api';
 import type { Selector } from '@/modules/redux/types/selectors';
 import type { State } from '@/modules/redux/types/store';
+import type { ModelsUser } from '@/types/models';
 
 /**
  * Селектор для получения данных пользователя из состояния.

@@ -1,7 +1,7 @@
-import type { ModelsFilm, ModelsGenre } from '@/modules/HTTPClient/types/api';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
+import type { ModelsFilm, ModelsGenre } from '@/types/models';
 import actionTypes from './actionTypes';
 
 /**

@@ -1,5 +1,5 @@
-import type { ModelsTopFilm } from '@/modules/HTTPClient/types/api';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
+import type { ModelsTopFilm } from '@/types/models';
 import actionTypes from './actionTypes';
 
 /**

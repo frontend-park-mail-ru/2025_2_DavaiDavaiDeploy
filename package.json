@@ -8,7 +8,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "getTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/modules/HTTPClient/types -n api.ts --no-client",
+    "genTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/types -n models.ts --no-client",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "tsc:check": "npx tsc --noEmit",
@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy#readme",
   "dependencies": {
+    "@fontsource/golos-ui": "^4.5.3",
     "@sentry/browser": "^10.21.0",
     "@sentry/core": "^10.21.0",
     "@sentry/vite-plugin": "^2.14.1",

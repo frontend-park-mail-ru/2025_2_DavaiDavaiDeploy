@@ -87,8 +87,8 @@ definitions:
       password:
         type: string
     required:
-    - login
-    - password
+      - login
+      - password
     type: object
   models.SignUpInput:
     properties:
@@ -123,9 +123,9 @@ definitions:
         type: array
       status:
         enum:
-        - active
-        - banned
-        - deleted
+          - active
+          - banned
+          - deleted
         type: string
       updatedAt:
         type: string
@@ -135,166 +135,166 @@ info:
   contact: {}
   description: API для авторизации пользователей и получения фильмов/жанров.
   title: Kinopoisk API
-  version: "1.0"
+  version: '1.0'
 paths:
   /auth/check:
     get:
       description: Verify JWT token in cookie
       produces:
-      - application/json
+        - application/json
       responses:
-        "200":
+        '200':
           description: OK
           schema:
             $ref: '#/definitions/models.User'
-        "401":
+        '401':
           description: Unauthorized
           schema:
             $ref: '#/definitions/models.Error'
       summary: Check authentication
       tags:
-      - auth
+        - auth
   /auth/signin:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Authenticate existing user
       parameters:
-      - description: User credentials
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/models.SignInInput'
+        - description: User credentials
+          in: body
+          name: input
+          required: true
+          schema:
+            $ref: '#/definitions/models.SignInInput'
       produces:
-      - application/json
+        - application/json
       responses:
-        "200":
+        '200':
           description: OK
           schema:
             $ref: '#/definitions/models.User'
-        "400":
+        '400':
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Error'
-        "401":
+        '401':
           description: Unauthorized
           schema:
             $ref: '#/definitions/models.Error'
       summary: User login
       tags:
-      - auth
+        - auth
   /auth/signup:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Register a new user
       parameters:
-      - description: User credentials
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/models.SignUpInput'
+        - description: User credentials
+          in: body
+          name: input
+          required: true
+          schema:
+            $ref: '#/definitions/models.SignUpInput'
       produces:
-      - application/json
+        - application/json
       responses:
-        "200":
+        '200':
           description: OK
           schema:
             $ref: '#/definitions/models.User'
-        "400":
+        '400':
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Error'
-        "409":
+        '409':
           description: Conflict
           schema:
             $ref: '#/definitions/models.Error'
       summary: User signup
       tags:
-      - auth
+        - auth
   /films:
     get:
       parameters:
-      - default: 10
-        description: Number of films
-        in: query
-        name: count
-        type: integer
-      - default: 0
-        description: Offset
-        in: query
-        name: offset
-        type: integer
+        - default: 10
+          description: Number of films
+          in: query
+          name: count
+          type: integer
+        - default: 0
+          description: Offset
+          in: query
+          name: offset
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
-        "200":
+        '200':
           description: OK
           schema:
             items:
               $ref: '#/definitions/models.Film'
             type: array
-        "400":
+        '400':
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Error'
       summary: List films
       tags:
-      - films
+        - films
   /films/{id}:
     get:
       parameters:
-      - description: Film ID
-        in: path
-        name: id
-        required: true
-        type: string
+        - description: Film ID
+          in: path
+          name: id
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
-        "200":
+        '200':
           description: OK
           schema:
             $ref: '#/definitions/models.Film'
-        "400":
+        '400':
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Error'
       summary: Get film by ID
       tags:
-      - films
+        - films
   /films/genre/{id}:
     get:
       parameters:
-      - description: Genre ID
-        in: path
-        name: id
-        required: true
-        type: string
+        - description: Genre ID
+          in: path
+          name: id
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
-        "200":
+        '200':
           description: OK
           schema:
             items:
               $ref: '#/definitions/models.Film'
             type: array
-        "400":
+        '400':
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Error'
       summary: Get films by genre ID
       tags:
-      - films
+        - films
   /genres:
     get:
       produces:
-      - application/json
+        - application/json
       responses:
-        "200":
+        '200':
           description: OK
           schema:
             items:
@@ -302,27 +302,27 @@ paths:
             type: array
       summary: List all genres
       tags:
-      - genres
+        - genres
   /genres/{id}:
     get:
       parameters:
-      - description: Genre ID
-        in: path
-        name: id
-        required: true
-        type: string
+        - description: Genre ID
+          in: path
+          name: id
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
-        "200":
+        '200':
           description: OK
           schema:
             $ref: '#/definitions/models.Genre'
-        "400":
+        '400':
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Error'
       summary: Get genre by ID
       tags:
-      - genres
-swagger: "2.0"
+        - genres
+swagger: '2.0'

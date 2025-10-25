@@ -1,5 +1,5 @@
-import type { ModelsUser } from '@/modules/HTTPClient/types/api';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
+import type { ModelsUser } from '@/types/models';
 import HTTPClient from '../../../modules/HTTPClient';
 import actionTypes from './actionTypes';
 

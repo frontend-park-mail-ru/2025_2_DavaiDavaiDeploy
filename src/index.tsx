@@ -1,6 +1,3 @@
-// prettier-ignore
-import 'reset-css/reset.css';
-
 import { Provider } from '@/modules/redux';
 import { Route } from '@/modules/router/route.tsx';
 import { RouterContext } from '@/modules/router/routerContext.ts';
@@ -11,11 +8,12 @@ import '@/styles/constants.scss';
 import '@/styles/globals.scss';
 import { Component, render } from '@react';
 import * as Sentry from '@sentry/browser';
+import 'reset-css/reset.css';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
-import { HomePage } from './pages/homePage';
+import { HomePage } from './pages/homePage/homePage';
 
-if (sentryEnabled === 'true') {
+if (sentryEnabled) {
 	Sentry.init({
 		dsn: sentryDSN,
 		enabled: isProduction,

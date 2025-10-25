@@ -1,25 +1,30 @@
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import type { ModelsTopFilm } from '@/modules/HTTPClient/types/api';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/topFilm/actions';
 import { selectTopFilm } from '@/redux/features/topFilm/selectors';
+import type { ModelsTopFilm } from '@/types/models';
 import { Component } from '@react';
-import styles from './TopFilm.module.scss';
+import styles from './topFilm.module.scss';
 
-class TopFilm extends Component<ModelsTopFilm & { getTopFilm: () => void }> {
+interface TopFilmProps {
+	film: ModelsTopFilm;
+	getTopFilm: () => void;
+}
+
+class TopFilmComponent extends Component<TopFilmProps> {
 	render() {
-		if (!this.props.id) {
+		if (!this.props.film.id) {
 			this.props.getTopFilm();
 			return <div>Loading...</div>;
 		}
 		console.log(this.props);
 
 		const { image, title, year, genre, duration, short_description, rating } =
-			this.props;
+			this.props.film;
 		const formattedDuration = formatDuration(duration);
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
@@ -49,14 +54,14 @@ class TopFilm extends Component<ModelsTopFilm & { getTopFilm: () => void }> {
 }
 
 const mapStateToProps = (state: State) => ({
-	...selectTopFilm(state),
+	film: selectTopFilm(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
 	getTopFilm: () => dispatch(actions.getTopFilmAction()),
 });
 
-export const ConnectedTopFilm = connect(
+export const TopFilm = connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(TopFilm);
+)(TopFilmComponent);
