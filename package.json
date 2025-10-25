@@ -8,7 +8,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "getTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/modules/HTTPClient/types -n Types.ts --no-client",
+    "getTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/modules/HTTPClient/types -n api.ts --no-client",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "tsc:check": "npx tsc --noEmit",

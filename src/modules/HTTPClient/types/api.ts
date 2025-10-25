@@ -77,3 +77,15 @@ export interface ModelsUser {
 	status?: 'active' | 'banned' | 'deleted';
 	updatedAt?: string;
 }
+
+// -------------------------------------------------------------
+export interface ModelsTopFilm {
+	image: string;
+	title: string;
+	year: number;
+	genre: string;
+	duration: number;
+	short_description: string;
+	rating: number;
+	id: string;
+}

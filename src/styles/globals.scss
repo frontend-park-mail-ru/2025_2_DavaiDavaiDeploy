@@ -1,14 +1,91 @@
 @use './constants';
 
-* {
-	font-family: Rubik, Arial, sans-serif;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	font-family: Regular, Arial, sans-serif;
 	box-sizing: border-box;
-	font-weight: 400;
-	font-size: 1rem;
-}
-
-.lato-family {
-	font-family: Lato, Arial, sans-serif;
+	color: var(--color-text);
+	font-weight: var(--font-weight-regular);
 }
 
 body,
@@ -17,31 +94,4 @@ html {
 	max-width: 100dvw;
 	overflow-x: hidden;
 	background-color: var(--color-bg);
-}
-
-h1 {
-	font-size: clamp(1rem, 3rem, 5rem);
-	color: var(--color-white);
-}
-
-h2 {
-	font-size: 2rem;
-	color: var(--color-white);
-}
-
-h3 {
-	font-size: 1.25rem;
-	color: var(--color-white);
-}
-
-p {
-	font-size: 1rem;
-	font-family: Lato, Arial, sans-serif;
-	color: var(--color-text-secondary);
-}
-
-.content {
-	height: 100%;
-	min-height: 100dvh;
-	width: 100%;
 }

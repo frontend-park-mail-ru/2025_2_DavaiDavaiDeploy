@@ -2,6 +2,7 @@ import { combineReducers } from '@/modules/redux/index';
 import counterReducer from './counter/reducers';
 import filmReducer from './film/reducers';
 import genreReducer from './genre/reducers';
+import topFilmReducer from './topFilm/reducers';
 import userReducer from './user/reducers';
 
 /**
@@ -13,4 +14,5 @@ export const reducer = combineReducers({
 	film: filmReducer,
 	user: userReducer,
 	genre: genreReducer,
+	topFilm: topFilmReducer,
 });
