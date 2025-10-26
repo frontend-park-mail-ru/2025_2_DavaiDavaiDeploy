@@ -1,3 +1,4 @@
+import { Header } from '@/components/header/header';
 import { Provider } from '@/modules/redux';
 import { Route } from '@/modules/router/route.tsx';
 import { RouterContext } from '@/modules/router/routerContext.ts';
@@ -29,6 +30,7 @@ class App extends Component {
 	render() {
 		return (
 			<div>
+				<Header />
 				<Routes>
 					<Route href="/" component={<HomePage />} />
 				</Routes>

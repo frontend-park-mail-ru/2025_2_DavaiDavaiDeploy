@@ -8,7 +8,6 @@
 .main {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	width: 100%;
 	max-width: 100vw;
 	box-sizing: border-box;
@@ -19,6 +18,6 @@
 	display: flex;
 	flex-direction: column;
 	gap: 1.875rem;
-	box-sizing: border-box;
-	width: 85%;
+	padding: 1.25rem 0;
+	padding: 0 7.5rem;
 }
