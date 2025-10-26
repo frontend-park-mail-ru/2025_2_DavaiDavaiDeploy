@@ -1,15 +1,20 @@
 .cardGrid {
 	display: flex;
 	flex-direction: column;
-	gap: 1.875rem;
+	gap: 2.5rem;
 }
 
 .grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-	gap: 1.5rem;
+	grid-template-columns: repeat(
+		auto-fit,
+		minmax(clamp(5rem, 16vw, 15rem), 1fr)
+	);
+	gap: 3rem 2rem;
 }
 
 .title {
 	font-weight: var(--font-weight-bold);
+	font-size: var(--font-size-xl);
+	margin-left: -0.2rem;
 }

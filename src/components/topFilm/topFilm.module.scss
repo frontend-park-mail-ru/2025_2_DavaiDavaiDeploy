@@ -118,8 +118,6 @@
 .rating-medium,
 .rating-low {
 	position: relative;
-
-	// height: 2.3em;
 	padding: 0.35rem 0.77rem;
 	border-radius: var(--border-radius-m);
 	line-height: 1;
@@ -129,7 +127,6 @@
 	white-space: nowrap;
 	margin-top: 0.4rem;
 	font-size: var(--font-size-l);
-	color: var(--white);
 }
 
 .rating,

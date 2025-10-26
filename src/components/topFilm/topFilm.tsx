@@ -16,9 +16,11 @@ interface TopFilmProps {
 }
 
 class TopFilmComponent extends Component<TopFilmProps> {
+	onMount(): void | Promise<void> {
+		this.props.getTopFilm();
+	}
 	render() {
 		if (!this.props.film.id) {
-			this.props.getTopFilm();
 			return <div>Loading...</div>;
 		}
 

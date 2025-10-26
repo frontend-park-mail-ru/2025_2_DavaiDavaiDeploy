@@ -15,8 +15,9 @@ interface CardGridProps {
 
 class CardGridComponent extends Component<CardGridProps> {
 	onMount(): void | Promise<void> {
-		this.props.getFilms(10, 0);
+		this.props.getFilms(50, 0);
 	}
+
 	render() {
 		if (this.props.films.length === 0) {
 			return <div>Loading...</div>;
@@ -27,7 +28,9 @@ class CardGridComponent extends Component<CardGridProps> {
 			<div className={styles.cardGrid}>
 				<h2 className={styles.title}>Все фильмы</h2>
 				<div className={styles.grid}>
-					<FilmCard film={this.props.films[0]} />
+					{this.props.films.map((film) => (
+						<FilmCard film={film} />
+					))}
 				</div>
 			</div>
 		);
@@ -47,3 +50,8 @@ export const CardGrid = connect(
 	mapStateToProps,
 	mapDispatchToProps,
 )(CardGridComponent);
+
+interface CardGridProps {
+	films: ModelsFilm[];
+	getFilms: (limit: number, offset: number) => void;
+}
