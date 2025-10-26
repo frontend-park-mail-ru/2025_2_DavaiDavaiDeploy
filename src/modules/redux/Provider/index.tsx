@@ -1,4 +1,4 @@
-import { Component } from '@react/index';
+import { Component } from '@react';
 import type { VDOMNode } from '@react/types';
 import { StoreContext } from '../connect';
 import type { Store } from '../types/store';

@@ -23,6 +23,7 @@
 	object-fit: contain;
 	flex-shrink: 0;
 	transition: transform 0.3s ease;
+	cursor: pointer;
 
 	&:hover {
 		transform: scale(1.05);
@@ -166,6 +167,7 @@
 
 .text1 {
 	font-size: var(--font-size-s);
+	cursor: pointer;
 }
 
 .text2 {
@@ -173,4 +175,36 @@
 	font-weight: var(--font-weight-bold);
 	color: var(--color-accent);
 	margin-left: -1.5rem;
+	cursor: pointer;
+	transition: transform 0.3s ease;
+
+	&:hover {
+		transform: scale(1.02);
+	}
+}
+
+@media (max-width: 768px) {
+	.header {
+		padding: 1rem 1.5rem;
+		gap: 1rem;
+	}
+
+	.text1 {
+		display: none;
+	}
+
+	.text2 {
+		display: none;
+	}
+
+	.loginBtn {
+		min-width: auto;
+		padding: 0.25rem 0.75rem;
+		font-size: var(--font-size-xxs);
+		height: 1.75rem;
+	}
+
+	.logo {
+		height: 1.5rem;
+	}
 }

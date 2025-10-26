@@ -90,3 +90,44 @@
 .nextBtnIcon {
 	transform: rotate(180deg);
 }
+
+@media (max-width: 768px) {
+	.genreSlider {
+		padding: 0 2rem;
+		gap: 1.25rem;
+	}
+
+	.image {
+		display: flex;
+		width: 100%;
+		aspect-ratio: 2.64 / 1;
+		object-fit: cover;
+		cursor: pointer;
+		transition: all 0.25s ease;
+		background-color: var(--color-accent-2);
+		border-radius: var(--border-radius-xl);
+
+		&:hover {
+			filter: brightness(1.2);
+		}
+	}
+
+	.title {
+		margin-left: 0;
+	}
+
+	.slider {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.9375rem;
+	}
+
+	.prevBtn,
+	.nextBtn {
+		display: none;
+		height: 10vh;
+	}
+
+	.container {
+		gap: 1.25rem;
+	}
+}

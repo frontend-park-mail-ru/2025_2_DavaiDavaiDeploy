@@ -6,6 +6,8 @@ interface ImportMetaEnv {
 	readonly SENTRY_ORG: string;
 	readonly SENTRY_PROJECT: string;
 	readonly SENTRY_AUTH_TOKEN: string;
+	readonly VITE_PRODUCTION_URL: string;
+	readonly VITE_CDN_ADDRESS: string;
 }
 
 interface ImportMeta {

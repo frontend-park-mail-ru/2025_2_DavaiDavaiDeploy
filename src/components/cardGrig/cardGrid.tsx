@@ -9,6 +9,9 @@ import { Component } from '@react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './cardGrid.module.scss';
 
+const FILM_COUNT: number = 50;
+const OFFSET: number = 0;
+
 interface CardGridProps {
 	films: ModelsFilm[];
 	getFilms: (limit: number, offset: number) => void;
@@ -16,7 +19,7 @@ interface CardGridProps {
 
 class CardGridComponent extends Component<CardGridProps> {
 	onMount(): void {
-		this.props.getFilms(50, 0);
+		this.props.getFilms(FILM_COUNT, OFFSET);
 	}
 
 	render() {

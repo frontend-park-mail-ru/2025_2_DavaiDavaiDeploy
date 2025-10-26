@@ -1,4 +1,4 @@
-import { combineReducers } from '@/modules/redux/index';
+import { combineReducers } from '@/modules/redux';
 import counterReducer from './counter/reducers';
 import filmReducer from './film/reducers';
 import genreReducer from './genre/reducers';
