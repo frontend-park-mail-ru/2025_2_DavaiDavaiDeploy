@@ -11,6 +11,7 @@ import '@fontsource/golos-ui';
 import { Component, render } from '@react';
 import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
+import { Footer } from './components/footer/footer';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
@@ -34,6 +35,7 @@ class App extends Component {
 				<Routes>
 					<Route href="/" component={<HomePage />} />
 				</Routes>
+				<Footer />
 			</div>
 		);
 	}
