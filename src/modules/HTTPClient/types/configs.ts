@@ -1,4 +1,4 @@
-import { METHODS } from '../methods';
+import type { Method } from '../methods';
 
 export type DefaultConfig = {
 	baseUrl: string;
@@ -7,7 +7,7 @@ export type DefaultConfig = {
 };
 
 export type RequestConfig = {
-	method: METHODS;
+	method: Method;
 	path: string;
 	params?: Record<string | number, string | number>;
 	data?: any;

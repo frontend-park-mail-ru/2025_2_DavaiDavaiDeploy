@@ -5,8 +5,10 @@
  * @property {string} medium - Средний рейтинг.
  * @property {string} low - Низкий рейтинг.
  */
-export const enum RatingValues {
-	High = 'high',
-	Medium = 'medium',
-	Low = 'low',
-}
+export const RatingValues = {
+	High: 'high',
+	Medium: 'medium',
+	Low: 'low',
+} as const;
+
+export type RatingTypes = (typeof RatingValues)[keyof typeof RatingValues];

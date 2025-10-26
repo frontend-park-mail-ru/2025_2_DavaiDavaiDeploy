@@ -4,13 +4,21 @@ import type { State } from '@/modules/redux/types/store';
 import type { ModelsUser } from '@/types/models';
 import actionTypes from './actionTypes';
 
+interface InitialState {
+	loading: boolean;
+	users: ModelsUser[];
+	error: string | null;
+}
+
 /**
  * Начальное состояние редьюсера пользователей.
  * @type {Object}
  * @property {Array<Object>} users - Список пользователей.
  */
-const initialState: State = {
-	users: [] as ModelsUser[],
+const initialState: InitialState = {
+	loading: false,
+	users: [],
+	error: null,
 };
 
 /**

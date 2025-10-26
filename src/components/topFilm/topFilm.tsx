@@ -6,6 +6,7 @@ import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/topFilm/actions';
 import { selectTopFilm } from '@/redux/features/topFilm/selectors';
+import type { Map } from '@/types/map';
 import type { ModelsTopFilm } from '@/types/models';
 import { Component } from '@react';
 import styles from './topFilm.module.scss';
@@ -54,11 +55,11 @@ class TopFilmComponent extends Component<TopFilmProps> {
 	}
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: State): Map => ({
 	film: selectTopFilm(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getTopFilm: () => dispatch(actions.getTopFilmAction()),
 });
 

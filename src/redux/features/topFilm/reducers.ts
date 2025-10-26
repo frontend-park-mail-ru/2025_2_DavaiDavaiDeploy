@@ -4,13 +4,19 @@ import type { State } from '@/modules/redux/types/store';
 import type { ModelsTopFilm } from '@/types/models';
 import actionTypes from './actionTypes';
 
+interface InitialState {
+	loading: boolean;
+	film: ModelsTopFilm | {};
+	error: string | null;
+}
+
 /**
  * Начальное состояние редьюсера фильма.
  * @type {{ loading: boolean, TOP_FILM: Array<Object>, error: string | null }}
  */
-const initialState: State = {
+const initialState: InitialState = {
 	loading: false,
-	film: {} as ModelsTopFilm,
+	film: {},
 	error: null,
 };
 
