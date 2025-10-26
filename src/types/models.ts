@@ -20,11 +20,11 @@ export interface ModelsFilm {
 	createdAt?: string;
 	duration?: number;
 	fees?: number;
-	genres?: ModelsGenre[];
+	genre: string;
 	icon?: string;
 	id?: string;
 	premierDate?: string;
-	rating?: number;
+	rating: number;
 	title?: string;
 	updatedAt?: string;
 	year?: number;

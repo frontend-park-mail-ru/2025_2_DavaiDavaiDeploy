@@ -21,7 +21,6 @@ class TopFilmComponent extends Component<TopFilmProps> {
 			this.props.getTopFilm();
 			return <div>Loading...</div>;
 		}
-		console.log(this.props);
 
 		const { image, title, year, genre, duration, short_description, rating } =
 			this.props.film;
