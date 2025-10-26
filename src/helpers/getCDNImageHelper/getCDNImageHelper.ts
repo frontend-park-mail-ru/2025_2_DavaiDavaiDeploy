@@ -1,7 +1,9 @@
+import { STATIC_URL } from '@/consts/urls';
+
 export const getImageSRC = (
 	folder: string,
 	id: string,
 	type: string,
 ): string => {
-	return `${import.meta.env.VITE_CDN_ADDRESS}/static/${folder}/${id}.${type}`;
+	return `${STATIC_URL}${folder}/${id}.${type}`;
 };

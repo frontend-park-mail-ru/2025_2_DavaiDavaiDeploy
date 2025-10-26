@@ -20,7 +20,6 @@ interface InitialState {
 
 /**
  * Начальное состояние редьюсера жанров.
- * @type {{ loading: boolean, genres: Array<Object>, error: string | null }}
  */
 const initialState: InitialState = {
 	genreLoading: false,

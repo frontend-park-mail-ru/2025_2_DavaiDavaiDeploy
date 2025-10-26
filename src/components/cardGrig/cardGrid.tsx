@@ -8,13 +8,14 @@ import type { ModelsFilm } from '@/types/models';
 import { Component } from '@react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './cardGrid.module.scss';
+
 interface CardGridProps {
 	films: ModelsFilm[];
 	getFilms: (limit: number, offset: number) => void;
 }
 
 class CardGridComponent extends Component<CardGridProps> {
-	onMount(): void | Promise<void> {
+	onMount(): void {
 		this.props.getFilms(50, 0);
 	}
 
@@ -49,8 +50,3 @@ export const CardGrid = connect(
 	mapStateToProps,
 	mapDispatchToProps,
 )(CardGridComponent);
-
-interface CardGridProps {
-	films: ModelsFilm[];
-	getFilms: (limit: number, offset: number) => void;
-}

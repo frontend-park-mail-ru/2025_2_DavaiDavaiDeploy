@@ -12,7 +12,6 @@ interface InitialState {
 
 /**
  * Начальное состояние редьюсера пользователей.
- * @type {Object}
  * @property {Array<Object>} users - Список пользователей.
  */
 const initialState: InitialState = {

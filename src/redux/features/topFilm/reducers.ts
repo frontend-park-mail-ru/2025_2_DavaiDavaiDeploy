@@ -12,7 +12,6 @@ interface InitialState {
 
 /**
  * Начальное состояние редьюсера фильма.
- * @type {{ loading: boolean, TOP_FILM: Array<Object>, error: string | null }}
  */
 const initialState: InitialState = {
 	loading: false,

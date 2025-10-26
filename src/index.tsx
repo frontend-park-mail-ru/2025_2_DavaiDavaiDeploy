@@ -12,14 +12,17 @@ import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
+import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
 import { HomePage } from './pages/homePage/homePage';
+
+console.log(PRODUCTION_URL_WITH_SCHEMA);
 
 if (sentryEnabled) {
 	Sentry.init({
 		dsn: sentryDSN,
 		enabled: isProduction,
 		integrations: [Sentry.browserTracingIntegration()],
-		tracePropagationTargets: ['https://ddfilms.online/'],
+		tracePropagationTargets: [PRODUCTION_URL_WITH_SCHEMA],
 	});
 }
 

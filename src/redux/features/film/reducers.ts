@@ -13,7 +13,6 @@ interface InitialState {
 
 /**
  * Начальное состояние редьюсера фильмов.
- * @type {{ loading: boolean, films: Array<Object>, error: string | null }}
  */
 const initialState: InitialState = {
 	loading: false,
