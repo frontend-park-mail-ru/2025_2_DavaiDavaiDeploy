@@ -1,4 +1,5 @@
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
+import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { connect } from '@/modules/redux';
@@ -25,11 +26,12 @@ class TopFilmComponent extends Component<TopFilmProps> {
 			return <div>Loading...</div>;
 		}
 
-		const { image, title, year, genre, duration, short_description, rating } =
+		const { title, year, genre, duration, short_description, rating } =
 			this.props.film;
 		const formattedDuration = formatDuration(duration);
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
+		const imageSrc = getImageSRC('topFilms', 'dune', 'jpg');
 
 		return (
 			<a className={styles.topFilm}>
@@ -48,7 +50,7 @@ class TopFilmComponent extends Component<TopFilmProps> {
 						</ul>
 						<h2 className={styles.description}>{short_description}</h2>
 					</div>
-					<img src={image} alt={title} className={styles.image} />
+					<img src={imageSrc} alt={title} className={styles.image} />
 				</section>
 			</a>
 		);

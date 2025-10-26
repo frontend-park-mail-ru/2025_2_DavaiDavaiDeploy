@@ -1,3 +1,4 @@
+import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
@@ -14,13 +15,13 @@ export class FilmCard extends Component<FilmCardProps> {
 		const { id, title, year, rating, genre } = this.props.film;
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
-		const image = `https:\\cdn.ddfilms-static.ru/static/films/25df6602-f4bd-46ba-a210-54f9c45df241.png`;
 		const info = `${genre}, ${year}`;
+		const imageSrc = getImageSRC('films', id, 'jpg');
 		return (
 			<div className={styles.filmCard}>
 				<div className={styles.imageContainer}>
 					<Link href={`/film/${id}`}>
-						<img className={styles.image} src={image} alt={title}></img>
+						<img className={styles.image} src={imageSrc} alt={title}></img>
 						<div className={styles[`rating-${ratingType}`]}>
 							<h3>{formattedRating}</h3>
 						</div>

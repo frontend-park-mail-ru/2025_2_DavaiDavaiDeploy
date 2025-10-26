@@ -22,7 +22,7 @@ export interface ModelsFilm {
 	fees?: number;
 	genre: string;
 	icon?: string;
-	id?: string;
+	id: string;
 	premierDate?: string;
 	rating: number;
 	title?: string;
