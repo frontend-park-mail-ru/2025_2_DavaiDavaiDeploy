@@ -6,7 +6,7 @@ import actionTypes from './actionTypes';
 
 interface InitialState {
 	genreLoading: boolean;
-	curGenre: ModelsGenre;
+	curGenre: ModelsGenre | {};
 	genreError: string | null;
 
 	genresLoading: boolean;

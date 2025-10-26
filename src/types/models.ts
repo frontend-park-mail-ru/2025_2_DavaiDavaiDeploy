@@ -50,7 +50,7 @@ export interface ModelsGenre {
 	createdAt?: string;
 	description?: string;
 	icon?: string;
-	id?: string;
+	id: string;
 	title?: string;
 	updatedAt?: string;
 }

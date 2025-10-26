@@ -122,7 +122,10 @@ const getGenreAction =
 const getGenresAction = (): Action => async (dispatch: Dispatch) => {
 	dispatch(setGenresLoadingAction());
 	try {
-		const response = await HTTPClient.get<ModelsGenre[]>('/genres');
+		const response = await HTTPClient.get<ModelsGenre[]>('/genres', {
+			params: { count: 24, offset: 0 },
+		});
+
 		dispatch(returnGenresAction(response.data));
 	} catch (error: unknown) {
 		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
