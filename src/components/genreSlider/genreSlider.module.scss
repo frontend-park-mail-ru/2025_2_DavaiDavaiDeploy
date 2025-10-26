@@ -34,9 +34,10 @@
 	width: 100%;
 	aspect-ratio: 2.64 / 1;
 	object-fit: cover;
-	border-radius: 0.625rem;
 	cursor: pointer;
 	transition: all 0.25s ease;
+	background-color: var(--color-accent-2);
+	border-radius: var(--border-radius-xl);
 
 	&:hover {
 		filter: brightness(1.2);

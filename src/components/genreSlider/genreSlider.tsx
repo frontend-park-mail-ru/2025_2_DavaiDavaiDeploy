@@ -1,3 +1,4 @@
+import Arrow from '@/assets/img/arrow.svg';
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper.js';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
@@ -79,25 +80,17 @@ class GenreSliderComponent extends Component<
 									key={genre.id}
 									className={styles.image}
 									alt={genre.title}
-									src={`${getImageSRC('genres', genre.id, 'png')}`}
+									src={`${getImageSRC('genres', genre.id, 'svg')}`}
 								/>
 							);
 						})}
 					</div>
 
 					<button className={styles.prevBtn} onClick={this.onPrevBthClick}>
-						<img
-							src="./src/assets/img/arrow.svg"
-							alt="Еще жанры"
-							className={styles.prevBtnIcon}
-						/>
+						<img src={Arrow} alt="Еще жанры" className={styles.prevBtnIcon} />
 					</button>
 					<button className={styles.nextBtn} onClick={this.onNextBthClick}>
-						<img
-							src="./src/assets/img/arrow.svg"
-							alt="Еще жанры"
-							className={styles.nextBtnIcon}
-						/>
+						<img src={Arrow} alt="Еще жанры" className={styles.nextBtnIcon} />
 					</button>
 				</div>
 			</section>
