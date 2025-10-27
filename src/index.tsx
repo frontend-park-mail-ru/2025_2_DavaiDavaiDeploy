@@ -1,131 +1,29 @@
-import { connect, Provider } from '@/modules/redux';
-import type { Dispatch } from '@/modules/redux/types/actions.ts';
-import type { State } from '@/modules/redux/types/store.ts';
-import { Link } from '@/modules/router/link.tsx';
+import { Header } from '@/components/header/header';
+import { Provider } from '@/modules/redux';
 import { Route } from '@/modules/router/route.tsx';
 import { RouterContext } from '@/modules/router/routerContext.ts';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { Routes } from '@/modules/router/routes.tsx';
 import { store } from '@/redux/store.ts';
+import '@/styles/constants.scss';
+import '@/styles/globals.scss';
+import '@fontsource/golos-ui';
 import { Component, render } from '@react';
 import * as Sentry from '@sentry/browser';
+import 'reset-css/reset.css';
+import { Footer } from './components/footer/footer';
+import { isProduction } from './consts/isProduction';
+import { sentryDSN, sentryEnabled } from './consts/sentry';
+import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
+import { HomePage } from './pages/homePage/homePage';
 
-if (import.meta.env.VITE_SENTRY_ENABLED) {
+if (sentryEnabled) {
 	Sentry.init({
-		dsn: import.meta.env.VITE_SENTRY_DSN,
-		enabled: import.meta.env.PROD,
+		dsn: sentryDSN,
+		enabled: isProduction,
 		integrations: [Sentry.browserTracingIntegration()],
-		tracePropagationTargets: ['https://ddfilms.online/'],
+		tracePropagationTargets: [PRODUCTION_URL_WITH_SCHEMA],
 	});
-}
-interface MyComponentProps {
-	count: number;
-	increment: () => void;
-}
-
-class MyComponent extends Component<MyComponentProps> {
-	render() {
-		return (
-			<div>
-				<p>Count: {this.props.count}</p>
-				<button onClick={this.props.increment}>+</button>
-			</div>
-		);
-	}
-}
-
-const mapStateToProps = (state: State) => ({
-	count: state.counter.count,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	increment: () => {
-		dispatch({ type: 'INCREMENT' });
-	},
-});
-
-const ConnectedMyComponent = connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(MyComponent);
-
-class MainApp extends Component {
-	render() {
-		return (
-			<div>
-				<p>Главная</p>
-				<Link href="/about">Back to About</Link>
-				<br></br>
-				<Link href="/contact/4?foo=52">Back to contact</Link>
-				<br></br>
-				<Link href="/login">Back to login</Link>
-				<ConnectedMyComponent />
-			</div>
-		);
-	}
-}
-
-class AboutApp extends Component {
-	render() {
-		return (
-			<div>
-				<p>about</p>
-				<Link href="/">Back to Home</Link>
-				<br></br>
-				<Link href="/contact/4?foo=52">Back to contact</Link>
-				<ConnectedMyComponent />
-			</div>
-		);
-	}
-}
-
-class ContactIDApp extends Component {
-	static contextType = RouterContext;
-	render() {
-		return (
-			<div>
-				<p>Contact ID</p>
-				<Link href="/">Back to Home</Link>
-				<br></br>
-				<Link href="/about">Back to About</Link>
-				<p>на это странице id: {this.context.params.id}</p>
-				<p>на это странице параметр из query: {this.context.params.foo}</p>
-				<ConnectedMyComponent />
-			</div>
-		);
-	}
-}
-
-class Header extends Component {
-	render() {
-		return (
-			<header>
-				<h1>My App Header</h1>
-			</header>
-		);
-	}
-}
-
-class Footer extends Component {
-	render() {
-		return (
-			<footer>
-				<p>My App Footer</p>
-			</footer>
-		);
-	}
-}
-
-class LoginApp extends Component {
-	render() {
-		return (
-			<div>
-				<p>Login</p>
-				<p>а ты заметил, что нет footer и header?</p>
-				<Link href="/">На главную</Link>
-			</div>
-		);
-	}
 }
 
 class App extends Component {
@@ -133,14 +31,11 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				{this.context.path != '/login' && <Header />}
+				<Header />
 				<Routes>
-					<Route href="/" component={<MainApp />} />
-					<Route href="/about" component={<AboutApp />} />
-					<Route href="/contact/:id" component={<ContactIDApp />} />
-					<Route href="/login" component={<LoginApp />} />
+					<Route href="/" component={<HomePage />} />
 				</Routes>
-				{this.context.path != '/login' && <Footer />}
+				<Footer />
 			</div>
 		);
 	}

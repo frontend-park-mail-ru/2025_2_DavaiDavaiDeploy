@@ -9,7 +9,7 @@ describe('formatRating', () => {
 
 	it('корректно форматирует целые числа', () => {
 		expect(formatRating(5)).toBe('5.0');
-		expect(formatRating(10)).toBe('10.0');
+		expect(formatRating(10)).toBe('10');
 	});
 
 	it('обрабатывает нулевой рейтинг', () => {

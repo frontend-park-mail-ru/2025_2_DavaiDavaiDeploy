@@ -1,0 +1,133 @@
+.genreSlider {
+	display: flex;
+	flex-direction: column;
+	gap: 1.875rem;
+	position: relative;
+	padding: 0 7.5rem;
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	gap: 1.875rem;
+	position: relative;
+}
+
+.title {
+	font-weight: var(--font-weight-bold);
+	font-size: var(--font-size-xl);
+	margin-left: -0.2rem;
+}
+
+.slider {
+	display: grid;
+	gap: 1.875rem;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	width: 100%;
+	box-sizing: border-box;
+	position: relative;
+	overflow-x: hidden;
+}
+
+.image {
+	display: flex;
+	width: 100%;
+	aspect-ratio: 2.64 / 1;
+	object-fit: cover;
+	cursor: pointer;
+	transition: all 0.25s ease;
+	background-color: var(--color-accent-2);
+	border-radius: var(--border-radius-xl);
+
+	&:hover {
+		filter: brightness(1.2);
+	}
+}
+
+.prevBtn,
+.nextBtn {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	cursor: pointer;
+	transition:
+		transform 0.4s ease,
+		scale 0.4s ease;
+}
+
+.prevBtn {
+	left: -2.5rem;
+
+	&:hover {
+		transform: translateY(-50%) translateX(-0.3rem) scale(1.1);
+	}
+
+	&:active {
+		transform: translateY(-50%) translateX(-1rem) scale(1.15);
+	}
+}
+
+.nextBtn {
+	right: -2.5rem;
+
+	&:hover {
+		transform: translateY(-50%) translateX(0.3rem) scale(1.1);
+	}
+
+	&:active {
+		transform: translateY(-50%) translateX(1rem) scale(1.15);
+	}
+}
+
+.prevBtnIcon,
+.nextBtnIcon {
+	height: 3.125rem;
+	transition: transform 0.2s ease;
+}
+
+.nextBtnIcon {
+	transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+	.genreSlider {
+		padding: 0 2rem;
+		gap: 1.25rem;
+	}
+
+	.image {
+		display: flex;
+		width: 100%;
+		aspect-ratio: 2.64 / 1;
+		object-fit: cover;
+		cursor: pointer;
+		transition: all 0.25s ease;
+		background-color: var(--color-accent-2);
+		border-radius: var(--border-radius-xl);
+
+		&:hover {
+			filter: brightness(1.2);
+		}
+	}
+
+	.title {
+		margin-left: 0;
+	}
+
+	.slider {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.9375rem;
+	}
+
+	.prevBtn,
+	.nextBtn {
+		display: none;
+		height: 10vh;
+	}
+
+	.container {
+		gap: 1.25rem;
+	}
+}

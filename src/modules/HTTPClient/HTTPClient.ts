@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import { METHODS } from './methods';
 import type { Config, DefaultConfig, RequestConfig } from './types/configs';
 import type { Response } from './types/response';
@@ -98,7 +99,15 @@ export class HTTPClient {
 			});
 
 			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
+				const error = new Error(`HTTP error! status: ${response.status}`);
+				Sentry.captureException(error, {
+					extra: {
+						url: requestUrl.toString(),
+						method: requestMethod,
+					},
+				});
+
+				throw error;
 			}
 
 			clearTimeout(timeout);
@@ -118,6 +127,13 @@ export class HTTPClient {
 			};
 		} catch (error: unknown) {
 			if (error instanceof Error) {
+				Sentry.captureException(error, {
+					extra: {
+						url: requestUrl.toString(),
+						method: requestMethod,
+					},
+				});
+
 				if (error.name === 'TypeError' && error.message.includes('fetch')) {
 					throw new Error('Network error');
 				}

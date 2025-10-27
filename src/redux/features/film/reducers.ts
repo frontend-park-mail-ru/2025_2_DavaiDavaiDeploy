@@ -1,17 +1,22 @@
 import { mergeUniqueFilms } from '@/helpers/mergeUniqueFilmsHelper/mergeUniqueFilmsHelper';
-import type { ModelsFilm } from '@/modules/HTTPClient/types/api';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
+import type { ModelsFilm } from '@/types/models';
 import actionTypes from './actionTypes';
+
+interface InitialState {
+	loading: boolean;
+	films: ModelsFilm[];
+	error: string | null;
+}
 
 /**
  * Начальное состояние редьюсера фильмов.
- * @type {{ loading: boolean, films: Array<Object>, error: string | null }}
  */
-const initialState: State = {
+const initialState: InitialState = {
 	loading: false,
-	films: [] as ModelsFilm[],
+	films: [],
 	error: null,
 };
 

@@ -1,9 +1,9 @@
-import { applyMiddleware } from './applyMiddleware/index';
-import { combineReducers } from './combineReducers/index';
-import { compose } from './compose/index';
-import { connect, StoreContext } from './connect/index';
-import { createStore } from './createStore/index';
-import { Provider } from './Provider/index';
+import { applyMiddleware } from './applyMiddleware';
+import { combineReducers } from './combineReducers';
+import { compose } from './compose';
+import { connect, StoreContext } from './connect';
+import { createStore } from './createStore';
+import { Provider } from './Provider';
 
 export {
 	applyMiddleware,

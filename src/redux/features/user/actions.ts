@@ -1,6 +1,6 @@
-import type { ModelsUser } from '@/modules/HTTPClient/types/api';
+import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import HTTPClient from '../../../modules/HTTPClient';
+import type { ModelsUser } from '@/types/models';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';

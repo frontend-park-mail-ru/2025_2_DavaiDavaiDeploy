@@ -1,24 +1,37 @@
-import type { ModelsFilm, ModelsGenre } from '@/modules/HTTPClient/types/api';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
+import type { ModelsFilm, ModelsGenre } from '@/types/models';
 import actionTypes from './actionTypes';
+
+interface InitialState {
+	genreLoading: boolean;
+	curGenre: ModelsGenre | {};
+	genreError: string | null;
+
+	genresLoading: boolean;
+	genres: ModelsGenre[];
+	genresError: string | null;
+
+	genreFilmsLoading: boolean;
+	genreFilms: ModelsFilm[];
+	genreFilmsError: string | null;
+}
 
 /**
  * Начальное состояние редьюсера жанров.
- * @type {{ loading: boolean, genres: Array<Object>, error: string | null }}
  */
-const initialState: State = {
+const initialState: InitialState = {
 	genreLoading: false,
-	curGenre: {} as ModelsGenre,
+	curGenre: {},
 	genreError: null,
 
 	genresLoading: false,
-	genres: [] as ModelsGenre[],
+	genres: [],
 	genresError: null,
 
 	genreFilmsLoading: false,
-	genreFilms: [] as ModelsFilm[],
+	genreFilms: [],
 	genreFilmsError: null,
 };
 

@@ -20,11 +20,11 @@ export interface ModelsFilm {
 	createdAt?: string;
 	duration?: number;
 	fees?: number;
-	genres?: ModelsGenre[];
+	genre: string;
 	icon?: string;
-	id?: string;
+	id: string;
 	premierDate?: string;
-	rating?: number;
+	rating: number;
 	title?: string;
 	updatedAt?: string;
 	year?: number;
@@ -50,7 +50,7 @@ export interface ModelsGenre {
 	createdAt?: string;
 	description?: string;
 	icon?: string;
-	id?: string;
+	id: string;
 	title?: string;
 	updatedAt?: string;
 }
@@ -76,4 +76,16 @@ export interface ModelsUser {
 	savedFilms?: ModelsFilm[];
 	status?: 'active' | 'banned' | 'deleted';
 	updatedAt?: string;
+}
+
+// -------------------------------------------------------------
+export interface ModelsTopFilm {
+	image: string;
+	title: string;
+	year: number;
+	genre: string;
+	duration: number;
+	short_description: string;
+	rating: number;
+	id: string;
 }
