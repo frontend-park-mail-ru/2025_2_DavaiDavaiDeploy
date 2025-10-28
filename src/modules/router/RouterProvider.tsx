@@ -1,5 +1,4 @@
 import { Component } from '@robocotik/react';
-import type { VDOMNode } from '@robocotik/react';
 import { RouterContext } from './routerContext.ts';
 import { trimRoute } from './utils/trimRoute.ts';
 
@@ -41,7 +40,7 @@ export class RouterProvider extends Component {
 		window.removeEventListener('popstate', this.handlePopState);
 	}
 
-	render(): VDOMNode {
+	render() {
 		return (
 			<RouterContext.Provider
 				value={{
