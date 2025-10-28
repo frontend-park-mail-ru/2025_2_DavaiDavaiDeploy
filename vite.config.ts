@@ -19,7 +19,7 @@ export default ({ mode }: ConfigEnv) => {
 			jsx: 'transform',
 			jsxFactory: 'jsx',
 			jsxFragment: 'Fragment',
-			jsxInject: "import {jsx, Fragment} from '@robocotik/react/jsx-runtime'",
+			jsxInject: "import {jsx, Fragment} from '@robocotik/react'",
 			jsxDev: false,
 		},
 		server: {
