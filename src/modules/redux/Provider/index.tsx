@@ -1,11 +1,9 @@
-import { Component } from '@react';
-import type { VDOMNode } from '@react/types';
+import { Component } from '@robocotik/react';
 import { StoreContext } from '../connect';
 import type { Store } from '../types/store';
 
 interface ProviderProps {
 	store: Store;
-	children?: VDOMNode | VDOMNode[];
 }
 
 export class Provider extends Component<ProviderProps> {
@@ -14,7 +12,7 @@ export class Provider extends Component<ProviderProps> {
 		StoreContext.value = this.props.store;
 	}
 
-	render(): VDOMNode {
+	render() {
 		return (
 			<StoreContext.Provider value={this.props.store}>
 				{this.props.children}

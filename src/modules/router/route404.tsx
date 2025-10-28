@@ -1,4 +1,4 @@
-import { Component } from '@react/component';
+import { Component } from '@robocotik/react';
 
 export class Route404 extends Component {
 	render() {

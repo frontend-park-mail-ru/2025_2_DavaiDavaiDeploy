@@ -1,7 +1,7 @@
 import { CardGrid } from '@/components/cardGrig/cardGrid';
 import { GenreSlider } from '@/components/genreSlider/genreSlider';
 import { TopFilm } from '@/components/topFilm/topFilm';
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import styles from './homePage.module.scss';
 
 export class HomePage extends Component {

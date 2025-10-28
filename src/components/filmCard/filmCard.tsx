@@ -3,7 +3,7 @@ import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsFilm } from '@/types/models';
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import styles from './filmCard.module.scss';
 
 interface FilmCardProps {

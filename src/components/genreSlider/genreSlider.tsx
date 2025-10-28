@@ -7,7 +7,7 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenres } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import styles from './genreSlider.module.scss';
 
 interface GenreSliderProps {
