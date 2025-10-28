@@ -49,7 +49,7 @@ const getFilmsAction: Action =
 	(limit: number, offset: number) => async (dispatch: Dispatch) => {
 		dispatch(setFilmsLoadingAction());
 		try {
-			const response = await HTTPClient.get<ModelsFilm[]>('/films', {
+			const response = await HTTPClient.get<ModelsFilm[]>('/films/', {
 				params: { count: limit, offset },
 			});
 			dispatch(returnFilmsAction(response.data));

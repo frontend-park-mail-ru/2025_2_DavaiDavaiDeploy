@@ -14,7 +14,7 @@ import styles from './topFilm.module.scss';
 
 interface TopFilmProps {
 	film: ModelsTopFilm;
-	getTopFilm: () => void;
+	getTopFilm: VoidFunction;
 }
 
 class TopFilmComponent extends Component<TopFilmProps> {
@@ -26,12 +26,12 @@ class TopFilmComponent extends Component<TopFilmProps> {
 			return <div>Loading...</div>;
 		}
 
-		const { title, year, genre, duration, short_description, rating } =
+		const { id, title, year, genre, duration, short_description, rating } =
 			this.props.film;
 		const formattedDuration = formatDuration(duration);
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
-		const imageSrc = getImageSRC('topFilms', 'dune', 'jpg');
+		const imageSrc = getImageSRC('topFilms', id, 'jpg');
 
 		return (
 			<a className={styles.topFilm}>

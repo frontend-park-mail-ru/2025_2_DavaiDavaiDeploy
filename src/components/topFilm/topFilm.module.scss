@@ -92,7 +92,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 130%;
+	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	z-index: 0;
@@ -140,4 +140,12 @@
 
 .rating-low {
 	background-color: var(--color-rating-low);
+}
+
+@media (max-width: 768px) {
+	.content {
+		flex: 0 0 100%;
+		align-items: flex-start;
+		padding: 2rem 3rem;
+	}
 }

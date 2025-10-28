@@ -16,7 +16,6 @@
 .title {
 	font-weight: var(--font-weight-bold);
 	font-size: var(--font-size-xl);
-	margin-left: -0.2rem;
 }
 
 .slider {
@@ -27,21 +26,6 @@
 	box-sizing: border-box;
 	position: relative;
 	overflow-x: hidden;
-}
-
-.image {
-	display: flex;
-	width: 100%;
-	aspect-ratio: 2.64 / 1;
-	object-fit: cover;
-	cursor: pointer;
-	transition: all 0.25s ease;
-	background-color: var(--color-accent-2);
-	border-radius: var(--border-radius-xl);
-
-	&:hover {
-		filter: brightness(1.2);
-	}
 }
 
 .prevBtn,
@@ -87,29 +71,10 @@
 	transition: transform 0.2s ease;
 }
 
-.nextBtnIcon {
-	transform: rotate(180deg);
-}
-
 @media (max-width: 768px) {
 	.genreSlider {
 		padding: 0 2rem;
 		gap: 1.25rem;
-	}
-
-	.image {
-		display: flex;
-		width: 100%;
-		aspect-ratio: 2.64 / 1;
-		object-fit: cover;
-		cursor: pointer;
-		transition: all 0.25s ease;
-		background-color: var(--color-accent-2);
-		border-radius: var(--border-radius-xl);
-
-		&:hover {
-			filter: brightness(1.2);
-		}
 	}
 
 	.title {
