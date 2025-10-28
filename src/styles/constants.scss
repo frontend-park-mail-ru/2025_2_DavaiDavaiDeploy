@@ -71,6 +71,9 @@
 	--font-size-s: clamp(1rem, 1.46vw, 1.25rem); // 20
 	--font-size-xs: clamp(1rem, 1.31vw, 1.125rem); // 18
 	--font-size-xxs: clamp(0.9375rem, 1.15vw, 1rem); // 16
+	--font-size-xxxs: clamp(0.6875rem, 1.05vw, 0.875rem); // 14
+	--font-size-xxxxx: clamp(0.5625rem, 0.85vw, 0.75rem); // 12
+	--font-size-xxxxxxx: clamp(0.4375rem, 0.65vw, 0.625rem); // 10
 
 	--font-weight-bold: 700;
 	--font-weight-regular: 400;

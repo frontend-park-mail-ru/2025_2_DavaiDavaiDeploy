@@ -3,7 +3,7 @@
 	flex-direction: column;
 	gap: 1.875rem;
 	position: relative;
-	padding: 0 7.5rem;
+	padding: 0 7vw;
 }
 
 .container {
@@ -73,7 +73,6 @@
 
 @media (max-width: 768px) {
 	.genreSlider {
-		padding: 0 2rem;
 		gap: 1.25rem;
 	}
 

@@ -4,6 +4,7 @@
 	gap: 0.75rem;
 	align-items: center;
 	justify-content: center;
+	flex: 1;
 }
 
 .title-low,
@@ -16,12 +17,13 @@
 	opacity: 0.6;
 	color: var(--color-light-text);
 	font-size: var(--font-size-xs);
+	margin-top: -0.5rem;
 }
 
 .rateBtn {
 	background: var(--color-light);
 	border-radius: var(--border-radius-l);
-	padding: 0.9375rem 1.875rem;
+	padding: 0.8vw 1.8vw;
 	cursor: pointer;
 	transition: all 0.4s ease;
 	border: 1px solid var(--color-light);
@@ -29,6 +31,7 @@
 
 .btnText {
 	font-size: var(--font-size-m);
+	white-space: nowrap;
 }
 
 .title-high {
@@ -41,4 +44,49 @@
 
 .title-low {
 	color: var(--color-rating-low);
+}
+
+.smallRating {
+	display: none;
+}
+
+@media (max-width: 768px) {
+	.rating {
+		display: none;
+	}
+
+	.smallRating {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.rateBtn {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.2rem;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+		transition:
+			background-color 0.2s,
+			transform 0.1s;
+	}
+
+	.rateBtn:hover {
+		transform: scale(1.05);
+	}
+
+	.starIcon {
+		width: 2.5rem;
+		height: 2.5rem;
+	}
+
+	.btnText {
+		font-size: var(--font-size-xxxxxs);
+		color: var(--color-light-text);
+		text-align: center;
+	}
 }

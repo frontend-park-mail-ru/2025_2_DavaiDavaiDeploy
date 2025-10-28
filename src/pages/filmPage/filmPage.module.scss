@@ -8,3 +8,9 @@
 .content {
 	background-color: var(--color-text);
 }
+
+@media (max-width: 768px) {
+	.page {
+		gap: 2rem;
+	}
+}
