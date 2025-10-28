@@ -1,7 +1,7 @@
+import actionTypes from './actionTypes';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsFilm, ModelsGenre } from '@/types/models';
-import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
 
@@ -100,6 +100,7 @@ const getGenreAction =
 	(id: string | number): Action =>
 	async (dispatch: Dispatch) => {
 		dispatch(setGenreLoadingAction());
+
 		try {
 			const response = await HTTPClient.get<ModelsGenre>(`/genres/${id}`);
 			dispatch(returnGenreAction(response.data));
@@ -121,6 +122,7 @@ const getGenreAction =
  */
 const getGenresAction = (): Action => async (dispatch: Dispatch) => {
 	dispatch(setGenresLoadingAction());
+
 	try {
 		const response = await HTTPClient.get<ModelsGenre[]>('/genres/', {
 			params: { count: 24, offset: 0 },
@@ -147,6 +149,7 @@ const getGenreFilmsAction =
 	(id: string | number, limit: number, offset: number): Action =>
 	async (dispatch: Dispatch) => {
 		dispatch(setGenreFilmsLoadingAction());
+
 		try {
 			const response = await HTTPClient.get<ModelsFilm[]>(
 				`/films/genre/${id}`,
@@ -154,6 +157,7 @@ const getGenreFilmsAction =
 					params: { count: limit, offset },
 				},
 			);
+
 			dispatch(returnGenreFilmsAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;

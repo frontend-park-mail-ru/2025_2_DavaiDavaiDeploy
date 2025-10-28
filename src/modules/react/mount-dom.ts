@@ -23,6 +23,7 @@ export function mountDOM(
 			createTextNode(vdom as TextVDOMNode, parentEl, index);
 			break;
 		}
+
 		case DOM_TYPES.ELEMENT: {
 			createElementNode(
 				vdom as ElementVDOMNode,
@@ -30,8 +31,10 @@ export function mountDOM(
 				index,
 				hostComponent,
 			);
+
 			break;
 		}
+
 		case DOM_TYPES.FRAGMENT: {
 			createFragmentNodes(
 				vdom as FragmentVDOMNode,
@@ -39,16 +42,21 @@ export function mountDOM(
 				index,
 				hostComponent,
 			);
+
 			break;
 		}
+
 		case DOM_TYPES.COMPONENT: {
 			createComponentNode(vdom as ComponentVDOMNode, parentEl, index);
 			const component = (vdom as ComponentVDOMNode).component;
+
 			if (component) {
 				enqueueJob(() => component.onMount());
 			}
+
 			break;
 		}
+
 		default: {
 			throw new Error(`Can't mount DOM of type: ${vdom.type}`);
 		}
@@ -132,6 +140,7 @@ function insert(el: Node, parentEl: HTMLElement, index: number | null): void {
 	}
 
 	const children = parentEl.childNodes;
+
 	if (index >= children.length) {
 		parentEl.append(el);
 	} else {

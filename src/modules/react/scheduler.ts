@@ -7,7 +7,9 @@ export function enqueueJob(job: () => unknown | Promise<unknown>): void {
 }
 
 function scheduleUpdate(): void {
-	if (isScheduled) return;
+	if (isScheduled) {
+		return;
+	}
 	isScheduled = true;
 	queueMicrotask(processJobs);
 }
@@ -16,6 +18,7 @@ function processJobs(): void {
 	while (jobs.length > 0) {
 		const job = jobs.shift()!;
 		let result: unknown;
+
 		try {
 			result = job();
 		} catch (err) {
@@ -32,5 +35,6 @@ function processJobs(): void {
 			},
 		);
 	}
+
 	isScheduled = false;
 }

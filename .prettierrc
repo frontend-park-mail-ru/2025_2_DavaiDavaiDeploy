@@ -2,7 +2,6 @@
 	"trailingComma": "all",
 	"tabWidth": 2,
 	"singleQuote": true,
-	"plugins": ["prettier-plugin-organize-imports"],
 	"useTabs": true,
 	"jsxSingleQuote": false,
 	"bracketSameLine": false,

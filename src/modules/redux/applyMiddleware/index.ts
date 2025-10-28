@@ -3,6 +3,7 @@ import type { Action } from '../types/actions';
 import type { Middleware } from '../types/middleware';
 import type { Reducer } from '../types/reducers';
 import type { State, Store, StoreEnhancer } from '../types/store';
+
 /**
  * Применяет middleware к Redux-подобному store.
  */

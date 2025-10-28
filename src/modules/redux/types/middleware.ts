@@ -1,5 +1,6 @@
 import type { Dispatch } from './actions';
 import type { State } from './store';
+
 /**
  * API для middleware.
  */

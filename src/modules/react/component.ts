@@ -64,6 +64,7 @@ export abstract class Component<
 				if (child.type === DOM_TYPES.COMPONENT && (child as any).component) {
 					return (child as any).component.elements;
 				}
+
 				return (child as any).el ? [(child as any).el] : [];
 			});
 		}
@@ -83,14 +84,17 @@ export abstract class Component<
 		) {
 			return Array.from(this.hostEl.children).indexOf(this.firstElement);
 		}
+
 		return 0;
 	}
 
 	updateProps(props: Partial<P>): void {
 		const newProps = { ...this.props, ...props };
+
 		if (equal(this.props, newProps)) {
 			return;
 		}
+
 		this.props = newProps;
 		this.patch();
 	}
@@ -107,6 +111,7 @@ export abstract class Component<
 		} else {
 			this.state = { ...this.state, ...state };
 		}
+
 		this.patch();
 	}
 
@@ -138,6 +143,7 @@ export abstract class Component<
 		const constructor = this.constructor as typeof Component & {
 			contextType?: Context<C>;
 		};
+
 		constructor.contextType?.unsubscribe(this as Component);
 
 		enqueueJob(() => this.onWillUnmount());

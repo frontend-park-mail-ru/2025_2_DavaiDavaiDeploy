@@ -1,10 +1,3 @@
-import { Header } from '@/components/header/header';
-import { Provider } from '@/modules/redux';
-import { Route } from '@/modules/router/route.tsx';
-import { RouterContext } from '@/modules/router/routerContext.ts';
-import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
-import { Routes } from '@/modules/router/routes.tsx';
-import { store } from '@/redux/store.ts';
 import '@/styles/constants.scss';
 import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
@@ -16,6 +9,13 @@ import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
 import { HomePage } from './pages/homePage/homePage';
+import { Header } from '@/components/header/header';
+import { Provider } from '@/modules/redux';
+import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
+import { Route } from '@/modules/router/route.tsx';
+import { RouterContext } from '@/modules/router/routerContext.ts';
+import { Routes } from '@/modules/router/routes.tsx';
+import { store } from '@/redux/store.ts';
 
 if (sentryEnabled) {
 	Sentry.init({
@@ -27,7 +27,7 @@ if (sentryEnabled) {
 }
 
 class App extends Component {
-	static contextType = RouterContext;
+	static readonly contextType = RouterContext;
 	render() {
 		return (
 			<div>

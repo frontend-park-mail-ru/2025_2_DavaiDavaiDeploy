@@ -1,8 +1,8 @@
+import actionTypes from './actionTypes';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
 import type { ModelsFilm, ModelsGenre } from '@/types/models';
-import actionTypes from './actionTypes';
 
 interface InitialState {
 	genreLoading: boolean;
@@ -42,6 +42,7 @@ const genreReducer: Reducer = (state = initialState, action: Action): State => {
 	if (typeof action == 'function') {
 		return state;
 	}
+
 	const { type, payload } = action;
 
 	switch (type) {

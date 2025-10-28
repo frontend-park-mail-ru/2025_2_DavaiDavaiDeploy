@@ -8,6 +8,7 @@ describe('getGridColumnCount', () => {
 		const grid = document.createElement('div');
 		grid.style.display = 'grid';
 		grid.style.gridTemplateColumns = '1fr 1fr 1fr 1fr';
+
 		for (let i = 1; i <= 8; i++) {
 			const item = document.createElement('div');
 			grid.appendChild(item);

@@ -19,6 +19,7 @@ export class Dispatcher {
 
 		return () => {
 			const idx = handlers.indexOf(handler);
+
 			if (idx > -1) {
 				handlers.splice(idx, 1);
 			}
@@ -30,6 +31,7 @@ export class Dispatcher {
 
 		return () => {
 			const idx = this.#afterHandlers.indexOf(handler);
+
 			if (idx > -1) {
 				this.#afterHandlers.splice(idx, 1);
 			}

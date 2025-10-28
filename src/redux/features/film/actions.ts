@@ -1,7 +1,7 @@
+import actionTypes from './actionTypes';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsFilm } from '@/types/models';
-import actionTypes from './actionTypes';
 
 /**
  * Action: начало загрузки фильмов.
@@ -48,10 +48,12 @@ const clearFilmsAction = (): Action => {
 const getFilmsAction: Action =
 	(limit: number, offset: number) => async (dispatch: Dispatch) => {
 		dispatch(setFilmsLoadingAction());
+
 		try {
 			const response = await HTTPClient.get<ModelsFilm[]>('/films/', {
 				params: { count: limit, offset },
 			});
+
 			dispatch(returnFilmsAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = 'Произошла ошибка';

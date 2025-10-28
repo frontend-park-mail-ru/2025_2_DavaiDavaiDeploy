@@ -1,6 +1,7 @@
 import type { Component } from './component.ts';
 
 export type EventHandler<T extends Event = Event> = (event: T) => void;
+
 export type EventListeners = Record<string, EventHandler>;
 
 export function addEventListener<T extends Event = Event>(
@@ -11,6 +12,7 @@ export function addEventListener<T extends Event = Event>(
 ): EventHandler<T> {
 	function boundHandler(event: Event) {
 		const typedEvent = event as T;
+
 		if (hostComponent) {
 			handler.call(hostComponent, typedEvent);
 		} else {

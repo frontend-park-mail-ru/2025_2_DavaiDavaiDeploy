@@ -1,3 +1,5 @@
+import { Component } from '@react';
+import styles from './topFilm.module.scss';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
@@ -9,8 +11,6 @@ import actions from '@/redux/features/topFilm/actions';
 import { selectTopFilm } from '@/redux/features/topFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsTopFilm } from '@/types/models';
-import { Component } from '@react';
-import styles from './topFilm.module.scss';
 
 interface TopFilmProps {
 	film: ModelsTopFilm;
@@ -28,6 +28,7 @@ class TopFilmComponent extends Component<TopFilmProps> {
 
 		const { id, title, year, genre, duration, short_description, rating } =
 			this.props.film;
+
 		const formattedDuration = formatDuration(duration);
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);

@@ -4,18 +4,13 @@ import {
 	setAttribute,
 	setStyle,
 } from './attributes.ts';
+import type { Component } from './component.ts';
 import { destroyDOM } from './destroy-dom.ts';
 import { addEventListener } from './events.ts';
+import type { EventListeners } from './events.ts';
 import { extractChildren } from './h.ts';
 import { mountDOM } from './mount-dom.ts';
 import { areNodesEqual } from './nodes-equal.ts';
-import { arraysDiff, arraysDiffSequence } from './utils/arrays.ts';
-import { objectsDiff } from './utils/objects.ts';
-import { extractPropsAndEvents } from './utils/props.ts';
-import { isNotBlankOrEmptyString } from './utils/strings.ts';
-
-import type { Component } from './component.ts';
-import type { EventListeners } from './events.ts';
 import type {
 	ArrayDiffOperation,
 	ComponentVDOMNode,
@@ -26,6 +21,10 @@ import type {
 	VDOMNode,
 } from './types';
 import { ARRAY_DIFF_OP, DOM_TYPES } from './types';
+import { arraysDiff, arraysDiffSequence } from './utils/arrays.ts';
+import { objectsDiff } from './utils/objects.ts';
+import { extractPropsAndEvents } from './utils/props.ts';
+import { isNotBlankOrEmptyString } from './utils/strings.ts';
 
 export function patchDOM(
 	oldVdom: VDOMNode,
@@ -47,19 +46,23 @@ export function patchDOM(
 			patchText(oldVdom as TextVDOMNode, newVdom as TextVDOMNode);
 			return newVdom;
 		}
+
 		case DOM_TYPES.ELEMENT: {
 			patchElement(
 				oldVdom as ElementVDOMNode,
 				newVdom as ElementVDOMNode,
 				hostComponent,
 			);
+
 			break;
 		}
+
 		case DOM_TYPES.COMPONENT: {
 			patchComponent(
 				oldVdom as ComponentVDOMNode,
 				newVdom as ComponentVDOMNode,
 			);
+
 			break;
 		}
 	}
@@ -72,7 +75,9 @@ function findIndexInParent(
 	parentEl: HTMLElement,
 	el: Node | null | undefined,
 ): number | null {
-	if (!el) return null;
+	if (!el) {
+		return null;
+	}
 	const index = Array.from(parentEl.childNodes).indexOf(el as ChildNode);
 	return index < 0 ? null : index;
 }
@@ -81,6 +86,7 @@ function patchText(oldVdom: TextVDOMNode, newVdom: TextVDOMNode): void {
 	const el = oldVdom.el as Text;
 	const { value: oldText } = oldVdom;
 	const { value: newText } = newVdom;
+
 	if (oldText !== newText && el) {
 		(el as unknown as CharacterData).nodeValue = newText;
 	}
@@ -98,6 +104,7 @@ function patchElement(
 		on: oldEvents,
 		...oldAttrs
 	} = (oldVdom.props ?? {}) as IProp;
+
 	const {
 		class: newClass,
 		style: newStyle,
@@ -113,6 +120,7 @@ function patchElement(
 		oldStyle as Record<string, string | number>,
 		newStyle as Record<string, string | number>,
 	);
+
 	newVdom.listeners = patchEvents(
 		el,
 		oldListeners as EventListeners | undefined,
@@ -128,9 +136,11 @@ function patchAttrs(
 	newAttrs: Record<string, unknown> = {},
 ): void {
 	const { added, removed, updated } = objectsDiff(oldAttrs, newAttrs);
+
 	for (const attr of removed) {
 		removeAttribute(el, attr);
 	}
+
 	for (const attr of added.concat(updated)) {
 		setAttribute(el, attr, newAttrs[attr]);
 	}
@@ -148,6 +158,7 @@ function patchClasses(
 	if (removed.length > 0) {
 		el.classList.remove(...removed);
 	}
+
 	if (added.length > 0) {
 		el.classList.add(...added);
 	}
@@ -165,9 +176,11 @@ function patchStyles(
 	newStyle: Record<string, string | number> = {},
 ): void {
 	const { added, removed, updated } = objectsDiff(oldStyle, newStyle);
+
 	for (const style of removed) {
 		removeStyle(el, style);
 	}
+
 	for (const style of added.concat(updated)) {
 		setStyle(el, style, newStyle[style]);
 	}
@@ -184,12 +197,14 @@ function patchEvents(
 
 	for (const eventName of removed.concat(updated)) {
 		const handler = oldListeners?.[eventName];
+
 		if (handler) {
 			el.removeEventListener(eventName, handler as EventListener);
 		}
 	}
 
 	const addedListeners: EventListeners = {};
+
 	for (const eventName of added.concat(updated)) {
 		addedListeners[eventName] = addEventListener(
 			eventName,
@@ -236,6 +251,7 @@ function patchChildren(
 				const { from, index } = operation as any;
 				const el = oldChildren[from].el;
 				const elAtTargetIndex = parentEl.childNodes[index + offset];
+
 				if (el) {
 					parentEl.insertBefore(el, elAtTargetIndex);
 					patchDOM(
@@ -245,13 +261,16 @@ function patchChildren(
 						hostComponent,
 					);
 				}
+
 				break;
 			}
+
 			case ARRAY_DIFF_OP.REMOVE: {
 				const { item } = operation as any;
 				destroyDOM(item);
 				break;
 			}
+
 			case ARRAY_DIFF_OP.ADD: {
 				const { index, item } = operation as any;
 				mountDOM(item, parentEl, index + offset, hostComponent);

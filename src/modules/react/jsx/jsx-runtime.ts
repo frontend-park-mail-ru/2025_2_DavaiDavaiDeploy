@@ -10,6 +10,7 @@ function normalizeChild(child: Child): VDOMNode | null {
 	if (child == null || child === false) {
 		return null;
 	}
+
 	if (
 		typeof child === 'string' ||
 		typeof child === 'number' ||
@@ -17,6 +18,7 @@ function normalizeChild(child: Child): VDOMNode | null {
 	) {
 		return hString(String(child));
 	}
+
 	return child as VDOMNode;
 }
 
@@ -31,6 +33,7 @@ export function jsx(
 			.flat()
 			.map(normalizeChild)
 			.filter((c): c is VDOMNode => c != null);
+
 		return hFragment(normalizedChildren);
 	}
 

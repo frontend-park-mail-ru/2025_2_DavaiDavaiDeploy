@@ -22,11 +22,13 @@ export function h(
 	props?: ElementProps,
 	children?: (VDOMNode | string | null | undefined)[],
 ): ElementVDOMNode;
+
 export function h(
 	tag: string,
 	props?: ElementProps,
 	children?: (VDOMNode | string | null | undefined)[],
 ): ElementVDOMNode;
+
 export function h(
 	tag: string | typeof Component,
 	props: ElementProps = {},

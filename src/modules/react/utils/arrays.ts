@@ -34,6 +34,7 @@ export class ArrayWithOriginalIndices<T> {
 		if (index >= this.length) {
 			return false;
 		}
+
 		const item = this.#array[index];
 		const newItem = newArray[index];
 		return this.#equalsFn(item, newItem);
@@ -43,10 +44,12 @@ export class ArrayWithOriginalIndices<T> {
 		if (index >= this.length) {
 			return false;
 		}
+
 		const item = this.#array[index];
 		const indexInNewArray = newArray.findIndex((newItem) =>
 			this.#equalsFn(item, newItem),
 		);
+
 		return indexInNewArray === -1;
 	}
 
@@ -56,6 +59,7 @@ export class ArrayWithOriginalIndices<T> {
 				return i;
 			}
 		}
+
 		return -1;
 	}
 
@@ -74,9 +78,11 @@ export class ArrayWithOriginalIndices<T> {
 
 	removeItemsAfter(index: number): ArrayDiffOperation<T>[] {
 		const operations: ArrayDiffOperation<T>[] = [];
+
 		while (this.length > index) {
 			operations.push(this.removeItem(index));
 		}
+
 		return operations;
 	}
 
@@ -86,6 +92,7 @@ export class ArrayWithOriginalIndices<T> {
 			index,
 			item: this.#array[index],
 		};
+
 		this.#array.splice(index, 1);
 		this.#originalIndices.splice(index, 1);
 		return operation;
@@ -97,6 +104,7 @@ export class ArrayWithOriginalIndices<T> {
 			index,
 			item,
 		};
+
 		this.#array.splice(index, 0, item);
 		this.#originalIndices.splice(index, 0, -1);
 		return operation;
@@ -111,6 +119,7 @@ export class ArrayWithOriginalIndices<T> {
 			index: toIndex,
 			item: this.#array[fromIndex],
 		};
+
 		const [_item] = this.#array.splice(fromIndex, 1);
 		this.#array.splice(toIndex, 0, _item);
 		const [originalIndex] = this.#originalIndices.splice(fromIndex, 1);

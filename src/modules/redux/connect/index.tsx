@@ -25,7 +25,7 @@ export function connect<Props = any, ComponentState = any, Context = any>(
 		WrappedComponent: ComponentConstructor<Props, ComponentState, Context>,
 	): ConnectedConstructor<Props> => {
 		class Connect extends Component<Props, State, Store> {
-			static contextType = StoreContext;
+			static readonly contextType = StoreContext;
 
 			private unsubscribe?: () => void;
 

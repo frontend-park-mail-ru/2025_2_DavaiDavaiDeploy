@@ -16,18 +16,22 @@ export function destroyDOM(vdom: VDOMNode): void {
 			removeTextNode(vdom as TextVDOMNode);
 			break;
 		}
+
 		case DOM_TYPES.ELEMENT: {
 			removeElementNode(vdom as ElementVDOMNode);
 			break;
 		}
+
 		case DOM_TYPES.FRAGMENT: {
 			removeFragmentNodes(vdom as FragmentVDOMNode);
 			break;
 		}
+
 		case DOM_TYPES.COMPONENT: {
 			(vdom as ComponentVDOMNode).component?.unmount();
 			break;
 		}
+
 		default: {
 			throw new Error(`Can't destroy DOM of type: ${type}`);
 		}
@@ -38,6 +42,7 @@ export function destroyDOM(vdom: VDOMNode): void {
 
 function removeTextNode(vdom: TextVDOMNode): void {
 	const { el } = vdom;
+
 	if (el) {
 		el.remove();
 	}

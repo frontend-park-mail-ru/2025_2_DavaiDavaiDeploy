@@ -14,6 +14,7 @@ export function areNodesEqual(nodeOne: VDOMNode, nodeTwo: VDOMNode): boolean {
 			tag: tagOne,
 			props: { key: keyOne },
 		} = elementOne;
+
 		const {
 			tag: tagTwo,
 			props: { key: keyTwo },

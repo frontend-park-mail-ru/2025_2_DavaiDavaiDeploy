@@ -1,9 +1,11 @@
 import type { Component } from '../component.ts';
-import type { VDOMNode } from './';
 import { ARRAY_DIFF_OP } from './consts.ts';
+import type { VDOMNode } from './';
 
 export type EventHandler = (...args: any[]) => void;
+
 export type IEvent = Record<string, EventHandler>;
+
 export type IProp = Record<string, unknown>;
 
 export interface PropsAndEvents {
@@ -64,8 +66,11 @@ export interface ComponentConstructor<P = {}> {
 }
 
 export type CommandHandler<T = any> = (payload: T) => void;
+
 export type AfterCommandHandler = () => void;
+
 export type Unsubscribe = () => void;
+
 export interface WithChildrenProps {
 	children?: VDOMNode[] | VDOMNode | string | Function;
 }
