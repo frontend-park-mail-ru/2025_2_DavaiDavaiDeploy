@@ -1,1 +1,11 @@
-// comming soon
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 1.875rem;
+}
+
+.title {
+	color: var(--color-dark-text);
+	font-weight: var(--font-weight-bold);
+	font-size: var(--font-size-xl);
+}

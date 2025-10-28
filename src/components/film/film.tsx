@@ -6,7 +6,6 @@ import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
-import { RouterContext } from '@/modules/router/routerContext';
 import type { ModelsFilmPage } from '@/types/models';
 
 interface FilmProps {
@@ -14,8 +13,6 @@ interface FilmProps {
 }
 
 export class Film extends Component<FilmProps> {
-	static readonly contextType = RouterContext;
-
 	render() {
 		if (Object.keys(this.props.film).length === 0) {
 			return <div>Loading...</div>;
