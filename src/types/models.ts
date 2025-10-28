@@ -10,49 +10,159 @@
  * ---------------------------------------------------------------
  */
 
+export interface ModelsActor {
+	birth_date?: string;
+	birth_place?: string;
+	created_at?: string;
+	death_date?: string;
+	height?: number;
+	id?: string;
+	marital_status?: string;
+	original_name?: string;
+	photo?: string;
+	russian_name: string;
+	updated_at?: string;
+	zodiac_sign?: string;
+}
+
+export interface ModelsActorPage {
+	age?: number;
+	birth_date?: string;
+	birth_place?: string;
+	films_number?: number;
+	height?: number;
+	id?: string;
+	marital_status?: string;
+	original_name?: string;
+	photo?: string;
+	russian_name: string;
+	zodiac_sign?: string;
+}
+
+export interface ModelsChangePasswordInput {
+	new_password: string;
+	old_password: string;
+}
+
 export interface ModelsError {
 	message?: string;
 }
 
 export interface ModelsFilm {
+	age_category?: string;
 	budget?: number;
-	country?: string;
-	createdAt?: string;
-	duration?: number;
-	fees?: number;
+	country: string;
+	cover?: string;
+	created_at?: string;
+	description?: string;
+	duration: number;
 	genre: string;
-	icon?: string;
 	id: string;
-	premierDate?: string;
+	image1?: string;
+	image2?: string;
+	image3?: string;
+	original_title?: string;
+	poster?: string;
 	rating: number;
-	title?: string;
-	updatedAt?: string;
-	year?: number;
+	short_description?: string;
+	slogan?: string;
+	title: string;
+	trailer_url?: string;
+	updated_at?: string;
+	worldwide_fees?: number;
+	year: number;
+	actors: ModelsActor[];
 }
 
-export interface ModelsFilmProfessional {
-	birthDate?: string;
-	birthPlace?: string;
-	createdAt?: string;
-	deathDate?: string;
-	description?: string;
-	icon?: string;
+export interface ModelsFilmFeedback {
+	created_at?: string;
+	film_id: string;
 	id?: string;
-	isActive?: boolean;
-	name?: string;
-	nationality?: string;
-	surname?: string;
-	updatedAt?: string;
-	wikipediaUrl?: string;
+	/**
+	 * @min 1
+	 * @max 10
+	 */
+	rating?: number;
+	text?: string;
+	title?: string;
+	updated_at?: string;
+	user_avatar?: string;
+	user_id: string;
+	user_login: string;
+}
+
+export interface ModelsFilmFeedbackInput {
+	/**
+	 * @min 1
+	 * @max 10
+	 */
+	rating: number;
+	/**
+	 * @minLength 1
+	 * @maxLength 1000
+	 */
+	text: string;
+	/**
+	 * @minLength 1
+	 * @maxLength 100
+	 */
+	title: string;
+}
+
+export interface ModelsFilmPage {
+	actors: ModelsActor[];
+	age_category: string;
+	budget: number;
+	country: string;
+	cover: string;
+	description: string;
+	duration: number;
+	genre: string;
+	id: string;
+	image1?: string;
+	image2?: string;
+	image3?: string;
+	number_of_ratings: number;
+	original_title?: string;
+	poster: string;
+	rating: number;
+	short_description: string;
+	slogan?: string;
+	title: string;
+	trailer_url: string;
+	worldwide_fees: number;
+	year: number;
 }
 
 export interface ModelsGenre {
-	createdAt?: string;
-	description?: string;
-	icon?: string;
+	created_at: string;
+	description: string;
+	icon: string;
 	id: string;
-	title?: string;
-	updatedAt?: string;
+	title: string;
+	updated_at: string;
+}
+
+export interface ModelsMainPageFilm {
+	cover: string;
+	genre: string;
+	id: string;
+	rating: number;
+	title: string;
+	year: number;
+}
+
+export interface ModelsPromoFilm {
+	created_at?: string;
+	duration: number;
+	genre: string;
+	id: string;
+	image: string;
+	rating: number;
+	short_description?: string;
+	title: string;
+	updated_at?: string;
+	year: number;
 }
 
 export interface ModelsSignInInput {
@@ -61,31 +171,15 @@ export interface ModelsSignInInput {
 }
 
 export interface ModelsSignUpInput {
-	login?: string;
-	password?: string;
+	login: string;
+	password: string;
 }
 
 export interface ModelsUser {
 	avatar?: string;
-	country?: string;
-	createdAt?: string;
-	favoriteActors?: ModelsFilmProfessional[];
-	favoriteGenres?: ModelsGenre[];
+	created_at?: string;
 	id?: string;
-	login?: string;
-	savedFilms?: ModelsFilm[];
-	status?: 'active' | 'banned' | 'deleted';
-	updatedAt?: string;
-}
-
-// -------------------------------------------------------------
-export interface ModelsTopFilm {
-	image: string;
-	title: string;
-	year: number;
-	genre: string;
-	duration: number;
-	short_description: string;
-	rating: number;
-	id: string;
+	login: string;
+	updated_at?: string;
+	version: number;
 }

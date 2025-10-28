@@ -4,10 +4,10 @@ import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
-import type { ModelsFilm } from '@/types/models';
+import type { ModelsMainPageFilm } from '@/types/models';
 
 interface FilmCardProps {
-	film: ModelsFilm;
+	film: ModelsMainPageFilm;
 }
 
 export class FilmCard extends Component<FilmCardProps> {
@@ -28,10 +28,10 @@ export class FilmCard extends Component<FilmCardProps> {
 					</Link>
 				</div>
 				<div className={styles.content}>
-					<a href="#">
+					<Link href={`/film/${id}`}>
 						<h2 className={styles.title}>{title}</h2>
 						<p className={styles.info}>{info}</p>
-					</a>
+					</Link>
 				</div>
 			</div>
 		);

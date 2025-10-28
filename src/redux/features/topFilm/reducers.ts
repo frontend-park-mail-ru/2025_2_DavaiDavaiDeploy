@@ -2,11 +2,11 @@ import actionTypes from './actionTypes';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsTopFilm } from '@/types/models';
+import type { ModelsPromoFilm } from '@/types/models';
 
 interface InitialState {
 	loading: boolean;
-	film: ModelsTopFilm | {};
+	film: ModelsPromoFilm | {};
 	error: string | null;
 }
 

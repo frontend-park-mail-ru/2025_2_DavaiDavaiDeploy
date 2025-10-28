@@ -1,5 +1,71 @@
 basePath: /api
 definitions:
+  models.Actor:
+    properties:
+      birth_date:
+        type: string
+      birth_place:
+        type: string
+      created_at:
+        type: string
+      death_date:
+        type: string
+      height:
+        type: integer
+      id:
+        type: string
+      marital_status:
+        type: string
+      original_name:
+        type: string
+      photo:
+        type: string
+      russian_name:
+        type: string
+      updated_at:
+        type: string
+      zodiac_sign:
+        type: string
+    required:
+      - russian_name
+    type: object
+  models.ActorPage:
+    properties:
+      age:
+        type: integer
+      birth_date:
+        type: string
+      birth_place:
+        type: string
+      films_number:
+        type: integer
+      height:
+        type: integer
+      id:
+        type: string
+      marital_status:
+        type: string
+      original_name:
+        type: string
+      photo:
+        type: string
+      russian_name:
+        type: string
+      zodiac_sign:
+        type: string
+    required:
+      - russian_name
+    type: object
+  models.ChangePasswordInput:
+    properties:
+      new_password:
+        type: string
+      old_password:
+        type: string
+    required:
+      - new_password
+      - old_password
+    type: object
   models.Error:
     properties:
       message:
@@ -7,78 +73,225 @@ definitions:
     type: object
   models.Film:
     properties:
+      age_category:
+        type: string
+      budget:
+        type: integer
+      country_id:
+        type: string
+      cover:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      duration:
+        type: integer
+      genre_id:
+        type: string
+      id:
+        type: string
+      image1:
+        type: string
+      image2:
+        type: string
+      image3:
+        type: string
+      original_title:
+        type: string
+      poster:
+        type: string
+      rating:
+        type: number
+      short_description:
+        type: string
+      slogan:
+        type: string
+      title:
+        type: string
+      trailer_url:
+        type: string
+      updated_at:
+        type: string
+      worldwide_fees:
+        type: integer
+      year:
+        type: integer
+    required:
+      - country_id
+      - duration
+      - genre_id
+      - title
+      - year
+    type: object
+  models.FilmFeedback:
+    properties:
+      created_at:
+        type: string
+      film_id:
+        type: string
+      id:
+        type: string
+      rating:
+        maximum: 10
+        minimum: 1
+        type: integer
+      text:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_avatar:
+        type: string
+      user_id:
+        type: string
+      user_login:
+        type: string
+    required:
+      - film_id
+      - user_id
+      - user_login
+    type: object
+  models.FilmFeedbackInput:
+    properties:
+      rating:
+        maximum: 10
+        minimum: 1
+        type: integer
+      text:
+        maxLength: 1000
+        minLength: 1
+        type: string
+      title:
+        maxLength: 100
+        minLength: 1
+        type: string
+    required:
+      - rating
+      - text
+      - title
+    type: object
+  models.FilmPage:
+    properties:
+      actors:
+        items:
+          $ref: '#/definitions/models.Actor'
+        type: array
+      age_category:
+        type: string
       budget:
         type: integer
       country:
         type: string
-      createdAt:
+      cover:
+        type: string
+      description:
         type: string
       duration:
         type: integer
-      fees:
+      genre:
+        type: string
+      id:
+        type: string
+      image1:
+        type: string
+      image2:
+        type: string
+      image3:
+        type: string
+      number_of_ratings:
         type: integer
-      genres:
-        items:
-          $ref: '#/definitions/models.Genre'
-        type: array
+      original_title:
+        type: string
+      poster:
+        type: string
+      rating:
+        type: number
+      short_description:
+        type: string
+      slogan:
+        type: string
+      title:
+        type: string
+      trailer_url:
+        type: string
+      worldwide_fees:
+        type: integer
+      year:
+        type: integer
+    required:
+      - country
+      - genre
+      - number_of_ratings
+      - title
+      - year
+    type: object
+  models.Genre:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
       icon:
         type: string
       id:
         type: string
-      premierDate:
+      title:
+        type: string
+      updated_at:
+        type: string
+    required:
+      - title
+    type: object
+  models.MainPageFilm:
+    properties:
+      cover:
+        type: string
+      genre:
+        type: string
+      id:
         type: string
       rating:
         type: number
       title:
         type: string
-      updatedAt:
-        type: string
       year:
         type: integer
+    required:
+      - cover
+      - genre
+      - title
+      - year
     type: object
-  models.FilmProfessional:
+  models.PromoFilm:
     properties:
-      birthDate:
+      created_at:
         type: string
-      birthPlace:
-        type: string
-      createdAt:
-        type: string
-      deathDate:
-        type: string
-      description:
-        type: string
-      icon:
+      duration:
+        type: integer
+      genre:
         type: string
       id:
         type: string
-      isActive:
-        type: boolean
-      name:
+      image:
         type: string
-      nationality:
-        type: string
-      surname:
-        type: string
-      updatedAt:
-        type: string
-      wikipediaUrl:
-        type: string
-    type: object
-  models.Genre:
-    properties:
-      createdAt:
-        type: string
-      description:
-        type: string
-      icon:
-        type: string
-      id:
+      rating:
+        type: number
+      short_description:
         type: string
       title:
         type: string
-      updatedAt:
+      updated_at:
         type: string
+      year:
+        type: integer
+    required:
+      - duration
+      - genre
+      - image
+      - title
+      - year
     type: object
   models.SignInInput:
     properties:
@@ -96,50 +309,84 @@ definitions:
         type: string
       password:
         type: string
+    required:
+      - login
+      - password
     type: object
   models.User:
     properties:
       avatar:
         type: string
-      country:
+      created_at:
         type: string
-      createdAt:
-        type: string
-      favoriteActors:
-        items:
-          $ref: '#/definitions/models.FilmProfessional'
-        type: array
-      favoriteGenres:
-        items:
-          $ref: '#/definitions/models.Genre'
-        type: array
       id:
         type: string
       login:
         type: string
-      savedFilms:
-        items:
-          $ref: '#/definitions/models.Film'
-        type: array
-      status:
-        enum:
-          - active
-          - banned
-          - deleted
+      updated_at:
         type: string
-      updatedAt:
-        type: string
+      version:
+        type: integer
+    required:
+      - login
+      - version
     type: object
 host: localhost:5458
 info:
   contact: {}
-  description: API для авторизации пользователей и получения фильмов/жанров.
+  description: API для авторизации пользователей и получения фильмов/жанров/актеров.
   title: Kinopoisk API
   version: '1.0'
 paths:
+  /actors/{id}:
+    get:
+      parameters:
+        - description: Actor ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ActorPage'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Get actor by ID
+      tags:
+        - actors
+  /actors/{id}/films:
+    get:
+      parameters:
+        - description: Actor ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.MainPageFilm'
+            type: array
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Get films by actor ID
+      tags:
+        - actors
   /auth/check:
     get:
-      description: Verify JWT token in cookie
+      description: Verify if user is authenticated and return user data
       produces:
         - application/json
       responses:
@@ -151,16 +398,39 @@ paths:
           description: Unauthorized
           schema:
             $ref: '#/definitions/models.Error'
-      summary: Check authentication
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Check authentication status
+      tags:
+        - auth
+  /auth/logout:
+    post:
+      description: Clear authentication cookie and log out user
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: User logout
       tags:
         - auth
   /auth/signin:
     post:
       consumes:
         - application/json
-      description: Authenticate existing user
+      description: Authenticate user
       parameters:
-        - description: User credentials
+        - description: User data
           in: body
           name: input
           required: true
@@ -181,6 +451,10 @@ paths:
           description: Unauthorized
           schema:
             $ref: '#/definitions/models.Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
       summary: User login
       tags:
         - auth
@@ -188,9 +462,9 @@ paths:
     post:
       consumes:
         - application/json
-      description: Register a new user
+      description: Register a new user account
       parameters:
-        - description: User credentials
+        - description: User registration data
           in: body
           name: input
           required: true
@@ -207,11 +481,11 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Error'
-        '409':
-          description: Conflict
+        '500':
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/models.Error'
-      summary: User signup
+      summary: User registration
       tags:
         - auth
   /films:
@@ -234,7 +508,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Film'
+              $ref: '#/definitions/models.MainPageFilm'
             type: array
         '400':
           description: Bad Request
@@ -257,7 +531,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/models.Film'
+            $ref: '#/definitions/models.FilmPage'
         '400':
           description: Bad Request
           schema:
@@ -265,10 +539,10 @@ paths:
       summary: Get film by ID
       tags:
         - films
-  /films/genre/{id}:
+  /films/{id}/feedbacks:
     get:
       parameters:
-        - description: Genre ID
+        - description: Film ID
           in: path
           name: id
           required: true
@@ -280,13 +554,103 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Film'
+              $ref: '#/definitions/models.FilmFeedback'
             type: array
         '400':
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Error'
-      summary: Get films by genre ID
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Get film reviews
+      tags:
+        - films
+    post:
+      consumes:
+        - application/json
+      parameters:
+        - description: Film ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/models.FilmFeedback'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Add film review
+      tags:
+        - films
+  /films/{id}/rating:
+    post:
+      consumes:
+        - application/json
+      parameters:
+        - description: Film ID
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Rating data (rating 1-10 is required)
+          in: body
+          name: input
+          required: true
+          schema:
+            $ref: '#/definitions/models.FilmFeedbackInput'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/models.FilmFeedback'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Rate a film
+      tags:
+        - films
+  /films/promo:
+    get:
+      description: Get the promo film
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PromoFilm'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Get promotional film
       tags:
         - films
   /genres:
@@ -300,7 +664,11 @@ paths:
             items:
               $ref: '#/definitions/models.Genre'
             type: array
-      summary: List all genres
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Get list of all genres
       tags:
         - genres
   /genres/{id}:
@@ -322,7 +690,134 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
       summary: Get genre by ID
       tags:
         - genres
+  /genres/{id}/films:
+    get:
+      parameters:
+        - description: Genre ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Film'
+            type: array
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Get films by genre
+      tags:
+        - genres
+  /users/{id}:
+    get:
+      parameters:
+        - description: Genre ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Get user by ID
+      tags:
+        - users
+  /users/avatar:
+    put:
+      consumes:
+        - multipart/form-data
+      parameters:
+        - description: 'Avatar image file (required, max 10MB, formats: jpg, png, webp)'
+          in: formData
+          name: avatar
+          required: true
+          type: file
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Error'
+        '413':
+          description: Request Entity Too Large
+          schema:
+            $ref: '#/definitions/models.Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Change user avatar
+      tags:
+        - users
+  /users/password:
+    put:
+      consumes:
+        - application/json
+      parameters:
+        - description: Password data (old_password and new_password are required)
+          in: body
+          name: input
+          required: true
+          schema:
+            $ref: '#/definitions/models.ChangePasswordInput'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        '401':
+          description: User not authenticated
+          schema:
+            $ref: '#/definitions/models.Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Change user password
+      tags:
+        - users
 swagger: '2.0'

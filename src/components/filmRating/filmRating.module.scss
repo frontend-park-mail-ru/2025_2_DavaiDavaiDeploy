@@ -1,0 +1,44 @@
+.rating {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	align-items: center;
+	justify-content: center;
+}
+
+.title-low,
+.title-high,
+.title-medium {
+	font-size: var(--font-size-3xl);
+}
+
+.subtitle {
+	opacity: 0.6;
+	color: var(--color-light-text);
+	font-size: var(--font-size-xs);
+}
+
+.rateBtn {
+	background: var(--color-light);
+	border-radius: var(--border-radius-l);
+	padding: 0.9375rem 1.875rem;
+	cursor: pointer;
+	transition: all 0.4s ease;
+	border: 1px solid var(--color-light);
+}
+
+.btnText {
+	font-size: var(--font-size-m);
+}
+
+.title-high {
+	color: var(--color-rating-high);
+}
+
+.title-medium {
+	color: var(--color-rating-middle);
+}
+
+.title-low {
+	color: var(--color-rating-low);
+}

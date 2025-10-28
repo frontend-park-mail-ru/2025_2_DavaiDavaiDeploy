@@ -1,14 +1,14 @@
 import actionTypes from './actionTypes';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsFilm } from '@/types/models';
+import type { ModelsFilmPage } from '@/types/models';
 
 /**
  * Action: начало загрузки фильмов.
  */
-const setFilmsLoadingAction = (): Action => {
+const setFilmLoadingAction = (): Action => {
 	return {
-		type: actionTypes.FILMS_LOADING,
+		type: actionTypes.FILM_LOADING,
 	};
 };
 
@@ -16,62 +16,49 @@ const setFilmsLoadingAction = (): Action => {
  * Action: успешная загрузка фильмов.
  *
  */
-const returnFilmsAction = (data: ModelsFilm[]): Action => {
+const returnFilmAction = (data: ModelsFilmPage): Action => {
 	return {
-		type: actionTypes.FILMS_LOADED,
-		payload: { films: data },
+		type: actionTypes.FILM_LOADED,
+		payload: { film: data },
 	};
 };
 
 /**
  * Action: ошибка при загрузке фильмов.
  */
-const returnFilmsErrorAction = (error: string): Action => {
+const returnFilmErrorAction = (error: string): Action => {
 	return {
-		type: actionTypes.FILMS_ERROR,
-		payload: { films: [], error: error },
-	};
-};
-
-/**
- * Action: очистка фильмов.
- */
-const clearFilmsAction = (): Action => {
-	return {
-		type: actionTypes.FILMS_CLEAR,
+		type: actionTypes.FILM_ERROR,
+		payload: { film: {}, error: error },
 	};
 };
 
 /**
  * Thunk: асинхронная загрузка фильмов с сервера.
  */
-const getFilmsAction: Action =
-	(limit: number, offset: number) => async (dispatch: Dispatch) => {
-		dispatch(setFilmsLoadingAction());
+const getFilmAction: Action = (id: string) => async (dispatch: Dispatch) => {
+	dispatch(setFilmLoadingAction());
 
-		try {
-			const response = await HTTPClient.get<ModelsFilm[]>('/films/', {
-				params: { count: limit, offset },
-			});
+	try {
+		const response = await HTTPClient.get<ModelsFilmPage>(`/films/${id}`);
 
-			dispatch(returnFilmsAction(response.data));
-		} catch (error: unknown) {
-			let errorMessage: string = 'Произошла ошибка';
+		dispatch(returnFilmAction(response.data));
+	} catch (error: unknown) {
+		let errorMessage: string = 'Произошла ошибка';
 
-			if (error instanceof Error) {
-				errorMessage = error.message;
-			} else if (typeof error === 'string') {
-				errorMessage = error;
-			}
-
-			dispatch(returnFilmsErrorAction(errorMessage));
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
 		}
-	};
+
+		dispatch(returnFilmErrorAction(errorMessage));
+	}
+};
 
 export default {
-	getFilmsAction,
-	setFilmsLoadingAction,
-	returnFilmsAction,
-	returnFilmsErrorAction,
-	clearFilmsAction,
+	getFilmAction,
+	setFilmLoadingAction,
+	returnFilmAction,
+	returnFilmErrorAction,
 };

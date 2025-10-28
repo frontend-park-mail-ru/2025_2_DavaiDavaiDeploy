@@ -1,12 +1,13 @@
 import actionTypes from './actionTypes';
+import { mergeUniqueFilms } from '@/helpers/mergeUniqueFilmsHelper/mergeUniqueFilmsHelper';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsFilmPage } from '@/types/models';
+import type { ModelsMainPageFilm } from '@/types/models';
 
 interface InitialState {
 	loading: boolean;
-	film: ModelsFilmPage | {};
+	films: ModelsMainPageFilm[];
 	error: string | null;
 }
 
@@ -15,14 +16,14 @@ interface InitialState {
  */
 const initialState: InitialState = {
 	loading: false,
-	film: {},
+	films: [],
 	error: null,
 };
 
 /**
  * Редьюсер для управления состоянием списка фильмов.
  */
-const filmReducer: Reducer = (state = initialState, action: Action): State => {
+const filmsReducer: Reducer = (state = initialState, action: Action): State => {
 	if (typeof action == 'function') {
 		return state;
 	}
@@ -30,26 +31,32 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 	const { type, payload } = action;
 
 	switch (type) {
-		case actionTypes.FILM_LOADING:
+		case actionTypes.FILMS_LOADING:
 			return {
 				...state,
 				loading: true,
 			};
-		case actionTypes.FILM_LOADED:
+		case actionTypes.FILMS_LOADED:
 			return {
 				...state,
 				loading: false,
-				film: payload.film,
+				films: mergeUniqueFilms(state.films, payload.films),
 			};
-		case actionTypes.FILM_ERROR:
+		case actionTypes.FILMS_ERROR:
 			return {
 				...state,
 				loading: false,
 				error: payload.error,
+			};
+		case actionTypes.FILMS_CLEAR:
+			return {
+				films: [],
+				error: null,
+				loading: false,
 			};
 		default:
 			return state;
 	}
 };
 
-export default filmReducer;
+export default filmsReducer;

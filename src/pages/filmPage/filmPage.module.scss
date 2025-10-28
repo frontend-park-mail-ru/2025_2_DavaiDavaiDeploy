@@ -1,0 +1,10 @@
+.page {
+	display: flex;
+	flex-direction: column;
+	gap: 3.75rem;
+	width: 100%;
+}
+
+.content {
+	background-color: var(--color-text);
+}

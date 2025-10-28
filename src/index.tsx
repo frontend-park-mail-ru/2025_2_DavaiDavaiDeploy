@@ -8,6 +8,7 @@ import { Footer } from './components/footer/footer';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
+import { FilmPage } from './pages/filmPage/filmPage';
 import { HomePage } from './pages/homePage/homePage';
 import { Header } from '@/components/header/header';
 import { Provider } from '@/modules/redux';
@@ -34,6 +35,7 @@ class App extends Component {
 				<Header />
 				<Routes>
 					<Route href="/" component={<HomePage />} />
+					<Route href="/film/:id" component={<FilmPage />} />
 				</Routes>
 				<Footer />
 			</div>

@@ -10,10 +10,10 @@ import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/topFilm/actions';
 import { selectTopFilm } from '@/redux/features/topFilm/selectors';
 import type { Map } from '@/types/map';
-import type { ModelsTopFilm } from '@/types/models';
+import type { ModelsPromoFilm } from '@/types/models';
 
 interface TopFilmProps {
-	film: ModelsTopFilm;
+	film: ModelsPromoFilm;
 	getTopFilm: VoidFunction;
 }
 
