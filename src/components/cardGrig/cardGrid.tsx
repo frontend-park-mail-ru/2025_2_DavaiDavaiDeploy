@@ -5,7 +5,7 @@ import actions from '@/redux/features/film/actions';
 import { selectFilms } from '@/redux/features/film/selectors.js';
 import type { Map } from '@/types/map';
 import type { ModelsFilm } from '@/types/models';
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './cardGrid.module.scss';
 

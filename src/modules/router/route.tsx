@@ -1,5 +1,5 @@
-import { Component } from '@react';
-import type { VDOMNode } from '@react/types';
+import { Component } from '@robocotik/react';
+import type { VDOMNode } from '@robocotik/react';
 import type { RouteConfig } from './types/routeConfig';
 
 export class Route extends Component<RouteConfig, {}> {

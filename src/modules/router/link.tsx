@@ -1,5 +1,5 @@
-import { Component } from '@react';
-import type { VDOMNode } from '@react/types';
+import { Component } from '@robocotik/react';
+import type { VDOMNode } from '@robocotik/react';
 import { RouterContext } from './routerContext';
 import type { LinkProps } from './types/link.props.ts';
 import type { RouterContextValue } from './types/routerContext.ts';

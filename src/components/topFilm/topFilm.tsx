@@ -9,7 +9,7 @@ import actions from '@/redux/features/topFilm/actions';
 import { selectTopFilm } from '@/redux/features/topFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsTopFilm } from '@/types/models';
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import styles from './topFilm.module.scss';
 
 interface TopFilmProps {

@@ -1,4 +1,4 @@
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import type { VDOMNode } from '@react/types';
 import { StoreContext } from '../connect';
 import type { Store } from '../types/store';
