@@ -1,4 +1,4 @@
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import styles from './filmCard.module.scss';
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';

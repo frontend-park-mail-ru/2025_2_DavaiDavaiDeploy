@@ -1,4 +1,4 @@
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import styles from './footer.module.scss';
 
 export class Footer extends Component {

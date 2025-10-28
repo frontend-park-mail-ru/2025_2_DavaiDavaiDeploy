@@ -1,4 +1,4 @@
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
 import styles from './genreSlider.module.scss';
 import ArrowLeft from '@/assets/img/arrowLeft.svg';

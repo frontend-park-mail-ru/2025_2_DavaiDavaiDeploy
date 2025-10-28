@@ -1,4 +1,4 @@
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import styles from './topFilm.module.scss';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';

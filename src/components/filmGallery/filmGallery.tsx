@@ -1,4 +1,4 @@
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import styles from './filmGallery.module.scss';
 import type { ModelsFilmPage } from '@/types/models';
 

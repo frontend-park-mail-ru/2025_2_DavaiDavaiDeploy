@@ -23,12 +23,10 @@
 
 		// jsx
 		"jsx": "react-jsx",
-		"jsxImportSource": "@react/jsx",
+		"jsxImportSource": "@robocotik/react",
 
 		"baseUrl": ".",
 		"paths": {
-			"@react": ["src/modules/react"],
-			"@react/*": ["src/modules/react/*"],
 			"@/*": ["src/*"]
 		}
 	},

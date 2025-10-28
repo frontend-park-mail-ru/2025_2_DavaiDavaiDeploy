@@ -1,4 +1,4 @@
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import styles from './filmRating.module.scss';
 import Star from '@/assets/img/Star.svg';
 import { formatRatingNumber } from '@/helpers/formatRatingNumberHelper/formatRatingNumberHelper';

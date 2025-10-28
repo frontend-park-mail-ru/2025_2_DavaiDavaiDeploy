@@ -43,7 +43,9 @@ export default function clsx(...args: ClassValue[]): string {
 	const classes: string[] = [];
 
 	for (const arg of args) {
-		if (!arg) continue;
+		if (!arg) {
+			continue;
+		}
 
 		if (typeof arg === 'string') {
 			classes.push(arg);

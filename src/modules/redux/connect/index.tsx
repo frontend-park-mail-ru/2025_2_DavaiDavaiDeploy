@@ -1,5 +1,4 @@
-import { Component, createContext } from '@react';
-import type { VDOMNode } from '@react/types';
+import { Component, createContext } from '@robocotik/react';
 import type { Dispatch } from '../types/actions';
 import type { State, Store } from '../types/store';
 
@@ -45,7 +44,7 @@ export function connect<Props = any, ComponentState = any, Context = any>(
 				}
 			}
 
-			render(): VDOMNode {
+			render() {
 				const store = this.context || StoreContext.value;
 
 				return (

@@ -1,4 +1,4 @@
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import { FilmRating } from '../filmRating/filmRating';
 import styles from './film.module.scss';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';

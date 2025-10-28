@@ -1,4 +1,4 @@
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import styles from './filmPage.module.scss';
 import { Film } from '@/components/film/film';
 import { FilmGallery } from '@/components/filmGallery/filmGallery';

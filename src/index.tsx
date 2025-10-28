@@ -1,7 +1,7 @@
 import '@/styles/constants.scss';
 import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
-import { Component, render } from '@react';
+import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
 import { Footer } from './components/footer/footer';

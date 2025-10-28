@@ -1,4 +1,4 @@
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import styles from './homePage.module.scss';
 import { CardGrid } from '@/components/cardGrig/cardGrid';
 import { GenreSlider } from '@/components/genreSlider/genreSlider';

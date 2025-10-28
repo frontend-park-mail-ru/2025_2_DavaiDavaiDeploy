@@ -1,4 +1,4 @@
-import type { Component } from '@react';
+import type { Component } from '@robocotik/react';
 
 export interface RouteConfig {
 	href: string;

@@ -1,4 +1,4 @@
-import { Component } from '@react';
+import { Component } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './cardGrid.module.scss';
 import { connect } from '@/modules/redux';
