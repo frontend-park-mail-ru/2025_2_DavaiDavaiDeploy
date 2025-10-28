@@ -66,11 +66,11 @@
 .firstRow {
 	display: flex;
 	flex-direction: row;
-	column-gap: 2.5rem;
 	align-items: flex-start;
 	width: 100%;
 	position: relative;
 	overflow: visible;
+	justify-content: space-between;
 }
 
 .media {
@@ -104,8 +104,7 @@
 
 .title {
 	font-size: var(--font-size-3xl);
-	white-space: nowrap;
-	margin-left: -0.2rem;
+	margin-left: -0.3rem;
 }
 
 .subtitle {
@@ -120,15 +119,16 @@
 .description {
 	font-size: var(--font-size-m);
 	margin-top: 1.875rem;
+	margin-right: 1rem;
 }
 
 .secondRow {
 	display: flex;
 	flex-direction: row;
-	column-gap: 2.5rem;
 	align-items: start;
 	width: 100%;
 	position: relative;
+	justify-content: space-between;
 }
 
 .aboutTitle {
@@ -175,7 +175,7 @@
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: flex-end;
 	gap: 2.5rem;
 	width: 100%;
 	height: 100%;
@@ -253,6 +253,7 @@
 	.firstRow {
 		flex-direction: column;
 		align-items: center;
+		gap: 1.5rem;
 	}
 
 	.media {
@@ -332,6 +333,6 @@
 		justify-content: space-around;
 		align-items: center;
 		flex-wrap: wrap;
-		list-style: none;
+		gap: 3vw;
 	}
 }
