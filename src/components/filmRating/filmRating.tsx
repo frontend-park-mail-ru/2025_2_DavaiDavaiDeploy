@@ -1,10 +1,10 @@
-import { Component } from '@robocotik/react';
-import styles from './filmRating.module.scss';
 import Star from '@/assets/img/Star.svg';
 import { formatRatingNumber } from '@/helpers/formatRatingNumberHelper/formatRatingNumberHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmPage } from '@/types/models';
+import { Component } from '@robocotik/react';
+import styles from './filmRating.module.scss';
 
 interface FilmRatingProps {
 	film: ModelsFilmPage;
@@ -23,6 +23,7 @@ export class FilmRating extends Component<FilmRatingProps> {
 					<h2 className={styles[`title-${ratingType}`]}>{formattedRating}</h2>
 					<p className={styles.subtitle}>{ratingNumber}</p>
 					<button className={styles.rateBtn}>
+						<img src={Star} className={styles.star} />
 						<p className={styles.btnText}>Оценить фильм</p>
 						<div className={styles.rateMenu}>
 							<img src={Star} className={styles.starIcon} />
@@ -30,31 +31,6 @@ export class FilmRating extends Component<FilmRatingProps> {
 								const number = i + 1;
 								return (
 									<p
-										key={number}
-										data-number={number}
-										className={styles[`ratingNumber-${getRatingType(number)}`]}
-									>
-										{number}
-									</p>
-								);
-							})}
-							<img src={Star} className={styles.starIcon} />
-						</div>
-					</button>
-				</div>
-
-				<div className={styles.smallRating}>
-					<h2 className={styles[`title-${ratingType}`]}>{formattedRating}</h2>
-					<button className={styles.rateBtn}>
-						<img src={Star} className={styles.star} />
-						<p className={styles.btnText}>Оценить</p>
-						<div className={styles.rateMenu}>
-							<img src={Star} className={styles.starIcon} />
-							{Array.from({ length: 10 }, (_, i) => {
-								const number = i + 1;
-								return (
-									<p
-										key={number}
 										data-number={number}
 										className={styles[`ratingNumber-${getRatingType(number)}`]}
 									>

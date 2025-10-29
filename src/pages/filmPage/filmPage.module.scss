@@ -16,10 +16,32 @@
 .left,
 .right {
 	margin-top: 4.4rem;
+	margin-bottom: 3rem;
 }
 
 @media (max-width: 768px) {
 	.page {
 		gap: 2rem;
+		margin-bottom: 2rem;
+	}
+
+	.content {
+		background-color: var(--color-text);
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+		padding: var(--side-padding);
+	}
+
+	.left {
+		margin-top: 2rem;
+		order: 2;
+		margin-bottom: 2rem;
+	}
+
+	.right {
+		order: 1;
+		margin-top: 2rem;
+		margin-bottom: 2rem;
 	}
 }

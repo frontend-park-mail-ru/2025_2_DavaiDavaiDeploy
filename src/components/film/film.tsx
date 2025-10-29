@@ -1,12 +1,12 @@
-import { Component } from '@robocotik/react';
-import { FilmRating } from '../filmRating/filmRating';
-import styles from './film.module.scss';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsFilmPage } from '@/types/models';
+import { Component } from '@robocotik/react';
+import { FilmRating } from '../filmRating/filmRating';
+import styles from './film.module.scss';
 
 interface FilmProps {
 	film: ModelsFilmPage;
