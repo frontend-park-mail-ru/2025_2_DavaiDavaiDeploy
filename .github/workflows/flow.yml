@@ -1,9 +1,7 @@
 name: Lint + Unit tests + Build + Deploy
 
 on:
-  push:
   pull_request:
-    types: [opened]
 
 env:
   TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
