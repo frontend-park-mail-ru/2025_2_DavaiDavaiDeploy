@@ -1,19 +1,63 @@
 import { Component } from '@robocotik/react';
+import { validateLogin } from '../../helpers/validateLogin/validateLogin.ts';
 import { validatePassword } from '../../helpers/validatePassword/validatePassword.ts';
 import { validatePasswordConfirm } from '../../helpers/validatePasswordConfirm/validatePasswordConfirm.ts';
+import { RouterContext } from '../../modules/router/routerContext.ts';
 import styles from './registerPage.module.scss';
 import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
 import { InputField } from '@/components/inputField/inputField.tsx';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
+import { connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions.ts';
+import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
+import actions from '@/redux/features/user/actions.ts';
+import {
+	selectUser,
+	selectUserError,
+} from '@/redux/features/user/selectors.ts';
+import type { Map } from '@/types/map';
+import type { ModelsUser } from '@/types/models.ts';
 
-export class RegisterPage extends Component {
+interface RegistrationPageProps {
+	user: ModelsUser;
+	userError: string;
+	useRegisterUser: (login: string, password: string) => void;
+}
+
+export class RegisterPageNotConnected extends Component<RegistrationPageProps> {
+	static readonly contextType = RouterContext;
+
 	state = {
 		username: '',
 		password: '',
 		repeatPassword: '',
 	};
+
+	handleRegisterUser = () => {
+		if (
+			validateLogin(this.state.username).isValid &&
+			validatePassword(this.state.password).isValid &&
+			validatePasswordConfirm(this.state.password, this.state.repeatPassword)
+				.isValid
+		) {
+			this.props.useRegisterUser(this.state.username, this.state.password);
+		}
+	};
+
+	// onUpdate() {
+	// 	// Проверяем, изменился ли user (это значит, что регистрация завершилась)
+	// 	if (this.props.user) {
+	// 		if (!this.props.userError) {
+	// 			alert('НАВИГИРУЮ НА /')
+	// 			this.context.navigate('/');
+	// 		} else {
+	// 			// Показываем ошибку
+	// 			alert('Произошла ошибка регистрации: ' + this.props.userError);
+	// 		}
+	// 	}
+	// }
 
 	render() {
 		return (
@@ -69,7 +113,10 @@ export class RegisterPage extends Component {
 							/>
 						</div>
 						<div className={styles.rightSide__actions}>
-							<button className={styles.login__button}>
+							<button
+								onClick={this.handleRegisterUser}
+								className={styles.login__button}
+							>
 								Зарегистрироваться
 							</button>
 							<p className={styles.register__button}>
@@ -85,3 +132,18 @@ export class RegisterPage extends Component {
 		);
 	}
 }
+
+const mapStateToProps = (state: State): Map => ({
+	user: selectUser(state),
+	userError: selectUserError(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	useRegisterUser: (login: string, password: string) =>
+		dispatch(actions.registerUserAction(login, password)),
+});
+
+export const RegisterPage = connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(RegisterPageNotConnected);

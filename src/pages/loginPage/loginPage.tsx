@@ -1,16 +1,42 @@
 import { Component } from '@robocotik/react';
-import { InputField } from '../../components/inputField/inputField.tsx';
-import { PasswordInputField } from '../../components/passwordInputField/passwordInputField.tsx';
-import { Link } from '../../modules/router/link.tsx';
+import actions from '../../redux/features/user/actions.ts';
+import type { ModelsUser } from '../../types/models.ts';
 import styles from './loginPage.module.scss';
 import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
+import { InputField } from '@/components/inputField/inputField.tsx';
+import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
+import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 import { validatePassword } from '@/helpers/validatePassword/validatePassword.ts';
+import { connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions.ts';
+import type { State } from '@/modules/redux/types/store.ts';
+import { Link } from '@/modules/router/link.tsx';
+import {
+	selectUser,
+	selectUserError,
+} from '@/redux/features/user/selectors.ts';
+import type { Map } from '@/types/map';
 
-export class LoginPage extends Component {
+interface LoginPageProps {
+	user: ModelsUser;
+	userError: string;
+	useLoginUser: (login: string, password: string) => void;
+}
+
+export class LoginPageNotConnected extends Component<LoginPageProps> {
 	state = {
 		username: '',
 		password: '',
+	};
+
+	handleLoginUser = () => {
+		if (
+			validateLogin(this.state.username).isValid &&
+			validatePassword(this.state.password).isValid
+		) {
+			this.props.useLoginUser(this.state.username, this.state.password);
+		}
 	};
 
 	render() {
@@ -54,7 +80,12 @@ export class LoginPage extends Component {
 							/>
 						</div>
 						<div className={styles.rightSide__actions}>
-							<button className={styles.login__button}>Войти</button>
+							<button
+								onClick={this.handleLoginUser}
+								className={styles.login__button}
+							>
+								Войти
+							</button>
 							<p className={styles.register__button}>
 								У меня нет аккаунта.{' '}
 								<Link className={styles.register} href="/register">
@@ -68,3 +99,18 @@ export class LoginPage extends Component {
 		);
 	}
 }
+
+const mapStateToProps = (state: State): Map => ({
+	user: selectUser(state),
+	userError: selectUserError(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	useLoginUser: (login: string, password: string) =>
+		dispatch(actions.loginUserAction(login, password)),
+});
+
+export const LoginPage = connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(LoginPageNotConnected);
