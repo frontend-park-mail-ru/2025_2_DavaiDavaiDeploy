@@ -21,7 +21,11 @@ export class Link extends Component<LinkProps, {}, RouterContextValue> {
 
 	render() {
 		return (
-			<a href={this.props.href} onClick={this.handleClick}>
+			<a
+				href={this.props.href}
+				className={this.props.className}
+				onClick={this.handleClick}
+			>
 				{this.props.children}
 			</a>
 		);

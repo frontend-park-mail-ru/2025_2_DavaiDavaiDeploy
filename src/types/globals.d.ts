@@ -77,6 +77,20 @@ declare global {
 				loading?: 'eager' | 'lazy';
 			};
 
+			video: BaseHTMLAttributes & {
+				src?: string;
+				alt?: string;
+				width?: string | number;
+				height?: string | number;
+				loading?: 'eager' | 'lazy';
+				autoplay?: boolean;
+				loop?: boolean;
+				muted?: boolean;
+				playsInline?: boolean;
+				controls?: boolean;
+				poster?: string;
+			};
+
 			// Lists
 			ul: BaseHTMLAttributes;
 			ol: BaseHTMLAttributes & {

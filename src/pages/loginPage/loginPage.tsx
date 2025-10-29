@@ -16,10 +16,13 @@ export class LoginPage extends Component {
 		return (
 			<main className={styles.main}>
 				<div className={styles.form}>
-					<img
-						src="https://cdn.ddfilms-static.ru/static/topFilms/8f9a0b1c-2d3e-4f5a-6b7c-8d9e0f1a2b3c.jpg"
-						alt="loginImg"
+					<video
+						src="https://cdn.ddfilms-static.ru/static/video/login_signup.mp4"
+						alt="loginVideo"
 						className={styles.loginImg}
+						autoplay
+						muted
+						loop
 					/>
 					<div className={styles.rightSide}>
 						<div className={styles.rightSide__titles}>
@@ -48,7 +51,10 @@ export class LoginPage extends Component {
 						<div className={styles.rightSide__actions}>
 							<button className={styles.login__button}>Войти</button>
 							<p className={styles.register__button}>
-								У меня нет аккаунта. <Link href="/register">Регистрация</Link>
+								У меня нет аккаунта.{' '}
+								<Link className={styles.register} href="/register">
+									Регистрация
+								</Link>
 							</p>
 						</div>
 					</div>
