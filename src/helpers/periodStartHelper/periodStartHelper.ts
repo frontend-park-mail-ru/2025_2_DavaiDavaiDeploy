@@ -5,9 +5,9 @@ export const createPeriodFunction = (
 	func: Function,
 	period: number,
 ): {
-	start: () => void;
+	start: VoidFunction;
 	isWorking: () => boolean;
-	stop: () => void;
+	stop: VoidFunction;
 } => {
 	let intervalId: number | null = null;
 	return {

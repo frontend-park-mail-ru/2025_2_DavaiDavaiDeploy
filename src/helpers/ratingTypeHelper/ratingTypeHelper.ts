@@ -8,8 +8,10 @@ export const getRatingType = (rating: number): RatingTypes => {
 	if (rating >= 8) {
 		return RatingValues.High;
 	}
+
 	if (rating >= 5) {
 		return RatingValues.Medium;
 	}
+
 	return RatingValues.Low;
 };

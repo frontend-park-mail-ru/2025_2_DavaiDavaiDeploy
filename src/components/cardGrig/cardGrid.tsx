@@ -1,10 +1,10 @@
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import actions from '@/redux/features/film/actions';
-import { selectFilms } from '@/redux/features/film/selectors.js';
+import actions from '@/redux/features/films/actions';
+import { selectFilms } from '@/redux/features/films/selectors.js';
 import type { Map } from '@/types/map';
-import type { ModelsFilm } from '@/types/models';
+import type { ModelsMainPageFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './cardGrid.module.scss';
@@ -13,7 +13,7 @@ const FILM_COUNT: number = 50;
 const OFFSET: number = 0;
 
 interface CardGridProps {
-	films: ModelsFilm[];
+	films: ModelsMainPageFilm[];
 	getFilms: (limit: number, offset: number) => void;
 }
 

@@ -8,13 +8,13 @@ import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/topFilm/actions';
 import { selectTopFilm } from '@/redux/features/topFilm/selectors';
 import type { Map } from '@/types/map';
-import type { ModelsTopFilm } from '@/types/models';
+import type { ModelsPromoFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
 import styles from './topFilm.module.scss';
 
 interface TopFilmProps {
-	film: ModelsTopFilm;
-	getTopFilm: () => void;
+	film: ModelsPromoFilm;
+	getTopFilm: VoidFunction;
 }
 
 class TopFilmComponent extends Component<TopFilmProps> {
@@ -26,12 +26,13 @@ class TopFilmComponent extends Component<TopFilmProps> {
 			return <div>Loading...</div>;
 		}
 
-		const { title, year, genre, duration, short_description, rating } =
+		const { id, title, year, genre, duration, short_description, rating } =
 			this.props.film;
+
 		const formattedDuration = formatDuration(duration);
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
-		const imageSrc = getImageSRC('topFilms', 'dune', 'jpg');
+		const imageSrc = getImageSRC('topFilms', id, 'jpg');
 
 		return (
 			<a className={styles.topFilm}>

@@ -10,6 +10,7 @@ export const throttle = <T extends (...args: any[]) => any>(
 	wait: number,
 ): ThrottledFunction<T> => {
 	let isCalled = false;
+
 	return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
 		if (!isCalled) {
 			func.apply(this, args);

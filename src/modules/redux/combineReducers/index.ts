@@ -11,6 +11,7 @@ export function combineReducers(reducersMap: Record<string, Reducer>): Reducer {
 		Object.entries(reducersMap).forEach(([key, reducer]) => {
 			nextState[key] = reducer(state[key], action);
 		});
+
 		return nextState;
 	};
 }

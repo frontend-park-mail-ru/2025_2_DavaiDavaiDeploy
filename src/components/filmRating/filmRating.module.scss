@@ -1,0 +1,175 @@
+.rating {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	align-items: center;
+	justify-content: center;
+	flex: 1;
+}
+
+.title-low,
+.title-high,
+.title-medium {
+	font-size: var(--font-size-3xl);
+}
+
+.subtitle {
+	opacity: 0.6;
+	color: var(--color-light-text);
+	font-size: var(--font-size-xs);
+	margin-top: -0.5rem;
+}
+
+.rateMenu {
+	position: absolute;
+	top: 0;
+	z-index: 10;
+	display: flex;
+	opacity: 0;
+	transform: translateY(-0.1rem);
+	flex-direction: row;
+	gap: 0.7vw;
+	padding: 0.3vw 0.5vw;
+	background: var(--color-light);
+	border-radius: var(--border-radius-l);
+	cursor: pointer;
+	transition: all 0.4s ease;
+	border: 1px solid var(--color-light);
+	align-items: center;
+	pointer-events: none;
+}
+
+.rateBtn {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--color-light);
+	border-radius: var(--border-radius-l);
+	padding: 0.6vw 1.6vw;
+	cursor: pointer;
+	transition: all 0.4s ease;
+	border: 1px solid var(--color-light);
+
+	&:hover .rateMenu {
+		opacity: 1;
+		pointer-events: all;
+	}
+}
+
+.starIcon {
+	width: 1.5vw;
+}
+
+.btnText {
+	font-size: var(--font-size-m);
+	white-space: nowrap;
+}
+
+.title-high {
+	color: var(--color-rating-high);
+}
+
+.title-medium {
+	color: var(--color-rating-middle);
+}
+
+.title-low {
+	color: var(--color-rating-low);
+}
+
+.ratingNumber-low,
+.ratingNumber-high,
+.ratingNumber-medium {
+	transition: all 0.2s ease;
+	font-size: var(--font-size-xlg);
+}
+
+.ratingNumber-low:hover {
+	color: var(--color-rating-low);
+}
+
+.ratingNumber-medium:hover {
+	color: var(--color-rating-middle);
+}
+
+.ratingNumber-high:hover {
+	color: var(--color-rating-high);
+}
+
+.star {
+	display: none;
+}
+
+@media (max-width: 768px) {
+	.rating {
+		display: flex;
+		flex-direction: row;
+		gap: 1.5rem;
+		align-items: center;
+		justify-content: center;
+		margin-top: 1rem;
+		pointer-events: none;
+	}
+
+	.star {
+		width: 2.5rem;
+		height: 2.5rem;
+		display: flex;
+	}
+
+	.btnText {
+		font-size: var(--font-size-xxxxxs);
+		color: var(--color-light-text);
+		opacity: 0.6;
+		text-align: center;
+	}
+
+	.rateBtn {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.2rem;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+		pointer-events: all;
+		padding: 0;
+		-webkit-tap-highlight-color: transparent;
+		transition:
+			background-color 0.2s,
+			transform 0.1s;
+
+		&:hover {
+			pointer-events: none;
+			transform: scale(1.05);
+
+			.star,
+			.btnText {
+				opacity: 0;
+				pointer-events: none;
+			}
+		}
+	}
+
+	.starIcon {
+		width: 1rem;
+	}
+
+	.rateMenu {
+		position: absolute;
+		top: 0;
+		z-index: 10;
+		display: flex;
+		opacity: 0;
+		transform: translateX(-10%);
+		gap: 3vw;
+		padding: 0.5rem 0.8rem;
+		align-items: center;
+		pointer-events: none;
+	}
+
+	.subtitle {
+		display: none;
+	}
+}

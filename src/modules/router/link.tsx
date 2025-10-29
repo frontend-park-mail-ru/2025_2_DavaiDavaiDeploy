@@ -4,10 +4,11 @@ import type { LinkProps } from './types/link.props.ts';
 import type { RouterContextValue } from './types/routerContext.ts';
 
 export class Link extends Component<LinkProps, {}, RouterContextValue> {
-	static contextType = RouterContext;
+	static readonly contextType = RouterContext;
 
 	constructor(props: LinkProps) {
 		super(props);
+
 		if (!this.context) {
 			throw Error('no context provided in Link');
 		}

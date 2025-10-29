@@ -1,5 +1,5 @@
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsTopFilm } from '@/types/models';
+import type { ModelsPromoFilm } from '@/types/models';
 import actionTypes from './actionTypes';
 
 /**
@@ -15,7 +15,7 @@ const setTopFilmLoadingAction = (): Action => {
  * Action: успешная загрузка фильма.
  *
  */
-const returnTopFilmAction = (data: ModelsTopFilm): Action => {
+const returnTopFilmAction = (data: ModelsPromoFilm): Action => {
 	return {
 		type: actionTypes.TOP_FILM_LOADED,
 		payload: { film: data },
@@ -37,23 +37,9 @@ const returnTopFilmErrorAction = (error: string): Action => {
  */
 const getTopFilmAction: Action = () => async (dispatch: Dispatch) => {
 	dispatch(setTopFilmLoadingAction());
-	// try {
-	// 	const response = await HTTPClient.get<ModelsTopFilm>('/films');
-	// 	dispatch(returnTopFilmAction(response.data));
-	// } catch (error: unknown) {
-	// 	let errorMessage: string = 'Произошла ошибка';
 
-	// 	if (error instanceof Error) {
-	// 		errorMessage = error.message;
-	// 	} else if (typeof error === 'string') {
-	// 		errorMessage = error;
-	// 	}
-
-	// 	dispatch(returnTopFilmErrorAction(errorMessage));
-	// }
-
-	const film: ModelsTopFilm = {
-		id: '2',
+	const film: ModelsPromoFilm = {
+		id: '8f9a0b1c-2d3e-4f5a-6b7c-8d9e0f1a2b3c',
 		image: '../../dune.jpg',
 		title: 'Дюна: Часть вторая',
 		year: 2024,

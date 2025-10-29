@@ -61,6 +61,7 @@ const deleteUserAction = (userId: string | number): Action => {
  */
 const checkUserAction = (): Action => async (dispatch: Dispatch) => {
 	dispatch(setUserLoadingAction());
+
 	try {
 		const response = await HTTPClient.get<ModelsUser>('/auth/check');
 		dispatch(returnUserAction(response.data));
@@ -94,6 +95,7 @@ const registerUserAction =
 					password: password,
 				},
 			});
+
 			dispatch(returnUserAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
@@ -121,6 +123,7 @@ const loginUserAction =
 					password: password,
 				},
 			});
+
 			dispatch(returnUserAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;

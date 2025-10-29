@@ -140,6 +140,7 @@ export class HTTPClient {
 
 				throw error;
 			}
+
 			throw new Error(String(error));
 		}
 	}

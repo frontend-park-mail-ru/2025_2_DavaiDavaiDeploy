@@ -17,6 +17,7 @@ export class RouterProvider extends Component {
 		if (to === this.state.path) {
 			return;
 		}
+
 		window.history.pushState({}, '', trimRoute(to));
 		this.setState({ path: trimRoute(to), params: to });
 	};
@@ -33,6 +34,7 @@ export class RouterProvider extends Component {
 			path: trimRoute(window.location.pathname),
 			params: window.location.pathname + window.location.search,
 		});
+
 		window.addEventListener('popstate', this.handlePopState);
 	}
 

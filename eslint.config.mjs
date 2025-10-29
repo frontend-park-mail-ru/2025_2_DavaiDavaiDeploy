@@ -1,10 +1,12 @@
 import js from '@eslint/js';
 import stylisticPlugin from '@stylistic/eslint-plugin';
+
+import { defineConfig } from 'eslint/config';
+
 import eslintConfigPrettier from 'eslint-config-prettier';
 import compatPlugin from 'eslint-plugin-compat';
 import importPlugin from 'eslint-plugin-import';
 import sonarjs from 'eslint-plugin-sonarjs';
-import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -48,9 +50,15 @@ const Rules = {
 	'sonarjs/no-all-duplicated-branches': 'error',
 	'sonarjs/no-duplicate-string': 'error',
 	'sonarjs/prefer-immediate-return': 'error',
+	'sonarjs/prefer-regexp-exec': 'off',
 };
 
-const Ignores = ['node_modules/', '**/build/**', 'dist/**'];
+const Ignores = [
+	'node_modules/',
+	'**/build/**',
+	'dist/**',
+	'src/modules/react/**',
+];
 
 export default defineConfig([
 	{
@@ -76,7 +84,7 @@ export default defineConfig([
 		ignores: [...Ignores, '.template-lintrc.js', '.lintstagedrc.js'],
 	},
 	{
-		files: ['**/*.{ts}'],
+		files: ['**/*.{ts,tsx}'],
 		plugins: {
 			'@typescript-eslint': tseslint.plugin,
 			compat: compatPlugin,
@@ -99,6 +107,8 @@ export default defineConfig([
 		},
 		rules: {
 			...Rules,
+			'no-console': 'error',
+			'@typescript-eslint/no-empty-object-type': 'off',
 			'@typescript-eslint/no-unused-vars': [
 				'error',
 				{ argsIgnorePattern: '^_' },

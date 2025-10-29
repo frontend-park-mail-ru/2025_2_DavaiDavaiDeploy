@@ -30,6 +30,7 @@ export const userReducer: Reducer = (
 	if (typeof action == 'function') {
 		return state;
 	}
+
 	const { type, payload } = action;
 
 	switch (type) {

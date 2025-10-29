@@ -14,25 +14,27 @@ export class Routes extends Component<RoutesConfig, {}, ContextProps> {
 		super(props);
 	}
 
-	static contextType = RouterContext;
+	static readonly contextType = RouterContext;
 
 	getCurrChild() {
 		if (!this.props.children) {
 			return <Route404 />;
 		}
+
 		if (!Array.isArray(this.props.children)) {
 			return this.props.children;
 		} else {
 			if (this.props.children.length === 1) {
 				return this.props.children[0];
 			}
+
 			const path = window.location.pathname + window.location.search;
 			const [pathname, queryString] = normalize(path).split('?');
 			const searchParams = new URLSearchParams(queryString);
 			const search = Object.fromEntries(searchParams.entries());
 
 			for (const child of this.props.children) {
-				let href = normalize(child.props?.href as string);
+				const href = normalize(child.props?.href as string);
 				const escapedPattern = href.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
 				const pattern = escapedPattern.replace(/:\w+/g, '([^/]+)');
 				const regex = new RegExp(`^${pattern}$`);
@@ -44,11 +46,13 @@ export class Routes extends Component<RoutesConfig, {}, ContextProps> {
 					paramNames.forEach((name, i) => {
 						params[name] = match[i + 1];
 					});
+
 					params = { ...params, ...search };
 					this.context.params = params;
 					return child;
 				}
 			}
+
 			return <Route404 />;
 		}
 	}

@@ -1,3 +1,5 @@
+type ValueType = string | number | readonly string[];
+
 declare global {
 	namespace JSX {
 		// Base props common to most elements
@@ -96,7 +98,7 @@ declare global {
 			};
 			input: BaseHTMLAttributes & {
 				type?: string;
-				value?: string | number | readonly string[];
+				value?: ValueType;
 				checked?: boolean;
 				placeholder?: string;
 				disabled?: boolean;

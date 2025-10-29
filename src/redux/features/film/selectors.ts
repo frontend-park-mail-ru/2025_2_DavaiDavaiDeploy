@@ -1,14 +1,9 @@
 import type { Selector } from '@/modules/redux/types/selectors';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsFilm } from '@/types/models';
+import type { ModelsFilmPage } from '@/types/models';
 
 /**
- * Селектор для получения списка фильмов из состояния.
+ * Селектор для получения списка фильма
  */
-export const selectFilms: Selector = (state: State): ModelsFilm[] =>
-	state.film.films;
-
-/**
- * Селектор для получения всей секции фильмов из состояния.
- */
-export const selectFilmSection: Selector = (state: State): State => state.film;
+export const selectFilm: Selector = (state: State): ModelsFilmPage =>
+	state.film.film;

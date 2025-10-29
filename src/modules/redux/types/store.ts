@@ -1,5 +1,6 @@
 import type { Action } from './actions';
 import type { Reducer } from './reducers';
+
 /**
  * Состояние Redux store.
  */

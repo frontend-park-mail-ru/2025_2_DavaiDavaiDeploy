@@ -15,5 +15,6 @@ export function validateProducer(
 	if (extraValue !== null) {
 		return validator(value, extraValue);
 	}
+
 	return validator(value);
 }

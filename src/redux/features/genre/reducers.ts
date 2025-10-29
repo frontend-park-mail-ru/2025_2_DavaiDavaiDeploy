@@ -42,6 +42,7 @@ const genreReducer: Reducer = (state = initialState, action: Action): State => {
 	if (typeof action == 'function') {
 		return state;
 	}
+
 	const { type, payload } = action;
 
 	switch (type) {
