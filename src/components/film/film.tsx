@@ -71,11 +71,8 @@ export class Film extends Component<FilmProps> {
 								<div className={styles.smallAbout}>
 									<p className={styles.value}>{year}</p>
 									<p className={styles.value}>{age_category}</p>
-
 									<p className={styles.value}>{country}</p>
-
 									<p className={styles.value}>{genre}</p>
-
 									<p className={styles.value}>{formattedDuration}</p>
 								</div>
 

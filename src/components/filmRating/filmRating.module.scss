@@ -20,13 +20,45 @@
 	margin-top: -0.5rem;
 }
 
-.rateBtn {
+.rateMenu {
+	position: absolute;
+	top: 0;
+	z-index: 10;
+	display: flex;
+	opacity: 0;
+	transform: translateY(-0.1rem);
+	flex-direction: row;
+	gap: 0.7vw;
+	padding: 0.3vw 0.5vw;
 	background: var(--color-light);
 	border-radius: var(--border-radius-l);
-	padding: 0.8vw 1.8vw;
 	cursor: pointer;
 	transition: all 0.4s ease;
 	border: 1px solid var(--color-light);
+	align-items: center;
+	pointer-events: none;
+}
+
+.rateBtn {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--color-light);
+	border-radius: var(--border-radius-l);
+	padding: 0.6vw 1.6vw;
+	cursor: pointer;
+	transition: all 0.4s ease;
+	border: 1px solid var(--color-light);
+
+	&:hover .rateMenu {
+		opacity: 1;
+		pointer-events: all;
+	}
+}
+
+.starIcon {
+	width: 1.5vw;
 }
 
 .btnText {
@@ -48,6 +80,25 @@
 
 .smallRating {
 	display: none;
+}
+
+.ratingNumber-low,
+.ratingNumber-high,
+.ratingNumber-medium {
+	transition: all 0.2s ease;
+	font-size: var(--font-size-xlg);
+}
+
+.ratingNumber-low:hover {
+	color: var(--color-rating-low);
+}
+
+.ratingNumber-medium:hover {
+	color: var(--color-rating-middle);
+}
+
+.ratingNumber-high:hover {
+	color: var(--color-rating-high);
 }
 
 @media (max-width: 768px) {
