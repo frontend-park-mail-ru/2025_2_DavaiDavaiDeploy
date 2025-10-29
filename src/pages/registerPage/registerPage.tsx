@@ -43,6 +43,7 @@ export class RegisterPageNotConnected extends Component<RegistrationPageProps> {
 				.isValid
 		) {
 			this.props.useRegisterUser(this.state.username, this.state.password);
+			this.context.navigate('/');
 		}
 	};
 
