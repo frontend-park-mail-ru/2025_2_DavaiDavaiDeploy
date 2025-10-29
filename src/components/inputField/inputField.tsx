@@ -1,7 +1,7 @@
 import { Component } from '@robocotik/react';
 import styles from './inputField.module.scss';
 import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
-
+import clsx from '@/modules/clsx/index.ts';
 interface InputFieldProps {
 	label?: string;
 	defaultValue?: string;
@@ -32,7 +32,12 @@ export class InputField extends Component<InputFieldProps, InputFieldState> {
 		return (
 			<div className={styles.input__container}>
 				{label && <label className={styles.input__label}>{label}</label>}
-				<div className={styles.input__wrapper}>
+				<div
+					className={clsx(styles.input__wrapper, {
+						[styles.errorBorder]: this.state.errorMessage.length > 0,
+						[styles.accentBorder]: this.state.errorMessage.length === 0,
+					})}
+				>
 					{preIconSrc && (
 						<img src={preIconSrc} alt="icon" className={styles.input__icon} />
 					)}

@@ -4,6 +4,7 @@ import eye_close from '@/assets/img/eye_close.svg';
 import eye_open from '@/assets/img/eye_open.svg';
 import lock from '@/assets/img/lock.svg';
 import type { ValidationResult } from '@/helpers/types/validationResult.ts';
+import clsx from '@/modules/clsx/index.ts';
 
 interface PasswordInputFieldProps {
 	label?: string;
@@ -44,7 +45,12 @@ export class PasswordInputField extends Component<
 		return (
 			<div className={styles.input__container}>
 				{label && <label className={styles.input__label}>{label}</label>}
-				<div className={styles.input__wrapper}>
+				<div
+					className={clsx(styles.input__wrapper, {
+						[styles.errorBorder]: this.state.errorMessage.length > 0,
+						[styles.accentBorder]: this.state.errorMessage.length === 0,
+					})}
+				>
 					<img src={lock} alt="icon" className={styles.input__icon} />
 					<input
 						className={styles.input__field}
