@@ -1,4 +1,5 @@
 import { Component } from '@robocotik/react';
+import { NavigateButton } from '../../modules/router/button.tsx';
 import { RouterContext } from '../../modules/router/routerContext.ts';
 import styles from './header.module.scss';
 import Logo from '@/assets/img/logo.svg';
@@ -43,13 +44,9 @@ export class Header extends Component<{}, IHeaderState> {
 							<Link href="/register" className={styles.text2}>
 								Зарегистрироваться
 							</Link>
-							<button
-								onClick={() => this.context.navigate('/login')}
-								id="login-button"
-								className={styles.loginBtn}
-							>
+							<NavigateButton href="/login" className={styles.loginBtn}>
 								Войти
-							</button>
+							</NavigateButton>
 						</>
 					)}
 				</div>

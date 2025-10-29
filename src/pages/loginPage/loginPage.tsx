@@ -12,6 +12,7 @@ import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
+import { RouterContext } from '@/modules/router/routerContext.ts';
 import {
 	selectUser,
 	selectUserError,
@@ -30,6 +31,8 @@ export class LoginPageNotConnected extends Component<LoginPageProps> {
 		password: '',
 	};
 
+	static readonly contextType = RouterContext;
+
 	handleLoginUser = () => {
 		if (
 			validateLogin(this.state.username).isValid &&
@@ -38,6 +41,14 @@ export class LoginPageNotConnected extends Component<LoginPageProps> {
 			this.props.useLoginUser(this.state.username, this.state.password);
 		}
 	};
+
+	onUpdate(): void | Promise<void> {
+		if (this.props.user) {
+			this.context.navigate('/');
+		} else {
+			alert('Произошла ошибка входа: ' + this.props.userError);
+		}
+	}
 
 	render() {
 		return (
