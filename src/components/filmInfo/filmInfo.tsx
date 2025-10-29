@@ -1,4 +1,5 @@
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
+import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
@@ -6,13 +7,13 @@ import { Link } from '@/modules/router/link.tsx';
 import type { ModelsFilmPage } from '@/types/models';
 import { Component } from '@robocotik/react';
 import { FilmRating } from '../filmRating/filmRating';
-import styles from './film.module.scss';
+import styles from './filmInfo.module.scss';
 
-interface FilmProps {
+interface FilmInfoProps {
 	film: ModelsFilmPage;
 }
 
-export class Film extends Component<FilmProps> {
+export class FilmInfo extends Component<FilmInfoProps> {
 	render() {
 		if (Object.keys(this.props.film).length === 0) {
 			return <div>Loading...</div>;
@@ -44,6 +45,9 @@ export class Film extends Component<FilmProps> {
 			'2f3a4b5c-6d7e-8f9a-0b1c-2d3e4f5a6b7c',
 			'jpg',
 		);
+
+		const formattedBudget = formatMoney(budget);
+		const formattedFees = formatMoney(worldwide_fees);
 
 		return (
 			<div className={styles.film}>
@@ -99,9 +103,9 @@ export class Film extends Component<FilmProps> {
 									{slogan && <p className={styles.fact}>Слоган</p>}
 									{slogan && <p className={styles.value}>{slogan}</p>}
 									<p className={styles.fact}>Бюджет</p>
-									<p className={styles.value}>{budget}</p>
+									<p className={styles.value}>{formattedBudget}</p>
 									<p className={styles.fact}>Сборы в мире</p>
-									<p className={styles.value}>{worldwide_fees}</p>
+									<p className={styles.value}>{formattedFees}</p>
 									<p className={styles.fact}>Длительность</p>
 									<p className={styles.value}>{formattedDuration}</p>
 								</div>

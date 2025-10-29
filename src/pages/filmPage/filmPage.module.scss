@@ -22,7 +22,6 @@
 @media (max-width: 768px) {
 	.page {
 		gap: 2rem;
-		margin-bottom: 2rem;
 	}
 
 	.content {
@@ -36,12 +35,12 @@
 	.left {
 		margin-top: 2rem;
 		order: 2;
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 	}
 
 	.right {
 		order: 1;
 		margin-top: 2rem;
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 	}
 }

@@ -36,7 +36,7 @@ class App extends Component {
 				<Header />
 				<Routes>
 					<Route href="/" component={<HomePage />} />
-					<Route href="/film/:id" component={<FilmPage />} />
+					<Route href="/films/:id" component={<FilmPage />} />
 				</Routes>
 				<Footer />
 			</div>

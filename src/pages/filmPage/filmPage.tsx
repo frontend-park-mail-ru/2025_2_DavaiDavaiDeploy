@@ -1,5 +1,5 @@
-import { Film } from '@/components/film/film';
 import { FilmGallery } from '@/components/filmGallery/filmGallery';
+import { FilmInfo } from '@/components/filmInfo/filmInfo';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -26,7 +26,7 @@ class FilmPageComponent extends Component<FilmPageProps> {
 	render() {
 		return (
 			<div className={styles.page}>
-				<Film film={this.props.film} />
+				<FilmInfo film={this.props.film} />
 				<section className={styles.content}>
 					<div className={styles.left}></div>
 					<div className={styles.right}>
