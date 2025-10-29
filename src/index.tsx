@@ -33,13 +33,17 @@ class App extends Component {
 	render() {
 		return (
 			<div class="layout">
-				<Header />
+				{this.context.path != '/login' && this.context.path != '/register' && (
+					<Header />
+				)}
 				<Routes>
 					<Route href="/" component={<HomePage />} />
 					<Route href="/film/:id" component={<FilmPage />} />
 					<Route href="/login" component={<LoginPage />} />
 				</Routes>
-				<Footer />
+				{this.context.path != '/login' && this.context.path != '/register' && (
+					<Footer />
+				)}
 			</div>
 		);
 	}
