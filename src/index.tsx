@@ -10,6 +10,7 @@ import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
 import { FilmPage } from './pages/filmPage/filmPage';
 import { HomePage } from './pages/homePage/homePage';
+import { LoginPage } from './pages/loginPage/loginPage.tsx';
 import { Header } from '@/components/header/header';
 import { Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
@@ -31,11 +32,12 @@ class App extends Component {
 	static readonly contextType = RouterContext;
 	render() {
 		return (
-			<div>
+			<div class="layout">
 				<Header />
 				<Routes>
 					<Route href="/" component={<HomePage />} />
 					<Route href="/film/:id" component={<FilmPage />} />
+					<Route href="/login" component={<LoginPage />} />
 				</Routes>
 				<Footer />
 			</div>

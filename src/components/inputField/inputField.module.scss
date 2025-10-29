@@ -1,0 +1,35 @@
+.input__container {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 100%;
+	align-items: flex-start;
+}
+
+.input__label {
+	font-weight: var(--font-weight-medium);
+	font-size: var(--font-size-s);
+	color: var(--color-text);
+}
+
+.input__wrapper {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: start;
+	gap: 1.125rem;
+	border: 2px solid var(--color-accent);
+	border-radius: var(--border-radius-m);
+	padding: 1rem;
+	height: 3.25rem;
+}
+
+.input__field {
+	border: none;
+	background: transparent;
+	outline: none;
+	color: var(--color-text);
+	height: 100%;
+	width: 100%;
+	font-size: var(--font-size-xs);
+}
