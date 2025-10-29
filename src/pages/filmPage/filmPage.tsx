@@ -28,7 +28,10 @@ class FilmPageComponent extends Component<FilmPageProps> {
 			<div className={styles.page}>
 				<Film film={this.props.film} />
 				<section className={styles.content}>
-					<FilmGallery film={this.props.film} />
+					<div className={styles.left}></div>
+					<div className={styles.right}>
+						<FilmGallery film={this.props.film} />
+					</div>
 				</section>
 			</div>
 		);

@@ -44,9 +44,26 @@ export class FilmRating extends Component<FilmRatingProps> {
 				</div>
 
 				<div className={styles.smallRating}>
+					<h2 className={styles[`title-${ratingType}`]}>{formattedRating}</h2>
 					<button className={styles.rateBtn}>
-						<img src={Star} className={styles.starIcon} />
+						<img src={Star} className={styles.star} />
 						<p className={styles.btnText}>Оценить</p>
+						<div className={styles.rateMenu}>
+							<img src={Star} className={styles.starIcon} />
+							{Array.from({ length: 10 }, (_, i) => {
+								const number = i + 1;
+								return (
+									<p
+										key={number}
+										data-number={number}
+										className={styles[`ratingNumber-${getRatingType(number)}`]}
+									>
+										{number}
+									</p>
+								);
+							})}
+							<img src={Star} className={styles.starIcon} />
+						</div>
 					</button>
 				</div>
 			</div>

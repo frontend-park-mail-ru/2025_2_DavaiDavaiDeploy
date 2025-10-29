@@ -7,6 +7,15 @@
 
 .content {
 	background-color: var(--color-text);
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 4.4rem 1.875rem;
+	padding: var(--side-padding);
+}
+
+.left,
+.right {
+	margin-top: 4.4rem;
 }
 
 @media (max-width: 768px) {

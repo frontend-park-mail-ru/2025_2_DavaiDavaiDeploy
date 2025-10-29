@@ -75,11 +75,15 @@ export class Film extends Component<FilmProps> {
 									<p className={styles.value}>{genre}</p>
 									<p className={styles.value}>{formattedDuration}</p>
 								</div>
-
+								<div className={styles.smallRating}>
+									<FilmRating film={this.props.film} />
+								</div>
 								<p className={styles.description}>{description}</p>
 							</div>
 
-							<FilmRating film={this.props.film} />
+							<div className={styles.bigRating}>
+								<FilmRating film={this.props.film} />
+							</div>
 						</div>
 
 						<div className={styles.secondRow}>

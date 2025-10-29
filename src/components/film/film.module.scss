@@ -43,7 +43,7 @@
 }
 
 .content {
-	padding: 0 7vw;
+	padding: var(--side-padding);
 	display: flex;
 	flex-direction: row;
 	gap: 4.6rem;
@@ -201,14 +201,12 @@
 	transform: scale(1.02);
 }
 
-.rating,
 .rating-high,
 .rating-medium,
 .rating-low {
 	display: none;
 }
 
-.rating,
 .rating-high {
 	background-color: var(--color-rating-high);
 }
@@ -222,6 +220,14 @@
 }
 
 .smallAbout {
+	display: none;
+}
+
+.bigRating {
+	display: flex;
+}
+
+.smallRating {
 	display: none;
 }
 
@@ -245,7 +251,7 @@
 	}
 
 	.info {
-		gap: 2rem;
+		gap: 4rem;
 		align-items: center;
 		text-align: center;
 	}
@@ -314,7 +320,14 @@
 		gap: 0.9375rem;
 	}
 
-	.rating,
+	.bigRating {
+		display: none;
+	}
+
+	.smallRating {
+		display: flex;
+	}
+
 	.rating-high,
 	.rating-medium,
 	.rating-low {

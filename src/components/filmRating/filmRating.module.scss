@@ -108,9 +108,24 @@
 
 	.smallRating {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		gap: 1.5rem;
 		align-items: center;
-		gap: 8px;
+		justify-content: center;
+		margin-top: 1rem;
+		pointer-events: none;
+	}
+
+	.star {
+		width: 2.5rem;
+		height: 2.5rem;
+	}
+
+	.btnText {
+		font-size: var(--font-size-xxxxxs);
+		color: var(--color-light-text);
+		opacity: 0.6;
+		text-align: center;
 	}
 
 	.rateBtn {
@@ -121,23 +136,39 @@
 		background-color: transparent;
 		border: none;
 		cursor: pointer;
+		pointer-events: all;
+		padding: 0;
+		-webkit-tap-highlight-color: transparent;
 		transition:
 			background-color 0.2s,
 			transform 0.1s;
-	}
 
-	.rateBtn:hover {
-		transform: scale(1.05);
+		&:hover {
+			pointer-events: none;
+			transform: scale(1.05);
+
+			.star,
+			.btnText {
+				opacity: 0;
+				pointer-events: none;
+			}
+		}
 	}
 
 	.starIcon {
-		width: 2.5rem;
-		height: 2.5rem;
+		width: 1rem;
 	}
 
-	.btnText {
-		font-size: var(--font-size-xxxxxs);
-		color: var(--color-light-text);
-		text-align: center;
+	.rateMenu {
+		position: absolute;
+		top: 0;
+		z-index: 10;
+		display: flex;
+		opacity: 0;
+		transform: translateX(-10%); /* Вместо translateX(-5vw) */
+		gap: 3vw;
+		padding: 0.5rem 0.8rem;
+		align-items: center;
+		pointer-events: none;
 	}
 }

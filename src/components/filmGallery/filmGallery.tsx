@@ -12,16 +12,15 @@ export class FilmGallery extends Component<FilmGalleryProps> {
 			return <div>Loading...</div>;
 		}
 
-		const { image1, image2, image3 } = this.props.film;
+		const image1 =
+			'https://static.ddfilms-static.ru/static/topFilms/3f4a5b6c-7d8e-9f0a-1b2c-3d4e5f6a7b8c.jpg';
 
 		return (
 			<div className={styles.content}>
-				{(image1 || image2 || image3) && (
-					<h1 className={styles.title}>Фотогалерея фильма</h1>
-				)}
+				{image1 && <h1 className={styles.title}>Фотогалерея фильма</h1>}
 				{image1 && <img className={styles.image} src={image1} />}
-				{image2 && <img className={styles.image} src={image1} />}
-				{image3 && <img className={styles.image} src={image1} />}
+				{image1 && <img className={styles.image} src={image1} />}
+				{image1 && <img className={styles.image} src={image1} />}
 			</div>
 		);
 	}
