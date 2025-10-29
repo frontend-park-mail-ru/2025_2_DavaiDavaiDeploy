@@ -10,6 +10,7 @@ import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
 import { FilmPage } from './pages/filmPage/filmPage';
 import { HomePage } from './pages/homePage/homePage';
+
 import { Header } from '@/components/header/header';
 import { Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
@@ -19,6 +20,8 @@ import { Routes } from '@/modules/router/routes.tsx';
 import { store } from '@/redux/store.ts';
 
 if (sentryEnabled) {
+	/* eslint-disable no-console */
+	console.log('init');
 	Sentry.init({
 		dsn: sentryDSN,
 		enabled: isProduction,
@@ -26,6 +29,8 @@ if (sentryEnabled) {
 		tracePropagationTargets: [PRODUCTION_URL_WITH_SCHEMA],
 	});
 }
+
+Sentry.captureException(new RangeError());
 
 class App extends Component {
 	static readonly contextType = RouterContext;
