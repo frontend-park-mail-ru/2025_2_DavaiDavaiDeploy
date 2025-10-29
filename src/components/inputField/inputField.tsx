@@ -1,5 +1,6 @@
 import { Component } from '@robocotik/react';
 import styles from './inputField.module.scss';
+import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 
 interface InputFieldProps {
 	label?: string;
@@ -10,10 +11,23 @@ interface InputFieldProps {
 	onChange: (value: string) => void;
 }
 
-export class InputField extends Component<InputFieldProps> {
+interface InputFieldState {
+	errorMessage: string;
+}
+
+export class InputField extends Component<InputFieldProps, InputFieldState> {
+	state = {
+		errorMessage: '',
+	};
+
+	onChange = (e: Event) => {
+		this.props.onChange((e.target as HTMLInputElement).value);
+		const { message } = validateLogin((e.target as HTMLInputElement).value);
+		this.state.errorMessage = message;
+	};
+
 	render() {
-		const { label, defaultValue, value, onChange, preIconSrc, placeholder } =
-			this.props;
+		const { label, defaultValue, value, preIconSrc, placeholder } = this.props;
 
 		return (
 			<div className={styles.input__container}>
@@ -28,9 +42,11 @@ export class InputField extends Component<InputFieldProps> {
 						value={value}
 						placeholder={placeholder}
 						defaultValue={defaultValue}
-						onChange={(e) => onChange((e.target as HTMLInputElement).value)}
+						onInput={(e) => this.onChange(e)}
 					/>
 				</div>
+
+				<p className={styles.errorMessage}>{this.state.errorMessage}</p>
 			</div>
 		);
 	}

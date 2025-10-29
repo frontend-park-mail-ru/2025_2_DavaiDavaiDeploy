@@ -4,19 +4,20 @@ import '@fontsource/golos-ui';
 import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
-import { Footer } from './components/footer/footer';
-import { isProduction } from './consts/isProduction';
-import { sentryDSN, sentryEnabled } from './consts/sentry';
-import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
-import { FilmPage } from './pages/filmPage/filmPage';
-import { HomePage } from './pages/homePage/homePage';
-import { LoginPage } from './pages/loginPage/loginPage.tsx';
+import { Footer } from '@/components/footer/footer';
 import { Header } from '@/components/header/header';
+import { isProduction } from '@/consts/isProduction';
+import { sentryDSN, sentryEnabled } from '@/consts/sentry';
+import { PRODUCTION_URL_WITH_SCHEMA } from '@/consts/urls';
 import { Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { Route } from '@/modules/router/route.tsx';
 import { RouterContext } from '@/modules/router/routerContext.ts';
 import { Routes } from '@/modules/router/routes.tsx';
+import { FilmPage } from '@/pages/filmPage/filmPage';
+import { HomePage } from '@/pages/homePage/homePage';
+import { LoginPage } from '@/pages/loginPage/loginPage.tsx';
+import { RegisterPage } from '@/pages/registerPage/registerPage.tsx';
 import { store } from '@/redux/store.ts';
 
 if (sentryEnabled) {
@@ -40,6 +41,7 @@ class App extends Component {
 					<Route href="/" component={<HomePage />} />
 					<Route href="/film/:id" component={<FilmPage />} />
 					<Route href="/login" component={<LoginPage />} />
+					<Route href="/register" component={<RegisterPage />} />
 				</Routes>
 				{this.context.path != '/login' && this.context.path != '/register' && (
 					<Footer />

@@ -10,10 +10,7 @@ export class Header extends Component {
 				<img src={Logo} alt="На главную" className={styles.logo} />
 				<div className={styles.user}>
 					<p className={styles.text1}>Нет аккаунта?</p>
-					<Link
-						href="/register"
-						// className={styles.text2}
-					>
+					<Link href="/register" className={styles.text2}>
 						Зарегистрироваться
 					</Link>
 					<button id="login-button" className={styles.loginBtn}>

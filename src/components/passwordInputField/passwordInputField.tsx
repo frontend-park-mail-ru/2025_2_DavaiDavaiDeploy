@@ -3,6 +3,7 @@ import styles from './passwordInputField.module.scss';
 import eye_close from '@/assets/img/eye_close.svg';
 import eye_open from '@/assets/img/eye_open.svg';
 import lock from '@/assets/img/lock.svg';
+import type { ValidationResult } from '@/helpers/types/validationResult.ts';
 
 interface PasswordInputFieldProps {
 	label?: string;
@@ -10,19 +11,35 @@ interface PasswordInputFieldProps {
 	value?: string;
 	placeholder?: string;
 	onChange: (value: string) => void;
+	validateFn: () => ValidationResult;
 }
 
-export class PasswordInputField extends Component<PasswordInputFieldProps> {
+interface PasswordInputFieldState {
+	isPasswordVisible: boolean;
+	errorMessage: string;
+}
+
+export class PasswordInputField extends Component<
+	PasswordInputFieldProps,
+	PasswordInputFieldState
+> {
 	state = {
 		isPasswordVisible: false,
+		errorMessage: '',
 	};
 
 	handleVisibilityClicked = () => {
 		this.setState({ isPasswordVisible: !this.state.isPasswordVisible });
 	};
 
+	handleInputChange = (e: Event) => {
+		this.props.onChange((e.target as HTMLInputElement).value);
+		const { message } = this.props.validateFn();
+		this.state.errorMessage = message;
+	};
+
 	render() {
-		const { label, defaultValue, value, onChange, placeholder } = this.props;
+		const { label, defaultValue, value, placeholder } = this.props;
 
 		return (
 			<div className={styles.input__container}>
@@ -35,7 +52,7 @@ export class PasswordInputField extends Component<PasswordInputFieldProps> {
 						value={value}
 						placeholder={placeholder}
 						defaultValue={defaultValue}
-						onChange={(e) => onChange((e.target as HTMLInputElement).value)}
+						onInput={this.handleInputChange}
 					/>
 					<button
 						onClick={this.handleVisibilityClicked}
@@ -48,6 +65,7 @@ export class PasswordInputField extends Component<PasswordInputFieldProps> {
 						/>
 					</button>
 				</div>
+				<p className={styles.errorMessage}>{this.state.errorMessage}</p>
 			</div>
 		);
 	}

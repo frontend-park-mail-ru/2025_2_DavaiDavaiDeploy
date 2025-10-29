@@ -48,3 +48,9 @@
 		transition: background-color 5000s ease-in-out 0s;
 	}
 }
+
+.errorMessage {
+	color: var(--color-error);
+	text-align: left;
+	height: 1rem;
+}
