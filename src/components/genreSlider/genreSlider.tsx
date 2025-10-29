@@ -1,6 +1,3 @@
-import { Component } from '@robocotik/react';
-import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
-import styles from './genreSlider.module.scss';
 import ArrowLeft from '@/assets/img/arrowLeft.svg';
 import ArrowRight from '@/assets/img/arrowRight.svg';
 import { connect } from '@/modules/redux';
@@ -10,6 +7,9 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenres } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
+import { Component } from '@robocotik/react';
+import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
+import styles from './genreSlider.module.scss';
 
 interface GenreSliderProps {
 	genres: ModelsGenre[];

@@ -1,10 +1,10 @@
-import { Component } from '@robocotik/react';
-import styles from './filmCard.module.scss';
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { Component } from '@robocotik/react';
+import styles from './filmCard.module.scss';
 
 interface FilmCardProps {
 	film: ModelsMainPageFilm;

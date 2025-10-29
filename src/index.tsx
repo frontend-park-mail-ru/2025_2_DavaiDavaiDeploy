@@ -20,8 +20,6 @@ import { Routes } from '@/modules/router/routes.tsx';
 import { store } from '@/redux/store.ts';
 
 if (sentryEnabled) {
-	/* eslint-disable no-console */
-	console.log('init');
 	Sentry.init({
 		dsn: sentryDSN,
 		enabled: isProduction,
@@ -29,8 +27,6 @@ if (sentryEnabled) {
 		tracePropagationTargets: [PRODUCTION_URL_WITH_SCHEMA],
 	});
 }
-
-Sentry.captureException(new RangeError());
 
 class App extends Component {
 	static readonly contextType = RouterContext;

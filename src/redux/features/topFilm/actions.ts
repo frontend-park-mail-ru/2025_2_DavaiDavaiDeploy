@@ -1,6 +1,6 @@
-import actionTypes from './actionTypes';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsPromoFilm } from '@/types/models';
+import actionTypes from './actionTypes';
 
 /**
  * Action: начало загрузки фильмов.

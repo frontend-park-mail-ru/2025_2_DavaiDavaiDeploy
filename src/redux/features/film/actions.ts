@@ -1,7 +1,7 @@
-import actionTypes from './actionTypes';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsFilmPage } from '@/types/models';
+import actionTypes from './actionTypes';
 
 /**
  * Action: начало загрузки фильмов.

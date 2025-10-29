@@ -1,6 +1,6 @@
+import Logo from '@/assets/img/logo.svg';
 import { Component } from '@robocotik/react';
 import styles from './header.module.scss';
-import Logo from '@/assets/img/logo.svg';
 
 export class Header extends Component {
 	render() {

@@ -1,5 +1,3 @@
-import { Component } from '@robocotik/react';
-import styles from './filmPage.module.scss';
 import { Film } from '@/components/film/film';
 import { FilmGallery } from '@/components/filmGallery/filmGallery';
 import { connect } from '@/modules/redux';
@@ -10,6 +8,8 @@ import actions from '@/redux/features/film/actions';
 import { selectFilm } from '@/redux/features/film/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
+import { Component } from '@robocotik/react';
+import styles from './filmPage.module.scss';
 
 interface FilmPageProps {
 	film: ModelsFilmPage;

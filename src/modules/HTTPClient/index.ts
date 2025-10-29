@@ -1,5 +1,5 @@
-import { HTTPClient } from './HTTPClient';
 import { serverAddr } from '@/consts/serverAddr';
+import { HTTPClient } from './HTTPClient';
 
 /**
  * Таймаут для HTTP-запросов в миллисекундах.

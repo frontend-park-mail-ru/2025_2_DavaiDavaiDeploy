@@ -1,5 +1,3 @@
-import { Component } from '@robocotik/react';
-import styles from './topFilm.module.scss';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
@@ -11,6 +9,8 @@ import actions from '@/redux/features/topFilm/actions';
 import { selectTopFilm } from '@/redux/features/topFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsPromoFilm } from '@/types/models';
+import { Component } from '@robocotik/react';
+import styles from './topFilm.module.scss';
 
 interface TopFilmProps {
 	film: ModelsPromoFilm;

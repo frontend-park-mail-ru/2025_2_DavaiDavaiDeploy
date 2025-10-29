@@ -1,8 +1,8 @@
-import { Component } from '@robocotik/react';
-import styles from './genreSliderItem.module.scss';
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Link } from '@/modules/router/link';
 import type { ModelsGenre } from '@/types/models';
+import { Component } from '@robocotik/react';
+import styles from './genreSliderItem.module.scss';
 
 interface GenreSliderItemProps {
 	genre: ModelsGenre;
