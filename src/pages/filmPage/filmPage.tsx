@@ -22,6 +22,11 @@ class FilmPageComponent extends Component<FilmPageProps> {
 
 	onMount(): void {
 		this.props.getFilm(this.context.params.id);
+		window.scrollTo({
+			top: 0,
+			left: 0,
+			behavior: 'smooth',
+		});
 	}
 
 	render() {

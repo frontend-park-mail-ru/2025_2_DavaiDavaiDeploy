@@ -1,5 +1,6 @@
 import ArrowLeft from '@/assets/img/arrowLeft.svg';
 import ArrowRight from '@/assets/img/arrowRight.svg';
+import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -14,6 +15,8 @@ import styles from './filmSlider.module.scss';
 
 const FILM_COUNT: number = 50;
 const OFFSET: number = 0;
+const THROTTLE_DELAY = 100;
+const DELAY = 300;
 
 interface FilmSliderProps {
 	films: ModelsMainPageFilm[];
@@ -23,40 +26,80 @@ interface FilmSliderProps {
 interface FilmSliderState {
 	curFilm: number;
 	slideCapacity: number;
+	cardHeight: number;
+	windowHeight: number;
+	active: boolean;
+	throttledResizeHandler: (ev?: UIEvent) => void;
 }
 
 class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 	static readonly contextType = RouterContext;
 
 	state: FilmSliderState = {
-		curFilm: 2,
+		curFilm: 0,
 		slideCapacity: 3,
+		cardHeight: 50,
+		active: false,
+		windowHeight: window.innerHeight,
+		throttledResizeHandler: () => {},
 	};
 
 	onMount(): void {
 		this.props.getFilms(FILM_COUNT, OFFSET, this.context.params.id);
 
+		this.state.throttledResizeHandler = throttle(
+			this.handleResize,
+			THROTTLE_DELAY,
+		);
+
+		window.addEventListener('resize', this.state.throttledResizeHandler);
+
 		setTimeout(() => {
-			const slider = document.querySelector(`.${styles.slider}`) as HTMLElement;
-
-			const slides = document.querySelectorAll(
-				`.${styles.slide}`,
-			) as NodeListOf<HTMLElement>;
-
-			if (slider && slides.length > 0) {
-				let maxHeight = 0;
-				slides.forEach((s) => {
-					const h = s.offsetHeight;
-
-					if (h > maxHeight) {
-						maxHeight = h;
-					}
-				});
-
-				slider.style.height = maxHeight + 'px';
-			}
-		}, 400);
+			this.handleResize();
+		}, DELAY);
 	}
+
+	onUnmount(): void {
+		window.removeEventListener('resize', this.state.throttledResizeHandler);
+	}
+
+	handleResize = (): void => {
+		const slider = document.querySelector(`.${styles.slider}`) as HTMLElement;
+		const slides = document.querySelectorAll(
+			`.${styles.slide}`,
+		) as NodeListOf<HTMLElement>;
+
+		if (slider && slides.length > 0) {
+			let maxHeight = 0;
+			slides.forEach((s) => {
+				const h = s.offsetHeight;
+
+				if (h > maxHeight) {
+					maxHeight = h;
+				}
+			});
+
+			slider.style.height = maxHeight + 'px';
+		}
+
+		const width = window.innerWidth;
+		let slideCapacity = 5;
+		let cardHeight = 30;
+
+		if (width > 1400) {
+			slideCapacity = 7;
+		} else if (width < 768) {
+			slideCapacity = 3;
+			cardHeight = 50;
+		}
+
+		this.setState({
+			windowHeight: window.innerHeight,
+			slideCapacity,
+			cardHeight,
+			active: this.props.films.length > slideCapacity,
+		});
+	};
 
 	next(): void {
 		this.setState({
@@ -66,7 +109,9 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 
 	prev(): void {
 		this.setState({
-			curFilm: (this.state.curFilm - 1) % this.props.films.length,
+			curFilm:
+				(this.state.curFilm - 1 + this.props.films.length) %
+				this.props.films.length,
 		});
 	}
 
@@ -86,7 +131,7 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 
 	getStyles = (index: number) => {
 		const total = this.props.films.length;
-		const stepPx = (window.innerWidth * 30) / (100 * 1.7); //50
+		const stepPx = (window.innerWidth * this.state.cardHeight) / (100 * 1.7);
 		const curIndex = this.state.curFilm;
 
 		let diff = (index - curIndex + total) % total;
@@ -139,23 +184,31 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 			<div className={styles.content}>
 				<h1 className={styles.title}>ПРОЕКТЫ</h1>
 				<div className={styles.slider}>
-					<button className={styles.prevBtn} onClick={this.prev}>
-						<img
-							src={ArrowLeft}
-							alt="Предыдущий"
-							className={styles.prevBtnIcon}
-						/>
-					</button>
-					<button className={styles.nextBtn} onClick={this.next}>
-						<img
-							src={ArrowRight}
-							alt="Следующий"
-							className={styles.nextBtnIcon}
-						/>
-					</button>
+					{this.state.active && (
+						<button className={styles.prevBtn} onClick={this.prev.bind(this)}>
+							<img
+								src={ArrowLeft}
+								alt="Предыдущий"
+								className={styles.prevBtnIcon}
+							/>
+						</button>
+					)}
+					{this.state.active && (
+						<button className={styles.nextBtn} onClick={this.next.bind(this)}>
+							<img
+								src={ArrowRight}
+								alt="Следующий"
+								className={styles.nextBtnIcon}
+							/>
+						</button>
+					)}
 					<div className={styles.container}>
 						{this.props.films.map((film, i) => (
-							<div className={styles.slide} style={{ ...this.getStyles(i) }}>
+							<div
+								key={i}
+								className={styles.slide}
+								style={{ ...this.getStyles(i) }}
+							>
 								<FilmCard film={film} />
 							</div>
 						))}
