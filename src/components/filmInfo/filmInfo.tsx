@@ -11,12 +11,17 @@ import styles from './filmInfo.module.scss';
 
 interface FilmInfoProps {
 	film: ModelsFilmPage;
+	error: string | null;
 }
 
 export class FilmInfo extends Component<FilmInfoProps> {
 	render() {
+		if (this.props.error) {
+			return <div className={styles.err}>Фильм не найден</div>;
+		}
+
 		if (Object.keys(this.props.film).length === 0) {
-			return <div>Loading...</div>;
+			return <div className={styles.err}>Загрузка фильма</div>;
 		}
 
 		const {
@@ -36,9 +41,9 @@ export class FilmInfo extends Component<FilmInfoProps> {
 			original_title,
 		} = this.props.film;
 
-		const formattedRating = formatRating(rating);
+		const formattedRating = rating ? formatRating(rating) : null;
 		const ratingType = getRatingType(rating);
-		const formattedDuration = formatDuration(duration);
+		const formattedDuration = duration ? formatDuration(duration) : null;
 		const coverSRC = getImageSRC('films', id, 'jpg');
 		const posterSRC = getImageSRC(
 			'topFilms',
@@ -46,18 +51,30 @@ export class FilmInfo extends Component<FilmInfoProps> {
 			'jpg',
 		);
 
-		const formattedBudget = formatMoney(budget);
-		const formattedFees = formatMoney(worldwide_fees);
+		const formattedBudget = budget ? formatMoney(budget) : null;
+		const formattedFees = worldwide_fees ? formatMoney(worldwide_fees) : null;
 
 		return (
 			<div className={styles.film}>
 				<div className={styles.container}>
-					<img src={posterSRC} alt={title} className={styles.image} />
+					{posterSRC && (
+						<img
+							src={posterSRC}
+							alt={title || 'Poster'}
+							className={styles.image}
+						/>
+					)}
 				</div>
 
 				<div className={styles.content}>
 					<div className={styles.media}>
-						<img src={coverSRC} alt={title} className={styles.cover} />
+						{coverSRC && (
+							<img
+								src={coverSRC}
+								alt={title || 'Cover'}
+								className={styles.cover}
+							/>
+						)}
 						<div className={styles[`rating-${ratingType}`]}>
 							<h3>{formattedRating}</h3>
 						</div>
@@ -66,23 +83,31 @@ export class FilmInfo extends Component<FilmInfoProps> {
 					<div className={styles.info}>
 						<div className={styles.firstRow}>
 							<div className={styles.main}>
-								<h1 className={styles.title}>{title}</h1>
+								{title && <h1 className={styles.title}>{title}</h1>}
 								<span className={styles.subtitle}>
 									{original_title && <h3>{original_title}</h3>}
-									<h3>{age_category}</h3>
+									{age_category && <h3>{age_category}</h3>}
 								</span>
 
 								<div className={styles.smallAbout}>
-									<p className={styles.value}>{year}</p>
-									<p className={styles.value}>{age_category}</p>
-									<p className={styles.value}>{country}</p>
-									<p className={styles.value}>{genre}</p>
-									<p className={styles.value}>{formattedDuration}</p>
+									{!!year && <p className={styles.value}>{year}</p>}
+									{age_category && (
+										<p className={styles.value}>{age_category}</p>
+									)}
+									{country && <p className={styles.value}>{country}</p>}
+									{genre && <p className={styles.value}>{genre}</p>}
+									{formattedDuration && (
+										<p className={styles.value}>{formattedDuration}</p>
+									)}
 								</div>
+
 								<div className={styles.smallRating}>
 									<FilmRating film={this.props.film} />
 								</div>
-								<p className={styles.description}>{description}</p>
+
+								{description && (
+									<p className={styles.description}>{description}</p>
+								)}
 							</div>
 
 							<div className={styles.bigRating}>
@@ -94,35 +119,69 @@ export class FilmInfo extends Component<FilmInfoProps> {
 							<div className={styles.about}>
 								<h1 className={styles.aboutTitle}>О фильме</h1>
 								<div className={styles.table}>
-									<p className={styles.fact}>Год производства</p>
-									<p className={styles.value}>{year}</p>
-									<p className={styles.fact}>Страна</p>
-									<p className={styles.value}>{country}</p>
-									<p className={styles.fact}>Жанр</p>
-									<p className={styles.value}>{genre}</p>
-									{slogan && <p className={styles.fact}>Слоган</p>}
-									{slogan && <p className={styles.value}>{slogan}</p>}
-									<p className={styles.fact}>Бюджет</p>
-									<p className={styles.value}>{formattedBudget}</p>
-									<p className={styles.fact}>Сборы в мире</p>
-									<p className={styles.value}>{formattedFees}</p>
-									<p className={styles.fact}>Длительность</p>
-									<p className={styles.value}>{formattedDuration}</p>
+									{!!year && (
+										<>
+											<p className={styles.fact}>Год производства</p>
+											<p className={styles.value}>{year}</p>
+										</>
+									)}
+
+									{country && (
+										<>
+											<p className={styles.fact}>Страна</p>
+											<p className={styles.value}>{country}</p>
+										</>
+									)}
+
+									{genre && (
+										<>
+											<p className={styles.fact}>Жанр</p>
+											<p className={styles.value}>{genre}</p>
+										</>
+									)}
+
+									{slogan && (
+										<>
+											<p className={styles.fact}>Слоган</p>
+											<p className={styles.value}>{slogan}</p>
+										</>
+									)}
+
+									{formattedBudget && (
+										<>
+											<p className={styles.fact}>Бюджет</p>
+											<p className={styles.value}>{formattedBudget}</p>
+										</>
+									)}
+
+									{formattedFees && (
+										<>
+											<p className={styles.fact}>Сборы в мире</p>
+											<p className={styles.value}>{formattedFees}</p>
+										</>
+									)}
+
+									{formattedDuration && (
+										<>
+											<p className={styles.fact}>Длительность</p>
+											<p className={styles.value}>{formattedDuration}</p>
+										</>
+									)}
 								</div>
 							</div>
 
-							<div className={styles.cast}>
-								<div className={styles.castContent}>
-									<h1 className={styles.roles}>В главных ролях</h1>
-									{actors.map((actor) => {
-										return (
+							{actors && actors.length > 0 && (
+								<div className={styles.cast}>
+									<div className={styles.castContent}>
+										<h1 className={styles.roles}>В главных ролях</h1>
+										{actors.map((actor) => (
 											<Link href="#">
 												<p className={styles.actors}>{actor.russian_name}</p>
 											</Link>
-										);
-									})}
+										))}
+									</div>
 								</div>
-							</div>
+							)}
 						</div>
 					</div>
 				</div>

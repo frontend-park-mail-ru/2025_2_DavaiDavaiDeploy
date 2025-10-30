@@ -231,6 +231,17 @@
 	display: none;
 }
 
+.err {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: calc(100vh - 4rem);
+	font-size: var(--font-size-3xl);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-accent);
+	line-height: 1;
+}
+
 @media (max-width: 768px) {
 	.film {
 		margin-bottom: 1rem;

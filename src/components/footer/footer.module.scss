@@ -1,12 +1,12 @@
 .footer-light,
 .footer-dark {
 	width: 100%;
-	max-width: 100%;
 	background-color: transparent;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding-block: 1.4rem;
+	margin-top: auto;
 
 	.content {
 		color: var(--color-accent);

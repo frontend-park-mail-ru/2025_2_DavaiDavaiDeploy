@@ -3,7 +3,7 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	min-height: 100vh;
+	min-height: calc(100vh - 4rem);
 	gap: 2rem;
 	text-align: left;
 }
