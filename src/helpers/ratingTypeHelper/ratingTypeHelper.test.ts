@@ -27,9 +27,9 @@ describe('getRatingType', () => {
 		expect(ratingType).toBe('medium');
 	});
 
-	it('возвращает low для рейтинга 0.1', () => {
+	it('возвращает null для рейтинга 0.1', () => {
 		const ratingType = getRatingType(0);
-		expect(ratingType).toBe('low');
+		expect(ratingType).toBe(null);
 	});
 
 	it('возвращает low для рейтинга 1', () => {
@@ -37,9 +37,9 @@ describe('getRatingType', () => {
 		expect(ratingType).toBe('low');
 	});
 
-	it('возвращает low для рейтинга 0', () => {
+	it('возвращает null для рейтинга 0', () => {
 		const ratingType = getRatingType(0);
-		expect(ratingType).toBe('low');
+		expect(ratingType).toBe(null);
 	});
 
 	it('возвращает medium для рейтинга 7.9', () => {

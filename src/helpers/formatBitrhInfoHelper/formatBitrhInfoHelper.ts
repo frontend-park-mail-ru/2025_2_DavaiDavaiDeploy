@@ -1,5 +1,4 @@
 import { formatAge } from './formatAge';
-import { Months } from './month';
 
 export const formatBirthInfo = (
 	birth_date: string | undefined,
@@ -11,11 +10,22 @@ export const formatBirthInfo = (
 	}
 
 	const date = new Date(birth_date);
-	const day = date.getUTCDate();
-	const month = Months[date.getUTCMonth()];
-	const year = date.getUTCFullYear();
 
-	const parts = [`${day} ${month}, ${year}`];
+	const formatter = new Intl.DateTimeFormat('ru-RU', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	});
+
+	const partsList = formatter.formatToParts(date);
+
+	const day = partsList.find((p) => p.type === 'day')?.value ?? '';
+	const month = partsList.find((p) => p.type === 'month')?.value ?? '';
+	const year = partsList.find((p) => p.type === 'year')?.value ?? '';
+
+	const formattedDate = `${day} ${month}, ${year}`;
+
+	const parts: string[] = [formattedDate];
 
 	if (zodiac_sign) {
 		parts.push(zodiac_sign);

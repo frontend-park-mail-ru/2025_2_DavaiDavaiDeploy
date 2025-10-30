@@ -76,7 +76,7 @@ class ActorInfoComponent extends Component<ActorInfoProps> {
 					</div>
 
 					<div className={styles.about}>
-						<h1 className={styles.aboutTitle}>О персоне</h1>
+						<h1 className={styles.aboutTitle}>Информация</h1>
 
 						<div className={styles.table}>
 							{formattedHeight && (

@@ -1,5 +1,6 @@
 import ArrowLeft from '@/assets/img/arrowLeft.svg';
 import ArrowRight from '@/assets/img/arrowRight.svg';
+import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
@@ -17,6 +18,8 @@ const FILM_COUNT: number = 50;
 const OFFSET: number = 0;
 const THROTTLE_DELAY = 100;
 const INITIAL_RESIZE_DELAY = 300;
+const SMALL_CARD_HEIGHT = 30;
+const BIG_CARD_HEIGHT = 50;
 
 interface FilmSliderProps {
 	films: ModelsMainPageFilm[];
@@ -29,7 +32,7 @@ interface FilmSliderState {
 	cardHeight: number;
 	windowHeight: number;
 	active: boolean;
-	throttledResizeHandler: (ev?: UIEvent) => void;
+	throttledResizeHandler: (ev?: Event | undefined) => void;
 }
 
 class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
@@ -38,7 +41,7 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 	state: FilmSliderState = {
 		curFilm: 0,
 		slideCapacity: 3,
-		cardHeight: 50,
+		cardHeight: SMALL_CARD_HEIGHT,
 		active: false,
 		windowHeight: window.innerHeight,
 		throttledResizeHandler: () => {},
@@ -53,6 +56,10 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 		);
 
 		window.addEventListener('resize', this.state.throttledResizeHandler);
+		window.addEventListener(
+			'orientationchange',
+			this.state.throttledResizeHandler,
+		);
 
 		setTimeout(() => {
 			this.handleResize();
@@ -84,13 +91,13 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 
 		const width = window.innerWidth;
 		let slideCapacity = 5;
-		let cardHeight = 30;
+		let cardHeight = SMALL_CARD_HEIGHT;
 
-		if (width > 1400) {
+		if (width > WIDE_SCREEN_WIDTH) {
 			slideCapacity = 7;
-		} else if (width < 768) {
+		} else if (width < NARROW_SCREEN_WIDTH) {
 			slideCapacity = 3;
-			cardHeight = 50;
+			cardHeight = BIG_CARD_HEIGHT;
 		}
 
 		this.setState({

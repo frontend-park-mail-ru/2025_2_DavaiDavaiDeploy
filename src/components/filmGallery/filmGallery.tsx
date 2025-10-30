@@ -14,7 +14,7 @@ export class FilmGallery extends Component<FilmGalleryProps> {
 		}
 
 		const image1 = getImageSRC(
-			'topFilms',
+			'promoFilms',
 			'3f4a5b6c-7d8e-9f0a-1b2c-3d4e5f6a7b8c',
 			'jpg',
 		);

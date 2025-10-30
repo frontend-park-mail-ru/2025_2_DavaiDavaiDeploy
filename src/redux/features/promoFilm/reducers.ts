@@ -22,7 +22,7 @@ const initialState: InitialState = {
 /**
  * Редьюсер для управления состоянием фильма.
  */
-const topFilmReducer: Reducer = (
+const promoFilmReducer: Reducer = (
 	state = initialState,
 	action: Action,
 ): State => {
@@ -55,4 +55,4 @@ const topFilmReducer: Reducer = (
 	}
 };
 
-export default topFilmReducer;
+export default promoFilmReducer;
