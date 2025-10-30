@@ -1,3 +1,4 @@
+import { decode } from '@/helpers/decodeHelper/decodeHelper';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
@@ -39,7 +40,10 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 			return {
 				...state,
 				loading: false,
-				film: payload.film,
+				film: {
+					...payload.film,
+					original_title: decode(payload.film.original_title),
+				},
 			};
 		case actionTypes.FILM_ERROR:
 			return {

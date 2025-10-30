@@ -1,3 +1,4 @@
+import { decode } from '@/helpers/decodeHelper/decodeHelper';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
@@ -49,7 +50,10 @@ const actorReducer: Reducer = (state = initialState, action: Action): State => {
 				...state,
 				actorLoading: false,
 				actorError: null,
-				curActor: payload.actor,
+				curActor: {
+					...payload.actor,
+					original_name: decode(payload.actor.original_name),
+				},
 			};
 		case actionTypes.ACTOR_ERROR:
 			return {
