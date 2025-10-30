@@ -1,5 +1,5 @@
 import { Component } from '@robocotik/react';
-import { Route404 } from './route404.tsx';
+import { Route404 } from './route404/route404.tsx';
 import { RouterContext } from './routerContext.ts';
 import type { RoutesConfig } from './types/routesConfig.ts';
 import { normalize } from './utils/normalize.ts';
