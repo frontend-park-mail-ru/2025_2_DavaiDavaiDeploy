@@ -10,7 +10,7 @@ import { FilmRating } from '../filmRating/filmRating';
 import styles from './filmInfo.module.scss';
 
 interface FilmInfoProps {
-	film: ModelsFilmPage;
+	film: ModelsFilmPage | null;
 	error: string | null;
 }
 
@@ -20,7 +20,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 			return <div className={styles.err}>Фильм не найден</div>;
 		}
 
-		if (Object.keys(this.props.film).length === 0) {
+		if (!this.props.film) {
 			return <div className={styles.err}>Загрузка фильма</div>;
 		}
 

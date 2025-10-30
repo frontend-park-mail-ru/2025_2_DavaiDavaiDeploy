@@ -13,7 +13,7 @@ import { Component } from '@robocotik/react';
 import styles from './topFilm.module.scss';
 
 interface TopFilmProps {
-	film: ModelsPromoFilm;
+	film: ModelsPromoFilm | null;
 	getTopFilm: VoidFunction;
 }
 
@@ -22,7 +22,7 @@ class TopFilmComponent extends Component<TopFilmProps> {
 		this.props.getTopFilm();
 	}
 	render() {
-		if (!this.props.film.id) {
+		if (!this.props.film) {
 			return <div>Loading...</div>;
 		}
 

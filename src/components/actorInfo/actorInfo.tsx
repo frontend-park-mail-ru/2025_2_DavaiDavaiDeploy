@@ -16,7 +16,7 @@ import { Component } from '@robocotik/react';
 import styles from './actorInfo.module.scss';
 
 interface ActorInfoProps {
-	actor: ModelsActorPage;
+	actor: ModelsActorPage | null;
 	error: string | null;
 	getActor: (id: string) => void;
 }
@@ -33,7 +33,7 @@ class ActorInfoComponent extends Component<ActorInfoProps> {
 			return <div className={styles.err}>Актер не найден</div>;
 		}
 
-		if (Object.keys(this.props.actor).length === 0) {
+		if (!this.props.actor) {
 			return <div className={styles.err}>Загрузка актера</div>;
 		}
 

@@ -12,7 +12,7 @@ import { Component } from '@robocotik/react';
 import styles from './filmPage.module.scss';
 
 interface FilmPageProps {
-	film: ModelsFilmPage;
+	film: ModelsFilmPage | null;
 	error: string | null;
 	getFilm: (id: string) => void;
 }
@@ -22,18 +22,13 @@ class FilmPageComponent extends Component<FilmPageProps> {
 
 	onMount() {
 		this.props.getFilm(this.context.params.id);
-		window.scrollTo({
-			top: 0,
-			left: 0,
-			behavior: 'smooth',
-		});
 	}
 
 	render() {
 		return (
 			<div className={styles.page}>
 				<FilmInfo film={this.props.film} error={this.props.error} />
-				{Object.keys(this.props.film).length != 0 && (
+				{this.props.film && (
 					<section className={styles.content}>
 						<div className={styles.left}></div>
 						<div className={styles.right}>

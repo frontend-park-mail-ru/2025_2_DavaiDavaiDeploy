@@ -4,12 +4,12 @@ import { Component } from '@robocotik/react';
 import styles from './filmGallery.module.scss';
 
 interface FilmGalleryProps {
-	film: ModelsFilmPage;
+	film: ModelsFilmPage | null;
 }
 
 export class FilmGallery extends Component<FilmGalleryProps> {
 	render() {
-		if (Object.keys(this.props.film).length === 0) {
+		if (!this.props.film) {
 			return <div>Loading...</div>;
 		}
 

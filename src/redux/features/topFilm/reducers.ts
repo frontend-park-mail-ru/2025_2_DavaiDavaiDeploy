@@ -6,7 +6,7 @@ import actionTypes from './actionTypes';
 
 interface InitialState {
 	loading: boolean;
-	film: ModelsPromoFilm | {};
+	film: ModelsPromoFilm | null;
 	error: string | null;
 }
 
@@ -15,7 +15,7 @@ interface InitialState {
  */
 const initialState: InitialState = {
 	loading: false,
-	film: {},
+	film: null,
 	error: null,
 };
 

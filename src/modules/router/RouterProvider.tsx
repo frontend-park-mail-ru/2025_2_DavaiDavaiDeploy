@@ -24,6 +24,8 @@ export class RouterProvider extends Component {
 			return;
 		}
 
+		window.scrollTo(0, 0);
+
 		window.history.pushState({}, '', trimRoute(to));
 		this.setState({ path: trimRoute(to), params: to });
 

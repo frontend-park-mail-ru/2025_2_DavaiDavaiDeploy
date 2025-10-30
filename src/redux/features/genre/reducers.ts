@@ -6,7 +6,7 @@ import actionTypes from './actionTypes';
 
 interface InitialState {
 	genreLoading: boolean;
-	curGenre: ModelsGenre | {};
+	curGenre: ModelsGenre | null;
 	genreError: string | null;
 
 	genresLoading: boolean;
@@ -23,7 +23,7 @@ interface InitialState {
  */
 const initialState: InitialState = {
 	genreLoading: false,
-	curGenre: {},
+	curGenre: null,
 	genreError: null,
 
 	genresLoading: false,

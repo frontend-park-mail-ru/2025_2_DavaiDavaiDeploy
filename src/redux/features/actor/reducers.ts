@@ -6,7 +6,7 @@ import actionTypes from './actionTypes';
 
 interface InitialState {
 	actorLoading: boolean;
-	curActor: ModelsActorPage | {};
+	curActor: ModelsActorPage | null;
 	actorError: string | null;
 
 	actorFilmsLoading: boolean;
@@ -19,7 +19,7 @@ interface InitialState {
  */
 const initialState: InitialState = {
 	actorLoading: false,
-	curActor: {},
+	curActor: null,
 	actorError: null,
 
 	actorFilmsLoading: false,
