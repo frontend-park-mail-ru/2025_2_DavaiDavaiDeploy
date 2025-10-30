@@ -20,8 +20,10 @@ export class FilmRating extends Component<FilmRatingProps> {
 		return (
 			<div className={styles.content}>
 				<div className={styles.rating}>
-					<h2 className={styles[`title-${ratingType}`]}>{formattedRating}</h2>
-					<p className={styles.subtitle}>{ratingNumber}</p>
+					{formattedRating && (
+						<h2 className={styles[`title-${ratingType}`]}>{formattedRating}</h2>
+					)}
+					{ratingNumber && <p className={styles.subtitle}>{ratingNumber}</p>}
 					<button className={styles.rateBtn}>
 						<img src={Star} className={styles.star} />
 						<p className={styles.btnText}>Оценить фильм</p>

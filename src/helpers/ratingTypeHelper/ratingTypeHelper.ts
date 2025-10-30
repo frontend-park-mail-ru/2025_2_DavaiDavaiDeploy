@@ -4,7 +4,13 @@ import { RatingValues } from '@/consts/raiting';
 /**
  * Определяет тип рейтинга: высокий, средний или низкий.
  */
-export const getRatingType = (rating: number): RatingTypes => {
+export const getRatingType = (
+	rating: number | undefined,
+): RatingTypes | null => {
+	if (rating === undefined) {
+		return null;
+	}
+
 	if (rating >= 8) {
 		return RatingValues.High;
 	}

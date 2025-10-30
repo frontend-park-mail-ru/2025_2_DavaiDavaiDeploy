@@ -41,9 +41,9 @@ export class FilmInfo extends Component<FilmInfoProps> {
 			original_title,
 		} = this.props.film;
 
-		const formattedRating = rating ? formatRating(rating) : null;
+		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
-		const formattedDuration = duration ? formatDuration(duration) : null;
+		const formattedDuration = formatDuration(duration);
 		const coverSRC = getImageSRC('films', id, 'jpg');
 		const posterSRC = getImageSRC(
 			'topFilms',
@@ -51,8 +51,8 @@ export class FilmInfo extends Component<FilmInfoProps> {
 			'jpg',
 		);
 
-		const formattedBudget = budget ? formatMoney(budget) : null;
-		const formattedFees = worldwide_fees ? formatMoney(worldwide_fees) : null;
+		const formattedBudget = formatMoney(budget);
+		const formattedFees = formatMoney(worldwide_fees);
 
 		return (
 			<div className={styles.film}>
@@ -75,9 +75,11 @@ export class FilmInfo extends Component<FilmInfoProps> {
 								className={styles.cover}
 							/>
 						)}
-						<div className={styles[`rating-${ratingType}`]}>
-							<h3>{formattedRating}</h3>
-						</div>
+						{formattedRating && (
+							<div className={styles[`rating-${ratingType}`]}>
+								<h3>{formattedRating}</h3>
+							</div>
+						)}
 					</div>
 
 					<div className={styles.info}>
@@ -170,7 +172,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 								</div>
 							</div>
 
-							{actors && actors.length > 0 && (
+							{actors?.length > 0 && (
 								<div className={styles.cast}>
 									<div className={styles.castContent}>
 										<h1 className={styles.roles}>В главных ролях</h1>
