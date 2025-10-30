@@ -91,7 +91,7 @@ const getActorAction =
  * Загружает фильмы актера с пагинацией
  */
 const getActorFilmsAction =
-	(id: string | number, limit: number, offset: number): Action =>
+	(limit: number, offset: number, id: string | number): Action =>
 	async (dispatch: Dispatch) => {
 		dispatch(setActorFilmsLoadingAction());
 

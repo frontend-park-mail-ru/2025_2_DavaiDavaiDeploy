@@ -69,7 +69,8 @@ const actorReducer: Reducer = (state = initialState, action: Action): State => {
 				...state,
 				actorFilmsLoading: false,
 				actorFilmsError: null,
-				actorFilms: payload.films,
+				// actorFilms: payload.films,
+				actorFilms: Array.from({ length: 10 }, () => [...payload.films]).flat(),
 			};
 		case actionTypes.ACTOR_FILMS_ERROR:
 			return {

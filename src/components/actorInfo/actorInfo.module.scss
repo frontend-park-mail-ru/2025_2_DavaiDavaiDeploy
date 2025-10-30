@@ -1,7 +1,6 @@
 .actor {
 	display: flex;
 	overflow: hidden;
-	margin-bottom: 10rem;
 	flex-direction: row;
 	gap: 4vw;
 	align-items: start;
@@ -12,7 +11,7 @@
 }
 
 .media {
-	flex: 1;
+	flex: 1.5;
 	display: flex;
 	justify-content: center;
 	align-items: center;

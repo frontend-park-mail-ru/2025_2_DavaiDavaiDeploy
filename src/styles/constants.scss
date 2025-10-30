@@ -62,6 +62,7 @@
 	--color-shadow-hover: hsl(180deg 100% 50% / 50%);
 	--color-shadow-focus: hsl(180deg 100% 50% / 30%);
 
+	--font-size-4xl: clamp(3rem, 23vw, 40rem);
 	--font-size-3xl: clamp(2rem, 4vw, 4rem); // 64
 	--font-size-2xl: clamp(1.8rem, 3.5vw, 3rem); // 48
 	--font-size-xl: clamp(1.6rem, 3.06vw, 2.625rem); // 42
