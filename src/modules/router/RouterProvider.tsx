@@ -37,6 +37,8 @@ export class RouterProvider extends Component {
 	};
 
 	handlePopState = () => {
+		window.scrollTo(0, 0);
+
 		this.setState({
 			path: trimRoute(window.location.pathname),
 			params: window.location.pathname + window.location.search,
