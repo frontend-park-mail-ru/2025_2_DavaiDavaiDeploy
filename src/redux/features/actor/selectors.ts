@@ -8,3 +8,9 @@ export const selectActor: Selector = (state: State): ModelsActorPage =>
 export const selectActorFilms: Selector = (
 	state: State,
 ): ModelsMainPageFilm[] => state.actor.actorFilms;
+
+export const selectActorError: Selector = (state: State): string | null =>
+	state.actor.actorError;
+
+export const selectActorFilmsError: Selector = (state: State): string | null =>
+	state.actor.actorFilmsError;

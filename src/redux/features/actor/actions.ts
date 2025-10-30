@@ -29,7 +29,7 @@ const setActorFilmsLoadingAction = (): Action => {
 const returnActorAction = (data: ModelsActorPage): Action => {
 	return {
 		type: actionTypes.ACTOR_LOADED,
-		payload: { genre: data },
+		payload: { actor: data },
 	};
 };
 

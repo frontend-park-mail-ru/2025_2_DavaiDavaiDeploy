@@ -177,7 +177,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 									<div className={styles.castContent}>
 										<h1 className={styles.roles}>В главных ролях</h1>
 										{actors.map((actor) => (
-											<Link href="#">
+											<Link href={`/actors/${actor.id}`}>
 												<p className={styles.actors}>{actor.russian_name}</p>
 											</Link>
 										))}
