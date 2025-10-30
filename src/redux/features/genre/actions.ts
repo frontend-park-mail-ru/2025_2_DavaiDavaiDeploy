@@ -1,6 +1,6 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsFilm, ModelsGenre } from '@/types/models';
+import type { ModelsGenre, ModelsMainPageFilm } from '@/types/models';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -46,7 +46,7 @@ const returnGenreAction = (data: ModelsGenre): Action => {
 /**
  * Action: устанавливает успешно загруженные фильмы жанра
  */
-const returnGenreFilmsAction = (data: ModelsFilm[]): Action => {
+const returnGenreFilmsAction = (data: ModelsMainPageFilm[]): Action => {
 	return {
 		type: actionTypes.GENRE_FILMS_LOADED,
 		payload: { films: data },
@@ -151,7 +151,7 @@ const getGenreFilmsAction =
 		dispatch(setGenreFilmsLoadingAction());
 
 		try {
-			const response = await HTTPClient.get<ModelsFilm[]>(
+			const response = await HTTPClient.get<ModelsMainPageFilm[]>(
 				`/films/genre/${id}`,
 				{
 					params: { count: limit, offset },

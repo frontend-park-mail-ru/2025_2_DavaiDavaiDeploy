@@ -8,6 +8,7 @@ import { Footer } from './components/footer/footer';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
+import { ActorPage } from './pages/actorPage/actorPage';
 import { FilmPage } from './pages/filmPage/filmPage';
 import { HomePage } from './pages/homePage/homePage';
 
@@ -37,6 +38,7 @@ class App extends Component {
 				<Routes>
 					<Route href="/" component={<HomePage />} />
 					<Route href="/films/:id" component={<FilmPage />} />
+					<Route href="/actors/:id" component={<ActorPage />} />
 				</Routes>
 				<Footer />
 			</div>

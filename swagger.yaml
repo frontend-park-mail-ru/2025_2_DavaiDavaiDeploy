@@ -27,7 +27,14 @@ definitions:
       zodiac_sign:
         type: string
     required:
+      - birth_date
+      - birth_place
+      - height
+      - id
+      - marital_status
+      - photo
       - russian_name
+      - zodiac_sign
     type: object
   models.ActorPage:
     properties:
@@ -54,7 +61,17 @@ definitions:
       zodiac_sign:
         type: string
     required:
+      - age
+      - birth_date
+      - birth_place
+      - films_number
+      - height
+      - id
+      - marital_status
+      - original_name
+      - photo
       - russian_name
+      - zodiac_sign
     type: object
   models.ChangePasswordInput:
     properties:
@@ -70,59 +87,6 @@ definitions:
     properties:
       message:
         type: string
-    type: object
-  models.Film:
-    properties:
-      age_category:
-        type: string
-      budget:
-        type: integer
-      country_id:
-        type: string
-      cover:
-        type: string
-      created_at:
-        type: string
-      description:
-        type: string
-      duration:
-        type: integer
-      genre_id:
-        type: string
-      id:
-        type: string
-      image1:
-        type: string
-      image2:
-        type: string
-      image3:
-        type: string
-      original_title:
-        type: string
-      poster:
-        type: string
-      rating:
-        type: number
-      short_description:
-        type: string
-      slogan:
-        type: string
-      title:
-        type: string
-      trailer_url:
-        type: string
-      updated_at:
-        type: string
-      worldwide_fees:
-        type: integer
-      year:
-        type: integer
-    required:
-      - country_id
-      - duration
-      - genre_id
-      - title
-      - year
     type: object
   models.FilmFeedback:
     properties:
@@ -149,7 +113,14 @@ definitions:
       user_login:
         type: string
     required:
+      - created_at
       - film_id
+      - id
+      - rating
+      - text
+      - title
+      - updated_at
+      - user_avatar
       - user_id
       - user_login
     type: object
@@ -221,10 +192,22 @@ definitions:
       year:
         type: integer
     required:
+      - actors
+      - age_category
+      - budget
       - country
+      - cover
+      - description
+      - duration
       - genre
+      - id
       - number_of_ratings
+      - poster
+      - rating
+      - short_description
       - title
+      - trailer_url
+      - worldwide_fees
       - year
     type: object
   models.Genre:
@@ -242,6 +225,9 @@ definitions:
       updated_at:
         type: string
     required:
+      - description
+      - icon
+      - id
       - title
     type: object
   models.MainPageFilm:
@@ -261,6 +247,8 @@ definitions:
     required:
       - cover
       - genre
+      - id
+      - rating
       - title
       - year
     type: object
@@ -289,7 +277,10 @@ definitions:
     required:
       - duration
       - genre
+      - id
       - image
+      - rating
+      - short_description
       - title
       - year
     type: object
@@ -328,6 +319,8 @@ definitions:
       version:
         type: integer
     required:
+      - avatar
+      - id
       - login
       - version
     type: object
@@ -712,7 +705,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Film'
+              $ref: '#/definitions/models.MainPageFilm'
             type: array
         '400':
           description: Bad Request

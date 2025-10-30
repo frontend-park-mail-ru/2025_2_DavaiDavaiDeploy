@@ -6,7 +6,7 @@ import actionTypes from './actionTypes';
 
 interface InitialState {
 	loading: boolean;
-	film: ModelsPromoFilm | {};
+	film: ModelsPromoFilm | null;
 	error: string | null;
 }
 
@@ -15,14 +15,14 @@ interface InitialState {
  */
 const initialState: InitialState = {
 	loading: false,
-	film: {},
+	film: null,
 	error: null,
 };
 
 /**
  * Редьюсер для управления состоянием фильма.
  */
-const topFilmReducer: Reducer = (
+const promoFilmReducer: Reducer = (
 	state = initialState,
 	action: Action,
 ): State => {
@@ -55,4 +55,4 @@ const topFilmReducer: Reducer = (
 	}
 };
 
-export default topFilmReducer;
+export default promoFilmReducer;

@@ -5,5 +5,5 @@ import type { ModelsPromoFilm } from '@/types/models';
 /**
  * Селектор для получения фильма из состояния.
  */
-export const selectTopFilm: Selector = (state: State): ModelsPromoFilm =>
-	state.topFilm.film;
+export const selectPromoFilm: Selector = (state: State): ModelsPromoFilm =>
+	state.promoFilm.film;

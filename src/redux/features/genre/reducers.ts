@@ -1,12 +1,12 @@
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsFilm, ModelsGenre } from '@/types/models';
+import type { ModelsGenre, ModelsMainPageFilm } from '@/types/models';
 import actionTypes from './actionTypes';
 
 interface InitialState {
 	genreLoading: boolean;
-	curGenre: ModelsGenre | {};
+	curGenre: ModelsGenre | null;
 	genreError: string | null;
 
 	genresLoading: boolean;
@@ -14,7 +14,7 @@ interface InitialState {
 	genresError: string | null;
 
 	genreFilmsLoading: boolean;
-	genreFilms: ModelsFilm[];
+	genreFilms: ModelsMainPageFilm[];
 	genreFilmsError: string | null;
 }
 
@@ -23,7 +23,7 @@ interface InitialState {
  */
 const initialState: InitialState = {
 	genreLoading: false,
-	curGenre: {},
+	curGenre: null,
 	genreError: null,
 
 	genresLoading: false,

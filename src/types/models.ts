@@ -11,32 +11,32 @@
  */
 
 export interface ModelsActor {
-	birth_date?: string;
-	birth_place?: string;
+	birth_date: string;
+	birth_place: string;
 	created_at?: string;
 	death_date?: string;
-	height?: number;
-	id?: string;
-	marital_status?: string;
+	height: number;
+	id: string;
+	marital_status: string;
 	original_name?: string;
-	photo?: string;
+	photo: string;
 	russian_name: string;
 	updated_at?: string;
-	zodiac_sign?: string;
+	zodiac_sign: string;
 }
 
 export interface ModelsActorPage {
-	age?: number;
-	birth_date?: string;
-	birth_place?: string;
-	films_number?: number;
-	height?: number;
-	id?: string;
-	marital_status?: string;
-	original_name?: string;
-	photo?: string;
+	age: number;
+	birth_date: string;
+	birth_place: string;
+	films_number: number;
+	height: number;
+	id: string;
+	marital_status: string;
+	original_name: string;
+	photo: string;
 	russian_name: string;
-	zodiac_sign?: string;
+	zodiac_sign: string;
 }
 
 export interface ModelsChangePasswordInput {
@@ -48,45 +48,19 @@ export interface ModelsError {
 	message?: string;
 }
 
-export interface ModelsFilm {
-	age_category?: string;
-	budget?: number;
-	country: string;
-	cover?: string;
-	created_at?: string;
-	description?: string;
-	duration: number;
-	genre: string;
-	id: string;
-	image1?: string;
-	image2?: string;
-	image3?: string;
-	original_title?: string;
-	poster?: string;
-	rating: number;
-	short_description?: string;
-	slogan?: string;
-	title: string;
-	trailer_url?: string;
-	updated_at?: string;
-	worldwide_fees?: number;
-	year: number;
-	actors: ModelsActor[];
-}
-
 export interface ModelsFilmFeedback {
-	created_at?: string;
+	created_at: string;
 	film_id: string;
-	id?: string;
+	id: string;
 	/**
 	 * @min 1
 	 * @max 10
 	 */
-	rating?: number;
-	text?: string;
-	title?: string;
-	updated_at?: string;
-	user_avatar?: string;
+	rating: number;
+	text: string;
+	title: string;
+	updated_at: string;
+	user_avatar: string;
 	user_id: string;
 	user_login: string;
 }
@@ -135,12 +109,12 @@ export interface ModelsFilmPage {
 }
 
 export interface ModelsGenre {
-	created_at: string;
+	created_at?: string;
 	description: string;
 	icon: string;
 	id: string;
 	title: string;
-	updated_at: string;
+	updated_at?: string;
 }
 
 export interface ModelsMainPageFilm {
@@ -159,7 +133,7 @@ export interface ModelsPromoFilm {
 	id: string;
 	image: string;
 	rating: number;
-	short_description?: string;
+	short_description: string;
 	title: string;
 	updated_at?: string;
 	year: number;
@@ -176,9 +150,9 @@ export interface ModelsSignUpInput {
 }
 
 export interface ModelsUser {
-	avatar?: string;
+	avatar: string;
 	created_at?: string;
-	id?: string;
+	id: string;
 	login: string;
 	updated_at?: string;
 	version: number;

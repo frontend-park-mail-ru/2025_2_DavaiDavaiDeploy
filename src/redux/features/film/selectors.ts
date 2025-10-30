@@ -7,3 +7,6 @@ import type { ModelsFilmPage } from '@/types/models';
  */
 export const selectFilm: Selector = (state: State): ModelsFilmPage =>
 	state.film.film;
+
+export const selectFilmError: Selector = (state: State): string | null =>
+	state.film.error;

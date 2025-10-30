@@ -9,7 +9,7 @@ class LocalStorageHelper {
 	/**
 	 * Сохраняет значение в localStorage.
 	 */
-	static setItem(key: string, value: string): void {
+	static setItem(key: string, value: string) {
 		try {
 			localStorage.setItem(key, value);
 		} catch (e: unknown) {
@@ -39,7 +39,7 @@ class LocalStorageHelper {
 	/**
 	 * Удаляет значение из localStorage.
 	 */
-	static removeItem(key: string): void {
+	static removeItem(key: string) {
 		try {
 			localStorage.removeItem(key);
 		} catch (e: unknown) {

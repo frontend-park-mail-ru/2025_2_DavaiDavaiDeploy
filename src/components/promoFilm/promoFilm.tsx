@@ -5,24 +5,24 @@ import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import actions from '@/redux/features/topFilm/actions';
-import { selectTopFilm } from '@/redux/features/topFilm/selectors';
+import actions from '@/redux/features/promoFilm/actions';
+import { selectPromoFilm } from '@/redux/features/promoFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsPromoFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
-import styles from './topFilm.module.scss';
+import styles from './promoFilm.module.scss';
 
-interface TopFilmProps {
-	film: ModelsPromoFilm;
-	getTopFilm: VoidFunction;
+interface PromoFilmProps {
+	film: ModelsPromoFilm | null;
+	getPromoFilm: VoidFunction;
 }
 
-class TopFilmComponent extends Component<TopFilmProps> {
-	onMount(): void {
-		this.props.getTopFilm();
+class PromoFilmComponent extends Component<PromoFilmProps> {
+	onMount() {
+		this.props.getPromoFilm();
 	}
 	render() {
-		if (!this.props.film.id) {
+		if (!this.props.film) {
 			return <div>Loading...</div>;
 		}
 
@@ -32,10 +32,10 @@ class TopFilmComponent extends Component<TopFilmProps> {
 		const formattedDuration = formatDuration(duration);
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
-		const imageSrc = getImageSRC('topFilms', id, 'jpg');
+		const imageSrc = getImageSRC('promoFilms', id, 'jpg');
 
 		return (
-			<a className={styles.topFilm}>
+			<a className={styles.promoFilm}>
 				<section>
 					<div className={styles.content}>
 						<div className={styles.header}>
@@ -59,14 +59,14 @@ class TopFilmComponent extends Component<TopFilmProps> {
 }
 
 const mapStateToProps = (state: State): Map => ({
-	film: selectTopFilm(state),
+	film: selectPromoFilm(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	getTopFilm: () => dispatch(actions.getTopFilmAction()),
+	getPromoFilm: () => dispatch(actions.getPromoFilmAction()),
 });
 
-export const TopFilm = connect(
+export const PromoFilm = connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(TopFilmComponent);
+)(PromoFilmComponent);
