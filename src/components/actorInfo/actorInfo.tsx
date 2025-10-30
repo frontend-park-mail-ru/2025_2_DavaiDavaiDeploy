@@ -24,7 +24,7 @@ interface ActorInfoProps {
 class ActorInfoComponent extends Component<ActorInfoProps> {
 	static readonly contextType = RouterContext;
 
-	onMount(): void {
+	onMount() {
 		this.props.getActor(this.context.params.id);
 	}
 

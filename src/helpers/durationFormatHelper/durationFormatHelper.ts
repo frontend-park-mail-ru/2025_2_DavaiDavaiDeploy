@@ -2,7 +2,7 @@
  * Преобразует продолжительность в минутах в строку формата "Xч Ym".
  */
 export const formatDuration = (minutes: number | undefined): string | null => {
-	if (minutes === undefined) {
+	if (!minutes) {
 		return null;
 	}
 

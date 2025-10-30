@@ -18,7 +18,7 @@ interface TopFilmProps {
 }
 
 class TopFilmComponent extends Component<TopFilmProps> {
-	onMount(): void {
+	onMount() {
 		this.props.getTopFilm();
 	}
 	render() {

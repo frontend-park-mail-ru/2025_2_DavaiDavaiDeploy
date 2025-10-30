@@ -38,7 +38,7 @@ class GenreSliderComponent extends Component<
 		inactivityTimer: null,
 	};
 
-	onMount(): void {
+	onMount() {
 		this.props.getGenres();
 	}
 

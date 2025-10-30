@@ -1,7 +1,7 @@
 export const formatRatingNumber = (
 	number_of_ratings: number | undefined,
 ): string | null => {
-	if (number_of_ratings === undefined) {
+	if (!number_of_ratings) {
 		return null;
 	}
 

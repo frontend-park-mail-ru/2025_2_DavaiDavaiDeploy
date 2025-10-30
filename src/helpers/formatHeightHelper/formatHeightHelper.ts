@@ -1,5 +1,5 @@
 export const formatHeight = (height: number | undefined): string | null => {
-	if (height === undefined) {
+	if (!height) {
 		return null;
 	}
 

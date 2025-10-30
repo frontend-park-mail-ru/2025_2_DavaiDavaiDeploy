@@ -7,7 +7,7 @@ import { RatingValues } from '@/consts/raiting';
 export const getRatingType = (
 	rating: number | undefined,
 ): RatingTypes | null => {
-	if (rating === undefined) {
+	if (!rating) {
 		return null;
 	}
 

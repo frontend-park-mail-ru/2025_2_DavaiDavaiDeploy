@@ -20,7 +20,7 @@ interface FilmPageProps {
 class FilmPageComponent extends Component<FilmPageProps> {
 	static readonly contextType = RouterContext;
 
-	onMount(): void {
+	onMount() {
 		this.props.getFilm(this.context.params.id);
 		window.scrollTo({
 			top: 0,

@@ -16,7 +16,7 @@ import styles from './filmSlider.module.scss';
 const FILM_COUNT: number = 50;
 const OFFSET: number = 0;
 const THROTTLE_DELAY = 100;
-const DELAY = 300;
+const INITIAL_RESIZE_DELAY = 300;
 
 interface FilmSliderProps {
 	films: ModelsMainPageFilm[];
@@ -44,7 +44,7 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 		throttledResizeHandler: () => {},
 	};
 
-	onMount(): void {
+	onMount() {
 		this.props.getFilms(FILM_COUNT, OFFSET, this.context.params.id);
 
 		this.state.throttledResizeHandler = throttle(
@@ -56,14 +56,14 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 
 		setTimeout(() => {
 			this.handleResize();
-		}, DELAY);
+		}, INITIAL_RESIZE_DELAY);
 	}
 
-	onUnmount(): void {
+	onUnmount() {
 		window.removeEventListener('resize', this.state.throttledResizeHandler);
 	}
 
-	handleResize = (): void => {
+	handleResize = () => {
 		const slider = document.querySelector(`.${styles.slider}`) as HTMLElement;
 		const slides = document.querySelectorAll(
 			`.${styles.slide}`,
@@ -101,13 +101,13 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 		});
 	};
 
-	next(): void {
+	next() {
 		this.setState({
 			curFilm: (this.state.curFilm + 1) % this.props.films.length,
 		});
 	}
 
-	prev(): void {
+	prev() {
 		this.setState({
 			curFilm:
 				(this.state.curFilm - 1 + this.props.films.length) %

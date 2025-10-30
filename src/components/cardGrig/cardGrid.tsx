@@ -18,7 +18,7 @@ interface CardGridProps {
 }
 
 class CardGridComponent extends Component<CardGridProps> {
-	onMount(): void {
+	onMount() {
 		this.props.getFilms(FILM_COUNT, OFFSET);
 	}
 

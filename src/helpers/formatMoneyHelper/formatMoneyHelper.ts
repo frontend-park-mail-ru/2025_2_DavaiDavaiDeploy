@@ -1,5 +1,5 @@
 export const formatMoney = (amount: number | undefined): string | null => {
-	if (amount === undefined) {
+	if (!amount) {
 		return null;
 	}
 

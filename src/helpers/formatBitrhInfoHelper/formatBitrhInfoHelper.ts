@@ -6,7 +6,7 @@ export const formatBirthInfo = (
 	age?: number | undefined,
 	zodiac_sign?: string | undefined,
 ): string | null => {
-	if (birth_date === undefined) {
+	if (!birth_date) {
 		return null;
 	}
 
