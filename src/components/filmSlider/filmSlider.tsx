@@ -1,7 +1,6 @@
 import ArrowLeft from '@/assets/img/arrowLeft.svg';
 import ArrowRight from '@/assets/img/arrowRight.svg';
 import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
-import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -11,6 +10,7 @@ import { selectActorFilms } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
+import { debounce } from '@sentry/core';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmSlider.module.scss';
 
@@ -32,7 +32,7 @@ interface FilmSliderState {
 	cardHeight: number;
 	windowHeight: number;
 	active: boolean;
-	throttledResizeHandler: (ev?: Event | undefined) => void;
+	debounceResizeHandler: (ev?: Event | undefined) => void;
 }
 
 class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
@@ -44,33 +44,32 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 		cardHeight: SMALL_CARD_HEIGHT,
 		active: false,
 		windowHeight: window.innerHeight,
-		throttledResizeHandler: () => {},
+		debounceResizeHandler: () => {},
 	};
 
 	onMount() {
 		this.props.getFilms(FILM_COUNT, OFFSET, this.context.params.id);
 
-		this.state.throttledResizeHandler = throttle(
+		this.state.debounceResizeHandler = debounce(
 			this.handleResize,
 			THROTTLE_DELAY,
 		);
 
-		window.addEventListener('resize', this.state.throttledResizeHandler);
-		window.addEventListener(
-			'orientationchange',
-			this.state.throttledResizeHandler,
-		);
+		window.addEventListener('resize', this.state.debounceResizeHandler);
 
+		/* eslint-disable sonarjs/todo-tag */
+		// TODO: Убрать когда будут рефы
 		setTimeout(() => {
 			this.handleResize();
 		}, INITIAL_RESIZE_DELAY);
 	}
 
 	onUnmount() {
-		window.removeEventListener('resize', this.state.throttledResizeHandler);
+		window.removeEventListener('resize', this.state.debounceResizeHandler);
 	}
 
 	handleResize = () => {
+		// TODO: Переписать на рефы
 		const slider = document.querySelector(`.${styles.slider}`) as HTMLElement;
 		const slides = document.querySelectorAll(
 			`.${styles.slide}`,
