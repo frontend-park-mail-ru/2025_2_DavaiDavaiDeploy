@@ -1,4 +1,5 @@
 import { combineReducers } from '@/modules/redux';
+import actorReducer from './actor/reducers';
 import counterReducer from './counter/reducers';
 import filmReducer from './film/reducers';
 import filmsReducer from './films/reducers';
@@ -17,4 +18,5 @@ export const reducer = combineReducers({
 	user: userReducer,
 	genre: genreReducer,
 	topFilm: topFilmReducer,
+	actor: actorReducer,
 });
