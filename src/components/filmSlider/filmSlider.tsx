@@ -1,6 +1,7 @@
 import ArrowLeft from '@/assets/img/arrowLeft.svg';
 import ArrowRight from '@/assets/img/arrowRight.svg';
 import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
+import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -10,7 +11,6 @@ import { selectActorFilms } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
-import { debounce } from '@sentry/core';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmSlider.module.scss';
 
@@ -57,8 +57,6 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 
 		window.addEventListener('resize', this.state.debounceResizeHandler);
 
-		/* eslint-disable sonarjs/todo-tag */
-		// TODO: Убрать когда будут рефы
 		setTimeout(() => {
 			this.handleResize();
 		}, INITIAL_RESIZE_DELAY);
@@ -69,7 +67,6 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 	}
 
 	handleResize = () => {
-		// TODO: Переписать на рефы
 		const slider = document.querySelector(`.${styles.slider}`) as HTMLElement;
 		const slides = document.querySelectorAll(
 			`.${styles.slide}`,
