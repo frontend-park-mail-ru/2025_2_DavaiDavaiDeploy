@@ -4,7 +4,6 @@ import { InputField } from '@/components/inputField/inputField.tsx';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
 import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 import { validatePassword } from '@/helpers/validatePassword/validatePassword.ts';
-import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
@@ -14,6 +13,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
+import { compose, connect } from '../../modules/redux/index.ts';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import actions from '../../redux/features/user/actions.ts';
@@ -41,14 +41,6 @@ export class LoginPageNotConnected extends Component<
 			this.props.useLoginUser(this.state.username, this.state.password);
 		}
 	};
-
-	onUpdate(): void | Promise<void> {
-		if (this.props.user) {
-			this.props.router.navigate('/');
-		} else {
-			alert('Произошла ошибка входа: ' + this.props.userError);
-		}
-	}
 
 	render() {
 		return (
@@ -121,6 +113,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(actions.loginUserAction(login, password)),
 });
 
-export const LoginPage = withRouter(
-	connect(mapStateToProps, mapDispatchToProps)(LoginPageNotConnected),
-);
+export const LoginPage = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(LoginPageNotConnected);
