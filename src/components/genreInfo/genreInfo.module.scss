@@ -1,0 +1,33 @@
+.genre {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: max(5vh, 4vw);
+}
+
+.title {
+	height: max(18vh, 15vw);
+	color: var(--color-light-text);
+}
+
+.description {
+	text-align: center;
+	margin-top: min(-3vh, -3vw);
+	font-size: var(--font-size-m);
+}
+
+@media (max-width: 768px) {
+	.genre {
+		margin-top: max(5vh, 6vw);
+	}
+
+	.title {
+		height: max(20vh, 18vw);
+	}
+
+	.description {
+		margin-top: -2vh;
+		font-size: var(--font-size-s);
+	}
+}

@@ -146,13 +146,13 @@ const getGenresAction = (): Action => async (dispatch: Dispatch) => {
  * Action: получает фильмы по жанру
  */
 const getGenreFilmsAction =
-	(id: string | number, limit: number, offset: number): Action =>
+	(limit: number, offset: number, id: string | number): Action =>
 	async (dispatch: Dispatch) => {
 		dispatch(setGenreFilmsLoadingAction());
 
 		try {
 			const response = await HTTPClient.get<ModelsMainPageFilm[]>(
-				`/films/genre/${id}`,
+				`/genres/${id}/films`,
 				{
 					params: { count: limit, offset },
 				},

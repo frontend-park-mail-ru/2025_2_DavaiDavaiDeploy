@@ -13,7 +13,7 @@ export class GenreSliderItem extends Component<GenreSliderItemProps> {
 		const { id, title } = this.props.genre;
 		const imageSrc = getImageSRC('genres', id, 'svg');
 		return (
-			<Link href={`/genre/${id}`}>
+			<Link href={`/genres/${id}`}>
 				<img className={styles.image} alt={title} src={imageSrc} />
 			</Link>
 		);
