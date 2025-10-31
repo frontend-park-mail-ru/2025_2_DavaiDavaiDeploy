@@ -51,6 +51,8 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 				loading: false,
 				error: payload.error,
 			};
+		case actionTypes.CLEAR_FILM:
+			return initialState;
 		default:
 			return state;
 	}

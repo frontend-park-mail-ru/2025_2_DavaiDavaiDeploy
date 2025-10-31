@@ -19,6 +19,7 @@ import { Route } from '@/modules/router/route.tsx';
 import { RouterContext } from '@/modules/router/routerContext.ts';
 import { Routes } from '@/modules/router/routes.tsx';
 import { store } from '@/redux/store.ts';
+import { GenrePage } from './pages/genrePage/genrePage';
 
 if (sentryEnabled) {
 	Sentry.init({
@@ -39,6 +40,7 @@ class App extends Component {
 					<Route href="/" component={<HomePage />} />
 					<Route href="/films/:id" component={<FilmPage />} />
 					<Route href="/actors/:id" component={<ActorPage />} />
+					<Route href="/genres/:id" component={<GenrePage />} />
 				</Routes>
 				<Footer />
 			</div>

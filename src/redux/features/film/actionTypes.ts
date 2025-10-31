@@ -1,9 +1,11 @@
 const FILM_LOADING = 'FILM_LOADING';
 const FILM_LOADED = 'FILM_LOADED';
 const FILM_ERROR = 'FILM_ERROR';
+const CLEAR_FILM = 'CLEAR_FILM';
 
 export default {
 	FILM_LOADING,
 	FILM_LOADED,
 	FILM_ERROR,
+	CLEAR_FILM,
 } as const;

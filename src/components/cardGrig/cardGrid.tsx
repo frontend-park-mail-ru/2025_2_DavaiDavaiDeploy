@@ -1,8 +1,11 @@
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
+import { RouterContext } from '@/modules/router/routerContext';
 import actions from '@/redux/features/films/actions';
 import { selectFilms } from '@/redux/features/films/selectors.js';
+import genreActions from '@/redux/features/genre/actions';
+import { selectGenreFilms } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
@@ -14,22 +17,30 @@ const OFFSET: number = 0;
 
 interface CardGridProps {
 	films: ModelsMainPageFilm[];
-	getFilms: (limit: number, offset: number) => void;
+	getFilms: (limit: number, offset: number, id?: string) => void;
 }
 
 class CardGridComponent extends Component<CardGridProps> {
+	static readonly contextType = RouterContext;
+
 	onMount() {
-		this.props.getFilms(FILM_COUNT, OFFSET);
+		if (this.context.params.id) {
+			this.props.getFilms(FILM_COUNT, OFFSET, this.context.params.id);
+		} else {
+			this.props.getFilms(FILM_COUNT, OFFSET);
+		}
 	}
 
 	render() {
 		if (this.props.films.length === 0) {
-			return <div>Loading...</div>;
+			return <div className={styles.err}>Загрузка фильмов</div>;
 		}
 
 		return (
 			<div className={styles.cardGrid}>
-				<h2 className={styles.title}>Все фильмы</h2>
+				{!this.context.params.id && (
+					<h2 className={styles.title}>Все фильмы</h2>
+				)}
 				<div className={styles.grid}>
 					{this.props.films.map((film) => (
 						<FilmCard film={film} />
@@ -52,4 +63,18 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 export const CardGrid = connect(
 	mapStateToProps,
 	mapDispatchToProps,
+)(CardGridComponent);
+
+const genreMapStateToProps = (state: State): Map => ({
+	films: selectGenreFilms(state),
+});
+
+const genreMapDispatchToProps = (dispatch: Dispatch): Map => ({
+	getFilms: (limit: number, offset: number, id: string) =>
+		dispatch(genreActions.getGenreFilmsAction(limit, offset, id)),
+});
+
+export const GenreCardGrid = connect(
+	genreMapStateToProps,
+	genreMapDispatchToProps,
 )(CardGridComponent);

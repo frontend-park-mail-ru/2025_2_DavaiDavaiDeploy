@@ -15,6 +15,7 @@ interface FilmPageProps {
 	film: ModelsFilmPage | null;
 	error: string | null;
 	getFilm: (id: string) => void;
+	clearFilm: VoidFunction;
 }
 
 class FilmPageComponent extends Component<FilmPageProps> {
@@ -22,6 +23,10 @@ class FilmPageComponent extends Component<FilmPageProps> {
 
 	onMount() {
 		this.props.getFilm(this.context.params.id);
+	}
+
+	onUnmount(): void | Promise<void> {
+		this.props.clearFilm();
 	}
 
 	render() {
@@ -48,6 +53,7 @@ const mapStateToProps = (state: State): Map => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getFilm: (id: string) => dispatch(actions.getFilmAction(id)),
+	clearFilm: () => dispatch(actions.clearFilmAction()),
 });
 
 export const FilmPage = connect(
