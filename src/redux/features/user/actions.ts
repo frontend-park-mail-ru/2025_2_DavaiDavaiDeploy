@@ -22,7 +22,7 @@ const setUserLoadingAction = (): Action => {
 const returnUserAction = (data: ModelsUser): Action => {
 	return {
 		type: actionTypes.USER_LOADED,
-		payload: { users: data },
+		payload: { user: data, error: null },
 	};
 };
 
@@ -32,7 +32,7 @@ const returnUserAction = (data: ModelsUser): Action => {
 const returnUserErrorAction = (error: string): Action => {
 	return {
 		type: actionTypes.USER_ERROR,
-		payload: { users: [], error: error },
+		payload: { user: null, error: error },
 	};
 };
 

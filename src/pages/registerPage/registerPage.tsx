@@ -48,18 +48,11 @@ export class RegisterPageNotConnected extends Component<
 		}
 	};
 
-	// onUpdate() {
-	// 	// Проверяем, изменился ли user (это значит, что регистрация завершилась)
-	// 	if (this.props.user) {
-	// 		if (!this.props.userError) {
-	// 			alert('НАВИГИРУЮ НА /')
-	// 			this.context.navigate('/');
-	// 		} else {
-	// 			// Показываем ошибку
-	// 			alert('Произошла ошибка регистрации: ' + this.props.userError);
-	// 		}
-	// 	}
-	// }
+	onUpdate(): void | Promise<void> {
+		if (this.props.user) {
+			this.props.router.navigate('/');
+		}
+	}
 
 	render() {
 		return (
