@@ -8,11 +8,6 @@ export class RouterProvider extends Component {
 		params: {},
 	};
 
-	constructor(props: any) {
-		super(props);
-		this.state.path = window.location.pathname;
-	}
-
 	navigate = (to: string) => {
 		if (to === this.state.path) {
 			return;
@@ -21,26 +16,19 @@ export class RouterProvider extends Component {
 		window.scrollTo(0, 0);
 
 		window.history.pushState({}, '', trimRoute(to));
-		this.setState({ ...this.state, path: trimRoute(to) });
+		this.setState({ path: trimRoute(to), params: {} });
 	};
 
 	handlePopState = () => {
 		window.scrollTo(0, 0);
 
 		this.setState({
-			...this.state,
 			path: trimRoute(window.location.pathname),
-			// params: window.location.pathname + window.location.search,
+			params: {},
 		});
 	};
 
-	onMount() {
-		this.setState({
-			...this.state,
-			path: trimRoute(window.location.pathname),
-			// params: window.location.pathname + window.location.search,
-		});
-
+	onMount(): void | Promise<void> {
 		window.addEventListener('popstate', this.handlePopState);
 	}
 

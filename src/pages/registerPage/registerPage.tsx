@@ -2,7 +2,7 @@ import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
 import { InputField } from '@/components/inputField/inputField.tsx';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
-import { connect } from '@/modules/redux';
+import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
@@ -145,6 +145,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(actions.registerUserAction(login, password)),
 });
 
-export const RegisterPage = withRouter(
-	connect(mapStateToProps, mapDispatchToProps)(RegisterPageNotConnected),
-);
+export const RegisterPage = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(RegisterPageNotConnected);

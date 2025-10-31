@@ -1,7 +1,7 @@
 import { formatBirthInfo } from '@/helpers/formatBitrhInfoHelper/formatBitrhInfoHelper';
 import { formatHeight } from '@/helpers/formatHeightHelper/formatHeightHelper';
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
-import { connect } from '@/modules/redux';
+import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/actor/actions';
@@ -166,6 +166,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getActor: (id: string) => dispatch(actions.getActorAction(id)),
 });
 
-export const ActorInfo = withRouter(
-	connect(mapStateToProps, mapDispatchToProps)(ActorInfoComponent),
-);
+export const ActorInfo = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(ActorInfoComponent);

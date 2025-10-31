@@ -2,7 +2,7 @@ import ArrowLeft from '@/assets/img/arrowLeft.svg';
 import ArrowRight from '@/assets/img/arrowRight.svg';
 import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
-import { connect } from '@/modules/redux';
+import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/actor/actions';
@@ -233,6 +233,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(actions.getActorFilmsAction(limit, offset, id)),
 });
 
-export const FilmSlider = withRouter(
-	connect(mapStateToProps, mapDispatchToProps)(FilmSliderComponent),
-);
+export const FilmSlider = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(FilmSliderComponent);
