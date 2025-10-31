@@ -224,6 +224,8 @@ jobs:
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 100
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
