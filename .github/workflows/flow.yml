@@ -184,11 +184,10 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.VITE_SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.VITE_SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.VITE_SENTRY_PROJECT }}
-          SENTRY_URL: ${{ secrets.VITE_SENTRY_URL }}
         with:
           environment: production
           sourcemaps: './dist'
-          release: ${{ github.sha }}
+          ignore_missing: true
 
   deploy-to-s3:
     name: Deploy to s3
