@@ -11,6 +11,12 @@ export class RouterProvider extends Component {
 	constructor(props: any) {
 		super(props);
 		this.state.path = window.location.pathname;
+
+		RouterContext.value = {
+			path: this.state.path,
+			navigate: this.navigate,
+			params: this.state.params,
+		};
 	}
 
 	navigate = (to: string) => {
@@ -18,15 +24,31 @@ export class RouterProvider extends Component {
 			return;
 		}
 
+		window.scrollTo(0, 0);
+
 		window.history.pushState({}, '', trimRoute(to));
 		this.setState({ path: trimRoute(to), params: to });
+
+		RouterContext.value = {
+			path: trimRoute(to),
+			navigate: this.navigate,
+			params: this.state.params,
+		};
 	};
 
 	handlePopState = () => {
+		window.scrollTo(0, 0);
+
 		this.setState({
 			path: trimRoute(window.location.pathname),
 			params: window.location.pathname + window.location.search,
 		});
+
+		RouterContext.value = {
+			path: trimRoute(window.location.pathname),
+			navigate: this.navigate,
+			params: this.state.params,
+		};
 	};
 
 	onMount() {

@@ -17,9 +17,9 @@ describe('formatDuration', () => {
 		expect(result).toBe('0ч 45м');
 	});
 
-	it('правильно форматирует 0 минут', () => {
+	it('возвращает null для 0 минут', () => {
 		const result = formatDuration(0);
-		expect(result).toBe('0ч 0м');
+		expect(result).toBe(null);
 	});
 
 	it('правильно форматирует ровно несколько часов', () => {

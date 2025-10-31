@@ -8,7 +8,6 @@
 	border-radius: 0.625rem;
 	transition: transform 0.3s ease;
 	width: 100%;
-	max-width: 18rem;
 }
 
 .imageContainer {
@@ -96,4 +95,10 @@
 .film-card a {
 	text-decoration: none;
 	color: inherit;
+}
+
+@media (max-width: 768px) {
+	.film-card {
+		max-width: 18rem;
+	}
 }

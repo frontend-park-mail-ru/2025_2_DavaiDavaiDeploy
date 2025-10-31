@@ -78,10 +78,6 @@
 	color: var(--color-rating-low);
 }
 
-.smallRating {
-	display: none;
-}
-
 .ratingNumber-low,
 .ratingNumber-high,
 .ratingNumber-medium {
@@ -101,12 +97,12 @@
 	color: var(--color-rating-high);
 }
 
+.star {
+	display: none;
+}
+
 @media (max-width: 768px) {
 	.rating {
-		display: none;
-	}
-
-	.smallRating {
 		display: flex;
 		flex-direction: row;
 		gap: 1.5rem;
@@ -119,6 +115,7 @@
 	.star {
 		width: 2.5rem;
 		height: 2.5rem;
+		display: flex;
 	}
 
 	.btnText {
@@ -165,10 +162,14 @@
 		z-index: 10;
 		display: flex;
 		opacity: 0;
-		transform: translateX(-10%); /* Вместо translateX(-5vw) */
+		transform: translateX(-10%);
 		gap: 3vw;
 		padding: 0.5rem 0.8rem;
 		align-items: center;
 		pointer-events: none;
+	}
+
+	.subtitle {
+		display: none;
 	}
 }

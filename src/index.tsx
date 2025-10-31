@@ -4,11 +4,13 @@ import '@fontsource/golos-ui';
 import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
-import { Footer } from '@/components/footer/footer';
+import { Footer } from './components/footer/footer';
+import { isProduction } from './consts/isProduction';
+import { sentryDSN, sentryEnabled } from './consts/sentry';
+import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
+import { ActorPage } from './pages/actorPage/actorPage';
+
 import { Header } from '@/components/header/header';
-import { isProduction } from '@/consts/isProduction';
-import { sentryDSN, sentryEnabled } from '@/consts/sentry';
-import { PRODUCTION_URL_WITH_SCHEMA } from '@/consts/urls';
 import { Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { Route } from '@/modules/router/route.tsx';
@@ -39,7 +41,8 @@ class App extends Component {
 				)}
 				<Routes>
 					<Route href="/" component={<HomePage />} />
-					<Route href="/film/:id" component={<FilmPage />} />
+					<Route href="/films/:id" component={<FilmPage />} />
+					<Route href="/actors/:id" component={<ActorPage />} />
 					<Route href="/login" component={<LoginPage />} />
 					<Route href="/register" component={<RegisterPage />} />
 				</Routes>

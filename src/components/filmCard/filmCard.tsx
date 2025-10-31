@@ -1,10 +1,10 @@
-import { Component } from '@robocotik/react';
-import styles from './filmCard.module.scss';
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { Component } from '@robocotik/react';
+import styles from './filmCard.module.scss';
 
 interface FilmCardProps {
 	film: ModelsMainPageFilm;
@@ -20,7 +20,7 @@ export class FilmCard extends Component<FilmCardProps> {
 		return (
 			<div className={styles.filmCard}>
 				<div className={styles.imageContainer}>
-					<Link href={`/film/${id}`}>
+					<Link href={`/films/${id}`}>
 						<img className={styles.image} src={imageSrc} alt={title}></img>
 						<div className={styles[`rating-${ratingType}`]}>
 							<h3>{formattedRating}</h3>
@@ -28,7 +28,7 @@ export class FilmCard extends Component<FilmCardProps> {
 					</Link>
 				</div>
 				<div className={styles.content}>
-					<Link href={`/film/${id}`}>
+					<Link href={`/films/${id}`}>
 						<h2 className={styles.title}>{title}</h2>
 						<p className={styles.info}>{info}</p>
 					</Link>

@@ -1,12 +1,12 @@
-import actionTypes from './actionTypes';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
 import type { ModelsPromoFilm } from '@/types/models';
+import actionTypes from './actionTypes';
 
 interface InitialState {
 	loading: boolean;
-	film: ModelsPromoFilm | {};
+	film: ModelsPromoFilm | null;
 	error: string | null;
 }
 
@@ -15,14 +15,14 @@ interface InitialState {
  */
 const initialState: InitialState = {
 	loading: false,
-	film: {},
+	film: null,
 	error: null,
 };
 
 /**
  * Редьюсер для управления состоянием фильма.
  */
-const topFilmReducer: Reducer = (
+const promoFilmReducer: Reducer = (
 	state = initialState,
 	action: Action,
 ): State => {
@@ -55,4 +55,4 @@ const topFilmReducer: Reducer = (
 	}
 };
 
-export default topFilmReducer;
+export default promoFilmReducer;

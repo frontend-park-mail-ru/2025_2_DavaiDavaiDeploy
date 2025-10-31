@@ -1,15 +1,24 @@
-.footer {
+.footer-light,
+.footer-dark {
 	width: 100%;
-	max-width: 100%;
 	background-color: transparent;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding-block: 1.4rem;
-	margin-top: 2rem;
+	margin-top: auto;
+
+	.content {
+		color: var(--color-accent);
+		font-size: var(--font-size-m);
+	}
 }
 
-.content {
-	color: var(--color-accent);
-	font-size: var(--font-size-m);
+.footer-light {
+	background-color: var(--color-text);
+	margin-top: 0;
+
+	.content {
+		color: var(--color-dark-text);
+	}
 }

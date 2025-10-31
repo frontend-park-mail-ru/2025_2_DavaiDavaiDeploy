@@ -1,9 +1,9 @@
-import { Component } from '@robocotik/react';
-import styles from './header.module.scss';
 import Logo from '@/assets/img/logo.svg';
 import { NavigateButton } from '@/modules/router/button.tsx';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
+import { Component } from '@robocotik/react';
+import styles from './header.module.scss';
 
 interface IHeaderState {
 	user: ModelsUser | null;

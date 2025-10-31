@@ -1,10 +1,11 @@
+import { combineReducers } from '@/modules/redux';
+import actorReducer from './actor/reducers';
 import counterReducer from './counter/reducers';
 import filmReducer from './film/reducers';
 import filmsReducer from './films/reducers';
 import genreReducer from './genre/reducers';
-import topFilmReducer from './topFilm/reducers';
+import promoFilmReducer from './promoFilm/reducers';
 import userReducer from './user/reducers';
-import { combineReducers } from '@/modules/redux';
 
 /**
  * Главный редьюсер приложения, объединяющий все feature-редьюсеры.
@@ -16,5 +17,6 @@ export const reducer = combineReducers({
 	film: filmReducer,
 	user: userReducer,
 	genre: genreReducer,
-	topFilm: topFilmReducer,
+	promoFilm: promoFilmReducer,
+	actor: actorReducer,
 });

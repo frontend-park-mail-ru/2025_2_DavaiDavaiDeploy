@@ -34,17 +34,6 @@ const Rules = {
 			next: ['export', 'block-like', 'class'],
 		},
 	],
-	'import/order': [
-		'error',
-		{
-			groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-			alphabetize: { order: 'asc' },
-			pathGroups: [
-				{ pattern: '*.css', group: 'sibling', position: 'after' },
-				{ pattern: '*.scss', group: 'sibling', position: 'after' },
-			],
-		},
-	],
 	'import/no-cycle': 'error',
 	'sonarjs/no-identical-functions': 'error',
 	'sonarjs/no-all-duplicated-branches': 'error',

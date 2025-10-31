@@ -1,11 +1,11 @@
-import actionTypes from './actionTypes';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsPromoFilm } from '@/types/models';
+import actionTypes from './actionTypes';
 
 /**
  * Action: начало загрузки фильмов.
  */
-const setTopFilmLoadingAction = (): Action => {
+const setPromoFilmLoadingAction = (): Action => {
 	return {
 		type: actionTypes.TOP_FILM_LOADING,
 	};
@@ -15,7 +15,7 @@ const setTopFilmLoadingAction = (): Action => {
  * Action: успешная загрузка фильма.
  *
  */
-const returnTopFilmAction = (data: ModelsPromoFilm): Action => {
+const returnPromoFilmAction = (data: ModelsPromoFilm): Action => {
 	return {
 		type: actionTypes.TOP_FILM_LOADED,
 		payload: { film: data },
@@ -25,7 +25,7 @@ const returnTopFilmAction = (data: ModelsPromoFilm): Action => {
 /**
  * Action: ошибка при загрузке фильма.
  */
-const returnTopFilmErrorAction = (error: string): Action => {
+const returnPromoFilmErrorAction = (error: string): Action => {
 	return {
 		type: actionTypes.TOP_FILM_ERROR,
 		payload: { film: {}, error: error },
@@ -35,8 +35,8 @@ const returnTopFilmErrorAction = (error: string): Action => {
 /**
  * Thunk: асинхронная загрузка фильма с сервера.
  */
-const getTopFilmAction: Action = () => async (dispatch: Dispatch) => {
-	dispatch(setTopFilmLoadingAction());
+const getPromoFilmAction: Action = () => async (dispatch: Dispatch) => {
+	dispatch(setPromoFilmLoadingAction());
 
 	const film: ModelsPromoFilm = {
 		id: '8f9a0b1c-2d3e-4f5a-6b7c-8d9e0f1a2b3c',
@@ -50,12 +50,12 @@ const getTopFilmAction: Action = () => async (dispatch: Dispatch) => {
 			'Продолжение эпической саги о Поле Атрейдесе. Он продолжает путь к тому, чтобы стать МуадДибом, в то время как его враги плетут заговоры против него.',
 	};
 
-	dispatch(returnTopFilmAction(film));
+	dispatch(returnPromoFilmAction(film));
 };
 
 export default {
-	getTopFilmAction,
-	setTopFilmLoadingAction,
-	returnTopFilmAction,
-	returnTopFilmErrorAction,
+	getPromoFilmAction,
+	setPromoFilmLoadingAction,
+	returnPromoFilmAction,
+	returnPromoFilmErrorAction,
 };
