@@ -1,24 +1,25 @@
 import Logo from '@/assets/img/logo.svg';
 import { connect } from '@/modules/redux/index.ts';
+import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { NavigateButton } from '@/modules/router/button.tsx';
 import { Link } from '@/modules/router/link.tsx';
+import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
+import actions from '@/redux/features/user/actions.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
-import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import styles from './header.module.scss';
 
 interface HeaderProps {
 	user: ModelsUser | null;
+	useCheckUser: () => void;
 }
 
 export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
-	onUpdate(): void | Promise<void> {
-		if (this.props.user) {
-			this.props.router.navigate('/');
-		}
+	onMount(): void | Promise<void> {
+		this.props.useCheckUser();
 	}
 
 	render() {
@@ -58,4 +59,11 @@ const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 });
 
-export const Header = connect(mapStateToProps)(HeaderComponent);
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	useCheckUser: () => dispatch(actions.checkUserAction()),
+});
+
+export const Header = connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(HeaderComponent);

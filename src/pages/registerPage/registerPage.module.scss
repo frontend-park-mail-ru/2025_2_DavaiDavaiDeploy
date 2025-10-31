@@ -115,4 +115,42 @@
 		box-sizing: border-box;
 		gap: 2rem;
 	}
+
+	.form {
+		width: 90%;
+		height: 80dvh;
+		padding-right: 1rem;
+	}
+
+	.loginImg {
+		display: none;
+	}
+
+	.rightSide {
+		width: 100%;
+	}
+
+	.rightSide__titles {
+		padding-top: 4rem;
+		padding-bottom: 2rem;
+	}
+
+	.rightSide__title {
+		text-align: center;
+		margin-bottom: 1rem;
+	}
+
+	.rightSide__subtitle {
+		text-align: center;
+		text-wrap: pretty;
+	}
+
+	.closeLink {
+		top: 1.5rem;
+		right: 1.5rem;
+	}
+
+	.rightSide__inputFields {
+		gap: 1rem;
+	}
 }

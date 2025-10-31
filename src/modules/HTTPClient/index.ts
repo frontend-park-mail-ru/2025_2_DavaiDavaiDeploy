@@ -1,4 +1,5 @@
 import { serverAddr } from '@/consts/serverAddr';
+import getCSRFromLocalStorage from '@/helpers/getCSRFromLocalStorage/getCSRFromLocalStorage.ts';
 import { HTTPClient } from './HTTPClient';
 
 /**
@@ -12,6 +13,8 @@ const TIMEOUT = 1000;
  */
 export default HTTPClient.create({
 	baseUrl: serverAddr,
-	headers: {},
+	headers: {
+		'X-Csrf-Token': getCSRFromLocalStorage(),
+	},
 	timeout: TIMEOUT,
 });
