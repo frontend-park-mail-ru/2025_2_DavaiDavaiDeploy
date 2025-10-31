@@ -1,6 +1,6 @@
 import { FilmGallery } from '@/components/filmGallery/filmGallery';
 import { FilmInfo } from '@/components/filmInfo/filmInfo';
-import { connect } from '@/modules/redux';
+import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/film/actions';
@@ -49,6 +49,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getFilm: (id: string) => dispatch(actions.getFilmAction(id)),
 });
 
-export const FilmPage = withRouter(
-	connect(mapStateToProps, mapDispatchToProps)(FilmPageComponent),
-);
+export const FilmPage = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(FilmPageComponent);
