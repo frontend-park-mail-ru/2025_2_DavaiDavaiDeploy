@@ -1,11 +1,8 @@
 import { Component } from '@robocotik/react';
-import { NavigateButton } from '../../modules/router/button.tsx';
-import { RouterContext } from '../../modules/router/routerContext.ts';
 import styles from './header.module.scss';
 import Logo from '@/assets/img/logo.svg';
+import { NavigateButton } from '@/modules/router/button.tsx';
 import { Link } from '@/modules/router/link.tsx';
-import { selectUser } from '@/redux/features/user/selectors.ts';
-import { store } from '@/redux/store.ts';
 import type { ModelsUser } from '@/types/models.ts';
 
 interface IHeaderState {
@@ -13,14 +10,9 @@ interface IHeaderState {
 }
 
 export class Header extends Component<{}, IHeaderState> {
-	static readonly contextType = RouterContext;
 	state: IHeaderState = {
 		user: null,
 	};
-
-	onMount(): void | Promise<void> {
-		this.state.user = selectUser(store.getState());
-	}
 
 	render() {
 		return (
