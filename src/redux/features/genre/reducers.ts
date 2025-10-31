@@ -106,6 +106,8 @@ const genreReducer: Reducer = (state = initialState, action: Action): State => {
 				genreFilmsError: payload.error,
 				genreFilms: [],
 			};
+		case actionTypes.CLEAR_GENRE:
+			return initialState;
 		default:
 			return state;
 	}

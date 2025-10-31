@@ -33,7 +33,7 @@ class CardGridComponent extends Component<CardGridProps> {
 
 	render() {
 		if (this.props.films.length === 0) {
-			return <div>Loading...</div>;
+			return <div className={styles.err}>Загрузка фильмов</div>;
 		}
 
 		return (

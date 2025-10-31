@@ -13,8 +13,19 @@
 
 .description {
 	text-align: center;
-	margin-top: min(-3vh, -3vw);
+	margin-top: min(-3vh, -2vw);
 	font-size: var(--font-size-m);
+}
+
+.err {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: calc(100vh - 4rem);
+	font-size: var(--font-size-3xl);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-accent);
+	line-height: 1;
 }
 
 @media (max-width: 768px) {

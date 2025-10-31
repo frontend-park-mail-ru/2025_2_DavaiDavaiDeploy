@@ -83,6 +83,8 @@ const actorReducer: Reducer = (state = initialState, action: Action): State => {
 				actorFilmsError: payload.error,
 				actorFilms: [],
 			};
+		case actionTypes.CLEAR_ACTOR:
+			return initialState;
 		default:
 			return state;
 	}

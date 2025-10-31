@@ -5,6 +5,12 @@ import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
 
+const clearGenreAction = (): Action => {
+	return {
+		type: actionTypes.CLEAR_GENRE,
+	};
+};
+
 /**
  * Action: устанавливает состояние загрузки для жанра
  */
@@ -185,4 +191,5 @@ export default {
 	returnGenreErrorAction,
 	returnGenresErrorAction,
 	returnGenreFilmsErrorAction,
+	clearGenreAction,
 };
