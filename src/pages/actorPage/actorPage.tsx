@@ -7,7 +7,7 @@ import * as Sentry from '@sentry/browser';
 
 export class ActorPage extends Component {
 	render() {
-		Sentry.captureException(new EvalError('Our Error'));
+		Sentry.captureException(new URIError('Our Error'));
 		return (
 			<div className={styles.page}>
 				<main className={styles.main}>

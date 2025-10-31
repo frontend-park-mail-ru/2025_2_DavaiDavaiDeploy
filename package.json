@@ -7,7 +7,7 @@
   "main": "index.tsx",
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build && npx rimraf dist/**/*.js.map",
+    "build": "tsc && vite build",
     "genTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/types -n models.ts --no-client",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
