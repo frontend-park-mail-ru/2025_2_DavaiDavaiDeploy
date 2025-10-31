@@ -42,6 +42,12 @@ export class LoginPageNotConnected extends Component<
 		}
 	};
 
+	onUpdate(): void | Promise<void> {
+		if (this.props.user) {
+			this.props.router.navigate('/');
+		}
+	}
+
 	render() {
 		return (
 			<main className={styles.main}>

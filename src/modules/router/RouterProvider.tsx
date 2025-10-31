@@ -4,7 +4,7 @@ import { trimRoute } from './utils/trimRoute.ts';
 
 export class RouterProvider extends Component {
 	state = {
-		path: '/',
+		path: trimRoute(window.location.pathname),
 		params: {},
 	};
 
