@@ -1,18 +1,25 @@
 import Logo from '@/assets/img/logo.svg';
+import { connect } from '@/modules/redux/index.ts';
+import type { State } from '@/modules/redux/types/store.ts';
 import { NavigateButton } from '@/modules/router/button.tsx';
 import { Link } from '@/modules/router/link.tsx';
+import { selectUser } from '@/redux/features/user/selectors.ts';
+import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
+import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import styles from './header.module.scss';
 
-interface IHeaderState {
+interface HeaderProps {
 	user: ModelsUser | null;
 }
 
-export class Header extends Component<{}, IHeaderState> {
-	state: IHeaderState = {
-		user: null,
-	};
+export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
+	onUpdate(): void | Promise<void> {
+		if (this.props.user) {
+			this.props.router.navigate('/');
+		}
+	}
 
 	render() {
 		return (
@@ -21,12 +28,12 @@ export class Header extends Component<{}, IHeaderState> {
 					<img src={Logo} alt="На главную" className={styles.logo} />
 				</Link>
 				<div className={styles.user}>
-					{this.state.user ? (
-						<div>
-							<p className={styles.username}>{this.state.user.login}</p>
+					{this.props.user ? (
+						<div className={styles.userInfo}>
+							<p className={styles.username}>{this.props.user?.login}</p>
 							<img
-								src={this.state.user.avatar}
-								alt={this.state.user.login}
+								src={'https://cdn.ddfilms-static.ru' + this.props.user?.avatar}
+								alt={this.props.user?.login}
 								className={styles.avatar}
 							/>
 						</div>
@@ -46,3 +53,9 @@ export class Header extends Component<{}, IHeaderState> {
 		);
 	}
 }
+
+const mapStateToProps = (state: State): Map => ({
+	user: selectUser(state),
+});
+
+export const Header = connect(mapStateToProps)(HeaderComponent);
