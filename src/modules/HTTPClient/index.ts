@@ -5,7 +5,7 @@ import { HTTPClient } from './HTTPClient';
  * Таймаут для HTTP-запросов в миллисекундах.
  * @constant {number}
  */
-const TIMEOUT = 1000;
+const TIMEOUT = 2500;
 
 /**
  * Настроенный экземпляр HTTP-клиента для работы с API.
