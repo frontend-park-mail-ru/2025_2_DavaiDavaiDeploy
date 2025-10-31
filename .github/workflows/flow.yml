@@ -172,7 +172,7 @@ jobs:
       - name: Checkout Commit
         uses: actions/checkout@v5
         with:
-          fetch-depth: 100
+          fetch-depth: 0
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -188,6 +188,7 @@ jobs:
         with:
           environment: production
           sourcemaps: './dist'
+          release: ${{ github.sha }}
 
   deploy-to-s3:
     name: Deploy to s3
