@@ -1,26 +1,25 @@
 import { Component } from '@robocotik/react';
-import { RouterContext } from './routerContext';
 import type { NavigateButtonProps } from './types/navigateButton.props.ts';
 import type { RouterContextValue } from './types/routerContext.ts';
+import type { WithRouterProps } from './types/withRouterProps.ts';
+import { withRouter } from './withRouter.tsx';
 
-export class NavigateButton extends Component<
-	NavigateButtonProps,
+export class NavigateButtonComponent extends Component<
+	NavigateButtonProps & WithRouterProps,
 	{},
 	RouterContextValue
 > {
-	static readonly contextType = RouterContext;
-
-	constructor(props: NavigateButtonProps) {
+	constructor(props: NavigateButtonProps & WithRouterProps) {
 		super(props);
 
-		if (!this.context) {
+		if (!this.props.router) {
 			throw Error('no context provided in Button');
 		}
 	}
 
 	handleClick = (e: Event) => {
 		e.preventDefault();
-		this.context.navigate(this.props.href);
+		this.props.router.navigate(this.props.href);
 	};
 
 	render() {
@@ -31,3 +30,5 @@ export class NavigateButton extends Component<
 		);
 	}
 }
+
+export const NavigateButton = withRouter(NavigateButtonComponent);

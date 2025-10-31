@@ -1,7 +1,3 @@
-import { Component } from '@robocotik/react';
-import actions from '../../redux/features/user/actions.ts';
-import type { ModelsUser } from '../../types/models.ts';
-import styles from './loginPage.module.scss';
 import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
 import { InputField } from '@/components/inputField/inputField.tsx';
@@ -12,26 +8,30 @@ import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
-import { RouterContext } from '@/modules/router/routerContext.ts';
 import {
 	selectUser,
 	selectUserError,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
-
+import { Component } from '@robocotik/react';
+import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
+import { withRouter } from '../../modules/router/withRouter.tsx';
+import actions from '../../redux/features/user/actions.ts';
+import type { ModelsUser } from '../../types/models.ts';
+import styles from './loginPage.module.scss';
 interface LoginPageProps {
 	user: ModelsUser;
 	userError: string;
 	useLoginUser: (login: string, password: string) => void;
 }
 
-export class LoginPageNotConnected extends Component<LoginPageProps> {
+export class LoginPageNotConnected extends Component<
+	LoginPageProps & WithRouterProps
+> {
 	state = {
 		username: '',
 		password: '',
 	};
-
-	static readonly contextType = RouterContext;
 
 	handleLoginUser = () => {
 		if (
@@ -44,7 +44,7 @@ export class LoginPageNotConnected extends Component<LoginPageProps> {
 
 	onUpdate(): void | Promise<void> {
 		if (this.props.user) {
-			this.context.navigate('/');
+			this.props.router.navigate('/');
 		} else {
 			alert('Произошла ошибка входа: ' + this.props.userError);
 		}
@@ -121,7 +121,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(actions.loginUserAction(login, password)),
 });
 
-export const LoginPage = connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(LoginPageNotConnected);
+export const LoginPage = withRouter(
+	connect(mapStateToProps, mapDispatchToProps)(LoginPageNotConnected),
+);

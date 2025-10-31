@@ -14,13 +14,14 @@ import { Header } from '@/components/header/header';
 import { Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { Route } from '@/modules/router/route.tsx';
-import { RouterContext } from '@/modules/router/routerContext.ts';
 import { Routes } from '@/modules/router/routes.tsx';
 import { FilmPage } from '@/pages/filmPage/filmPage';
 import { HomePage } from '@/pages/homePage/homePage';
 import { LoginPage } from '@/pages/loginPage/loginPage.tsx';
 import { RegisterPage } from '@/pages/registerPage/registerPage.tsx';
 import { store } from '@/redux/store.ts';
+import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
+import { withRouter } from './modules/router/withRouter.tsx';
 
 if (sentryEnabled) {
 	Sentry.init({
@@ -31,14 +32,12 @@ if (sentryEnabled) {
 	});
 }
 
-class App extends Component {
-	static readonly contextType = RouterContext;
+class AppComponent extends Component<WithRouterProps> {
 	render() {
 		return (
 			<div class="layout">
-				{this.context.path != '/login' && this.context.path != '/register' && (
-					<Header />
-				)}
+				{this.props.router.path != '/login' &&
+					this.props.router.path != '/register' && <Header />}
 				<Routes>
 					<Route href="/" component={<HomePage />} />
 					<Route href="/films/:id" component={<FilmPage />} />
@@ -46,9 +45,8 @@ class App extends Component {
 					<Route href="/login" component={<LoginPage />} />
 					<Route href="/register" component={<RegisterPage />} />
 				</Routes>
-				{this.context.path != '/login' && this.context.path != '/register' && (
-					<Footer />
-				)}
+				{this.props.router.path != '/login' &&
+					this.props.router.path != '/register' && <Footer />}
 			</div>
 		);
 	}
@@ -63,6 +61,8 @@ class ProvidersLayout extends Component {
 		);
 	}
 }
+
+const App = withRouter(AppComponent);
 
 render(
 	<ProvidersLayout>

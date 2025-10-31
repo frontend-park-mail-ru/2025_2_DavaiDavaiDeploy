@@ -1,9 +1,3 @@
-import { Component } from '@robocotik/react';
-import { validateLogin } from '../../helpers/validateLogin/validateLogin.ts';
-import { validatePassword } from '../../helpers/validatePassword/validatePassword.ts';
-import { validatePasswordConfirm } from '../../helpers/validatePasswordConfirm/validatePasswordConfirm.ts';
-import { RouterContext } from '../../modules/router/routerContext.ts';
-import styles from './registerPage.module.scss';
 import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
 import { InputField } from '@/components/inputField/inputField.tsx';
@@ -19,6 +13,13 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Component } from '@robocotik/react';
+import { validateLogin } from '../../helpers/validateLogin/validateLogin.ts';
+import { validatePassword } from '../../helpers/validatePassword/validatePassword.ts';
+import { validatePasswordConfirm } from '../../helpers/validatePasswordConfirm/validatePasswordConfirm.ts';
+import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
+import { withRouter } from '../../modules/router/withRouter.tsx';
+import styles from './registerPage.module.scss';
 
 interface RegistrationPageProps {
 	user: ModelsUser;
@@ -26,9 +27,9 @@ interface RegistrationPageProps {
 	useRegisterUser: (login: string, password: string) => void;
 }
 
-export class RegisterPageNotConnected extends Component<RegistrationPageProps> {
-	static readonly contextType = RouterContext;
-
+export class RegisterPageNotConnected extends Component<
+	RegistrationPageProps & WithRouterProps
+> {
 	state = {
 		username: '',
 		password: '',
@@ -43,7 +44,7 @@ export class RegisterPageNotConnected extends Component<RegistrationPageProps> {
 				.isValid
 		) {
 			this.props.useRegisterUser(this.state.username, this.state.password);
-			this.context.navigate('/');
+			this.props.router.navigate('/');
 		}
 	};
 
@@ -144,7 +145,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(actions.registerUserAction(login, password)),
 });
 
-export const RegisterPage = connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(RegisterPageNotConnected);
+export const RegisterPage = withRouter(
+	connect(mapStateToProps, mapDispatchToProps)(RegisterPageNotConnected),
+);

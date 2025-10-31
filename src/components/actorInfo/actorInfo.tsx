@@ -4,7 +4,6 @@ import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import { RouterContext } from '@/modules/router/routerContext';
 import actions from '@/redux/features/actor/actions';
 import {
 	selectActor,
@@ -13,6 +12,8 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsActorPage } from '@/types/models';
 import { Component } from '@robocotik/react';
+import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
+import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './actorInfo.module.scss';
 
 interface ActorInfoProps {
@@ -21,11 +22,9 @@ interface ActorInfoProps {
 	getActor: (id: string) => void;
 }
 
-class ActorInfoComponent extends Component<ActorInfoProps> {
-	static readonly contextType = RouterContext;
-
+class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 	onMount() {
-		this.props.getActor(this.context.params.id);
+		this.props.getActor(this.props.router.params.id);
 	}
 
 	render() {
@@ -167,7 +166,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getActor: (id: string) => dispatch(actions.getActorAction(id)),
 });
 
-export const ActorInfo = connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(ActorInfoComponent);
+export const ActorInfo = withRouter(
+	connect(mapStateToProps, mapDispatchToProps)(ActorInfoComponent),
+);

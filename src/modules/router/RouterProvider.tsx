@@ -11,12 +11,6 @@ export class RouterProvider extends Component {
 	constructor(props: any) {
 		super(props);
 		this.state.path = window.location.pathname;
-
-		RouterContext.value = {
-			path: this.state.path,
-			navigate: this.navigate,
-			params: this.state.params,
-		};
 	}
 
 	navigate = (to: string) => {
@@ -27,34 +21,24 @@ export class RouterProvider extends Component {
 		window.scrollTo(0, 0);
 
 		window.history.pushState({}, '', trimRoute(to));
-		this.setState({ path: trimRoute(to), params: to });
-
-		RouterContext.value = {
-			path: trimRoute(to),
-			navigate: this.navigate,
-			params: this.state.params,
-		};
+		this.setState({ ...this.state, path: trimRoute(to) });
 	};
 
 	handlePopState = () => {
 		window.scrollTo(0, 0);
 
 		this.setState({
+			...this.state,
 			path: trimRoute(window.location.pathname),
-			params: window.location.pathname + window.location.search,
+			// params: window.location.pathname + window.location.search,
 		});
-
-		RouterContext.value = {
-			path: trimRoute(window.location.pathname),
-			navigate: this.navigate,
-			params: this.state.params,
-		};
 	};
 
 	onMount() {
 		this.setState({
+			...this.state,
 			path: trimRoute(window.location.pathname),
-			params: window.location.pathname + window.location.search,
+			// params: window.location.pathname + window.location.search,
 		});
 
 		window.addEventListener('popstate', this.handlePopState);

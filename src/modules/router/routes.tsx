@@ -1,21 +1,10 @@
 import { Component } from '@robocotik/react';
 import { Route404 } from './route404/route404.tsx';
-import { RouterContext } from './routerContext.ts';
-import type { RoutesConfig } from './types/routesConfig.ts';
+import type { WithRouterProps } from './types/withRouterProps.ts';
 import { normalize } from './utils/normalize.ts';
+import { withRouter } from './withRouter.tsx';
 
-interface ContextProps {
-	path: string;
-	params: Record<string, string>;
-}
-
-export class Routes extends Component<RoutesConfig, {}, ContextProps> {
-	constructor(props: RoutesConfig) {
-		super(props);
-	}
-
-	static readonly contextType = RouterContext;
-
+class RoutesNotConnected extends Component<WithRouterProps> {
 	getCurrChild() {
 		if (!this.props.children) {
 			return <Route404 />;
@@ -48,7 +37,7 @@ export class Routes extends Component<RoutesConfig, {}, ContextProps> {
 					});
 
 					params = { ...params, ...search };
-					this.context.params = params;
+					this.props.router.params = params;
 					return child;
 				}
 			}
@@ -61,3 +50,5 @@ export class Routes extends Component<RoutesConfig, {}, ContextProps> {
 		return this.getCurrChild();
 	}
 }
+
+export const Routes = withRouter(RoutesNotConnected);
