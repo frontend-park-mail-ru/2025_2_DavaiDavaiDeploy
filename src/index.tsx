@@ -11,7 +11,7 @@ import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
 import { ActorPage } from './pages/actorPage/actorPage';
 
 import { Header } from '@/components/header/header';
-import { Provider } from '@/modules/redux';
+import { compose, connect, Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { Route } from '@/modules/router/route.tsx';
 import { Routes } from '@/modules/router/routes.tsx';
@@ -20,8 +20,14 @@ import { HomePage } from '@/pages/homePage/homePage';
 import { LoginPage } from '@/pages/loginPage/loginPage.tsx';
 import { RegisterPage } from '@/pages/registerPage/registerPage.tsx';
 import { store } from '@/redux/store.ts';
+import type { Dispatch } from './modules/redux/types/actions.ts';
+import type { State } from './modules/redux/types/store.ts';
 import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
 import { withRouter } from './modules/router/withRouter.tsx';
+import actions from './redux/features/user/actions.ts';
+import { selectUser } from './redux/features/user/selectors.ts';
+import type { Map } from './types/map.ts';
+import type { ModelsUser } from './types/models.ts';
 
 if (sentryEnabled) {
 	Sentry.init({
@@ -32,7 +38,16 @@ if (sentryEnabled) {
 	});
 }
 
-class AppComponent extends Component<WithRouterProps> {
+interface AppProps {
+	user: ModelsUser;
+	checkUser: () => {};
+}
+
+class AppComponent extends Component<AppProps & WithRouterProps> {
+	onMount(): void | Promise<void> {
+		this.props.checkUser();
+	}
+
 	render() {
 		return (
 			<div class="layout">
@@ -62,7 +77,18 @@ class ProvidersLayout extends Component {
 	}
 }
 
-const App = withRouter(AppComponent);
+const mapStateToProps = (state: State): Map => ({
+	user: selectUser(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	checkUser: () => dispatch(actions.checkUserAction()),
+});
+
+const App = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(AppComponent);
 
 render(
 	<ProvidersLayout>

@@ -1,11 +1,9 @@
 import Logo from '@/assets/img/logo.svg';
 import { connect } from '@/modules/redux/index.ts';
-import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { NavigateButton } from '@/modules/router/button.tsx';
 import { Link } from '@/modules/router/link.tsx';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
-import actions from '@/redux/features/user/actions.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
@@ -18,10 +16,6 @@ interface HeaderProps {
 }
 
 export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
-	onMount(): void | Promise<void> {
-		this.props.useCheckUser();
-	}
-
 	render() {
 		return (
 			<header id="header" className={styles.header}>
@@ -59,11 +53,4 @@ const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	useCheckUser: () => dispatch(actions.checkUserAction()),
-});
-
-export const Header = connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(HeaderComponent);
+export const Header = connect(mapStateToProps)(HeaderComponent);
