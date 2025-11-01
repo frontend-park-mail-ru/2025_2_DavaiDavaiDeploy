@@ -114,3 +114,9 @@
 	object-fit: cover;
 	object-position: center;
 }
+
+@media (max-width: 768px) {
+	.avatarActions__login {
+		margin-block: 0;
+	}
+}
