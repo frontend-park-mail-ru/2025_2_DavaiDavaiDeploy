@@ -17,7 +17,7 @@ export class LoadedUser extends Component<LoadedUserProps> {
 				<div className={styles.avatarContainer}>
 					<img
 						src={getStaticURL(this.props.user?.avatar)}
-						alt={this.props.user?.login}
+						alt={'avatar'}
 						className={styles.avatar}
 					/>
 					<AvatarModal
