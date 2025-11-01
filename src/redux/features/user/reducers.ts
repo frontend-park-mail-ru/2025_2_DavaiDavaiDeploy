@@ -64,6 +64,12 @@ export const userReducer: Reducer = (
 				error: action.payload.error,
 				user: null,
 			};
+		case actionTypes.USER_LOGOUT:
+			return {
+				...state,
+				user: null,
+				error: action.payload.error,
+			};
 		default:
 			return state;
 	}
