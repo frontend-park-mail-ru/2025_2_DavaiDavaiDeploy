@@ -1,5 +1,6 @@
 import exit from '@/assets/img/exit.svg';
 import Logo from '@/assets/img/logo.svg';
+import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
 import { connect } from '@/modules/redux/index.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { NavigateButton } from '@/modules/router/button.tsx';
@@ -64,9 +65,7 @@ export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 							<p className={styles.username}>{this.props.user?.login}</p>
 							<div className={styles.avatarContainer}>
 								<img
-									src={
-										'https://cdn.ddfilms-static.ru' + this.props.user?.avatar
-									}
+									src={getStaticURL(this.props.user?.avatar)}
 									alt={this.props.user?.login}
 									className={styles.avatar}
 								/>

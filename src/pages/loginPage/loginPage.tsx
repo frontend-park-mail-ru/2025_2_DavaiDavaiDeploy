@@ -2,23 +2,25 @@ import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
 import { InputField } from '@/components/inputField/inputField.tsx';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
+import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
 import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 import { validatePassword } from '@/helpers/validatePassword/validatePassword.ts';
+import { compose, connect } from '@/modules/redux/index.ts';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
+import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
+import { withRouter } from '@/modules/router/withRouter.tsx';
+import actions from '@/redux/features/user/actions.ts';
 import {
 	selectUser,
 	selectUserError,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
+import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
-import { compose, connect } from '../../modules/redux/index.ts';
-import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
-import { withRouter } from '../../modules/router/withRouter.tsx';
-import actions from '../../redux/features/user/actions.ts';
-import type { ModelsUser } from '../../types/models.ts';
 import styles from './loginPage.module.scss';
+
 interface LoginPageProps {
 	user: ModelsUser;
 	userError: string;
@@ -31,7 +33,24 @@ export class LoginPageNotConnected extends Component<
 	state = {
 		username: '',
 		password: '',
+		showVideo: window.innerWidth >= 768,
 	};
+
+	handleResize = () => {
+		if (window.innerWidth < 768) {
+			this.setState({ showVideo: false });
+		} else {
+			this.setState({ showVideo: true });
+		}
+	};
+
+	onMount() {
+		window.addEventListener('resize', this.handleResize);
+	}
+
+	onUnmount() {
+		window.removeEventListener('resize', this.handleResize);
+	}
 
 	handleLoginUser = () => {
 		if (
@@ -42,7 +61,7 @@ export class LoginPageNotConnected extends Component<
 		}
 	};
 
-	onUpdate(): void | Promise<void> {
+	onUpdate() {
 		if (this.props.user) {
 			this.props.router.navigate('/');
 		}
@@ -55,14 +74,20 @@ export class LoginPageNotConnected extends Component<
 					<Link className={styles.closeLink} href="/">
 						<img src={close} alt="close" />
 					</Link>
-					<video
-						src="https://cdn.ddfilms-static.ru/static/video/login_signup.mp4"
-						alt="loginVideo"
-						className={styles.loginImg}
-						autoplay
-						muted
-						loop
-					/>
+					{this.state.showVideo && (
+						<video
+							src={getStaticURL('/video/login_signup.mp4')}
+							alt="loginVideo"
+							className={styles.loginImg}
+							autoplay
+							muted
+							loop
+							playsinline
+							disablePictureInPicture
+							controlsList="nodownload noremoteplayback"
+						/>
+					)}
+
 					<div className={styles.rightSide}>
 						<div className={styles.rightSide__titles}>
 							<h1 className={styles.rightSide__title}>С возвращением!</h1>

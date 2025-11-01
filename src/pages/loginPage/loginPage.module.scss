@@ -12,7 +12,7 @@
 	justify-content: center;
 	align-items: center;
 	gap: 1.5rem;
-	width: 97.5rem;
+	width: clamp(50rem, 80%, 97.5rem);
 	height: 51.25rem;
 	margin-inline: auto;
 	border-radius: var(--border-radius-xxl);
@@ -39,6 +39,7 @@
 	border-radius: var(--border-radius-xxl);
 	object-fit: cover;
 	height: 100%;
+	pointer-events: none;
 }
 
 .rightSide {
@@ -79,6 +80,11 @@
 	border: none;
 	border-radius: var(--border-radius-lg);
 	font-size: var(--font-size-s);
+	transition: all 200ms ease;
+
+	&:hover {
+		opacity: 0.9;
+	}
 }
 
 .register__button {
@@ -100,6 +106,26 @@
 	cursor: pointer;
 }
 
+@media (max-width: 1024px) {
+	.loginImg {
+		display: none;
+	}
+
+	.rightSide {
+		width: 100%;
+	}
+
+	.rightSide__title {
+		text-align: center;
+		margin-bottom: 1rem;
+	}
+
+	.rightSide__subtitle {
+		text-align: center;
+		text-wrap: pretty;
+	}
+}
+
 @media (max-width: 768px) {
 	.films {
 		display: flex;
@@ -118,35 +144,22 @@
 
 	.form {
 		width: 90%;
-		height: 80dvh;
+		height: clamp(100%, 80dvh, 80dvh);
 		padding-right: 1rem;
 	}
 
-	.loginImg {
-		display: none;
-	}
-
-	.rightSide {
-		width: 100%;
-	}
-
 	.rightSide__titles {
-		padding-top: 6rem;
-		padding-bottom: 4rem;
-	}
-
-	.rightSide__title {
-		text-align: center;
-		margin-bottom: 2rem;
-	}
-
-	.rightSide__subtitle {
-		text-align: center;
-		text-wrap: pretty;
+		padding-top: 4rem;
+		padding-bottom: 2rem;
 	}
 
 	.closeLink {
 		top: 1.5rem;
 		right: 1.5rem;
+	}
+
+	.rightSide__inputFields {
+		margin-block: auto;
+		gap: clamp(0.8rem, 1dvh, 1rem);
 	}
 }

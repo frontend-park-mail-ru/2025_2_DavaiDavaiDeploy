@@ -3,13 +3,13 @@ import { FilmInfo } from '@/components/filmInfo/filmInfo';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
+import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
+import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/film/actions';
 import { selectFilm, selectFilmError } from '@/redux/features/film/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
 import { Component } from '@robocotik/react';
-import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
-import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './filmPage.module.scss';
 
 interface FilmPageProps {
@@ -24,7 +24,7 @@ class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 		this.props.getFilm(this.props.router.params.id);
 	}
 
-	onUnmount(): void | Promise<void> {
+	onUnmount() {
 		this.props.clearFilm();
 	}
 
