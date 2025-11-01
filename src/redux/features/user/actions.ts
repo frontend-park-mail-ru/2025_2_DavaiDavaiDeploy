@@ -106,14 +106,14 @@ const registerUserAction =
 					password: password,
 				},
 			});
-			console.log('Я ДОШЕЛ ДО ПРОВЕРКИ');
+
 			if (response.headers['x-csrf-token']) {
-				console.log('CSRF token установлен');
 				LocalStorageHelper.setItem(
 					'x-csrf-token',
 					response.headers['x-csrf-token'],
 				);
 			}
+
 			dispatch(returnUserAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
@@ -141,12 +141,14 @@ const loginUserAction =
 					password: password,
 				},
 			});
+
 			if (response.headers['x-csrf-token']) {
 				LocalStorageHelper.setItem(
 					'x-csrf-token',
 					response.headers['x-csrf-token'],
 				);
 			}
+
 			dispatch(returnUserAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;

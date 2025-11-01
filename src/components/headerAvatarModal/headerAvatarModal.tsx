@@ -1,9 +1,9 @@
+import exit from '@/assets/img/exit.svg';
+import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
+import { getStaticURL } from '../../helpers/getCDNImageHelper/getStaticURL.ts';
 import styles from './headerAvatarModal.module.scss';
-import { Link } from '@/modules/router/link.tsx';
-import exit from '@/assets/img/exit.svg';
-
 
 interface ModalProps {
 	user: ModelsUser | null;
@@ -20,7 +20,7 @@ export class AvatarModal extends Component<ModalProps> {
 		return (
 			<div className={styles.avatarActions}>
 				<img
-					src={'https://cdn.ddfilms-static.ru' + this.props.user?.avatar}
+					src={getStaticURL(this.props.user?.avatar)}
 					alt={this.props.user?.login}
 					className={styles.avatar}
 				/>

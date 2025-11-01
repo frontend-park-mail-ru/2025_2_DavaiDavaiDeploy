@@ -23,32 +23,37 @@ interface HeaderProps {
 }
 
 export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
+	renderUserSection() {
+		if (this.props.isLoading) {
+			return <p>LOADING</p>;
+		}
+
+		if (this.props.user) {
+			return (
+				<LoadedUser user={this.props.user} logoutUser={this.props.logoutUser} />
+			);
+		}
+
+		return (
+			<>
+				<p className={styles.text1}>Нет аккаунта?</p>
+				<Link href="/register" className={styles.text2}>
+					Зарегистрироваться
+				</Link>
+				<NavigateButton href="/login" className={styles.loginBtn}>
+					Войти
+				</NavigateButton>
+			</>
+		);
+	}
+
 	render() {
 		return (
 			<header id="header" className={styles.header}>
 				<Link href="/">
 					<img src={Logo} alt="На главную" className={styles.logo} />
 				</Link>
-				<div className={styles.user}>
-					{this.props.isLoading ? (
-						<p>LOADING</p>
-					) : this.props.user ? (
-						<LoadedUser
-							user={this.props.user}
-							logoutUser={this.props.logoutUser}
-						/>
-					) : (
-						<>
-							<p className={styles.text1}>Нет аккаунта?</p>
-							<Link href="/register" className={styles.text2}>
-								Зарегистрироваться
-							</Link>
-							<NavigateButton href="/login" className={styles.loginBtn}>
-								Войти
-							</NavigateButton>
-						</>
-					)}
-				</div>
+				<div className={styles.user}>{this.renderUserSection()}</div>
 			</header>
 		);
 	}
