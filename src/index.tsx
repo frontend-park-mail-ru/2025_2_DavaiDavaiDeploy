@@ -22,6 +22,7 @@ import { RegisterPage } from '@/pages/registerPage/registerPage.tsx';
 import { store } from '@/redux/store.ts';
 import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
 import { withRouter } from './modules/router/withRouter.tsx';
+import { GenrePage } from './pages/genrePage/genrePage';
 
 if (sentryEnabled) {
 	Sentry.init({
@@ -44,6 +45,7 @@ class AppComponent extends Component<WithRouterProps> {
 					<Route href="/actors/:id" component={<ActorPage />} />
 					<Route href="/login" component={<LoginPage />} />
 					<Route href="/register" component={<RegisterPage />} />
+					<Route href="/genres/:id" component={<GenrePage />} />
 				</Routes>
 				{this.props.router.path != '/login' &&
 					this.props.router.path != '/register' && <Footer />}

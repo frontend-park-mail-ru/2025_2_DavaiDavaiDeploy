@@ -5,6 +5,12 @@ import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
 
+const clearActorAction = (): Action => {
+	return {
+		type: actionTypes.CLEAR_ACTOR,
+	};
+};
+
 /**
  * Устанавливает состояние загрузки страницы актера
  */
@@ -126,4 +132,5 @@ export default {
 	returnActorFilmsAction,
 	returnActorErrorAction,
 	returnActorFilmsErrorAction,
+	clearActorAction,
 };
