@@ -2,7 +2,7 @@ import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
 import { InputField } from '@/components/inputField/inputField.tsx';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
-import { getCDNImageUrl } from '@/helpers/getCDNImageHelper/getCDNImageUrl.ts';
+import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
 import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 import { validatePassword } from '@/helpers/validatePassword/validatePassword.ts';
 import { compose, connect } from '@/modules/redux/index.ts';
@@ -58,7 +58,7 @@ export class LoginPageNotConnected extends Component<
 						<img src={close} alt="close" />
 					</Link>
 					<video
-						src={getCDNImageUrl('/video/login_signup.mp4')}
+						src={getStaticURL('/video/login_signup.mp4')}
 						alt="loginVideo"
 						className={styles.loginImg}
 						autoplay

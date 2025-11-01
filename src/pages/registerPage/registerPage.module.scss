@@ -138,13 +138,13 @@
 
 	.form {
 		width: 90%;
-		height: 80dvh;
+		height: clamp(100%, 80dvh, 80dvh);
 		padding-right: 1rem;
 	}
 
 	.rightSide__titles {
-		padding-top: 4rem;
-		padding-bottom: 2rem;
+		padding-top: 2rem;
+		padding-bottom: 1rem;
 	}
 
 	.closeLink {
@@ -153,6 +153,7 @@
 	}
 
 	.rightSide__inputFields {
-		gap: 1rem;
+		margin-block: auto;
+		gap: clamp(0.8rem, 1dvh, 1rem);
 	}
 }

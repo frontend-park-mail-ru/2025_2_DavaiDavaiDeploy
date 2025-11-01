@@ -138,17 +138,22 @@
 
 	.form {
 		width: 90%;
-		height: 80dvh;
+		height: clamp(100%, 80dvh, 80dvh);
 		padding-right: 1rem;
 	}
 
 	.rightSide__titles {
-		padding-top: 6rem;
-		padding-bottom: 4rem;
+		padding-top: 4rem;
+		padding-bottom: 2rem;
 	}
 
 	.closeLink {
 		top: 1.5rem;
 		right: 1.5rem;
+	}
+
+	.rightSide__inputFields {
+		margin-block: auto;
+		gap: clamp(0.8rem, 1dvh, 1rem);
 	}
 }
