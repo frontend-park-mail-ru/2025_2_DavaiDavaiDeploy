@@ -8,13 +8,15 @@ import { HTTPClient } from './HTTPClient';
  */
 const TIMEOUT = 2500;
 
+const csrfTokenHeader: Record<string, string> = {
+	'X-CSRF-Token': getCSRFromLocalStorage(),
+};
+
 /**
  * Настроенный экземпляр HTTP-клиента для работы с API.
  */
 export default HTTPClient.create({
 	baseUrl: serverAddr,
-	headers: {
-		'X-Csrf-Token': () => getCSRFromLocalStorage(),
-	},
+	headers: csrfTokenHeader,
 	timeout: TIMEOUT,
 });

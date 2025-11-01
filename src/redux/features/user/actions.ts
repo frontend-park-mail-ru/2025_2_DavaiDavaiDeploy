@@ -1,6 +1,7 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsUser } from '@/types/models';
+import LocalStorageHelper from '../../../helpers/localStorageHelper/localStorageHelper.ts';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -105,7 +106,14 @@ const registerUserAction =
 					password: password,
 				},
 			});
-
+			console.log('Я ДОШЕЛ ДО ПРОВЕРКИ');
+			if (response.headers['x-csrf-token']) {
+				console.log('CSRF token установлен');
+				LocalStorageHelper.setItem(
+					'x-csrf-token',
+					response.headers['x-csrf-token'],
+				);
+			}
 			dispatch(returnUserAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
@@ -133,7 +141,12 @@ const loginUserAction =
 					password: password,
 				},
 			});
-
+			if (response.headers['x-csrf-token']) {
+				LocalStorageHelper.setItem(
+					'x-csrf-token',
+					response.headers['x-csrf-token'],
+				);
+			}
 			dispatch(returnUserAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;

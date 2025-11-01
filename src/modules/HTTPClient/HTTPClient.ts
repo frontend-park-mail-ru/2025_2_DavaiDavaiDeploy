@@ -51,7 +51,10 @@ export class HTTPClient {
 	}: RequestConfig): Promise<Response<T>> {
 		const requestMethod = method.toUpperCase();
 
-		const requestUrl = new URL(this.default.baseUrl + path);
+		const requestUrl = new URL(
+			this.default.baseUrl + path,
+			window.location.origin,
+		);
 
 		for (const [key, value] of Object.entries(params)) {
 			if (value != null) {
