@@ -28,7 +28,7 @@ export class RouterProvider extends Component {
 		});
 	};
 
-	onMount(): void | Promise<void> {
+	onMount() {
 		window.addEventListener('popstate', this.handlePopState);
 	}
 

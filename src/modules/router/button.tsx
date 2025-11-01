@@ -9,14 +9,6 @@ export class NavigateButtonComponent extends Component<
 	{},
 	RouterContextValue
 > {
-	constructor(props: NavigateButtonProps & WithRouterProps) {
-		super(props);
-
-		if (!this.props.router) {
-			throw Error('no context provided in Button');
-		}
-	}
-
 	handleClick = (e: Event) => {
 		e.preventDefault();
 		this.props.router.navigate(this.props.href);

@@ -26,7 +26,7 @@ export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 						<div className={styles.userInfo}>
 							<p className={styles.username}>{this.props.user?.login}</p>
 							<img
-								src={'https://cdn.ddfilms-static.ru' + this.props.user?.avatar}
+								src={process.env.VITE_CDN_ADDRESS + this.props.user?.avatar}
 								alt={this.props.user?.login}
 								className={styles.avatar}
 							/>

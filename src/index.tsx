@@ -45,15 +45,18 @@ interface AppProps {
 }
 
 class AppComponent extends Component<AppProps & WithRouterProps> {
-	onMount(): void | Promise<void> {
+	onMount() {
 		this.props.checkUser();
 	}
 
 	render() {
+		const showExtraFields =
+			this.props.router.path !== '/login' &&
+			this.props.router.path !== '/register';
+
 		return (
 			<div class="layout">
-				{this.props.router.path != '/login' &&
-					this.props.router.path != '/register' && <Header />}
+				{showExtraFields && <Header />}
 				<Routes>
 					<Route href="/" component={<HomePage />} />
 					<Route href="/films/:id" component={<FilmPage />} />
@@ -62,8 +65,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/register" component={<RegisterPage />} />
 					<Route href="/genres/:id" component={<GenrePage />} />
 				</Routes>
-				{this.props.router.path != '/login' &&
-					this.props.router.path != '/register' && <Footer />}
+				{showExtraFields && <Footer />}
 			</div>
 		);
 	}
