@@ -14,3 +14,9 @@
 	width: 100%;
 	border-radius: var(--border-radius-xl);
 }
+
+@media (max-width: 1000px) {
+	.title {
+		text-align: center;
+	}
+}

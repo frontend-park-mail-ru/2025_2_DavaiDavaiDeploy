@@ -8,3 +8,7 @@ export const formatRating = (rating: number): string => {
 
 	return rating.toFixed(1);
 };
+
+export const formatRatingForFeedback = (rating: number): string => {
+	return `${rating.toFixed(0)}/10`;
+};

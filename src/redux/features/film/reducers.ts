@@ -2,29 +2,35 @@ import { decode } from '@/helpers/decodeHelper/decodeHelper';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsFilmPage } from '@/types/models';
+import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
 import actionTypes from './actionTypes';
 
 interface InitialState {
-	loading: boolean;
+	filmLoading: boolean;
+	feedbackLoading: boolean;
 	film: ModelsFilmPage | null;
-	error: string | null;
+	feedbacks: ModelsFilmFeedback[] | null;
+	filmError: string | null;
+	feedbackError: string | null;
 }
 
 /**
  * Начальное состояние редьюсера фильмов.
  */
 const initialState: InitialState = {
-	loading: false,
+	filmLoading: false,
+	feedbackLoading: false,
 	film: null,
-	error: null,
+	feedbacks: null,
+	filmError: null,
+	feedbackError: null,
 };
 
 /**
- * Редьюсер для управления состоянием списка фильмов.
+ * Редьюсер для управления состоянием фильма и отзывов.
  */
 const filmReducer: Reducer = (state = initialState, action: Action): State => {
-	if (typeof action == 'function') {
+	if (typeof action === 'function') {
 		return state;
 	}
 
@@ -34,12 +40,13 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 		case actionTypes.FILM_LOADING:
 			return {
 				...state,
-				loading: true,
+				filmLoading: true,
+				filmError: null,
 			};
 		case actionTypes.FILM_LOADED:
 			return {
 				...state,
-				loading: false,
+				filmLoading: false,
 				film: {
 					...payload.film,
 					original_title: decode(payload.film.original_title),
@@ -48,11 +55,30 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 		case actionTypes.FILM_ERROR:
 			return {
 				...state,
-				loading: false,
-				error: payload.error,
+				filmLoading: false,
+				filmError: payload.error,
 			};
 		case actionTypes.CLEAR_FILM:
 			return initialState;
+		case actionTypes.FEEDBACK_LOADING:
+			return {
+				...state,
+				feedbackLoading: true,
+				feedbackError: null,
+			};
+		case actionTypes.FEEDBACK_LOADED:
+			return {
+				...state,
+				feedbackLoading: false,
+				feedbacks: payload.feedbacks,
+			};
+		case actionTypes.FEEDBACK_ERROR:
+			return {
+				...state,
+				feedbackLoading: false,
+				feedbackError: payload.error,
+			};
+
 		default:
 			return state;
 	}

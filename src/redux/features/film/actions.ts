@@ -1,6 +1,6 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsFilmPage } from '@/types/models';
+import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
 import actionTypes from './actionTypes';
 
 const clearFilmAction = (): Action => {
@@ -10,7 +10,7 @@ const clearFilmAction = (): Action => {
 };
 
 /**
- * Action: начало загрузки фильмов.
+ * Action: начало загрузки фильма.
  */
 const setFilmLoadingAction = (): Action => {
 	return {
@@ -19,8 +19,16 @@ const setFilmLoadingAction = (): Action => {
 };
 
 /**
- * Action: успешная загрузка фильмов.
- *
+ * Action: начало загрузки фидбэков.
+ */
+const setFeedbacksLoadingAction = (): Action => {
+	return {
+		type: actionTypes.FEEDBACK_LOADING,
+	};
+};
+
+/**
+ * Action: успешная загрузка фильма.
  */
 const returnFilmAction = (data: ModelsFilmPage): Action => {
 	return {
@@ -30,7 +38,17 @@ const returnFilmAction = (data: ModelsFilmPage): Action => {
 };
 
 /**
- * Action: ошибка при загрузке фильмов.
+ * Action: успешное получение фидбэков.
+ */
+const returnFeedbacksAction = (data: ModelsFilmFeedback[]): Action => {
+	return {
+		type: actionTypes.FEEDBACK_LOADED,
+		payload: { feedbacks: data },
+	};
+};
+
+/**
+ * Action: ошибка при загрузке фильма.
  */
 const returnFilmErrorAction = (error: string): Action => {
 	return {
@@ -40,7 +58,17 @@ const returnFilmErrorAction = (error: string): Action => {
 };
 
 /**
- * Thunk: асинхронная загрузка фильмов с сервера.
+ * Action: ошибка при загрузке фидбэков.
+ */
+const returnFeedbacksErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.FEEDBACK_ERROR,
+		payload: { feedbacks: [], error: error },
+	};
+};
+
+/**
+ * Thunk: асинхронная загрузка фильма с сервера.
  */
 const getFilmAction: Action = (id: string) => async (dispatch: Dispatch) => {
 	dispatch(setFilmLoadingAction());
@@ -62,10 +90,41 @@ const getFilmAction: Action = (id: string) => async (dispatch: Dispatch) => {
 	}
 };
 
+/**
+ * Thunk: асинхронная загрузка фильма с сервера.
+ */
+const getFeedbacksAction: Action =
+	(limit: number, offset: number, id: string) => async (dispatch: Dispatch) => {
+		dispatch(setFeedbacksLoadingAction());
+
+		try {
+			const response = await HTTPClient.get<ModelsFilmFeedback[]>(
+				`/films/${id}/feedbacks`,
+				{ params: { count: limit, offset } },
+			);
+
+			dispatch(returnFeedbacksAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = 'Произошла ошибка';
+
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnFeedbacksErrorAction(errorMessage));
+		}
+	};
+
 export default {
 	getFilmAction,
+	getFeedbacksAction,
 	setFilmLoadingAction,
 	returnFilmAction,
 	returnFilmErrorAction,
 	clearFilmAction,
+	setFeedbacksLoadingAction,
+	returnFeedbacksAction,
+	returnFeedbacksErrorAction,
 };
