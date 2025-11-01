@@ -1,4 +1,6 @@
 import Logo from '@/assets/img/logo.svg';
+import { LoadedUser } from '@/components/headerLoadedUser/headerLoadedUser.tsx';
+import { LoadingState } from '@/components/loadingState/loadingState.tsx';
 import { connect } from '@/modules/redux/index.ts';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -13,8 +15,6 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
-import { LoadedUser } from '../headerLoadedUser/headerLoadedUser.tsx';
-import { LoadingState } from '../loadingState/loadingState.tsx';
 import styles from './header.module.scss';
 
 interface HeaderProps {
