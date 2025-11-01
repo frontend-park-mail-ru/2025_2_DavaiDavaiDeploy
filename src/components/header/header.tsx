@@ -1,4 +1,5 @@
 import Logo from '@/assets/img/logo.svg';
+import { getCDNImageUrl } from '@/helpers/getCDNImageHelper/getCDNImageUrl';
 import { connect } from '@/modules/redux/index.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { NavigateButton } from '@/modules/router/button.tsx';
@@ -26,7 +27,7 @@ export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 						<div className={styles.userInfo}>
 							<p className={styles.username}>{this.props.user?.login}</p>
 							<img
-								src={process.env.VITE_CDN_ADDRESS + this.props.user?.avatar}
+								src={getCDNImageUrl(this.props.user?.avatar)}
 								alt={this.props.user?.login}
 								className={styles.avatar}
 							/>
