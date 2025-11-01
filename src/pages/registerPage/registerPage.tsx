@@ -63,7 +63,7 @@ export class RegisterPageNotConnected extends Component<
 						<img src={close} alt="close" />
 					</Link>
 					<video
-						src={getCDNImageUrl('/static/video/login_signup.mp4')}
+						src={getCDNImageUrl('/video/login_signup.mp4')}
 						alt="loginVideo"
 						className={styles.loginImg}
 						autoplay

@@ -1,3 +1,5 @@
+import { STATIC_URL } from '../../consts/urls.ts';
+
 /**
  * Получает полный URL изображения с CDN
  * @param imagePath - относительный путь к изображению (например, "/avatars/user.jpg")
@@ -8,8 +10,7 @@ export function getCDNImageUrl(imagePath: string | undefined | null): string {
 		return '';
 	}
 
-	const CDN_ADDRESS =
-		import.meta.env.VITE_CDN_ADDRESS || 'https://cdn.ddfilms-static.ru';
+	const CDN_ADDRESS = STATIC_URL;
 
 	// Если путь уже содержит полный URL, возвращаем как есть
 	if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
