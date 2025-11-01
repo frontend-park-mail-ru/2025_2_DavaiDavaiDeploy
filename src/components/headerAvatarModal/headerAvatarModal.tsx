@@ -1,13 +1,14 @@
 import exit from '@/assets/img/exit.svg';
+import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
 import { getStaticURL } from '../../helpers/getCDNImageHelper/getStaticURL.ts';
 import styles from './headerAvatarModal.module.scss';
-
 interface ModalProps {
 	user: ModelsUser | null;
 	logoutUser: () => {};
+	className: string;
 }
 
 export class AvatarModal extends Component<ModalProps> {
@@ -18,7 +19,7 @@ export class AvatarModal extends Component<ModalProps> {
 
 	render() {
 		return (
-			<div className={styles.avatarActions}>
+			<div className={clsx(styles.avatarActions, this.props.className)}>
 				<img
 					src={getStaticURL(this.props.user?.avatar)}
 					alt={this.props.user?.login}

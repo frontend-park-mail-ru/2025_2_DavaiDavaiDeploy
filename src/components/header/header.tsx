@@ -14,6 +14,7 @@ import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
 import { LoadedUser } from '../headerLoadedUser/headerLoadedUser.tsx';
+import { LoadingState } from '../loadingState/loadingState.tsx';
 import styles from './header.module.scss';
 
 interface HeaderProps {
@@ -25,7 +26,11 @@ interface HeaderProps {
 export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 	renderUserSection() {
 		if (this.props.isLoading) {
-			return <p>LOADING</p>;
+			return (
+				<div className={styles.loadingContainer}>
+					<LoadingState />
+				</div>
+			);
 		}
 
 		if (this.props.user) {

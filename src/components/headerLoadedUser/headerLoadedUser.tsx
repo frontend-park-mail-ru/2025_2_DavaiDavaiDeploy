@@ -23,6 +23,7 @@ export class LoadedUser extends Component<LoadedUserProps> {
 					<AvatarModal
 						user={this.props.user}
 						logoutUser={this.props.logoutUser}
+						className={styles.avatarActions}
 					/>
 				</div>
 			</div>
