@@ -22,7 +22,7 @@ import styles from './loginPage.module.scss';
 interface LoginPageProps {
 	user: ModelsUser;
 	userError: string;
-	useLoginUser: (login: string, password: string) => void;
+	loginUser: (login: string, password: string) => void;
 }
 
 export class LoginPageNotConnected extends Component<
@@ -38,7 +38,7 @@ export class LoginPageNotConnected extends Component<
 			validateLogin(this.state.username).isValid &&
 			validatePassword(this.state.password).isValid
 		) {
-			this.props.useLoginUser(this.state.username, this.state.password);
+			this.props.loginUser(this.state.username, this.state.password);
 		}
 	};
 
@@ -115,7 +115,7 @@ const mapStateToProps = (state: State): Map => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	useLoginUser: (login: string, password: string) =>
+	loginUser: (login: string, password: string) =>
 		dispatch(actions.loginUserAction(login, password)),
 });
 

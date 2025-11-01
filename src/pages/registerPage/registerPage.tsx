@@ -24,7 +24,7 @@ import styles from './registerPage.module.scss';
 interface RegistrationPageProps {
 	user: ModelsUser;
 	userError: string;
-	useRegisterUser: (login: string, password: string) => void;
+	registerUser: (login: string, password: string) => void;
 }
 
 export class RegisterPageNotConnected extends Component<
@@ -43,7 +43,7 @@ export class RegisterPageNotConnected extends Component<
 			validatePasswordConfirm(this.state.password, this.state.repeatPassword)
 				.isValid
 		) {
-			this.props.useRegisterUser(this.state.username, this.state.password);
+			this.props.registerUser(this.state.username, this.state.password);
 			this.props.router.navigate('/');
 		}
 	};
@@ -134,7 +134,7 @@ const mapStateToProps = (state: State): Map => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	useRegisterUser: (login: string, password: string) =>
+	registerUser: (login: string, password: string) =>
 		dispatch(actions.registerUserAction(login, password)),
 });
 
