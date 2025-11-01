@@ -39,6 +39,7 @@
 	border-radius: var(--border-radius-xxl);
 	object-fit: cover;
 	height: 100%;
+	pointer-events: none;
 }
 
 .rightSide {
