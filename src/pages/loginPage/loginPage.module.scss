@@ -80,6 +80,11 @@
 	border: none;
 	border-radius: var(--border-radius-lg);
 	font-size: var(--font-size-s);
+	transition: all 200ms ease;
+
+	&:hover {
+		opacity: 0.9;
+	}
 }
 
 .register__button {

@@ -35,7 +35,24 @@ export class RegisterPageNotConnected extends Component<
 		username: '',
 		password: '',
 		repeatPassword: '',
+		showVideo: window.innerWidth >= 768,
 	};
+
+	handleResize = () => {
+		if (window.innerWidth < 768) {
+			this.setState({ showVideo: false });
+		} else {
+			this.setState({ showVideo: true });
+		}
+	};
+
+	onMount() {
+		window.addEventListener('resize', this.handleResize);
+	}
+
+	onUnmount() {
+		window.removeEventListener('resize', this.handleResize);
+	}
 
 	handleRegisterUser = () => {
 		if (
@@ -62,17 +79,20 @@ export class RegisterPageNotConnected extends Component<
 					<Link className={styles.closeLink} href="/">
 						<img src={close} alt="close" />
 					</Link>
-					<video
-						src={getStaticURL('/video/login_signup.mp4')}
-						alt="loginVideo"
-						className={styles.loginImg}
-						autoplay
-						muted
-						loop
-						playsinline
-						disablePictureInPicture
-						controlsList="nodownload noremoteplayback"
-					/>
+					{this.state.showVideo && (
+						<video
+							src={getStaticURL('/video/login_signup.mp4')}
+							alt="loginVideo"
+							className={styles.loginImg}
+							autoplay
+							muted
+							loop
+							playsinline
+							disablePictureInPicture
+							controlsList="nodownload noremoteplayback"
+						/>
+					)}
+
 					<div className={styles.rightSide}>
 						<div className={styles.rightSide__titles}>
 							<h1 className={styles.rightSide__title}>Создать аккаунт</h1>
