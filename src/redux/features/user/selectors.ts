@@ -5,16 +5,11 @@ import type { ModelsUser } from '@/types/models';
 /**
  * Селектор для получения данных пользователя из состояния.
  */
-export const selectUser: Selector = (state: State): ModelsUser[] =>
-	state.user.users;
+export const selectUser: Selector = (state: State): ModelsUser | null =>
+	state.user.user;
 
 /**
  * Селектор для получения ошибки пользователя из состояния.
  */
-export const selectUserError: Selector = (state: State): string =>
-	state.user.users.error;
-
-/**
- * Селектор для получения общей ошибки пользователя из состояния.
- */
-export const selectError: Selector = (state: State): string => state.user.error;
+export const selectUserError: Selector = (state: State): string | null =>
+	state.user.error;

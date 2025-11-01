@@ -2,15 +2,16 @@ import ArrowLeft from '@/assets/img/arrowLeft.svg';
 import ArrowRight from '@/assets/img/arrowRight.svg';
 import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
-import { connect } from '@/modules/redux';
+import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import { RouterContext } from '@/modules/router/routerContext';
 import actions from '@/redux/features/actor/actions';
 import { selectActorFilms } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
+import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
+import { withRouter } from '../../modules/router/withRouter.tsx';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmSlider.module.scss';
 
@@ -35,9 +36,10 @@ interface FilmSliderState {
 	debounceResizeHandler: (ev?: Event | undefined) => void;
 }
 
-class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
-	static readonly contextType = RouterContext;
-
+class FilmSliderComponent extends Component<
+	FilmSliderProps & WithRouterProps,
+	FilmSliderState
+> {
 	state: FilmSliderState = {
 		curFilm: 0,
 		slideCapacity: 3,
@@ -48,7 +50,7 @@ class FilmSliderComponent extends Component<FilmSliderProps, FilmSliderState> {
 	};
 
 	onMount() {
-		this.props.getFilms(FILM_COUNT, OFFSET, this.context.params.id);
+		this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
 
 		this.state.debounceResizeHandler = debounce(
 			this.handleResize,
@@ -231,7 +233,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(actions.getActorFilmsAction(limit, offset, id)),
 });
 
-export const FilmSlider = connect(
-	mapStateToProps,
-	mapDispatchToProps,
+export const FilmSlider = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
 )(FilmSliderComponent);

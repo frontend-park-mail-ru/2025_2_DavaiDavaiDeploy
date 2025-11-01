@@ -9,17 +9,26 @@ import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
 import { ActorPage } from './pages/actorPage/actorPage';
-import { FilmPage } from './pages/filmPage/filmPage';
-import { HomePage } from './pages/homePage/homePage';
 
 import { Header } from '@/components/header/header';
-import { Provider } from '@/modules/redux';
+import { compose, connect, Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { Route } from '@/modules/router/route.tsx';
-import { RouterContext } from '@/modules/router/routerContext.ts';
 import { Routes } from '@/modules/router/routes.tsx';
+import { FilmPage } from '@/pages/filmPage/filmPage';
+import { HomePage } from '@/pages/homePage/homePage';
+import { LoginPage } from '@/pages/loginPage/loginPage.tsx';
+import { RegisterPage } from '@/pages/registerPage/registerPage.tsx';
 import { store } from '@/redux/store.ts';
+import type { Dispatch } from './modules/redux/types/actions.ts';
+import type { State } from './modules/redux/types/store.ts';
+import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
+import { withRouter } from './modules/router/withRouter.tsx';
 import { GenrePage } from './pages/genrePage/genrePage';
+import actions from './redux/features/user/actions.ts';
+import { selectUser } from './redux/features/user/selectors.ts';
+import type { Map } from './types/map.ts';
+import type { ModelsUser } from './types/models.ts';
 
 if (sentryEnabled) {
 	Sentry.init({
@@ -30,19 +39,33 @@ if (sentryEnabled) {
 	});
 }
 
-class App extends Component {
-	static readonly contextType = RouterContext;
+interface AppProps {
+	user: ModelsUser;
+	checkUser: () => {};
+}
+
+class AppComponent extends Component<AppProps & WithRouterProps> {
+	onMount() {
+		this.props.checkUser();
+	}
+
 	render() {
+		const showExtraFields =
+			this.props.router.path !== '/login' &&
+			this.props.router.path !== '/register';
+
 		return (
-			<div>
-				<Header />
+			<div class="layout">
+				{showExtraFields && <Header />}
 				<Routes>
 					<Route href="/" component={<HomePage />} />
 					<Route href="/films/:id" component={<FilmPage />} />
 					<Route href="/actors/:id" component={<ActorPage />} />
+					<Route href="/login" component={<LoginPage />} />
+					<Route href="/register" component={<RegisterPage />} />
 					<Route href="/genres/:id" component={<GenrePage />} />
 				</Routes>
-				<Footer />
+				{showExtraFields && <Footer />}
 			</div>
 		);
 	}
@@ -57,6 +80,19 @@ class ProvidersLayout extends Component {
 		);
 	}
 }
+
+const mapStateToProps = (state: State): Map => ({
+	user: selectUser(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	checkUser: () => dispatch(actions.checkUserAction()),
+});
+
+const App = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(AppComponent);
 
 render(
 	<ProvidersLayout>

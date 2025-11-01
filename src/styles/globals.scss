@@ -97,3 +97,9 @@ html {
 	overflow-x: hidden;
 	background-color: var(--color-bg);
 }
+
+.layout {
+	display: flex;
+	flex-direction: column;
+	min-height: 100dvh;
+}

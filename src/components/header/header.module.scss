@@ -184,6 +184,17 @@
 	}
 }
 
+.userInfo {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.username {
+	font-size: var(--font-size-l);
+	color: var(--color-accent);
+}
+
 @media (max-width: 768px) {
 	.header {
 		padding: 1rem 1.5rem;

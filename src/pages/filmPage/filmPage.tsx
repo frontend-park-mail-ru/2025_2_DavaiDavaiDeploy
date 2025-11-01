@@ -1,9 +1,10 @@
 import { FilmGallery } from '@/components/filmGallery/filmGallery';
 import { FilmInfo } from '@/components/filmInfo/filmInfo';
-import { connect } from '@/modules/redux';
+import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import { RouterContext } from '@/modules/router/routerContext';
+import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
+import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/film/actions';
 import { selectFilm, selectFilmError } from '@/redux/features/film/selectors';
 import type { Map } from '@/types/map';
@@ -18,14 +19,12 @@ interface FilmPageProps {
 	clearFilm: VoidFunction;
 }
 
-class FilmPageComponent extends Component<FilmPageProps> {
-	static readonly contextType = RouterContext;
-
+class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 	onMount() {
-		this.props.getFilm(this.context.params.id);
+		this.props.getFilm(this.props.router.params.id);
 	}
 
-	onUnmount(): void | Promise<void> {
+	onUnmount() {
 		this.props.clearFilm();
 	}
 
@@ -56,7 +55,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	clearFilm: () => dispatch(actions.clearFilmAction()),
 });
 
-export const FilmPage = connect(
-	mapStateToProps,
-	mapDispatchToProps,
+export const FilmPage = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
 )(FilmPageComponent);

@@ -6,17 +6,17 @@ import actionTypes from './actionTypes';
 
 interface InitialState {
 	loading: boolean;
-	users: ModelsUser[];
+	user: ModelsUser | null;
 	error: string | null;
 }
 
 /**
  * Начальное состояние редьюсера пользователей.
- * @property {Array<Object>} users - Список пользователей.
+ * @property {Array<Object>} user - Список пользователей.
  */
 const initialState: InitialState = {
 	loading: false,
-	users: [],
+	user: null,
 	error: null,
 };
 
@@ -37,32 +37,32 @@ export const userReducer: Reducer = (
 		case actionTypes.USER_CREATE:
 			return {
 				...state,
-				users: [...state.users, payload.user],
+				user: payload.user,
 			};
 		case actionTypes.USER_UPDATE:
 			return {
 				...state,
-				users: state.users.map((user: ModelsUser) =>
+				user: state.user.map((user: ModelsUser) =>
 					user.id === payload.user.id ? payload.user : user,
 				),
 			};
 		case actionTypes.USER_DELETE:
 			return {
 				...state,
-				users: state.users.filter(
+				user: state.user.filter(
 					(user: ModelsUser) => user.id !== payload.userId,
 				),
 			};
 		case actionTypes.USER_LOADING:
 			return { ...state, loading: true, error: null };
 		case actionTypes.USER_LOADED:
-			return { ...state, loading: false, users: action.payload.users };
+			return { ...state, loading: false, user: action.payload.user };
 		case actionTypes.USER_ERROR:
 			return {
 				...state,
 				loading: false,
 				error: action.payload.error,
-				users: [],
+				user: null,
 			};
 		default:
 			return state;
