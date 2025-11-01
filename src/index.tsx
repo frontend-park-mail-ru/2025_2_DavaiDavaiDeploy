@@ -24,6 +24,7 @@ import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
 import { withRouter } from './modules/router/withRouter.tsx';
+import { GenrePage } from './pages/genrePage/genrePage';
 import actions from './redux/features/user/actions.ts';
 import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
@@ -59,6 +60,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/actors/:id" component={<ActorPage />} />
 					<Route href="/login" component={<LoginPage />} />
 					<Route href="/register" component={<RegisterPage />} />
+					<Route href="/genres/:id" component={<GenrePage />} />
 				</Routes>
 				{this.props.router.path != '/login' &&
 					this.props.router.path != '/register' && <Footer />}

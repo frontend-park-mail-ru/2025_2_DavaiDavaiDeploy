@@ -5,6 +5,12 @@ import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
 
+const clearGenreAction = (): Action => {
+	return {
+		type: actionTypes.CLEAR_GENRE,
+	};
+};
+
 /**
  * Action: устанавливает состояние загрузки для жанра
  */
@@ -146,13 +152,13 @@ const getGenresAction = (): Action => async (dispatch: Dispatch) => {
  * Action: получает фильмы по жанру
  */
 const getGenreFilmsAction =
-	(id: string | number, limit: number, offset: number): Action =>
+	(limit: number, offset: number, id: string | number): Action =>
 	async (dispatch: Dispatch) => {
 		dispatch(setGenreFilmsLoadingAction());
 
 		try {
 			const response = await HTTPClient.get<ModelsMainPageFilm[]>(
-				`/films/genre/${id}`,
+				`/genres/${id}/films`,
 				{
 					params: { count: limit, offset },
 				},
@@ -185,4 +191,5 @@ export default {
 	returnGenreErrorAction,
 	returnGenresErrorAction,
 	returnGenreFilmsErrorAction,
+	clearGenreAction,
 };

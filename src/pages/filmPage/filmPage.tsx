@@ -16,11 +16,16 @@ interface FilmPageProps {
 	film: ModelsFilmPage | null;
 	error: string | null;
 	getFilm: (id: string) => void;
+	clearFilm: VoidFunction;
 }
 
 class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 	onMount() {
 		this.props.getFilm(this.props.router.params.id);
+	}
+
+	onUnmount(): void | Promise<void> {
+		this.props.clearFilm();
 	}
 
 	render() {
@@ -47,6 +52,7 @@ const mapStateToProps = (state: State): Map => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getFilm: (id: string) => dispatch(actions.getFilmAction(id)),
+	clearFilm: () => dispatch(actions.clearFilmAction()),
 });
 
 export const FilmPage = compose(

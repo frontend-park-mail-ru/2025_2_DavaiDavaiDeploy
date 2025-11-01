@@ -3,6 +3,12 @@ import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsFilmPage } from '@/types/models';
 import actionTypes from './actionTypes';
 
+const clearFilmAction = (): Action => {
+	return {
+		type: actionTypes.CLEAR_FILM,
+	};
+};
+
 /**
  * Action: начало загрузки фильмов.
  */
@@ -61,4 +67,5 @@ export default {
 	setFilmLoadingAction,
 	returnFilmAction,
 	returnFilmErrorAction,
+	clearFilmAction,
 };
