@@ -12,7 +12,6 @@ import styles from './header.module.scss';
 
 interface HeaderProps {
 	user: ModelsUser | null;
-	useCheckUser: () => void;
 }
 
 export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
