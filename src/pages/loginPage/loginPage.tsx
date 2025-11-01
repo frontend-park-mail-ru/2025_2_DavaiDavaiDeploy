@@ -64,6 +64,9 @@ export class LoginPageNotConnected extends Component<
 						autoplay
 						muted
 						loop
+						playsinline
+						disablePictureInPicture
+						controlsList="nodownload noremoteplayback"
 					/>
 					<div className={styles.rightSide}>
 						<div className={styles.rightSide__titles}>
