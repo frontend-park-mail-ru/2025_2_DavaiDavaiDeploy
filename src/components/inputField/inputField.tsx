@@ -1,7 +1,7 @@
-import { Component } from '@robocotik/react';
-import styles from './inputField.module.scss';
 import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 import clsx from '@/modules/clsx/index.ts';
+import { Component } from '@robocotik/react';
+import styles from './inputField.module.scss';
 interface InputFieldProps {
 	label?: string;
 	defaultValue?: string;

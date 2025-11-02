@@ -9,5 +9,6 @@ export function getStaticURL(imagePath: string | undefined | null): string {
 	if (!imagePath) {
 		return '';
 	}
+
 	return `${STATIC_URL}${imagePath}`;
 }
