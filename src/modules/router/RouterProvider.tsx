@@ -1,4 +1,3 @@
-import { PREVIOUS_PAGE } from '@/consts/router.ts';
 import { Component } from '@robocotik/react';
 import { RouterContext } from './routerContext.ts';
 import { trimRoute } from './utils/trimRoute.ts';
@@ -9,17 +8,17 @@ export class RouterProvider extends Component {
 		params: {},
 	};
 
+	back() {
+		window.scrollTo(0, 0);
+		window.history.back();
+	}
+
 	navigate = (to: string) => {
 		if (to === this.state.path) {
 			return;
 		}
 
 		window.scrollTo(0, 0);
-
-		if (to === PREVIOUS_PAGE) {
-			window.history.back();
-			return;
-		}
 
 		window.history.pushState({}, '', trimRoute(to));
 		this.setState({ path: trimRoute(to), params: {} });
@@ -49,6 +48,7 @@ export class RouterProvider extends Component {
 					path: this.state.path,
 					navigate: this.navigate,
 					params: this.state.params,
+					back: this.back,
 				}}
 			>
 				{this.props.children}
