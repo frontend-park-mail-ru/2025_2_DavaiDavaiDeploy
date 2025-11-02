@@ -179,6 +179,11 @@ jobs:
         with:
           name: build-output
           path: dist
+      - name: List downloaded files
+        run: |
+          find dist -name "*.js" -o -name "*.map" | head -20
+          echo "Total JS files: $(find dist -name "*.js" | wc -l)"
+          echo "Total MAP files: $(find dist -name "*.map" | wc -l)"
       - name: Create Sentry release
         uses: getsentry/action-release@v3
         env:
