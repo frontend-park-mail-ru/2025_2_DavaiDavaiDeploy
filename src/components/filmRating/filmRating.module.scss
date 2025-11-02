@@ -57,20 +57,6 @@
 	border: 1px solid var(--color-light);
 	z-index: 5;
 	pointer-events: all;
-
-	// &:hover .rateMenu {
-	// 	opacity: 1;
-	// 	pointer-events: all;
-	// 	z-index: 6;
-	// }
-
-	// &:hover {
-	// 	pointer-events: none;
-	// }
-}
-
-.starIcon {
-	width: 1.5vw;
 }
 
 .btnText {
@@ -88,37 +74,6 @@
 }
 
 .title-low {
-	color: var(--color-rating-low);
-}
-
-.ratingNumber-low,
-.ratingNumber-high,
-.ratingNumber-medium {
-	transition: all 0.2s ease;
-	font-size: var(--font-size-xlg);
-}
-
-.ratingNumber-low:hover {
-	color: var(--color-rating-low);
-}
-
-.ratingNumber-medium:hover {
-	color: var(--color-rating-medium);
-}
-
-.ratingNumber-high:hover {
-	color: var(--color-rating-high);
-}
-
-.cur-high {
-	color: var(--color-rating-high);
-}
-
-.cur-medium {
-	color: var(--color-rating-medium);
-}
-
-.cur-low {
 	color: var(--color-rating-low);
 }
 
@@ -215,10 +170,6 @@
 				pointer-events: none;
 			}
 		}
-	}
-
-	.starIcon {
-		width: 1rem;
 	}
 
 	.userStarIcon {

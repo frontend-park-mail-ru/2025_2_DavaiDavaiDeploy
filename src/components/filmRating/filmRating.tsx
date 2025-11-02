@@ -3,21 +3,19 @@ import { formatRatingNumber } from '@/helpers/formatRatingNumberHelper/formatRat
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { compose, connect } from '@/modules/redux';
-import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import actions from '@/redux/features/film/actions';
 import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
+import { FilmRatingInput } from '../FilmRatingInput/FilmRatingInput.tsx';
 import styles from './filmRating.module.scss';
 
 interface FilmRatingProps {
 	film: ModelsFilmPage;
 	userRating: number | null;
-	createRating: (rating: number, id: string) => void;
 }
 
 interface FilmRatingState {
@@ -32,19 +30,9 @@ class FilmRatingComponent extends Component<
 		isMenuActive: false,
 	};
 
-	leaveRating = (event: MouseEvent): void => {
+	handleRatingLeave = (event: MouseEvent): void => {
 		event.stopPropagation();
-		const target = event.currentTarget as HTMLElement | null;
-		const number = target?.getAttribute('data-number');
-
-		if (!number) {
-			return;
-		}
-
 		this.setState({ isMenuActive: false });
-
-		const rating = parseInt(number, 10);
-		this.props.createRating(rating, this.props.router.params.id);
 	};
 
 	handleMouseLeave = () => {
@@ -92,35 +80,9 @@ class FilmRatingComponent extends Component<
 						)}
 						<div
 							className={`${styles.rateMenu} ${this.state.isMenuActive ? styles.active : ''}`}
+							onClick={this.handleRatingLeave}
 						>
-							<img
-								src={Star}
-								className={styles.starIcon}
-								onClick={this.leaveRating}
-								data-number={1}
-							/>
-							{Array.from({ length: 10 }, (_, i) => {
-								const number = i + 1;
-								return (
-									<p
-										data-number={number}
-										className={`${styles['ratingNumber-' + getRatingType(number)]} ${
-											this.props.userRating === number
-												? styles[`cur-${getRatingType(number)}`]
-												: ''
-										}`}
-										onClick={this.leaveRating}
-									>
-										{number}
-									</p>
-								);
-							})}
-							<img
-								src={Star}
-								className={styles.starIcon}
-								onClick={this.leaveRating}
-								data-number={10}
-							/>
+							<FilmRatingInput userRating={this.props.userRating} />
 						</div>
 					</button>
 				</div>
@@ -133,12 +95,7 @@ const mapStateToProps = (state: State): Map => ({
 	userRating: selectUserRating(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	createRating: (rating: number, id: string) =>
-		dispatch(actions.leaveRatingAction(rating, id)),
-});
-
 export const FilmRating = compose(
 	withRouter,
-	connect(mapStateToProps, mapDispatchToProps),
+	connect(mapStateToProps),
 )(FilmRatingComponent);

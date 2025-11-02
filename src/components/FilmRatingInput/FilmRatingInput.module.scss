@@ -1,0 +1,43 @@
+.ratingInput {
+	display: flex;
+	flex-direction: row;
+	gap: 0.7vw;
+	padding: 0.3vw 0.5vw;
+}
+
+.ratingNumber-low,
+.ratingNumber-high,
+.ratingNumber-medium {
+	transition: all 0.2s ease;
+	font-size: var(--font-size-xlg);
+}
+
+.ratingNumber-low:hover {
+	color: var(--color-rating-low);
+}
+
+.ratingNumber-medium:hover {
+	color: var(--color-rating-medium);
+}
+
+.ratingNumber-high:hover {
+	color: var(--color-rating-high);
+}
+
+.cur-high {
+	color: var(--color-rating-high);
+}
+
+.cur-medium {
+	color: var(--color-rating-medium);
+}
+
+.cur-low {
+	color: var(--color-rating-low);
+}
+
+@media (max-width: 768px) {
+	.starIcon {
+		width: 1rem;
+	}
+}
