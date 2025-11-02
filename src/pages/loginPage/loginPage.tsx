@@ -34,6 +34,10 @@ export class LoginPageNotConnected extends Component<
 		username: '',
 		password: '',
 		showVideo: window.innerWidth >= 768,
+		validationErrors: {
+			username: '',
+			password: '',
+		},
 	};
 
 	handleResize = () => {
@@ -43,6 +47,21 @@ export class LoginPageNotConnected extends Component<
 			this.setState({ showVideo: true });
 		}
 	};
+
+	validateFields() {
+		const usernameValidation = validateLogin(this.state.username);
+		const passwordValidation = validatePassword(this.state.password);
+
+		this.setState({
+			...this.state,
+			validationErrors: {
+				username: usernameValidation.message,
+				password: passwordValidation.message,
+			},
+		});
+
+		return usernameValidation.isValid && passwordValidation.isValid;
+	}
 
 	onMount() {
 		this.updateProps({ ...this.props, userError: '' });
@@ -54,10 +73,7 @@ export class LoginPageNotConnected extends Component<
 	}
 
 	handleLoginUser = () => {
-		if (
-			validateLogin(this.state.username).isValid &&
-			validatePassword(this.state.password).isValid
-		) {
+		if (this.validateFields()) {
 			this.props.loginUser(this.state.username, this.state.password);
 		}
 	};
@@ -69,11 +85,13 @@ export class LoginPageNotConnected extends Component<
 	}
 
 	onFieldChange(value: string, field: 'username' | 'password') {
-		this.setState({ [field]: value });
+		this.setState({ ...this.state, [field]: value });
 
 		if (this.props.userError) {
 			this.props.userError = '';
 		}
+
+		this.validateFields();
 	}
 
 	render() {
@@ -110,13 +128,14 @@ export class LoginPageNotConnected extends Component<
 								defaultValue=""
 								preIconSrc={userSvg}
 								placeholder="Введите логин"
+								errorMessage={this.state.validationErrors.username}
 								value={this.state.username}
 								onChange={(value) => this.onFieldChange(value, 'username')}
 							/>
 							<PasswordInputField
 								label="Пароль"
 								defaultValue=""
-								validateFn={() => validatePassword(this.state.password)}
+								errorMessage={this.state.validationErrors.password}
 								placeholder="Введите пароль"
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
