@@ -77,7 +77,7 @@
 	}
 }
 
-.avatarActions__link {
+.avatarActionsLink {
 	font-size: var(--font-size-l);
 	position: relative;
 
@@ -94,7 +94,7 @@
 	}
 }
 
-.avatarActions__login {
+.avatarActionsLogin {
 	font-size: var(--font-size-l);
 	color: var(--color-accent);
 	text-align: center;
@@ -116,7 +116,7 @@
 }
 
 @media (max-width: 768px) {
-	.avatarActions__login {
+	.avatarActionsLogin {
 		margin-block: 0;
 	}
 }

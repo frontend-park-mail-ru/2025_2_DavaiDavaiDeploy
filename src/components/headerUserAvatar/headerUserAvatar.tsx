@@ -5,13 +5,13 @@ import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
 import styles from './headerUserAvatar.module.scss';
-interface ModalProps {
+interface UserAvatarProps {
 	user: ModelsUser | null;
 	logoutUser: () => {};
 	className: string;
 }
 
-export class UserAvatar extends Component<ModalProps> {
+export class UserAvatar extends Component<UserAvatarProps> {
 	handleLogout = (e: Event) => {
 		e.preventDefault();
 		this.props.logoutUser();
@@ -25,8 +25,8 @@ export class UserAvatar extends Component<ModalProps> {
 					alt={this.props.user?.login}
 					className={styles.avatar}
 				/>
-				<p className={styles.avatarActions__login}>{this.props.user?.login}</p>
-				<Link className={styles.avatarActions__link} href="/profile">
+				<p className={styles.avatarActionsLogin}>{this.props.user?.login}</p>
+				<Link className={styles.avatarActionsLink} href="/profile">
 					Мой профиль
 				</Link>
 

@@ -36,24 +36,24 @@ export class PasswordInputField extends Component<
 	handleInputChange = (e: Event) => {
 		this.props.onChange((e.target as HTMLInputElement).value);
 		const { message } = this.props.validateFn();
-		this.state.errorMessage = message;
+		this.setState({ errorMessage: message });
 	};
 
 	render() {
 		const { label, defaultValue, value, placeholder } = this.props;
 
 		return (
-			<div className={styles.input__container}>
-				{label && <label className={styles.input__label}>{label}</label>}
+			<div className={styles.inputContainer}>
+				{label && <label className={styles.inputLabel}>{label}</label>}
 				<div
-					className={clsx(styles.input__wrapper, {
+					className={clsx(styles.inputWrapper, {
 						[styles.errorBorder]: this.state.errorMessage.length > 0,
 						[styles.accentBorder]: this.state.errorMessage.length === 0,
 					})}
 				>
-					<img src={lock} alt="icon" className={styles.input__icon} />
+					<img src={lock} alt="icon" className={styles.inputIcon} />
 					<input
-						className={styles.input__field}
+						className={styles.inputField}
 						type={this.state.isPasswordVisible ? 'text' : 'password'}
 						value={value}
 						placeholder={placeholder}
@@ -62,12 +62,12 @@ export class PasswordInputField extends Component<
 					/>
 					<button
 						onClick={this.handleVisibilityClicked}
-						className={styles.input__eye}
+						className={styles.inputEye}
 					>
 						<img
 							src={this.state.isPasswordVisible ? eye_close : eye_open}
 							alt="icon"
-							className={styles.input__icon}
+							className={styles.inputIcon}
 						/>
 					</button>
 				</div>

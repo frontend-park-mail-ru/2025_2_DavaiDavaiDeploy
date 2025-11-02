@@ -23,26 +23,26 @@ export class InputField extends Component<InputFieldProps, InputFieldState> {
 	onChange = (e: Event) => {
 		this.props.onChange((e.target as HTMLInputElement).value);
 		const { message } = validateLogin((e.target as HTMLInputElement).value);
-		this.state.errorMessage = message;
+		this.setState({ errorMessage: message });
 	};
 
 	render() {
 		const { label, defaultValue, value, preIconSrc, placeholder } = this.props;
 
 		return (
-			<div className={styles.input__container}>
-				{label && <label className={styles.input__label}>{label}</label>}
+			<div className={styles.inputContainer}>
+				{label && <label className={styles.inputLabel}>{label}</label>}
 				<div
-					className={clsx(styles.input__wrapper, {
+					className={clsx(styles.inputWrapper, {
 						[styles.errorBorder]: this.state.errorMessage.length > 0,
 						[styles.accentBorder]: this.state.errorMessage.length === 0,
 					})}
 				>
 					{preIconSrc && (
-						<img src={preIconSrc} alt="icon" className={styles.input__icon} />
+						<img src={preIconSrc} alt="icon" className={styles.inputIcon} />
 					)}
 					<input
-						className={styles.input__field}
+						className={styles.inputField}
 						type={'text'}
 						value={value}
 						placeholder={placeholder}

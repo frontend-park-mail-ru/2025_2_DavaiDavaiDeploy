@@ -72,6 +72,17 @@ export class RegisterPageNotConnected extends Component<
 		}
 	}
 
+	onFieldChange(
+		value: string,
+		field: 'username' | 'password' | 'repeatPassword',
+	) {
+		this.setState({ [field]: value });
+
+		if (this.props.userError) {
+			this.props.userError = '';
+		}
+	}
+
 	render() {
 		return (
 			<main className={styles.main}>
@@ -107,7 +118,7 @@ export class RegisterPageNotConnected extends Component<
 								preIconSrc={userSvg}
 								placeholder="Введите логин"
 								value={this.state.username}
-								onChange={(value) => this.setState({ username: value })}
+								onChange={(value) => this.onFieldChange(value, 'username')}
 							/>
 							<PasswordInputField
 								label="Пароль"
@@ -115,7 +126,7 @@ export class RegisterPageNotConnected extends Component<
 								placeholder="Введите пароль"
 								validateFn={() => validatePassword(this.state.password)}
 								value={this.state.password}
-								onChange={(value) => this.setState({ password: value })}
+								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
 							<PasswordInputField
 								label="Подтверждение пароля"
@@ -128,7 +139,9 @@ export class RegisterPageNotConnected extends Component<
 								}
 								placeholder="Повторите пароль"
 								value={this.state.repeatPassword}
-								onChange={(value) => this.setState({ repeatPassword: value })}
+								onChange={(value) =>
+									this.onFieldChange(value, 'repeatPassword')
+								}
 							/>
 						</div>
 						<div className={styles.rightSide__actions}>

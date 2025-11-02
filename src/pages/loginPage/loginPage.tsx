@@ -14,7 +14,7 @@ import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/user/actions.ts';
 import {
 	selectUser,
-	selectUserError,
+	selectUserErrorNot401,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
@@ -67,6 +67,14 @@ export class LoginPageNotConnected extends Component<
 		}
 	}
 
+	onFieldChange(value: string, field: 'username' | 'password') {
+		this.setState({ [field]: value });
+
+		if (this.props.userError) {
+			this.props.userError = '';
+		}
+	}
+
 	render() {
 		return (
 			<main className={styles.main}>
@@ -102,7 +110,7 @@ export class LoginPageNotConnected extends Component<
 								preIconSrc={userSvg}
 								placeholder="Введите логин"
 								value={this.state.username}
-								onChange={(value) => this.setState({ username: value })}
+								onChange={(value) => this.onFieldChange(value, 'username')}
 							/>
 							<PasswordInputField
 								label="Пароль"
@@ -110,8 +118,9 @@ export class LoginPageNotConnected extends Component<
 								validateFn={() => validatePassword(this.state.password)}
 								placeholder="Введите пароль"
 								value={this.state.password}
-								onChange={(value) => this.setState({ password: value })}
+								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
+							<p className={styles.errorMessage}>{this.props.userError}</p>
 						</div>
 						<div className={styles.rightSide__actions}>
 							<button
@@ -136,7 +145,7 @@ export class LoginPageNotConnected extends Component<
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
-	userError: selectUserError(state),
+	userError: selectUserErrorNot401(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
