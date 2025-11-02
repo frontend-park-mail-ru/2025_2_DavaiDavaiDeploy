@@ -9,6 +9,7 @@ import { selectGenreFilms } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
+import * as Sentry from '@sentry/browser';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './cardGrid.module.scss';
 
@@ -24,6 +25,8 @@ class CardGridComponent extends Component<CardGridProps> {
 	static readonly contextType = RouterContext;
 
 	onMount() {
+		Sentry.captureException(new RangeError('Good bye'));
+
 		if (this.context.params.id) {
 			this.props.getFilms(FILM_COUNT, OFFSET, this.context.params.id);
 		} else {
