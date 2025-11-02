@@ -145,7 +145,7 @@ jobs:
           echo VITE_SENTRY_PROJECT=${{ secrets.VITE_SENTRY_PROJECT }} >> .env
           echo VITE_CDN_ADRESS=${{ secrets.VITE_CDN_ADRESS }} >> .env
           echo VITE_SENTRY_ENABLED=${{ secrets.VITE_SENTRY_ENABLED }} >> .env
-          echo VITE_RELEASE_VERSION=${{ github.ref_name }}-${{ github.sha }} >> .env
+          echo VITE_RELEASE_VERSION=${{ github.ref_name }} >> .env
           cat .env
 
       - name: Build project
@@ -189,7 +189,7 @@ jobs:
         with:
           environment: production
           sourcemaps: './dist'
-          release: ${{ github.ref_name }}-${{ github.sha }}
+          release: ${{ github.ref_name }}
           ignore_missing: true
 
   deploy-to-s3:
