@@ -1,0 +1,117 @@
+.feedbackForm {
+	display: flex;
+	flex-direction: column;
+	gap: 1.875rem;
+	border-radius: var(--border-radius-xl);
+	padding: 2.5rem 2rem;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	background-color: var(--color-light-text);
+	align-items: center;
+	justify-content: center;
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	width: 100%;
+}
+
+.user {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.avatar {
+	height: 4.4rem;
+	width: 4.4rem;
+	border-radius: 50%;
+	object-fit: cover;
+	object-position: center;
+	flex-shrink: 0;
+}
+
+.login {
+	color: var(--color-dark-text);
+	opacity: 0.8;
+	font-size: var(--font-size-l);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.title {
+	font-size: var(--font-size-xl);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-bg);
+}
+
+.input {
+	margin-top: 1.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	width: 100%;
+}
+
+.inputTitle,
+.textarea {
+	width: 100%;
+	max-width: 100%;
+	padding: 0.8rem 1.25rem;
+	border: none;
+	border-radius: var(--border-radius-l);
+	font-size: var(--font-size-xs);
+	color: var(--color-dark-text);
+	outline: none;
+	box-sizing: border-box;
+}
+
+.textarea {
+	resize: vertical;
+	min-height: 10rem;
+}
+
+.inputTitle::placeholder,
+.textarea::placeholder {
+	color: var(--color-dark-text);
+	opacity: 0.5;
+	font-family: 'Golos UI', Arial, sans-serif;
+}
+
+.inputTitle:-webkit-input-placeholder,
+.textarea:-webkit-input-placeholder {
+	font-family: 'Golos UI', Arial, sans-serif;
+}
+
+.submitButton {
+	margin-top: 1.25rem;
+	padding: 1.2rem 4.5rem;
+	background-color: var(--color-light);
+	font-size: var(--font-size-l);
+	border: none;
+	border-radius: var(--border-radius-l);
+	cursor: pointer;
+	color: var(--color-text);
+	box-sizing: border-box;
+
+	:hover {
+		background-color: var(--color-primary-dark);
+	}
+}
+
+@media (max-width: 768px) {
+	.feedbackForm {
+		padding: 1.5rem;
+	}
+
+	.avatar {
+		height: 3rem;
+		width: 3rem;
+	}
+}

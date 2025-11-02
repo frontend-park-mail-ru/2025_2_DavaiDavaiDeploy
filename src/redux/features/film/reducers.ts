@@ -88,13 +88,13 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 				feedbackError: payload.error,
 			};
 
-		case actionTypes.LEAVE_FEEDBACK:
+		case actionTypes.CREATE_FEEDBACK:
 			return {
 				...state,
 				userFeedback: payload.feedback,
 			};
 
-		case actionTypes.LEAVE_RATING:
+		case actionTypes.CREATE_RATING:
 			return {
 				...state,
 				userRating: payload.rating.rating,

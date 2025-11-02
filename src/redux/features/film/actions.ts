@@ -121,19 +121,19 @@ const getFeedbacksAction: Action =
 
 const returnNewRatingAction = (data: ModelsFilmFeedback): Action => {
 	return {
-		type: actionTypes.LEAVE_RATING,
+		type: actionTypes.CREATE_RATING,
 		payload: { rating: data },
 	};
 };
 
 const returnNewRatingErrorAction = (error: string): Action => {
 	return {
-		type: actionTypes.LEAVE_RATING_ERROR,
+		type: actionTypes.CREATE_RATING_ERROR,
 		payload: { error: error },
 	};
 };
 
-const leaveRatingAction =
+const createRatingAction =
 	(rating: number, id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
@@ -162,7 +162,7 @@ const leaveRatingAction =
 
 const returnNewFeedbackAction = (data: ModelsFilmFeedback): Action => {
 	return {
-		type: actionTypes.LEAVE_FEEDBACK,
+		type: actionTypes.CREATE_FEEDBACK,
 		payload: {
 			feedback: data,
 		},
@@ -171,17 +171,17 @@ const returnNewFeedbackAction = (data: ModelsFilmFeedback): Action => {
 
 const returnNewFeedbackErrorAction = (error: string): Action => {
 	return {
-		type: actionTypes.LEAVE_FEEDBACK_ERROR,
+		type: actionTypes.CREATE_FEEDBACK_ERROR,
 		payload: { error },
 	};
 };
 
-const leaveFeedbackAction =
+const createFeedbackAction =
 	(rating: number, text: string, title: string, id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
 			const response = await HTTPClient.post<ModelsFilmFeedback>(
-				`/films/${id}/feedbacks`,
+				`/films/${id}/feedback`,
 				{
 					data: {
 						rating,
@@ -215,8 +215,8 @@ export default {
 	setFeedbacksLoadingAction,
 	returnFeedbacksAction,
 	returnFeedbacksErrorAction,
-	leaveRatingAction,
+	createRatingAction,
 	returnNewRatingAction,
 	returnNewRatingErrorAction,
-	leaveFeedbackAction,
+	createFeedbackAction,
 };

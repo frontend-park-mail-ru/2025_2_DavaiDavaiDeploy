@@ -1,5 +1,6 @@
 import Star from '@/assets/img/Star.svg';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
+import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -14,6 +15,7 @@ import styles from './FilmRatingInput.module.scss';
 interface FilmRatingInputProps {
 	userRating: number | null;
 	createRating: (rating: number, id: string) => void;
+	isDark: boolean;
 }
 
 class FilmRatingInputComponent extends Component<
@@ -45,11 +47,11 @@ class FilmRatingInputComponent extends Component<
 					return (
 						<p
 							data-number={number}
-							className={`${styles['ratingNumber-' + getRatingType(number)]} ${
-								this.props.userRating === number
-									? styles[`cur-${getRatingType(number)}`]
-									: ''
-							}`}
+							className={clsx(styles['ratingNumber-' + getRatingType(number)], {
+								[styles.dark]: this.props.isDark,
+								[`cur-${getRatingType(number)}`]:
+									this.props.userRating === number,
+							})}
 							onClick={this.leaveRating}
 						>
 							{number}
@@ -73,7 +75,7 @@ const mapStateToProps = (state: State): Map => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	createRating: (rating: number, id: string) =>
-		dispatch(actions.leaveRatingAction(rating, id)),
+		dispatch(actions.createRatingAction(rating, id)),
 });
 
 export const FilmRatingInput = compose(

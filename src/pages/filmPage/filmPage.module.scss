@@ -19,6 +19,12 @@
 	gap: 1.875rem;
 }
 
+.right {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+
 .feedbacks {
 	display: flex;
 	flex-direction: column;

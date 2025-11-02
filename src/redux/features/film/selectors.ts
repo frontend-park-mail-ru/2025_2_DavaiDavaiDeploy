@@ -19,3 +19,7 @@ export const selectFeedbackError: Selector = (state: State): string | null =>
 
 export const selectUserRating: Selector = (state: State): number | null =>
 	state.film.userRating;
+
+export const selectUserFeedback: Selector = (
+	state: State,
+): ModelsFilmFeedback | null => state.film.userFeedback;

@@ -82,7 +82,7 @@ class FilmRatingComponent extends Component<
 							className={`${styles.rateMenu} ${this.state.isMenuActive ? styles.active : ''}`}
 							onClick={this.handleRatingLeave}
 						>
-							<FilmRatingInput userRating={this.props.userRating} />
+							<FilmRatingInput isDark={false} />
 						</div>
 					</button>
 				</div>
