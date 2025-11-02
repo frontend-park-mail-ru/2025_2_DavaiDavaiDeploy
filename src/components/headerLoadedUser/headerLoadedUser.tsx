@@ -1,4 +1,4 @@
-import { AvatarModal } from '@/components/headerAvatarModal/headerAvatarModal.tsx';
+import { UserAvatar } from '@/components/headerUserAvatar/headerUserAvatar';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
@@ -20,7 +20,7 @@ export class LoadedUser extends Component<LoadedUserProps> {
 						alt={'avatar'}
 						className={styles.avatar}
 					/>
-					<AvatarModal
+					<UserAvatar
 						user={this.props.user}
 						logoutUser={this.props.logoutUser}
 						className={styles.avatarActions}

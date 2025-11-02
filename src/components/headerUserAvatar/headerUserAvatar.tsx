@@ -4,14 +4,14 @@ import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
-import styles from './headerAvatarModal.module.scss';
+import styles from './headerUserAvatar.module.scss';
 interface ModalProps {
 	user: ModelsUser | null;
 	logoutUser: () => {};
 	className: string;
 }
 
-export class AvatarModal extends Component<ModalProps> {
+export class UserAvatar extends Component<ModalProps> {
 	handleLogout = (e: Event) => {
 		e.preventDefault();
 		this.props.logoutUser();
