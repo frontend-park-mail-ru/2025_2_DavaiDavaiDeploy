@@ -116,6 +116,7 @@
 	align-items: center;
 	width: min(15vw, 10rem);
 	gap: 0.8vw;
+	justify-content: space-between;
 }
 
 .userRatingTitle {
@@ -127,7 +128,21 @@
 	width: 1rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
+	.rating-high,
+	.rating-medium,
+	.rating-low {
+		display: flex;
+		flex-direction: row;
+		border-radius: 0.3125rem;
+		padding: 0.02rem 0.2rem;
+		font-size: var(--font-size-l);
+		gap: 0.2rem;
+		align-items: center;
+	}
+}
+
+@media (max-width: 800px) {
 	.rating {
 		display: flex;
 		flex-direction: row;
@@ -142,6 +157,10 @@
 		width: 2.5rem;
 		height: 2.5rem;
 		display: flex;
+	}
+
+	.userStarIcon {
+		display: none;
 	}
 
 	.btnText {
@@ -175,10 +194,6 @@
 				pointer-events: none;
 			}
 		}
-	}
-
-	.userStarIcon {
-		width: 1rem;
 	}
 
 	.rateMenu {

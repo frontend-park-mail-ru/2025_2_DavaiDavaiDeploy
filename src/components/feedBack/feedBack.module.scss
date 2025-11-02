@@ -6,6 +6,7 @@
 	gap: 1vh;
 	border-radius: var(--border-radius-xl);
 	padding: 3rem 2.2rem;
+	width: 100%;
 }
 
 .feedback-high {
@@ -57,7 +58,6 @@
 	align-items: center;
 	gap: 0.5vw;
 	white-space: nowrap;
-	margin-right: 4.5vw;
 }
 
 .star {

@@ -121,10 +121,29 @@
 @media (max-width: 768px) {
 	.feedbackForm {
 		padding: 1.5rem;
+		gap: 1.2rem;
+	}
+
+	.input {
+		gap: 0.6rem;
+		margin-top: 0.8rem;
 	}
 
 	.avatar {
 		height: 3rem;
 		width: 3rem;
+	}
+
+	.submitButton {
+		margin-top: 0.5rem;
+		padding: 0.6rem 2.5rem;
+		font-size: var(--font-size-l);
+	}
+}
+
+@media (max-width: 440px) {
+	.header {
+		flex-direction: column;
+		align-items: center;
 	}
 }

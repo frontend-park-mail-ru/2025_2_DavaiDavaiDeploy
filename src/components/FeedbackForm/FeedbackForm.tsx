@@ -66,7 +66,7 @@ class FeedbackFormComponent extends Component<
 
 		let textErrorMessage = '';
 
-		if (value.trim().length >= 10) {
+		if (value.trim().length >= 5) {
 			const validation = validateFeedbackText(value);
 			textErrorMessage = validation.message;
 		}
