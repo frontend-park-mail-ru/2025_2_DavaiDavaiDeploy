@@ -76,7 +76,7 @@ export class HTTPClient {
 		return data;
 	}
 
-	async _request<T = any>({
+	private async _request<T = any>({
 		method = METHODS.GET,
 		path,
 		params = {},
