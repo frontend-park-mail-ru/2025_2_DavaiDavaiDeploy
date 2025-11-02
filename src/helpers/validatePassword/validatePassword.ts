@@ -22,10 +22,10 @@ export function validatePassword(value: string): ValidationResult {
 		};
 	}
 
-	if (!/^[a-zA-Z0-9]+$/.test(value)) {
+	if (!/^[a-zA-Z0-9-]+$/.test(value)) {
 		return {
 			isValid: false,
-			message: 'Пароль может содержать только латинские буквы и цифры',
+			message: 'Пароль может содержать только латинские буквы, цифры и дефис',
 		};
 	}
 
