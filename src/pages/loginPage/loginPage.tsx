@@ -2,6 +2,7 @@ import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
 import { InputField } from '@/components/inputField/inputField.tsx';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
+import { PREVIOUS_PAGE } from '@/consts/router.ts';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
 import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 import { validatePassword } from '@/helpers/validatePassword/validatePassword.ts';
@@ -63,7 +64,7 @@ export class LoginPageNotConnected extends Component<
 
 	onUpdate() {
 		if (this.props.user) {
-			this.props.router.navigate('/');
+			this.props.router.navigate(PREVIOUS_PAGE);
 		}
 	}
 
