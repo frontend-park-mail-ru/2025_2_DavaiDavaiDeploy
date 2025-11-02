@@ -13,7 +13,6 @@ export class LoadedUser extends Component<LoadedUserProps> {
 	render() {
 		return (
 			<div className={styles.userInfo}>
-				<p className={styles.username}>{this.props.user?.login}</p>
 				<div className={styles.avatarContainer}>
 					<img
 						src={getStaticURL(this.props.user?.avatar)}
