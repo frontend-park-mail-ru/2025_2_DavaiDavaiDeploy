@@ -1,7 +1,7 @@
 import { FeedBack } from '@/components/feedBack/feedBack';
-import { FeedbackForm } from '@/components/FeedbackForm/FeedbackForm';
 import { FilmGallery } from '@/components/filmGallery/filmGallery';
 import { FilmInfo } from '@/components/filmInfo/filmInfo';
+import { Userfeedback } from '@/components/UserFeedback/UserFeedback';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -53,9 +53,11 @@ class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 							<h1 className={styles.feedback}>Отзывы</h1>
 							<div className={styles.feedbacks}>
 								{this.props.feedbacks && this.props.feedbacks.length > 0 ? (
-									this.props.feedbacks.map((item) => (
-										<FeedBack feedback={item} />
-									))
+									this.props.feedbacks.map((item, index) =>
+										index === 0 && item.is_mine ? null : (
+											<FeedBack feedback={item} />
+										),
+									)
 								) : (
 									<h1 className={styles.feedback}>Отзывов пока нет</h1>
 								)}
@@ -63,7 +65,7 @@ class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 						</div>
 						<div className={styles.right}>
 							<FilmGallery film={this.props.film} />
-							<FeedbackForm />
+							<Userfeedback />
 						</div>
 					</section>
 				)}

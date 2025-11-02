@@ -80,7 +80,11 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 				...state,
 				feedbackLoading: false,
 				feedbacks: payload.feedbacks,
+				userFeedback: payload.feedbacks[0]?.is_mine
+					? payload.feedbacks[0]
+					: null,
 			};
+
 		case actionTypes.FEEDBACK_ERROR:
 			return {
 				...state,

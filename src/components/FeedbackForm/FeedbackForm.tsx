@@ -9,7 +9,7 @@ import actions from '@/redux/features/film/actions';
 import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
-import type { ModelsUser } from '@/types/models.ts';
+import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -25,6 +25,9 @@ interface FeedbackFormProps {
 		id: string,
 	) => void;
 	user: ModelsUser;
+	isEditing: boolean;
+	closeEditing: VoidFunction;
+	userFeedback: ModelsFilmFeedback | null;
 }
 
 interface FeedbackFormState {
@@ -39,8 +42,8 @@ class FeedbackFormComponent extends Component<
 	FeedbackFormState
 > {
 	state = {
-		title: '',
-		text: '',
+		title: this.props.userFeedback?.title ? this.props.userFeedback.title : '',
+		text: this.props.userFeedback?.text ? this.props.userFeedback.text : '',
 		titleErrorMessage: '',
 		textErrorMessage: '',
 	};
@@ -92,20 +95,23 @@ class FeedbackFormComponent extends Component<
 			title,
 			this.props.router.params.id,
 		);
+
+		this.props.closeEditing();
 	};
 
 	render() {
-		if (!this.props.user) {
-			return <div></div>;
-		}
-
 		const { title, text } = this.state;
 		const { login } = this.props.user;
 		const imageSrc = getImageSRC('avatars', 'default', 'png');
 
 		return (
 			<div className={styles.feedbackForm}>
-				<h2 className={styles.title}>Оставить отзыв</h2>
+				{!this.props.isEditing && (
+					<h2 className={styles.title}>Оставить отзыв</h2>
+				)}
+				{this.props.isEditing && (
+					<h2 className={styles.title}>Редактирование</h2>
+				)}
 				<div className={styles.header}>
 					<span className={styles.user}>
 						<img src={imageSrc} className={styles.avatar}></img>
