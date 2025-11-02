@@ -1,7 +1,8 @@
+import LocalStorageHelper from '@/helpers/localStorageHelper/localStorageHelper.ts';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsUser } from '@/types/models';
-import LocalStorageHelper from '../../../helpers/localStorageHelper/localStorageHelper.ts';
+import { storeAuthTokensFromResponse } from '../../../helpers/storeAuthTokensFromResponse/storeAuthTokensFromResponse.ts';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -107,13 +108,7 @@ const registerUserAction =
 				},
 			});
 
-			if (response.headers['x-csrf-token']) {
-				LocalStorageHelper.setItem(
-					'x-csrf-token',
-					response.headers['x-csrf-token'],
-				);
-			}
-
+			storeAuthTokensFromResponse(response);
 			dispatch(returnUserAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
@@ -142,13 +137,7 @@ const loginUserAction =
 				},
 			});
 
-			if (response.headers['x-csrf-token']) {
-				LocalStorageHelper.setItem(
-					'x-csrf-token',
-					response.headers['x-csrf-token'],
-				);
-			}
-
+			storeAuthTokensFromResponse(response);
 			dispatch(returnUserAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
@@ -167,6 +156,7 @@ const logoutUserAction = () => async (dispatch: Dispatch) => {
 	try {
 		await HTTPClient.post<ModelsUser>('/auth/logout');
 		dispatch(setUserLogoutAction());
+		LocalStorageHelper.removeItem('x-csrf-token');
 	} catch (error: unknown) {
 		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
