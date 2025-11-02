@@ -13,3 +13,9 @@ export const selectUser: Selector = (state: State): ModelsUser | null =>
  */
 export const selectUserError: Selector = (state: State): string | null =>
 	state.user.error;
+
+/**
+ * Селектор для получения состояния загрузки пользователя из состояния.
+ */
+export const selectUserLoading: Selector = (state: State): boolean =>
+	state.user.loading;
