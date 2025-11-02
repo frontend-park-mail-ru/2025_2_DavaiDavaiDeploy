@@ -46,6 +46,7 @@ export class LoginPageNotConnected extends Component<
 	};
 
 	onMount() {
+		this.updateProps({ ...this.props, userError: '' });
 		window.addEventListener('resize', this.handleResize);
 	}
 
