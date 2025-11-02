@@ -63,7 +63,6 @@
 
 .avatarContainer {
 	position: relative;
-	cursor: pointer;
 
 	&:hover .avatarActions {
 		opacity: 1;
@@ -78,6 +77,7 @@
 	border-radius: 50%;
 	object-fit: cover;
 	object-position: center;
+	cursor: pointer;
 }
 
 @media (max-width: 768px) {
