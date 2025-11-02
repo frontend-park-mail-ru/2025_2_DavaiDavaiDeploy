@@ -1,5 +1,4 @@
 import { FeedBack } from '@/components/feedBack/feedBack';
-import { FilmGallery } from '@/components/filmGallery/filmGallery';
 import { FilmInfo } from '@/components/filmInfo/filmInfo';
 import { Userfeedback } from '@/components/userFeedback/userFeedback';
 import { compose, connect } from '@/modules/redux';
@@ -64,7 +63,6 @@ class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 							</div>
 						</div>
 						<div className={styles.right}>
-							<FilmGallery film={this.props.film} />
 							<Userfeedback />
 						</div>
 					</section>
