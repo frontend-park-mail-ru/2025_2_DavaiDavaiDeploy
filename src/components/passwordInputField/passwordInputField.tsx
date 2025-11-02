@@ -1,10 +1,10 @@
-import { Component } from '@robocotik/react';
-import styles from './passwordInputField.module.scss';
 import eye_close from '@/assets/img/eye_close.svg';
 import eye_open from '@/assets/img/eye_open.svg';
 import lock from '@/assets/img/lock.svg';
 import type { ValidationResult } from '@/helpers/types/validationResult.ts';
 import clsx from '@/modules/clsx/index.ts';
+import { Component } from '@robocotik/react';
+import styles from './passwordInputField.module.scss';
 
 interface PasswordInputFieldProps {
 	label?: string;
