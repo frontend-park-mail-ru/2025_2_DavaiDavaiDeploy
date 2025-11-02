@@ -4,6 +4,7 @@ const USER_DELETE = 'USER_DELETE';
 const USER_LOADING = 'USER_LOADING';
 const USER_LOADED = 'USER_LOADED';
 const USER_ERROR = 'USER_ERROR';
+const USER_LOGOUT = 'USER_LOGOUT';
 
 export default {
 	USER_CREATE,
@@ -12,4 +13,5 @@ export default {
 	USER_LOADING,
 	USER_LOADED,
 	USER_ERROR,
+	USER_LOGOUT,
 } as const;

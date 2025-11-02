@@ -26,6 +26,13 @@ export default ({ mode }: ConfigEnv) => {
 		server: {
 			host: 'localhost',
 			port: 3000,
+			proxy: {
+				'/api': {
+					target: 'https://ddfilms.online/api/',
+					changeOrigin: true,
+					rewrite: (path) => path.replace(/^\/api/, ''),
+				},
+			},
 		},
 		build: {
 			outDir: 'dist',

@@ -1,0 +1,35 @@
+.userInfo {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.username {
+	font-size: var(--font-size-l);
+	color: var(--color-accent);
+}
+
+.avatarContainer {
+	position: relative;
+
+	&:hover .avatarActions {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+}
+
+.avatar {
+	width: 3rem;
+	height: 3rem;
+	border-radius: 50%;
+	object-fit: cover;
+	object-position: center;
+	cursor: pointer;
+}
+
+@media (max-width: 768px) {
+	.username {
+		display: none;
+	}
+}

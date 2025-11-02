@@ -13,3 +13,15 @@ export const selectUser: Selector = (state: State): ModelsUser | null =>
  */
 export const selectUserError: Selector = (state: State): string | null =>
 	state.user.error;
+
+/**
+ * Селектор для получения ошибки пользователя из состояния, кроме 401.
+ */
+export const selectUserErrorNot401: Selector = (state: State): string | null =>
+	state.user.error === 'user is not authorized' ? null : state.user.error;
+
+/**
+ * Селектор для получения состояния загрузки пользователя из состояния.
+ */
+export const selectUserLoading: Selector = (state: State): boolean =>
+	state.user.loading;

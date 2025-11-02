@@ -37,11 +37,13 @@ export const userReducer: Reducer = (
 		case actionTypes.USER_CREATE:
 			return {
 				...state,
+				loading: false,
 				user: payload.user,
 			};
 		case actionTypes.USER_UPDATE:
 			return {
 				...state,
+				loading: false,
 				user: state.user.map((user: ModelsUser) =>
 					user.id === payload.user.id ? payload.user : user,
 				),
@@ -49,6 +51,7 @@ export const userReducer: Reducer = (
 		case actionTypes.USER_DELETE:
 			return {
 				...state,
+				loading: false,
 				user: state.user.filter(
 					(user: ModelsUser) => user.id !== payload.userId,
 				),
@@ -62,6 +65,12 @@ export const userReducer: Reducer = (
 				...state,
 				loading: false,
 				error: action.payload.error,
+				user: null,
+			};
+		case actionTypes.USER_LOGOUT:
+			return {
+				...state,
+				loading: false,
 				user: null,
 			};
 		default:

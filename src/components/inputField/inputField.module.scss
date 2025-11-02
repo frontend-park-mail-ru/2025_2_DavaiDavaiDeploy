@@ -1,4 +1,4 @@
-.input__container {
+.inputContainer {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
@@ -6,24 +6,24 @@
 	align-items: flex-start;
 }
 
-.input__label {
+.inputLabel {
 	font-weight: var(--font-weight-medium);
 	font-size: var(--font-size-s);
 	color: var(--color-text);
 }
 
-.input__wrapper {
+.inputWrapper {
 	display: flex;
 	align-items: center;
 	width: 100%;
 	justify-content: start;
 	gap: 1.125rem;
 	border-radius: var(--border-radius-l);
-	padding: 1rem;
 	height: 3.25rem;
+	position: relative;
 }
 
-.input__field {
+.inputField {
 	border: none;
 	background: transparent;
 	outline: none;
@@ -31,6 +31,7 @@
 	height: 100%;
 	width: 100%;
 	font-size: var(--font-size-xs);
+	padding-left: 3.25rem;
 
 	&:-moz-autofill,
 	&:-moz-autofill-preview {
@@ -65,4 +66,12 @@
 
 .errorBorder {
 	border: 2px solid var(--color-error);
+}
+
+.inputIcon {
+	width: 1rem;
+	height: 1rem;
+	position: absolute;
+	left: 1rem;
+	pointer-events: none;
 }

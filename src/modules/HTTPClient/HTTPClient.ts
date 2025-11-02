@@ -43,22 +43,7 @@ export class HTTPClient {
 		return this._request<T>({ path, ...config, method: METHODS.DELETE });
 	}
 
-	async _request<T = any>({
-		method = METHODS.GET,
-		path,
-		params = {},
-		data = {},
-	}: RequestConfig): Promise<Response<T>> {
-		const requestMethod = method.toUpperCase();
-
-		const requestUrl = new URL(this.default.baseUrl + path);
-
-		for (const [key, value] of Object.entries(params)) {
-			if (value != null) {
-				requestUrl.searchParams.append(key, value.toString());
-			}
-		}
-
+	private _buildHeaders(): Headers {
 		const requestHeaders = new Headers();
 
 		for (const [headerName, header] of Object.entries(
@@ -71,16 +56,48 @@ export class HTTPClient {
 			}
 		}
 
-		let requestBody = undefined;
+		return requestHeaders;
+	}
 
-		if (data && requestMethod !== METHODS.GET) {
-			if (typeof data === 'object') {
-				requestHeaders.set('Content-Type', 'application/json');
-				requestBody = JSON.stringify(data);
-			} else {
-				requestBody = data;
+	private _buildBody(
+		data: any,
+		requestMethod: string,
+		requestHeaders: Headers,
+	): string | undefined {
+		if (!data || requestMethod === METHODS.GET) {
+			return undefined;
+		}
+
+		if (typeof data === 'object') {
+			requestHeaders.set('Content-Type', 'application/json');
+			return JSON.stringify(data);
+		}
+
+		return data;
+	}
+
+	private async _request<T = any>({
+		method = METHODS.GET,
+		path,
+		params = {},
+		data = {},
+	}: RequestConfig): Promise<Response<T>> {
+		const requestMethod = method.toUpperCase();
+
+		const requestUrl = new URL(
+			this.default.baseUrl + path,
+			window.location.origin,
+		);
+
+		for (const [key, value] of Object.entries(params)) {
+			if (value != null) {
+				requestUrl.searchParams.append(key, value.toString());
 			}
 		}
+
+		const requestHeaders = this._buildHeaders();
+
+		const requestBody = this._buildBody(data, requestMethod, requestHeaders);
 
 		const controller = new AbortController();
 		const signal = controller.signal;
@@ -99,15 +116,17 @@ export class HTTPClient {
 			});
 
 			if (!response.ok) {
-				const error = new Error(`HTTP error! status: ${response.status}`);
-				Sentry.captureException(error, {
+				const errorMessage = `HTTP error! status: ${response.status}`;
+
+				Sentry.captureException(new Error(errorMessage), {
 					extra: {
 						url: requestUrl.toString(),
 						method: requestMethod,
+						status: response.status,
 					},
 				});
 
-				throw error;
+				throw new Error(errorMessage, { cause: response.status });
 			}
 
 			clearTimeout(timeout);
@@ -117,7 +136,13 @@ export class HTTPClient {
 				responseHeaders[key] = value;
 			});
 
-			const responseData: T = await response.json();
+			let responseData: T;
+
+			try {
+				responseData = await response.json();
+			} catch {
+				responseData = {} as T;
+			}
 
 			return {
 				data: responseData,

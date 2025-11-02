@@ -36,6 +36,11 @@ export class RegisterPageNotConnected extends Component<
 		password: '',
 		repeatPassword: '',
 		showVideo: window.innerWidth >= 768,
+		validationErrors: {
+			username: '',
+			password: '',
+			repeatPassword: '',
+		},
 	};
 
 	handleResize = () => {
@@ -47,6 +52,7 @@ export class RegisterPageNotConnected extends Component<
 	};
 
 	onMount() {
+		this.updateProps({ ...this.props, userError: '' });
 		window.addEventListener('resize', this.handleResize);
 	}
 
@@ -54,21 +60,62 @@ export class RegisterPageNotConnected extends Component<
 		window.removeEventListener('resize', this.handleResize);
 	}
 
+	validateFields() {
+		const usernameValidation = validateLogin(this.state.username);
+		const passwordValidation = validatePassword(this.state.password);
+		const repeatPasswordValidation = validatePasswordConfirm(
+			this.state.password,
+			this.state.repeatPassword,
+		);
+
+		this.setState({
+			...this.state,
+			validationErrors: {
+				username: usernameValidation.message,
+				password: passwordValidation.message,
+				repeatPassword: repeatPasswordValidation.message,
+			},
+		});
+
+		return (
+			usernameValidation.isValid &&
+			passwordValidation.isValid &&
+			repeatPasswordValidation.isValid
+		);
+	}
+
 	handleRegisterUser = () => {
-		if (
-			validateLogin(this.state.username).isValid &&
-			validatePassword(this.state.password).isValid &&
-			validatePasswordConfirm(this.state.password, this.state.repeatPassword)
-				.isValid
-		) {
+		if (this.validateFields()) {
 			this.props.registerUser(this.state.username, this.state.password);
-			this.props.router.navigate('/');
 		}
 	};
 
 	onUpdate() {
 		if (this.props.user) {
-			this.props.router.navigate('/');
+			this.props.router.back();
+		}
+	}
+
+	onFieldChange(
+		value: string,
+		field: 'username' | 'password' | 'repeatPassword',
+	) {
+		this.setState({ ...this.state, [field]: value });
+
+		if (this.props.userError) {
+			this.props.userError = '';
+		}
+
+		if (field === 'username') {
+			this.setState({
+				...this.state,
+				validationErrors: {
+					...this.state.validationErrors,
+					[field]: validateLogin(this.state[field]).message,
+				},
+			});
+		} else {
+			this.validateFields();
 		}
 	}
 
@@ -106,30 +153,29 @@ export class RegisterPageNotConnected extends Component<
 								defaultValue=""
 								preIconSrc={userSvg}
 								placeholder="Введите логин"
+								errorMessage={this.state.validationErrors.username}
 								value={this.state.username}
-								onChange={(value) => this.setState({ username: value })}
+								onChange={(value) => this.onFieldChange(value, 'username')}
 							/>
 							<PasswordInputField
 								label="Пароль"
 								defaultValue=""
 								placeholder="Введите пароль"
-								validateFn={() => validatePassword(this.state.password)}
+								errorMessage={this.state.validationErrors.password}
 								value={this.state.password}
-								onChange={(value) => this.setState({ password: value })}
+								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
 							<PasswordInputField
 								label="Подтверждение пароля"
 								defaultValue=""
-								validateFn={() =>
-									validatePasswordConfirm(
-										this.state.password,
-										this.state.repeatPassword,
-									)
-								}
+								errorMessage={this.state.validationErrors.repeatPassword}
 								placeholder="Повторите пароль"
 								value={this.state.repeatPassword}
-								onChange={(value) => this.setState({ repeatPassword: value })}
+								onChange={(value) =>
+									this.onFieldChange(value, 'repeatPassword')
+								}
 							/>
+							<p className={styles.errorMessage}>{this.props.userError}</p>
 						</div>
 						<div className={styles.rightSide__actions}>
 							<button

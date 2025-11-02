@@ -13,8 +13,6 @@ const TIMEOUT = 2500;
  */
 export default HTTPClient.create({
 	baseUrl: serverAddr,
-	headers: {
-		'X-Csrf-Token': () => getCSRFromLocalStorage(),
-	},
+	headers: { 'X-CSRF-Token': () => getCSRFromLocalStorage() },
 	timeout: TIMEOUT,
 });

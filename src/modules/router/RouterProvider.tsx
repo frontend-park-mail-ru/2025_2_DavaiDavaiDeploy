@@ -8,6 +8,11 @@ export class RouterProvider extends Component {
 		params: {},
 	};
 
+	back() {
+		window.scrollTo(0, 0);
+		window.history.back();
+	}
+
 	navigate = (to: string) => {
 		if (to === this.state.path) {
 			return;
@@ -43,6 +48,7 @@ export class RouterProvider extends Component {
 					path: this.state.path,
 					navigate: this.navigate,
 					params: this.state.params,
+					back: this.back,
 				}}
 			>
 				{this.props.children}

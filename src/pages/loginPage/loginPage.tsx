@@ -14,7 +14,7 @@ import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/user/actions.ts';
 import {
 	selectUser,
-	selectUserError,
+	selectUserErrorNot401,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
@@ -34,6 +34,10 @@ export class LoginPageNotConnected extends Component<
 		username: '',
 		password: '',
 		showVideo: window.innerWidth >= 768,
+		validationErrors: {
+			username: '',
+			password: '',
+		},
 	};
 
 	handleResize = () => {
@@ -44,7 +48,23 @@ export class LoginPageNotConnected extends Component<
 		}
 	};
 
+	validateFields() {
+		const usernameValidation = validateLogin(this.state.username);
+		const passwordValidation = validatePassword(this.state.password);
+
+		this.setState({
+			...this.state,
+			validationErrors: {
+				username: usernameValidation.message,
+				password: passwordValidation.message,
+			},
+		});
+
+		return usernameValidation.isValid && passwordValidation.isValid;
+	}
+
 	onMount() {
+		this.updateProps({ ...this.props, userError: '' });
 		window.addEventListener('resize', this.handleResize);
 	}
 
@@ -53,18 +73,25 @@ export class LoginPageNotConnected extends Component<
 	}
 
 	handleLoginUser = () => {
-		if (
-			validateLogin(this.state.username).isValid &&
-			validatePassword(this.state.password).isValid
-		) {
+		if (this.validateFields()) {
 			this.props.loginUser(this.state.username, this.state.password);
 		}
 	};
 
 	onUpdate() {
 		if (this.props.user) {
-			this.props.router.navigate('/');
+			this.props.router.back();
 		}
+	}
+
+	onFieldChange(value: string, field: 'username' | 'password') {
+		this.setState({ ...this.state, [field]: value });
+
+		if (this.props.userError) {
+			this.props.userError = '';
+		}
+
+		this.validateFields();
 	}
 
 	render() {
@@ -101,17 +128,19 @@ export class LoginPageNotConnected extends Component<
 								defaultValue=""
 								preIconSrc={userSvg}
 								placeholder="Введите логин"
+								errorMessage={this.state.validationErrors.username}
 								value={this.state.username}
-								onChange={(value) => this.setState({ username: value })}
+								onChange={(value) => this.onFieldChange(value, 'username')}
 							/>
 							<PasswordInputField
 								label="Пароль"
 								defaultValue=""
-								validateFn={() => validatePassword(this.state.password)}
+								errorMessage={this.state.validationErrors.password}
 								placeholder="Введите пароль"
 								value={this.state.password}
-								onChange={(value) => this.setState({ password: value })}
+								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
+							<p className={styles.errorMessage}>{this.props.userError}</p>
 						</div>
 						<div className={styles.rightSide__actions}>
 							<button
@@ -136,7 +165,7 @@ export class LoginPageNotConnected extends Component<
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
-	userError: selectUserError(state),
+	userError: selectUserErrorNot401(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

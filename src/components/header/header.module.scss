@@ -4,7 +4,6 @@
 	padding: 1.4rem 5rem;
 	box-sizing: border-box;
 	display: flex;
-	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
 	position: fixed;
@@ -145,14 +144,6 @@
 	}
 }
 
-.avatar {
-	width: 2.5rem;
-	height: 2.5rem;
-	border-radius: 50%;
-	object-fit: cover;
-	object-position: center;
-}
-
 .name {
 	padding: 0.5rem 0.75rem;
 	color: var(--color-white);
@@ -184,15 +175,9 @@
 	}
 }
 
-.userInfo {
-	display: flex;
-	align-items: center;
-	gap: 1rem;
-}
-
-.username {
-	font-size: var(--font-size-l);
-	color: var(--color-accent);
+.loadingContainer {
+	width: 3rem;
+	height: 3rem;
 }
 
 @media (max-width: 768px) {

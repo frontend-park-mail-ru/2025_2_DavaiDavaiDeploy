@@ -1,9 +1,23 @@
+import { authorizationCodeToErrorHelper } from '@/helpers/authorizationCodeToErrorHelper/authorizationCodeToErrorHelper.ts';
+import LocalStorageHelper from '@/helpers/localStorageHelper/localStorageHelper.ts';
+import { registrationCodeToErrorHelper } from '@/helpers/registrationCodeToError/registrationCodeToError.ts';
+import { storeAuthTokensFromResponse } from '@/helpers/storeAuthTokensFromResponse/storeAuthTokensFromResponse.ts';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsUser } from '@/types/models';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
+
+/**
+ * Создает действие для выхода пользователя из системы.
+
+ */
+const setUserLogoutAction = (): Action => {
+	return {
+		type: actionTypes.USER_LOGOUT,
+	};
+};
 
 /**
  * Создает действие для установки состояния загрузки пользователя.
@@ -60,6 +74,13 @@ const deleteUserAction = (userId: string | number): Action => {
  * Создает асинхронное действие для проверки авторизации пользователя.
  */
 const checkUserAction = (): Action => async (dispatch: Dispatch) => {
+	if (
+		window.location.pathname === '/login' ||
+		window.location.pathname === '/register'
+	) {
+		return;
+	}
+
 	dispatch(setUserLoadingAction());
 
 	try {
@@ -96,12 +117,13 @@ const registerUserAction =
 				},
 			});
 
+			storeAuthTokensFromResponse(response);
 			dispatch(returnUserAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
 			if (error instanceof Error) {
-				errorMessage = error.message;
+				errorMessage = registrationCodeToErrorHelper(error.cause as number);
 			} else if (typeof error === 'string') {
 				errorMessage = error;
 			}
@@ -124,12 +146,13 @@ const loginUserAction =
 				},
 			});
 
+			storeAuthTokensFromResponse(response);
 			dispatch(returnUserAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
 			if (error instanceof Error) {
-				errorMessage = error.message;
+				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
 			} else if (typeof error === 'string') {
 				errorMessage = error;
 			}
@@ -138,10 +161,29 @@ const loginUserAction =
 		}
 	};
 
+const logoutUserAction = () => async (dispatch: Dispatch) => {
+	try {
+		await HTTPClient.post<ModelsUser>('/auth/logout');
+		dispatch(setUserLogoutAction());
+		LocalStorageHelper.removeItem('x-csrf-token');
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(returnUserErrorAction(errorMessage));
+	}
+};
+
 export default {
 	registerUserAction,
 	loginUserAction,
 	checkUserAction,
 	updateUserAction,
 	deleteUserAction,
+	logoutUserAction,
 };
