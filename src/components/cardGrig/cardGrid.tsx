@@ -1,7 +1,8 @@
-import { connect } from '@/modules/redux';
+import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import { RouterContext } from '@/modules/router/routerContext';
+import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
+import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/films/actions';
 import { selectFilms } from '@/redux/features/films/selectors.js';
 import genreActions from '@/redux/features/genre/actions';
@@ -20,12 +21,10 @@ interface CardGridProps {
 	getFilms: (limit: number, offset: number, id?: string) => void;
 }
 
-class CardGridComponent extends Component<CardGridProps> {
-	static readonly contextType = RouterContext;
-
+class CardGridComponent extends Component<CardGridProps & WithRouterProps> {
 	onMount() {
-		if (this.context.params.id) {
-			this.props.getFilms(FILM_COUNT, OFFSET, this.context.params.id);
+		if (this.props.router.params.id) {
+			this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
 		} else {
 			this.props.getFilms(FILM_COUNT, OFFSET);
 		}
@@ -38,7 +37,7 @@ class CardGridComponent extends Component<CardGridProps> {
 
 		return (
 			<div className={styles.cardGrid}>
-				{!this.context.params.id && (
+				{!this.props.router.params.id && (
 					<h2 className={styles.title}>Все фильмы</h2>
 				)}
 				<div className={styles.grid}>
@@ -60,9 +59,9 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(actions.getFilmsAction(limit, offset)),
 });
 
-export const CardGrid = connect(
-	mapStateToProps,
-	mapDispatchToProps,
+export const CardGrid = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
 )(CardGridComponent);
 
 const genreMapStateToProps = (state: State): Map => ({
@@ -74,7 +73,7 @@ const genreMapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(genreActions.getGenreFilmsAction(limit, offset, id)),
 });
 
-export const GenreCardGrid = connect(
-	genreMapStateToProps,
-	genreMapDispatchToProps,
+export const GenreCardGrid = compose(
+	withRouter,
+	connect(genreMapStateToProps, genreMapDispatchToProps),
 )(CardGridComponent);
