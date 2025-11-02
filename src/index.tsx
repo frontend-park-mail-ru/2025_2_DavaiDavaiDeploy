@@ -36,8 +36,12 @@ if (sentryEnabled) {
 		enabled: isProduction,
 		integrations: [Sentry.browserTracingIntegration()],
 		tracePropagationTargets: [PRODUCTION_URL_WITH_SCHEMA],
+		release: import.meta.env.VITE_RELEASE_VERSION,
 	});
 }
+
+// eslint-disable-next-line no-console
+console.log(import.meta.env.VITE_RELEASE_VERSION);
 
 interface AppProps {
 	user: ModelsUser;
