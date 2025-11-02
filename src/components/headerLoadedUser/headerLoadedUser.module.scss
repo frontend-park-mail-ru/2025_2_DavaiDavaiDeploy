@@ -9,52 +9,6 @@
 	color: var(--color-accent);
 }
 
-.avatarActions {
-	position: absolute;
-	top: calc(100% + 0.5rem);
-	right: 0;
-	background: var(--color-light);
-	border: 1px solid var(--color-accent);
-	border-radius: 0.5rem;
-	padding: 1rem;
-	min-width: 16rem;
-	max-width: 20rem;
-	box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
-	opacity: 0;
-	visibility: hidden;
-	transform: translateY(-0.5rem);
-	transition: all 0.3s ease;
-	display: flex;
-	flex-direction: column;
-	gap: 0.75rem;
-
-	&::before {
-		content: '';
-		position: absolute;
-		top: -0.5rem;
-		right: 1rem;
-		width: 0;
-		height: 0;
-		border-left: 0.5rem solid transparent;
-		border-right: 0.5rem solid transparent;
-		border-bottom: 0.5rem solid var(--color-border);
-	}
-
-	a {
-		padding: 0.5rem;
-		border-radius: 0.375rem;
-		transition: all 0.2s ease;
-		color: var(--color-text);
-		text-decoration: none;
-		text-align: center;
-
-		&:hover {
-			background: var(--color-accent-hover, rgb(255 107 107 / 10%));
-			color: var(--color-accent);
-		}
-	}
-}
-
 .avatarContainer {
 	position: relative;
 
