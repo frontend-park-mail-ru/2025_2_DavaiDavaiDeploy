@@ -188,7 +188,8 @@ jobs:
         with:
           environment: production
           sourcemaps: './dist'
-          release: ${{ github.sha }}
+          release: ${{ github.ref_name }}-${{ github.sha }}
+          ignore_missing: true
 
   deploy-to-s3:
     name: Deploy to s3
