@@ -116,7 +116,7 @@ export class HTTPClient {
 			});
 
 			if (!response.ok) {
-				let errorMessage = `HTTP error! status: ${response.status}`;
+				const errorMessage = `HTTP error! status: ${response.status}`;
 
 				Sentry.captureException(new Error(errorMessage), {
 					extra: {
@@ -126,17 +126,7 @@ export class HTTPClient {
 					},
 				});
 
-				try {
-					const errorData = await response.json();
-
-					if (errorData.message) {
-						errorMessage = errorData.message;
-					}
-				} catch {
-					// Если не удалось распарсить JSON, используем стандартное сообщение
-				}
-
-				throw new Error(errorMessage);
+				throw new Error(errorMessage, { cause: response.status });
 			}
 
 			clearTimeout(timeout);

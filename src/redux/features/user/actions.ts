@@ -1,8 +1,10 @@
+import { authorizationCodeToErrorHelper } from '@/helpers/authorizationCodeToErrorHelper/authorizationCodeToErrorHelper.ts';
 import LocalStorageHelper from '@/helpers/localStorageHelper/localStorageHelper.ts';
+import { registrationCodeToErrorHelper } from '@/helpers/registrationCodeToError/registrationCodeToError.ts';
+import { storeAuthTokensFromResponse } from '@/helpers/storeAuthTokensFromResponse/storeAuthTokensFromResponse.ts';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsUser } from '@/types/models';
-import { storeAuthTokensFromResponse } from '../../../helpers/storeAuthTokensFromResponse/storeAuthTokensFromResponse.ts';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -72,6 +74,13 @@ const deleteUserAction = (userId: string | number): Action => {
  * Создает асинхронное действие для проверки авторизации пользователя.
  */
 const checkUserAction = (): Action => async (dispatch: Dispatch) => {
+	if (
+		window.location.pathname === '/login' ||
+		window.location.pathname === '/register'
+	) {
+		return;
+	}
+
 	dispatch(setUserLoadingAction());
 
 	try {
@@ -114,7 +123,7 @@ const registerUserAction =
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
 			if (error instanceof Error) {
-				errorMessage = error.message;
+				errorMessage = registrationCodeToErrorHelper(error.cause as number);
 			} else if (typeof error === 'string') {
 				errorMessage = error;
 			}
@@ -143,7 +152,7 @@ const loginUserAction =
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
 			if (error instanceof Error) {
-				errorMessage = error.message;
+				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
 			} else if (typeof error === 'string') {
 				errorMessage = error;
 			}
