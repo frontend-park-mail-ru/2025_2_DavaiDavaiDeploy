@@ -1,4 +1,5 @@
 import Star from '@/assets/img/Star.svg';
+import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices.ts';
 import { formatRatingNumber } from '@/helpers/formatRatingNumberHelper/formatRatingNumberHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
@@ -12,7 +13,7 @@ import type { ModelsFilmPage, ModelsUser } from '@/types/models';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
-import { FilmRatingInput } from '../FilmRatingInput/FilmRatingInput.tsx';
+import { FilmRatingInput } from '../filmRatingInput/filmRatingInput.tsx';
 import styles from './filmRating.module.scss';
 
 interface FilmRatingProps {
@@ -34,15 +35,28 @@ class FilmRatingComponent extends Component<
 	};
 
 	handleRatingLeave = (event: MouseEvent): void => {
+		if (window.innerWidth < MIDDLE_SCREEN_WIDTH) {
+			return;
+		}
+
 		event.stopPropagation();
 		this.setState({ isMenuActive: false });
 	};
 
 	handleMouseLeave = () => {
+		if (window.innerWidth < MIDDLE_SCREEN_WIDTH) {
+			return;
+		}
+
 		this.setState({ isMenuActive: false });
 	};
 
 	handleMouseEnter = () => {
+		if (window.innerWidth < MIDDLE_SCREEN_WIDTH) {
+			this.setState({ isMenuActive: !this.state.isMenuActive });
+			return;
+		}
+
 		this.setState({ isMenuActive: true });
 	};
 
@@ -60,7 +74,14 @@ class FilmRatingComponent extends Component<
 				onMouseEnter={this.handleMouseEnter}
 				onClick={this.handleMouseEnter}
 			>
-				<img src={Star} className={styles.star} />
+				<span className={styles.starAndRating}>
+					{this.props.user && this.props.userRating && (
+						<h2 className={styles[`userTitle-${userRatingType}`]}>
+							{this.props.userRating}
+						</h2>
+					)}
+					<img src={Star} className={styles.star} />
+				</span>
 				{!this.props.userRating && (
 					<p className={styles.btnText}>Оценить фильм</p>
 				)}
@@ -93,6 +114,7 @@ class FilmRatingComponent extends Component<
 					{formattedRating && (
 						<h2 className={styles[`title-${ratingType}`]}>{formattedRating}</h2>
 					)}
+
 					{ratingNumber && <p className={styles.subtitle}>{ratingNumber}</p>}
 					{!this.props.user ? (
 						<Link href="/login">{buttonContent}</Link>

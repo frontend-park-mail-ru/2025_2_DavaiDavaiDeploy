@@ -13,8 +13,8 @@ import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
-import { FilmRatingInput } from '../FilmRatingInput/FilmRatingInput.tsx';
-import styles from './FeedbackForm.module.scss';
+import { FilmRatingInput } from '../filmRatingInput/filmRatingInput.tsx';
+import styles from './feedbackForm.module.scss';
 
 interface FeedbackFormProps {
 	userRating: number | null;

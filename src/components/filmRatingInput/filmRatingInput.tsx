@@ -10,7 +10,7 @@ import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
-import styles from './FilmRatingInput.module.scss';
+import styles from './filmRatingInput.module.scss';
 
 interface FilmRatingInputProps {
 	userRating: number | null;

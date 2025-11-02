@@ -1,7 +1,7 @@
 import { FeedBack } from '@/components/feedBack/feedBack';
 import { FilmGallery } from '@/components/filmGallery/filmGallery';
 import { FilmInfo } from '@/components/filmInfo/filmInfo';
-import { Userfeedback } from '@/components/UserFeedback/UserFeedback';
+import { Userfeedback } from '@/components/userFeedback/userFeedback';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';

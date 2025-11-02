@@ -10,8 +10,8 @@ import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { FeedBack } from '../feedBack/feedBack.tsx';
-import { FeedbackForm } from '../FeedbackForm/FeedbackForm.tsx';
-import styles from './UserFeedback.module.scss';
+import { FeedbackForm } from '../feedbackForm/feedbackForm.tsx';
+import styles from './userFeedback.module.scss';
 
 interface FeedbackFormProps {
 	userFeedback: ModelsFilmFeedback | null;

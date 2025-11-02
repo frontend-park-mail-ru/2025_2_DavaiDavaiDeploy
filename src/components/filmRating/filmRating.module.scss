@@ -7,12 +7,6 @@
 	flex: 1;
 }
 
-.title-low,
-.title-high,
-.title-medium {
-	font-size: var(--font-size-3xl);
-}
-
 .subtitle {
 	opacity: 0.6;
 	color: var(--color-light-text);
@@ -40,7 +34,7 @@
 
 .active {
 	opacity: 1 !important;
-	pointer-events: all !important;
+	pointer-events: all;
 	z-index: 6 !important;
 }
 
@@ -55,19 +49,20 @@
 	cursor: pointer;
 	border: 1px solid var(--color-light);
 	z-index: 5;
-	pointer-events: all;
 	transition: transform 0.2s ease;
-
-	&:hover {
-		transform: scale(1.02);
-		box-shadow: 0 0 0.8rem var(--color-boxshadow-btn);
-	}
+	pointer-events: all;
 }
 
 .btnText {
 	font-size: var(--font-size-m);
 	white-space: nowrap;
 	width: min(15vw, 10rem);
+}
+
+.title-low,
+.title-medium,
+.title-high {
+	font-size: var(--font-size-3xl);
 }
 
 .title-high {
@@ -125,26 +120,58 @@
 }
 
 .userStarIcon {
-	width: 1rem;
+	width: 1.2rem;
 }
 
-@media (max-width: 1000px) {
+.userTitle-low,
+.userTitle-medium,
+.userTitle-high {
+	display: none;
+	font-size: var(--font-size-3xl);
+	margin-bottom: -0.2rem;
+}
+
+.userTitle-high {
+	color: var(--color-rating-high);
+}
+
+.userTitle-medium {
+	color: var(--color-rating-medium);
+}
+
+.userTitle-low {
+	color: var(--color-rating-low);
+}
+
+.content {
+	display: flex;
+	flex-direction: row;
+}
+
+.starAndRating {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	gap: 0.6rem;
+}
+
+@media (max-width: 1024px) {
 	.rating-high,
 	.rating-medium,
-	.rating-low {
-		display: flex;
-		flex-direction: row;
-		border-radius: 0.3125rem;
-		padding: 0.02rem 0.2rem;
-		font-size: var(--font-size-l);
-		gap: 0.2rem;
-		align-items: center;
+	.rating-low,
+	.title-low,
+	.title-medium,
+	.title-high {
+		display: none;
 	}
-}
 
-@media (max-width: 800px) {
-	.rating {
+	.userTitle-low,
+	.userTitle-medium,
+	.userTitle-high {
 		display: flex;
+	}
+
+	.rating {
 		flex-direction: row;
 		gap: 1.5rem;
 		align-items: center;
@@ -154,12 +181,36 @@
 	}
 
 	.star {
+		display: flex;
 		width: 2.5rem;
 		height: 2.5rem;
-		display: flex;
 	}
 
 	.userStarIcon {
+		display: none;
+	}
+
+	.rateBtn {
+		flex-direction: column;
+		align-items: center;
+		gap: 0.4rem;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 0;
+		pointer-events: all;
+		-webkit-tap-highlight-color: transparent;
+		transition:
+			background-color 0.2s,
+			transform 0.1s;
+		width: max-content;
+	}
+
+	.rateMenu {
+		padding: 1rem 1.5rem;
+	}
+
+	.subtitle {
 		display: none;
 	}
 
@@ -168,48 +219,6 @@
 		color: var(--color-light-text);
 		opacity: 0.6;
 		text-align: center;
-	}
-
-	.rateBtn {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.2rem;
-		background-color: transparent;
-		border: none;
-		cursor: pointer;
-		pointer-events: all;
-		padding: 0;
-		-webkit-tap-highlight-color: transparent;
-		transition:
-			background-color 0.2s,
-			transform 0.1s;
-
-		&:hover {
-			transform: scale(1.05);
-
-			.star,
-			.btnText {
-				opacity: 0;
-				pointer-events: none;
-			}
-		}
-	}
-
-	.rateMenu {
-		position: absolute;
-		top: 0;
-		z-index: 10;
-		display: flex;
-		opacity: 0;
-		transform: translateX(-10%);
-		gap: 3vw;
-		padding: 0.5rem 0.8rem;
-		align-items: center;
-		pointer-events: none;
-	}
-
-	.subtitle {
-		display: none;
+		width: 100%;
 	}
 }

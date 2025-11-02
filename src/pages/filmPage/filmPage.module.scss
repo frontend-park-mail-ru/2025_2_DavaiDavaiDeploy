@@ -9,7 +9,9 @@
 	background-color: var(--color-text);
 	display: flex;
 	flex-direction: row;
-	gap: 80px;
+	gap: 3vw;
+	align-items: flex-start;
+	justify-content: space-between;
 	padding: var(--side-padding);
 }
 
@@ -17,12 +19,14 @@
 	display: flex;
 	flex-direction: column;
 	gap: 1.875rem;
+	width: 100%;
 }
 
 .right {
 	display: flex;
 	flex-direction: column;
 	gap: 4rem;
+	width: 100%;
 }
 
 .feedbacks {
@@ -44,16 +48,16 @@
 	font-size: var(--font-size-xl);
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
 	.content {
 		flex-direction: column;
-		gap: 1.5rem;
+		gap: 2vw;
 	}
 
 	.left {
 		order: 2;
 		margin-top: 1rem;
-		margin-bottom: 1rem;
+		margin-bottom: 3rem;
 	}
 
 	.feedbacks {
