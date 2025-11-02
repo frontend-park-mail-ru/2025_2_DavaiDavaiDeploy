@@ -40,9 +40,6 @@ if (sentryEnabled) {
 	});
 }
 
-// eslint-disable-next-line no-console
-console.log(import.meta.env.VITE_RELEASE_VERSION);
-
 interface AppProps {
 	user: ModelsUser;
 	checkUser: () => {};
