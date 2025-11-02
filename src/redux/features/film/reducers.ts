@@ -102,6 +102,8 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 			return {
 				...state,
 				userRating: payload.rating.rating,
+				userFeedback:
+					payload.rating.title && payload.rating.text ? payload.rating : null,
 			};
 		default:
 			return state;

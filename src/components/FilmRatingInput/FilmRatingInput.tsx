@@ -49,7 +49,7 @@ class FilmRatingInputComponent extends Component<
 							data-number={number}
 							className={clsx(styles['ratingNumber-' + getRatingType(number)], {
 								[styles.dark]: this.props.isDark,
-								[`cur-${getRatingType(number)}`]:
+								[styles[`cur-${getRatingType(number)}`]]:
 									this.props.userRating === number,
 							})}
 							onClick={this.leaveRating}
