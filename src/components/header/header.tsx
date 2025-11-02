@@ -20,7 +20,7 @@ import styles from './header.module.scss';
 interface HeaderProps {
 	user: ModelsUser | null;
 	isLoading: boolean;
-	logoutUser: () => {};
+	logoutUser: VoidFunction;
 }
 
 export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
@@ -40,15 +40,9 @@ export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 		}
 
 		return (
-			<>
-				<p className={styles.text1}>Нет аккаунта?</p>
-				<Link href="/register" className={styles.text2}>
-					Зарегистрироваться
-				</Link>
-				<NavigateButton href="/login" className={styles.loginBtn}>
-					Войти
-				</NavigateButton>
-			</>
+			<NavigateButton href="/login" className={styles.loginBtn}>
+				Войти
+			</NavigateButton>
 		);
 	}
 

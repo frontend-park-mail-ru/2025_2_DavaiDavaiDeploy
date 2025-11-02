@@ -7,7 +7,7 @@ import { Component } from '@robocotik/react';
 import styles from './headerUserAvatar.module.scss';
 interface UserAvatarProps {
 	user: ModelsUser | null;
-	logoutUser: () => {};
+	logoutUser: VoidFunction;
 	className: string;
 }
 

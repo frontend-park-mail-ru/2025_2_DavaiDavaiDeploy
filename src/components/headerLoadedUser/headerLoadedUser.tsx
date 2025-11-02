@@ -6,7 +6,7 @@ import styles from './headerLoadedUser.module.scss';
 
 interface LoadedUserProps {
 	user: ModelsUser | null;
-	logoutUser: () => {};
+	logoutUser: VoidFunction;
 }
 
 export class LoadedUser extends Component<LoadedUserProps> {
