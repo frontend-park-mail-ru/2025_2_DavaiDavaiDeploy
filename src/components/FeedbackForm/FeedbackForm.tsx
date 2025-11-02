@@ -1,4 +1,7 @@
 import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
+import { validateFeedbackText } from '@/helpers/validateFeedbackText/validateFeedbackText.ts';
+import { validateFeedbackTitle } from '@/helpers/validateFeedbackTitle/validateFeedbackTitle.ts';
+import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -27,6 +30,8 @@ interface FeedbackFormProps {
 interface FeedbackFormState {
 	title: string;
 	text: string;
+	titleErrorMessage: string;
+	textErrorMessage: string;
 }
 
 class FeedbackFormComponent extends Component<
@@ -36,26 +41,48 @@ class FeedbackFormComponent extends Component<
 	state = {
 		title: '',
 		text: '',
+		titleErrorMessage: '',
+		textErrorMessage: '',
 	};
 
-	handleChange = (event: Event) => {
-		const target = event.target as HTMLInputElement | HTMLTextAreaElement;
+	handleTitleChange = (event: Event) => {
+		const target = event.target as HTMLInputElement;
 		const { name, value } = target;
-		this.setState({ [name]: value });
+
+		const { message } = validateFeedbackTitle(value);
+
+		this.setState({
+			[name]: value,
+			titleErrorMessage: message,
+		});
 	};
 
-	handleKeyPress = (event: KeyboardEvent) => {
-		if (event.key === 'Enter') {
-			event.preventDefault();
-			this.handleSubmit();
+	handleTextChange = (event: Event) => {
+		const target = event.target as HTMLTextAreaElement;
+		const { name, value } = target;
+
+		let textErrorMessage = '';
+
+		if (value.trim().length >= 10) {
+			const validation = validateFeedbackText(value);
+			textErrorMessage = validation.message;
 		}
+
+		this.setState({
+			[name]: value,
+			textErrorMessage,
+		});
 	};
 
 	handleSubmit = () => {
 		const { title, text } = this.state;
 
-		if (!title.trim() || !text.trim() || !this.props.userRating) {
-			alert('Пожалуйста, заполните все поля');
+		const { message: titleErrorMessage } = validateFeedbackTitle(title);
+		const { message: textErrorMessage } = validateFeedbackText(text);
+
+		this.setState({ titleErrorMessage, textErrorMessage });
+
+		if (titleErrorMessage || textErrorMessage || !this.props.userRating) {
 			return;
 		}
 
@@ -93,16 +120,22 @@ class FeedbackFormComponent extends Component<
 						name="title"
 						value={title}
 						placeholder="Заголовок"
-						className={styles.inputTitle}
-						onInput={this.handleChange}
+						className={clsx(styles.inputTitle, {
+							[styles.errorBorder]: this.state.titleErrorMessage.length > 0,
+						})}
+						onInput={this.handleTitleChange}
 					/>
+					<p className={styles.errorMessage}>{this.state.titleErrorMessage}</p>
 					<textarea
 						name="text"
 						value={text}
 						placeholder="Текст"
-						className={styles.textarea}
-						onInput={this.handleChange}
+						className={clsx(styles.textarea, {
+							[styles.errorBorder]: this.state.textErrorMessage.length > 0,
+						})}
+						onInput={this.handleTextChange}
 					/>
+					<p className={styles.errorMessage}>{this.state.textErrorMessage}</p>
 				</div>
 
 				<button className={styles.submitButton} onClick={this.handleSubmit}>

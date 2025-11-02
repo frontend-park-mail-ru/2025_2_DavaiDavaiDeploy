@@ -105,6 +105,17 @@
 	}
 }
 
+.errorMessage {
+	color: var(--color-error);
+	text-align: left;
+	height: 1rem;
+	margin-top: -0.5rem;
+}
+
+.errorBorder {
+	border: 2px solid var(--color-error);
+}
+
 @media (max-width: 768px) {
 	.feedbackForm {
 		padding: 1.5rem;
