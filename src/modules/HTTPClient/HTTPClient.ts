@@ -43,6 +43,39 @@ export class HTTPClient {
 		return this._request<T>({ path, ...config, method: METHODS.DELETE });
 	}
 
+	private _buildHeaders(): Headers {
+		const requestHeaders = new Headers();
+
+		for (const [headerName, header] of Object.entries(
+			this.default.headers ?? {},
+		)) {
+			if (typeof header === 'function') {
+				requestHeaders.set(headerName, header());
+			} else {
+				requestHeaders.set(headerName, header);
+			}
+		}
+
+		return requestHeaders;
+	}
+
+	private _buildBody(
+		data: any,
+		requestMethod: string,
+		requestHeaders: Headers,
+	): string | undefined {
+		if (!data || requestMethod === METHODS.GET) {
+			return undefined;
+		}
+
+		if (typeof data === 'object') {
+			requestHeaders.set('Content-Type', 'application/json');
+			return JSON.stringify(data);
+		}
+
+		return data;
+	}
+
 	async _request<T = any>({
 		method = METHODS.GET,
 		path,
@@ -62,28 +95,9 @@ export class HTTPClient {
 			}
 		}
 
-		const requestHeaders = new Headers();
+		const requestHeaders = this._buildHeaders();
 
-		for (const [headerName, header] of Object.entries(
-			this.default.headers ?? {},
-		)) {
-			if (typeof header === 'function') {
-				requestHeaders.set(headerName, header());
-			} else {
-				requestHeaders.set(headerName, header);
-			}
-		}
-
-		let requestBody = undefined;
-
-		if (data && requestMethod !== METHODS.GET) {
-			if (typeof data === 'object') {
-				requestHeaders.set('Content-Type', 'application/json');
-				requestBody = JSON.stringify(data);
-			} else {
-				requestBody = data;
-			}
-		}
+		const requestBody = this._buildBody(data, requestMethod, requestHeaders);
 
 		const controller = new AbortController();
 		const signal = controller.signal;
@@ -102,15 +116,27 @@ export class HTTPClient {
 			});
 
 			if (!response.ok) {
-				const error = new Error(`HTTP error! status: ${response.status}`);
-				Sentry.captureException(error, {
+				let errorMessage = `HTTP error! status: ${response.status}`;
+
+				Sentry.captureException(new Error(errorMessage), {
 					extra: {
 						url: requestUrl.toString(),
 						method: requestMethod,
+						status: response.status,
 					},
 				});
 
-				throw error;
+				try {
+					const errorData = await response.json();
+
+					if (errorData.message) {
+						errorMessage = errorData.message;
+					}
+				} catch {
+					// Если не удалось распарсить JSON, используем стандартное сообщение
+				}
+
+				throw new Error(errorMessage);
 			}
 
 			clearTimeout(timeout);
