@@ -59,6 +59,7 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 					...payload.film,
 					original_title: decode(payload.film.original_title),
 				},
+				userRating: payload.film.user_rating ? payload.film.user_rating : null,
 			};
 		case actionTypes.FILM_ERROR:
 			return {
@@ -96,7 +97,7 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 		case actionTypes.LEAVE_RATING:
 			return {
 				...state,
-				userRating: payload.rating,
+				userRating: payload.rating.rating,
 			};
 		default:
 			return state;

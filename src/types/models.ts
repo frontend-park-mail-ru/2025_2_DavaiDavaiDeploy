@@ -108,6 +108,7 @@ export interface ModelsFilmPage {
 	worldwide_fees: number;
 	year: number;
 	is_reviewed: boolean;
+	user_rating?: number;
 }
 
 export interface ModelsGenre {

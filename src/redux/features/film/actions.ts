@@ -122,7 +122,7 @@ const getFeedbacksAction: Action =
 const returnNewRatingAction = (data: ModelsFilmFeedback): Action => {
 	return {
 		type: actionTypes.LEAVE_RATING,
-		payload: { rating: data.rating },
+		payload: { rating: data },
 	};
 };
 

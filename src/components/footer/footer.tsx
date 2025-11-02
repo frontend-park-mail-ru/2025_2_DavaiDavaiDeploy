@@ -5,7 +5,7 @@ import styles from './footer.module.scss';
 
 class FooterComponent extends Component<WithRouterProps> {
 	render() {
-		const type = this.props.router.path.startsWith('/film') ? 'light' : 'dark';
+		const type = this.props.router.path.startsWith('/films') ? 'light' : 'dark';
 		return (
 			<footer id="footer" className={styles[`footer-${type}`]}>
 				<p className={styles.content}>© Davai Film, 2025</p>
