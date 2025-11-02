@@ -9,7 +9,7 @@ export function registrationCodeToErrorHelper(code: number): string {
 		case 400:
 			return 'Неверный логин или пароль';
 		case 409:
-			return 'Пользователь с таким именем уже существует';
+			return 'Пользователь с таким именем уже зарегистрирован';
 		case 500:
 			return 'Внутренняя ошибка сервера';
 		default:
