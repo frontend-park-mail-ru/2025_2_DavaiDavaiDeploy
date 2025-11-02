@@ -143,6 +143,7 @@ export class RegisterPageNotConnected extends Component<
 									this.onFieldChange(value, 'repeatPassword')
 								}
 							/>
+							<p className={styles.errorMessage}>{this.props.userError}</p>
 						</div>
 						<div className={styles.rightSide__actions}>
 							<button

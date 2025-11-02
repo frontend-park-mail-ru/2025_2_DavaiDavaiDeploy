@@ -56,6 +56,7 @@
 	flex-direction: column;
 	gap: 1.875rem;
 	width: 100%;
+	position: relative;
 }
 
 .rightSide__actions {
@@ -88,6 +89,14 @@
 		color: var(--color-accent);
 		transform: translateY(-1px);
 	}
+}
+
+.errorMessage {
+	color: var(--color-error);
+	font-size: var(--font-size-s);
+	position: absolute;
+	top: 100%;
+	left: 0;
 }
 
 .register__button {
@@ -137,6 +146,10 @@
 }
 
 @media (max-width: 768px) {
+	.rightSide__actions {
+		padding-top: 2rem;
+	}
+
 	.films {
 		display: flex;
 		flex-direction: column;
