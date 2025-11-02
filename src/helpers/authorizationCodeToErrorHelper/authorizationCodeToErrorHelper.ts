@@ -1,3 +1,5 @@
+import { ERROR_CODES } from '@/consts/errorCodes.ts';
+
 /**
  * Возвращает сообщение об ошибке на основе кода ошибки авторизации.
  * @param {number} code - Код ошибки авторизации.
@@ -6,9 +8,9 @@
 
 export function authorizationCodeToErrorHelper(code: number): string {
 	switch (code) {
-		case 400:
+		case ERROR_CODES.BAD_REQUEST:
 			return 'Неверный логин или пароль';
-		case 500:
+		case ERROR_CODES.INTERNAL_ERROR:
 			return 'Внутренняя ошибка сервера';
 		default:
 			return 'Неизвестная ошибка';

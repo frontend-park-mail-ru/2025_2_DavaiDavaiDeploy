@@ -1,3 +1,4 @@
+import { ERROR_CODES } from '@/consts/errorCodes.ts';
 /**
  * Возвращает сообщение об ошибке на основе кода ошибки регистрации.
  * @param {number} code - Код ошибки регистрации.
@@ -6,11 +7,11 @@
 
 export function registrationCodeToErrorHelper(code: number): string {
 	switch (code) {
-		case 400:
+		case ERROR_CODES.BAD_REQUEST:
 			return 'Неверный логин или пароль';
-		case 409:
+		case ERROR_CODES.CONFLICT:
 			return 'Пользователь с таким именем уже зарегистрирован';
-		case 500:
+		case ERROR_CODES.INTERNAL_ERROR:
 			return 'Внутренняя ошибка сервера';
 		default:
 			return 'Неизвестная ошибка';
