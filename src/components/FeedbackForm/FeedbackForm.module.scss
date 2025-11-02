@@ -99,6 +99,7 @@
 	cursor: pointer;
 	color: var(--color-text);
 	box-sizing: border-box;
+	transition: transform 0.3s ease;
 
 	&:hover {
 		transform: scale(1.01);
