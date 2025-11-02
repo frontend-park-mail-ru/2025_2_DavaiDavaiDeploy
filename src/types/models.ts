@@ -52,6 +52,7 @@ export interface ModelsFilmFeedback {
 	created_at: string;
 	film_id: string;
 	id: string;
+	is_mine: boolean;
 	/**
 	 * @min 1
 	 * @max 10
@@ -106,6 +107,7 @@ export interface ModelsFilmPage {
 	trailer_url: string;
 	worldwide_fees: number;
 	year: number;
+	is_reviewed: boolean;
 }
 
 export interface ModelsGenre {

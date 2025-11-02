@@ -12,6 +12,10 @@ interface InitialState {
 	feedbacks: ModelsFilmFeedback[] | null;
 	filmError: string | null;
 	feedbackError: string | null;
+	userRating: number | null;
+	userFeedback: ModelsFilmFeedback | null;
+	leaveRatingError: string | null;
+	leaveFeedbackError: string | null;
 }
 
 /**
@@ -24,6 +28,10 @@ const initialState: InitialState = {
 	feedbacks: null,
 	filmError: null,
 	feedbackError: null,
+	userRating: null,
+	userFeedback: null,
+	leaveRatingError: null,
+	leaveFeedbackError: null,
 };
 
 /**
@@ -79,6 +87,17 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 				feedbackError: payload.error,
 			};
 
+		case actionTypes.LEAVE_FEEDBACK:
+			return {
+				...state,
+				userFeedback: payload.feedback,
+			};
+
+		case actionTypes.LEAVE_RATING:
+			return {
+				...state,
+				userRating: payload.rating,
+			};
 		default:
 			return state;
 	}

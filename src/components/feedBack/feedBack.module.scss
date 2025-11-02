@@ -50,7 +50,7 @@
 	white-space: nowrap;
 }
 
-.raiting {
+.rating {
 	display: flex;
 	flex-direction: row;
 	font-size: var(--font-size-l);
@@ -64,21 +64,21 @@
 	background-color: var(--color-feedback-text-high);
 }
 
-.raiting-low,
-.raiting-high,
-.raiting-medium {
+.rating-low,
+.rating-high,
+.rating-medium {
 	font-size: var(--font-size-l);
 }
 
-.raiting-low {
+.rating-low {
 	color: var(--color-feedback-text-low);
 }
 
-.raiting-high {
+.rating-high {
 	color: var(--color-feedback-text-high);
 }
 
-.raiting-medium {
+.rating-medium {
 	color: var(--color-feedback-text-medium);
 }
 
@@ -157,7 +157,7 @@
 		width: 3rem;
 	}
 
-	.raiting {
+	.rating {
 		margin-right: 0;
 	}
 }

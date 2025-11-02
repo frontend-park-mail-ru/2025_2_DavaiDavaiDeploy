@@ -2,15 +2,34 @@ import Star from '@/assets/img/Star.svg';
 import { formatRatingNumber } from '@/helpers/formatRatingNumberHelper/formatRatingNumberHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
+import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions.ts';
+import actions from '@/redux/features/film/actions';
+import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
 import { Component } from '@robocotik/react';
+import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
+import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './filmRating.module.scss';
 
 interface FilmRatingProps {
 	film: ModelsFilmPage;
+	createRating: (rating: number, id: string) => void;
 }
 
-export class FilmRating extends Component<FilmRatingProps> {
+class FilmRatingComponent extends Component<FilmRatingProps & WithRouterProps> {
+	leaveRating = (event: MouseEvent): void => {
+		const target = event.currentTarget as HTMLElement | null;
+		const number = target?.getAttribute('data-number');
+
+		if (!number) {
+			return;
+		}
+
+		const rating = parseInt(number, 10);
+		this.props.createRating(rating, this.props.router.params.id);
+	};
+
 	render() {
 		const { rating, number_of_ratings } = this.props.film;
 		const formattedRating = formatRating(rating);
@@ -35,6 +54,7 @@ export class FilmRating extends Component<FilmRatingProps> {
 									<p
 										data-number={number}
 										className={styles[`ratingNumber-${getRatingType(number)}`]}
+										onClick={this.leaveRating}
 									>
 										{number}
 									</p>
@@ -48,3 +68,13 @@ export class FilmRating extends Component<FilmRatingProps> {
 		);
 	}
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	createRating: (rating: number, id: string) =>
+		dispatch(actions.leaveRatingAction(rating, id)),
+});
+
+export const FilmRating = compose(
+	withRouter,
+	connect(undefined, mapDispatchToProps),
+)(FilmRatingComponent);

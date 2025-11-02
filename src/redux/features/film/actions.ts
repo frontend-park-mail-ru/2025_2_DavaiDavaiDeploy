@@ -3,6 +3,8 @@ import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
 import actionTypes from './actionTypes';
 
+const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
+
 const clearFilmAction = (): Action => {
 	return {
 		type: actionTypes.CLEAR_FILM,
@@ -78,7 +80,7 @@ const getFilmAction: Action = (id: string) => async (dispatch: Dispatch) => {
 
 		dispatch(returnFilmAction(response.data));
 	} catch (error: unknown) {
-		let errorMessage: string = 'Произошла ошибка';
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
 		if (error instanceof Error) {
 			errorMessage = error.message;
@@ -105,7 +107,7 @@ const getFeedbacksAction: Action =
 
 			dispatch(returnFeedbacksAction(response.data));
 		} catch (error: unknown) {
-			let errorMessage: string = 'Произошла ошибка';
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
 			if (error instanceof Error) {
 				errorMessage = error.message;
@@ -114,6 +116,92 @@ const getFeedbacksAction: Action =
 			}
 
 			dispatch(returnFeedbacksErrorAction(errorMessage));
+		}
+	};
+
+const returnNewRatingAction = (data: ModelsFilmFeedback): Action => {
+	return {
+		type: actionTypes.LEAVE_RATING,
+		payload: { rating: data.rating },
+	};
+};
+
+const returnNewRatingErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.LEAVE_RATING_ERROR,
+		payload: { error: error },
+	};
+};
+
+const leaveRatingAction =
+	(rating: number, id: string): Action =>
+	async (dispatch: Dispatch) => {
+		try {
+			const response = await HTTPClient.post<ModelsFilmFeedback>(
+				`/films/${id}/rating`,
+				{
+					data: {
+						rating,
+					},
+				},
+			);
+
+			dispatch(returnNewRatingAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnNewRatingErrorAction(errorMessage));
+		}
+	};
+
+const returnNewFeedbackAction = (data: ModelsFilmFeedback): Action => {
+	return {
+		type: actionTypes.LEAVE_FEEDBACK,
+		payload: {
+			feedback: data,
+		},
+	};
+};
+
+const returnNewFeedbackErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.LEAVE_FEEDBACK_ERROR,
+		payload: { error },
+	};
+};
+
+const leaveFeedbackAction =
+	(rating: number, text: string, title: string, id: string): Action =>
+	async (dispatch: Dispatch) => {
+		try {
+			const response = await HTTPClient.post<ModelsFilmFeedback>(
+				`/films/${id}/feedbacks`,
+				{
+					data: {
+						rating,
+						text,
+						title,
+					},
+				},
+			);
+
+			dispatch(returnNewFeedbackAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnNewFeedbackErrorAction(errorMessage));
 		}
 	};
 
@@ -127,4 +215,8 @@ export default {
 	setFeedbacksLoadingAction,
 	returnFeedbacksAction,
 	returnFeedbacksErrorAction,
+	leaveRatingAction,
+	returnNewRatingAction,
+	returnNewRatingErrorAction,
+	leaveFeedbackAction,
 };

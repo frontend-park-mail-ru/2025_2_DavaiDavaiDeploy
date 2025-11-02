@@ -31,9 +31,9 @@ export class FeedBack extends Component<FeedBackProps> {
 						<img src={imageSrc} className={styles.avatar}></img>
 						<h3 className={styles.login}>{user_login}</h3>
 					</span>
-					<span className={styles.raiting}>
+					<span className={styles.rating}>
 						<img src={Star} className={styles.star} />
-						<p className={styles[`raiting-${ratingType}`]}>{formattedRating}</p>
+						<p className={styles[`rating-${ratingType}`]}>{formattedRating}</p>
 					</span>
 					<p className={styles.date}>{formattedDatetime}</p>
 					<p className={styles.smallDate}>{smallDatetime}</p>
