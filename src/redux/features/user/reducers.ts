@@ -72,7 +72,6 @@ export const userReducer: Reducer = (
 				...state,
 				loading: false,
 				user: null,
-				error: action.payload.error,
 			};
 		default:
 			return state;

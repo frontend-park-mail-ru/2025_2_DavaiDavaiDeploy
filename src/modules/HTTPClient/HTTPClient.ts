@@ -146,7 +146,13 @@ export class HTTPClient {
 				responseHeaders[key] = value;
 			});
 
-			const responseData: T = await response.json();
+			let responseData: T;
+
+			try {
+				responseData = await response.json();
+			} catch {
+				responseData = {} as T;
+			}
 
 			return {
 				data: responseData,
