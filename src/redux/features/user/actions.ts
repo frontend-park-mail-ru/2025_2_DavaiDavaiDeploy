@@ -6,6 +6,16 @@ import actionTypes from './actionTypes';
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
 
 /**
+ * Создает действие для выхода пользователя из системы.
+
+ */
+const setUserLogoutAction = (): Action => {
+	return {
+		type: actionTypes.USER_LOGOUT,
+	};
+};
+
+/**
  * Создает действие для установки состояния загрузки пользователя.
 
  */
@@ -138,10 +148,28 @@ const loginUserAction =
 		}
 	};
 
+const logoutUserAction = () => async (dispatch: Dispatch) => {
+	try {
+		await HTTPClient.post<ModelsUser>('/auth/logout');
+		dispatch(setUserLogoutAction());
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(returnUserErrorAction(errorMessage));
+	}
+};
+
 export default {
 	registerUserAction,
 	loginUserAction,
 	checkUserAction,
 	updateUserAction,
 	deleteUserAction,
+	logoutUserAction,
 };
