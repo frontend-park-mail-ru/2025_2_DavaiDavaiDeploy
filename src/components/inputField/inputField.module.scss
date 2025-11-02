@@ -19,8 +19,8 @@
 	justify-content: start;
 	gap: 1.125rem;
 	border-radius: var(--border-radius-l);
-	padding: 1rem;
 	height: 3.25rem;
+	position: relative;
 }
 
 .inputField {
@@ -30,7 +30,9 @@
 	color: var(--color-text);
 	height: 100%;
 	width: 100%;
+	cursor: pointer;
 	font-size: var(--font-size-xs);
+	padding-left: 3.25rem;
 
 	&:-moz-autofill,
 	&:-moz-autofill-preview {
@@ -65,4 +67,12 @@
 
 .errorBorder {
 	border: 2px solid var(--color-error);
+}
+
+.inputIcon {
+	width: 1rem;
+	height: 1rem;
+	position: absolute;
+	left: 1rem;
+	pointer-events: none;
 }

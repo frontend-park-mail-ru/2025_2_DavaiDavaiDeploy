@@ -31,7 +31,11 @@ export class InputField extends Component<InputFieldProps, InputFieldState> {
 
 		return (
 			<div className={styles.inputContainer}>
-				{label && <label className={styles.inputLabel}>{label}</label>}
+				{label && (
+					<label htmlFor={`inputField-${label}`} className={styles.inputLabel}>
+						{label}
+					</label>
+				)}
 				<div
 					className={clsx(styles.inputWrapper, {
 						[styles.errorBorder]: this.state.errorMessage.length > 0,
@@ -42,6 +46,7 @@ export class InputField extends Component<InputFieldProps, InputFieldState> {
 						<img src={preIconSrc} alt="icon" className={styles.inputIcon} />
 					)}
 					<input
+						id={`inputField-${label}`}
 						className={styles.inputField}
 						type={'text'}
 						value={value}

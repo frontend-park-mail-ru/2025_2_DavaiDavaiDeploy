@@ -44,15 +44,23 @@ export class PasswordInputField extends Component<
 
 		return (
 			<div className={styles.inputContainer}>
-				{label && <label className={styles.inputLabel}>{label}</label>}
+				{label && (
+					<label
+						htmlFor={`passwordField-${label}`}
+						className={styles.inputLabel}
+					>
+						{label}
+					</label>
+				)}
 				<div
 					className={clsx(styles.inputWrapper, {
 						[styles.errorBorder]: this.state.errorMessage.length > 0,
 						[styles.accentBorder]: this.state.errorMessage.length === 0,
 					})}
 				>
-					<img src={lock} alt="icon" className={styles.inputIcon} />
+					<img src={lock} alt="icon" className={styles.inputIconLeft} />
 					<input
+						id={`passwordField-${label}`}
 						className={styles.inputField}
 						type={this.state.isPasswordVisible ? 'text' : 'password'}
 						value={value}
@@ -67,7 +75,7 @@ export class PasswordInputField extends Component<
 						<img
 							src={this.state.isPasswordVisible ? eye_close : eye_open}
 							alt="icon"
-							className={styles.inputIcon}
+							className={styles.inputIconRight}
 						/>
 					</button>
 				</div>
