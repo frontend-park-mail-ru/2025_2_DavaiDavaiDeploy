@@ -131,7 +131,7 @@ class FeedbackFormComponent extends Component<
 					<FilmRatingInput isDark={true} />
 				</div>
 
-				{this.state.ratingError && (
+				{this.state.ratingError && !this.props.userRating && (
 					<p className={styles.ratingErrorMessage}>Оцените фильм</p>
 				)}
 
@@ -153,7 +153,7 @@ class FeedbackFormComponent extends Component<
 						</p>
 					) : (
 						<p className={styles.defaultMessage}>
-							Придумайте короткий заголовок для вашего отзыва
+							Придумайте короткий заголовок
 						</p>
 					)}
 					<textarea

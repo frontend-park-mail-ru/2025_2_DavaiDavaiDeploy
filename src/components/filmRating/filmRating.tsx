@@ -36,19 +36,11 @@ class FilmRatingComponent extends Component<
 	};
 
 	handleRatingLeave = (event: MouseEvent): void => {
-		if (window.innerWidth < MIDDLE_SCREEN_WIDTH) {
-			return;
-		}
-
 		event.stopPropagation();
 		this.setState({ isMenuActive: false });
 	};
 
 	handleMouseLeave = () => {
-		if (window.innerWidth < MIDDLE_SCREEN_WIDTH) {
-			return;
-		}
-
 		this.setState({ isMenuActive: false });
 	};
 
@@ -65,46 +57,44 @@ class FilmRatingComponent extends Component<
 		const userRatingType = getRatingType(this.props.userRating);
 
 		return (
-			<button
-				className={styles.rateBtn}
-				onMouseLeave={this.handleMouseLeave}
-				onMouseEnter={this.handleMouseEnter}
-				onClick={this.handleMouseEnter}
-			>
-				<span className={styles.starAndRating}>
-					{this.props.isAuthentificated && this.props.userRating && (
-						<h2 className={styles[`userTitle-${userRatingType}`]}>
-							{this.props.userRating}
-						</h2>
+			<div>
+				<button
+					className={styles.rateBtn}
+					onMouseLeave={this.handleMouseLeave}
+					onMouseEnter={this.handleMouseEnter}
+					onClick={this.handleMouseEnter}
+				>
+					{!this.props.userRating && (
+						<p className={styles.btnText}>Оценить фильм</p>
 					)}
-					<img src={Star} className={styles.star} />
-				</span>
-				{!this.props.userRating && (
-					<p className={styles.btnText}>Оценить фильм</p>
-				)}
-				{this.props.isAuthentificated && this.props.userRating && (
-					<span className={styles.userRating}>
-						<p className={styles.btnText}>Изменить</p>
-						<div className={styles[`rating-${userRatingType}`]}>
-							<img src={Star} className={styles.userStarIcon} />
-							<h3 className={styles.userRatingTitle}>
-								{this.props.userRating}
-							</h3>
-						</div>
-					</span>
-				)}
+					{this.props.isAuthentificated && this.props.userRating && (
+						<span className={styles.userRating}>
+							<p className={styles.btnText}>Изменить</p>
+							<div className={styles[`rating-${userRatingType}`]}>
+								<img src={Star} className={styles.userStarIcon} />
+								<h3 className={styles.userRatingTitle}>
+									{this.props.userRating}
+								</h3>
+							</div>
+						</span>
+					)}
 
-				{this.props.isAuthentificated && (
-					<div
-						className={clsx(styles.rateMenu, {
-							[styles.active]: this.state.isMenuActive,
-						})}
-						onClick={this.handleRatingLeave}
-					>
-						<FilmRatingInput isDark={false} />
-					</div>
-				)}
-			</button>
+					{this.props.isAuthentificated && (
+						<div
+							className={clsx(styles.rateMenu, {
+								[styles.active]: this.state.isMenuActive,
+							})}
+							onClick={this.handleRatingLeave}
+						>
+							<FilmRatingInput isDark={false} />
+						</div>
+					)}
+				</button>
+
+				<button className={styles.smallRateBtn} onClick={this.handleMouseEnter}>
+					{this.props.isAuthentificated && <FilmRatingInput isDark={false} />}
+				</button>
+			</div>
 		);
 	};
 

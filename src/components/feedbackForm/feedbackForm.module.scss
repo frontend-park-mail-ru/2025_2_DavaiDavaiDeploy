@@ -134,6 +134,25 @@
 	border: 2px solid var(--color-error);
 }
 
+@media (max-width: 1400px) {
+	.feedbackForm {
+		gap: 1.2rem;
+	}
+
+	.errorMessage {
+		margin-top: -0.4rem;
+	}
+
+	.ratingErrorMessage {
+		margin-top: -1rem;
+		margin-bottom: -1rem;
+	}
+
+	.defaultMessage {
+		margin-top: -0.4rem;
+	}
+}
+
 @media (max-width: 768px) {
 	.feedbackForm {
 		padding: 1.5rem;
@@ -141,7 +160,7 @@
 	}
 
 	.input {
-		gap: 1rem;
+		gap: 1.5rem;
 		margin-top: 0.8rem;
 	}
 
@@ -151,13 +170,12 @@
 	}
 
 	.submitButton {
-		margin-top: 0.5rem;
 		padding: 0.6rem 2.5rem;
 		font-size: var(--font-size-l);
 	}
 
 	.errorMessage {
-		margin-top: -0.4rem;
+		margin-top: -0.6rem;
 	}
 
 	.ratingErrorMessage {
@@ -166,7 +184,7 @@
 	}
 
 	.defaultMessage {
-		margin-top: -0.4rem;
+		margin-top: -0.6rem;
 	}
 }
 

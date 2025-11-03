@@ -5,6 +5,10 @@
 	align-items: center;
 }
 
+.dark {
+	color: var(--color-bg);
+}
+
 .ratingNumber-low,
 .ratingNumber-high,
 .ratingNumber-medium {
@@ -37,10 +41,6 @@
 	color: var(--color-rating-low) !important;
 }
 
-.dark {
-	color: var(--color-bg);
-}
-
 .starIcon {
 	width: 1.5vw;
 }
@@ -48,7 +48,12 @@
 @media (max-width: 1024px) {
 	.ratingInput {
 		gap: 2.5vw;
-		font-size: var(--font-size-4xl);
+	}
+
+	.ratingNumber-low,
+	.ratingNumber-high,
+	.ratingNumber-medium {
+		font-size: var(--font-size-xl);
 	}
 
 	.starIcon {
@@ -57,7 +62,8 @@
 
 	.dark {
 		color: var(--color-bg);
-		gap: 2vw;
+		margin-left: -0.1rem;
+		margin-right: -0.1rem;
 	}
 }
 
