@@ -1,4 +1,5 @@
 import { decode } from '@/helpers/decodeHelper/decodeHelper';
+import { mergeUnique } from '@/helpers/mergeUniqueHelper/mergeUniqueHelper';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
@@ -79,7 +80,7 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 			return {
 				...state,
 				feedbackLoading: false,
-				feedbacks: payload.feedbacks,
+				feedbacks: mergeUnique(state.feedbacks, payload.feedbacks),
 				userFeedback: payload.feedbacks[0]?.is_mine
 					? payload.feedbacks[0]
 					: null,

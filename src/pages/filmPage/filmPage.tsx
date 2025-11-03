@@ -1,6 +1,7 @@
 import { FeedBack } from '@/components/feedBack/feedBack';
 import { FilmInfo } from '@/components/filmInfo/filmInfo';
 import { Userfeedback } from '@/components/userFeedback/userFeedback';
+import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -28,19 +29,73 @@ interface FilmPageProps {
 	clearFilm: VoidFunction;
 }
 
-const FEEDBACKS_COUNT: number = 50;
-const OFFSET: number = 0;
+interface FilmPageState {
+	offset: number;
+	observer?: IntersectionObserver;
+	throttledIntersectHandler?: VoidFunction;
+}
 
-class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
+const FEEDBACKS_COUNT: number = 3;
+const THROTTLE_DELAY: number = 10;
+const ROOT_MARGIN: string = '400px';
+const INITIAL_RESIZE_DELAY = 300;
+
+class FilmPageComponent extends Component<
+	FilmPageProps & WithRouterProps,
+	FilmPageState
+> {
+	state = {
+		offset: 0,
+		observer: undefined,
+		throttledIntersectHandler: undefined,
+	};
+
 	onMount() {
 		const filmId = this.props.router.params.id;
+
 		this.props.getFilm(filmId);
-		this.props.getFeedbacks(FEEDBACKS_COUNT, OFFSET, filmId);
+		this.loadMoreFeedbacks();
+
+		const throttledIntersectHandler = throttle(
+			this.loadMoreFeedbacks,
+			THROTTLE_DELAY,
+		);
+
+		const observer = new IntersectionObserver(throttledIntersectHandler, {
+			rootMargin: ROOT_MARGIN,
+		});
+
+		this.setState({ throttledIntersectHandler, observer: observer });
+
+		setTimeout(() => {
+			const trigger = document.querySelector(`.${styles.loadMoreTrigger}`);
+			const observer = this.state.observer as IntersectionObserver | undefined;
+
+			if (trigger && observer) {
+				observer.observe(trigger);
+			}
+		}, INITIAL_RESIZE_DELAY);
 	}
 
 	onUnmount() {
 		this.props.clearFilm();
+		const observer = this.state.observer as IntersectionObserver | undefined;
+		observer?.disconnect();
 	}
+
+	loadMoreFeedbacks = () => {
+		if (this.props.feedbackError) {
+			return;
+		}
+
+		this.props.getFeedbacks(
+			FEEDBACKS_COUNT,
+			this.state.offset,
+			this.props.router.params.id,
+		);
+
+		this.setState({ offset: this.state.offset + FEEDBACKS_COUNT });
+	};
 
 	render() {
 		return (
@@ -49,7 +104,6 @@ class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 				{this.props.film && (
 					<section className={styles.content}>
 						<div className={styles.left}>
-							<h1 className={styles.feedback}>Отзывы</h1>
 							<div className={styles.feedbacks}>
 								{this.props.feedbacks && this.props.feedbacks.length > 0 ? (
 									this.props.feedbacks.map((item, index) =>
@@ -61,6 +115,7 @@ class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 									<h1 className={styles.feedback}>Отзывов пока нет</h1>
 								)}
 							</div>
+							<div className={styles.loadMoreTrigger}></div>
 						</div>
 						<div className={styles.right}>
 							<Userfeedback />

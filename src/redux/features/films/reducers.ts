@@ -1,4 +1,4 @@
-import { mergeUniqueFilms } from '@/helpers/mergeUniqueFilmsHelper/mergeUniqueFilmsHelper';
+import { mergeUnique } from '@/helpers/mergeUniqueHelper/mergeUniqueHelper';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
@@ -40,7 +40,7 @@ const filmsReducer: Reducer = (state = initialState, action: Action): State => {
 			return {
 				...state,
 				loading: false,
-				films: mergeUniqueFilms(state.films, payload.films),
+				films: mergeUnique(state.films, payload.films),
 			};
 		case actionTypes.FILMS_ERROR:
 			return {
