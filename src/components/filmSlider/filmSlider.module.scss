@@ -125,4 +125,10 @@
 		left: 25%;
 		width: 50%;
 	}
+
+	.prevBtnIcon,
+	.nextBtnIcon {
+		height: 6vw;
+		transition: transform 0.2s ease;
+	}
 }

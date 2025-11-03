@@ -36,6 +36,8 @@ interface FilmSliderState {
 	debounceResizeHandler: (ev?: Event | undefined) => void;
 }
 
+const MIN_SLIDE_CAPACITY = 3;
+
 class FilmSliderComponent extends Component<
 	FilmSliderProps & WithRouterProps,
 	FilmSliderState
@@ -98,11 +100,13 @@ class FilmSliderComponent extends Component<
 			cardHeight = BIG_CARD_HEIGHT;
 		}
 
+		slideCapacity = Math.min(slideCapacity, this.props.films.length);
+
 		this.setState({
 			windowHeight: window.innerHeight,
 			slideCapacity,
 			cardHeight,
-			active: this.props.films.length > slideCapacity,
+			active: slideCapacity >= MIN_SLIDE_CAPACITY,
 		});
 	};
 

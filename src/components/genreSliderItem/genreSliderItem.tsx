@@ -1,4 +1,4 @@
-import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Link } from '@/modules/router/link';
 import type { ModelsGenre } from '@/types/models';
 import { Component } from '@robocotik/react';
@@ -10,8 +10,8 @@ interface GenreSliderItemProps {
 
 export class GenreSliderItem extends Component<GenreSliderItemProps> {
 	render() {
-		const { id, title } = this.props.genre;
-		const imageSrc = getImageSRC('genres', id, 'svg');
+		const { id, title, icon } = this.props.genre;
+		const imageSrc = getImageURL(icon);
 		return (
 			<Link href={`/genres/${id}`}>
 				<img className={styles.image} alt={title} src={imageSrc} />

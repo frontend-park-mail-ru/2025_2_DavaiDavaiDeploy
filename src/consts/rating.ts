@@ -12,3 +12,5 @@ export const RatingValues = {
 } as const;
 
 export type RatingTypes = (typeof RatingValues)[keyof typeof RatingValues];
+
+export const RATING_COUNT = 10;
