@@ -3,7 +3,7 @@ import {
 	formatDatetime,
 	formatSmallDatetime,
 } from '@/helpers/formatDateHelper/formatDateHelper';
-import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmFeedback } from '@/types/models';
@@ -23,7 +23,7 @@ export class FeedBack extends Component<FeedBackProps> {
 		const formattedDatetime = formatDatetime(updated_at);
 		const smallDatetime = formatSmallDatetime(updated_at);
 		const ratingType = getRatingType(rating);
-		const imageSrc = getImageSRC(user_avatar);
+		const imageSrc = getImageURL(user_avatar);
 
 		return (
 			<div className={styles[`feedback-${rating}`]}>

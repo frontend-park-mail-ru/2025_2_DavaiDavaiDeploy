@@ -1,4 +1,4 @@
-import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -24,12 +24,12 @@ class GenreInfoComponent extends Component<GenreInfoProps & WithRouterProps> {
 
 	render() {
 		if (!this.props.genre) {
-			return <div className={styles.err}>Загрузка жанра</div>;
+			return <div className={styles.err}></div>;
 		}
 
 		const { title, description, icon } = this.props.genre;
 
-		const titleSRC = getImageSRC(icon);
+		const titleSRC = getImageURL(icon);
 
 		return (
 			<div className={styles.genre}>

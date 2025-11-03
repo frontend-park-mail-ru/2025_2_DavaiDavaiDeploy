@@ -84,6 +84,9 @@
 	opacity: 0.8;
 	font-size: var(--font-size-l);
 	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 12vw;
 }
 
 .rating {
@@ -196,5 +199,9 @@
 
 	.rating {
 		margin-right: 0;
+	}
+
+	.login {
+		max-width: 30vw;
 	}
 }

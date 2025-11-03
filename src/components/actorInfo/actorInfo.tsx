@@ -1,6 +1,6 @@
 import { formatBirthInfo } from '@/helpers/formatBitrhInfoHelper/formatBitrhInfoHelper';
 import { formatHeight } from '@/helpers/formatHeightHelper/formatHeightHelper';
-import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -33,7 +33,7 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 		}
 
 		if (!this.props.actor) {
-			return <div className={styles.err}>Загрузка актера</div>;
+			return <div></div>;
 		}
 
 		const {
@@ -53,7 +53,7 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 		const birthInfo = formatBirthInfo(birth_date, age, zodiac_sign);
 		const smallBirthInfo = formatBirthInfo(birth_date);
 
-		const photoSRC = getImageSRC(photo);
+		const photoSRC = getImageURL(photo);
 
 		return (
 			<div className={styles.actor}>

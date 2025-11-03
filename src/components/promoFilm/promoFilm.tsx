@@ -1,5 +1,5 @@
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
-import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { connect } from '@/modules/redux';
@@ -32,7 +32,7 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 		const formattedDuration = formatDuration(duration);
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
-		const imageSrc = getImageSRC('posters/pic50.jpg');
+		const imageSrc = getImageURL('posters/pic50.jpg');
 
 		return (
 			<a className={styles.promoFilm}>

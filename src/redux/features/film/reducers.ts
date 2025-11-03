@@ -102,10 +102,19 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 		case actionTypes.CREATE_RATING:
 			return {
 				...state,
+				film: {
+					...state.film,
+
+					number_of_ratings:
+						!state.userRating && payload.rating.rating
+							? state.film.number_of_ratings + 1
+							: state.film.number_of_ratings,
+				},
 				userRating: payload.rating.rating,
 				userFeedback:
 					payload.rating.title && payload.rating.text ? payload.rating : null,
 			};
+
 		default:
 			return state;
 	}

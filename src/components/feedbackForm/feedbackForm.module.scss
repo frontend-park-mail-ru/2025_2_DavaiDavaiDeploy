@@ -14,35 +14,10 @@
 
 .header {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
-	justify-content: space-between;
-	gap: 1rem;
 	width: 100%;
-}
-
-.user {
-	display: flex;
-	align-items: center;
-	gap: 1rem;
-}
-
-.avatar {
-	height: 4.4rem;
-	width: 4.4rem;
-	border-radius: 50%;
-	object-fit: cover;
-	object-position: center;
-	flex-shrink: 0;
-}
-
-.login {
-	color: var(--color-dark-text);
-	opacity: 0.8;
-	font-size: var(--font-size-l);
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	margin-top: 0.7rem;
 }
 
 .title {
@@ -74,8 +49,8 @@
 }
 
 .textarea {
-	resize: vertical;
 	min-height: 10rem;
+	resize: none;
 }
 
 .inputTitle::placeholder,

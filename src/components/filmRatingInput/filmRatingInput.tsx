@@ -1,4 +1,5 @@
 import Star from '@/assets/img/Star.svg';
+import { RATING_COUNT } from '@/consts/rating.ts';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
@@ -29,7 +30,7 @@ class FilmRatingInputComponent extends Component<
 			return;
 		}
 
-		const rating = parseInt(number, 10);
+		const rating = parseInt(number, RATING_COUNT);
 		this.props.createRating(rating, this.props.router.params.id);
 	};
 
@@ -42,7 +43,7 @@ class FilmRatingInputComponent extends Component<
 					onClick={this.leaveRating}
 					data-number={1}
 				/>
-				{Array.from({ length: 10 }, (_, i) => {
+				{Array.from({ length: RATING_COUNT }, (_, i) => {
 					const number = i + 1;
 					return (
 						<p
@@ -62,7 +63,7 @@ class FilmRatingInputComponent extends Component<
 					src={Star}
 					className={styles.starIcon}
 					onClick={this.leaveRating}
-					data-number={10}
+					data-number={RATING_COUNT}
 				/>
 			</div>
 		);

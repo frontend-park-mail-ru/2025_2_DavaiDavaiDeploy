@@ -24,8 +24,9 @@ interface FeedbackFormState {
 	offsetTop: number | null;
 }
 
-const INITIAL_RESIZE_DELAY = 300;
+const INITIAL_SCROLL_DELAY = 300;
 const THROTTLE_DELAY: number = 10;
+const MARGINE_TOP_SIZE = 112;
 
 class FeedbackFormComponent extends Component<
 	FeedbackFormProps & WithRouterProps,
@@ -37,14 +38,14 @@ class FeedbackFormComponent extends Component<
 	};
 
 	onMount() {
-		const throttledResizeHandler = throttle(this.handleResize, THROTTLE_DELAY);
+		const throttledScrollHandler = throttle(this.handleScroll, THROTTLE_DELAY);
 
 		setTimeout(() => {
-			window.addEventListener('scroll', throttledResizeHandler);
-		}, INITIAL_RESIZE_DELAY);
+			window.addEventListener('scroll', throttledScrollHandler);
+		}, INITIAL_SCROLL_DELAY);
 	}
 
-	handleResize = () => {
+	handleScroll = () => {
 		const component = document.querySelector(
 			`.${styles.userFeedback}`,
 		) as HTMLElement;
@@ -61,7 +62,7 @@ class FeedbackFormComponent extends Component<
 
 		if (
 			window.scrollY >=
-			Math.max(offsetTop, this.state.offsetTop ?? 0) - 112
+			Math.max(offsetTop, this.state.offsetTop ?? 0) - MARGINE_TOP_SIZE
 		) {
 			component?.classList.add(styles.fixed);
 		} else {
@@ -73,32 +74,31 @@ class FeedbackFormComponent extends Component<
 		this.setState({ isEditing: !this.state.isEditing });
 	};
 
-	render() {
-		const { user, userFeedback } = this.props;
-		const { isEditing } = this.state;
-
-		if (!user) {
+	renderContent = () => {
+		if (!this.props.user) {
 			return (
 				<div className={styles.notAuth}>
 					<p className={styles.notAuthTitle}>Хотите оставить отзыв?</p>
-					<p className={styles.notAuthText}>
+
+					<span className={styles.notAuthText}>
 						<Link href="/login" className={styles.notAuthLink}>
 							Войдите
-						</Link>
-						или
+						</Link>{' '}
+						или{' '}
 						<Link href="/register" className={styles.notAuthLink}>
 							создайте аккаунт
 						</Link>
 						!
-					</p>
+					</span>
 				</div>
 			);
 		}
 
-		let content;
+		const { userFeedback } = this.props;
+		const { isEditing } = this.state;
 
 		if (isEditing) {
-			content = (
+			return (
 				<FeedbackForm
 					isEditing={true}
 					userFeedback={this.props.userFeedback}
@@ -106,7 +106,7 @@ class FeedbackFormComponent extends Component<
 				/>
 			);
 		} else if (userFeedback) {
-			content = (
+			return (
 				<div className={styles.feedbackContainer}>
 					<div className={styles.header}>
 						<h1 className={styles.title}>Ваш отзыв</h1>
@@ -117,17 +117,19 @@ class FeedbackFormComponent extends Component<
 					<FeedBack feedback={userFeedback} />
 				</div>
 			);
-		} else {
-			content = (
-				<FeedbackForm
-					isEditing={false}
-					userFeedback={null}
-					closeEditing={this.handleEdit}
-				/>
-			);
 		}
 
-		return <div className={styles.userFeedback}>{content}</div>;
+		return (
+			<FeedbackForm
+				isEditing={false}
+				userFeedback={null}
+				closeEditing={this.handleEdit}
+			/>
+		);
+	};
+
+	render() {
+		return <div className={styles.userFeedback}>{this.renderContent()}</div>;
 	}
 }
 

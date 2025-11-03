@@ -1,6 +1,7 @@
 import type { ValidationResult } from '../types/validationResult';
 
-const MAX_SYMBOL_COUNT = 30;
+const MIN_SYMBOL_COUNT = 30;
+const MAX_SYMBOL_COUNT = 1000;
 
 export function validateFeedbackText(value: string): ValidationResult {
 	if (!value || value.trim() === '') {
@@ -12,10 +13,17 @@ export function validateFeedbackText(value: string): ValidationResult {
 
 	const trimmedValue = value.trim();
 
-	if (trimmedValue.length < MAX_SYMBOL_COUNT) {
+	if (trimmedValue.length < MIN_SYMBOL_COUNT) {
 		return {
 			isValid: false,
 			message: 'Пожалуйста, дайте нам больше деталей — от 30 символов',
+		};
+	}
+
+	if (trimmedValue.length > MAX_SYMBOL_COUNT) {
+		return {
+			isValid: false,
+			message: 'Пожалуйста, сократите отзыв — до 1000 символов',
 		};
 	}
 

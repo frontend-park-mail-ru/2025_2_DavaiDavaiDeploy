@@ -1,4 +1,3 @@
-import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
 import { validateFeedbackText } from '@/helpers/validateFeedbackText/validateFeedbackText.ts';
 import { validateFeedbackTitle } from '@/helpers/validateFeedbackTitle/validateFeedbackTitle.ts';
 import clsx from '@/modules/clsx/index.ts';
@@ -112,8 +111,6 @@ class FeedbackFormComponent extends Component<
 
 	render() {
 		const { title, text } = this.state;
-		const { login, avatar } = this.props.user;
-		const imageSrc = getImageSRC(avatar);
 
 		return (
 			<div className={styles.feedbackForm}>
@@ -124,10 +121,6 @@ class FeedbackFormComponent extends Component<
 					<h2 className={styles.title}>Редактирование</h2>
 				)}
 				<div className={styles.header}>
-					<span className={styles.user}>
-						<img src={imageSrc} className={styles.avatar}></img>
-						<h3 className={styles.login}>{login}</h3>
-					</span>
 					<FilmRatingInput isDark={true} />
 				</div>
 

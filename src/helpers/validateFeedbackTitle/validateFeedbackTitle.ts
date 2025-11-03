@@ -1,7 +1,7 @@
 import type { ValidationResult } from '../types/validationResult';
 
 const MIN_SYMBOL_COUNT = 5;
-const MAX_SYMBOL_COUNT = 10;
+const MAX_SYMBOL_COUNT = 40;
 
 export function validateFeedbackTitle(value: string): ValidationResult {
 	if (!value || value.trim() === '') {

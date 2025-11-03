@@ -1,4 +1,4 @@
-import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
@@ -16,7 +16,7 @@ export class FilmCard extends Component<FilmCardProps> {
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
 		const info = `${genre}, ${year}`;
-		const imageSrc = getImageSRC(cover);
+		const imageSrc = getImageURL(cover);
 		return (
 			<div className={styles.filmCard}>
 				<div className={styles.imageContainer}>
