@@ -180,7 +180,7 @@ jobs:
           name: build-output
           path: dist
       - name: Create Sentry release
-        uses: getsentry/action-release@v1.4.1
+        uses: getsentry/action-release@v1.7.0
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.VITE_SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.VITE_SENTRY_ORG }}
