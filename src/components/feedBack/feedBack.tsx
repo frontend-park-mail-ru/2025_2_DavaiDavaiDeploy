@@ -16,16 +16,17 @@ interface FeedBackProps {
 
 export class FeedBack extends Component<FeedBackProps> {
 	render() {
-		const { rating, text, title, updated_at, user_login } = this.props.feedback;
+		const { rating, text, title, updated_at, user_login, user_avatar } =
+			this.props.feedback;
 
 		const formattedRating = formatRatingForFeedback(rating);
 		const formattedDatetime = formatDatetime(updated_at);
 		const smallDatetime = formatSmallDatetime(updated_at);
 		const ratingType = getRatingType(rating);
+		const imageSrc = getImageSRC(user_avatar);
 
-		const imageSrc = getImageSRC('avatars', 'default', 'png');
 		return (
-			<div className={styles[`feedback-${ratingType}`]}>
+			<div className={styles[`feedback-${rating}`]}>
 				<div className={styles.header}>
 					<span className={styles.user}>
 						<img src={imageSrc} className={styles.avatar}></img>

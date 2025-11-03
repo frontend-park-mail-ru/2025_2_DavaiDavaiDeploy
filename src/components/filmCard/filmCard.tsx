@@ -12,11 +12,11 @@ interface FilmCardProps {
 
 export class FilmCard extends Component<FilmCardProps> {
 	render() {
-		const { id, title, year, rating, genre } = this.props.film;
+		const { id, title, year, rating, genre, cover } = this.props.film;
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
 		const info = `${genre}, ${year}`;
-		const imageSrc = getImageSRC('films', id, 'jpg');
+		const imageSrc = getImageSRC(cover);
 		return (
 			<div className={styles.filmCard}>
 				<div className={styles.imageContainer}>

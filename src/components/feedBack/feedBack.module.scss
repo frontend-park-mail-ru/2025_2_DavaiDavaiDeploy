@@ -1,6 +1,13 @@
-.feedback-low,
-.feedback-medium,
-.feedback-high {
+.feedback-1,
+.feedback-2,
+.feedback-3,
+.feedback-4,
+.feedback-5,
+.feedback-6,
+.feedback-7,
+.feedback-8,
+.feedback-9,
+.feedback-10 {
 	display: flex;
 	flex-direction: column;
 	gap: 1vh;
@@ -9,16 +16,44 @@
 	width: 100%;
 }
 
-.feedback-high {
-	background-color: var(--color-feedback-high);
+.feedback-1 {
+	background-color: var(--color-feedback-1);
 }
 
-.feedback-low {
-	background-color: var(--color-feedback-low);
+.feedback-2 {
+	background-color: var(--color-feedback-2);
 }
 
-.feedback-medium {
-	background-color: var(--color-feedback-medium);
+.feedback-3 {
+	background-color: var(--color-feedback-3);
+}
+
+.feedback-4 {
+	background-color: var(--color-feedback-4);
+}
+
+.feedback-5 {
+	background-color: var(--color-feedback-5);
+}
+
+.feedback-6 {
+	background-color: var(--color-feedback-6);
+}
+
+.feedback-7 {
+	background-color: var(--color-feedback-7);
+}
+
+.feedback-8 {
+	background-color: var(--color-feedback-8);
+}
+
+.feedback-9 {
+	background-color: var(--color-feedback-9);
+}
+
+.feedback-10 {
+	background-color: var(--color-feedback-10);
 }
 
 .header {

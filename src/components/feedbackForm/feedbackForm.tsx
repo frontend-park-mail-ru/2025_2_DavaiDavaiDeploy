@@ -101,8 +101,8 @@ class FeedbackFormComponent extends Component<
 
 	render() {
 		const { title, text } = this.state;
-		const { login } = this.props.user;
-		const imageSrc = getImageSRC('avatars', 'default', 'png');
+		const { login, avatar } = this.props.user;
+		const imageSrc = getImageSRC(avatar);
 
 		return (
 			<div className={styles.feedbackForm}>

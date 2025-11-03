@@ -27,9 +27,9 @@ class GenreInfoComponent extends Component<GenreInfoProps & WithRouterProps> {
 			return <div className={styles.err}>Загрузка жанра</div>;
 		}
 
-		const { id, title, description } = this.props.genre;
+		const { title, description, icon } = this.props.genre;
 
-		const titleSRC = getImageSRC('genres', id, 'svg');
+		const titleSRC = getImageSRC(icon);
 
 		return (
 			<div className={styles.genre}>

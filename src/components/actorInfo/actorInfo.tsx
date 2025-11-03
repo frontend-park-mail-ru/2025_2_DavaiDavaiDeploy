@@ -46,13 +46,14 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 			original_name,
 			russian_name,
 			zodiac_sign,
+			photo,
 		} = this.props.actor;
 
 		const formattedHeight = formatHeight(height);
 		const birthInfo = formatBirthInfo(birth_date, age, zodiac_sign);
 		const smallBirthInfo = formatBirthInfo(birth_date);
 
-		const photoSRC = getImageSRC('actors', '1', 'jpg');
+		const photoSRC = getImageSRC(photo);
 
 		return (
 			<div className={styles.actor}>

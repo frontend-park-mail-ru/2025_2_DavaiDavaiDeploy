@@ -26,13 +26,13 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 			return <div>Loading...</div>;
 		}
 
-		const { id, title, year, genre, duration, short_description, rating } =
+		const { title, year, genre, duration, short_description, rating } =
 			this.props.film;
 
 		const formattedDuration = formatDuration(duration);
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
-		const imageSrc = getImageSRC('promoFilms', id, 'jpg');
+		const imageSrc = getImageSRC('posters/pic50.jpg');
 
 		return (
 			<a className={styles.promoFilm}>

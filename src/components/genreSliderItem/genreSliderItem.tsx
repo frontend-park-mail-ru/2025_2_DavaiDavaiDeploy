@@ -10,8 +10,8 @@ interface GenreSliderItemProps {
 
 export class GenreSliderItem extends Component<GenreSliderItemProps> {
 	render() {
-		const { id, title } = this.props.genre;
-		const imageSrc = getImageSRC('genres', id, 'svg');
+		const { id, title, icon } = this.props.genre;
+		const imageSrc = getImageSRC(icon);
 		return (
 			<Link href={`/genres/${id}`}>
 				<img className={styles.image} alt={title} src={imageSrc} />
