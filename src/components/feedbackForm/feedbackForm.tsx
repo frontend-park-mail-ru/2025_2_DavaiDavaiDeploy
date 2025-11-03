@@ -96,7 +96,9 @@ class FeedbackFormComponent extends Component<
 			this.props.router.params.id,
 		);
 
-		this.props.closeEditing();
+		if (this.props.isEditing) {
+			this.props.closeEditing();
+		}
 	};
 
 	render() {
