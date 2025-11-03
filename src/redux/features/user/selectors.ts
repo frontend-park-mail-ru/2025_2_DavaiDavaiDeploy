@@ -19,3 +19,6 @@ export const selectUserError: Selector = (state: State): string | null =>
  */
 export const selectUserLoading: Selector = (state: State): boolean =>
 	state.user.loading;
+
+export const selectIsAuthentificated: Selector = (state: State): boolean =>
+	state.user.user !== null;

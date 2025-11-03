@@ -52,7 +52,7 @@ class FeedbackFormComponent extends Component<
 
 	handleTitleChange = (event: Event) => {
 		const target = event.target as HTMLInputElement;
-		const { name, value } = target;
+		const { value } = target;
 		let titleErrorMessage = '';
 
 		if (this.state.titleErrorMessage) {
@@ -61,14 +61,14 @@ class FeedbackFormComponent extends Component<
 		}
 
 		this.setState({
-			[name]: value,
+			title: value,
 			titleErrorMessage: titleErrorMessage,
 		});
 	};
 
 	handleTextChange = (event: Event) => {
 		const target = event.target as HTMLTextAreaElement;
-		const { name, value } = target;
+		const { value } = target;
 		let textErrorMessage = '';
 
 		if (this.state.textErrorMessage !== '') {
@@ -77,7 +77,7 @@ class FeedbackFormComponent extends Component<
 		}
 
 		this.setState({
-			[name]: value,
+			text: value,
 			textErrorMessage,
 		});
 	};

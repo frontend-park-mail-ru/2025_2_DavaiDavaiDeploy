@@ -121,7 +121,7 @@ export class LoginPageNotConnected extends Component<
 								Войти
 							</button>
 							<p className={styles.register__button}>
-								У меня нет аккаунта.{' '}
+								У меня нет аккаунта.
 								<Link className={styles.register} href="/register">
 									Регистрация
 								</Link>

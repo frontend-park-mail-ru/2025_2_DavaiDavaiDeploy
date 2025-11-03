@@ -5,10 +5,6 @@
 	align-items: center;
 }
 
-.dark {
-	color: var(--color-bg);
-}
-
 .ratingNumber-low,
 .ratingNumber-high,
 .ratingNumber-medium {
@@ -39,6 +35,10 @@
 
 .cur-low {
 	color: var(--color-rating-low) !important;
+}
+
+.dark {
+	color: var(--color-bg);
 }
 
 .starIcon {

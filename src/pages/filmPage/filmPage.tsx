@@ -96,6 +96,18 @@ class FilmPageComponent extends Component<
 		this.setState({ offset: this.state.offset + FEEDBACKS_COUNT });
 	};
 
+	renderFeedbacks() {
+		const { feedbacks } = this.props;
+
+		if (feedbacks && feedbacks.length > 0) {
+			return feedbacks.map((item, index) =>
+				index === 0 && item.is_mine ? null : <FeedBack feedback={item} />,
+			);
+		} else {
+			return <h1 className={styles.feedback}>Отзывов пока нет</h1>;
+		}
+	}
+
 	render() {
 		return (
 			<div className={styles.page}>
@@ -103,17 +115,7 @@ class FilmPageComponent extends Component<
 				{this.props.film && (
 					<section className={styles.content}>
 						<div className={styles.left}>
-							<div className={styles.feedbacks}>
-								{this.props.feedbacks && this.props.feedbacks.length > 0 ? (
-									this.props.feedbacks.map((item, index) =>
-										index === 0 && item.is_mine ? null : (
-											<FeedBack feedback={item} />
-										),
-									)
-								) : (
-									<h1 className={styles.feedback}>Отзывов пока нет</h1>
-								)}
-							</div>
+							<div className={styles.feedbacks}>{this.renderFeedbacks()}</div>
 							<div className={styles.loadMoreTrigger}></div>
 						</div>
 						<div className={styles.right}>

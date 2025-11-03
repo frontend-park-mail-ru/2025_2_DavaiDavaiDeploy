@@ -84,8 +84,8 @@ class FeedbackFormComponent extends Component<
 					<p className={styles.notAuthText}>
 						<Link href="/login" className={styles.notAuthLink}>
 							Войдите
-						</Link>{' '}
-						или{' '}
+						</Link>
+						или
 						<Link href="/register" className={styles.notAuthLink}>
 							создайте аккаунт
 						</Link>

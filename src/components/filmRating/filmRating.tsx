@@ -3,13 +3,14 @@ import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices.ts';
 import { formatRatingNumber } from '@/helpers/formatRatingNumberHelper/formatRatingNumberHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
+import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
 import { selectUserRating } from '@/redux/features/film/selectors.ts';
-import { selectUser } from '@/redux/features/user/selectors.ts';
+import { selectIsAuthentificated } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
-import type { ModelsFilmPage, ModelsUser } from '@/types/models';
+import type { ModelsFilmPage } from '@/types/models';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -19,7 +20,7 @@ import styles from './filmRating.module.scss';
 interface FilmRatingProps {
 	film: ModelsFilmPage;
 	userRating: number | null;
-	user: ModelsUser | null;
+	isAuthentificated: boolean;
 }
 
 interface FilmRatingState {
@@ -60,14 +61,10 @@ class FilmRatingComponent extends Component<
 		this.setState({ isMenuActive: true });
 	};
 
-	render() {
-		const { rating, number_of_ratings } = this.props.film;
-		const formattedRating = formatRating(rating);
-		const ratingNumber = formatRatingNumber(number_of_ratings);
-		const ratingType = getRatingType(rating);
+	renderButtonContent = () => {
 		const userRatingType = getRatingType(this.props.userRating);
 
-		const buttonContent = (
+		return (
 			<button
 				className={styles.rateBtn}
 				onMouseLeave={this.handleMouseLeave}
@@ -75,7 +72,7 @@ class FilmRatingComponent extends Component<
 				onClick={this.handleMouseEnter}
 			>
 				<span className={styles.starAndRating}>
-					{this.props.user && this.props.userRating && (
+					{this.props.isAuthentificated && this.props.userRating && (
 						<h2 className={styles[`userTitle-${userRatingType}`]}>
 							{this.props.userRating}
 						</h2>
@@ -85,7 +82,7 @@ class FilmRatingComponent extends Component<
 				{!this.props.userRating && (
 					<p className={styles.btnText}>Оценить фильм</p>
 				)}
-				{this.props.user && this.props.userRating && (
+				{this.props.isAuthentificated && this.props.userRating && (
 					<span className={styles.userRating}>
 						<p className={styles.btnText}>Изменить</p>
 						<div className={styles[`rating-${userRatingType}`]}>
@@ -97,9 +94,11 @@ class FilmRatingComponent extends Component<
 					</span>
 				)}
 
-				{this.props.user && (
+				{this.props.isAuthentificated && (
 					<div
-						className={`${styles.rateMenu} ${this.state.isMenuActive ? styles.active : ''}`}
+						className={clsx(styles.rateMenu, {
+							[styles.active]: this.state.isMenuActive,
+						})}
 						onClick={this.handleRatingLeave}
 					>
 						<FilmRatingInput isDark={false} />
@@ -107,6 +106,21 @@ class FilmRatingComponent extends Component<
 				)}
 			</button>
 		);
+	};
+
+	renderButton = () => {
+		if (!this.props.isAuthentificated) {
+			return <Link href="/login">{this.renderButtonContent()}</Link>;
+		}
+
+		return this.renderButtonContent();
+	};
+
+	render() {
+		const { rating, number_of_ratings } = this.props.film;
+		const formattedRating = formatRating(rating);
+		const ratingNumber = formatRatingNumber(number_of_ratings);
+		const ratingType = getRatingType(rating);
 
 		return (
 			<div className={styles.content}>
@@ -114,13 +128,8 @@ class FilmRatingComponent extends Component<
 					{formattedRating && (
 						<h2 className={styles[`title-${ratingType}`]}>{formattedRating}</h2>
 					)}
-
 					{ratingNumber && <p className={styles.subtitle}>{ratingNumber}</p>}
-					{!this.props.user ? (
-						<Link href="/login">{buttonContent}</Link>
-					) : (
-						buttonContent
-					)}
+					{this.renderButton()}
 				</div>
 			</div>
 		);
@@ -129,7 +138,7 @@ class FilmRatingComponent extends Component<
 
 const mapStateToProps = (state: State): Map => ({
 	userRating: selectUserRating(state),
-	user: selectUser(state),
+	isAuthentificated: selectIsAuthentificated(state),
 });
 
 export const FilmRating = compose(
