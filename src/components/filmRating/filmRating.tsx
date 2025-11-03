@@ -1,5 +1,4 @@
 import Star from '@/assets/img/Star.svg';
-import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices.ts';
 import { formatRatingNumber } from '@/helpers/formatRatingNumberHelper/formatRatingNumberHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
@@ -45,11 +44,6 @@ class FilmRatingComponent extends Component<
 	};
 
 	handleMouseEnter = () => {
-		if (window.innerWidth < MIDDLE_SCREEN_WIDTH) {
-			this.setState({ isMenuActive: !this.state.isMenuActive });
-			return;
-		}
-
 		this.setState({ isMenuActive: true });
 	};
 
@@ -91,7 +85,7 @@ class FilmRatingComponent extends Component<
 					)}
 				</button>
 
-				<button className={styles.smallRateBtn} onClick={this.handleMouseEnter}>
+				<button className={styles.smallRateBtn}>
 					{this.props.isAuthentificated && <FilmRatingInput isDark={false} />}
 				</button>
 			</div>
