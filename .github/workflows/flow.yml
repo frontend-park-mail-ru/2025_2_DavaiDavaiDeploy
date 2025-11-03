@@ -145,7 +145,7 @@ jobs:
           echo VITE_SENTRY_PROJECT=${{ secrets.VITE_SENTRY_PROJECT }} >> .env
           echo VITE_CDN_ADRESS=${{ secrets.VITE_CDN_ADRESS }} >> .env
           echo VITE_SENTRY_ENABLED=${{ secrets.VITE_SENTRY_ENABLED }} >> .env
-          echo VITE_RELEASE_VERSION=1.3.1 >> .env
+          echo VITE_RELEASE_VERSION='1.3.2' >> .env
           cat .env
 
       - name: Build project
@@ -172,8 +172,6 @@ jobs:
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -188,7 +186,7 @@ jobs:
         with:
           environment: production
           sourcemaps: './dist'
-          release: "1.3.1"
+          release: "1.3.2"
 
   deploy-to-s3:
     name: Deploy to s3
