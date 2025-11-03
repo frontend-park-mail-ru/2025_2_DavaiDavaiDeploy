@@ -145,7 +145,7 @@ jobs:
           echo VITE_SENTRY_PROJECT=${{ secrets.VITE_SENTRY_PROJECT }} >> .env
           echo VITE_CDN_ADRESS=${{ secrets.VITE_CDN_ADRESS }} >> .env
           echo VITE_SENTRY_ENABLED=${{ secrets.VITE_SENTRY_ENABLED }} >> .env
-          echo VITE_RELEASE_VERSION=v1.3.3 >> .env
+          echo VITE_RELEASE_VERSION=v1.3.4 >> .env
           cat .env
 
       - name: Build project
@@ -183,9 +183,9 @@ jobs:
 
       - name: Create Sentry release
         run: |
-          sentry-cli releases new "v1.3.3"
-          sentry-cli releases files "v1.3.3" upload-sourcemaps ./dist
-          sentry-cli releases finalize "v1.3.3"
+          sentry-cli releases new "v1.3.4"
+          sentry-cli releases files "v1.3.4" upload-sourcemaps ./dist
+          sentry-cli releases finalize "v1.3.4"
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.VITE_SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.VITE_SENTRY_ORG }}

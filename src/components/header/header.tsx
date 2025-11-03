@@ -15,6 +15,7 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
+import * as Sentry from '@sentry/browser';
 import styles from './header.module.scss';
 
 interface HeaderProps {
@@ -48,7 +49,11 @@ export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 
 	render() {
 		return (
-			<header id="header" className={styles.header}>
+			<header
+				id="header"
+				className={styles.header}
+				onClick={() => Sentry.captureException(new AggregateError('asdf'))}
+			>
 				<Link href="/">
 					<img src={Logo} alt="На главную" className={styles.logo} />
 				</Link>

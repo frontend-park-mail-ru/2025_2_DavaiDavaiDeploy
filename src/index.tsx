@@ -101,3 +101,6 @@ render(
 	</ProvidersLayout>,
 	document.body,
 );
+
+// eslint-disable-next-line no-console
+console.log(import.meta.env.VITE_RELEASE_VERSION);
