@@ -47,7 +47,6 @@ class FilmPageComponent extends Component<
 	state = {
 		offset: 0,
 		observer: undefined,
-		throttledIntersectHandler: undefined,
 	};
 
 	onMount() {
@@ -65,7 +64,7 @@ class FilmPageComponent extends Component<
 			rootMargin: ROOT_MARGIN,
 		});
 
-		this.setState({ throttledIntersectHandler, observer: observer });
+		this.setState({ observer });
 
 		setTimeout(() => {
 			const trigger = document.querySelector(`.${styles.loadMoreTrigger}`);
@@ -118,7 +117,9 @@ class FilmPageComponent extends Component<
 							<div className={styles.loadMoreTrigger}></div>
 						</div>
 						<div className={styles.right}>
-							<Userfeedback />
+							<div class="wrapper">
+								<Userfeedback />
+							</div>
 						</div>
 					</section>
 				)}

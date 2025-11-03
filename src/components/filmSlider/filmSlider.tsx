@@ -98,11 +98,13 @@ class FilmSliderComponent extends Component<
 			cardHeight = BIG_CARD_HEIGHT;
 		}
 
+		slideCapacity = Math.min(slideCapacity, this.props.films.length);
+
 		this.setState({
 			windowHeight: window.innerHeight,
 			slideCapacity,
 			cardHeight,
-			active: this.props.films.length > slideCapacity,
+			active: slideCapacity >= 3,
 		});
 	};
 

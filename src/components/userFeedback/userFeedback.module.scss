@@ -1,3 +1,14 @@
+.userFeedback {
+	position: relative;
+}
+
+.fixed {
+	position: fixed;
+	top: 7rem;
+	z-index: 100;
+	width: 41.5vw;
+}
+
 .notAuth {
 	display: flex;
 	flex-direction: column;
@@ -26,7 +37,7 @@
 	transition: transform 0.2s ease;
 
 	&:hover {
-		transform: scale(1.05);
+		transform: scale(1.02);
 	}
 }
 
@@ -83,6 +94,12 @@
 
 	.notAuth {
 		align-items: center;
+	}
+
+	.fixed {
+		position: relative;
+		top: 0;
+		width: 100%;
 	}
 }
 

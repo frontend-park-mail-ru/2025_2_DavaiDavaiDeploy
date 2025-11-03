@@ -55,7 +55,7 @@
 	margin-top: 1.25rem;
 	display: flex;
 	flex-direction: column;
-	gap: 1rem;
+	gap: 1.8rem;
 	width: 100%;
 }
 
@@ -70,6 +70,7 @@
 	color: var(--color-dark-text);
 	outline: none;
 	box-sizing: border-box;
+	word-break: break-all;
 }
 
 .textarea {
@@ -111,7 +112,7 @@
 	color: var(--color-error);
 	text-align: left;
 	height: 1rem;
-	margin-top: -0.5rem;
+	margin-top: -1rem;
 }
 
 .ratingErrorMessage {
@@ -126,7 +127,7 @@
 	color: var(--color-bg);
 	text-align: left;
 	height: 1rem;
-	margin-top: -0.5rem;
+	margin-top: -1rem;
 }
 
 .errorBorder {
@@ -136,11 +137,11 @@
 @media (max-width: 768px) {
 	.feedbackForm {
 		padding: 1.5rem;
-		gap: 1.2rem;
+		gap: 1.4rem;
 	}
 
 	.input {
-		gap: 0.6rem;
+		gap: 1rem;
 		margin-top: 0.8rem;
 	}
 
@@ -153,6 +154,19 @@
 		margin-top: 0.5rem;
 		padding: 0.6rem 2.5rem;
 		font-size: var(--font-size-l);
+	}
+
+	.errorMessage {
+		margin-top: -0.4rem;
+	}
+
+	.ratingErrorMessage {
+		margin-top: -1.2rem;
+		margin-bottom: -1.2rem;
+	}
+
+	.defaultMessage {
+		margin-top: -0.4rem;
 	}
 }
 

@@ -1,4 +1,5 @@
 import Edit from '@/assets/img/edit.svg';
+import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { compose, connect } from '@/modules/redux';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
@@ -20,7 +21,11 @@ interface FeedbackFormProps {
 
 interface FeedbackFormState {
 	isEditing: boolean;
+	offsetTop: number | null;
 }
+
+const INITIAL_RESIZE_DELAY = 300;
+const THROTTLE_DELAY: number = 10;
 
 class FeedbackFormComponent extends Component<
 	FeedbackFormProps & WithRouterProps,
@@ -28,6 +33,40 @@ class FeedbackFormComponent extends Component<
 > {
 	state = {
 		isEditing: false,
+		offsetTop: null,
+	};
+
+	onMount() {
+		const throttledResizeHandler = throttle(this.handleResize, THROTTLE_DELAY);
+
+		setTimeout(() => {
+			window.addEventListener('scroll', throttledResizeHandler);
+		}, INITIAL_RESIZE_DELAY);
+	}
+
+	handleResize = () => {
+		const component = document.querySelector(
+			`.${styles.userFeedback}`,
+		) as HTMLElement;
+
+		if (!component) {
+			return;
+		}
+
+		const offsetTop = component.offsetTop;
+
+		if (this.state.offsetTop === null) {
+			this.setState({ offsetTop });
+		}
+
+		if (
+			window.scrollY >=
+			Math.max(offsetTop, this.state.offsetTop ?? 0) - 112
+		) {
+			component?.classList.add(styles.fixed);
+		} else {
+			component?.classList.remove(styles.fixed);
+		}
 	};
 
 	handleEdit = () => {
@@ -88,7 +127,7 @@ class FeedbackFormComponent extends Component<
 			);
 		}
 
-		return <div className={styles.feedbackForm}>{content}</div>;
+		return <div className={styles.userFeedback}>{content}</div>;
 	}
 }
 

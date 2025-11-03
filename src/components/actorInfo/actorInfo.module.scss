@@ -122,7 +122,7 @@
 
 .smallTable {
 	display: none;
-	grid-template-columns: 1fr 2fr;
+	grid-template-columns: 1fr min-content;
 	gap: 2rem 6vw;
 	margin-top: 3rem;
 	align-items: end;
@@ -136,8 +136,13 @@
 		display: grid;
 	}
 
+	.aboutTitle {
+		text-align: center;
+	}
+
 	.about {
 		width: 90%;
+		align-items: center;
 	}
 
 	.value {
