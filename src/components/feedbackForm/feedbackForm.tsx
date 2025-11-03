@@ -35,6 +35,7 @@ interface FeedbackFormState {
 	text: string;
 	titleErrorMessage: string;
 	textErrorMessage: string;
+	ratingError: boolean;
 }
 
 class FeedbackFormComponent extends Component<
@@ -46,27 +47,31 @@ class FeedbackFormComponent extends Component<
 		text: this.props.userFeedback?.text ? this.props.userFeedback.text : '',
 		titleErrorMessage: '',
 		textErrorMessage: '',
+		ratingError: false,
 	};
 
 	handleTitleChange = (event: Event) => {
 		const target = event.target as HTMLInputElement;
 		const { name, value } = target;
+		let titleErrorMessage = '';
 
-		const { message } = validateFeedbackTitle(value);
+		if (this.state.titleErrorMessage) {
+			const validation = validateFeedbackTitle(value);
+			titleErrorMessage = validation.message;
+		}
 
 		this.setState({
 			[name]: value,
-			titleErrorMessage: message,
+			titleErrorMessage: titleErrorMessage,
 		});
 	};
 
 	handleTextChange = (event: Event) => {
 		const target = event.target as HTMLTextAreaElement;
 		const { name, value } = target;
-
 		let textErrorMessage = '';
 
-		if (value.trim().length >= 5) {
+		if (this.state.textErrorMessage !== '') {
 			const validation = validateFeedbackText(value);
 			textErrorMessage = validation.message;
 		}
@@ -83,7 +88,11 @@ class FeedbackFormComponent extends Component<
 		const { message: titleErrorMessage } = validateFeedbackTitle(title);
 		const { message: textErrorMessage } = validateFeedbackText(text);
 
-		this.setState({ titleErrorMessage, textErrorMessage });
+		this.setState({
+			titleErrorMessage,
+			textErrorMessage,
+			ratingError: !this.props.userRating,
+		});
 
 		if (titleErrorMessage || textErrorMessage || !this.props.userRating) {
 			return;
@@ -122,6 +131,10 @@ class FeedbackFormComponent extends Component<
 					<FilmRatingInput isDark={true} />
 				</div>
 
+				{this.state.ratingError && (
+					<p className={styles.ratingErrorMessage}>Оцените фильм</p>
+				)}
+
 				<div className={styles.input}>
 					<input
 						type="text"
@@ -133,7 +146,16 @@ class FeedbackFormComponent extends Component<
 						})}
 						onInput={this.handleTitleChange}
 					/>
-					<p className={styles.errorMessage}>{this.state.titleErrorMessage}</p>
+
+					{this.state.titleErrorMessage ? (
+						<p className={styles.errorMessage}>
+							{this.state.titleErrorMessage}
+						</p>
+					) : (
+						<p className={styles.defaultMessage}>
+							Придумайте короткий заголовок для вашего отзыва
+						</p>
+					)}
 					<textarea
 						name="text"
 						value={text}
@@ -143,7 +165,14 @@ class FeedbackFormComponent extends Component<
 						})}
 						onInput={this.handleTextChange}
 					/>
-					<p className={styles.errorMessage}>{this.state.textErrorMessage}</p>
+
+					{this.state.textErrorMessage ? (
+						<p className={styles.errorMessage}>{this.state.textErrorMessage}</p>
+					) : (
+						<p className={styles.defaultMessage}>
+							Расскажите, что вы думаете о фильме - от 30 символов
+						</p>
+					)}
 				</div>
 
 				<button className={styles.submitButton} onClick={this.handleSubmit}>

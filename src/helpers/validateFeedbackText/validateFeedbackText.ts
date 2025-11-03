@@ -2,13 +2,19 @@ import type { ValidationResult } from '../types/validationResult';
 
 export function validateFeedbackText(value: string): ValidationResult {
 	if (!value || value.trim() === '') {
-		return { isValid: false, message: 'Введите текст отзыва' };
+		return {
+			isValid: false,
+			message: 'Пожалуйста, дайте нам больше деталей — от 30 символов',
+		};
 	}
 
-	const wordCount = value.trim().split(/\s+/).length;
+	const trimmedValue = value.trim();
 
-	if (wordCount < 4) {
-		return { isValid: false, message: 'Пожалуйста, дайте нам больше деталей' };
+	if (trimmedValue.length < 30) {
+		return {
+			isValid: false,
+			message: 'Пожалуйста, дайте нам больше деталей — от 30 символов',
+		};
 	}
 
 	return { isValid: true, message: '' };
