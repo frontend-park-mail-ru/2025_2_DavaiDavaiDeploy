@@ -186,6 +186,7 @@ jobs:
         with:
           environment: production
           sourcemaps: './dist'
+          version: "1.3.2"
           release: "1.3.2"
 
   deploy-to-s3:
