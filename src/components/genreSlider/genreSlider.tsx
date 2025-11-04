@@ -2,6 +2,8 @@ import ArrowLeft from '@/assets/img/arrowLeft.svg';
 import ArrowRight from '@/assets/img/arrowRight.svg';
 import { WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
+import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper';
+import clsx from '@/modules/clsx';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -25,10 +27,18 @@ interface GenreSliderState {
 	phase: 'out' | 'in' | null;
 	direction: 'left' | 'right' | null;
 	debounceResizeHandler: (ev?: Event | undefined) => void;
+	autoSlider: null | {
+		start: VoidFunction;
+		isWorking: () => boolean;
+		stop: VoidFunction;
+	};
+	inactivityTimer: NodeJS.Timeout | null;
 }
 
 const THROTTLE_DELAY = 100;
-const ANIMATION_DURATION = 400;
+const ANIMATION_DURATION = 350;
+const AUTO_SLIDE_DURATION = 7000;
+const AUTO_SLIDE_RESTART_DURATION = 30000;
 
 class GenreSliderComponent extends Component<
 	GenreSliderProps,
@@ -41,6 +51,8 @@ class GenreSliderComponent extends Component<
 		phase: null,
 		direction: null,
 		debounceResizeHandler: () => {},
+		autoSlider: null,
+		inactivityTimer: null,
 	};
 
 	onMount() {
@@ -53,6 +65,21 @@ class GenreSliderComponent extends Component<
 
 		window.addEventListener('resize', this.state.debounceResizeHandler);
 		this.handleResize();
+
+		if (this.state.autoSlider && this.state.autoSlider.isWorking()) {
+			this.state.autoSlider.stop();
+		}
+
+		if (this.state.autoSlider) {
+			this.state.autoSlider.stop();
+		}
+
+		this.state.autoSlider = createPeriodFunction(
+			this.onNextBtnClick,
+			AUTO_SLIDE_DURATION,
+		);
+
+		this.state.autoSlider.start();
 	}
 
 	onUnmount() {
@@ -110,6 +137,20 @@ class GenreSliderComponent extends Component<
 		this.animate('right', nextIndex);
 	};
 
+	onSliderClick = () => {
+		this.state.autoSlider?.stop();
+
+		if (this.state.inactivityTimer) {
+			clearTimeout(this.state.inactivityTimer);
+		}
+
+		this.state.inactivityTimer = setTimeout(() => {
+			if (!this.state.autoSlider?.isWorking()) {
+				this.state.autoSlider?.start();
+			}
+		}, AUTO_SLIDE_RESTART_DURATION);
+	};
+
 	getVisibleGenres() {
 		const { genres } = this.props;
 		const { curGenre, slideCapacity } = this.state;
@@ -147,8 +188,8 @@ class GenreSliderComponent extends Component<
 		return (
 			<section className={styles.genreSlider}>
 				<h2 className={styles.title}>Жанры</h2>
-				<div className={styles.container}>
-					<div className={`${styles.slider} ${animationClass}`}>
+				<div className={styles.container} onClick={this.onSliderClick}>
+					<div className={clsx(styles.slider, animationClass)}>
 						{visibleGenres.map((genre) => (
 							<GenreSliderItem genre={genre} />
 						))}
