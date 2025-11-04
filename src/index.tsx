@@ -42,7 +42,10 @@ if (sentryEnabled) {
 
 if (isProduction && 'serviceWorker' in navigator) {
 	window.addEventListener('load', () => {
-		navigator.serviceWorker.register('/sw.js', { scope: '/' });
+		navigator.serviceWorker
+			.register('/sw.js', { scope: '/' })
+			// eslint-disable-next-line no-console
+			.catch(console.log);
 	});
 }
 
