@@ -43,7 +43,7 @@ export default ({ mode }: ConfigEnv) => {
 					background_color: '#ffffff',
 					display: 'standalone',
 					start_url: 'https://ddfilms.online/',
-					scope: '/',
+					scope: 'https://ddfilms.online/',
 					icons: [
 						{
 							src: '/assets/favicon-16x16.png',
