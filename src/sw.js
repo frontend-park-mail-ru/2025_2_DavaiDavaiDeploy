@@ -49,6 +49,31 @@ self.addEventListener('fetch', (event) => {
 
 	const url = new URL(event.request.url);
 
+	if (url.pathname.startsWith('/api')) {
+		event.respondWith(
+			fetch(event.request)
+				.then((response) => {
+					if (response && response.ok) {
+						const responseToCache = response.clone();
+						caches.open(CACHE).then((cache) => {
+							cache.put(event.request, responseToCache);
+						});
+					}
+
+					return response;
+				})
+				.catch(() => {
+					return caches.match(event.request).then((cached) => {
+						if (cached) {
+							return cached;
+						}
+					});
+				}),
+		);
+
+		return;
+	}
+
 	// ✅ Обрабатываем навигацию (переходы по страницам, перезагрузка)
 	if (event.request.mode === 'navigate') {
 		event.respondWith(
