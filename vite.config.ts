@@ -12,6 +12,9 @@ export default ({ mode }: ConfigEnv) => {
 		plugins: [
 			tsconfigPaths(),
 			VitePWA({
+				injectManifest: {
+					swSrc: './src/sw.js',
+				},
 				registerType: 'autoUpdate',
 				includeAssets: [
 					'assets/favicon-16x16.png',
@@ -126,13 +129,6 @@ export default ({ mode }: ConfigEnv) => {
 			emptyOutDir: true,
 			assetsDir: 'assets',
 			sourcemap: true,
-			rollupOptions: {
-				output: {
-					entryFileNames: 'assets/[name].js',
-					chunkFileNames: 'assets/[name].js',
-					assetFileNames: 'assets/[name].[ext]',
-				},
-			},
 		},
 		base: process.env.VITE_CDN_ADDRESS || '/',
 	});

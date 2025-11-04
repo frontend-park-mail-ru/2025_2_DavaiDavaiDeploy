@@ -1,16 +1,21 @@
-const CACHE_NAME = 'ddd_cache_v1';
-const CACHE_URLS = [
-	'/',
-	'/index.html',
-	'/assets/index.css',
-	'/assets/index.js',
-	'/assets/logo.svg',
-];
+import { precache } from 'workbox-precaching';
+precache(self.__WB_MANIFEST);
+//eslint-disable-next-line no-console
+console.log('WB: ', self.__WB_MANIFEST);
 
-const preCacheResources = async (resources) => {
-	const cache = await caches.open(CACHE_NAME);
-	await cache.addAll(resources);
-};
+const CACHE_NAME = 'ddd_cache_v1';
+// const CACHE_URLS = [
+// 	'/',
+// 	'/index.html',
+// 	'/assets/index.css',
+// 	'/assets/index.js',
+// 	'/assets/logo.svg',
+// ];
+
+// const preCacheResources = async (resources) => {
+// 	const cache = await caches.open(CACHE_NAME);
+// 	await cache.addAll(resources);
+// };
 
 const addResponseToCache = async (request, response) => {
 	const cache = await caches.open(CACHE_NAME);
@@ -51,9 +56,9 @@ const networkFirst = async (request) => {
 	}
 };
 
-self.addEventListener('install', (event) => {
-	event.waitUntil(preCacheResources(CACHE_URLS));
-});
+// self.addEventListener('install', (event) => {
+// 	event.waitUntil(preCacheResources(CACHE_URLS));
+// });
 
 self.addEventListener('activate', async () => {
 	const cacheNames = await caches.keys();
