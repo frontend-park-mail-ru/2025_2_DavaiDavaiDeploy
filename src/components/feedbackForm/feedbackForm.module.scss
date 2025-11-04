@@ -46,6 +46,7 @@
 	outline: none;
 	box-sizing: border-box;
 	word-break: break-all;
+	font-family: 'Golos UI', Arial, sans-serif;
 }
 
 .textarea {
@@ -115,11 +116,11 @@
 	}
 
 	.errorMessage {
-		margin-top: -0.4rem;
+		margin-top: -0.6rem;
 	}
 
 	.ratingErrorMessage {
-		margin-top: -1rem;
+		margin-top: -0.2rem;
 		margin-bottom: -1rem;
 	}
 

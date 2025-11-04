@@ -1,4 +1,5 @@
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
+import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -141,11 +142,14 @@ class ChangeAvatarComponent extends Component<
 							></input>
 						</div>
 
-						{file && isEditing && (
-							<button className={styles.btn} onClick={this.handleUpload}>
-								Сохранить
-							</button>
-						)}
+						<button
+							className={clsx(styles.btn, {
+								[styles.hidden]: !file || !isEditing,
+							})}
+							onClick={this.handleUpload}
+						>
+							Сохранить
+						</button>
 					</div>
 				</div>
 			</div>

@@ -85,20 +85,23 @@ class ChangePasswordComponent extends Component<
 					placeholder="Введите пароль"
 					errorMessage={this.state.validationErrors.password}
 					onChange={(value) => this.onFieldChange(value, 'password')}
+					className={'userPage'}
 				/>
 				<PasswordInputField
 					label="Новый пароль"
 					defaultValue=""
-					placeholder="Введите новый пароль"
+					placeholder="Введите пароль"
 					errorMessage={this.state.validationErrors.newPassword}
 					onChange={(value) => this.onFieldChange(value, 'newPassword')}
+					className={'userPage'}
 				/>
 				<PasswordInputField
 					label="Подтверждение пароля"
 					defaultValue=""
 					errorMessage={this.state.validationErrors.repeatNewPassword}
-					placeholder="Повторите новый пароль"
+					placeholder="Повторите пароль"
 					onChange={(value) => this.onFieldChange(value, 'repeatNewPassword')}
+					className={'userPage'}
 				/>
 				{this.props.error && <p>Неверный текущий пароль</p>}
 				<button onClick={this.handleChangePassword} className={styles.saveBtn}>

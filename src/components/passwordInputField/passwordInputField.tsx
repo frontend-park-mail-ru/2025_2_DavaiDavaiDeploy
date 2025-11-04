@@ -12,6 +12,7 @@ interface PasswordInputFieldProps {
 	placeholder?: string;
 	onChange: (value: string) => void;
 	errorMessage: string;
+	className?: string;
 }
 
 interface PasswordInputFieldState {
@@ -39,7 +40,12 @@ export class PasswordInputField extends Component<
 			this.props;
 
 		return (
-			<div className={styles.inputContainer}>
+			<div
+				className={clsx(
+					styles.inputContainer,
+					(this.props.className && styles[this.props.className]) ?? '',
+				)}
+			>
 				{label && (
 					<label
 						htmlFor={`passwordField-${label}`}
