@@ -170,7 +170,7 @@ class GenreSliderComponent extends Component<
 		const { isAnimating, phase, direction } = this.state;
 
 		if (!genres.length) {
-			return <div>Loading...</div>;
+			return <div></div>;
 		}
 
 		const visibleGenres = this.getVisibleGenres();
