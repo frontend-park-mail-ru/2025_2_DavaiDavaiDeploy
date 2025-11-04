@@ -20,16 +20,15 @@ interface GenreSliderProps {
 
 interface GenreSliderState {
 	curGenre: number;
-	prevGenre: number;
-	isAnimating: boolean;
 	slideCapacity: number;
-	autoSlider: any;
-	inactivityTimer: any;
+	isAnimating: boolean;
+	phase: 'out' | 'in' | null;
+	direction: 'left' | 'right' | null;
 	debounceResizeHandler: (ev?: Event | undefined) => void;
 }
 
 const THROTTLE_DELAY = 100;
-const INITIAL_RESIZE_DELAY = 300;
+const ANIMATION_DURATION = 400;
 
 class GenreSliderComponent extends Component<
 	GenreSliderProps,
@@ -37,11 +36,10 @@ class GenreSliderComponent extends Component<
 > {
 	state: GenreSliderState = {
 		curGenre: 0,
-		prevGenre: 0,
-		isAnimating: false,
 		slideCapacity: 8,
-		autoSlider: null,
-		inactivityTimer: null,
+		isAnimating: false,
+		phase: null,
+		direction: null,
 		debounceResizeHandler: () => {},
 	};
 
@@ -54,10 +52,7 @@ class GenreSliderComponent extends Component<
 		);
 
 		window.addEventListener('resize', this.state.debounceResizeHandler);
-
-		setTimeout(() => {
-			this.handleResize();
-		}, INITIAL_RESIZE_DELAY);
+		this.handleResize();
 	}
 
 	onUnmount() {
@@ -66,72 +61,113 @@ class GenreSliderComponent extends Component<
 
 	handleResize = () => {
 		const width = window.innerWidth;
-		let slideCapacity = 8;
+		this.setState({
+			slideCapacity: width < WIDE_SCREEN_WIDTH ? 4 : 8,
+		});
+	};
 
-		if (width < WIDE_SCREEN_WIDTH) {
-			slideCapacity = 4;
+	animate(direction: 'left' | 'right', nextIndex: number) {
+		if (this.state.isAnimating) {
+			return;
 		}
 
-		this.setState({
-			slideCapacity,
-		});
+		this.setState({ isAnimating: true, phase: 'out', direction });
+
+		setTimeout(() => {
+			this.setState({ curGenre: nextIndex, phase: 'in' });
+		}, ANIMATION_DURATION);
+
+		setTimeout(() => {
+			this.setState({ isAnimating: false, phase: null, direction: null });
+		}, ANIMATION_DURATION * 2);
+	}
+
+	onNextBtnClick = () => {
+		const { genres } = this.props;
+
+		if (!genres.length || this.state.isAnimating) {
+			return;
+		}
+
+		const nextIndex =
+			(this.state.curGenre + this.state.slideCapacity) % genres.length;
+
+		this.animate('left', nextIndex);
 	};
 
-	onNextBthClick = () => {
-		const genresCount = this.props.genres.length;
-		this.setState({
-			prevGenre: this.state.curGenre,
-			curGenre: (this.state.curGenre + this.state.slideCapacity) % genresCount,
-		});
-	};
+	onPrevBtnClick = () => {
+		const { genres } = this.props;
 
-	onPrevBthClick = () => {
-		const genresCount = this.props.genres.length;
-		this.setState({
-			prevGenre: this.state.curGenre,
-			curGenre:
-				this.state.curGenre - this.state.slideCapacity < 0
-					? this.state.curGenre - this.state.slideCapacity + genresCount
-					: this.state.curGenre - this.state.slideCapacity,
-		});
+		if (!genres.length || this.state.isAnimating) {
+			return;
+		}
+
+		const nextIndex =
+			this.state.curGenre - this.state.slideCapacity < 0
+				? genres.length + (this.state.curGenre - this.state.slideCapacity)
+				: this.state.curGenre - this.state.slideCapacity;
+
+		this.animate('right', nextIndex);
 	};
 
 	getVisibleGenres() {
-		const genresCount = this.props.genres.length;
-		return Array.from({ length: this.state.slideCapacity }, (_, i) => {
-			const idx = (this.state.curGenre + i) % genresCount;
-			return this.props.genres[idx];
+		const { genres } = this.props;
+		const { curGenre, slideCapacity } = this.state;
+
+		if (!genres.length) {
+			return [];
+		}
+
+		return Array.from({ length: slideCapacity }, (_, i) => {
+			const idx = (curGenre + i) % genres.length;
+			return genres[idx];
 		});
 	}
 
 	render() {
-		if (this.props.genres.length === 0) {
+		const { genres } = this.props;
+		const { isAnimating, phase, direction } = this.state;
+
+		if (!genres.length) {
 			return <div>Loading...</div>;
+		}
+
+		const visibleGenres = this.getVisibleGenres();
+
+		let animationClass = '';
+
+		if (phase === 'out') {
+			animationClass =
+				direction === 'left' ? styles.slideOutLeft : styles.slideOutRight;
+		} else if (phase === 'in') {
+			animationClass =
+				direction === 'left' ? styles.slideInRight : styles.slideInLeft;
 		}
 
 		return (
 			<section className={styles.genreSlider}>
 				<h2 className={styles.title}>Жанры</h2>
 				<div className={styles.container}>
-					<div className={styles.slider}>
-						{this.getVisibleGenres().map((genre) => {
-							return <GenreSliderItem genre={genre} />;
-						})}
+					<div className={`${styles.slider} ${animationClass}`}>
+						{visibleGenres.map((genre) => (
+							<GenreSliderItem genre={genre} />
+						))}
 					</div>
 
-					<button className={styles.prevBtn} onClick={this.onPrevBthClick}>
-						<img
-							src={ArrowLeft}
-							alt="Еще жанры"
-							className={styles.prevBtnIcon}
-						/>
+					<button
+						className={styles.prevBtn}
+						onClick={this.onPrevBtnClick}
+						disabled={isAnimating}
+					>
+						<img src={ArrowLeft} alt="Назад" className={styles.prevBtnIcon} />
 					</button>
-					<button className={styles.nextBtn} onClick={this.onNextBthClick}>
-						<img
-							src={ArrowRight}
-							alt="Еще жанры"
-							className={styles.nextBtnIcon}
-						/>
+
+					<button
+						className={styles.nextBtn}
+						onClick={this.onNextBtnClick}
+						disabled={isAnimating}
+					>
+						<img src={ArrowRight} alt="Вперёд" className={styles.nextBtnIcon} />
 					</button>
 				</div>
 			</section>
