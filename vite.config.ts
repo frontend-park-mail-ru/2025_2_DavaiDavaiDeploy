@@ -14,7 +14,7 @@ export default ({ mode }: ConfigEnv) => {
 				targets: [
 					{
 						src: 'src/sw.js',
-						dest: '',
+						dest: './',
 					},
 				],
 			}),
