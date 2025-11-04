@@ -200,7 +200,7 @@ jobs:
         uses: actions/download-artifact@main
         with:
           name: assets
-          path: dist/assets
+          path: dist
       - name: Deploy assets folder to S3 bucket
         uses: jakejarvis/s3-sync-action@master
         with:
@@ -211,7 +211,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: 'ru-7'
-          SOURCE_DIR: 'dist/assets'
+          SOURCE_DIR: 'dist'
           DEST_DIR: 'assets'
 
   deploy:

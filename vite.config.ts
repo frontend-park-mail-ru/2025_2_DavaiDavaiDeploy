@@ -33,8 +33,7 @@ export default ({ mode }: ConfigEnv) => {
 					'assets/apple-touch-icon.png',
 					'assets/logo.svg',
 				],
-				manifestFilename: 'assets/manifest.webmanifest',
-				outDir: 'dist/assets',
+				outDir: 'dist',
 				injectRegister: false,
 				manifest: {
 					name: 'DDFilms - Онлайн кинотеатр',
@@ -97,7 +96,7 @@ export default ({ mode }: ConfigEnv) => {
 		build: {
 			outDir: 'dist',
 			emptyOutDir: true,
-			assetsDir: 'assets',
+			assetsDir: '.',
 			sourcemap: true,
 		},
 		base: process.env.VITE_CDN_ADDRESS || '/',
