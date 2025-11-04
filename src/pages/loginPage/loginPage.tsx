@@ -80,7 +80,8 @@ export class LoginPageNotConnected extends Component<
 
 	onUpdate() {
 		if (this.props.user) {
-			this.props.router.back();
+			this.updateProps({ userError: '' });
+			this.props.router.navigate('/');
 		}
 	}
 
