@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Главная страница -->
+  <url>
+    <loc>https://ddfilms.online/</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Страница фильмов -->
+  <url>
+    <loc>https://ddfilms.online/films</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Страница сериалов -->
+  <url>
+    <loc>https://ddfilms.online/series</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Страница жанров -->
+  <url>
+    <loc>https://ddfilms.online/genres</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Страница актеров -->
+  <url>
+    <loc>https://ddfilms.online/actors</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Страница избранного (если публичная) -->
+  <url>
+    <loc>https://ddfilms.online/favorites</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Страница профиля (если публичная) -->
+  <url>
+    <loc>https://ddfilms.online/profile</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Страница авторизации -->
+  <url>
+    <loc>https://ddfilms.online/signin</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Страница регистрации -->
+  <url>
+    <loc>https://ddfilms.online/signup</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Примеры страниц фильмов (добавьте реальные ID) -->
+  <url>
+    <loc>https://ddfilms.online/films/1</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://ddfilms.online/films/2</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Добавьте больше страниц фильмов по необходимости -->
+</urlset>

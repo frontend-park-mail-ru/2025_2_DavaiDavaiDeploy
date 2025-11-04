@@ -1,0 +1,7 @@
+User-agent: *
+Crawl-delay: 1
+Host: https://ddfilms.online/
+Disallow: https://ddfilms.online/profile/
+Disallow: /*?*
+Источник: https://robotstxt.ru
+Sitemap: https://ddfilms.online/sitemap.xml
