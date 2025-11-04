@@ -49,8 +49,13 @@ self.addEventListener('fetch', (event) => {
 	const requestUrl = new URL(event.request.url);
 
 	// Определяем какой кеш использовать
-	const isLocalResource = requestUrl.origin === self.location.origin;
-	const cacheName = isLocalResource ? CACHE_STATIC : CACHE_DYNAMIC;
+	// STATIC: HTML, CSS, изображения (jpg, png, svg, ico, webp)
+	// DYNAMIC: API запросы и JS файлы
+	const isStaticResource =
+		event.request.mode === 'navigate' ||
+		/\.(html|css|jpg|jpeg|png|svg|ico|webp|gif)$/i.test(requestUrl.pathname);
+
+	const cacheName = isStaticResource ? CACHE_STATIC : CACHE_DYNAMIC;
 
 	event.respondWith(
 		fetch(event.request)
