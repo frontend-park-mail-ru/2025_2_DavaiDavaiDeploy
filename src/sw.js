@@ -6,10 +6,7 @@ const STATIC_ASSETS = [
 	'/index.html',
 	'/assets/index.js',
 	'/assets/index.css',
-	'/assets/logo.svg',
-	'/assets/apple-touch-icon.png',
-	'/assets/favicon-16x16.png',
-	'/assets/favicon-32x32.png',
+	'https://cdn.ddfilms-static.ru/assets/logo.svg',
 ];
 
 self.addEventListener('install', (event) => {
@@ -76,13 +73,36 @@ self.addEventListener('fetch', (event) => {
 						return cached;
 					}
 
+					// ✅ Для навигации возвращаем index.html
 					if (event.request.mode === 'navigate') {
 						return caches.match('/index.html');
 					}
 
-					return new Response('Offline - resource not available', {
+					// ✅ Определяем правильный Content-Type по расширению файла
+					const extension = requestUrl.pathname.split('.').pop().toLowerCase();
+					const mimeTypes = {
+						svg: 'image/svg+xml',
+						png: 'image/png',
+						jpg: 'image/jpeg',
+						jpeg: 'image/jpeg',
+						gif: 'image/gif',
+						webp: 'image/webp',
+						ico: 'image/x-icon',
+						css: 'text/css',
+						js: 'application/javascript',
+						json: 'application/json',
+						html: 'text/html',
+					};
+
+					const contentType = mimeTypes[extension] || 'text/plain';
+
+					// ✅ Возвращаем 503 с правильным Content-Type
+					return new Response(null, {
 						status: 503,
 						statusText: 'Service Unavailable',
+						headers: {
+							'Content-Type': contentType,
+						},
 					});
 				});
 			}),
