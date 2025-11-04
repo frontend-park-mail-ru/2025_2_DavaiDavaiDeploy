@@ -10,7 +10,7 @@ const CACHE_URLS = [
 
 const preCacheResources = async (resources) => {
 	const cache = await caches.open(CACHE_NAME);
-	await cache.addAll([...resources]);
+	await cache.addAll(resources);
 };
 
 const addResponseToCache = async (request, response) => {
