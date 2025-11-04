@@ -1,12 +1,16 @@
 const CACHE_NAME = 'ddd_v1';
-const CACHE_URLS = ['/', '/index.html', '/assets/'];
+const CACHE_URLS = [
+	'/',
+	'/index.html',
+	'/assets/',
+	'/assets/index.js',
+	'/assets/index.css',
+	'/assets/logo.svg',
+];
 
 const preCacheResources = async (resources) => {
-	const fetchResponse = await fetch('/assets_filenames.txt');
-	const assets = await fetchResponse.json();
-
 	const cache = await caches.open(CACHE_NAME);
-	await cache.addAll([...resources, ...assets]);
+	await cache.addAll([...resources]);
 };
 
 const addResponseToCache = async (request, response) => {
