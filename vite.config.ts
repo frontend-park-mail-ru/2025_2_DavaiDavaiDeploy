@@ -2,7 +2,6 @@ import { sentryVitePlugin } from '@sentry/vite-plugin';
 import type { ConfigEnv } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default ({ mode }: ConfigEnv) => {
@@ -55,51 +54,19 @@ export default ({ mode }: ConfigEnv) => {
 						},
 					],
 				},
-				workbox: {
-					globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2,ttf,eot}'],
-					runtimeCaching: [
-						{
-							urlPattern: /^https:\/\/cdn\.ddfilms-static\.ru\/.*/i,
-							handler: 'CacheFirst',
-							options: {
-								cacheName: 'cdn-cache',
-								expiration: {
-									maxEntries: 100,
-									maxAgeSeconds: 60 * 60,
-								},
-								cacheableResponse: {
-									statuses: [0, 200],
-								},
-							},
-						},
-						{
-							urlPattern: /^https:\/\/ddfilms\.online\/api\/.*/i,
-							handler: 'NetworkFirst',
-							options: {
-								cacheName: 'api-cache',
-								expiration: {
-									maxEntries: 50,
-									maxAgeSeconds: 60 * 5,
-								},
-								cacheableResponse: {
-									statuses: [0, 200],
-								},
-							},
-						},
-					],
-				},
+
 				devOptions: {
 					enabled: true,
 				},
 			}),
-			viteStaticCopy({
-				targets: [
-					{
-						src: 'src/sw.js',
-						dest: './',
-					},
-				],
-			}),
+			// viteStaticCopy({
+			// 	targets: [
+			// 		{
+			// 			src: 'src/sw.js',
+			// 			dest: './',
+			// 		},
+			// 	],
+			// }),
 			sentryVitePlugin({
 				org: process.env.VITE_SENTRY_ORG,
 				project: process.env.VITE_SENTRY_PROJECT,

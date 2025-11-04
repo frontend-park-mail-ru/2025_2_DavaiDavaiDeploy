@@ -1,7 +1,5 @@
 import { precacheAndRoute } from 'workbox-precaching';
 precacheAndRoute(self.__WB_MANIFEST);
-//eslint-disable-next-line no-console
-console.log('WB: ', self.__WB_MANIFEST);
 
 const CACHE_NAME = 'ddd_cache_v1';
 // const CACHE_URLS = ['/', '/index.html', '/assets/'];

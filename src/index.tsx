@@ -20,6 +20,7 @@ import { HomePage } from '@/pages/homePage/homePage';
 import { LoginPage } from '@/pages/loginPage/loginPage.tsx';
 import { RegisterPage } from '@/pages/registerPage/registerPage.tsx';
 import { store } from '@/redux/store.ts';
+import { registerSW } from 'virtual:pwa-register';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
@@ -29,6 +30,19 @@ import actions from './redux/features/user/actions.ts';
 import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
 import type { ModelsUser } from './types/models.ts';
+
+registerSW({
+	onNeedRefresh() {
+		// Logic to prompt the user to refresh for new content
+		//eslint-disable-next-line no-console
+		console.log('New content available, please refresh.');
+	},
+	onOfflineReady() {
+		// Logic to notify the user that the app is ready for offline use
+		//eslint-disable-next-line no-console
+		console.log('App is ready to work offline.');
+	},
+});
 
 if (sentryEnabled) {
 	Sentry.init({
