@@ -44,6 +44,7 @@ export default ({ mode }: ConfigEnv) => {
 					background_color: '#ffffff',
 					display: 'standalone',
 					start_url: '/',
+					scope: '/',
 					icons: [
 						{
 							src: '/assets/favicon-16x16.png',
