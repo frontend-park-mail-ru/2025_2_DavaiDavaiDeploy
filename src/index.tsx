@@ -31,18 +31,20 @@ import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
 import type { ModelsUser } from './types/models.ts';
 
-registerSW({
-	onNeedRefresh() {
-		// Logic to prompt the user to refresh for new content
-		//eslint-disable-next-line no-console
-		console.log('New content available, please refresh.');
-	},
-	onOfflineReady() {
-		// Logic to notify the user that the app is ready for offline use
-		//eslint-disable-next-line no-console
-		console.log('App is ready to work offline.');
-	},
-});
+if ('serviceWorker' in navigator) {
+	const updateSW = registerSW({
+		onNeedRefresh() {
+			// eslint-disable-next-line no-console
+			console.log('New content available, please refresh.');
+		},
+		onOfflineReady() {
+			// eslint-disable-next-line no-console
+			console.log('App ready to work offline');
+		},
+	});
+
+	updateSW();
+}
 
 if (sentryEnabled) {
 	Sentry.init({
