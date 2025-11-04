@@ -1,88 +1,83 @@
-const CACHE = 'ddfilms-v1';
+const CACHE_NAME = 'resto_v1';
+const CACHE_URLS = [
+	'/',
+	'/index.html',
+	'/assets/index.css',
+	'/assets/index.js',
+	'/assets/logo.svg',
+];
 
-const STATIC_ASSETS = ['/', '/index.html', '/assets/'];
+const preCacheResources = async (resources) => {
+	const cache = await caches.open(CACHE_NAME);
+	await cache.addAll(resources);
+};
+
+const addResponseToCache = async (request, response) => {
+	const cache = await caches.open(CACHE_NAME);
+	await cache.put(request, response);
+};
+
+const cacheFirst = async (request) => {
+	const dataFromCache = await caches.match(request);
+
+	if (dataFromCache) {
+		return dataFromCache;
+	}
+
+	try {
+		const responseFromNetwork = await fetch(request.clone());
+		addResponseToCache(request, responseFromNetwork.clone());
+
+		return responseFromNetwork;
+	} catch {
+		return new Response('Network error happened', { status: 408 });
+	}
+};
+
+const networkFirst = async (request) => {
+	try {
+		const responseFromNetwork = await fetch(request.clone());
+		addResponseToCache(request, responseFromNetwork.clone());
+
+		return responseFromNetwork;
+	} catch {
+		const dataFromCache = await caches.match(request);
+
+		if (dataFromCache) {
+			return dataFromCache;
+		}
+
+		return new Response('Network error happened', { status: 408 });
+	}
+};
 
 self.addEventListener('install', (event) => {
-	event.waitUntil(
-		caches.open(CACHE).then((cache) => {
-			return cache.addAll(STATIC_ASSETS);
-		}),
-	);
-
-	self.skipWaiting();
+	event.waitUntil(preCacheResources(CACHE_URLS));
 });
 
-self.addEventListener('activate', (event) => {
-	event.waitUntil(
-		Promise.all([
-			self.clients.claim(),
-			caches.keys().then((keys) =>
-				Promise.all(
-					keys.map((key) => {
-						return caches.delete(key);
-					}),
-				),
-			),
-		]),
+self.addEventListener('activate', async () => {
+	const cacheNames = await caches.keys();
+
+	await Promise.all(
+		cacheNames.map(async (cacheName) => {
+			if (cacheName !== CACHE_NAME) {
+				await caches.delete(cacheName);
+			}
+		}),
 	);
 });
 
 self.addEventListener('fetch', (event) => {
-	if (event.request.method !== 'GET') {
+	if (event.request.method !== 'GET' || !event.request.url.startsWith('http')) {
 		return;
 	}
 
-	if (['image', 'font'].includes(event.request.destination)) {
-		event.respondWith(
-			caches.match(event.request).then((cached) => {
-				if (cached) {
-					return cached;
-				}
+	const destination = event.request.destination;
 
-				return fetch(event.request).then((response) => {
-					if (response && response.ok) {
-						const responseToCache = response.clone();
-						caches.open(CACHE).then((cache) => {
-							cache.put(event.request, responseToCache);
-						});
-					}
-
-					return response;
-				});
-			}),
-		);
-
+	if (['image', 'font'].includes(destination)) {
+		event.respondWith(cacheFirst(event.request));
 		return;
 	}
 
-	event.respondWith(
-		fetch(event.request)
-			.then((response) => {
-				if (response && response.ok) {
-					const responseToCache = response.clone();
-					caches.open(CACHE).then((cache) => {
-						cache.put(event.request, responseToCache);
-					});
-				}
-
-				return response;
-			})
-			.catch(() => {
-				return caches.match(event.request).then((cached) => {
-					if (cached) {
-						return cached;
-					}
-
-					if (event.request.mode === 'navigate') {
-						return caches.match('/index.html');
-					}
-
-					return new Response(null, {
-						status: 503,
-						statusText: 'Service Unavailable',
-						headers: { 'Content-Type': 'text/plain' },
-					});
-				});
-			}),
-	);
+	event.respondWith(networkFirst(event.request));
 });
