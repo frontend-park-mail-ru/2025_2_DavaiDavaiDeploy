@@ -20,7 +20,6 @@ import { HomePage } from '@/pages/homePage/homePage';
 import { LoginPage } from '@/pages/loginPage/loginPage.tsx';
 import { RegisterPage } from '@/pages/registerPage/registerPage.tsx';
 import { store } from '@/redux/store.ts';
-import { registerSW } from 'virtual:pwa-register';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
@@ -31,21 +30,6 @@ import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
 import type { ModelsUser } from './types/models.ts';
 
-if ('serviceWorker' in navigator) {
-	const updateSW = registerSW({
-		onNeedRefresh() {
-			// eslint-disable-next-line no-console
-			console.log('New content available, please refresh.');
-		},
-		onOfflineReady() {
-			// eslint-disable-next-line no-console
-			console.log('App ready to work offline');
-		},
-	});
-
-	updateSW();
-}
-
 if (sentryEnabled) {
 	Sentry.init({
 		dsn: sentryDSN,
@@ -53,6 +37,15 @@ if (sentryEnabled) {
 		integrations: [Sentry.browserTracingIntegration()],
 		tracePropagationTargets: [PRODUCTION_URL_WITH_SCHEMA],
 		release: import.meta.env.VITE_RELEASE_VERSION,
+	});
+}
+
+if (isProduction && 'serviceWorker' in navigator) {
+	window.addEventListener('load', () => {
+		navigator.serviceWorker
+			.register('/sw.js', { scope: '/' })
+			// eslint-disable-next-line no-console
+			.catch(console.log);
 	});
 }
 

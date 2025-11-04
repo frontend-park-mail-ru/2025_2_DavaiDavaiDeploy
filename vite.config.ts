@@ -1,7 +1,7 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import type { ConfigEnv } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
-import { VitePWA } from 'vite-plugin-pwa';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default ({ mode }: ConfigEnv) => {
@@ -10,66 +10,14 @@ export default ({ mode }: ConfigEnv) => {
 	return defineConfig({
 		plugins: [
 			tsconfigPaths(),
-			VitePWA({
-				injectRegister: 'auto',
-				manifestFilename: 'assets/manifest.webmanifest',
-				outDir: 'dist/assets',
-				strategies: 'injectManifest',
-				srcDir: 'src',
-				filename: 'sw.js',
-
-				registerType: 'autoUpdate',
-				includeAssets: [
-					'assets/favicon-16x16.png',
-					'assets/favicon-32x32.png',
-					'assets/apple-touch-icon.png',
-					'assets/logo.svg',
+			viteStaticCopy({
+				targets: [
+					{
+						src: 'src/sw.js',
+						dest: './',
+					},
 				],
-				manifest: {
-					name: 'DDFilms - Онлайн кинотеатр',
-					short_name: 'DDFilms',
-					description: 'Смотрите фильмы и сериалы онлайн',
-					theme_color: '#1976d2',
-					background_color: '#ffffff',
-					display: 'standalone',
-					start_url: '/',
-					icons: [
-						{
-							src: '/assets/favicon-16x16.png',
-							sizes: '16x16',
-							type: 'image/png',
-						},
-						{
-							src: '/assets/favicon-32x32.png',
-							sizes: '32x32',
-							type: 'image/png',
-						},
-						{
-							src: '/assets/apple-touch-icon.png',
-							sizes: '180x180',
-							type: 'image/png',
-						},
-						{
-							src: '/assets/logo.svg',
-							sizes: '512x512',
-							type: 'image/svg+xml',
-							purpose: 'any maskable',
-						},
-					],
-				},
-
-				devOptions: {
-					enabled: true,
-				},
 			}),
-			// viteStaticCopy({
-			// 	targets: [
-			// 		{
-			// 			src: 'src/sw.js',
-			// 			dest: './',
-			// 		},
-			// 	],
-			// }),
 			sentryVitePlugin({
 				org: process.env.VITE_SENTRY_ORG,
 				project: process.env.VITE_SENTRY_PROJECT,
