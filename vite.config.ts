@@ -1,6 +1,7 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import type { ConfigEnv } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -10,6 +11,83 @@ export default ({ mode }: ConfigEnv) => {
 	return defineConfig({
 		plugins: [
 			tsconfigPaths(),
+			VitePWA({
+				registerType: 'autoUpdate',
+				includeAssets: [
+					'assets/favicon-16x16.png',
+					'assets/favicon-32x32.png',
+					'assets/apple-touch-icon.png',
+					'assets/logo.svg',
+				],
+				manifest: {
+					name: 'DDFilms - Онлайн кинотеатр',
+					short_name: 'DDFilms',
+					description: 'Смотрите фильмы и сериалы онлайн',
+					theme_color: '#1976d2',
+					background_color: '#ffffff',
+					display: 'standalone',
+					start_url: '/',
+					icons: [
+						{
+							src: '/assets/favicon-16x16.png',
+							sizes: '16x16',
+							type: 'image/png',
+						},
+						{
+							src: '/assets/favicon-32x32.png',
+							sizes: '32x32',
+							type: 'image/png',
+						},
+						{
+							src: '/assets/apple-touch-icon.png',
+							sizes: '180x180',
+							type: 'image/png',
+						},
+						{
+							src: '/assets/logo.svg',
+							sizes: '512x512',
+							type: 'image/svg+xml',
+							purpose: 'any maskable',
+						},
+					],
+				},
+				workbox: {
+					globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2,ttf,eot}'],
+					runtimeCaching: [
+						{
+							urlPattern: /^https:\/\/cdn\.ddfilms-static\.ru\/.*/i,
+							handler: 'CacheFirst',
+							options: {
+								cacheName: 'cdn-cache',
+								expiration: {
+									maxEntries: 100,
+									maxAgeSeconds: 60 * 60,
+								},
+								cacheableResponse: {
+									statuses: [0, 200],
+								},
+							},
+						},
+						{
+							urlPattern: /^https:\/\/ddfilms\.online\/api\/.*/i,
+							handler: 'NetworkFirst',
+							options: {
+								cacheName: 'api-cache',
+								expiration: {
+									maxEntries: 50,
+									maxAgeSeconds: 60 * 5,
+								},
+								cacheableResponse: {
+									statuses: [0, 200],
+								},
+							},
+						},
+					],
+				},
+				devOptions: {
+					enabled: true,
+				},
+			}),
 			viteStaticCopy({
 				targets: [
 					{
