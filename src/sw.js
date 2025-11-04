@@ -1,4 +1,4 @@
-const CACHE_NAME = 'resto_v1';
+const CACHE_NAME = 'ddd_cache_v1';
 const CACHE_URLS = [
 	'/',
 	'/index.html',
@@ -68,7 +68,7 @@ self.addEventListener('activate', async () => {
 });
 
 self.addEventListener('fetch', (event) => {
-	if (event.request.method !== 'GET' || !event.request.url.startsWith('http')) {
+	if (event.request.method !== 'GET') {
 		return;
 	}
 
