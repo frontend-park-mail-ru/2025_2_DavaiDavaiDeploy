@@ -12,9 +12,10 @@ export default ({ mode }: ConfigEnv) => {
 		plugins: [
 			tsconfigPaths(),
 			VitePWA({
-				injectManifest: {
-					swSrc: './src/sw.js',
-				},
+				strategies: 'injectManifest',
+				srcDir: 'src',
+				filename: 'sw.js',
+
 				registerType: 'autoUpdate',
 				includeAssets: [
 					'assets/favicon-16x16.png',
