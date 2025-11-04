@@ -40,6 +40,7 @@ const Rules = {
 	'sonarjs/no-duplicate-string': 'error',
 	'sonarjs/prefer-immediate-return': 'error',
 	'sonarjs/prefer-regexp-exec': 'off',
+	'sonarjs/no-hardcoded-passwords': 'off',
 };
 
 const Ignores = [

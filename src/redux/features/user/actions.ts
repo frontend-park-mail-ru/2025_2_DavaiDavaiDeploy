@@ -50,6 +50,13 @@ const returnUserErrorAction = (error: string): Action => {
 	};
 };
 
+const returnPasswordChangeErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.PASSWORD_CHANGE_ERROR,
+		payload: { error: error },
+	};
+};
+
 /**
  * Создает действие для обновления существующего пользователя.
  */
@@ -179,6 +186,35 @@ const logoutUserAction = () => async (dispatch: Dispatch) => {
 	}
 };
 
+const changePasswordAction =
+	(old_password: string, new_password: string): Action =>
+	async (dispatch: Dispatch) => {
+		try {
+			const response = await HTTPClient.put<ModelsUser>(
+				'/users/change/password',
+				{
+					data: {
+						new_password,
+						old_password,
+					},
+				},
+			);
+
+			storeAuthTokensFromResponse(response);
+			dispatch(returnUserAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnPasswordChangeErrorAction(errorMessage));
+		}
+	};
+
 export default {
 	registerUserAction,
 	loginUserAction,
@@ -186,4 +222,5 @@ export default {
 	updateUserAction,
 	deleteUserAction,
 	logoutUserAction,
+	changePasswordAction,
 };
