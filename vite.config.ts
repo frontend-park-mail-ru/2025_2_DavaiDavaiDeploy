@@ -34,7 +34,7 @@ export default ({ mode }: ConfigEnv) => {
 					'assets/logo.svg',
 				],
 				manifestFilename: 'assets/manifest.webmanifest',
-				outDir: 'dist/assets/',
+				outDir: 'dist/assets',
 				manifest: {
 					name: 'DDFilms - Онлайн кинотеатр',
 					short_name: 'DDFilms',
