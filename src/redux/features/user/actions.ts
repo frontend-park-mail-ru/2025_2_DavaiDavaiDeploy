@@ -57,6 +57,13 @@ const returnPasswordChangeErrorAction = (error: string): Action => {
 	};
 };
 
+const returnAvatarChangeErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.AVATAR_CHANGE_ERROR,
+		payload: { error: error },
+	};
+};
+
 /**
  * Создает действие для обновления существующего пользователя.
  */
@@ -215,6 +222,35 @@ const changePasswordAction =
 		}
 	};
 
+const changeAvatarAction =
+	(file: File): Action =>
+	async (dispatch: Dispatch) => {
+		const formData = new FormData();
+		formData.append('avatar', file);
+
+		try {
+			const response = await HTTPClient.put<ModelsUser>(
+				'/users/change/avatar',
+				{
+					data: formData,
+				},
+			);
+
+			storeAuthTokensFromResponse(response);
+			dispatch(returnUserAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnAvatarChangeErrorAction(errorMessage));
+		}
+	};
+
 export default {
 	registerUserAction,
 	loginUserAction,
@@ -223,4 +259,5 @@ export default {
 	deleteUserAction,
 	logoutUserAction,
 	changePasswordAction,
+	changeAvatarAction,
 };

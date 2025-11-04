@@ -9,6 +9,7 @@ interface InitialState {
 	user: ModelsUser | null;
 	error: string | null;
 	passwordChangeError: string | null;
+	avatarChangeError: boolean;
 }
 
 /**
@@ -20,6 +21,7 @@ const initialState: InitialState = {
 	user: null,
 	error: null,
 	passwordChangeError: null,
+	avatarChangeError: false,
 };
 
 /**
@@ -66,6 +68,7 @@ export const userReducer: Reducer = (
 				loading: false,
 				user: payload.user,
 				passwordChangeError: null,
+				avatarChangeError: false,
 			};
 		case actionTypes.USER_ERROR:
 			return {
@@ -84,6 +87,12 @@ export const userReducer: Reducer = (
 			return {
 				...state,
 				passwordChangeError: payload.error,
+			};
+
+		case actionTypes.AVATAR_CHANGE_ERROR:
+			return {
+				...state,
+				avatarChangeError: payload.error,
 			};
 		default:
 			return state;

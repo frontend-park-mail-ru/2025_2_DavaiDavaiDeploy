@@ -32,3 +32,7 @@ export const selectIsAuthentificated: Selector = (state: State): boolean =>
 export const selectPasswordChangeError: Selector = (
 	state: State,
 ): string | null => state.user.passwordChangeError;
+
+export const selectAvatarChangeError: Selector = (
+	state: State,
+): string | null => state.user.avatarChangeError;

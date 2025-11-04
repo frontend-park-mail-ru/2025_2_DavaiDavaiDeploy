@@ -63,9 +63,13 @@ export class HTTPClient {
 		data: any,
 		requestMethod: string,
 		requestHeaders: Headers,
-	): string | undefined {
+	): string | undefined | FormData {
 		if (!data || requestMethod === METHODS.GET) {
 			return undefined;
+		}
+
+		if (data instanceof FormData) {
+			return data;
 		}
 
 		if (typeof data === 'object') {

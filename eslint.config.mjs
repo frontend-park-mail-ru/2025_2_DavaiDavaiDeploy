@@ -41,6 +41,7 @@ const Rules = {
 	'sonarjs/prefer-immediate-return': 'error',
 	'sonarjs/prefer-regexp-exec': 'off',
 	'sonarjs/no-hardcoded-passwords': 'off',
+	'sonarjs/function-return-type': 'off',
 };
 
 const Ignores = [

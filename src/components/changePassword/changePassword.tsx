@@ -78,6 +78,7 @@ class ChangePasswordComponent extends Component<
 	render() {
 		return (
 			<div className={styles.changePasswordForm}>
+				<h1 className={styles.title}>Сменить пароль</h1>
 				<PasswordInputField
 					label="Старый пароль"
 					defaultValue=""
@@ -93,7 +94,7 @@ class ChangePasswordComponent extends Component<
 					onChange={(value) => this.onFieldChange(value, 'newPassword')}
 				/>
 				<PasswordInputField
-					label="Подтверждение нового пароля"
+					label="Подтверждение пароля"
 					defaultValue=""
 					errorMessage={this.state.validationErrors.repeatNewPassword}
 					placeholder="Повторите новый пароль"

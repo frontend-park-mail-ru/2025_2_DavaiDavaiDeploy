@@ -1,0 +1,101 @@
+.avatarForm {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: flex-end;
+	gap: 1rem;
+}
+
+.content {
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+	width: 39.5vw;
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+	gap: 6.7rem;
+}
+
+.title {
+	font-size: var(--font-size-xl);
+	margin-top: 1rem;
+}
+
+.error {
+	margin-top: 0.8rem;
+	color: var(--color-accent);
+	font-size: var(--font-size-l);
+}
+
+.success {
+	margin-top: 0.8rem;
+	color: var(--color-rating-high);
+	font-size: var(--font-size-l);
+}
+
+.subtitle {
+	font-size: var(--font-size-xs);
+	color: var(--color-light-text);
+	opacity: 0.7;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.changeAvatar {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2.8rem;
+}
+
+.avatar {
+	border-radius: 50%;
+	height: 170px;
+	width: 170px;
+}
+
+.btns {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+}
+
+.wrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.btn {
+	background-color: var(--color-accent);
+	color: var(--color-light);
+	font-size: var(--font-size-xs);
+	border-radius: var(--border-radius-l);
+	padding: 8px 15px;
+	border: none;
+	cursor: pointer;
+	box-sizing: border-box;
+	transition: transform 0.3s ease;
+	white-space: nowrap;
+}
+
+.input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+	.content {
+		width: 100%;
+	}
+}
