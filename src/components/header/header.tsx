@@ -1,4 +1,4 @@
-import Logo from '@/assets/img/logo.svg';
+import Logo from '@/assets/img/logo.svg?react';
 import { LoadedUser } from '@/components/headerLoadedUser/headerLoadedUser.tsx';
 import { LoadingState } from '@/components/loadingState/loadingState.tsx';
 import { connect } from '@/modules/redux/index.ts';
@@ -16,7 +16,6 @@ import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
 import styles from './header.module.scss';
-
 interface HeaderProps {
 	user: ModelsUser | null;
 	isLoading: boolean;
@@ -50,7 +49,7 @@ export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 		return (
 			<header id="header" className={styles.header}>
 				<Link href="/">
-					<img src={Logo} alt="На главную" className={styles.logo} />
+					<Logo className={styles.logo} />
 				</Link>
 				<div className={styles.user}>{this.renderUserSection()}</div>
 			</header>

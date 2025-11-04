@@ -40,11 +40,13 @@
   "homepage": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy#readme",
   "dependencies": {
     "@fontsource/golos-ui": "^4.5.3",
-    "@robocotik/react": "^1.0.20",
+    "@robocotik/react": "^1.0.26",
     "@sentry/browser": "^10.21.0",
     "@sentry/core": "^10.21.0",
     "@sentry/vite-plugin": "^2.14.1",
-    "reset-css": "^5.0.2"
+    "@svgr/plugin-jsx": "^8.1.0",
+    "reset-css": "^5.0.2",
+    "vite-plugin-svgr": "^4.5.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.38.0",

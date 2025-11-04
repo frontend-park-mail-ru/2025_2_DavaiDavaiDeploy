@@ -2,6 +2,7 @@ import { sentryVitePlugin } from '@sentry/vite-plugin';
 import type { ConfigEnv } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default ({ mode }: ConfigEnv) => {
@@ -23,6 +24,22 @@ export default ({ mode }: ConfigEnv) => {
 				project: process.env.VITE_SENTRY_PROJECT,
 				authToken: process.env.VITE_SENTRY_AUTH_TOKEN,
 				release: { name: process.env.VITE_RELEASE_VERSION },
+			}),
+			svgr({
+				svgrOptions: {
+					plugins: ['@svgr/plugin-jsx'],
+					jsxRuntimeImport: {
+						namespace: 'jsx',
+						source: '@robocotik/react/jsx-runtime',
+					},
+					jsxRuntime: 'automatic',
+				},
+				esbuildOptions: {
+					jsx: 'transform',
+					jsxFactory: 'jsx.jsx',
+					jsxFragment: 'Fragment',
+					jsxDev: false,
+				},
 			}),
 		],
 		esbuild: {
