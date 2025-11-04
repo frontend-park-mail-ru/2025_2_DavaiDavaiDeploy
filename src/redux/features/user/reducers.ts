@@ -61,7 +61,12 @@ export const userReducer: Reducer = (
 				),
 			};
 		case actionTypes.USER_LOADING:
-			return { ...state, loading: true, error: null };
+			return {
+				...state,
+				loading: true,
+				error: null,
+				passwordChangeError: null,
+			};
 		case actionTypes.USER_LOADED:
 			return {
 				...state,
@@ -86,12 +91,14 @@ export const userReducer: Reducer = (
 		case actionTypes.PASSWORD_CHANGE_ERROR:
 			return {
 				...state,
+				loading: false,
 				passwordChangeError: payload.error,
 			};
 
 		case actionTypes.AVATAR_CHANGE_ERROR:
 			return {
 				...state,
+				loading: false,
 				avatarChangeError: payload.error,
 			};
 		default:

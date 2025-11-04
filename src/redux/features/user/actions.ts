@@ -50,7 +50,7 @@ const returnUserErrorAction = (error: string): Action => {
 	};
 };
 
-const returnPasswordChangeErrorAction = (error: string): Action => {
+const returnPasswordChangeErrorAction = (error: string | null): Action => {
 	return {
 		type: actionTypes.PASSWORD_CHANGE_ERROR,
 		payload: { error: error },
@@ -196,6 +196,8 @@ const logoutUserAction = () => async (dispatch: Dispatch) => {
 const changePasswordAction =
 	(old_password: string, new_password: string): Action =>
 	async (dispatch: Dispatch) => {
+		dispatch(setUserLoadingAction());
+
 		try {
 			const response = await HTTPClient.put<ModelsUser>(
 				'/users/change/password',
@@ -208,7 +210,7 @@ const changePasswordAction =
 			);
 
 			storeAuthTokensFromResponse(response);
-			dispatch(returnUserAction(response.data));
+			dispatch(returnPasswordChangeErrorAction(null));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
