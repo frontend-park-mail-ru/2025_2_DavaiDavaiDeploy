@@ -1,8 +1,9 @@
-import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
-import { connect } from '@/modules/redux';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import { RouterContext } from '@/modules/router/routerContext';
+import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
+import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/genre/actions';
 import { selectGenre } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
@@ -16,21 +17,19 @@ interface GenreInfoProps {
 	getGenre: (id: string) => void;
 }
 
-class GenreInfoComponent extends Component<GenreInfoProps> {
-	static readonly contextType = RouterContext;
-
+class GenreInfoComponent extends Component<GenreInfoProps & WithRouterProps> {
 	onMount() {
-		this.props.getGenre(this.context.params.id);
+		this.props.getGenre(this.props.router.params.id);
 	}
 
 	render() {
 		if (!this.props.genre) {
-			return <div className={styles.err}>Загрузка жанра</div>;
+			return <div className={styles.err}></div>;
 		}
 
-		const { id, title, description } = this.props.genre;
+		const { title, description, icon } = this.props.genre;
 
-		const titleSRC = getImageSRC('genres', id, 'svg');
+		const titleSRC = getImageURL(icon);
 
 		return (
 			<div className={styles.genre}>
@@ -49,7 +48,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getGenre: (id: string) => dispatch(actions.getGenreAction(id)),
 });
 
-export const GenreInfo = connect(
-	mapStateToProps,
-	mapDispatchToProps,
+export const GenreInfo = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
 )(GenreInfoComponent);

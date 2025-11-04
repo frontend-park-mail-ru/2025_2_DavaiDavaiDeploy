@@ -1,4 +1,4 @@
-import { GenreCardGrid } from '@/components/cardGrig/cardGrid';
+import { GenreCardGrid } from '@/components/genreCardGrid/genreCardGrid';
 import { GenreInfo } from '@/components/genreInfo/genreInfo';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';

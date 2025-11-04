@@ -1,11 +1,10 @@
-import { connect } from '@/modules/redux';
+import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import { RouterContext } from '@/modules/router/routerContext';
+import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
+import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/films/actions';
 import { selectFilms } from '@/redux/features/films/selectors.js';
-import genreActions from '@/redux/features/genre/actions';
-import { selectGenreFilms } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
@@ -20,12 +19,12 @@ interface CardGridProps {
 	getFilms: (limit: number, offset: number, id?: string) => void;
 }
 
-class CardGridComponent extends Component<CardGridProps> {
-	static readonly contextType = RouterContext;
-
+export class CardGridComponent extends Component<
+	CardGridProps & WithRouterProps
+> {
 	onMount() {
-		if (this.context.params.id) {
-			this.props.getFilms(FILM_COUNT, OFFSET, this.context.params.id);
+		if (this.props.router.params.id) {
+			this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
 		} else {
 			this.props.getFilms(FILM_COUNT, OFFSET);
 		}
@@ -33,12 +32,12 @@ class CardGridComponent extends Component<CardGridProps> {
 
 	render() {
 		if (this.props.films.length === 0) {
-			return <div className={styles.err}>Загрузка фильмов</div>;
+			return <div className={styles.err}></div>;
 		}
 
 		return (
 			<div className={styles.cardGrid}>
-				{!this.context.params.id && (
+				{!this.props.router.params.id && (
 					<h2 className={styles.title}>Все фильмы</h2>
 				)}
 				<div className={styles.grid}>
@@ -60,21 +59,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(actions.getFilmsAction(limit, offset)),
 });
 
-export const CardGrid = connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(CardGridComponent);
-
-const genreMapStateToProps = (state: State): Map => ({
-	films: selectGenreFilms(state),
-});
-
-const genreMapDispatchToProps = (dispatch: Dispatch): Map => ({
-	getFilms: (limit: number, offset: number, id: string) =>
-		dispatch(genreActions.getGenreFilmsAction(limit, offset, id)),
-});
-
-export const GenreCardGrid = connect(
-	genreMapStateToProps,
-	genreMapDispatchToProps,
+export const CardGrid = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
 )(CardGridComponent);

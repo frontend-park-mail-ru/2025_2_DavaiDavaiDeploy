@@ -1,4 +1,4 @@
-import { getImageSRC } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import type { ModelsFilmPage } from '@/types/models';
 import { Component } from '@robocotik/react';
 import styles from './filmGallery.module.scss';
@@ -13,11 +13,7 @@ export class FilmGallery extends Component<FilmGalleryProps> {
 			return <div>Loading...</div>;
 		}
 
-		const image1 = getImageSRC(
-			'promoFilms',
-			'3f4a5b6c-7d8e-9f0a-1b2c-3d4e5f6a7b8c',
-			'jpg',
-		);
+		const image1 = getImageURL('posters/pic44.jpg');
 
 		return (
 			<div className={styles.content}>
