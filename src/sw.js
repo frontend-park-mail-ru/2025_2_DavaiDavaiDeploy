@@ -49,6 +49,66 @@ self.addEventListener('fetch', (event) => {
 
 	const url = new URL(event.request.url);
 
+	// ✅ Обрабатываем навигацию (переходы по страницам, перезагрузка)
+	if (event.request.mode === 'navigate') {
+		event.respondWith(
+			fetch(event.request)
+				.then((response) => {
+					// Успешно получили из сети - кэшируем
+					const responseToCache = response.clone();
+					caches.open(CACHE).then((cache) => {
+						cache.put(event.request, responseToCache);
+					});
+
+					return response;
+				})
+				.catch(() => {
+					return caches.match('/index.html');
+				}),
+		);
+
+		return;
+	}
+
+	// ✅ Обрабатываем JS и CSS файлы
+	if (url.pathname.match(/\.(js|css)$/)) {
+		event.respondWith(
+			caches.match(event.request).then((cached) => {
+				if (cached) {
+					// Возвращаем из кэша, обновляем в фоне
+					fetch(event.request)
+						.then((response) => {
+							if (response && response.ok) {
+								caches.open(CACHE).then((cache) => {
+									cache.put(event.request, response);
+								});
+							}
+						})
+						.catch(() => {
+							// Игнорируем ошибки фоновой загрузки
+						});
+
+					return cached;
+				}
+
+				// Нет в кэше - идём в сеть
+				return fetch(event.request).then((response) => {
+					if (response && response.ok) {
+						const responseToCache = response.clone();
+						caches.open(CACHE).then((cache) => {
+							cache.put(event.request, responseToCache);
+						});
+					}
+
+					return response;
+				});
+			}),
+		);
+
+		return;
+	}
+
+	// ✅ Обрабатываем статические ресурсы (изображения, шрифты, видео)
 	if (
 		url.pathname.match(/\.(png|jpg|jpeg|svg|gif|webp|woff|woff2|ttf|eot|mp4)$/)
 	) {
