@@ -1,6 +1,7 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import type { ConfigEnv } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default ({ mode }: ConfigEnv) => {
@@ -9,6 +10,14 @@ export default ({ mode }: ConfigEnv) => {
 	return defineConfig({
 		plugins: [
 			tsconfigPaths(),
+			viteStaticCopy({
+				targets: [
+					{
+						src: 'src/sw.js',
+						dest: './',
+					},
+				],
+			}),
 			sentryVitePlugin({
 				org: process.env.VITE_SENTRY_ORG,
 				project: process.env.VITE_SENTRY_PROJECT,
@@ -39,6 +48,13 @@ export default ({ mode }: ConfigEnv) => {
 			emptyOutDir: true,
 			assetsDir: 'assets',
 			sourcemap: true,
+			rollupOptions: {
+				output: {
+					entryFileNames: 'assets/[name].js',
+					chunkFileNames: 'assets/[name].js',
+					assetFileNames: 'assets/[name].[ext]',
+				},
+			},
 		},
 		base: process.env.VITE_CDN_ADDRESS || '/',
 	});

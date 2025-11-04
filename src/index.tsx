@@ -41,6 +41,25 @@ if (sentryEnabled) {
 	});
 }
 
+if (isProduction && 'serviceWorker' in navigator) {
+	window.addEventListener('load', () => {
+		navigator.serviceWorker
+			.register('/sw.js', { scope: '/' })
+			// eslint-disable-next-line no-console
+			.catch(console.log);
+	});
+}
+
+window.addEventListener('online', () => {
+	// eslint-disable-next-line no-console
+	console.info('online');
+});
+
+window.addEventListener('offline', () => {
+	// eslint-disable-next-line no-console
+	console.info('offline');
+});
+
 interface AppProps {
 	user: ModelsUser;
 	checkUser: () => {};
