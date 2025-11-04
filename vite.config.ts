@@ -35,6 +35,7 @@ export default ({ mode }: ConfigEnv) => {
 				],
 				manifestFilename: 'assets/manifest.webmanifest',
 				outDir: 'dist/assets',
+				injectRegister: false,
 				manifest: {
 					name: 'DDFilms - Онлайн кинотеатр',
 					short_name: 'DDFilms',
@@ -42,7 +43,7 @@ export default ({ mode }: ConfigEnv) => {
 					theme_color: '#1976d2',
 					background_color: '#ffffff',
 					display: 'standalone',
-					start_url: '/',
+					start_url: 'https://ddfilms.online/',
 					icons: [
 						{
 							src: '/assets/favicon-16x16.png',
