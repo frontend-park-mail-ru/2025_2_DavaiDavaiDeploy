@@ -39,6 +39,7 @@
 	gap: 2.5rem;
 	padding: 0 clamp(4rem, 7vw, 7.5rem);
 	backdrop-filter: blur(1px);
+	max-width: 70vw;
 
 	&::before {
 		content: '';
@@ -57,7 +58,7 @@
 	text-decoration: none;
 	background: transparent;
 	font-size: var(--font-size-2xl);
-	white-space: nowrap;
+	white-space: wrap;
 }
 
 .info {
@@ -66,7 +67,7 @@
 	justify-content: space-between;
 	padding: 0;
 	list-style: none;
-	margin-top: -1.8rem;
+	margin-top: -1.5rem;
 	flex-wrap: nowrap;
 	gap: 1rem;
 	white-space: nowrap;
