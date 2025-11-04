@@ -1,5 +1,7 @@
 import ArrowLeft from '@/assets/img/arrowLeft.svg';
 import ArrowRight from '@/assets/img/arrowRight.svg';
+import { WIDE_SCREEN_WIDTH } from '@/consts/devices';
+import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -23,7 +25,11 @@ interface GenreSliderState {
 	slideCapacity: number;
 	autoSlider: any;
 	inactivityTimer: any;
+	debounceResizeHandler: (ev?: Event | undefined) => void;
 }
+
+const THROTTLE_DELAY = 100;
+const INITIAL_RESIZE_DELAY = 300;
 
 class GenreSliderComponent extends Component<
 	GenreSliderProps,
@@ -36,11 +42,40 @@ class GenreSliderComponent extends Component<
 		slideCapacity: 8,
 		autoSlider: null,
 		inactivityTimer: null,
+		debounceResizeHandler: () => {},
 	};
 
 	onMount() {
 		this.props.getGenres();
+
+		this.state.debounceResizeHandler = debounce(
+			this.handleResize,
+			THROTTLE_DELAY,
+		);
+
+		window.addEventListener('resize', this.state.debounceResizeHandler);
+
+		setTimeout(() => {
+			this.handleResize();
+		}, INITIAL_RESIZE_DELAY);
 	}
+
+	onUnmount() {
+		window.removeEventListener('resize', this.state.debounceResizeHandler);
+	}
+
+	handleResize = () => {
+		const width = window.innerWidth;
+		let slideCapacity = 8;
+
+		if (width < WIDE_SCREEN_WIDTH) {
+			slideCapacity = 4;
+		}
+
+		this.setState({
+			slideCapacity,
+		});
+	};
 
 	onNextBthClick = () => {
 		const genresCount = this.props.genres.length;

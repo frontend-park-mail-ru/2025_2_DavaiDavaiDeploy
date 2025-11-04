@@ -71,9 +71,17 @@
 	transition: transform 0.2s ease;
 }
 
+@media (max-width: 1400px) {
+	.slider {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
 @media (max-width: 768px) {
 	.genreSlider {
 		gap: 1.25rem;
+		padding: 0 2rem;
 	}
 
 	.title {
@@ -87,8 +95,36 @@
 
 	.prevBtn,
 	.nextBtn {
-		display: none;
-		height: 10vh;
+		height: fit-content;
+	}
+
+	.prevBtn {
+		left: -1.5rem;
+
+		&:hover {
+			transform: translateY(-50%) translateX(-0.1rem) scale(1.1);
+		}
+
+		&:active {
+			transform: translateY(-50%) translateX(-0.5rem) scale(1.15);
+		}
+	}
+
+	.nextBtn {
+		right: -1.5rem;
+
+		&:hover {
+			transform: translateY(-50%) translateX(0.1rem) scale(1.1);
+		}
+
+		&:active {
+			transform: translateY(-50%) translateX(0.5rem) scale(1.15);
+		}
+	}
+
+	.prevBtnIcon,
+	.nextBtnIcon {
+		height: 2rem;
 	}
 
 	.container {
