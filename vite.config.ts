@@ -26,7 +26,6 @@ export default ({ mode }: ConfigEnv) => {
 				release: { name: process.env.VITE_RELEASE_VERSION },
 			}),
 			VitePWA({
-				registerType: 'autoUpdate',
 				includeAssets: [
 					'assets/favicon-16x16.png',
 					'assets/favicon-32x32.png',
@@ -43,7 +42,7 @@ export default ({ mode }: ConfigEnv) => {
 					theme_color: '#1976d2',
 					background_color: '#ffffff',
 					display: 'standalone',
-					start_url: '/',
+					start_url: 'https://ddfilms.online/',
 					scope: '/',
 					icons: [
 						{
