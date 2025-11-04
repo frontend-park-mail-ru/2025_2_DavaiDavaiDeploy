@@ -1,90 +1,85 @@
-const CACHE_STATIC = 'ddfilms-static-v1';
-const CACHE_DYNAMIC = 'ddfilms-dynamic-v1';
+const CACHE_NAME = 'ddd_v1';
+const CACHE_URLS = ['/', '/index.html', '/assets/'];
 
-const STATIC_ASSETS = [
-	'/',
-	'/index.html',
-	'/assets/index.js',
-	'/assets/index.css',
-	'/assets/logo.svg',
-	'/assets/apple-touch-icon.png',
-	'/assets/favicon-16x16.png',
-	'/assets/favicon-32x32.png',
-];
+const preCacheResources = async (resources) => {
+	const fetchResponse = await fetch('/assets_filenames.txt');
+	const assets = await fetchResponse.json();
+
+	const cache = await caches.open(CACHE_NAME);
+	await cache.addAll([...resources, ...assets]);
+};
+
+const addResponseToCache = async (request, response) => {
+	const cache = await caches.open(CACHE_NAME);
+	await cache.put(request, response);
+};
+
+const cacheFirst = async (request) => {
+	const dataFromCache = await caches.match(request);
+
+	if (dataFromCache) {
+		return dataFromCache;
+	}
+
+	try {
+		const responseFromNetwork = await fetch(request.clone());
+		addResponseToCache(request, responseFromNetwork.clone());
+
+		return responseFromNetwork;
+	} catch {
+		return new Response('Network error happened', { status: 408 });
+	}
+};
+
+const networkFirst = async (request) => {
+	try {
+		const responseFromNetwork = await fetch(request.clone());
+		addResponseToCache(request, responseFromNetwork.clone());
+
+		return responseFromNetwork;
+	} catch {
+		const dataFromCache = await caches.match(request);
+
+		if (dataFromCache) {
+			return dataFromCache;
+		}
+
+		return new Response('Network error happened', { status: 408 });
+	}
+};
 
 self.addEventListener('install', (event) => {
-	event.waitUntil(
-		caches.open(CACHE_STATIC).then((cache) => {
-			return cache.addAll(STATIC_ASSETS).catch((error) => {
-				throw new Error(error);
-			});
-		}),
-	);
-
-	self.skipWaiting();
+	event.waitUntil(preCacheResources(CACHE_URLS));
 });
 
-self.addEventListener('activate', (event) => {
-	event.waitUntil(
-		Promise.all([
-			self.clients.claim(),
-			caches.keys().then((keys) =>
-				Promise.all(
-					keys.map((key) => {
-						if (key !== CACHE_STATIC && key !== CACHE_DYNAMIC) {
-							return caches.delete(key);
-						}
-					}),
-				),
-			),
-		]),
+self.addEventListener('activate', async () => {
+	const cacheNames = await caches.keys();
+
+	await Promise.all(
+		cacheNames.map(async (cacheName) => {
+			if (cacheName !== CACHE_NAME) {
+				await caches.delete(cacheName);
+			}
+		}),
 	);
 });
 
 self.addEventListener('fetch', (event) => {
-	if (event.request.method !== 'GET') {
+	if (
+		event.request.method !== 'GET' ||
+		!event.request.url.startsWith('https')
+	) {
 		return;
 	}
 
-	const requestUrl = new URL(event.request.url);
+	// eslint-disable-next-line no-console
+	console.log('при фетче destination', event.request.destination);
+	const destination = event.request.destination;
 
-	// Определяем какой кеш использовать
-	// STATIC: HTML, CSS, изображения (jpg, png, svg, ico, webp)
-	// DYNAMIC: API запросы и JS файлы
-	const isStaticResource =
-		event.request.mode === 'navigate' ||
-		/\.(html|css|jpg|jpeg|png|svg|ico|webp|gif)$/i.test(requestUrl.pathname);
+	if (['image', 'font'].includes(destination)) {
+		event.respondWith(cacheFirst(event.request));
+		return;
+	}
 
-	const cacheName = isStaticResource ? CACHE_STATIC : CACHE_DYNAMIC;
-
-	event.respondWith(
-		fetch(event.request)
-			.then((response) => {
-				if (response && response.ok) {
-					const responseToCache = response.clone();
-					caches.open(cacheName).then((cache) => {
-						cache.put(event.request, responseToCache);
-					});
-				}
-
-				return response;
-			})
-			.catch(() => {
-				// Ищем в обоих кешах
-				return caches.match(event.request).then((cached) => {
-					if (cached) {
-						return cached;
-					}
-
-					if (event.request.mode === 'navigate') {
-						return caches.match('/index.html');
-					}
-
-					return new Response('Offline - resource not available', {
-						status: 503,
-						statusText: 'Service Unavailable',
-					});
-				});
-			}),
-	);
+	event.respondWith(networkFirst(event.request));
 });
