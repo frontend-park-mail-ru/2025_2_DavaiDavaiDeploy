@@ -1,10 +1,24 @@
-const CACHE = 'network-first-v1';
+const CACHE = 'ddfilms-static-v1';
 const TIMEOUT = 400;
 
+// Список всех статических файлов для precache
+const STATIC_ASSETS = [
+	'/',
+	'/index.html',
+	'/assets/index.js',
+	'/assets/index.css',
+];
+
 self.addEventListener('install', (event) => {
+	// eslint-disable-next-line no-console
+	console.log('[SW] Installing and precaching all static assets...');
 	event.waitUntil(
 		caches.open(CACHE).then((cache) => {
-			return cache.addAll(['/', '/index.html']);
+			return cache.addAll(STATIC_ASSETS).catch((error) => {
+				// eslint-disable-next-line no-console
+				console.error('[SW] Failed to cache some assets:', error);
+				// Продолжаем даже если какие-то файлы не закэшировались
+			});
 		}),
 	);
 
@@ -12,6 +26,8 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
+	// eslint-disable-next-line no-console
+	console.log('[SW] Activating...');
 	event.waitUntil(
 		Promise.all([
 			self.clients.claim(),
@@ -19,6 +35,8 @@ self.addEventListener('activate', (event) => {
 				Promise.all(
 					keys.map((key) => {
 						if (key !== CACHE) {
+							// eslint-disable-next-line no-console
+							console.log('[SW] Deleting old cache:', key);
 							return caches.delete(key);
 						}
 					}),
