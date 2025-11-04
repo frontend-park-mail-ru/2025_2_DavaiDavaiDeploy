@@ -7,17 +7,17 @@ const STATIC_ASSETS = [
 	'/index.html',
 	'/assets/index.js',
 	'/assets/index.css',
+	'/assets/logo.svg',
+	'/assets/apple-touch-icon.png',
+	'/assets/favicon-16x16.png',
+	'/assets/favicon-32x32.png',
 ];
 
 self.addEventListener('install', (event) => {
-	// eslint-disable-next-line no-console
-	console.log('[SW] Installing and precaching all static assets...');
 	event.waitUntil(
 		caches.open(CACHE).then((cache) => {
 			return cache.addAll(STATIC_ASSETS).catch((error) => {
-				// eslint-disable-next-line no-console
-				console.error('[SW] Failed to cache some assets:', error);
-				// Продолжаем даже если какие-то файлы не закэшировались
+				throw new Error(error);
 			});
 		}),
 	);
@@ -26,8 +26,6 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-	// eslint-disable-next-line no-console
-	console.log('[SW] Activating...');
 	event.waitUntil(
 		Promise.all([
 			self.clients.claim(),
@@ -35,8 +33,6 @@ self.addEventListener('activate', (event) => {
 				Promise.all(
 					keys.map((key) => {
 						if (key !== CACHE) {
-							// eslint-disable-next-line no-console
-							console.log('[SW] Deleting old cache:', key);
 							return caches.delete(key);
 						}
 					}),
