@@ -12,10 +12,10 @@ export function validateLogin(value: string): ValidationResult {
 		return { isValid: false, message: 'Логин должен быть не менее 6 символов' };
 	}
 
-	if (value.length > 20) {
+	if (value.length > 15) {
 		return {
 			isValid: false,
-			message: 'Логин должен быть не более 20 символов',
+			message: 'Логин должен быть не более 15 символов',
 		};
 	}
 
