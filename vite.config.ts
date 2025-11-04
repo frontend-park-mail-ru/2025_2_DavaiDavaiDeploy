@@ -11,6 +11,8 @@ export default ({ mode }: ConfigEnv) => {
 		plugins: [
 			tsconfigPaths(),
 			VitePWA({
+				manifestFilename: 'assets/manifest.webmanifest',
+				outDir: 'dist/assets',
 				strategies: 'injectManifest',
 				srcDir: 'src',
 				filename: 'sw.js',
