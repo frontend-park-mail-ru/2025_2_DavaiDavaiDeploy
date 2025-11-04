@@ -1,22 +1,11 @@
 const CACHE = 'ddfilms-v1';
 
-const STATIC_ASSETS = [
-	'/',
-	'/index.html',
-	'/assets/index.js',
-	'/assets/index.css',
-	'/assets/logo.svg',
-	'/assets/apple-touch-icon.png',
-	'/assets/favicon-16x16.png',
-	'/assets/favicon-32x32.png',
-];
+const STATIC_ASSETS = ['/', '/index.html', '/assets/'];
 
 self.addEventListener('install', (event) => {
 	event.waitUntil(
 		caches.open(CACHE).then((cache) => {
-			return cache.addAll(STATIC_ASSETS).catch((error) => {
-				throw new Error('[SW] Failed to cache some assets:', error);
-			});
+			return cache.addAll(STATIC_ASSETS);
 		}),
 	);
 
@@ -43,7 +32,6 @@ self.addEventListener('fetch', (event) => {
 		return;
 	}
 
-	// Для изображений и шрифтов - Cache First
 	if (['image', 'font'].includes(event.request.destination)) {
 		event.respondWith(
 			caches.match(event.request).then((cached) => {
@@ -67,7 +55,6 @@ self.addEventListener('fetch', (event) => {
 		return;
 	}
 
-	// Для остальных - Network First
 	event.respondWith(
 		fetch(event.request)
 			.then((response) => {
@@ -81,13 +68,11 @@ self.addEventListener('fetch', (event) => {
 				return response;
 			})
 			.catch(() => {
-				// Ищем в обоих кешах
 				return caches.match(event.request).then((cached) => {
 					if (cached) {
 						return cached;
 					}
 
-					// Для навигации возвращаем index.html
 					if (event.request.mode === 'navigate') {
 						return caches.match('/index.html');
 					}
