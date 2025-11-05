@@ -8,6 +8,10 @@ env:
   TELEGRAM_TOPIC_ID: ${{ secrets.TELEGRAM_TOPIC_ID }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
   pages: write
