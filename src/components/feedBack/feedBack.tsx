@@ -1,4 +1,4 @@
-import Star from '@/assets/img/Star.svg';
+import Star from '@/assets/img/Star.svg?react';
 import {
 	formatDatetime,
 	formatSmallDatetime,
@@ -33,7 +33,7 @@ export class FeedBack extends Component<FeedBackProps> {
 						<h3 className={styles.login}>{user_login}</h3>
 					</span>
 					<span className={styles.rating}>
-						<img src={Star} className={styles.star} />
+						<Star className={styles.star} />
 						<p className={styles[`rating-${ratingType}`]}>{formattedRating}</p>
 					</span>
 					<p className={styles.date}>{formattedDatetime}</p>

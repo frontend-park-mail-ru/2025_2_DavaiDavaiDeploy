@@ -1,11 +1,5 @@
 const CACHE_NAME = 'ddd_cache_v1';
-const CACHE_URLS = [
-	'/',
-	'/index.html',
-	'/assets/index.css',
-	'/assets/index.js',
-	'/assets/logo.svg',
-];
+const CACHE_URLS = ['/', '/index.html'];
 
 const preCacheResources = async (resources) => {
 	const cache = await caches.open(CACHE_NAME);
