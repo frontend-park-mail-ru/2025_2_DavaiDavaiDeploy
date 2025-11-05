@@ -39,13 +39,14 @@ export class FilmInfo extends Component<FilmInfoProps> {
 			actors,
 			original_title,
 			cover,
+			poster,
 		} = this.props.film;
 
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
 		const formattedDuration = formatDuration(duration);
 		const coverSRC = getImageURL(cover);
-		const posterSRC = getImageURL('posters/pic44.jpg');
+		const posterSRC = getImageURL(poster);
 
 		const formattedBudget = formatMoney(budget);
 		const formattedFees = formatMoney(worldwide_fees);

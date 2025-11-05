@@ -5,6 +5,10 @@ import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
 
+interface ExtendedFilmFeedback extends ModelsFilmFeedback {
+	new_film_rating: number;
+}
+
 const clearFilmAction = (): Action => {
 	return {
 		type: actionTypes.CLEAR_FILM,
@@ -119,7 +123,7 @@ const getFeedbacksAction: Action =
 		}
 	};
 
-const returnNewRatingAction = (data: ModelsFilmFeedback): Action => {
+const returnNewRatingAction = (data: ExtendedFilmFeedback): Action => {
 	return {
 		type: actionTypes.CREATE_RATING,
 		payload: { rating: data },
@@ -137,7 +141,7 @@ const createRatingAction =
 	(rating: number, id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			const response = await HTTPClient.post<ModelsFilmFeedback>(
+			const response = await HTTPClient.post<ExtendedFilmFeedback>(
 				`/films/${id}/rating`,
 				{
 					data: {

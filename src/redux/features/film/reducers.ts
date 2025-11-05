@@ -59,6 +59,7 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 				film: {
 					...payload.film,
 					original_title: decode(payload.film.original_title),
+					slogan: decode(payload.film.slogan),
 				},
 				userRating: payload.film.user_rating ? payload.film.user_rating : null,
 			};
@@ -109,10 +110,14 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 						!state.userRating && payload.rating.rating
 							? state.film.number_of_ratings + 1
 							: state.film.number_of_ratings,
+
+					rating: payload.rating.new_film_rating,
 				},
 				userRating: payload.rating.rating,
 				userFeedback:
-					payload.rating.title && payload.rating.text ? payload.rating : null,
+					payload.rating.title && payload.rating.text
+						? (payload.rating as ModelsFilmFeedback)
+						: null,
 			};
 
 		default:

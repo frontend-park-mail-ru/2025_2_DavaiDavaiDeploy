@@ -29,6 +29,12 @@ const setUserLoadingAction = (): Action => {
 	};
 };
 
+const setNewPasswordLoadingAction = (): Action => {
+	return {
+		type: actionTypes.PASSWORD_CHANGE_LOADING,
+	};
+};
+
 /**
  * Создает действие для успешной загрузки данных пользователя.
  * @function
@@ -47,6 +53,20 @@ const returnUserErrorAction = (error: string): Action => {
 	return {
 		type: actionTypes.USER_ERROR,
 		payload: { user: null, error: error },
+	};
+};
+
+const returnPasswordChangeErrorAction = (error: string | null): Action => {
+	return {
+		type: actionTypes.PASSWORD_CHANGE_ERROR,
+		payload: { error: error },
+	};
+};
+
+const returnAvatarChangeErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.AVATAR_CHANGE_ERROR,
+		payload: { error: error },
 	};
 };
 
@@ -179,6 +199,68 @@ const logoutUserAction = () => async (dispatch: Dispatch) => {
 	}
 };
 
+const changePasswordAction =
+	(old_password: string, new_password: string): Action =>
+	async (dispatch: Dispatch) => {
+		dispatch(setNewPasswordLoadingAction());
+
+		try {
+			const response = await HTTPClient.put<ModelsUser>(
+				'/users/change/password',
+				{
+					data: {
+						new_password,
+						old_password,
+					},
+				},
+			);
+
+			storeAuthTokensFromResponse(response);
+			dispatch(returnPasswordChangeErrorAction(null));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnPasswordChangeErrorAction(errorMessage));
+		}
+	};
+
+const changeAvatarAction =
+	(file: File): Action =>
+	async (dispatch: Dispatch) => {
+		const formData = new FormData();
+		formData.append('avatar', file);
+
+		dispatch(setUserLoadingAction());
+
+		try {
+			const response = await HTTPClient.put<ModelsUser>(
+				'/users/change/avatar',
+				{
+					data: formData,
+				},
+			);
+
+			storeAuthTokensFromResponse(response);
+			dispatch(returnUserAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnAvatarChangeErrorAction(errorMessage));
+		}
+	};
+
 export default {
 	registerUserAction,
 	loginUserAction,
@@ -186,4 +268,6 @@ export default {
 	updateUserAction,
 	deleteUserAction,
 	logoutUserAction,
+	changePasswordAction,
+	changeAvatarAction,
 };

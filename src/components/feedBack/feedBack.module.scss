@@ -98,8 +98,16 @@
 	white-space: nowrap;
 }
 
-.star {
-	background-color: var(--color-feedback-text-high);
+.star-low {
+	color: var(--color-feedback-text-low);
+}
+
+.star-high {
+	color: var(--color-feedback-text-high);
+}
+
+.star-medium {
+	color: var(--color-feedback-text-medium);
 }
 
 .rating-low,

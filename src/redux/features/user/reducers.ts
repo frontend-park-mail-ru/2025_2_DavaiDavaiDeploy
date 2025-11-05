@@ -8,6 +8,9 @@ interface InitialState {
 	loading: boolean;
 	user: ModelsUser | null;
 	error: string | null;
+	passwordChangeError: string | null;
+	avatarChangeError: boolean;
+	newPasswordLoading: boolean;
 }
 
 /**
@@ -18,6 +21,9 @@ const initialState: InitialState = {
 	loading: false,
 	user: null,
 	error: null,
+	passwordChangeError: null,
+	avatarChangeError: false,
+	newPasswordLoading: false,
 };
 
 /**
@@ -57,14 +63,23 @@ export const userReducer: Reducer = (
 				),
 			};
 		case actionTypes.USER_LOADING:
-			return { ...state, loading: true, error: null };
+			return {
+				...state,
+				loading: true,
+				error: null,
+			};
 		case actionTypes.USER_LOADED:
-			return { ...state, loading: false, user: action.payload.user };
+			return {
+				...state,
+				loading: false,
+				user: payload.user,
+				avatarChangeError: false,
+			};
 		case actionTypes.USER_ERROR:
 			return {
 				...state,
 				loading: false,
-				error: action.payload.error,
+				error: payload.error,
 				user: null,
 			};
 		case actionTypes.USER_LOGOUT:
@@ -72,6 +87,26 @@ export const userReducer: Reducer = (
 				...state,
 				loading: false,
 				user: null,
+			};
+		case actionTypes.PASSWORD_CHANGE_ERROR:
+			return {
+				...state,
+				newPasswordLoading: false,
+				passwordChangeError: payload.error,
+			};
+
+		case actionTypes.PASSWORD_CHANGE_LOADING:
+			return {
+				...state,
+				passwordChangeError: null,
+				newPasswordLoading: true,
+			};
+
+		case actionTypes.AVATAR_CHANGE_ERROR:
+			return {
+				...state,
+				loading: false,
+				avatarChangeError: payload.error,
 			};
 		default:
 			return state;

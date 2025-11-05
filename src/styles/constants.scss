@@ -1,6 +1,6 @@
 :root {
 	--color-bg: hsl(235deg 52% 16%);
-	--color-accent: hsl(68deg 75% 56%);
+	--color-accent: hsl(65deg 78% 57%);
 	--color-text: hsl(48deg 14% 93%);
 	--color-light-text: hsl(210deg 30% 87%);
 	--color-dark-text: hsl(236deg 65% 5%);
@@ -20,6 +20,7 @@
 	--color-feedback-high: hsl(132deg 42% 81%);
 	--color-feedback-medium: hsl(240deg 15% 92%);
 	--color-feedback-low: hsl(0deg 67% 87%);
+	--color-user-bg: hsl(228deg 85% 46% / 50%);
 
 	--color-feedback-1: hsl(0deg 67% 87%);
 	--color-feedback-2: hsl(6deg 60% 87%);
@@ -108,4 +109,5 @@
 	--border-radius-m: 0.3125rem; // 5
 
 	--side-padding: 0 7vw;
+	--wide-side-padding: 0 12vw;
 }

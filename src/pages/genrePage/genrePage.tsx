@@ -11,7 +11,7 @@ interface GenrePageProps {
 	clearGenre: VoidFunction;
 }
 
-export class GenrePageComponent extends Component<GenrePageProps> {
+class GenrePageComponent extends Component<GenrePageProps> {
 	onUnmount() {
 		this.props.clearGenre();
 	}

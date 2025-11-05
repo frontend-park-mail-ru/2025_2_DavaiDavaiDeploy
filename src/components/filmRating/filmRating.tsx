@@ -1,4 +1,4 @@
-import Star from '@/assets/img/Star.svg';
+import Star from '@/assets/img/Star.svg?react';
 import { formatRatingNumber } from '@/helpers/formatRatingNumberHelper/formatRatingNumberHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
@@ -65,7 +65,7 @@ class FilmRatingComponent extends Component<
 						<span className={styles.userRating}>
 							<p className={styles.btnText}>Изменить</p>
 							<div className={styles[`rating-${userRatingType}`]}>
-								<img src={Star} className={styles.userStarIcon} />
+								<Star className={styles.userStarIcon} />
 								<h3 className={styles.userRatingTitle}>
 									{this.props.userRating}
 								</h3>

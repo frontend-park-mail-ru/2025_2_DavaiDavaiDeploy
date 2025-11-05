@@ -8,6 +8,9 @@
 	text-decoration: none;
 	color: inherit;
 	z-index: 1;
+	opacity: 0;
+	min-height: 100vh;
+	animation: fadeIn 0.7s ease-in-out forwards;
 
 	section {
 		display: flex;
@@ -29,6 +32,18 @@
 	}
 }
 
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(15px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
 .content {
 	position: relative;
 	z-index: 2;
@@ -39,6 +54,7 @@
 	gap: 2.5rem;
 	padding: 0 clamp(4rem, 7vw, 7.5rem);
 	backdrop-filter: blur(1px);
+	max-width: 70vw;
 
 	&::before {
 		content: '';
@@ -57,7 +73,7 @@
 	text-decoration: none;
 	background: transparent;
 	font-size: var(--font-size-2xl);
-	white-space: nowrap;
+	white-space: wrap;
 }
 
 .info {
@@ -66,7 +82,7 @@
 	justify-content: space-between;
 	padding: 0;
 	list-style: none;
-	margin-top: -1.8rem;
+	margin-top: -1.5rem;
 	flex-wrap: nowrap;
 	gap: 1rem;
 	white-space: nowrap;
@@ -151,6 +167,8 @@
 		padding: 2rem 5vw;
 		justify-content: center;
 		text-align: center;
+		width: 100%;
+		max-width: 100%;
 	}
 
 	.description {

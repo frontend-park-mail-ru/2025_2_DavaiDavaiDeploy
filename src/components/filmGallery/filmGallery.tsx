@@ -10,7 +10,7 @@ interface FilmGalleryProps {
 export class FilmGallery extends Component<FilmGalleryProps> {
 	render() {
 		if (!this.props.film) {
-			return <div>Loading...</div>;
+			return <div></div>;
 		}
 
 		const image1 = getImageURL('posters/pic44.jpg');
