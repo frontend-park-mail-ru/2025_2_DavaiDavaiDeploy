@@ -22,6 +22,10 @@ export default ({ mode }: ConfigEnv) => {
 						src: 'src/assets/screenshots/',
 						dest: './assets',
 					},
+					{
+						src: 'src/assets/favicon/',
+						dest: './assets',
+					},
 				],
 			}),
 			sentryVitePlugin({
@@ -62,17 +66,21 @@ export default ({ mode }: ConfigEnv) => {
 					scope: 'https://ddfilms.online/',
 					icons: [
 						{
-							src: '/assets/favicon-86x86.png',
-							sizes: '86x86',
+							src: 'https://static.ddfilms-static.ru/assets/favicon/apple-touch-icon.png',
+							sizes: '180x180',
 							type: 'image/png',
-							purpose: 'maskable',
+						},
+						{
+							src: 'https://static.ddfilms-static.ru/assets/favicon/favicon-144x144.png',
+							sizes: '144x144',
+							type: 'image/png',
 						},
 					],
 					screenshots: [
 						{
 							src: '/assets/screenshots/screenshot-narrow.png',
 							type: 'image/png',
-							sizes: '320x694',
+							sizes: '538x819',
 							form_factor: 'narrow',
 						},
 						{
