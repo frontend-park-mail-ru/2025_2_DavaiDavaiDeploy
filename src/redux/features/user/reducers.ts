@@ -67,14 +67,12 @@ export const userReducer: Reducer = (
 				...state,
 				loading: true,
 				error: null,
-				passwordChangeError: null,
 			};
 		case actionTypes.USER_LOADED:
 			return {
 				...state,
 				loading: false,
 				user: payload.user,
-				passwordChangeError: null,
 				avatarChangeError: false,
 			};
 		case actionTypes.USER_ERROR:
