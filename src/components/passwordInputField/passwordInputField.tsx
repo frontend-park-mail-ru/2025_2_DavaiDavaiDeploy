@@ -12,7 +12,11 @@ interface PasswordInputFieldProps {
 	placeholder?: string;
 	onChange: (value: string) => void;
 	errorMessage: string;
-	className?: string;
+	inputFieldClass?: string;
+	inputLabelClass?: string;
+	inputWrapperClass?: string;
+	accentBorderClass?: string;
+	errorBorderClass?: string;
 }
 
 interface PasswordInputFieldState {
@@ -40,30 +44,37 @@ export class PasswordInputField extends Component<
 			this.props;
 
 		return (
-			<div
-				className={clsx(
-					styles.inputContainer,
-					(this.props.className && styles[this.props.className]) ?? '',
-				)}
-			>
+			<div className={styles.inputContainer}>
 				{label && (
 					<label
 						htmlFor={`passwordField-${label}`}
-						className={styles.inputLabel}
+						className={clsx(
+							styles.inputLabel,
+							this.props.inputLabelClass ?? '',
+						)}
 					>
 						{label}
 					</label>
 				)}
 				<div
-					className={clsx(styles.inputWrapper, {
-						[styles.errorBorder]: errorMessage.length > 0,
-						[styles.accentBorder]: errorMessage.length === 0,
-					})}
+					className={clsx(
+						styles.inputWrapper,
+						this.props.inputWrapperClass ?? '',
+						{
+							[this.props.errorBorderClass ?? styles.errorBorder]:
+								errorMessage.length > 0,
+							[this.props.accentBorderClass ?? styles.accentBorder]:
+								errorMessage.length === 0,
+						},
+					)}
 				>
 					<img src={lock} alt="icon" className={styles.inputIconLeft} />
 					<input
 						id={`passwordField-${label}`}
-						className={styles.inputField}
+						className={clsx(
+							styles.inputField,
+							this.props.inputFieldClass ?? '',
+						)}
 						type={this.state.showPassword ? 'text' : 'password'}
 						placeholder={placeholder}
 						defaultValue={defaultValue}
@@ -72,7 +83,7 @@ export class PasswordInputField extends Component<
 					/>
 					<button
 						onClick={this.togglePasswordVisibility}
-						className={styles.inputEye}
+						className={clsx(styles.inputEye, this.props.inputFieldClass ?? '')}
 					>
 						<img
 							src={this.state.showPassword ? eyeHideSvg : eyeShowSvg}
