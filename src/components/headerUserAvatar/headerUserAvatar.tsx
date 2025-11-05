@@ -33,10 +33,10 @@ export class UserAvatar extends Component<UserAvatarProps> {
 				<LogoutModal
 					onExit={this.handleLogout}
 					Actions={
-						<button className={styles.logoutButton}>
+						<div className={styles.logoutButton}>
 							<img src={exit} alt="logout" />
 							Выйти
-						</button>
+						</div>
 					}
 				/>
 			</div>

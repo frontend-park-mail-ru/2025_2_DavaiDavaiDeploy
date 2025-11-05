@@ -3,7 +3,7 @@ import { Component, createContext } from '@robocotik/react';
 export interface ModalContextValue {
 	handleCloseModal: VoidFunction;
 	handleOpenModal: VoidFunction;
-	toggleVisibility?: VoidFunction;
+	toggleVisibility: VoidFunction;
 	showModal: boolean;
 }
 
@@ -36,7 +36,7 @@ export class ModalProvider extends Component<
 	};
 
 	toggleVisibility = () => {
-		this.setState((prevState) => ({ showModal: !prevState.showModal }));
+		this.setState({ showModal: !this.state.showModal });
 	};
 
 	render() {

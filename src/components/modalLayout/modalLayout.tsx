@@ -18,23 +18,22 @@ export class ModalLayout extends Component<ModalLayoutProps> {
 					handleCloseModal,
 					showModal,
 					toggleVisibility,
-				}: ModalContextValue) => (
-					<>
-						{showModal && (
-							<div className={style.modalWrapper} onClick={handleCloseModal}>
-								<div
-									className={style.modalContent}
-									onClick={(e) => e.stopPropagation()}
-								>
-									{this.props.children}
+				}: ModalContextValue) => {
+					return (
+						<>
+							{showModal && (
+								<div className={style.modalWrapper} onClick={handleCloseModal}>
+									<div className={style.modalContent}>
+										{this.props.children}
+									</div>
 								</div>
-							</div>
-						)}
-						<button className={style.actionButton} onClick={toggleVisibility}>
-							{Actions}
-						</button>
-					</>
-				)}
+							)}
+							<button className={style.actionButton} onClick={toggleVisibility}>
+								{Actions}
+							</button>
+						</>
+					);
+				}}
 			</ModalContext.Consumer>
 		);
 	}

@@ -14,23 +14,24 @@ interface LogoutModalProps {
 
 export class LogoutModal extends Component<LogoutModalProps> {
 	render() {
-		const { Actions } = this.props;
 		return (
-			<ModalLayout Actions={Actions}>
+			<ModalLayout Actions={this.props.Actions}>
 				<ModalContext.Consumer>
-					{({ handleCloseModal }: ModalContextValue) => (
-						<div className={style.modalLogout}>
-							<div>
-								<h1>Уже уходите?</h1>
-								<h1>Мы будем скучать!</h1>
+					{({ handleCloseModal }: ModalContextValue) => {
+						return (
+							<div className={style.modalLogout}>
+								<div>
+									<h1>Уже уходите?</h1>
+									<h1>Мы будем скучать!</h1>
+								</div>
+								<button onClick={this.props.onExit}>
+									<Exit />
+									Выйти
+								</button>
+								<button onClick={handleCloseModal}>Вернуться на сайт</button>s
 							</div>
-							<button onClick={this.props.onExit}>
-								<Exit />
-								Выйти
-							</button>
-							<button onClick={handleCloseModal}>Вернуться на сайт</button>s
-						</div>
-					)}
+						);
+					}}
 				</ModalContext.Consumer>
 			</ModalLayout>
 		);
