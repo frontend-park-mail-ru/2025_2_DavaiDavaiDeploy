@@ -213,7 +213,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /frontend/prod
+            cd /home/ubuntu/frontend/prod
             git fetch
             git checkout ${{ github.ref_name }}
             git pull
@@ -225,7 +225,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /frontend/prod
+            cd /home/ubuntu/frontend/prod
             docker compose -f docker-compose.prod.yml down -v
             docker compose -f docker-compose.prod.yml up --build -d
 
