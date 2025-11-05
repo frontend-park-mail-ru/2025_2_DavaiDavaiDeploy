@@ -1,3 +1,4 @@
+import { Toast } from '@/components/toast/toast.tsx';
 import { compose, connect, Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { store } from '@/redux/store.ts';
@@ -86,7 +87,9 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/genres/:id" component={<GenrePage />} />
 					<Route href="/profile" component={<UserPage />} />
 				</Routes>
+
 				{showExtraFields && <Footer />}
+				<Toast type={'error'} message="Неверный логин или пароль" />
 			</div>
 		);
 	}
