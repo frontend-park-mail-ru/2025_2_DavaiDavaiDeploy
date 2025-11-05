@@ -22,6 +22,10 @@ export default ({ mode }: ConfigEnv) => {
 						src: 'src/assets/screenshots/',
 						dest: './assets',
 					},
+					{
+						src: 'src/assets/favicon/',
+						dest: './assets',
+					},
 				],
 			}),
 			sentryVitePlugin({
