@@ -73,7 +73,7 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Run Prettier
         run: |
-          npm run lint:prettier:fix
+          npm run lint:prettier
 
   stylelint-check:
     name: Stylelint check
