@@ -90,7 +90,7 @@ class GenreSliderComponent extends Component<
 	handleResize = () => {
 		const width = window.innerWidth;
 		this.setState({
-			slideCapacity: width < WIDE_SCREEN_WIDTH ? 4 : 8,
+			slideCapacity: width <= WIDE_SCREEN_WIDTH ? 4 : 8,
 		});
 	};
 
