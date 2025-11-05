@@ -21,6 +21,7 @@
 	overflow-y: auto;
 	position: relative;
 	z-index: 1001;
+	border-radius: var(--border-radius-xl);
 }
 
 .actionButton {

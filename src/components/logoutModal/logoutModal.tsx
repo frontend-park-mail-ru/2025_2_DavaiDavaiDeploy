@@ -20,15 +20,25 @@ export class LogoutModal extends Component<LogoutModalProps> {
 					{({ handleCloseModal }: ModalContextValue) => {
 						return (
 							<div className={style.modalLogout}>
-								<div>
-									<h1>Уже уходите?</h1>
-									<h1>Мы будем скучать!</h1>
+								<div className={style.modalHeader}>
+									<h1 className={style.modalTitle}>Уже уходите?</h1>
+									<h1 className={style.modalTitle}>Мы будем скучать!</h1>
 								</div>
-								<button onClick={this.props.onExit}>
-									<Exit />
-									Выйти
-								</button>
-								<button onClick={handleCloseModal}>Вернуться на сайт</button>s
+								<div className={style.modalActions}>
+									<button
+										className={style.exitButton}
+										onClick={this.props.onExit}
+									>
+										<Exit />
+										Выйти
+									</button>
+									<button
+										className={style.turnBackButton}
+										onClick={handleCloseModal}
+									>
+										Вернуться на сайт
+									</button>
+								</div>
 							</div>
 						);
 					}}
