@@ -77,6 +77,20 @@ export default ({ mode }: ConfigEnv) => {
 							type: 'image/png',
 						},
 					],
+					screenshots: [
+						{
+							src: '/src/assets/screenshots/screenshot-narrow.png',
+							type: 'image/png',
+							sizes: '318x694',
+							form_factor: 'narrow',
+						},
+						{
+							src: '/src/assets/screenshots/screenshot-wide.png',
+							type: 'image/png',
+							sizes: '1899x1027',
+							form_factor: 'wide',
+						},
+					],
 				},
 
 				devOptions: {
