@@ -1,4 +1,4 @@
-import Star from '@/assets/img/Star.svg';
+import Star from '@/assets/img/Star.svg?react';
 import { RATING_COUNT } from '@/consts/rating.ts';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '@/modules/clsx/index.ts';
@@ -37,12 +37,14 @@ class FilmRatingInputComponent extends Component<
 	render() {
 		return (
 			<div className={styles.ratingInput}>
-				<img
-					src={Star}
-					className={styles.starIcon}
-					onClick={this.leaveRating}
-					data-number={1}
-				/>
+				<div onClick={this.leaveRating} data-number={1}>
+					<Star
+						className={clsx({
+							[styles.darkLeftStarIcon]: this.props.isDark,
+							[styles.leftStarIcon]: !this.props.isDark,
+						})}
+					/>
+				</div>
 				{Array.from({ length: RATING_COUNT }, (_, i) => {
 					const number = i + 1;
 					return (
@@ -59,12 +61,14 @@ class FilmRatingInputComponent extends Component<
 						</p>
 					);
 				})}
-				<img
-					src={Star}
-					className={styles.starIcon}
-					onClick={this.leaveRating}
-					data-number={RATING_COUNT}
-				/>
+				<div onClick={this.leaveRating} data-number={RATING_COUNT}>
+					<Star
+						className={clsx({
+							[styles.darkRightStarIcon]: this.props.isDark,
+							[styles.rightStarIcon]: !this.props.isDark,
+						})}
+					/>
+				</div>
 			</div>
 		);
 	}
