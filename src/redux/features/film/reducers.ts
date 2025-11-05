@@ -59,6 +59,7 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 				film: {
 					...payload.film,
 					original_title: decode(payload.film.original_title),
+					slogan: decode(payload.film.slogan),
 				},
 				userRating: payload.film.user_rating ? payload.film.user_rating : null,
 			};

@@ -28,15 +28,12 @@ export default ({ mode }: ConfigEnv) => {
 			}),
 			svgr({
 				svgrOptions: {
-					plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
+					plugins: ['@svgr/plugin-jsx'],
 					jsxRuntimeImport: {
 						namespace: 'jsx',
 						source: '@robocotik/react/jsx-runtime',
 					},
 					jsxRuntime: 'automatic',
-					svgoConfig: {
-						floatPrecision: 2,
-					},
 				},
 				esbuildOptions: {
 					jsx: 'transform',

@@ -21,10 +21,11 @@ import type { WithRouterProps } from './modules/router/types/withRouterProps.ts'
 import { withRouter } from './modules/router/withRouter.tsx';
 import { ActorPage } from './pages/actorPage/actorPage.tsx';
 import { FilmPage } from './pages/filmPage/filmPage.tsx';
-import { GenrePage } from './pages/genrePage/genrePage.tsx';
+import { GenrePage } from './pages/genrePage/genrePage';
 import { HomePage } from './pages/homePage/homePage.tsx';
 import { LoginPage } from './pages/loginPage/loginPage.tsx';
 import { RegisterPage } from './pages/registerPage/registerPage.tsx';
+import { UserPage } from './pages/userPage/userPage.tsx';
 import actions from './redux/features/user/actions.ts';
 import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
@@ -37,15 +38,6 @@ if (sentryEnabled) {
 		integrations: [Sentry.browserTracingIntegration()],
 		tracePropagationTargets: [PRODUCTION_URL_WITH_SCHEMA],
 		release: import.meta.env.VITE_RELEASE_VERSION,
-	});
-}
-
-if (isProduction && 'serviceWorker' in navigator) {
-	window.addEventListener('load', () => {
-		navigator.serviceWorker
-			.register('/sw.js', { scope: '/' })
-			// eslint-disable-next-line no-console
-			.catch(console.log);
 	});
 }
 
@@ -84,6 +76,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/login" component={<LoginPage />} />
 					<Route href="/register" component={<RegisterPage />} />
 					<Route href="/genres/:id" component={<GenrePage />} />
+					<Route href="/profile" component={<UserPage />} />
 				</Routes>
 				{showExtraFields && <Footer />}
 			</div>
