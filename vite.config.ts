@@ -18,6 +18,10 @@ export default ({ mode }: ConfigEnv) => {
 						src: 'src/sw.js',
 						dest: './',
 					},
+					{
+						src: 'src/assets/screenshots/',
+						dest: './assets',
+					},
 				],
 			}),
 			sentryVitePlugin({
