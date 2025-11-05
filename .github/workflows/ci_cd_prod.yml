@@ -1,7 +1,9 @@
 name: Flow
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
 
 env:
   TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -55,12 +57,8 @@ jobs:
             ~/.npm
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Run ESLint
-        uses: wearerequired/lint-action@v2
-        with:
-          eslint: true
-          prettier: false
-          stylelint: false
-          auto_fix: false
+        run: |
+          npm run lint:eslint
 
   prettier-check:
     name: Prettier check
@@ -76,13 +74,9 @@ jobs:
             node_modules
             ~/.npm
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Run Prettier
-        uses: wearerequired/lint-action@v2
-        with:
-          eslint: false
-          prettier: true
-          stylelint: false
-          auto_fix: false
+      - name: Run ESLint
+        run: |
+          npm run lint:prettier
 
   stylelint-check:
     name: Stylelint check
@@ -139,18 +133,6 @@ jobs:
             node_modules
             ~/.npm
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Создание env файла
-        run: |
-          touch .env
-          echo VITE_SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> .env
-          echo VITE_SENTRY_AUTH_TOKEN=${{ secrets.VITE_SENTRY_AUTH_TOKEN }} >> .env
-          echo VITE_SENTRY_ORG=${{ secrets.VITE_SENTRY_ORG }} >> .env
-          echo VITE_SENTRY_PROJECT=${{ secrets.VITE_SENTRY_PROJECT }} >> .env
-          echo VITE_CDN_ADRESS=${{ secrets.VITE_CDN_ADRESS }} >> .env
-          echo VITE_SENTRY_ENABLED=${{ secrets.VITE_SENTRY_ENABLED }} >> .env
-          echo VITE_RELEASE_VERSION=${{ github.sha }} >> .env
-          cat .env
 
       - name: Build project
         run: npm run build
@@ -223,30 +205,28 @@ jobs:
     runs-on: ubuntu-latest
     needs: sentry
     steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-output
-          path: dist
-      - name: Clean
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            sudo chown -R ubuntu:ubuntu /opt/public
-            sudo rm -rf /opt/public/*
-      - name: Deploy to server via SCP
+      - name: Pull code
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: 'dist/*'
-          target: '/opt/public'
-          overwrite: true
-          strip_components: 1
+          script: |
+            cd /frontend/prod
+            git fetch
+            git checkout ${{ github.ref_name }}
+            git pull
+
+      - name: Build frontend
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /frontend/prod
+            docker compose -f docker-compose.prod.yml down -v
+            docker compose -f docker-compose.prod.yml up --build -d
 
   notify_success:
     name: Success Message
