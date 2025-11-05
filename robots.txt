@@ -1,6 +1,5 @@
 User-agent: *
+Allow: *
 Crawl-delay: 1
 Host: https://ddfilms.online/
-Disallow: https://ddfilms.online/profile/
-Disallow: /*?*
 Sitemap: https://ddfilms.online/sitemap.xml
