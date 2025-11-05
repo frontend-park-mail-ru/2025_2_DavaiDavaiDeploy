@@ -22,6 +22,8 @@ interface ChangeAvatarProps {
 }
 
 const MAX_FILE_SIZE_MB = 8;
+
+const IDEAL_SIZE = 200;
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 class ChangeAvatarComponent extends Component<
@@ -116,7 +118,7 @@ class ChangeAvatarComponent extends Component<
 					)}
 					{!error && (!isSuccess || !preview) && (
 						<div className={styles.subtitle}>
-							<p>Идеальный размер файла 200 * 200 px</p>
+							<p>{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}</p>
 							<p>Вес файла: не более 8МБ</p>
 						</div>
 					)}

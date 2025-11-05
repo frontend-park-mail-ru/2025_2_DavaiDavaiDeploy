@@ -1,4 +1,4 @@
-type ClassValue = string | { [key: string]: boolean };
+type ClassValue = string | { [key: string]: boolean } | undefined;
 
 /**
  * Утилита для условного объединения CSS классов.

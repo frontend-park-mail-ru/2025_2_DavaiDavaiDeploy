@@ -10,6 +10,7 @@ interface InitialState {
 	error: string | null;
 	passwordChangeError: string | null;
 	avatarChangeError: boolean;
+	newPasswordLoading: boolean;
 }
 
 /**
@@ -22,6 +23,7 @@ const initialState: InitialState = {
 	error: null,
 	passwordChangeError: null,
 	avatarChangeError: false,
+	newPasswordLoading: false,
 };
 
 /**
@@ -65,14 +67,12 @@ export const userReducer: Reducer = (
 				...state,
 				loading: true,
 				error: null,
-				passwordChangeError: null,
 			};
 		case actionTypes.USER_LOADED:
 			return {
 				...state,
 				loading: false,
 				user: payload.user,
-				passwordChangeError: null,
 				avatarChangeError: false,
 			};
 		case actionTypes.USER_ERROR:
@@ -91,8 +91,15 @@ export const userReducer: Reducer = (
 		case actionTypes.PASSWORD_CHANGE_ERROR:
 			return {
 				...state,
-				loading: false,
+				newPasswordLoading: false,
 				passwordChangeError: payload.error,
+			};
+
+		case actionTypes.PASSWORD_CHANGE_LOADING:
+			return {
+				...state,
+				passwordChangeError: null,
+				newPasswordLoading: true,
 			};
 
 		case actionTypes.AVATAR_CHANGE_ERROR:

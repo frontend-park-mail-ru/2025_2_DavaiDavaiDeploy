@@ -6,8 +6,8 @@ import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/user/actions';
 import {
+	selectNewPasswordLoading,
 	selectPasswordChangeError,
-	selectUserLoading,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
@@ -94,7 +94,11 @@ class ChangePasswordComponent extends Component<
 					placeholder="Введите пароль"
 					errorMessage={this.state.validationErrors.password}
 					onChange={(value) => this.onFieldChange(value, 'password')}
-					className={'userPage'}
+					inputFieldClass={styles.inputField}
+					inputLabelClass={styles.inputLabel}
+					inputWrapperClass={styles.inputWrapper}
+					accentBorderClass={styles.accentBorder}
+					errorBorderClass={styles.errorBorder}
 				/>
 				<PasswordInputField
 					label="Новый пароль"
@@ -102,7 +106,11 @@ class ChangePasswordComponent extends Component<
 					placeholder="Введите пароль"
 					errorMessage={this.state.validationErrors.newPassword}
 					onChange={(value) => this.onFieldChange(value, 'newPassword')}
-					className={'userPage'}
+					inputFieldClass={styles.inputField}
+					inputLabelClass={styles.inputLabel}
+					inputWrapperClass={styles.inputWrapper}
+					accentBorderClass={styles.accentBorder}
+					errorBorderClass={styles.errorBorder}
 				/>
 				<PasswordInputField
 					label="Подтверждение пароля"
@@ -110,7 +118,11 @@ class ChangePasswordComponent extends Component<
 					errorMessage={this.state.validationErrors.repeatNewPassword}
 					placeholder="Повторите пароль"
 					onChange={(value) => this.onFieldChange(value, 'repeatNewPassword')}
-					className={'userPage'}
+					inputFieldClass={styles.inputField}
+					inputLabelClass={styles.inputLabel}
+					inputWrapperClass={styles.inputWrapper}
+					accentBorderClass={styles.accentBorder}
+					errorBorderClass={styles.errorBorder}
 				/>
 				{this.props.error && (
 					<p className={styles.error}>Неверный текущий пароль</p>
@@ -128,7 +140,7 @@ class ChangePasswordComponent extends Component<
 
 const mapStateToProps = (state: State): Map => ({
 	error: selectPasswordChangeError(state),
-	loading: selectUserLoading(state),
+	loading: selectNewPasswordLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

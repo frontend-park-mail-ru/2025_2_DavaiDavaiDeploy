@@ -29,6 +29,12 @@ const setUserLoadingAction = (): Action => {
 	};
 };
 
+const setNewPasswordLoadingAction = (): Action => {
+	return {
+		type: actionTypes.PASSWORD_CHANGE_LOADING,
+	};
+};
+
 /**
  * Создает действие для успешной загрузки данных пользователя.
  * @function
@@ -196,7 +202,7 @@ const logoutUserAction = () => async (dispatch: Dispatch) => {
 const changePasswordAction =
 	(old_password: string, new_password: string): Action =>
 	async (dispatch: Dispatch) => {
-		dispatch(setUserLoadingAction());
+		dispatch(setNewPasswordLoadingAction());
 
 		try {
 			const response = await HTTPClient.put<ModelsUser>(
@@ -229,6 +235,8 @@ const changeAvatarAction =
 	async (dispatch: Dispatch) => {
 		const formData = new FormData();
 		formData.append('avatar', file);
+
+		dispatch(setUserLoadingAction());
 
 		try {
 			const response = await HTTPClient.put<ModelsUser>(
