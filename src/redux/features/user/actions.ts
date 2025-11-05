@@ -236,6 +236,8 @@ const changeAvatarAction =
 		const formData = new FormData();
 		formData.append('avatar', file);
 
+		dispatch(setUserLoadingAction());
+
 		try {
 			const response = await HTTPClient.put<ModelsUser>(
 				'/users/change/avatar',
