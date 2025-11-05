@@ -166,15 +166,8 @@ class GenreSliderComponent extends Component<
 		});
 	}
 
-	render() {
-		const { genres } = this.props;
+	getClass = () => {
 		const { phase, direction } = this.state;
-
-		if (!genres.length) {
-			return <div></div>;
-		}
-
-		const visibleGenres = this.getVisibleGenres();
 
 		let animationClass = '';
 
@@ -185,6 +178,19 @@ class GenreSliderComponent extends Component<
 			animationClass =
 				direction === 'left' ? styles.slideInRight : styles.slideInLeft;
 		}
+
+		return animationClass;
+	};
+
+	render() {
+		const { genres } = this.props;
+
+		if (!genres.length) {
+			return <div></div>;
+		}
+
+		const visibleGenres = this.getVisibleGenres();
+		const animationClass = this.getClass();
 
 		return (
 			<section className={styles.genreSlider}>

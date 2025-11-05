@@ -5,10 +5,6 @@ import { Component } from '@robocotik/react';
 import styles from './homePage.module.scss';
 
 export class HomePage extends Component {
-	onMount() {
-		window.scrollTo(0, 0);
-	}
-
 	render() {
 		return (
 			<div className={styles.page}>
