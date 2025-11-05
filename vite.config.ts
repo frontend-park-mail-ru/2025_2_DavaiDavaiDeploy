@@ -47,11 +47,7 @@ export default ({ mode }: ConfigEnv) => {
 				},
 			}),
 			VitePWA({
-				includeAssets: [
-					'assets/favicon-16x16.png',
-					'assets/favicon-32x32.png',
-					'assets/apple-touch-icon.png',
-				],
+				includeAssets: ['assets/favicon-86x86.png'],
 				outDir: 'dist/assets',
 				manifestFilename: 'assets/manifest.webmanifest',
 				injectRegister: false,
@@ -66,18 +62,8 @@ export default ({ mode }: ConfigEnv) => {
 					scope: 'https://ddfilms.online/',
 					icons: [
 						{
-							src: '/assets/favicon-16x16.png',
-							sizes: '16x16',
-							type: 'image/png',
-						},
-						{
-							src: '/assets/favicon-32x32.png',
-							sizes: '32x32',
-							type: 'image/png',
-						},
-						{
-							src: '/assets/apple-touch-icon.png',
-							sizes: '180x180',
+							src: '/assets/favicon-86x86.png',
+							sizes: '86x86',
 							type: 'image/png',
 						},
 					],
