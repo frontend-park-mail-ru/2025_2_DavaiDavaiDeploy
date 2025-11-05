@@ -11,3 +11,6 @@ export const selectGenre: Selector = (state: State): ModelsGenre =>
 export const selectGenreFilms: Selector = (
 	state: State,
 ): ModelsMainPageFilm[] => state.genre.genreFilms;
+
+export const selectGenreFilmsError: Selector = (state: State): string | null =>
+	state.films.genreFilmsError;

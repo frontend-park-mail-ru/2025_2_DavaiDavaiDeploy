@@ -23,7 +23,7 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 	}
 	render() {
 		if (!this.props.film) {
-			return <div>Loading...</div>;
+			return <div className={styles.promoFilm}></div>;
 		}
 
 		const { title, year, genre, duration, short_description, rating, image } =

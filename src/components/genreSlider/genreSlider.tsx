@@ -84,6 +84,7 @@ class GenreSliderComponent extends Component<
 
 	onUnmount() {
 		window.removeEventListener('resize', this.state.debounceResizeHandler);
+		this.state.autoSlider?.stop();
 	}
 
 	handleResize = () => {
@@ -167,7 +168,7 @@ class GenreSliderComponent extends Component<
 
 	render() {
 		const { genres } = this.props;
-		const { isAnimating, phase, direction } = this.state;
+		const { phase, direction } = this.state;
 
 		if (!genres.length) {
 			return <div></div>;
@@ -195,19 +196,11 @@ class GenreSliderComponent extends Component<
 						))}
 					</div>
 
-					<button
-						className={styles.prevBtn}
-						onClick={this.onPrevBtnClick}
-						disabled={isAnimating}
-					>
+					<button className={styles.prevBtn} onClick={this.onPrevBtnClick}>
 						<img src={ArrowLeft} alt="Назад" className={styles.prevBtnIcon} />
 					</button>
 
-					<button
-						className={styles.nextBtn}
-						onClick={this.onNextBtnClick}
-						disabled={isAnimating}
-					>
+					<button className={styles.nextBtn} onClick={this.onNextBtnClick}>
 						<img src={ArrowRight} alt="Вперёд" className={styles.nextBtnIcon} />
 					</button>
 				</div>
