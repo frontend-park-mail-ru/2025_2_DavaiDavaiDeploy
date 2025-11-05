@@ -227,6 +227,66 @@ declare global {
 				fill?: string;
 				stroke?: string;
 			};
+			// SVG
+			svg: App.SVGProps<SVGSVGElement>;
+
+			animate: App.SVGProps<SVGElement>;
+			animateMotion: App.SVGProps<SVGElement>;
+			animateTransform: App.SVGProps<SVGElement>;
+			circle: App.SVGProps<SVGCircleElement>;
+			clipPath: App.SVGProps<SVGClipPathElement>;
+			defs: App.SVGProps<SVGDefsElement>;
+			desc: App.SVGProps<SVGDescElement>;
+			ellipse: App.SVGProps<SVGEllipseElement>;
+			feBlend: App.SVGProps<SVGFEBlendElement>;
+			feColorMatrix: App.SVGProps<SVGFEColorMatrixElement>;
+			feComponentTransfer: App.SVGProps<SVGFEComponentTransferElement>;
+			feComposite: App.SVGProps<SVGFECompositeElement>;
+			feConvolveMatrix: App.SVGProps<SVGFEConvolveMatrixElement>;
+			feDiffuseLighting: App.SVGProps<SVGFEDiffuseLightingElement>;
+			feDisplacementMap: App.SVGProps<SVGFEDisplacementMapElement>;
+			feDistantLight: App.SVGProps<SVGFEDistantLightElement>;
+			feDropShadow: App.SVGProps<SVGFEDropShadowElement>;
+			feFlood: App.SVGProps<SVGFEFloodElement>;
+			feFuncA: App.SVGProps<SVGFEFuncAElement>;
+			feFuncB: App.SVGProps<SVGFEFuncBElement>;
+			feFuncG: App.SVGProps<SVGFEFuncGElement>;
+			feFuncR: App.SVGProps<SVGFEFuncRElement>;
+			feGaussianBlur: App.SVGProps<SVGFEGaussianBlurElement>;
+			feImage: App.SVGProps<SVGFEImageElement>;
+			feMerge: App.SVGProps<SVGFEMergeElement>;
+			feMergeNode: App.SVGProps<SVGFEMergeNodeElement>;
+			feMorphology: App.SVGProps<SVGFEMorphologyElement>;
+			feOffset: App.SVGProps<SVGFEOffsetElement>;
+			fePointLight: App.SVGProps<SVGFEPointLightElement>;
+			feSpecularLighting: App.SVGProps<SVGFESpecularLightingElement>;
+			feSpotLight: App.SVGProps<SVGFESpotLightElement>;
+			feTile: App.SVGProps<SVGFETileElement>;
+			feTurbulence: App.SVGProps<SVGFETurbulenceElement>;
+			filter: App.SVGProps<SVGFilterElement>;
+			foreignObject: App.SVGProps<SVGForeignObjectElement>;
+			g: App.SVGProps<SVGGElement>;
+			image: App.SVGProps<SVGImageElement>;
+			line: App.SVGLineElementAttributes<SVGLineElement>;
+			linearGradient: App.SVGProps<SVGLinearGradientElement>;
+			marker: App.SVGProps<SVGMarkerElement>;
+			mask: App.SVGProps<SVGMaskElement>;
+			metadata: App.SVGProps<SVGMetadataElement>;
+			mpath: App.SVGProps<SVGElement>;
+			path: App.SVGProps<SVGPathElement>;
+			pattern: App.SVGProps<SVGPatternElement>;
+			polygon: App.SVGProps<SVGPolygonElement>;
+			polyline: App.SVGProps<SVGPolylineElement>;
+			radialGradient: App.SVGProps<SVGRadialGradientElement>;
+			rect: App.SVGProps<SVGRectElement>;
+			stop: App.SVGProps<SVGStopElement>;
+			switch: App.SVGProps<SVGSwitchElement>;
+			symbol: App.SVGProps<SVGSymbolElement>;
+			text: App.SVGTextElementAttributes<SVGTextElement>;
+			textPath: App.SVGProps<SVGTextPathElement>;
+			tspan: App.SVGProps<SVGTSpanElement>;
+			use: App.SVGProps<SVGUseElement>;
+			view: App.SVGProps<SVGViewElement>;
 		}
 
 		// --- Explicit Definitions for Component Props and Children ---

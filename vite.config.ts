@@ -3,6 +3,7 @@ import type { ConfigEnv } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default ({ mode }: ConfigEnv) => {
@@ -24,6 +25,25 @@ export default ({ mode }: ConfigEnv) => {
 				project: process.env.VITE_SENTRY_PROJECT,
 				authToken: process.env.VITE_SENTRY_AUTH_TOKEN,
 				release: { name: process.env.VITE_RELEASE_VERSION },
+			}),
+			svgr({
+				svgrOptions: {
+					plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
+					jsxRuntimeImport: {
+						namespace: 'jsx',
+						source: '@robocotik/react/jsx-runtime',
+					},
+					jsxRuntime: 'automatic',
+					svgoConfig: {
+						floatPrecision: 2,
+					},
+				},
+				esbuildOptions: {
+					jsx: 'transform',
+					jsxFactory: 'jsx.jsx',
+					jsxFragment: 'Fragment',
+					jsxDev: false,
+				},
 			}),
 			VitePWA({
 				includeAssets: [
