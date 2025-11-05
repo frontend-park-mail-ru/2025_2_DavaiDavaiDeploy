@@ -4,5 +4,5 @@ package.json
 package-lock.json
 **/.git
 **/node_modules
-**/.yml
-**/.yaml
+**/*.yml
+**/*.yaml
