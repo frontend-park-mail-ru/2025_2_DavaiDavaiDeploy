@@ -36,3 +36,6 @@ export const selectPasswordChangeError: Selector = (
 export const selectAvatarChangeError: Selector = (
 	state: State,
 ): string | null => state.user.avatarChangeError;
+
+export const selectNewPasswordLoading: Selector = (state: State): boolean =>
+	state.user.newPasswordLoading;

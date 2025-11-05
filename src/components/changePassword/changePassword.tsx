@@ -6,8 +6,8 @@ import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/user/actions';
 import {
+	selectNewPasswordLoading,
 	selectPasswordChangeError,
-	selectUserLoading,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
@@ -128,7 +128,7 @@ class ChangePasswordComponent extends Component<
 
 const mapStateToProps = (state: State): Map => ({
 	error: selectPasswordChangeError(state),
-	loading: selectUserLoading(state),
+	loading: selectNewPasswordLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
