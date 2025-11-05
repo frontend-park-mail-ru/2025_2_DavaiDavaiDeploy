@@ -41,8 +41,40 @@
 	color: var(--color-rating-low) !important;
 }
 
-.starIcon {
-	width: 1.5vw;
+.leftStarIcon {
+	width: 1.5rem;
+	color: var(--color-text);
+
+	&:hover {
+		color: var(--color-rating-low);
+	}
+}
+
+.rightStarIcon {
+	width: 1.5rem;
+	color: var(--color-text);
+
+	&:hover {
+		color: var(--color-rating-high);
+	}
+}
+
+.darkLeftStarIcon {
+	width: 1.5rem;
+	color: var(--color-bg);
+
+	&:hover {
+		color: var(--color-rating-low);
+	}
+}
+
+.darkRightStarIcon {
+	width: 1.5rem;
+	color: var(--color-bg);
+
+	&:hover {
+		color: var(--color-rating-high);
+	}
 }
 
 @media (max-width: 1024px) {
