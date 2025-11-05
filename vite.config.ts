@@ -85,7 +85,7 @@ export default ({ mode }: ConfigEnv) => {
 						{
 							src: '/assets/screenshots/screenshot-narrow.png',
 							type: 'image/png',
-							sizes: '318x694',
+							sizes: '320x694',
 							form_factor: 'narrow',
 						},
 						{
