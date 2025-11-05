@@ -65,6 +65,7 @@ export default ({ mode }: ConfigEnv) => {
 							src: '/assets/favicon-86x86.png',
 							sizes: '86x86',
 							type: 'image/png',
+							purpose: 'maskable',
 						},
 					],
 					screenshots: [
