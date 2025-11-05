@@ -235,10 +235,11 @@ jobs:
         with:
           type: topic
           message: |
+            🔔 Frontend (Development)
             ✅ Изменения успешно задеплоены
 
-            🔗 Ссылка на прод 🔗
-            ${{ secrets.PRODUCTION_URL || 'Отсутствует' }}
+            🔗 Ссылка 🔗
+            ${{ secrets.DEV_STAND_URL || 'Отсутствует' }}
 
   notify_failure:
     name: Failure Message

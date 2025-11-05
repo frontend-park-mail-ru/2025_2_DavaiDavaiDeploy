@@ -239,9 +239,10 @@ jobs:
         with:
           type: topic
           message: |
+            🔔 Frontend (Production)
             ✅ Изменения успешно задеплоены
 
-            🔗 Ссылка на прод 🔗
+            🔗 Ссылка 🔗
             ${{ secrets.PRODUCTION_URL || 'Отсутствует' }}
 
   notify_failure:
