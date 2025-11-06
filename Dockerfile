@@ -36,6 +36,7 @@ RUN aws s3 sync . s3://$S3_BUCKET/assets/prod \
     --endpoint-url $AWS_ENDPOINT \
     --cache-control "max-age=31536000" && \
     aws s3 cp . s3://$S3_BUCKET/assets/prod \
+    --endpoint-url $AWS_ENDPOINT \
     --acl public-read \
     --cache-control "no-cache, no-store, must-revalidate"
 
