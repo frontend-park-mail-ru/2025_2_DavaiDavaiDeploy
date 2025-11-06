@@ -35,7 +35,7 @@ RUN aws s3 sync . s3://$S3_BUCKET/assets/prod \
     --acl public-read \
     --no-verify-ssl \
     --endpoint-url $AWS_ENDPOINT \
-    --cache-control "max-age=31536000" && \
+    --cache-control "max-age=31536000"
 
 #базовый образ
 FROM nginx:alpine AS nginx
