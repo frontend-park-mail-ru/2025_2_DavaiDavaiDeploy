@@ -17,7 +17,7 @@ FROM amazon/aws-cli:latest AS deploy
 WORKDIR /deploy
 
 # Копируем собранные файлы в текущую директорию
-COPY --from=build /app/dist/assets ./
+COPY --from=build /app/dist/assets/prod ./
 
 # Проверяем что файлы скопировались
 RUN ls -la
