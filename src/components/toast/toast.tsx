@@ -10,7 +10,7 @@ interface ToastProps {
 	type: ToastType;
 	message: string;
 	isActive: boolean;
-	key: number;
+	id: number;
 }
 
 export class Toast extends Component<ToastProps> {
@@ -25,10 +25,10 @@ export class Toast extends Component<ToastProps> {
 	}
 
 	render() {
-		const { message } = this.props;
-
+		const { id, message } = this.props;
 		return (
 			<div
+				id={`toast-${id}`}
 				className={clsx(styles.toast, { [styles.hide]: !this.props.isActive })}
 			>
 				{this.renderIcon()}

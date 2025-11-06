@@ -6,20 +6,31 @@ import { Component } from '@robocotik/react';
 import { Toast } from '../toast/toast';
 import styles from './toastContainer.module.scss';
 
+const REMOVE_DELAY = 1000;
+
 class ToastContainerComponent extends Component<WithToastsProps> {
+	removeToastById = (id: number) =>
+		setTimeout(() => {
+			document.querySelector(`#toast-${id}`)?.remove();
+		}, REMOVE_DELAY);
+
 	render() {
 		const { toasts } = this.props.toast;
-
 		return (
 			<div className={styles.toasts}>
-				{toasts.map((toast: ToastItem) => (
-					<Toast
-						key={toast.id}
-						type={toast.type}
-						message={toast.message}
-						isActive={toast.isActive}
-					/>
-				))}
+				{toasts.map((toast: ToastItem) => {
+					//eslint-disable-next-line @typescript-eslint/no-unused-expressions
+					!toast.isActive && this.removeToastById(toast.id);
+
+					return (
+						<Toast
+							id={toast.id}
+							type={toast.type}
+							message={toast.message}
+							isActive={toast.isActive}
+						/>
+					);
+				})}
 			</div>
 		);
 	}
