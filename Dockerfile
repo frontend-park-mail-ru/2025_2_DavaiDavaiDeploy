@@ -28,6 +28,8 @@ ARG AWS_SECRET_ACCESS_KEY
 ARG AWS_DEFAULT_REGION
 ARG S3_BUCKET
 
+RUN echo $S3_BUCKET
+
 # Синхронизируем с S3
 RUN aws s3 sync . s3://$S3_BUCKET/assets/prod \
     --delete \
