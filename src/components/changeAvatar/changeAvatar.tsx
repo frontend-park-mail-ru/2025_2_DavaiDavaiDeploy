@@ -3,6 +3,8 @@ import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
+import type { WithToastsProps } from '@/modules/toasts/withToastasProps.ts';
+import { withToasts } from '@/modules/toasts/withToasts.tsx';
 import actions from '@/redux/features/user/actions';
 import {
 	selectAvatarChangeError,
@@ -27,7 +29,7 @@ const IDEAL_SIZE = 200;
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 class ChangeAvatarComponent extends Component<
-	ChangeAvatarProps & WithRouterProps
+	ChangeAvatarProps & WithRouterProps & WithToastsProps
 > {
 	state = {
 		file: null,
@@ -35,6 +37,8 @@ class ChangeAvatarComponent extends Component<
 		preview: null,
 		isEditing: false,
 		isSuccess: false,
+		errorShown: false,
+		successShown: false,
 	};
 
 	handleFileChange = (event: Event) => {
@@ -93,8 +97,22 @@ class ChangeAvatarComponent extends Component<
 			isSuccess: true,
 		});
 
+		this.setState({ errorShown: false, successShown: false });
 		this.props.setAvatar(file);
 	};
+
+	onUpdate() {
+		if (this.props.error && !this.state.errorShown) {
+			this.props.toast.error(this.props.error);
+			this.setState({ errorShown: true });
+			return;
+		}
+
+		if (this.state.isSuccess && !this.state.successShown) {
+			this.props.toast.success('Фото успешно сохранено!');
+			this.setState({ successShown: true });
+		}
+	}
 
 	render() {
 		if (!this.props.user) {
@@ -102,7 +120,7 @@ class ChangeAvatarComponent extends Component<
 		}
 
 		const { avatar } = this.props.user;
-		const { preview, error, file, isEditing, isSuccess } = this.state;
+		const { preview, file, isEditing } = this.state;
 		const avatarURL = getImageURL(avatar);
 
 		return (
@@ -111,17 +129,10 @@ class ChangeAvatarComponent extends Component<
 					<h1 className={styles.title}>
 						Хочется чего-то нового? Обновите фото профиля
 					</h1>
-
-					{error && <p className={styles.error}>{error}</p>}
-					{isSuccess && !this.props.error && (
-						<p className={styles.success}>Фото успешно сохранено!</p>
-					)}
-					{!error && (!isSuccess || !preview) && (
-						<div className={styles.subtitle}>
-							<p>{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}</p>
-							<p>Вес файла: не более 8МБ</p>
-						</div>
-					)}
+					<div className={styles.subtitle}>
+						<p>{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}</p>
+						<p>Вес файла: не более 8МБ</p>
+					</div>
 				</div>
 
 				<div className={styles.changeAvatar}>
@@ -170,5 +181,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const ChangeAvatar = compose(
 	withRouter,
+	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(ChangeAvatarComponent);

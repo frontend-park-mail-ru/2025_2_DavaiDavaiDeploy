@@ -12,6 +12,8 @@ import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
+import type { WithToastsProps } from '@/modules/toasts/withToastasProps';
+import { withToasts } from '@/modules/toasts/withToasts';
 import actions from '@/redux/features/user/actions.ts';
 import {
 	selectUser,
@@ -29,7 +31,7 @@ interface RegistrationPageProps {
 }
 
 export class RegisterPageNotConnected extends Component<
-	RegistrationPageProps & WithRouterProps
+	RegistrationPageProps & WithRouterProps & WithToastsProps
 > {
 	state = {
 		username: '',
@@ -41,6 +43,7 @@ export class RegisterPageNotConnected extends Component<
 			password: '',
 			repeatPassword: '',
 		},
+		errorShown: false,
 	};
 
 	handleResize = () => {
@@ -86,6 +89,7 @@ export class RegisterPageNotConnected extends Component<
 
 	handleRegisterUser = () => {
 		if (this.validateFields()) {
+			this.setState({ errorShown: false });
 			this.props.registerUser(this.state.username, this.state.password);
 		}
 	};
@@ -94,6 +98,11 @@ export class RegisterPageNotConnected extends Component<
 		if (this.props.user) {
 			this.updateProps({ userError: '' });
 			this.props.router.navigate('/');
+		}
+
+		if (this.props.userError && !this.state.errorShown) {
+			this.props.toast.error(this.props.userError);
+			this.setState({ errorShown: true });
 		}
 	}
 
@@ -176,7 +185,6 @@ export class RegisterPageNotConnected extends Component<
 									this.onFieldChange(value, 'repeatPassword')
 								}
 							/>
-							<p className={styles.errorMessage}>{this.props.userError}</p>
 						</div>
 						<div className={styles.rightSide__actions}>
 							<button
@@ -211,5 +219,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const RegisterPage = compose(
 	withRouter,
+	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(RegisterPageNotConnected);

@@ -4,6 +4,8 @@ import { validatePasswordConfirm } from '@/helpers/validatePasswordConfirm/valid
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
+import type { WithToastsProps } from '@/modules/toasts/withToastasProps.ts';
+import { withToasts } from '@/modules/toasts/withToasts.tsx';
 import actions from '@/redux/features/user/actions';
 import {
 	selectNewPasswordLoading,
@@ -23,7 +25,7 @@ interface ChangePasswordProps {
 }
 
 class ChangePasswordComponent extends Component<
-	ChangePasswordProps & WithRouterProps
+	ChangePasswordProps & WithRouterProps & WithToastsProps
 > {
 	state = {
 		password: '',
@@ -35,6 +37,8 @@ class ChangePasswordComponent extends Component<
 			repeatNewPassword: '',
 		},
 		isSuccess: false,
+		errorShown: false,
+		successShown: false,
 	};
 
 	onFieldChange(
@@ -51,9 +55,28 @@ class ChangePasswordComponent extends Component<
 				isSuccess: true,
 			});
 
+			this.setState({ errorShown: false, successShown: false });
+
 			this.props.setPassword(this.state.password, this.state.newPassword);
 		}
 	};
+
+	onUpdate() {
+		if (this.props.error && !this.state.errorShown) {
+			this.props.toast.error('Неверный текущий пароль');
+			this.setState({ errorShown: true });
+			return;
+		}
+
+		if (
+			!this.props.loading &&
+			this.state.isSuccess &&
+			!this.state.successShown
+		) {
+			this.props.toast.success('Пароль успешно сохранён!');
+			this.setState({ successShown: true });
+		}
+	}
 
 	validateFields() {
 		const passwordValidation = validatePassword(this.state.password);
@@ -124,12 +147,6 @@ class ChangePasswordComponent extends Component<
 					accentBorderClass={styles.accentBorder}
 					errorBorderClass={styles.errorBorder}
 				/>
-				{this.props.error && (
-					<p className={styles.error}>Неверный текущий пароль</p>
-				)}
-				{!this.props.loading && !this.props.error && this.state.isSuccess && (
-					<p className={styles.success}>Пароль успешно сохранён!</p>
-				)}
 				<button onClick={this.handleChangePassword} className={styles.saveBtn}>
 					Сохранить
 				</button>
@@ -150,5 +167,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const ChangePassword = compose(
 	withRouter,
+	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(ChangePasswordComponent);
