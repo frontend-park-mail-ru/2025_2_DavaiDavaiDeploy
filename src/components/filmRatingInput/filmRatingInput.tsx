@@ -37,7 +37,11 @@ class FilmRatingInputComponent extends Component<
 	render() {
 		return (
 			<div className={styles.ratingInput}>
-				<div onClick={this.leaveRating} data-number={1}>
+				<div
+					onClick={this.leaveRating}
+					data-number={1}
+					className={styles.starWrap}
+				>
 					<Star
 						className={clsx({
 							[styles.darkLeftStarIcon]: this.props.isDark,
@@ -61,7 +65,11 @@ class FilmRatingInputComponent extends Component<
 						</p>
 					);
 				})}
-				<div onClick={this.leaveRating} data-number={RATING_COUNT}>
+				<div
+					onClick={this.leaveRating}
+					data-number={RATING_COUNT}
+					className={styles.starWrap}
+				>
 					<Star
 						className={clsx({
 							[styles.darkRightStarIcon]: this.props.isDark,

@@ -85,9 +85,11 @@ class FilmRatingComponent extends Component<
 					)}
 				</button>
 
-				<button className={styles.smallRateBtn}>
-					{this.props.isAuthentificated && <FilmRatingInput isDark={false} />}
-				</button>
+				{this.props.isAuthentificated && (
+					<button className={styles.smallRateBtn}>
+						{this.props.isAuthentificated && <FilmRatingInput isDark={false} />}
+					</button>
+				)}
 			</div>
 		);
 	};
