@@ -34,6 +34,7 @@ RUN echo $S3_BUCKET
 RUN aws s3 sync . s3://$S3_BUCKET/assets/prod \
     --delete \
     --acl public-read \
+    --endpoint-url $AWS_ENDPOINT \
     --cache-control "max-age=31536000" && \
     aws s3 cp . s3://$S3_BUCKET/assets/prod \
     --acl public-read \

@@ -18,7 +18,8 @@ services:
         AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
         AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
         S3_BUCKET: ${S3_BUCKET}
-        
+        AWS_ENDPOINT: ${AWS_ENDPOINT}
+
     env_file:
       - .env.production
 
