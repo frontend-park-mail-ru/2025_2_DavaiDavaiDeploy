@@ -1,4 +1,4 @@
-name: Product Flow
+name: Production flow
 
 on:
   push:

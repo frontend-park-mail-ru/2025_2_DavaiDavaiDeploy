@@ -1,6 +1,13 @@
-name: Stage Flow
+name: Stage flow
 
-on: pull_request
+on:
+  push: 
+    branches:
+      - 'ddd*'
+
+  pull_request:
+    branches:
+      - 'ddd*'
 
 env:
   TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
