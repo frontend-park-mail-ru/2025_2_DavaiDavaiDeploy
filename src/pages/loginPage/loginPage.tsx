@@ -40,6 +40,7 @@ export class LoginPageNotConnected extends Component<
 			username: '',
 			password: '',
 		},
+		errorShown: false,
 	};
 
 	handleResize = () => {
@@ -68,7 +69,6 @@ export class LoginPageNotConnected extends Component<
 	onMount() {
 		this.updateProps({ ...this.props, userError: '' });
 		window.addEventListener('resize', this.handleResize);
-		this.props.toast.error('test');
 	}
 
 	onUnmount() {
@@ -77,6 +77,7 @@ export class LoginPageNotConnected extends Component<
 
 	handleLoginUser = () => {
 		if (this.validateFields()) {
+			this.setState({ errorShown: false });
 			this.props.loginUser(this.state.username, this.state.password);
 		}
 	};
@@ -85,6 +86,11 @@ export class LoginPageNotConnected extends Component<
 		if (this.props.user) {
 			this.updateProps({ userError: '' });
 			this.props.router.navigate('/');
+		}
+
+		if (this.props.userError && !this.state.errorShown) {
+			this.props.toast.error(this.props.userError);
+			this.setState({ errorShown: true });
 		}
 	}
 

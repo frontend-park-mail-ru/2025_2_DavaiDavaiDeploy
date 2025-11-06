@@ -9,7 +9,7 @@ interface ToastsProviderState {
 }
 
 export class ToastsProvider extends Component<{}, ToastsProviderState> {
-	state = {
+	state: ToastsProviderState = {
 		toasts: [],
 	};
 
@@ -27,9 +27,11 @@ export class ToastsProvider extends Component<{}, ToastsProviderState> {
 		};
 
 		newToast.timer = setTimeout(() => {
-			this.setState((prev) => ({
-				toasts: prev.toasts.filter((t) => t !== newToast),
-			}));
+			this.setState({
+				toasts: this.state.toasts.map((t) =>
+					t === newToast ? { ...t, isActive: false } : t,
+				),
+			});
 		}, 8000);
 
 		this.setState({ toasts: [...toasts, newToast] });
