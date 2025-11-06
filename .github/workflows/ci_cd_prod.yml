@@ -1,4 +1,4 @@
-name: Flow
+name: Production flow
 
 on:
   push:

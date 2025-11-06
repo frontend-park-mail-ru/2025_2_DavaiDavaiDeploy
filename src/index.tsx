@@ -77,6 +77,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 		return (
 			<div class="layout">
 				{showExtraFields && <Header />}
+				<div id="modal-root"></div>
 				<Routes>
 					<Route href="/" component={<HomePage />} />
 					<Route href="/films/:id" component={<FilmPage />} />
