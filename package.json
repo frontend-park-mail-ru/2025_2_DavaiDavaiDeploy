@@ -8,6 +8,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
+    "build:stage": "tsc && vite build --mode stage",
     "genTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/types -n models.ts --no-client",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
