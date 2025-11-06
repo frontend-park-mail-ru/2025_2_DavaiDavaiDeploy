@@ -11,7 +11,7 @@ services:
   deploy-s3:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
       target: deploy
       args:
         - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
