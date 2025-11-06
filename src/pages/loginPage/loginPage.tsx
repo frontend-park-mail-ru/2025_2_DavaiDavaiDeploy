@@ -150,7 +150,6 @@ export class LoginPageNotConnected extends Component<
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
-							<p className={styles.errorMessage}>{this.props.userError}</p>
 						</div>
 						<div className={styles.rightSide__actions}>
 							<button

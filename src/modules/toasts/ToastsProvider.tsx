@@ -3,6 +3,7 @@ import { ToastsContext } from './toastsContext.ts';
 import type { ToastItem } from './types/toast.ts';
 
 const MAX_TOAST_NUMBER = 5;
+const ACTIVE_TIME = 8000;
 
 interface ToastsProviderState {
 	toasts: ToastItem[];
@@ -13,28 +14,37 @@ export class ToastsProvider extends Component<{}, ToastsProviderState> {
 		toasts: [],
 	};
 
+	removeToast = (id: number) => {
+		this.setState((prevState) => ({
+			toasts: prevState.toasts.map((t) =>
+				t.id === id ? { ...t, isActive: false } : t,
+			),
+		}));
+	};
+
 	createToast = (message: string, type: 'success' | 'error') => {
-		const { toasts } = this.state;
-
-		if (toasts.length >= MAX_TOAST_NUMBER) {
-			toasts.shift();
-		}
-
 		const newToast: ToastItem = {
+			id: Date.now(),
 			type,
 			message,
 			isActive: true,
 		};
 
 		newToast.timer = setTimeout(() => {
-			this.setState({
-				toasts: this.state.toasts.map((t) =>
-					t === newToast ? { ...t, isActive: false } : t,
-				),
-			});
-		}, 8000);
+			this.removeToast(newToast.id);
+		}, ACTIVE_TIME);
 
-		this.setState({ toasts: [...toasts, newToast] });
+		this.setState((prevState) => {
+			const updatedToasts = [...prevState.toasts];
+
+			if (updatedToasts.length + 1 > MAX_TOAST_NUMBER) {
+				const id = updatedToasts.length - MAX_TOAST_NUMBER;
+				updatedToasts[id] = { ...updatedToasts[id], isActive: false };
+				clearTimeout(updatedToasts[id].timer);
+			}
+
+			return { toasts: [...updatedToasts, newToast] };
+		});
 	};
 
 	success = (message: string) => {

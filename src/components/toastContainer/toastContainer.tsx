@@ -14,6 +14,7 @@ class ToastContainerComponent extends Component<WithToastsProps> {
 			<div className={styles.toasts}>
 				{toasts.map((toast: ToastItem) => (
 					<Toast
+						key={toast.id}
 						type={toast.type}
 						message={toast.message}
 						isActive={toast.isActive}
