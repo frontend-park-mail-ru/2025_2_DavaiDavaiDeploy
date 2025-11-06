@@ -120,7 +120,7 @@ export default ({ mode }: ConfigEnv) => {
 		build: {
 			outDir: 'dist',
 			emptyOutDir: true,
-			assetsDir: isProduction ? 'assets/prod' : 'assets/dev',
+			assetsDir: isProduction ? 'assets/prod' : 'assets/staging',
 			sourcemap: true,
 		},
 		base: process.env.VITE_CDN_ADDRESS || '/',
