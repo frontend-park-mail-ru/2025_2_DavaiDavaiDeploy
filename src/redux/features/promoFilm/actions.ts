@@ -1,6 +1,9 @@
+import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsPromoFilm } from '@/types/models';
 import actionTypes from './actionTypes';
+
+const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
 
 /**
  * Action: начало загрузки фильмов.
@@ -38,19 +41,21 @@ const returnPromoFilmErrorAction = (error: string): Action => {
 const getPromoFilmAction: Action = () => async (dispatch: Dispatch) => {
 	dispatch(setPromoFilmLoadingAction());
 
-	const film: ModelsPromoFilm = {
-		id: '8f9a0b1c-2d3e-4f5a-6b7c-8d9e0f1a2b3c',
-		image: '../../dune.jpg',
-		title: 'Дюна: Часть вторая',
-		year: 2024,
-		genre: 'Фантастика',
-		duration: 169,
-		rating: 7.9,
-		short_description:
-			'Продолжение эпической саги о Поле Атрейдесе. Он продолжает путь к тому, чтобы стать МуадДибом, в то время как его враги плетут заговоры против него.',
-	};
+	try {
+		const response = await HTTPClient.get<ModelsPromoFilm>(`/films/promo`);
 
-	dispatch(returnPromoFilmAction(film));
+		dispatch(returnPromoFilmAction(response.data));
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(returnPromoFilmErrorAction(errorMessage));
+	}
 };
 
 export default {

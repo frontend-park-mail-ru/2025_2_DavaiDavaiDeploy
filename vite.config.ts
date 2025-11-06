@@ -8,6 +8,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default ({ mode }: ConfigEnv) => {
 	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+	const isProduction = mode === 'production';
 
 	return defineConfig({
 		plugins: [
@@ -17,6 +18,14 @@ export default ({ mode }: ConfigEnv) => {
 					{
 						src: 'src/sw.js',
 						dest: './',
+					},
+					{
+						src: 'src/assets/screenshots/',
+						dest: './assets',
+					},
+					{
+						src: 'src/assets/favicon/',
+						dest: './assets',
 					},
 				],
 			}),
@@ -43,12 +52,7 @@ export default ({ mode }: ConfigEnv) => {
 				},
 			}),
 			VitePWA({
-				includeAssets: [
-					'assets/favicon-16x16.png',
-					'assets/favicon-32x32.png',
-					'assets/apple-touch-icon.png',
-					'assets/logo.svg',
-				],
+				includeAssets: ['assets/favicon-86x86.png'],
 				outDir: 'dist/assets',
 				manifestFilename: 'assets/manifest.webmanifest',
 				injectRegister: false,
@@ -63,25 +67,28 @@ export default ({ mode }: ConfigEnv) => {
 					scope: 'https://ddfilms.online/',
 					icons: [
 						{
-							src: '/assets/favicon-16x16.png',
-							sizes: '16x16',
-							type: 'image/png',
-						},
-						{
-							src: '/assets/favicon-32x32.png',
-							sizes: '32x32',
-							type: 'image/png',
-						},
-						{
-							src: '/assets/apple-touch-icon.png',
+							src: 'https://static.ddfilms-static.ru/assets/favicon/apple-touch-icon.png',
 							sizes: '180x180',
 							type: 'image/png',
 						},
 						{
-							src: '/assets/logo.svg',
-							sizes: '512x512',
-							type: 'image/svg+xml',
-							purpose: 'any maskable',
+							src: 'https://static.ddfilms-static.ru/assets/favicon/favicon-144x144.png',
+							sizes: '144x144',
+							type: 'image/png',
+						},
+					],
+					screenshots: [
+						{
+							src: '/assets/screenshots/screenshot-narrow.png',
+							type: 'image/png',
+							sizes: '538x819',
+							form_factor: 'narrow',
+						},
+						{
+							src: '/assets/screenshots/screenshot-wide.png',
+							type: 'image/png',
+							sizes: '1899x1027',
+							form_factor: 'wide',
 						},
 					],
 				},
@@ -113,8 +120,11 @@ export default ({ mode }: ConfigEnv) => {
 		build: {
 			outDir: 'dist',
 			emptyOutDir: true,
-			assetsDir: 'assets',
+			assetsDir: isProduction ? 'assets/prod' : 'assets/stage',
 			sourcemap: true,
+			rollupOptions: {
+				input: 'index.html',
+			},
 		},
 		base: process.env.VITE_CDN_ADDRESS || '/',
 	});

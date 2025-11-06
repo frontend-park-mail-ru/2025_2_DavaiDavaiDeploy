@@ -9,6 +9,7 @@ export default {
 		'scss/at-import-partial-extension': null,
 		'color-no-hex': true,
 		'color-named': 'never',
+		'keyframes-name-pattern': null,
 		'media-feature-range-notation': 'prefix',
 	},
 	ignoreFiles: ['**/dist/**'],

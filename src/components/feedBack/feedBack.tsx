@@ -33,7 +33,7 @@ export class FeedBack extends Component<FeedBackProps> {
 						<h3 className={styles.login}>{user_login}</h3>
 					</span>
 					<span className={styles.rating}>
-						<Star className={styles.star} />
+						<Star className={styles[`star-${ratingType}`]} />
 						<p className={styles[`rating-${ratingType}`]}>{formattedRating}</p>
 					</span>
 					<p className={styles.date}>{formattedDatetime}</p>

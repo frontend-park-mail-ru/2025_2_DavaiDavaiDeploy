@@ -1,18 +1,17 @@
+import { compose, connect, Provider } from '@/modules/redux';
+import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
+import { store } from '@/redux/store.ts';
 import '@/styles/constants.scss';
 import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
 import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
+import { Footer } from './components/footer/footer.tsx';
+import { Header } from './components/header/header.tsx';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
-
-import { compose, connect, Provider } from '@/modules/redux';
-import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
-import { store } from '@/redux/store.ts';
-import { Footer } from './components/footer/footer.tsx';
-import { Header } from './components/header/header.tsx';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import { Route } from './modules/router/route.tsx';
@@ -38,6 +37,15 @@ if (sentryEnabled) {
 		integrations: [Sentry.browserTracingIntegration()],
 		tracePropagationTargets: [PRODUCTION_URL_WITH_SCHEMA],
 		release: import.meta.env.VITE_RELEASE_VERSION,
+	});
+}
+
+if (isProduction && 'serviceWorker' in navigator) {
+	window.addEventListener('load', () => {
+		navigator.serviceWorker
+			.register('/sw.js', { scope: '/' })
+			// eslint-disable-next-line no-console
+			.catch(console.log);
 	});
 }
 

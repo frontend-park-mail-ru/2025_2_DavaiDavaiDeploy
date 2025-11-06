@@ -3,12 +3,16 @@ import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import genreActions from '@/redux/features/genre/actions';
-import { selectGenreFilms } from '@/redux/features/genre/selectors';
+import {
+	selectGenreFilms,
+	selectGenreFilmsError,
+} from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import { CardGridComponent } from '../cardGrig/cardGrid';
 
 const MapStateToProps = (state: State): Map => ({
 	films: selectGenreFilms(state),
+	error: selectGenreFilmsError(state),
 });
 
 const MapDispatchToProps = (dispatch: Dispatch): Map => ({
