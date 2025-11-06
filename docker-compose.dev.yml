@@ -4,7 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      
+    networks:
+      - ddd-network
+
 networks:
   ddd-network:
     external: true
