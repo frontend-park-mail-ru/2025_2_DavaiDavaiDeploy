@@ -140,7 +140,7 @@ jobs:
           script: |
             cd /home/ubuntu/frontend/stage
             docker compose -f docker-compose.stage.yml down -v
-            docker compose -f docker-compose.stage.yml --env-file .env.production up --build -d
+            docker compose -f docker-compose.stage.yml --env-file .env.stage up --build -d
 
   notify_success:
     name: Success Message
