@@ -8,7 +8,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build --mode staging
+RUN npm run build --mode stage
 
 # Стадия деплоя в S3
 FROM amazon/aws-cli:latest AS deploy
@@ -17,7 +17,7 @@ FROM amazon/aws-cli:latest AS deploy
 WORKDIR /deploy
 
 # Копируем собранные файлы в текущую директорию
-COPY --from=build /app/dist/assets/staging ./
+COPY --from=build /app/dist/assets/stage ./
 
 # Проверяем что файлы скопировались
 RUN ls -la
@@ -30,7 +30,7 @@ ARG S3_BUCKET
 ARG AWS_ENDPOINT
 
 # Синхронизируем с S3
-RUN aws s3 sync . s3://$S3_BUCKET/assets/staging \
+RUN aws s3 sync . s3://$S3_BUCKET/assets/stage \
     --delete \
     --acl public-read \
     --no-verify-ssl \
