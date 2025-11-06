@@ -205,7 +205,7 @@ jobs:
           script: |
             cd /home/ubuntu/frontend/prod
             docker compose -f docker-compose.prod.yml down -v
-            docker compose -f docker-compose.prod.yml up --build -d
+            docker compose -f docker-compose.prod.yml --env-file .env.production up --build -d 
 
   notify_success:
     name: Success Message
