@@ -2,7 +2,7 @@ import { Component } from '@robocotik/react';
 import { ToastsContext } from './toastsContext.ts';
 import type { ToastItem } from './types/toast.ts';
 
-const MAX_TOAST_NUMBER = 5;
+const MAX_TOAST_NUMBER = 4;
 const ACTIVE_TIME = 8000;
 
 interface ToastsProviderState {
