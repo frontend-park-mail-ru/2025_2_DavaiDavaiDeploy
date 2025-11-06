@@ -8,6 +8,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default ({ mode }: ConfigEnv) => {
 	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+	const isProduction = mode === 'production';
 
 	return defineConfig({
 		plugins: [
@@ -119,8 +120,11 @@ export default ({ mode }: ConfigEnv) => {
 		build: {
 			outDir: 'dist',
 			emptyOutDir: true,
-			assetsDir: 'assets',
+			assetsDir: isProduction ? 'assets/prod' : 'assets/stage',
 			sourcemap: true,
+			rollupOptions: {
+				input: 'index.html',
+			},
 		},
 		base: process.env.VITE_CDN_ADDRESS || '/',
 	});

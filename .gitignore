@@ -4,3 +4,4 @@ build/
 src/build/
 dist/
 .vite
+.env.production
