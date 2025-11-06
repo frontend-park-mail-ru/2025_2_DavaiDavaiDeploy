@@ -1,6 +1,9 @@
 name: Flow
 
-on: pull_request
+on:
+  pull_request:
+    branches:
+      - 'ddd-*'
 
 env:
   TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
