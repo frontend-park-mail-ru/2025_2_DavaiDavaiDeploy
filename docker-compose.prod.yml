@@ -3,7 +3,7 @@ services:
     container_name: frontend-prod
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
       target: nginx
     networks:
       - ddd-network
