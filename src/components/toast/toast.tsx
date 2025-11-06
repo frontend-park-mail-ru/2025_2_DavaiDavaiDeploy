@@ -1,4 +1,5 @@
 import Error from '@/assets/img/error.svg';
+import Info from '@/assets/img/info.svg';
 import Success from '@/assets/img/success.svg';
 import clsx from '@/modules/clsx';
 import type { ToastType } from '@/modules/toasts/types/toast';
@@ -20,7 +21,7 @@ export class Toast extends Component<ToastProps> {
 			return <img src={Error} className={styles.icon} />;
 		}
 
-		return <img src={Error} className={styles.icon} />;
+		return <img src={Info} className={styles.icon} />;
 	}
 
 	render() {
