@@ -9,6 +9,7 @@ import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
+import { ToastContainer } from './components/toastContainer/toastContainer.tsx';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
@@ -18,6 +19,8 @@ import { Route } from './modules/router/route.tsx';
 import { Routes } from './modules/router/routes.tsx';
 import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
 import { withRouter } from './modules/router/withRouter.tsx';
+import { ToastsProvider } from './modules/toasts/ToastsProvider.tsx';
+import { withToasts } from './modules/toasts/withToasts.tsx';
 import { ActorPage } from './pages/actorPage/actorPage.tsx';
 import { FilmPage } from './pages/filmPage/filmPage.tsx';
 import { GenrePage } from './pages/genrePage/genrePage';
@@ -76,6 +79,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 
 		return (
 			<div class="layout">
+				<ToastContainer />
 				{showExtraFields && <Header />}
 				<div id="modal-root"></div>
 				<Routes>
@@ -97,7 +101,9 @@ class ProvidersLayout extends Component {
 	render() {
 		return (
 			<Provider store={store}>
-				<RouterProvider>{this.props.children}</RouterProvider>
+				<ToastsProvider>
+					<RouterProvider>{this.props.children}</RouterProvider>
+				</ToastsProvider>
 			</Provider>
 		);
 	}
@@ -113,6 +119,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 const App = compose(
 	withRouter,
+	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(AppComponent);
 

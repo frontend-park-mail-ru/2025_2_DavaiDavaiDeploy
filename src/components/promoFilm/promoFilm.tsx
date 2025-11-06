@@ -5,6 +5,7 @@ import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
+import { Link } from '@/modules/router/link';
 import actions from '@/redux/features/promoFilm/actions';
 import { selectPromoFilm } from '@/redux/features/promoFilm/selectors';
 import type { Map } from '@/types/map';
@@ -26,8 +27,16 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 			return <div className={styles.promoFilm}></div>;
 		}
 
-		const { title, year, genre, duration, short_description, rating, image } =
-			this.props.film;
+		const {
+			title,
+			year,
+			genre,
+			duration,
+			short_description,
+			rating,
+			image,
+			id,
+		} = this.props.film;
 
 		const formattedDuration = formatDuration(duration);
 		const formattedRating = formatRating(rating);
@@ -38,19 +47,25 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 			<a className={styles.promoFilm}>
 				<section>
 					<div className={styles.content}>
-						<div className={styles.header}>
-							<h1 className={styles.title}>{title}</h1>
-							<div className={styles[`rating-${ratingType}`]}>
-								<h3 className={styles.ratingTitle}>{formattedRating}</h3>
+						<Link href={`/films/${id}`} className={styles.linkWrap}>
+							<div className={styles.header}>
+								<h1 className={styles.title}>{title}</h1>
+								<div className={styles[`rating-${ratingType}`]}>
+									<h3 className={styles.ratingTitle}>{formattedRating}</h3>
+								</div>
 							</div>
-						</div>
-						<ul className={styles.info}>
-							<li className={styles.item}>{year}</li>
-							<li className={styles.item}>{genre}</li>
-							<li className={styles.item}>{formattedDuration}</li>
-						</ul>
-						<h2 className={styles.description}>{short_description}</h2>
+							<ul className={styles.info}>
+								<li className={styles.item}>{year}</li>
+								<li className={styles.item}>{genre}</li>
+								<li className={styles.item}>{formattedDuration}</li>
+							</ul>
+							<h2 className={styles[`title-${ratingType}`]}>
+								{formattedRating}
+							</h2>
+							<h2 className={styles.description}>{short_description}</h2>
+						</Link>
 					</div>
+
 					<img src={imageSrc} alt={title} className={styles.image} />
 				</section>
 			</a>

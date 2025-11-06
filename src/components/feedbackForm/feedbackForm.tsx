@@ -4,6 +4,8 @@ import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
+import type { WithToastsProps } from '@/modules/toasts/withToastasProps.ts';
+import { withToasts } from '@/modules/toasts/withToasts.tsx';
 import actions from '@/redux/features/film/actions';
 import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
@@ -34,11 +36,11 @@ interface FeedbackFormState {
 	text: string;
 	titleErrorMessage: string;
 	textErrorMessage: string;
-	ratingError: boolean;
+	errorShown: boolean;
 }
 
 class FeedbackFormComponent extends Component<
-	FeedbackFormProps & WithRouterProps,
+	FeedbackFormProps & WithRouterProps & WithToastsProps,
 	FeedbackFormState
 > {
 	state = {
@@ -46,7 +48,7 @@ class FeedbackFormComponent extends Component<
 		text: this.props.userFeedback?.text ? this.props.userFeedback.text : '',
 		titleErrorMessage: '',
 		textErrorMessage: '',
-		ratingError: false,
+		errorShown: false,
 	};
 
 	handleTitleChange = (event: Event) => {
@@ -90,12 +92,17 @@ class FeedbackFormComponent extends Component<
 		this.setState({
 			titleErrorMessage,
 			textErrorMessage,
-			ratingError: !this.props.userRating,
 		});
+
+		if (!this.props.userRating) {
+			this.props.toast.error('Оцените фильм');
+		}
 
 		if (titleErrorMessage || textErrorMessage || !this.props.userRating) {
 			return;
 		}
+
+		this.setState({ errorShown: false });
 
 		this.props.createFeedback(
 			this.props.userRating,
@@ -123,10 +130,6 @@ class FeedbackFormComponent extends Component<
 				<div className={styles.header}>
 					<FilmRatingInput isDark={true} />
 				</div>
-
-				{this.state.ratingError && !this.props.userRating && (
-					<p className={styles.ratingErrorMessage}>Оцените фильм</p>
-				)}
 
 				<div className={styles.input}>
 					<input
@@ -188,5 +191,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const FeedbackForm = compose(
 	withRouter,
+	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(FeedbackFormComponent);

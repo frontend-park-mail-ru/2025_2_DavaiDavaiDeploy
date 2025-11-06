@@ -85,6 +85,10 @@
 	}
 }
 
+.starWrap {
+	display: contents;
+}
+
 @media (max-width: 1024px) {
 	.ratingInput {
 		gap: 2.5vw;

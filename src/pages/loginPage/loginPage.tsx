@@ -11,6 +11,8 @@ import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
+import type { WithToastsProps } from '@/modules/toasts/withToastasProps';
+import { withToasts } from '@/modules/toasts/withToasts';
 import actions from '@/redux/features/user/actions.ts';
 import {
 	selectUser,
@@ -28,7 +30,7 @@ interface LoginPageProps {
 }
 
 export class LoginPageNotConnected extends Component<
-	LoginPageProps & WithRouterProps
+	LoginPageProps & WithRouterProps & WithToastsProps
 > {
 	state = {
 		username: '',
@@ -38,6 +40,7 @@ export class LoginPageNotConnected extends Component<
 			username: '',
 			password: '',
 		},
+		errorShown: false,
 	};
 
 	handleResize = () => {
@@ -74,6 +77,7 @@ export class LoginPageNotConnected extends Component<
 
 	handleLoginUser = () => {
 		if (this.validateFields()) {
+			this.setState({ errorShown: false });
 			this.props.loginUser(this.state.username, this.state.password);
 		}
 	};
@@ -82,6 +86,11 @@ export class LoginPageNotConnected extends Component<
 		if (this.props.user) {
 			this.updateProps({ userError: '' });
 			this.props.router.navigate('/');
+		}
+
+		if (this.props.userError && !this.state.errorShown) {
+			this.props.toast.error(this.props.userError);
+			this.setState({ errorShown: true });
 		}
 	}
 
@@ -141,7 +150,6 @@ export class LoginPageNotConnected extends Component<
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
-							<p className={styles.errorMessage}>{this.props.userError}</p>
 						</div>
 						<div className={styles.rightSide__actions}>
 							<button
@@ -176,5 +184,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const LoginPage = compose(
 	withRouter,
+	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(LoginPageNotConnected);
