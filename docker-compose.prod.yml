@@ -4,8 +4,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: nginx
     networks:
       - ddd-network
+      
+  deploy-s3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deploy
+    env_file:
+      - .env.production
 
 networks:
   ddd-network:
