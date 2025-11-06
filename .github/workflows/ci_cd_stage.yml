@@ -152,11 +152,11 @@ jobs:
         with:
           type: topic
           message: |
-            🔔 Frontend (Development)
+            🔔 Frontend (Stage)
             ✅ Изменения успешно задеплоены
 
             🔗 Ссылка 🔗
-            ${{ secrets.DEV_STAND_URL || 'Отсутствует' }}
+            ${{ secrets.STAGE_URL || 'Отсутствует' }}
 
   notify_failure:
     name: Failure Message
