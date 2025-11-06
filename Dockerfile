@@ -13,6 +13,15 @@ RUN npm run build
 # Стадия деплоя в S3
 FROM amazon/aws-cli:latest AS deploy
 
+# Устанавливаем рабочую директорию
+WORKDIR /deploy
+
+# Копируем собранные файлы в текущую директорию
+COPY --from=build /app/dist ./
+
+# Проверяем что файлы скопировались
+RUN ls -la
+
 # Устанавливаем переменные окружения для AWS
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
