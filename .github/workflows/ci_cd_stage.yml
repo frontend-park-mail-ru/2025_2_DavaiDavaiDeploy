@@ -1,4 +1,4 @@
-name: Flow
+name: Stage flow
 
 on:
   push: 
