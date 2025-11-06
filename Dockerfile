@@ -29,7 +29,7 @@ RUN aws s3 sync ./dist s3://$S3_BUCKET/ \
     --cache-control "no-cache, no-store, must-revalidate"
 
 #базовый образ
-FROM nginx:alpine
+FROM nginx:alpine AS nginx
 
 COPY --from=build /app/dist /usr/share/nginx/html
 
