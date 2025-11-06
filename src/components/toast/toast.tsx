@@ -7,41 +7,16 @@ import styles from './toast.module.scss';
 interface ToastProps {
 	type: 'error' | 'success';
 	message: string;
-}
-
-interface ToastState {
-	timer?: ReturnType<typeof setTimeout>;
 	isActive: boolean;
 }
 
-export class Toast extends Component<ToastProps, ToastState> {
-	state: ToastState = {
-		timer: undefined,
-		isActive: true,
-	};
-
-	onMount(): void {
-		const timer = setTimeout(() => {
-			this.setState({ isActive: false });
-		}, 8000);
-
-		this.setState({ timer });
-	}
-
-	onWillUnmount(): void {
-		if (this.state.timer) {
-			clearTimeout(this.state.timer);
-		}
-	}
-
-	close() {}
-
+export class Toast extends Component<ToastProps> {
 	render() {
 		const { message, type } = this.props;
 
 		return (
 			<div
-				className={clsx(styles.toast, { [styles.hide]: !this.state.isActive })}
+				className={clsx(styles.toast, { [styles.hide]: !this.props.isActive })}
 			>
 				{type === 'success' ? (
 					<img src={Success} className={styles.icon} />

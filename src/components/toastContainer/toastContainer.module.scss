@@ -1,0 +1,15 @@
+.toasts {
+	display: flex;
+	position: fixed;
+	bottom: 4rem;
+	right: 4rem;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	z-index: 1000;
+	background-color: transparent;
+	border: none;
+	height: auto;
+	width: auto;
+	padding: 1rem;
+}

@@ -11,6 +11,8 @@ import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
+import type { WithToastsProps } from '@/modules/toasts/withToastasProps';
+import { withToasts } from '@/modules/toasts/withToasts';
 import actions from '@/redux/features/user/actions.ts';
 import {
 	selectUser,
@@ -28,7 +30,7 @@ interface LoginPageProps {
 }
 
 export class LoginPageNotConnected extends Component<
-	LoginPageProps & WithRouterProps
+	LoginPageProps & WithRouterProps & WithToastsProps
 > {
 	state = {
 		username: '',
@@ -66,6 +68,7 @@ export class LoginPageNotConnected extends Component<
 	onMount() {
 		this.updateProps({ ...this.props, userError: '' });
 		window.addEventListener('resize', this.handleResize);
+		this.props.toast.error('test');
 	}
 
 	onUnmount() {
@@ -176,5 +179,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const LoginPage = compose(
 	withRouter,
+	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(LoginPageNotConnected);
