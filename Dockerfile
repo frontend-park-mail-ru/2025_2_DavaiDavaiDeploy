@@ -29,11 +29,11 @@ ARG AWS_DEFAULT_REGION
 ARG S3_BUCKET
 
 # Синхронизируем с S3
-RUN aws s3 sync ./dist s3://$S3_BUCKET/ \
+RUN aws s3 sync . s3://$S3_BUCKET/assets/prod \
     --delete \
     --acl public-read \
     --cache-control "max-age=31536000" && \
-    aws s3 cp ./dist s3://$S3_BUCKET/assets/prod \
+    aws s3 cp . s3://$S3_BUCKET/assets/prod \
     --acl public-read \
     --cache-control "no-cache, no-store, must-revalidate"
 
