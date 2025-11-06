@@ -65,11 +65,11 @@ class ChangePasswordComponent extends Component<
 		if (this.props.error && !this.state.errorShown) {
 			this.props.toast.error('Неверный текущий пароль');
 			this.setState({ errorShown: true });
-			return;
 		}
 
 		if (
 			!this.props.loading &&
+			!this.props.error &&
 			this.state.isSuccess &&
 			!this.state.successShown
 		) {
