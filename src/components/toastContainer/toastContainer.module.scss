@@ -13,3 +13,11 @@
 	width: auto;
 	padding: 1rem;
 }
+
+@media (max-width: 1024px) {
+	.toasts {
+		right: 50%;
+		transform: translateX(50%);
+		bottom: 0;
+	}
+}
