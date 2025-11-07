@@ -146,7 +146,8 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /home/ubuntu/frontend/stage
-            docker compose -f docker-compose.stage.yml down -v
+            docker compose -f docker-compose.stage.yml --env-file .env.stage down -v
+            docker compose --env-file .env.stage -f docker-compose.stage.yml build deploy-s3
             docker compose -f docker-compose.stage.yml --env-file .env.stage up --build -d
 
   notify_success:
