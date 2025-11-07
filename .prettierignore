@@ -1,12 +1,8 @@
-# Ignore artifacts:
-build
-node_modules
+dist/
+node_modules/
 package.json
 package-lock.json
 **/.git
-**/.svn
-**/.hg
-**/*.hbs
 **/node_modules
-src/handlebars/**
-src/build/
+**/*.yml
+**/*.yaml

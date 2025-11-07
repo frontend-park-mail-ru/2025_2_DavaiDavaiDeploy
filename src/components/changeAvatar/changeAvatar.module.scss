@@ -1,0 +1,159 @@
+.changeAvatar {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2.8rem;
+}
+
+.avatarForm {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: flex-end;
+	gap: 1.5rem;
+	z-index: 15;
+}
+
+.content {
+	display: flex;
+	flex-direction: row;
+	width: 45vw;
+	z-index: 15;
+	gap: 1rem;
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.title {
+	font-size: var(--font-size-xl);
+	margin-top: 1rem;
+	font-weight: var(--font-weight-bold);
+}
+
+.subtitle {
+	font-size: var(--font-size-xs);
+	color: var(--color-light-text);
+	opacity: 0.7;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-bottom: 3.25rem;
+}
+
+.avatar {
+	border-radius: 50%;
+	height: 10.5rem;
+	width: 10.5rem;
+}
+
+.btns {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+}
+
+.wrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.btn {
+	background-color: var(--color-accent);
+	color: var(--color-light);
+	font-size: var(--font-size-xs);
+	border-radius: var(--border-radius-l);
+	padding: 0.5rem 1rem;
+	border: none;
+	cursor: pointer;
+	box-sizing: border-box;
+	transition: transform 0.3s ease;
+	white-space: nowrap;
+	height: 2.25rem;
+}
+
+.hidden {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+	.content {
+		width: 100%;
+		height: 25vh;
+		flex-direction: column;
+		align-items: center;
+		gap: 2.5rem;
+	}
+
+	.title {
+		margin-top: 3rem;
+		margin-top: 0;
+		font-size: var(--font-size-m);
+		text-align: center;
+	}
+
+	.text {
+		gap: 2rem;
+		text-align: center;
+	}
+
+	.avatar {
+		height: 9rem;
+		width: 9rem;
+	}
+
+	.changeAvatar {
+		gap: 1rem;
+	}
+
+	.subtitle {
+		text-align: center;
+		margin-bottom: 0;
+	}
+}
+
+@media (max-width: 768px) {
+	.changeAvatar {
+		gap: 1rem;
+	}
+
+	.avatar {
+		height: 7rem;
+		width: 7rem;
+	}
+
+	.title {
+		font-size: var(--font-size-l);
+		margin-top: 0;
+		text-align: center;
+	}
+
+	.text {
+		text-align: center;
+		gap: 0.7rem;
+	}
+
+	.subtitle {
+		text-align: center;
+		gap: 0;
+	}
+
+	.btn {
+		padding: 0.2rem 0.6rem;
+	}
+}

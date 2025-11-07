@@ -1,9 +1,12 @@
 {
 	"trailingComma": "all",
 	"tabWidth": 2,
-	"semi": false,
 	"singleQuote": true,
-	"arrowParens": "avoid",
 	"plugins": ["prettier-plugin-organize-imports"],
-	"useTabs": true
+	"useTabs": true,
+	"jsxSingleQuote": false,
+	"bracketSameLine": false,
+	"bracketSpacing": true,
+	"semi": true,
+	"arrowParens": "always"
 }

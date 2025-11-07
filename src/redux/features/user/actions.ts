@@ -1,0 +1,273 @@
+import { authorizationCodeToErrorHelper } from '@/helpers/authorizationCodeToErrorHelper/authorizationCodeToErrorHelper.ts';
+import LocalStorageHelper from '@/helpers/localStorageHelper/localStorageHelper.ts';
+import { registrationCodeToErrorHelper } from '@/helpers/registrationCodeToError/registrationCodeToError.ts';
+import { storeAuthTokensFromResponse } from '@/helpers/storeAuthTokensFromResponse/storeAuthTokensFromResponse.ts';
+import HTTPClient from '@/modules/HTTPClient';
+import type { Action, Dispatch } from '@/modules/redux/types/actions';
+import type { ModelsUser } from '@/types/models';
+import actionTypes from './actionTypes';
+
+const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
+
+/**
+ * Создает действие для выхода пользователя из системы.
+
+ */
+const setUserLogoutAction = (): Action => {
+	return {
+		type: actionTypes.USER_LOGOUT,
+	};
+};
+
+/**
+ * Создает действие для установки состояния загрузки пользователя.
+
+ */
+const setUserLoadingAction = (): Action => {
+	return {
+		type: actionTypes.USER_LOADING,
+	};
+};
+
+const setNewPasswordLoadingAction = (): Action => {
+	return {
+		type: actionTypes.PASSWORD_CHANGE_LOADING,
+	};
+};
+
+/**
+ * Создает действие для успешной загрузки данных пользователя.
+ * @function
+ */
+const returnUserAction = (data: ModelsUser): Action => {
+	return {
+		type: actionTypes.USER_LOADED,
+		payload: { user: data, error: null },
+	};
+};
+
+/**
+ * Создает действие для обработки ошибки загрузки пользователя.
+ */
+const returnUserErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.USER_ERROR,
+		payload: { user: null, error: error },
+	};
+};
+
+const returnPasswordChangeErrorAction = (error: string | null): Action => {
+	return {
+		type: actionTypes.PASSWORD_CHANGE_ERROR,
+		payload: { error: error },
+	};
+};
+
+const returnAvatarChangeErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.AVATAR_CHANGE_ERROR,
+		payload: { error: error },
+	};
+};
+
+/**
+ * Создает действие для обновления существующего пользователя.
+ */
+const updateUserAction = (login: string, password: string): Action => {
+	return {
+		type: actionTypes.USER_UPDATE,
+		payload: { login: login, password: password },
+	};
+};
+
+/**
+ * Создает действие для удаления пользователя по его идентификатору.
+ */
+const deleteUserAction = (userId: string | number): Action => {
+	return {
+		type: actionTypes.USER_DELETE,
+		payload: { userId: userId },
+	};
+};
+
+/**
+ * Создает асинхронное действие для проверки авторизации пользователя.
+ */
+const checkUserAction = (): Action => async (dispatch: Dispatch) => {
+	if (
+		window.location.pathname === '/login' ||
+		window.location.pathname === '/register'
+	) {
+		return;
+	}
+
+	dispatch(setUserLoadingAction());
+
+	try {
+		const response = await HTTPClient.get<ModelsUser>('/auth/check');
+		dispatch(returnUserAction(response.data));
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(returnUserErrorAction(errorMessage));
+	}
+};
+
+/**
+ * Создает действие для добавления нового пользователя.
+ */
+
+/**
+ * Создает асинхронное действие для регистрации нового пользователя.
+ */
+const registerUserAction =
+	(login: string, password: string): Action =>
+	async (dispatch: Dispatch) => {
+		try {
+			const response = await HTTPClient.post<ModelsUser>('/auth/signup', {
+				data: {
+					login: login,
+					password: password,
+				},
+			});
+
+			storeAuthTokensFromResponse(response);
+			dispatch(returnUserAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = registrationCodeToErrorHelper(error.cause as number);
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnUserErrorAction(errorMessage));
+		}
+	};
+
+/**
+ * Создает асинхронное действие для входа пользователя в систему.
+ */
+const loginUserAction =
+	(login: string, password: string): Action =>
+	async (dispatch: Dispatch) => {
+		try {
+			const response = await HTTPClient.post<ModelsUser>('/auth/signin', {
+				data: {
+					login: login,
+					password: password,
+				},
+			});
+
+			storeAuthTokensFromResponse(response);
+			dispatch(returnUserAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnUserErrorAction(errorMessage));
+		}
+	};
+
+const logoutUserAction = () => async (dispatch: Dispatch) => {
+	try {
+		await HTTPClient.post<ModelsUser>('/auth/logout');
+		dispatch(setUserLogoutAction());
+		LocalStorageHelper.removeItem('x-csrf-token');
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(returnUserErrorAction(errorMessage));
+	}
+};
+
+const changePasswordAction =
+	(old_password: string, new_password: string): Action =>
+	async (dispatch: Dispatch) => {
+		dispatch(setNewPasswordLoadingAction());
+
+		try {
+			const response = await HTTPClient.put<ModelsUser>(
+				'/users/change/password',
+				{
+					data: {
+						new_password,
+						old_password,
+					},
+				},
+			);
+
+			storeAuthTokensFromResponse(response);
+			dispatch(returnPasswordChangeErrorAction(null));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnPasswordChangeErrorAction(errorMessage));
+		}
+	};
+
+const changeAvatarAction =
+	(file: File): Action =>
+	async (dispatch: Dispatch) => {
+		const formData = new FormData();
+		formData.append('avatar', file);
+
+		dispatch(setUserLoadingAction());
+
+		try {
+			const response = await HTTPClient.put<ModelsUser>(
+				'/users/change/avatar',
+				{
+					data: formData,
+				},
+			);
+
+			storeAuthTokensFromResponse(response);
+			dispatch(returnUserAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnAvatarChangeErrorAction(errorMessage));
+		}
+	};
+
+export default {
+	registerUserAction,
+	loginUserAction,
+	checkUserAction,
+	updateUserAction,
+	deleteUserAction,
+	logoutUserAction,
+	changePasswordAction,
+	changeAvatarAction,
+};

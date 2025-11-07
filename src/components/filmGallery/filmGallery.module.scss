@@ -1,0 +1,22 @@
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 1.875rem;
+}
+
+.title {
+	color: var(--color-dark-text);
+	font-weight: var(--font-weight-bold);
+	font-size: var(--font-size-xl);
+}
+
+.image {
+	width: 100%;
+	border-radius: var(--border-radius-xl);
+}
+
+@media (max-width: 1024px) {
+	.title {
+		text-align: center;
+	}
+}

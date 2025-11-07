@@ -1,0 +1,172 @@
+import { validateNewPassword } from '@/helpers/validateNewPassword/validateNewPassword.ts';
+import { validatePassword } from '@/helpers/validatePassword/validatePassword.ts';
+import { validatePasswordConfirm } from '@/helpers/validatePasswordConfirm/validatePasswordConfirm.ts';
+import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions.ts';
+import type { State } from '@/modules/redux/types/store.ts';
+import type { WithToastsProps } from '@/modules/toasts/withToastasProps.ts';
+import { withToasts } from '@/modules/toasts/withToasts.tsx';
+import actions from '@/redux/features/user/actions';
+import {
+	selectNewPasswordLoading,
+	selectPasswordChangeError,
+} from '@/redux/features/user/selectors.ts';
+import type { Map } from '@/types/map';
+import { Component } from '@robocotik/react';
+import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
+import { withRouter } from '../../modules/router/withRouter.tsx';
+import { PasswordInputField } from '../passwordInputField/passwordInputField.tsx';
+import styles from './changePassword.module.scss';
+
+interface ChangePasswordProps {
+	error: string | null;
+	loading: boolean;
+	setPassword: (old_password: string, new_password: string) => void;
+}
+
+class ChangePasswordComponent extends Component<
+	ChangePasswordProps & WithRouterProps & WithToastsProps
+> {
+	state = {
+		password: '',
+		newPassword: '',
+		repeatNewPassword: '',
+		validationErrors: {
+			password: '',
+			newPassword: '',
+			repeatNewPassword: '',
+		},
+		isSuccess: false,
+		errorShown: false,
+		successShown: false,
+	};
+
+	onFieldChange(
+		value: string,
+		field: 'password' | 'newPassword' | 'repeatNewPassword',
+	) {
+		this.setState({ ...this.state, [field]: value, isSuccess: false });
+		this.validateFields();
+	}
+
+	handleChangePassword = () => {
+		if (this.validateFields()) {
+			this.setState({
+				isSuccess: true,
+			});
+
+			this.setState({ errorShown: false, successShown: false });
+
+			this.props.setPassword(this.state.password, this.state.newPassword);
+		}
+	};
+
+	onUpdate() {
+		if (this.props.error && !this.state.errorShown) {
+			this.props.toast.error('Неверный текущий пароль');
+			this.setState({ errorShown: true });
+		}
+
+		if (
+			!this.props.loading &&
+			!this.props.error &&
+			this.state.isSuccess &&
+			!this.state.successShown
+		) {
+			this.props.toast.success('Пароль успешно сохранён!');
+			this.setState({ successShown: true });
+		}
+	}
+
+	validateFields() {
+		const passwordValidation = validatePassword(this.state.password);
+
+		const newPasswordValidation = validateNewPassword(
+			this.state.newPassword,
+			this.state.password,
+		);
+
+		const repeatNewPasswordValidation = validatePasswordConfirm(
+			this.state.newPassword,
+			this.state.repeatNewPassword,
+		);
+
+		this.setState({
+			...this.state,
+			validationErrors: {
+				password: passwordValidation.message,
+				newPassword: newPasswordValidation.message,
+				repeatNewPassword: repeatNewPasswordValidation.message,
+			},
+		});
+
+		return (
+			passwordValidation.isValid &&
+			newPasswordValidation.isValid &&
+			repeatNewPasswordValidation.isValid
+		);
+	}
+
+	render() {
+		return (
+			<div className={styles.changePasswordForm}>
+				<h1 className={styles.title}>Сменить пароль</h1>
+				<PasswordInputField
+					label="Старый пароль"
+					defaultValue=""
+					placeholder="Введите пароль"
+					errorMessage={this.state.validationErrors.password}
+					onChange={(value) => this.onFieldChange(value, 'password')}
+					inputFieldClass={styles.inputField}
+					inputLabelClass={styles.inputLabel}
+					inputWrapperClass={styles.inputWrapper}
+					accentBorderClass={styles.accentBorder}
+					errorBorderClass={styles.errorBorder}
+				/>
+				<PasswordInputField
+					label="Новый пароль"
+					defaultValue=""
+					placeholder="Введите пароль"
+					errorMessage={this.state.validationErrors.newPassword}
+					onChange={(value) => this.onFieldChange(value, 'newPassword')}
+					inputFieldClass={styles.inputField}
+					inputLabelClass={styles.inputLabel}
+					inputWrapperClass={styles.inputWrapper}
+					accentBorderClass={styles.accentBorder}
+					errorBorderClass={styles.errorBorder}
+				/>
+				<PasswordInputField
+					label="Подтверждение пароля"
+					defaultValue=""
+					errorMessage={this.state.validationErrors.repeatNewPassword}
+					placeholder="Повторите пароль"
+					onChange={(value) => this.onFieldChange(value, 'repeatNewPassword')}
+					inputFieldClass={styles.inputField}
+					inputLabelClass={styles.inputLabel}
+					inputWrapperClass={styles.inputWrapper}
+					accentBorderClass={styles.accentBorder}
+					errorBorderClass={styles.errorBorder}
+				/>
+				<button onClick={this.handleChangePassword} className={styles.saveBtn}>
+					Сохранить
+				</button>
+			</div>
+		);
+	}
+}
+
+const mapStateToProps = (state: State): Map => ({
+	error: selectPasswordChangeError(state),
+	loading: selectNewPasswordLoading(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	setPassword: (old_password: string, new_password: string) =>
+		dispatch(actions.changePasswordAction(old_password, new_password)),
+});
+
+export const ChangePassword = compose(
+	withRouter,
+	withToasts,
+	connect(mapStateToProps, mapDispatchToProps),
+)(ChangePasswordComponent);

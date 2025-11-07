@@ -1,0 +1,25 @@
+import type { Selector } from '@/modules/redux/types/selectors';
+import type { State } from '@/modules/redux/types/store';
+import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
+
+/**
+ * Селектор для получения списка фильма
+ */
+export const selectFilm: Selector = (state: State): ModelsFilmPage =>
+	state.film.film;
+
+export const selectFilmError: Selector = (state: State): string | null =>
+	state.film.filmError;
+
+export const selectFeedbacks: Selector = (state: State): ModelsFilmFeedback[] =>
+	state.film.feedbacks;
+
+export const selectFeedbackError: Selector = (state: State): string | null =>
+	state.film.feedbackError;
+
+export const selectUserRating: Selector = (state: State): number | null =>
+	state.film.userRating;
+
+export const selectUserFeedback: Selector = (
+	state: State,
+): ModelsFilmFeedback | null => state.film.userFeedback;
