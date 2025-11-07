@@ -81,11 +81,12 @@
 
 .rating,
 .rating-high {
-	background-color: var(--color-rating-high);
+	color: var(--color-light-text);
+	background-color: var(--color-rating-high-contrast);
 }
 
 .rating-medium {
-	background-color: var(--color-rating-medium);
+	background-color: var(--color-rating-medium-contrast);
 }
 
 .rating-low {
