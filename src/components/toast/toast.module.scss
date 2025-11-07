@@ -49,3 +49,17 @@
 		display: none;
 	}
 }
+
+@media (max-width: 1024px) {
+	.toast {
+		padding: 0.5rem 1rem;
+	}
+
+	.icon {
+		width: 2rem;
+	}
+
+	.title {
+		font-size: var(--font-size-m);
+	}
+}
