@@ -1,9 +1,12 @@
 import { Component } from '@robocotik/react';
+import { MIDDLE_SCREEN_WIDTH } from '../../consts/devices.ts';
 import { ToastsContext } from './toastsContext.ts';
 import type { ToastItem } from './types/toast.ts';
 
-const MAX_TOAST_NUMBER = 4;
-const ACTIVE_TIME = 8000;
+const MAX_TOAST_NUMBER =
+	window && window.innerWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4;
+
+const ACTIVE_TIME = 4000;
 
 interface ToastsProviderState {
 	toasts: ToastItem[];

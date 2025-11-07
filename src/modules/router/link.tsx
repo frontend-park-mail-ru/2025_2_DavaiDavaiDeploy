@@ -12,6 +12,7 @@ class LinkUnconnected extends Component<LinkProps & WithRouterProps> {
 	render() {
 		return (
 			<a
+				aria-label="Link that redirect to another route"
 				href={this.props.href}
 				className={this.props.className}
 				onClick={this.handleClick}

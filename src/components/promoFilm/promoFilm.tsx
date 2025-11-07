@@ -44,14 +44,14 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 		const imageSrc = getImageURL(image);
 
 		return (
-			<a className={styles.promoFilm}>
+			<a aria-label="Card for promo film" className={styles.promoFilm}>
 				<section>
 					<div className={styles.content}>
 						<Link href={`/films/${id}`} className={styles.linkWrap}>
 							<div className={styles.header}>
 								<h1 className={styles.title}>{title}</h1>
 								<div className={styles[`rating-${ratingType}`]}>
-									<h3 className={styles.ratingTitle}>{formattedRating}</h3>
+									<h1 className={styles.ratingTitle}>{formattedRating}</h1>
 								</div>
 							</div>
 							<ul className={styles.info}>
