@@ -11,19 +11,27 @@
 }
 
 .exitButton {
-	border: none;
 	background: transparent;
 	outline: none;
-	display: flex;
-	align-items: center;
 	gap: 0.5rem;
 	color: var(--color-always-light-text);
 	cursor: pointer;
 	font-size: var(--font-size-m);
+	transition: border 200ms;
+	width: 15rem;
+	height: 4rem;
+	border-radius: var(--border-radius-l);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--color-light);
+
+	&:hover {
+		border: 1px solid var(--color-accent);
+	}
 }
 
 .turnBackButton {
-	border: none;
 	border-radius: var(--border-radius-l);
 	background: var(--color-accent);
 	color: var(--color-light);
@@ -31,6 +39,14 @@
 	cursor: pointer;
 	outline: none;
 	font-size: var(--font-size-m);
+	border: 1px solid var(--color-accent);
+	transition: all 200ms;
+
+	&:hover {
+		background: transparent;
+		color: var(--color-accent);
+		transform: translateY(-1px);
+	}
 }
 
 .modalHeader {
@@ -47,4 +63,24 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 2rem;
+}
+
+@media (max-width: 1024px) {
+	.modalLogout {
+		width: 40rem;
+		height: 20rem;
+		padding: 3rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.modalLogout {
+		width: 20rem;
+		height: 18rem;
+		padding: 1rem;
+	}
+
+	.modalActions {
+		gap: 1rem;
+	}
 }

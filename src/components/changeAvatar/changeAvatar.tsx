@@ -132,17 +132,19 @@ class ChangeAvatarComponent extends Component<
 					)}
 
 					<div className={styles.btns}>
-						<div className={styles.wrapper}>
-							<button className={styles.btn} onClick={this.handleUpload}>
+						<label htmlFor="changePhoto" className={styles.wrapper}>
+							<span className={styles.btn} onClick={this.handleUpload}>
 								Изменить фото
-							</button>
+							</span>
 							<input
+								hidden
+								id="changePhoto"
 								className={styles.input}
 								type="file"
 								accept="image/*"
 								onChange={this.handleFileChange}
 							></input>
-						</div>
+						</label>
 
 						<button
 							className={clsx(styles.btn, {
