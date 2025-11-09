@@ -50,6 +50,9 @@ export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 			<header id="header" className={styles.header}>
 				<Link href="/">
 					<Logo className={styles.logo} />
+					<Logo className={styles.logo} />
+					<Logo className={styles.logo} />
+					<Logo className={styles.logo} />
 				</Link>
 				<div className={styles.user}>{this.renderUserSection()}</div>
 			</header>
