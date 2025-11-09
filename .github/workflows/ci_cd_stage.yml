@@ -1,6 +1,10 @@
 name: Stage flow
 
-on: pull_request
+on:
+  pull_request:
+    branches-ignore:
+      - main
+      - develop
 
 env:
   TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
