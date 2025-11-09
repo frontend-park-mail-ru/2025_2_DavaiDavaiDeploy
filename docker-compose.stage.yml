@@ -3,7 +3,7 @@ services:
     container_name: frontend-stage
     build:
       context: .
-      dockerfile: Dockerfile.stage
+      dockerfile: Dockerfile.build.stage
       target: nginx
     networks:
       - ddd-network
@@ -11,8 +11,7 @@ services:
   deploy-s3:
     build:
       context: .
-      dockerfile: Dockerfile.stage
-      target: deploy
+      dockerfile: Dockerfile.s3.stage
       args:
         - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
         - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
