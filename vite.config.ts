@@ -69,16 +69,16 @@ export default ({ mode }: ConfigEnv) => {
 					theme_color: '#1976d2',
 					background_color: '#ffffff',
 					display: 'standalone',
-					start_url: 'https://ddfilms.online/',
-					scope: 'https://ddfilms.online/',
+					start_url: process.env.VITE_PRODUCTION_API_URL,
+					scope: process.env.VITE_PRODUCTION_API_URL,
 					icons: [
 						{
-							src: 'https://static.ddfilms-static.ru/assets/favicon/apple-touch-icon.png',
+							src: `${process.env.VITE_CDN_ADDRESS}/assets/favicon/apple-touch-icon.png`,
 							sizes: '180x180',
 							type: 'image/png',
 						},
 						{
-							src: 'https://static.ddfilms-static.ru/assets/favicon/favicon-144x144.png',
+							src: `${process.env.VITE_CDN_ADDRESS}/assets/favicon/favicon-144x144.png`,
 							sizes: '144x144',
 							type: 'image/png',
 						},
@@ -117,7 +117,7 @@ export default ({ mode }: ConfigEnv) => {
 			port: 3000,
 			proxy: {
 				'/api': {
-					target: 'https://ddfilms.online/api/',
+					target: process.env.VITE_PRODUCTION_API_URL,
 					changeOrigin: true,
 					rewrite: (path) => path.replace(/^\/api/, ''),
 				},
