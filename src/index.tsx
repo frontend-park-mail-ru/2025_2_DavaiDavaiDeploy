@@ -81,7 +81,6 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 			<div class="layout">
 				<ToastContainer />
 				{showExtraFields && <Header />}
-
 				<div id="modal-root"></div>
 				<Routes>
 					<Route href="/" component={<HomePage />} />
