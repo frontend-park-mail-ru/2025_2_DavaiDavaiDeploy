@@ -29,7 +29,7 @@ export class LogoutModal extends Component<LogoutModalProps> {
 										className={style.exitButton}
 										onClick={this.props.onExit}
 									>
-										<Exit />
+										<Exit className={style.exit} />
 										Выйти
 									</button>
 									<button

@@ -1,4 +1,4 @@
-import exit from '@/assets/img/exit.svg';
+import Exit from '@/assets/img/exit.svg?react';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
 import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
@@ -36,7 +36,7 @@ export class UserAvatar extends Component<UserAvatarProps> {
 						onExit={this.handleLogout}
 						Actions={
 							<div className={styles.logoutButton}>
-								<img src={exit} alt="logout" />
+								<Exit alt="logout" className={styles.logout} />
 								Выйти
 							</div>
 						}
