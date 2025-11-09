@@ -1,7 +1,6 @@
 name: Stage flow
 
-on:
-  pull_request
+on: pull_request
 
 env:
   TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
