@@ -69,8 +69,8 @@ export default ({ mode }: ConfigEnv) => {
 					theme_color: '#1976d2',
 					background_color: '#ffffff',
 					display: 'standalone',
-					start_url: process.env.VITE_PRODUCTION_API_URL,
-					scope: process.env.VITE_PRODUCTION_API_URL,
+					start_url: process.env.VITE_PRODUCTION_URL,
+					scope: process.env.VITE_PRODUCTION_URL,
 					icons: [
 						{
 							src: `${process.env.VITE_CDN_ADDRESS}/assets/favicon/apple-touch-icon.png`,
