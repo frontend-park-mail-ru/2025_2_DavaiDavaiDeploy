@@ -8,6 +8,7 @@ import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
 import { Footer } from './components/footer/footer.tsx';
+import { Header } from './components/header/header.tsx';
 import { ToastContainer } from './components/toastContainer/toastContainer.tsx';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
@@ -79,6 +80,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 		return (
 			<div class="layout">
 				<ToastContainer />
+				{showExtraFields && <Header />}
 				<div id="modal-root"></div>
 				<Routes>
 					<Route href="/" component={<HomePage />} />
