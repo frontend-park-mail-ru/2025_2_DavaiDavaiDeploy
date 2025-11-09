@@ -9,7 +9,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default ({ mode }: ConfigEnv) => {
 	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 	const isProduction = mode === 'production';
-
+	const isSentryEnabled = process.env.VITE_SENTRY_ENABLED === 'true';
 	return defineConfig({
 		plugins: [
 			tsconfigPaths(),
@@ -33,12 +33,14 @@ export default ({ mode }: ConfigEnv) => {
 					},
 				],
 			}),
-			sentryVitePlugin({
-				org: process.env.VITE_SENTRY_ORG,
-				project: process.env.VITE_SENTRY_PROJECT,
-				authToken: process.env.VITE_SENTRY_AUTH_TOKEN,
-				release: { name: process.env.VITE_RELEASE_VERSION },
-			}),
+			isSentryEnabled
+				? sentryVitePlugin({
+						org: process.env.VITE_SENTRY_ORG,
+						project: process.env.VITE_SENTRY_PROJECT,
+						authToken: process.env.VITE_SENTRY_AUTH_TOKEN,
+						release: { name: process.env.VITE_RELEASE_VERSION },
+					})
+				: null,
 			svgr({
 				svgrOptions: {
 					plugins: ['@svgr/plugin-jsx'],

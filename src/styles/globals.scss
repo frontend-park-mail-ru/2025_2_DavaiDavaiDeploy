@@ -96,6 +96,26 @@ html {
 	min-height: 100vh;
 	overflow-x: hidden;
 	background-color: var(--color-bg);
+
+	&::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: var(--color-scrollbar-thumb);
+		border-radius: 2px;
+
+		&:hover {
+			background: var(--color-scrollbar-thumb-hover);
+		}
+	}
+
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
 }
 
 .layout {

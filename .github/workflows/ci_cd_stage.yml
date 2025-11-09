@@ -1,13 +1,10 @@
 name: Stage flow
 
 on:
-  push: 
-    branches:
-      - 'ddd*'
-
-  pull_request:
-    branches:
-      - 'ddd*'
+  push:
+    branches-ignore:
+      - main
+      - develop
 
 env:
   TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -146,9 +143,11 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /home/ubuntu/frontend/stage
+
             docker compose -f docker-compose.stage.yml --env-file .env.stage down -v
-            docker compose --env-file .env.stage -f docker-compose.stage.yml build deploy-s3
-            docker compose -f docker-compose.stage.yml --env-file .env.stage up --build -d
+
+            docker compose --env-file .env.stage -f docker-compose.stage.yml build --no-cache
+            docker compose --env-file .env.stage -f docker-compose.stage.yml up -d
 
   notify_success:
     name: Success Message
