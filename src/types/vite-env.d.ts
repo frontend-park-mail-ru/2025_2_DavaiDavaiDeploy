@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
+	readonly VITE_PRODUCTION_API_URL: string;
 	readonly VITE_SENTRY_ENABLED: string;
 	readonly VITE_SENTRY_DSN: string;
 	readonly SENTRY_ORG: string;
