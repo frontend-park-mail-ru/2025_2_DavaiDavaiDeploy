@@ -9,7 +9,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default ({ mode }: ConfigEnv) => {
 	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 	const isProduction = mode === 'production';
-	const isSentryEnabled = process.env.VITE_SENTRY_ENABLED;
+	const isSentryEnabled = process.env.VITE_SENTRY_ENABLED === 'true';
 	return defineConfig({
 		plugins: [
 			tsconfigPaths(),
