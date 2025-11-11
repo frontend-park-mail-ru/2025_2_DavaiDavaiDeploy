@@ -8,8 +8,8 @@ interface ProviderProps {
 
 export class Provider extends Component<ProviderProps> {
 	constructor(props: ProviderProps) {
-		super(props);
-		StoreContext.value = this.props.store;
+		super(props, null);
+		StoreContext.defaultValue = this.props.store;
 	}
 
 	render() {
