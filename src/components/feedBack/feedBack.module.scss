@@ -165,14 +165,14 @@
 	font-size: var(--font-size-l);
 	font-weight: var(--font-weight-bold);
 	flex-wrap: wrap;
-	word-break: break-all;
+	overflow-wrap: break-word;
 }
 
 .text {
 	color: var(--color-dark-text);
 	font-size: var(--font-size-m);
 	flex-wrap: wrap;
-	word-break: break-all;
+	overflow-wrap: break-word;
 }
 
 @media (max-width: 1600px) {
