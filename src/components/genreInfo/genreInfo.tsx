@@ -19,7 +19,7 @@ interface GenreInfoProps {
 
 class GenreInfoComponent extends Component<GenreInfoProps & WithRouterProps> {
 	onMount() {
-		this.props.getGenre(this.props.router.params.id);
+		this.props.getGenre(this.context.router.params.id);
 	}
 
 	render() {

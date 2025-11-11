@@ -24,7 +24,7 @@ interface ActorInfoProps {
 
 class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 	onMount() {
-		this.props.getActor(this.props.router.params.id);
+		this.props.getActor(this.context.router.params.id);
 	}
 
 	render() {

@@ -37,7 +37,7 @@ class RoutesNotConnected extends Component<WithRouterProps> {
 					});
 
 					params = { ...params, ...search };
-					this.props.router.params = params;
+					this.context.router.params = params;
 					return child;
 				}
 			}

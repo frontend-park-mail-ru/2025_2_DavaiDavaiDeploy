@@ -50,7 +50,7 @@ class FilmPageComponent extends Component<
 	};
 
 	onMount() {
-		const filmId = this.props.router.params.id;
+		const filmId = this.context.router.params.id;
 
 		this.props.getFilm(filmId);
 		this.loadMoreFeedbacks();
@@ -90,7 +90,7 @@ class FilmPageComponent extends Component<
 		this.props.getFeedbacks(
 			FEEDBACKS_COUNT,
 			this.state.offset,
-			this.props.router.params.id,
+			this.context.router.params.id,
 		);
 
 		this.setState({ offset: this.state.offset + FEEDBACKS_COUNT });

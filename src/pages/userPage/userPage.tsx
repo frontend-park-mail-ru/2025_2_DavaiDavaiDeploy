@@ -16,7 +16,7 @@ interface UserPageProps {
 class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 	onUpdate() {
 		if (!this.props.isAuthentificated) {
-			this.props.router.navigate('/');
+			this.context.router.navigate('/');
 		}
 	}
 	render() {

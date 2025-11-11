@@ -97,7 +97,7 @@ export class RegisterPageNotConnected extends Component<
 	onUpdate() {
 		if (this.props.user) {
 			this.updateProps({ userError: '' });
-			this.props.router.navigate('/');
+			this.context.router.navigate('/');
 		}
 
 		if (this.props.userError && !this.state.errorShown) {

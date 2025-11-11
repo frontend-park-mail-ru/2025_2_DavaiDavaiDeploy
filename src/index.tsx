@@ -74,8 +74,8 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 
 	render() {
 		const showExtraFields =
-			this.props.router.path !== '/login' &&
-			this.props.router.path !== '/register';
+			this.context.router.path !== '/login' &&
+			this.context.router.path !== '/register';
 
 		return (
 			<div class="layout">

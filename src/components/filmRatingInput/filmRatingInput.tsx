@@ -31,7 +31,7 @@ class FilmRatingInputComponent extends Component<
 		}
 
 		const rating = parseInt(number, RATING_COUNT);
-		this.props.createRating(rating, this.props.router.params.id);
+		this.props.createRating(rating, this.context.router.params.id);
 	};
 
 	render() {

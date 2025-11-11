@@ -62,7 +62,7 @@ class FilmSliderComponent extends Component<
 	};
 
 	onMount() {
-		this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
+		this.props.getFilms(FILM_COUNT, OFFSET, this.context.router.params.id);
 
 		const debounceResizeHandler = debounce(this.handleResize, THROTTLE_DELAY);
 

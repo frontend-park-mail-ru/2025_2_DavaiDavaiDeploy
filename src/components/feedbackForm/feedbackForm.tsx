@@ -108,7 +108,7 @@ class FeedbackFormComponent extends Component<
 			this.props.userRating,
 			text,
 			title,
-			this.props.router.params.id,
+			this.context.router.params.id,
 		);
 
 		if (this.props.isEditing) {

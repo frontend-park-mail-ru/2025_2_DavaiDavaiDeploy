@@ -6,7 +6,7 @@ import { withRouter } from './withRouter.tsx';
 class LinkUnconnected extends Component<LinkProps & WithRouterProps> {
 	handleClick = (e: Event) => {
 		e.preventDefault();
-		this.props.router.navigate(this.props.href);
+		this.context.router.navigate(this.props.href);
 	};
 
 	render() {

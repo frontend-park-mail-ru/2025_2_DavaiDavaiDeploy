@@ -23,8 +23,8 @@ export class CardGridComponent extends Component<
 	CardGridProps & WithRouterProps
 > {
 	onMount() {
-		if (this.props.router.params.id) {
-			this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
+		if (this.context.router.params.id) {
+			this.props.getFilms(FILM_COUNT, OFFSET, this.context.router.params.id);
 		} else {
 			this.props.getFilms(FILM_COUNT, OFFSET);
 		}
@@ -37,7 +37,7 @@ export class CardGridComponent extends Component<
 
 		return (
 			<div className={styles.cardGrid}>
-				{!this.props.router.params.id && (
+				{!this.context.router.params.id && (
 					<h2 className={styles.title}>Все фильмы</h2>
 				)}
 				<div className={styles.grid}>
