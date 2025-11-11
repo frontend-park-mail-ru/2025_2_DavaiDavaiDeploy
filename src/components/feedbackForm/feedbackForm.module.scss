@@ -50,7 +50,7 @@
 }
 
 .textarea {
-	min-height: 10rem;
+	height: 20vh;
 	resize: none;
 }
 
@@ -110,13 +110,10 @@
 	border: 2px solid var(--color-error);
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1600px) {
 	.feedbackForm {
-		gap: 1.2rem;
-	}
-
-	.errorMessage {
-		margin-top: -0.6rem;
+		gap: 0.5rem;
+		padding: 2rem 1.5rem;
 	}
 
 	.ratingErrorMessage {
@@ -126,6 +123,26 @@
 
 	.defaultMessage {
 		margin-top: -0.4rem;
+	}
+
+	.textarea {
+		height: 15vh;
+		resize: none;
+	}
+
+	.submitButton {
+		margin-top: 0.7rem;
+		padding: 0.5rem 3.5rem;
+		font-size: var(--font-size-l);
+	}
+
+	.input {
+		margin-top: 1rem;
+		gap: 1.5rem;
+	}
+
+	.inputTitle {
+		height: 3rem;
 	}
 }
 

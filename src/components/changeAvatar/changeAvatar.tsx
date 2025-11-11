@@ -150,7 +150,7 @@ class ChangeAvatarComponent extends Component<
 							<input
 								className={styles.input}
 								type="file"
-								accept="image/*"
+								accept=".jpg, .jpeg, .png"
 								onChange={this.handleFileChange}
 							></input>
 						</div>

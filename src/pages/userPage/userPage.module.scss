@@ -70,7 +70,7 @@
 	.profile {
 		display: flex;
 		flex-direction: column;
-		gap: 8rem;
+		gap: 2rem;
 		align-items: center;
 	}
 
@@ -82,7 +82,7 @@
 
 @media (max-width: 768px) {
 	.page {
-		margin-top: 8rem;
+		margin-top: 2rem;
 
 		&::before {
 			top: 40%;
@@ -102,7 +102,7 @@
 	}
 
 	.profile {
-		gap: 6rem;
+		gap: 1rem;
 	}
 }
 
