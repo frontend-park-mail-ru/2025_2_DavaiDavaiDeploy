@@ -8,6 +8,7 @@ import { withToasts } from '@/modules/toasts/withToasts.tsx';
 import actions from '@/redux/features/user/actions';
 import {
 	selectAvatarChangeError,
+	selectNewAvatarLoading,
 	selectUser,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
@@ -20,6 +21,7 @@ import styles from './changeAvatar.module.scss';
 interface ChangeAvatarProps {
 	error: string | null;
 	user: ModelsUser;
+	loading: boolean;
 	setAvatar: (file: File) => void;
 }
 
@@ -50,14 +52,14 @@ class ChangeAvatarComponent extends Component<
 		}
 
 		if (!ALLOWED_TYPES.includes(selected.type)) {
-			this.setState({ error: 'Можно загружать только JPG, PNG, WEBP.' });
+			this.props.toast.error('Можно загружать только JPG, PNG, WEBP.');
 			return;
 		}
 
 		if (selected.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-			this.setState({
-				error: `Размер не должен превышать ${MAX_FILE_SIZE_MB} МБ.`,
-			});
+			this.props.toast.error(
+				`Размер не должен превышать ${MAX_FILE_SIZE_MB} МБ.`,
+			);
 
 			return;
 		}
@@ -102,13 +104,18 @@ class ChangeAvatarComponent extends Component<
 	};
 
 	onUpdate() {
-		if (this.props.error && !this.state.errorShown) {
+		if (this.props.error && !this.props.loading && !this.state.errorShown) {
 			this.props.toast.error(this.props.error);
 			this.setState({ errorShown: true });
 			return;
 		}
 
-		if (this.state.isSuccess && !this.state.successShown) {
+		if (
+			this.state.isSuccess &&
+			!this.props.loading &&
+			!this.state.successShown &&
+			!this.props.error
+		) {
 			this.props.toast.success('Фото успешно сохранено!');
 			this.setState({ successShown: true });
 		}
@@ -173,6 +180,7 @@ class ChangeAvatarComponent extends Component<
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 	error: selectAvatarChangeError(state),
+	loading: selectNewAvatarLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

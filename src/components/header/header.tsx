@@ -9,6 +9,7 @@ import { Link } from '@/modules/router/link.tsx';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import actions from '@/redux/features/user/actions.ts';
 import {
+	selectNewAvatarLoading,
 	selectUser,
 	selectUserLoading,
 } from '@/redux/features/user/selectors.ts';
@@ -59,7 +60,7 @@ export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
-	isLoading: selectUserLoading(state),
+	isLoading: selectUserLoading(state) | selectNewAvatarLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

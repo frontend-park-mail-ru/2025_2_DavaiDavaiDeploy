@@ -11,6 +11,7 @@ interface InitialState {
 	passwordChangeError: string | null;
 	avatarChangeError: boolean;
 	newPasswordLoading: boolean;
+	newAvatarLoading: false;
 }
 
 /**
@@ -24,6 +25,7 @@ const initialState: InitialState = {
 	passwordChangeError: null,
 	avatarChangeError: false,
 	newPasswordLoading: false,
+	newAvatarLoading: false,
 };
 
 /**
@@ -41,6 +43,7 @@ export const userReducer: Reducer = (
 
 	switch (type) {
 		case actionTypes.USER_CREATE:
+		case actionTypes.USER_LOADED:
 			return {
 				...state,
 				loading: false,
@@ -68,13 +71,7 @@ export const userReducer: Reducer = (
 				loading: true,
 				error: null,
 			};
-		case actionTypes.USER_LOADED:
-			return {
-				...state,
-				loading: false,
-				user: payload.user,
-				avatarChangeError: false,
-			};
+
 		case actionTypes.USER_ERROR:
 			return {
 				...state,
@@ -88,12 +85,6 @@ export const userReducer: Reducer = (
 				loading: false,
 				user: null,
 			};
-		case actionTypes.PASSWORD_CHANGE_ERROR:
-			return {
-				...state,
-				newPasswordLoading: false,
-				passwordChangeError: payload.error,
-			};
 
 		case actionTypes.PASSWORD_CHANGE_LOADING:
 			return {
@@ -102,12 +93,43 @@ export const userReducer: Reducer = (
 				newPasswordLoading: true,
 			};
 
+		case actionTypes.PASSWORD_CHANGE_LOAD:
+			return {
+				...state,
+				passwordChangeError: null,
+				newPasswordLoading: false,
+				user: payload.user,
+			};
+
+		case actionTypes.PASSWORD_CHANGE_ERROR:
+			return {
+				...state,
+				newPasswordLoading: false,
+				passwordChangeError: payload.error,
+			};
+
+		case actionTypes.AVATAR_CHANGE_LOADING:
+			return {
+				...state,
+				avatarChangeError: null,
+				newAvatarLoading: true,
+			};
+
 		case actionTypes.AVATAR_CHANGE_ERROR:
 			return {
 				...state,
-				loading: false,
+				newAvatarLoading: false,
 				avatarChangeError: payload.error,
 			};
+
+		case actionTypes.AVATAR_CHANGE_LOAD:
+			return {
+				...state,
+				newAvatarLoading: false,
+				avatarChangeError: null,
+				user: payload.user,
+			};
+
 		default:
 			return state;
 	}

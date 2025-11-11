@@ -1,4 +1,5 @@
 import { authorizationCodeToErrorHelper } from '@/helpers/authorizationCodeToErrorHelper/authorizationCodeToErrorHelper.ts';
+import { avatarChangeCodeToErrorHelper } from '@/helpers/avatarChangeCodeToErrorHelper/avatarChangeCodeToErrorHelper';
 import LocalStorageHelper from '@/helpers/localStorageHelper/localStorageHelper.ts';
 import { registrationCodeToErrorHelper } from '@/helpers/registrationCodeToError/registrationCodeToError.ts';
 import { storeAuthTokensFromResponse } from '@/helpers/storeAuthTokensFromResponse/storeAuthTokensFromResponse.ts';
@@ -35,6 +36,12 @@ const setNewPasswordLoadingAction = (): Action => {
 	};
 };
 
+const setNewAvatarLoadingAction = (): Action => {
+	return {
+		type: actionTypes.AVATAR_CHANGE_LOADING,
+	};
+};
+
 /**
  * Создает действие для успешной загрузки данных пользователя.
  * @function
@@ -43,6 +50,20 @@ const returnUserAction = (data: ModelsUser): Action => {
 	return {
 		type: actionTypes.USER_LOADED,
 		payload: { user: data, error: null },
+	};
+};
+
+const returnChangeAvatarAction = (data: ModelsUser): Action => {
+	return {
+		type: actionTypes.AVATAR_CHANGE_LOAD,
+		payload: { user: data },
+	};
+};
+
+const returnChangePasswordAction = (data: ModelsUser): Action => {
+	return {
+		type: actionTypes.PASSWORD_CHANGE_LOAD,
+		payload: { user: data },
 	};
 };
 
@@ -216,12 +237,12 @@ const changePasswordAction =
 			);
 
 			storeAuthTokensFromResponse(response);
-			dispatch(returnPasswordChangeErrorAction(null));
+			dispatch(returnChangePasswordAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
 			if (error instanceof Error) {
-				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
+				errorMessage = error.message;
 			} else if (typeof error === 'string') {
 				errorMessage = error;
 			}
@@ -236,7 +257,7 @@ const changeAvatarAction =
 		const formData = new FormData();
 		formData.append('avatar', file);
 
-		dispatch(setUserLoadingAction());
+		dispatch(setNewAvatarLoadingAction());
 
 		try {
 			const response = await HTTPClient.put<ModelsUser>(
@@ -247,12 +268,12 @@ const changeAvatarAction =
 			);
 
 			storeAuthTokensFromResponse(response);
-			dispatch(returnUserAction(response.data));
+			dispatch(returnChangeAvatarAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
 			if (error instanceof Error) {
-				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
+				errorMessage = avatarChangeCodeToErrorHelper(error.cause as number);
 			} else if (typeof error === 'string') {
 				errorMessage = error;
 			}
