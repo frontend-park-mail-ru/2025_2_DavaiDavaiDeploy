@@ -15,11 +15,7 @@ export function withRouter<P>(
 				<RouterContext.Consumer>
 					{(context: RouterContextValue) => {
 						return (
-							<WrappedComponent
-								{...(this.props as any)}
-								router={context}
-								parentComponent={this}
-							/>
+							<WrappedComponent {...(this.props as any)} router={context} />
 						);
 					}}
 				</RouterContext.Consumer>

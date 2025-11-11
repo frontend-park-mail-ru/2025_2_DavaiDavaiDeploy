@@ -7,11 +7,6 @@ interface ProviderProps {
 }
 
 export class Provider extends Component<ProviderProps> {
-	constructor(props: ProviderProps) {
-		super(props, null);
-		StoreContext.defaultValue = this.props.store;
-	}
-
 	render() {
 		return (
 			<StoreContext.Provider value={this.props.store}>
