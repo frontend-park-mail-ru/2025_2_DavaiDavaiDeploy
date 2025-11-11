@@ -26,7 +26,7 @@ interface FeedbackFormState {
 
 const INITIAL_SCROLL_DELAY = 300;
 const THROTTLE_DELAY: number = 10;
-const MARGINE_TOP_SIZE = 112;
+const MARGINE_TOP_SIZE = 100;
 
 class FeedbackFormComponent extends Component<
 	FeedbackFormProps & WithRouterProps,
