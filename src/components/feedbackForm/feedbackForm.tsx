@@ -152,15 +152,17 @@ class FeedbackFormComponent extends Component<
 							Придумайте короткий заголовок
 						</p>
 					)}
+
 					<textarea
 						name="text"
-						value={text}
 						placeholder="Текст"
 						className={clsx(styles.textarea, {
 							[styles.errorBorder]: this.state.textErrorMessage.length > 0,
 						})}
 						onInput={this.handleTextChange}
-					/>
+					>
+						{text}
+					</textarea>
 
 					{this.state.textErrorMessage ? (
 						<p className={styles.errorMessage}>{this.state.textErrorMessage}</p>
