@@ -4,8 +4,6 @@ import { validatePasswordConfirm } from '@/helpers/validatePasswordConfirm/valid
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import type { WithToastsProps } from '@/modules/toasts/withToastasProps.ts';
-import { withToasts } from '@/modules/toasts/withToasts.tsx';
 import actions from '@/redux/features/user/actions';
 import {
 	selectNewPasswordLoading,
@@ -16,6 +14,7 @@ import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { PasswordInputField } from '../passwordInputField/passwordInputField.tsx';
+import { AppToast } from '../toastContainer/toastContainer.tsx';
 import styles from './changePassword.module.scss';
 
 interface ChangePasswordProps {
@@ -25,7 +24,7 @@ interface ChangePasswordProps {
 }
 
 class ChangePasswordComponent extends Component<
-	ChangePasswordProps & WithRouterProps & WithToastsProps
+	ChangePasswordProps & WithRouterProps
 > {
 	state = {
 		password: '',
@@ -63,7 +62,7 @@ class ChangePasswordComponent extends Component<
 
 	onUpdate() {
 		if (this.props.error && !this.state.errorShown) {
-			this.props.toast.error('Неверный текущий пароль');
+			AppToast?.error('Неверный текущий пароль');
 			this.setState({ errorShown: true });
 		}
 
@@ -73,7 +72,7 @@ class ChangePasswordComponent extends Component<
 			this.state.isSuccess &&
 			!this.state.successShown
 		) {
-			this.props.toast.success('Пароль успешно сохранён!');
+			AppToast?.success('Пароль успешно сохранён!');
 			this.setState({ successShown: true });
 		}
 	}
@@ -167,6 +166,5 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const ChangePassword = compose(
 	withRouter,
-	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(ChangePasswordComponent);

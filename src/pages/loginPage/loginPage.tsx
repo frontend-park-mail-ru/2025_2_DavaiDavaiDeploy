@@ -2,6 +2,7 @@ import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
 import { InputField } from '@/components/inputField/inputField.tsx';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
+import { AppToast } from '@/components/toastContainer/toastContainer';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
 import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 import { validatePassword } from '@/helpers/validatePassword/validatePassword.ts';
@@ -11,8 +12,6 @@ import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
-import type { WithToastsProps } from '@/modules/toasts/withToastasProps';
-import { withToasts } from '@/modules/toasts/withToasts';
 import actions from '@/redux/features/user/actions.ts';
 import {
 	selectUser,
@@ -30,7 +29,7 @@ interface LoginPageProps {
 }
 
 export class LoginPageNotConnected extends Component<
-	LoginPageProps & WithRouterProps & WithToastsProps
+	LoginPageProps & WithRouterProps
 > {
 	state = {
 		username: '',
@@ -89,7 +88,7 @@ export class LoginPageNotConnected extends Component<
 		}
 
 		if (this.props.userError && !this.state.errorShown) {
-			this.props.toast.error(this.props.userError);
+			AppToast?.error(this.props.userError);
 			this.setState({ errorShown: true });
 		}
 	}
@@ -184,6 +183,5 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const LoginPage = compose(
 	withRouter,
-	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(LoginPageNotConnected);

@@ -100,6 +100,7 @@ export default defineConfig([
 			...Rules,
 			'no-console': 'error',
 			'@typescript-eslint/no-empty-object-type': 'off',
+			'@typescript-eslint/no-this-alias': 'off',
 			'@typescript-eslint/no-unused-vars': [
 				'error',
 				{ argsIgnorePattern: '^_' },

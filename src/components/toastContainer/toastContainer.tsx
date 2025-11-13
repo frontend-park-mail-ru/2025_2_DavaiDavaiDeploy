@@ -1,14 +1,79 @@
-import { compose } from '@/modules/redux';
-import type { ToastItem } from '@/modules/toasts/types/toast';
-import type { WithToastsProps } from '@/modules/toasts/withToastasProps';
-import { withToasts } from '@/modules/toasts/withToasts';
+import { Toast } from '@/components/toast/toast';
+import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices';
+import type { ToastType } from '@/consts/toasts';
 import { Component } from '@robocotik/react';
-import { Toast } from '../toast/toast';
 import styles from './toastContainer.module.scss';
 
-const REMOVE_DELAY = 1000;
+interface ToastItem {
+	id: number;
+	type: ToastType;
+	message: string;
+	isActive: boolean;
+	timer?: ReturnType<typeof setTimeout>;
+}
 
-class ToastContainerComponent extends Component<WithToastsProps> {
+const REMOVE_DELAY = 1000;
+const ACTIVE_TIME = 4000;
+const MAX_TOAST_NUMBER =
+	window && window.innerWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4;
+
+interface ToastContainerState {
+	toasts: ToastItem[];
+}
+
+export let AppToast: ToastContainer | undefined = undefined;
+
+export class ToastContainer extends Component<{}, ToastContainerState> {
+	state: ToastContainerState = {
+		toasts: [],
+	};
+
+	constructor() {
+		super({}, null);
+		AppToast = this;
+	}
+
+	success = (message: string) => {
+		this.createToast(message, 'success');
+	};
+
+	error = (message: string) => {
+		this.createToast(message, 'error');
+	};
+
+	createToast = (message: string, type: 'success' | 'error') => {
+		const newToast: ToastItem = {
+			id: Date.now(),
+			type,
+			message,
+			isActive: true,
+		};
+
+		newToast.timer = setTimeout(() => {
+			this.removeToast(newToast.id);
+		}, ACTIVE_TIME);
+
+		this.setState((prevState) => {
+			const updatedToasts = [...prevState.toasts];
+
+			if (updatedToasts.length + 1 > MAX_TOAST_NUMBER) {
+				const id = updatedToasts.length - MAX_TOAST_NUMBER;
+				updatedToasts[id] = { ...updatedToasts[id], isActive: false };
+				clearTimeout(updatedToasts[id].timer);
+			}
+
+			return { toasts: [...updatedToasts, newToast] };
+		});
+	};
+
+	removeToast = (id: number) => {
+		this.setState((prevState) => ({
+			toasts: prevState.toasts.map((t) =>
+				t.id === id ? { ...t, isActive: false } : t,
+			),
+		}));
+	};
+
 	removeToastById = (id: number) => {
 		setTimeout(() => {
 			document.querySelector(`#toast-${id}`)?.remove();
@@ -16,7 +81,7 @@ class ToastContainerComponent extends Component<WithToastsProps> {
 	};
 
 	render() {
-		const { toasts } = this.props.toast;
+		const { toasts } = this.state;
 
 		return (
 			<div className={styles.toasts}>
@@ -38,5 +103,3 @@ class ToastContainerComponent extends Component<WithToastsProps> {
 		);
 	}
 }
-
-export const ToastContainer = compose(withToasts)(ToastContainerComponent);
