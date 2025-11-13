@@ -10,7 +10,7 @@ import actions from '@/redux/features/actor/actions';
 import { selectActorFilms } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component, createRef, type Ref } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { FilmCard } from '../filmCard/filmCard';
@@ -34,17 +34,39 @@ interface FilmSliderState {
 	};
 	inactivityTimer: NodeJS.Timeout | null;
 	debounceResizeHandler: (ev?: Event | undefined) => void;
+	sliderRef: Ref<HTMLElement>;
+	slideRefMap: Ref<HTMLElement>[];
 }
 
 const MIN_SLIDE_CAPACITY = 3;
+const MAX_SLIDE_CAPACITY = 7;
 const THROTTLE_DELAY = 100;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
 const FILM_COUNT: number = 50;
 const OFFSET: number = 0;
-const INITIAL_RESIZE_DELAY = 300;
 const SMALL_CARD_HEIGHT = 30;
 const BIG_CARD_HEIGHT = 50;
+
+function getSlideCapacityFromWidth(width: number) {
+	if (width > WIDE_SCREEN_WIDTH) {
+		return MAX_SLIDE_CAPACITY;
+	} else if (width < NARROW_SCREEN_WIDTH) {
+		return MIN_SLIDE_CAPACITY;
+	}
+
+	return 5;
+}
+
+function getIsActive(slideCapacity: number) {
+	return slideCapacity >= MIN_SLIDE_CAPACITY;
+}
+
+function getCardHeight(slideCapacity: number) {
+	return slideCapacity === MIN_SLIDE_CAPACITY
+		? BIG_CARD_HEIGHT
+		: SMALL_CARD_HEIGHT;
+}
 
 class FilmSliderComponent extends Component<
 	FilmSliderProps & WithRouterProps,
@@ -52,36 +74,37 @@ class FilmSliderComponent extends Component<
 > {
 	state: FilmSliderState = {
 		curFilm: 0,
-		slideCapacity: 3,
+		slideCapacity: getSlideCapacityFromWidth(window.innerWidth),
 		cardHeight: SMALL_CARD_HEIGHT,
 		active: false,
 		windowHeight: window.innerHeight,
 		debounceResizeHandler: () => {},
 		autoSlider: null,
 		inactivityTimer: null,
+		sliderRef: createRef(),
+		slideRefMap: Array.from({ length: FILM_COUNT }, () =>
+			createRef<HTMLElement>(),
+		),
 	};
 
 	onMount() {
 		this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
-
 		const debounceResizeHandler = debounce(this.handleResize, THROTTLE_DELAY);
 
 		this.setState({ debounceResizeHandler });
 
 		window.addEventListener('resize', debounceResizeHandler);
 
-		setTimeout(() => {
-			this.handleResize();
-		}, INITIAL_RESIZE_DELAY);
-
 		const autoSlider = createPeriodFunction(
 			() => this.next(),
 			AUTO_SLIDE_DURATION,
 		);
 
-		this.handleResize();
-
-		this.setState({ autoSlider });
+		this.setState({
+			autoSlider,
+			active: getIsActive(this.state.slideCapacity),
+			cardHeight: getCardHeight(this.state.slideCapacity),
+		});
 
 		if (this.state.active) {
 			autoSlider.start();
@@ -103,14 +126,15 @@ class FilmSliderComponent extends Component<
 	}
 
 	handleResize = () => {
-		const slider = document.querySelector(`.${styles.slider}`) as HTMLElement;
-		const slides = document.querySelectorAll(
-			`.${styles.slide}`,
-		) as NodeListOf<HTMLElement>;
+		const slider = this.state.sliderRef.current;
+		const slides = this.state.slideRefMap.map((ref) => ref.current);
 
 		if (slider && slides.length > 0) {
 			let maxHeight = 0;
 			slides.forEach((s) => {
+				if (!s) {
+					return;
+				}
 				const h = s.offsetHeight;
 
 				if (h > maxHeight) {
@@ -122,19 +146,12 @@ class FilmSliderComponent extends Component<
 		}
 
 		const width = window.innerWidth;
-		let slideCapacity = 5;
-		let cardHeight = SMALL_CARD_HEIGHT;
-
-		if (width > WIDE_SCREEN_WIDTH) {
-			slideCapacity = 7;
-		} else if (width < NARROW_SCREEN_WIDTH) {
-			slideCapacity = 3;
-			cardHeight = BIG_CARD_HEIGHT;
-		}
+		let slideCapacity = getSlideCapacityFromWidth(width);
+		const cardHeight = getCardHeight(slideCapacity);
 
 		slideCapacity = Math.min(slideCapacity, this.props.films.length);
 
-		const active = slideCapacity >= MIN_SLIDE_CAPACITY;
+		const active = getIsActive(slideCapacity);
 
 		this.setState({
 			windowHeight: window.innerHeight,
@@ -254,7 +271,11 @@ class FilmSliderComponent extends Component<
 		return (
 			<div className={styles.content}>
 				<h1 className={styles.title}>ПРОЕКТЫ</h1>
-				<div className={styles.slider} onClick={this.onSliderClick}>
+				<div
+					ref={this.state.sliderRef}
+					className={styles.slider}
+					onClick={this.onSliderClick}
+				>
 					{this.state.active && (
 						<button className={styles.prevBtn} onClick={this.prev}>
 							<img
@@ -277,6 +298,7 @@ class FilmSliderComponent extends Component<
 						{this.props.films.map((film, i) => (
 							<div
 								key={i}
+								ref={this.state.slideRefMap[i]}
 								className={styles.slide}
 								style={{ ...this.getStyles(i) }}
 							>
