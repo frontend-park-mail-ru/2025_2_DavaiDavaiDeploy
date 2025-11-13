@@ -1,7 +1,6 @@
 import Edit from '@/assets/img/edit.svg';
 import { FeedBack } from '@/components/feedBack/feedBack.tsx';
 import { FeedbackForm } from '@/components/feedbackForm/feedbackForm.tsx';
-import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { compose, connect } from '@/modules/redux';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
@@ -21,11 +20,9 @@ interface FeedbackFormProps {
 
 interface FeedbackFormState {
 	isEditing: boolean;
-	offsetTop: number | null;
 }
 
-const THROTTLE_DELAY: number = 10;
-const MARGINE_TOP_SIZE = 100;
+const MARGIN_TOP_SIZE = 100;
 
 class FeedbackFormComponent extends Component<
 	FeedbackFormProps & WithRouterProps,
@@ -33,38 +30,56 @@ class FeedbackFormComponent extends Component<
 > {
 	state = {
 		isEditing: false,
-		offsetTop: null,
 	};
 
-	userFeedbackRef = createRef<HTMLDivElement>();
+	wrapperRef = createRef<HTMLDivElement>();
+	contentRef = createRef<HTMLDivElement>();
+	observer: IntersectionObserver | null = null;
 
 	onMount() {
-		const throttledScrollHandler = throttle(this.handleScroll, THROTTLE_DELAY);
-
-		window.addEventListener('scroll', throttledScrollHandler);
+		requestAnimationFrame(() => {
+			this.initObserver();
+		});
 	}
 
-	handleScroll = () => {
-		const component = this.userFeedbackRef.current;
+	onUnmount() {
+		if (this.observer) {
+			this.observer.disconnect();
+			this.observer = null;
+		}
+	}
 
-		if (!component) {
+	initObserver = () => {
+		const wrapper = this.wrapperRef.current;
+
+		if (!wrapper) {
 			return;
 		}
 
-		const offsetTop = component.offsetTop;
+		const options: IntersectionObserverInit = {
+			root: null,
+			rootMargin: `-${MARGIN_TOP_SIZE}px 0px 0px 0px`,
+			threshold: 0,
+		};
 
-		if (this.state.offsetTop === null) {
-			this.setState({ offsetTop });
-		}
+		const callback: IntersectionObserverCallback = (entries) => {
+			entries.forEach((entry) => {
+				const content = this.contentRef.current;
 
-		if (
-			window.scrollY >=
-			Math.max(offsetTop, this.state.offsetTop ?? 0) - MARGINE_TOP_SIZE
-		) {
-			component?.classList.add(styles.fixed);
-		} else {
-			component?.classList.remove(styles.fixed);
-		}
+				if (!content) {
+					return;
+				}
+
+				if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+					content.classList.add(styles.fixed);
+				} else {
+					content.classList.remove(styles.fixed);
+				}
+			});
+		};
+
+		this.observer = new IntersectionObserver(callback, options);
+		this.observer.observe(wrapper);
 	};
 
 	handleEdit = () => {
@@ -74,7 +89,7 @@ class FeedbackFormComponent extends Component<
 	renderContent = () => {
 		if (!this.props.user) {
 			return (
-				<div className={styles.notAuth}>
+				<div ref={this.contentRef} className={styles.notAuth}>
 					<p className={styles.notAuthTitle}>Хотите оставить отзыв?</p>
 
 					<span className={styles.notAuthText}>
@@ -127,7 +142,7 @@ class FeedbackFormComponent extends Component<
 
 	render() {
 		return (
-			<div ref={this.userFeedbackRef} className={styles.userFeedback}>
+			<div ref={this.wrapperRef} className={styles.userFeedback}>
 				{this.renderContent()}
 			</div>
 		);
