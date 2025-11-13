@@ -126,25 +126,6 @@ class FilmSliderComponent extends Component<
 	}
 
 	handleResize = () => {
-		const slider = this.state.sliderRef.current;
-		const slides = this.state.slideRefMap.map((ref) => ref.current);
-
-		if (slider && slides.length > 0) {
-			let maxHeight = 0;
-			slides.forEach((s) => {
-				if (!s) {
-					return;
-				}
-				const h = s.offsetHeight;
-
-				if (h > maxHeight) {
-					maxHeight = h;
-				}
-			});
-
-			slider.style.height = maxHeight + 'px';
-		}
-
 		const width = window.innerWidth;
 		let slideCapacity = getSlideCapacityFromWidth(width);
 		const cardHeight = getCardHeight(slideCapacity);
@@ -266,6 +247,26 @@ class FilmSliderComponent extends Component<
 	render() {
 		if (this.props.films.length === 0) {
 			return <div></div>;
+		}
+
+		const slider = this.state.sliderRef.current;
+		const slides = this.state.slideRefMap.map((ref) => ref.current);
+
+		if (slider && slides.length > 0) {
+			let maxHeight = 0;
+			slides.forEach((s) => {
+				if (!s) {
+					return;
+				}
+
+				const h = s.offsetHeight;
+
+				if (h > maxHeight) {
+					maxHeight = h;
+				}
+			});
+
+			slider.style.height = maxHeight + 'px';
 		}
 
 		return (
