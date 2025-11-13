@@ -62,7 +62,7 @@ class ChangePasswordComponent extends Component<
 
 	onUpdate() {
 		if (this.props.error && !this.state.errorShown) {
-			AppToast?.error('Неверный текущий пароль');
+			AppToast.error('Неверный текущий пароль');
 			this.setState({ errorShown: true });
 		}
 
@@ -72,7 +72,7 @@ class ChangePasswordComponent extends Component<
 			this.state.isSuccess &&
 			!this.state.successShown
 		) {
-			AppToast?.success('Пароль успешно сохранён!');
+			AppToast.success('Пароль успешно сохранён!');
 			this.setState({ successShown: true });
 		}
 	}

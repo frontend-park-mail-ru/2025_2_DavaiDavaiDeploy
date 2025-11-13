@@ -88,7 +88,7 @@ export class LoginPageNotConnected extends Component<
 		}
 
 		if (this.props.userError && !this.state.errorShown) {
-			AppToast?.error(this.props.userError);
+			AppToast.error(this.props.userError);
 			this.setState({ errorShown: true });
 		}
 	}

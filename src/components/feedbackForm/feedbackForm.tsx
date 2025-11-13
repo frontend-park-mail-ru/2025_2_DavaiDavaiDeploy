@@ -94,7 +94,7 @@ class FeedbackFormComponent extends Component<
 		});
 
 		if (!this.props.userRating) {
-			AppToast?.error('Оцените фильм');
+			AppToast.error('Оцените фильм');
 		}
 
 		if (titleErrorMessage || textErrorMessage || !this.props.userRating) {

@@ -21,7 +21,7 @@ interface ToastContainerState {
 	toasts: ToastItem[];
 }
 
-export let AppToast: ToastContainer | undefined = undefined;
+export let AppToast: ToastContainer = null as unknown as ToastContainer;
 
 export class ToastContainer extends Component<{}, ToastContainerState> {
 	state: ToastContainerState = {

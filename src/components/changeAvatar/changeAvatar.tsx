@@ -51,12 +51,12 @@ class ChangeAvatarComponent extends Component<
 		}
 
 		if (!ALLOWED_TYPES.includes(selected.type)) {
-			AppToast?.error('Можно загружать только JPG, PNG, WEBP.');
+			AppToast.error('Можно загружать только JPG, PNG, WEBP.');
 			return;
 		}
 
 		if (selected.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-			AppToast?.error(`Размер не должен превышать ${MAX_FILE_SIZE_MB} МБ.`);
+			AppToast.error(`Размер не должен превышать ${MAX_FILE_SIZE_MB} МБ.`);
 
 			return;
 		}
@@ -102,7 +102,7 @@ class ChangeAvatarComponent extends Component<
 
 	onUpdate() {
 		if (this.props.error && !this.props.loading && !this.state.errorShown) {
-			AppToast?.error(this.props.error);
+			AppToast.error(this.props.error);
 			this.setState({ errorShown: true });
 			return;
 		}
@@ -113,7 +113,7 @@ class ChangeAvatarComponent extends Component<
 			!this.state.successShown &&
 			!this.props.error
 		) {
-			AppToast?.success('Фото успешно сохранено!');
+			AppToast.success('Фото успешно сохранено!');
 			this.setState({ successShown: true });
 		}
 	}
