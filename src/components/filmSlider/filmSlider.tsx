@@ -36,6 +36,7 @@ interface FilmSliderState {
 	debounceResizeHandler: (ev?: Event | undefined) => void;
 	sliderRef: Ref<HTMLElement>;
 	slideRefMap: Ref<HTMLElement>[];
+	sliderHeight: number;
 }
 
 const MIN_SLIDE_CAPACITY = 3;
@@ -68,6 +69,23 @@ function getCardHeight(slideCapacity: number) {
 		: SMALL_CARD_HEIGHT;
 }
 
+function getMaxSlidesHeight(slides: (HTMLElement | null)[]) {
+	let maxHeight = 0;
+	slides.forEach((s) => {
+		if (!s) {
+			return;
+		}
+
+		const h = s.offsetHeight;
+
+		if (h > maxHeight) {
+			maxHeight = h;
+		}
+	});
+
+	return maxHeight;
+}
+
 class FilmSliderComponent extends Component<
 	FilmSliderProps & WithRouterProps,
 	FilmSliderState
@@ -78,6 +96,7 @@ class FilmSliderComponent extends Component<
 		cardHeight: SMALL_CARD_HEIGHT,
 		active: false,
 		windowHeight: window.innerHeight,
+		sliderHeight: 0,
 		debounceResizeHandler: () => {},
 		autoSlider: null,
 		inactivityTimer: null,
@@ -249,24 +268,12 @@ class FilmSliderComponent extends Component<
 			return <div></div>;
 		}
 
-		const slider = this.state.sliderRef.current;
-		const slides = this.state.slideRefMap.map((ref) => ref.current);
+		const height = getMaxSlidesHeight(
+			this.state.slideRefMap.map((ref) => ref.current),
+		);
 
-		if (slider && slides.length > 0) {
-			let maxHeight = 0;
-			slides.forEach((s) => {
-				if (!s) {
-					return;
-				}
-
-				const h = s.offsetHeight;
-
-				if (h > maxHeight) {
-					maxHeight = h;
-				}
-			});
-
-			slider.style.height = maxHeight + 'px';
+		if (height !== this.state.sliderHeight) {
+			this.setState({ sliderHeight: height });
 		}
 
 		return (
@@ -276,6 +283,7 @@ class FilmSliderComponent extends Component<
 					ref={this.state.sliderRef}
 					className={styles.slider}
 					onClick={this.onSliderClick}
+					style={{ height: this.state.sliderHeight + 'px' }}
 				>
 					{this.state.active && (
 						<button className={styles.prevBtn} onClick={this.prev}>
