@@ -19,8 +19,6 @@ import { Route } from './modules/router/route.tsx';
 import { Routes } from './modules/router/routes.tsx';
 import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
 import { withRouter } from './modules/router/withRouter.tsx';
-import { ToastsProvider } from './modules/toasts/ToastsProvider.tsx';
-import { withToasts } from './modules/toasts/withToasts.tsx';
 import { ActorPage } from './pages/actorPage/actorPage.tsx';
 import { FilmPage } from './pages/filmPage/filmPage.tsx';
 import { GenrePage } from './pages/genrePage/genrePage';
@@ -103,9 +101,7 @@ class ProvidersLayout extends Component {
 	render() {
 		return (
 			<Provider store={store}>
-				<ToastsProvider>
-					<RouterProvider>{this.props.children}</RouterProvider>
-				</ToastsProvider>
+				<RouterProvider>{this.props.children}</RouterProvider>
 			</Provider>
 		);
 	}
@@ -121,7 +117,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 const App = compose(
 	withRouter,
-	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(AppComponent);
 

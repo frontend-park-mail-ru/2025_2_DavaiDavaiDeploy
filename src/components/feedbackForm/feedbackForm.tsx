@@ -4,8 +4,6 @@ import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import type { WithToastsProps } from '@/modules/toasts/withToastasProps.ts';
-import { withToasts } from '@/modules/toasts/withToasts.tsx';
 import actions from '@/redux/features/film/actions';
 import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
@@ -15,6 +13,7 @@ import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { FilmRatingInput } from '../filmRatingInput/filmRatingInput.tsx';
+import { AppToast } from '../toastContainer/toastContainer.tsx';
 import styles from './feedbackForm.module.scss';
 
 interface FeedbackFormProps {
@@ -40,7 +39,7 @@ interface FeedbackFormState {
 }
 
 class FeedbackFormComponent extends Component<
-	FeedbackFormProps & WithRouterProps & WithToastsProps,
+	FeedbackFormProps & WithRouterProps,
 	FeedbackFormState
 > {
 	state = {
@@ -95,7 +94,7 @@ class FeedbackFormComponent extends Component<
 		});
 
 		if (!this.props.userRating) {
-			this.props.toast.error('Оцените фильм');
+			AppToast.error('Оцените фильм');
 		}
 
 		if (titleErrorMessage || textErrorMessage || !this.props.userRating) {
@@ -193,6 +192,5 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const FeedbackForm = compose(
 	withRouter,
-	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(FeedbackFormComponent);

@@ -3,8 +3,6 @@ import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import type { WithToastsProps } from '@/modules/toasts/withToastasProps.ts';
-import { withToasts } from '@/modules/toasts/withToasts.tsx';
 import actions from '@/redux/features/user/actions';
 import {
 	selectAvatarChangeError,
@@ -16,6 +14,7 @@ import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
+import { AppToast } from '../toastContainer/toastContainer.tsx';
 import styles from './changeAvatar.module.scss';
 
 interface ChangeAvatarProps {
@@ -31,7 +30,7 @@ const IDEAL_SIZE = 200;
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 class ChangeAvatarComponent extends Component<
-	ChangeAvatarProps & WithRouterProps & WithToastsProps
+	ChangeAvatarProps & WithRouterProps
 > {
 	state = {
 		file: null,
@@ -52,14 +51,12 @@ class ChangeAvatarComponent extends Component<
 		}
 
 		if (!ALLOWED_TYPES.includes(selected.type)) {
-			this.props.toast.error('Можно загружать только JPG, PNG, WEBP.');
+			AppToast.error('Можно загружать только JPG, PNG, WEBP.');
 			return;
 		}
 
 		if (selected.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-			this.props.toast.error(
-				`Размер не должен превышать ${MAX_FILE_SIZE_MB} МБ.`,
-			);
+			AppToast.error(`Размер не должен превышать ${MAX_FILE_SIZE_MB} МБ.`);
 
 			return;
 		}
@@ -105,7 +102,7 @@ class ChangeAvatarComponent extends Component<
 
 	onUpdate() {
 		if (this.props.error && !this.props.loading && !this.state.errorShown) {
-			this.props.toast.error(this.props.error);
+			AppToast.error(this.props.error);
 			this.setState({ errorShown: true });
 			return;
 		}
@@ -116,7 +113,7 @@ class ChangeAvatarComponent extends Component<
 			!this.state.successShown &&
 			!this.props.error
 		) {
-			this.props.toast.success('Фото успешно сохранено!');
+			AppToast.success('Фото успешно сохранено!');
 			this.setState({ successShown: true });
 		}
 	}
@@ -189,6 +186,5 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const ChangeAvatar = compose(
 	withRouter,
-	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(ChangeAvatarComponent);

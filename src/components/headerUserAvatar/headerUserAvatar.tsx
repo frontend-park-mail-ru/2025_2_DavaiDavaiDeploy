@@ -4,8 +4,6 @@ import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
-import { LogoutModal } from '../logoutModal/logoutModal.tsx';
-import { ModalProvider } from '../modalProvider/modalProvider.tsx';
 import styles from './headerUserAvatar.module.scss';
 interface UserAvatarProps {
 	user: ModelsUser | null;
@@ -31,17 +29,11 @@ export class UserAvatar extends Component<UserAvatarProps> {
 				<Link className={styles.avatarActionsLink} href="/profile">
 					Мой профиль
 				</Link>
-				<ModalProvider>
-					<LogoutModal
-						onExit={this.handleLogout}
-						Actions={
-							<div className={styles.logoutButton}>
-								<img src={exit} alt="logout" />
-								Выйти
-							</div>
-						}
-					/>
-				</ModalProvider>
+
+				<div className={styles.logoutButton} onClick={this.handleLogout}>
+					<img src={exit} alt="logout" />
+					Выйти
+				</div>
 			</div>
 		);
 	}
