@@ -72,13 +72,13 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 
 	render() {
 		const isAuthPageOpen =
-			this.props.router.path !== '/login' &&
-			this.props.router.path !== '/register';
+			this.props.router.path === '/login' ||
+			this.props.router.path === '/register';
 
 		return (
 			<div class="layout">
 				<ToastContainer />
-				{isAuthPageOpen && <Header />}
+				{!isAuthPageOpen && <Header />}
 				<div id="modal-root"></div>
 				<Routes>
 					<Route href="/" component={<HomePage />} />
@@ -89,7 +89,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/genres/:id" component={<GenrePage />} />
 					<Route href="/profile" component={<UserPage />} />
 				</Routes>
-				{isAuthPageOpen && <Footer />}
+				{!isAuthPageOpen && <Footer />}
 			</div>
 		);
 	}

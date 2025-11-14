@@ -1,7 +1,7 @@
 import Logo from '@/assets/img/logo.svg?react';
 import { LoadedUser } from '@/components/headerLoadedUser/headerLoadedUser.tsx';
 import { LoadingState } from '@/components/loadingState/loadingState.tsx';
-import { connect } from '@/modules/redux/index.ts';
+import { compose, connect } from '@/modules/redux/index.ts';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { NavigateButton } from '@/modules/router/button.tsx';
@@ -16,6 +16,7 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
+import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './header.module.scss';
 interface HeaderProps {
 	user: ModelsUser | null;
@@ -23,7 +24,7 @@ interface HeaderProps {
 	logoutUser: VoidFunction;
 }
 
-export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
+class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 	renderUserSection() {
 		if (this.props.isLoading) {
 			return (
@@ -71,7 +72,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	logoutUser: () => dispatch(actions.logoutUserAction()),
 });
 
-export const Header = connect(
-	mapStateToProps,
-	mapDispatchToProps,
+export const Header = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
 )(HeaderComponent);
