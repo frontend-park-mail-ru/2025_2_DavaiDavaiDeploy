@@ -1,17 +1,17 @@
 import Edit from '@/assets/img/edit.svg';
+import { FeedBack } from '@/components/feedBack/feedBack.tsx';
+import { FeedbackForm } from '@/components/feedbackForm/feedbackForm.tsx';
 import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { compose, connect } from '@/modules/redux';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
+import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
+import { withRouter } from '@/modules/router/withRouter.tsx';
 import { selectUserFeedback } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
-import { Component } from '@robocotik/react';
-import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
-import { withRouter } from '../../modules/router/withRouter.tsx';
-import { FeedBack } from '../feedBack/feedBack.tsx';
-import { FeedbackForm } from '../feedbackForm/feedbackForm.tsx';
+import { Component, createRef } from '@robocotik/react';
 import styles from './userFeedback.module.scss';
 
 interface FeedbackFormProps {
@@ -24,7 +24,6 @@ interface FeedbackFormState {
 	offsetTop: number | null;
 }
 
-const INITIAL_SCROLL_DELAY = 300;
 const THROTTLE_DELAY: number = 10;
 const MARGINE_TOP_SIZE = 100;
 
@@ -37,18 +36,16 @@ class FeedbackFormComponent extends Component<
 		offsetTop: null,
 	};
 
+	userFeedbackRef = createRef<HTMLDivElement>();
+
 	onMount() {
 		const throttledScrollHandler = throttle(this.handleScroll, THROTTLE_DELAY);
 
-		setTimeout(() => {
-			window.addEventListener('scroll', throttledScrollHandler);
-		}, INITIAL_SCROLL_DELAY);
+		window.addEventListener('scroll', throttledScrollHandler);
 	}
 
 	handleScroll = () => {
-		const component = document.querySelector(
-			`.${styles.userFeedback}`,
-		) as HTMLElement;
+		const component = this.userFeedbackRef.current;
 
 		if (!component) {
 			return;
@@ -129,7 +126,11 @@ class FeedbackFormComponent extends Component<
 	};
 
 	render() {
-		return <div className={styles.userFeedback}>{this.renderContent()}</div>;
+		return (
+			<div ref={this.userFeedbackRef} className={styles.userFeedback}>
+				{this.renderContent()}
+			</div>
+		);
 	}
 }
 
