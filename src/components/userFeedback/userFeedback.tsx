@@ -12,6 +12,7 @@ import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
 import { Component, createRef } from '@robocotik/react';
+import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import styles from './userFeedback.module.scss';
 
 interface FeedbackFormProps {
@@ -78,11 +79,17 @@ class FeedbackFormComponent extends Component<
 					<p className={styles.notAuthTitle}>Хотите оставить отзыв?</p>
 
 					<span className={styles.notAuthText}>
-						<Link href="/login" className={styles.notAuthLink}>
+						<Link
+							href={getPathWithPath('login', this.props.router.path)}
+							className={styles.notAuthLink}
+						>
 							Войдите
 						</Link>{' '}
 						или{' '}
-						<Link href="/register" className={styles.notAuthLink}>
+						<Link
+							href={getPathWithPath('register', this.props.router.path)}
+							className={styles.notAuthLink}
+						>
 							создайте аккаунт
 						</Link>
 						!
