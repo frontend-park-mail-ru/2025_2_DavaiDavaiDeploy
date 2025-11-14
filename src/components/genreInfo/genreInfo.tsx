@@ -9,6 +9,8 @@ import { selectGenre } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
 import { Component } from '@robocotik/react';
+import { withModal } from '../../modules/modals/withModal.tsx';
+import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import styles from './genreInfo.module.scss';
 
 interface GenreInfoProps {
@@ -17,7 +19,9 @@ interface GenreInfoProps {
 	getGenre: (id: string) => void;
 }
 
-class GenreInfoComponent extends Component<GenreInfoProps & WithRouterProps> {
+class GenreInfoComponent extends Component<
+	GenreInfoProps & WithRouterProps & WithModalProps
+> {
 	onMount() {
 		this.props.getGenre(this.props.router.params.id);
 	}
@@ -50,5 +54,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const GenreInfo = compose(
 	withRouter,
+	withModal,
 	connect(mapStateToProps, mapDispatchToProps),
 )(GenreInfoComponent);

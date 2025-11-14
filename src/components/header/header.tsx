@@ -17,6 +17,8 @@ import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
+import { withModal } from '../../modules/modals/withModal.tsx';
+import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './header.module.scss';
 interface HeaderProps {
@@ -25,7 +27,9 @@ interface HeaderProps {
 	logoutUser: VoidFunction;
 }
 
-class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
+class HeaderComponent extends Component<
+	HeaderProps & WithRouterProps & WithModalProps
+> {
 	renderUserSection() {
 		if (this.props.isLoading) {
 			return (
@@ -74,5 +78,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const Header = compose(
 	withRouter,
+	withModal,
 	connect(mapStateToProps, mapDispatchToProps),
 )(HeaderComponent);
