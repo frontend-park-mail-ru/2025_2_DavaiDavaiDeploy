@@ -13,6 +13,7 @@ import { ToastContainer } from './components/toastContainer/toastContainer.tsx';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
+import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import { Route } from './modules/router/route.tsx';
@@ -99,7 +100,9 @@ class ProvidersLayout extends Component {
 	render() {
 		return (
 			<Provider store={store}>
-				<RouterProvider>{this.props.children}</RouterProvider>
+				<ModalsProvider>
+					<RouterProvider>{this.props.children}</RouterProvider>
+				</ModalsProvider>
 			</Provider>
 		);
 	}
