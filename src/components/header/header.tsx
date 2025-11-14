@@ -19,6 +19,7 @@ import { Component } from '@robocotik/react';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './header.module.scss';
+import { TestModal } from '../testModal/testModal.tsx';
 interface HeaderProps {
 	user: ModelsUser | null;
 	isLoading: boolean;
@@ -57,6 +58,7 @@ class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 				<Link href="/">
 					<Logo className={styles.logo} />
 				</Link>
+				<TestModal value={3} />
 				<div className={styles.user}>{this.renderUserSection()}</div>
 			</header>
 		);
