@@ -6,12 +6,13 @@ export class ModalsProvider extends Component {
 		activeModal: null,
 	};
 
-	open(id: number) {
+	open = (id: number) => {
 		this.setState({ activeModal: id });
-	}
-	hide() {
+		console.log('Я БЛТЬ ПОШЕЛ ОТКРЫВАТЬ МОДАЛКУ', id);
+	};
+	hide = () => {
 		this.setState({ activeModal: null });
-	}
+	};
 	render() {
 		return (
 			<ModalContext.Provider
