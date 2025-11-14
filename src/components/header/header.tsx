@@ -40,9 +40,10 @@ class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 			);
 		}
 
-		const path = this.props.router
-			? '/login?from=' + this.props.router.path
-			: '/login';
+		const path =
+			this.props.router && this.props.router.path != '/'
+				? '/login?from=' + this.props.router.path
+				: '/login';
 
 		return (
 			<NavigateButton href={path} className={styles.loginBtn}>
