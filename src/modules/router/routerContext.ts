@@ -5,4 +5,5 @@ export const RouterContext = createContext<RouterContextValue>({
 	path: '/',
 	navigate: (_to: string | number) => {},
 	params: {},
+	outlet: null,
 });

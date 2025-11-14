@@ -15,6 +15,7 @@ import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
+import { Outlet } from './modules/router/outlet.tsx';
 import { Route } from './modules/router/route.tsx';
 import { Routes } from './modules/router/routes.tsx';
 import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
@@ -60,6 +61,22 @@ window.addEventListener('offline', () => {
 	console.info('offline');
 });
 
+interface ILayoutProps {
+	showExtraFields: boolean;
+}
+
+class Layout extends Component<ILayoutProps> {
+	render() {
+		return (
+			<>
+				{this.props.showExtraFields && <Header />}
+				<Outlet />
+				{this.props.showExtraFields && <Footer />}
+			</>
+		);
+	}
+}
+
 interface AppProps {
 	user: ModelsUser;
 	checkUser: () => {};
@@ -79,19 +96,24 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 		return (
 			<div class="layout">
 				<ToastContainer />
+
 				{showExtraFields && <Header />}
 				<div id="modal-root"></div>
 				<Routes>
-					<Route href="/" component={<HomePage />} />
-					<Route href="/films/:id" component={<FilmPage />} />
-					<Route href="/actors/:id" component={<ActorPage />} />
-					<Route href="/login" component={<LoginPage />} />
-					<Route href="/register" component={<RegisterPage />} />
-					<Route href="/genres/:id" component={<GenrePage />} />
-					<Route href="/profile" component={<UserPage />} />
-					<Route href="*" component={<HomePage />} />
+					<Route
+						href="/"
+						component={<Layout showExtraFields={showExtraFields} />}
+					>
+						<Route href="/" component={<HomePage />} />
+						<Route href="/films/:id" component={<FilmPage />} />
+						<Route href="/actors/:id" component={<ActorPage />} />
+						<Route href="/login" component={<LoginPage />} />
+						<Route href="/register" component={<RegisterPage />} />
+						<Route href="/genres/:id" component={<GenrePage />} />
+						<Route href="/profile" component={<UserPage />} />
+						<Route href="*" component={<HomePage />} />
+					</Route>
 				</Routes>
-				{showExtraFields && <Footer />}
 			</div>
 		);
 	}

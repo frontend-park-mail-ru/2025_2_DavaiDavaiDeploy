@@ -3,8 +3,12 @@ import type { RouteConfig } from './types/routeConfig';
 
 export class Route extends Component<RouteConfig, {}> {
 	render() {
-		const { component } = this.props;
+		const { component, children } = this.props;
 
-		return <>{component}</>;
+		if (component) {
+			return <>{component}</>;
+		}
+
+		return <>{children}</>;
 	}
 }
