@@ -91,6 +91,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/register" component={<RegisterPage />} />
 					<Route href="/genres/:id" component={<GenrePage />} />
 					<Route href="/profile" component={<UserPage />} />
+					<Route href="*" component={<HomePage />} />
 				</Routes>
 				{showExtraFields && <Footer />}
 			</div>
