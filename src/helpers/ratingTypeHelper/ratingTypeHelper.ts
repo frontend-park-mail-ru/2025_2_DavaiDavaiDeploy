@@ -11,11 +11,11 @@ export const getRatingType = (
 		return null;
 	}
 
-	if (rating >= 8) {
+	if (rating > 7) {
 		return RatingValues.High;
 	}
 
-	if (rating >= 5) {
+	if (rating > 4) {
 		return RatingValues.Medium;
 	}
 

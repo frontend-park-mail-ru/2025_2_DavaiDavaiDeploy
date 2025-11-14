@@ -31,7 +31,7 @@ export class CardGridComponent extends Component<
 	}
 
 	render() {
-		if (this.props.films.length === 0) {
+		if (!this.props.films || this.props.films.length === 0) {
 			return <div className={styles.err}></div>;
 		}
 

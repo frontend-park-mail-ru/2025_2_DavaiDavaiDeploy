@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { getRatingType } from './ratingTypeHelper';
 
 describe('getRatingType', () => {
-	it('возвращает high если рейтинг не меньше 8', () => {
+	it('возвращает high если рейтинг больше 7', () => {
 		const ratingType = getRatingType(9);
 		expect(ratingType).toBe('high');
 	});
@@ -12,12 +12,12 @@ describe('getRatingType', () => {
 		expect(ratingType).toBe('high');
 	});
 
-	it('возвращает medium если рейтинг меньше 8, но не меньше 5', () => {
-		const ratingType = getRatingType(7);
+	it('возвращает medium если рейтинг меньше или равен 7, но больше 4', () => {
+		const ratingType = getRatingType(6);
 		expect(ratingType).toBe('medium');
 	});
 
-	it('возвращает low если рейтинг меньше 5', () => {
+	it('возвращает low если рейтинг меньше 4', () => {
 		const ratingType = getRatingType(3);
 		expect(ratingType).toBe('low');
 	});
@@ -42,9 +42,9 @@ describe('getRatingType', () => {
 		expect(ratingType).toBe(null);
 	});
 
-	it('возвращает medium для рейтинга 7.9', () => {
+	it('возвращает high для рейтинга 7.9', () => {
 		const ratingType = getRatingType(7.9);
-		expect(ratingType).toBe('medium');
+		expect(ratingType).toBe('high');
 	});
 
 	it('возвращает high для рейтинга 10', () => {
