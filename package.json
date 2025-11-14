@@ -42,7 +42,7 @@
   "homepage": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy#readme",
   "dependencies": {
     "@fontsource/golos-ui": "^4.5.3",
-    "@robocotik/react": "^1.5.0",
+    "@robocotik/react": "^1.5.1",
     "@sentry/browser": "^10.21.0",
     "@sentry/core": "^10.21.0",
     "@sentry/vite-plugin": "^2.14.1",

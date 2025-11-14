@@ -55,10 +55,6 @@ class HeaderComponent extends Component<
 		);
 	}
 
-	onMount(): void | Promise<void> {
-		this.props.modal.open(2);
-	}
-
 	render() {
 		return (
 			<header id="header" className={styles.header}>

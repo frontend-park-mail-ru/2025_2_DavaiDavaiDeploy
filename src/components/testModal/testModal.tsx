@@ -3,7 +3,7 @@ import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import style from './testModal.module.scss';
 
-export class TestModalComponent extends Component<WithModalProps> {
+export class TestModalComponent extends Component<WithModalProps, {}> {
 	render() {
 		return createPortal(
 			<div
