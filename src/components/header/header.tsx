@@ -39,8 +39,12 @@ export class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 			);
 		}
 
+		const path = this.props.router
+			? '/login?from=' + this.props.router.path
+			: '/login';
+
 		return (
-			<NavigateButton href="/login" className={styles.loginBtn}>
+			<NavigateButton href={path} className={styles.loginBtn}>
 				Войти
 			</NavigateButton>
 		);

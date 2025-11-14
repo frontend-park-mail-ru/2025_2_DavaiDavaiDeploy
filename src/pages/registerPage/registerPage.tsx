@@ -95,8 +95,13 @@ export class RegisterPageNotConnected extends Component<
 
 	onUpdate() {
 		if (this.props.user) {
+			const redirectPath =
+				'from' in this.props.router.params
+					? this.props.router.params.from
+					: '/';
+
 			this.updateProps({ userError: '' });
-			this.props.router.navigate('/');
+			this.props.router.navigate(redirectPath);
 		}
 
 		if (this.props.userError && !this.state.errorShown) {
@@ -127,6 +132,10 @@ export class RegisterPageNotConnected extends Component<
 			this.validateFields();
 		}
 	}
+	path =
+		'from' in this.props.router.params
+			? '/login?from=' + this.props.router.params.from
+			: '/login';
 
 	render() {
 		return (
@@ -194,7 +203,7 @@ export class RegisterPageNotConnected extends Component<
 							</button>
 							<p className={styles.register__button}>
 								Уже есть аккаунт?{' '}
-								<Link className={styles.register} href="/login">
+								<Link className={styles.register} href={this.path}>
 									Войти
 								</Link>
 							</p>
