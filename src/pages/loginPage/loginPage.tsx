@@ -20,6 +20,7 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
+import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import styles from './loginPage.module.scss';
 
 interface LoginPageProps {
@@ -108,11 +109,6 @@ export class LoginPageNotConnected extends Component<
 		this.validateFields();
 	}
 
-	path =
-		'from' in this.props.router.params
-			? '/register?from=' + this.props.router.params.from
-			: '/register';
-
 	render() {
 		return (
 			<main className={styles.main}>
@@ -169,7 +165,10 @@ export class LoginPageNotConnected extends Component<
 							</button>
 							<p className={styles.register__button}>
 								У меня нет аккаунта.{' '}
-								<Link className={styles.register} href={this.path}>
+								<Link
+									className={styles.register}
+									href={getPathWithFrom('register', this.props.router.params)}
+								>
 									Регистрация
 								</Link>
 							</p>

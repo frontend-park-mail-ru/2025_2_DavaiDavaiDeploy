@@ -16,6 +16,7 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
+import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './header.module.scss';
 interface HeaderProps {
@@ -40,13 +41,11 @@ class HeaderComponent extends Component<HeaderProps & WithRouterProps> {
 			);
 		}
 
-		const path =
-			this.props.router && this.props.router.path != '/'
-				? '/login?from=' + this.props.router.path
-				: '/login';
-
 		return (
-			<NavigateButton href={path} className={styles.loginBtn}>
+			<NavigateButton
+				href={getPathWithPath('login', this.props.router.path)}
+				className={styles.loginBtn}
+			>
 				Войти
 			</NavigateButton>
 		);
