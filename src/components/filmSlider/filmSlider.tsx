@@ -37,7 +37,7 @@ interface FilmSliderState {
 }
 
 const MIN_SLIDE_CAPACITY = 3;
-const THROTTLE_DELAY = 100;
+const DEBOUNCE_DELAY = 100;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
 const FILM_COUNT: number = 50;
@@ -64,7 +64,7 @@ class FilmSliderComponent extends Component<
 	onMount() {
 		this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
 
-		const debounceResizeHandler = debounce(this.handleResize, THROTTLE_DELAY);
+		const debounceResizeHandler = debounce(this.handleResize, DEBOUNCE_DELAY);
 
 		this.setState({ debounceResizeHandler });
 

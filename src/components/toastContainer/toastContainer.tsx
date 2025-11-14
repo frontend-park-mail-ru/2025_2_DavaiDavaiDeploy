@@ -1,6 +1,7 @@
 import { Toast } from '@/components/toast/toast';
 import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices';
 import type { ToastType } from '@/consts/toasts';
+import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { Component } from '@robocotik/react';
 import styles from './toastContainer.module.scss';
 
@@ -14,11 +15,13 @@ interface ToastItem {
 
 const REMOVE_DELAY = 1000;
 const ACTIVE_TIME = 4000;
-const MAX_TOAST_NUMBER =
-	window && window.innerWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4;
+const DEBOUNCE_DELAY = 100;
+
+let maxToastNumber = window && window.innerWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4;
 
 interface ToastContainerState {
 	toasts: ToastItem[];
+	debounceResizeHandler: (ev?: Event | undefined) => void;
 }
 
 export let AppToast: ToastContainer = null as unknown as ToastContainer;
@@ -26,11 +29,32 @@ export let AppToast: ToastContainer = null as unknown as ToastContainer;
 export class ToastContainer extends Component<{}, ToastContainerState> {
 	state: ToastContainerState = {
 		toasts: [],
+		debounceResizeHandler: () => {},
 	};
 
 	constructor() {
 		super({}, null);
 		AppToast = this;
+	}
+
+	onMount() {
+		const debounceResizeHandler = debounce(this.handleResize, DEBOUNCE_DELAY);
+
+		this.setState({ debounceResizeHandler });
+
+		window.addEventListener('resize', debounceResizeHandler);
+
+		this.handleResize();
+	}
+
+	onUnmount() {
+		if (this.state.debounceResizeHandler) {
+			window.removeEventListener('resize', this.state.debounceResizeHandler);
+		}
+	}
+
+	handleResize() {
+		maxToastNumber = window && window.innerWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4;
 	}
 
 	success = (message: string) => {
@@ -56,8 +80,8 @@ export class ToastContainer extends Component<{}, ToastContainerState> {
 		this.setState((prevState) => {
 			const updatedToasts = [...prevState.toasts];
 
-			if (updatedToasts.length + 1 > MAX_TOAST_NUMBER) {
-				const id = updatedToasts.length - MAX_TOAST_NUMBER;
+			if (updatedToasts.length + 1 > maxToastNumber) {
+				const id = updatedToasts.length - maxToastNumber;
 				updatedToasts[id] = { ...updatedToasts[id], isActive: false };
 				clearTimeout(updatedToasts[id].timer);
 			}
