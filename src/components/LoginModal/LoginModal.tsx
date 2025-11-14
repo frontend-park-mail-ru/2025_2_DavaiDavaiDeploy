@@ -2,16 +2,8 @@ import Exit from '@/assets/img/exit.svg?react';
 import { Component, createPortal } from '@robocotik/react';
 import style from './LoginModal.module.scss';
 
-type Props = {
-	value: number;
-};
-
-export class LoginModal extends Component<Props> {
+export class LoginModal extends Component {
 	render() {
-		if (this.props.value > 5) {
-			return <></>;
-		}
-
 		return createPortal(
 			<div className={style.modalWrapper}>
 				<div
@@ -26,7 +18,6 @@ export class LoginModal extends Component<Props> {
 						<div className={style.modalActions}>
 							<button className={style.exitButton}>
 								<Exit />
-								{this.props.value}
 							</button>
 							<button className={style.turnBackButton}>
 								Вернуться на сайт

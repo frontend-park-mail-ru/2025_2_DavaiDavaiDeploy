@@ -20,7 +20,6 @@ import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.t
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
-import { TestModal } from '../testModal/testModal.tsx';
 import styles from './header.module.scss';
 interface HeaderProps {
 	user: ModelsUser | null;
@@ -66,7 +65,6 @@ class HeaderComponent extends Component<
 				<Link href="/">
 					<Logo className={styles.logo} />
 				</Link>
-				<TestModal value={3} />
 				<div className={styles.user}>{this.renderUserSection()}</div>
 			</header>
 		);

@@ -1,16 +1,8 @@
 import { Component, createPortal } from '@robocotik/react';
 import style from './testModal.module.scss';
 
-type Props = {
-	value: number;
-};
-
-export class TestModal extends Component<Props> {
+export class TestModal extends Component {
 	render() {
-		if (this.props.value > 5) {
-			return <></>;
-		}
-
 		return createPortal(
 			<div className={style.modalWrapper}>
 				<div
