@@ -2,12 +2,12 @@ import { Component } from '@robocotik/react';
 import { LoginModal } from '../../components/LoginModal/LoginModal.tsx';
 import { TestModal } from '../../components/testModal/testModal.tsx';
 import { MODALS } from './modals.ts';
-import { withModal } from './withModal.tsx';
-import type { WithModalProps } from './withModalProps.ts';
+import { ModalContext, type ModalContextValue } from './modalsContext.ts';
 
-class ModalRootComponent extends Component<WithModalProps> {
+export class ModalRoot extends Component<{}, {}, ModalContextValue> {
+	static readonly contextType = ModalContext;
 	render() {
-		switch (this.props.modal.activeModal) {
+		switch (this.context.activeModal) {
 			case MODALS.LOGIN_MODAL:
 				return <LoginModal />;
 			case MODALS.TEST_MODAL:
@@ -17,5 +17,3 @@ class ModalRootComponent extends Component<WithModalProps> {
 		}
 	}
 }
-
-export const ModalRoot = withModal(ModalRootComponent);

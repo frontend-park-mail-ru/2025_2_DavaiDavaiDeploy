@@ -1,10 +1,17 @@
 import { Component, createPortal } from '@robocotik/react';
+import { withModal } from '../../modules/modals/withModal.tsx';
+import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import style from './testModal.module.scss';
 
-export class TestModal extends Component {
+export class TestModalComponent extends Component<WithModalProps> {
 	render() {
 		return createPortal(
-			<div className={style.modalWrapper}>
+			<div
+				className={style.modalWrapper}
+				onClick={() => {
+					this.props.modal.hide();
+				}}
+			>
 				<div
 					className={style.modalContent}
 					onClick={(e) => e.stopPropagation()}
@@ -22,3 +29,5 @@ export class TestModal extends Component {
 		);
 	}
 }
+
+export const TestModal = withModal(TestModalComponent);

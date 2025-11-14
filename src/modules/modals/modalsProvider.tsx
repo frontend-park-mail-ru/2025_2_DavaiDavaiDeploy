@@ -8,7 +8,6 @@ export class ModalsProvider extends Component {
 
 	open = (id: number) => {
 		this.setState({ activeModal: id });
-		console.log('Я БЛТЬ ПОШЕЛ ОТКРЫВАТЬ МОДАЛКУ', id);
 	};
 	hide = () => {
 		this.setState({ activeModal: null });
