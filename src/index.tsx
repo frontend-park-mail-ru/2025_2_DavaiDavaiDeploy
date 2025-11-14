@@ -71,14 +71,14 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 	}
 
 	render() {
-		const showExtraFields =
+		const isAuthPageOpen =
 			this.props.router.path !== '/login' &&
 			this.props.router.path !== '/register';
 
 		return (
 			<div class="layout">
 				<ToastContainer />
-				{showExtraFields && <Header />}
+				{isAuthPageOpen && <Header />}
 				<div id="modal-root"></div>
 				<Routes>
 					<Route href="/" component={<HomePage />} />
@@ -89,7 +89,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/genres/:id" component={<GenrePage />} />
 					<Route href="/profile" component={<UserPage />} />
 				</Routes>
-				{showExtraFields && <Footer />}
+				{isAuthPageOpen && <Footer />}
 			</div>
 		);
 	}
