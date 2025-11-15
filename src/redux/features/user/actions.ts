@@ -5,7 +5,7 @@ import { registrationCodeToErrorHelper } from '@/helpers/registrationCodeToError
 import { storeAuthTokensFromResponse } from '@/helpers/storeAuthTokensFromResponse/storeAuthTokensFromResponse.ts';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsUser } from '@/types/models';
+import type { ModelsUser, TechResponse } from '@/types/models';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -108,6 +108,20 @@ const deleteUserAction = (userId: string | number): Action => {
 	return {
 		type: actionTypes.USER_DELETE,
 		payload: { userId: userId },
+	};
+};
+
+const returnMyRequestsAction = (data: TechResponse[]): Action => {
+	return {
+		type: actionTypes.MY_REQUESTS_LOADED,
+		payload: { tech_requests: data },
+	};
+};
+
+const returnMyRequestsActionError = (error: string): Action => {
+	return {
+		type: actionTypes.MY_REQUESTS_ERROR,
+		payload: { error: error },
 	};
 };
 
@@ -282,6 +296,26 @@ const changeAvatarAction =
 		}
 	};
 
+const getMyRequests: Action = () => async (dispatch: Dispatch) => {
+	// dispatch(setFilmLoadingAction());
+	console.log('Я ПОШЕЛ ОТПРАВЛЯТЬ ЗАПРОС');
+	try {
+		const response = await HTTPClient.get<TechResponse[]>('/feedback/my');
+		console.log('Я ОТПРАВИЛ ЗАПРОС');
+		dispatch(returnMyRequestsAction(response.data));
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(returnMyRequestsActionError(errorMessage));
+	}
+};
+
 export default {
 	registerUserAction,
 	loginUserAction,
@@ -291,4 +325,5 @@ export default {
 	logoutUserAction,
 	changePasswordAction,
 	changeAvatarAction,
+	getMyRequests,
 };

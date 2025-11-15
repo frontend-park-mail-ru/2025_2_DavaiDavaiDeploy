@@ -131,7 +131,27 @@ export const userReducer: Reducer = (
 				avatarChangeError: null,
 				user: payload.user,
 			};
-
+		case actionTypes.MY_REQUESTS_LOADED:
+			console.log(
+				'в редьюсере поймал MY_REQUESTS_LOADED',
+				payload.tech_requests,
+			);
+			return {
+				...state,
+				loading: false,
+				tech_requests: payload.tech_requests,
+			};
+		case actionTypes.MY_REQUESTS_ERROR:
+			return {
+				...state,
+				loading: false,
+				tech_requests: [],
+			};
+		case actionTypes.MY_REQUESTS_LOADING:
+			return {
+				...state,
+				loading: true,
+			};
 		default:
 			return state;
 	}

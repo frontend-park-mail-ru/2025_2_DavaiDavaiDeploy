@@ -1,0 +1,74 @@
+.modalWrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100dvw;
+	height: 100dvh;
+	background-color: rgb(0 0 0 / 50%); /* Затемнение */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	font-size: large;
+}
+
+.modalContent {
+	background-color: var(--color-bg);
+	min-height: 40rem;
+	height: auto;
+	width: 60rem;
+	z-index: 1001;
+	border-radius: var(--border-radius-xl);
+}
+
+.innerContainer {
+	height: 100%;
+	width: 100%;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.row {
+	width: 100%;
+	display: flex;
+}
+.textCenter {
+	justify-content: center;
+}
+
+.textLeft {
+	justify-content: flex-start;
+}
+
+.title {
+	font-size: var(--font-size-lg);
+	font-weight: bold;
+}
+
+.topic {
+	width: 20%;
+}
+
+.titleContent {
+	width: 80%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.descriptionContent {
+	height: 40rem;
+	overflow: auto;
+}
+
+.green {
+	color: var(--color-feedback-text-high);
+}
+
+.yellow {
+	color: var(--color-feedback-text-medium);
+}

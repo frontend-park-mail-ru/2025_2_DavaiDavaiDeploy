@@ -178,3 +178,16 @@ export interface Feedback {
 	user_id: string;
 	user_login: string;
 }
+
+type category = 'feature_request' | 'complaint' | 'question';
+type status = 'open' | 'in_progress' | 'closed';
+
+export interface TechResponse {
+	id: string;
+	user_id: string;
+	description: string;
+	category: category;
+	status: status;
+	created_at: string;
+	updated_at: string;
+}

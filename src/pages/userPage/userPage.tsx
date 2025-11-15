@@ -4,22 +4,33 @@ import { compose, connect } from '@/modules/redux';
 import type { State } from '@/modules/redux/types/store.ts';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
+import actions from '@/redux/features/user/actions';
 import {
 	selectIsAdmin,
 	selectIsAuthentificated,
+	selectMyRequests,
 } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
 import { CircleDiagram } from '../../components/circleDiagram/circleDiagram.tsx';
 import clsx from '../../modules/clsx/index.ts';
+import { MODALS } from '../../modules/modals/modals.ts';
+import { withModal } from '../../modules/modals/withModal.tsx';
+import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
+import type { Dispatch } from '../../modules/redux/types/actions.ts';
+import type { TechResponse } from '../../types/models.ts';
 import styles from './userPage.module.scss';
 
 interface UserPageProps {
 	isAuthentificated: boolean;
 	isAdmin: boolean;
+	getMyRequests: VoidFunction;
+	myRequests: TechResponse[];
 }
 
-class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
+class UserPageComponent extends Component<
+	UserPageProps & WithRouterProps & WithModalProps
+> {
 	onUpdate() {
 		if (!this.props.isAuthentificated) {
 			this.props.router.navigate('/');
@@ -32,6 +43,7 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 	};
 	render() {
 		console.log(this.props.isAdmin);
+		console.log(this.props.myRequests);
 		return (
 			<>
 				<div className={styles.page}>
@@ -75,7 +87,43 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 								<div className={styles.supportRequestDate}>Дата обращения</div>
 								<div className={styles.supportRequestEvents}>События</div>
 							</div>
-							<div className={styles.supportRequestRow}>
+							{/* {this.props.myRequests.map((request) => {
+								return (
+									<div className={styles.supportRequestRow}>
+										<div
+											className={clsx(
+												styles.supportRequestStatus,
+												styles.requestActive,
+											)}
+										>
+											{request.status == 'in_progress'
+												? 'В обработке'
+												: 'Завершено'}
+										</div>
+										<div className={styles.supportRequestTheme}>
+											{request.description}
+										</div>
+										<div className={styles.supportRequestDate}>
+											{request.created_at}
+										</div>
+										<button
+											onClick={() =>
+												this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+											}
+											className={styles.aboutBtn}
+										>
+											Подробнее
+										</button>
+									</div>
+								);
+							})} */}
+
+
+
+
+
+
+							{/* <div className={styles.supportRequestRow}>
 								<div
 									className={clsx(
 										styles.supportRequestStatus,
@@ -88,7 +136,14 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 									Проблемы с подключением к сервису
 								</div>
 								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button className={styles.aboutBtn}>Подробнее</button>
+								<button
+									onClick={() =>
+										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+									}
+									className={styles.aboutBtn}
+								>
+									Подробнее
+								</button>
 							</div>
 							<div className={styles.supportRequestRow}>
 								<div
@@ -103,7 +158,14 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 									Проблемы с подключением к сервису
 								</div>
 								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button className={styles.aboutBtn}>Подробнее</button>
+								<button
+									onClick={() =>
+										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+									}
+									className={styles.aboutBtn}
+								>
+									Подробнее
+								</button>
 							</div>
 							<div className={styles.supportRequestRow}>
 								<div
@@ -119,7 +181,14 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 									посмотрел!
 								</div>
 								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button className={styles.aboutBtn}>Подробнее</button>
+								<button
+									onClick={() =>
+										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+									}
+									className={styles.aboutBtn}
+								>
+									Подробнее
+								</button>
 							</div>
 							<div className={styles.supportRequestRow}>
 								<div
@@ -134,7 +203,14 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 									Проблемы с версткой на странице редактирования профиля
 								</div>
 								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button className={styles.aboutBtn}>Подробнее</button>
+								<button
+									onClick={() =>
+										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+									}
+									className={styles.aboutBtn}
+								>
+									Подробнее
+								</button>
 							</div>
 							<div className={styles.supportRequestRow}>
 								<div
@@ -149,7 +225,14 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 									Проблемы с подключением к сервису
 								</div>
 								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button className={styles.aboutBtn}>Подробнее</button>
+								<button
+									onClick={() =>
+										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+									}
+									className={styles.aboutBtn}
+								>
+									Подробнее
+								</button>
 							</div>
 							<div className={styles.supportRequestRow}>
 								<div
@@ -165,7 +248,14 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 									посмотрел!
 								</div>
 								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button className={styles.aboutBtn}>Подробнее</button>
+								<button
+									onClick={() =>
+										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+									}
+									className={styles.aboutBtn}
+								>
+									Подробнее
+								</button>
 							</div>
 							<div className={styles.supportRequestRow}>
 								<div
@@ -181,7 +271,14 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 									посмотрел!
 								</div>
 								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button className={styles.aboutBtn}>Подробнее</button>
+								<button
+									onClick={() =>
+										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+									}
+									className={styles.aboutBtn}
+								>
+									Подробнее
+								</button>
 							</div>
 
 							<div className={styles.supportRequestRow}>
@@ -214,7 +311,14 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 									посмотрел!
 								</div>
 								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button className={styles.aboutBtn}>Подробнее</button>
+								<button
+									onClick={() =>
+										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+									}
+									className={styles.aboutBtn}
+								>
+									Подробнее
+								</button>
 							</div>
 							<div className={styles.supportRequestRow}>
 								<div
@@ -230,8 +334,15 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 									посмотрел!
 								</div>
 								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button className={styles.aboutBtn}>Подробнее</button>
-							</div>
+								<button
+									onClick={() =>
+										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+									}
+									className={styles.aboutBtn}
+								>
+									Подробнее
+								</button>
+							</div> */}
 						</div>
 					</div>
 				</div>
@@ -243,9 +354,15 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 const mapStateToProps = (state: State): Map => ({
 	isAuthentificated: selectIsAuthentificated(state),
 	isAdmin: selectIsAdmin(state),
+	myRequests: selectMyRequests(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	getMyRequests: () => dispatch(actions.getMyRequests()),
 });
 
 export const UserPage = compose(
 	withRouter,
-	connect(mapStateToProps),
+	withModal,
+	connect(mapStateToProps, mapDispatchToProps),
 )(UserPageComponent);
