@@ -9,6 +9,7 @@ import type { Dispatch } from '../../modules/redux/types/actions.ts';
 import type { State } from '../../modules/redux/types/store.ts';
 import actions from '../../redux/features/user/actions.ts';
 import {
+	selectIsAdmin,
 	selectMyRequests,
 	selectStats,
 } from '../../redux/features/user/selectors.ts';
@@ -38,7 +39,7 @@ function getPhraseFromRequest(req: string) {
 
 class getTableComponent extends Component<getTableProps & WithModalProps> {
 	onMount() {
-		if (!this.props.isAdmin) {
+		if (this.props.isAdmin != true) {
 			this.props.getMyRequests();
 		} else {
 			this.props.getAllRequests();
@@ -141,6 +142,7 @@ class getTableComponent extends Component<getTableProps & WithModalProps> {
 const mapStateToProps = (state: State): Map => ({
 	myRequests: selectMyRequests(state),
 	stats: selectStats(state),
+	isAdmin: selectIsAdmin(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

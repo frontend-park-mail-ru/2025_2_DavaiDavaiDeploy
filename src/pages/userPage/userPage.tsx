@@ -38,7 +38,6 @@ class UserPageComponent extends Component<
 		}
 	}
 
-
 	onMount() {
 		this.props.getStats(this.props.isAdmin);
 	}
@@ -80,7 +79,7 @@ class UserPageComponent extends Component<
 							</div>
 						)}
 						<div className={styles.supportRequests}>
-							<GetTable isAdmin={this.props.isAdmin} />
+							<GetTable />
 						</div>
 					</div>
 				</div>
