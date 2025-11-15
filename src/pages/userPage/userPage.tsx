@@ -41,6 +41,11 @@ class UserPageComponent extends Component<
 		done: 6,
 		inProgress: 4,
 	};
+
+	onMount() {
+		this.props.getMyRequests();
+	}
+
 	render() {
 		console.log(this.props.isAdmin);
 		console.log(this.props.myRequests);
@@ -87,7 +92,7 @@ class UserPageComponent extends Component<
 								<div className={styles.supportRequestDate}>Дата обращения</div>
 								<div className={styles.supportRequestEvents}>События</div>
 							</div>
-							{/* {this.props.myRequests.map((request) => {
+							{this.props.myRequests.map((request) => {
 								return (
 									<div className={styles.supportRequestRow}>
 										<div
@@ -116,12 +121,7 @@ class UserPageComponent extends Component<
 										</button>
 									</div>
 								);
-							})} */}
-
-
-
-
-
+							})}
 
 							{/* <div className={styles.supportRequestRow}>
 								<div
