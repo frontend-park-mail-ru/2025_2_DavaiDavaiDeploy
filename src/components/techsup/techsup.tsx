@@ -1,5 +1,11 @@
 import { validateTechSup } from '@/helpers/validateTechSupHelper/validateTechSupHelper';
 import clsx from '@/modules/clsx';
+import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions.ts';
+import type { State } from '@/modules/redux/types/store.ts';
+import actions from '@/redux/features/techSup/actions';
+import { selectIsSuccess } from '@/redux/features/techSup/selectors.ts';
+import type { Map } from '@/types/map';
 import { Component, createRef } from '@robocotik/react';
 import { AppToast } from '../toastContainer/toastContainer';
 import styles from './techsup.module.scss';
@@ -7,7 +13,12 @@ import styles from './techsup.module.scss';
 const MAX_FILE_SIZE_MB = 8;
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
-export class TechSup extends Component<{}> {
+interface TechSupProps {
+	send: (category: string, description: string, file?: File) => void;
+	isSuccess: boolean;
+}
+
+class TechSupComponent extends Component<TechSupProps> {
 	state = {
 		type: '',
 		typeErrorMessage: '',
@@ -27,6 +38,12 @@ export class TechSup extends Component<{}> {
 	};
 
 	fileInputRef = createRef<HTMLElement>();
+
+	onUpdate = () => {
+		if (this.props.isSuccess) {
+			AppToast.success('Обращение успешно отправлено!');
+		}
+	};
 
 	handleTypeChange = (event: Event) => {
 		const target = event.target as HTMLInputElement;
@@ -91,6 +108,18 @@ export class TechSup extends Component<{}> {
 			phone: value,
 			phoneErrorMessage: phoneErrorMessage,
 		});
+	};
+
+	send = () => {
+		const { type, description, file } = this.state;
+
+		if (file) {
+			this.props.send(type, description, file);
+
+			return;
+		}
+
+		this.props.send(type, description);
 	};
 
 	handleFileChange = (event: Event) => {
@@ -158,10 +187,6 @@ export class TechSup extends Component<{}> {
 			typeErrorMessage,
 			description,
 			descriptionErrorMessage,
-			name,
-			nameErrorMessage,
-			phone,
-			phoneErrorMessage,
 			file,
 		} = this.state;
 
@@ -188,11 +213,14 @@ export class TechSup extends Component<{}> {
 						<option value="problem">Проблема</option>
 						<option value="question">Вопрос</option>
 					</select>
+
+					{typeErrorMessage && (
+						<p className={styles.errorMessage}>{typeErrorMessage}</p>
+					)}
 				</div>
 
 				<div className={styles.form}>
 					<p className={styles.question}>
-						{' '}
 						Опишите ситуацию как можно подробнее
 					</p>
 
@@ -205,6 +233,9 @@ export class TechSup extends Component<{}> {
 					>
 						{description}
 					</textarea>
+					{descriptionErrorMessage && (
+						<p className={styles.errorMessage}>{descriptionErrorMessage}</p>
+					)}
 				</div>
 
 				<div className={styles.form}>
@@ -230,35 +261,23 @@ export class TechSup extends Component<{}> {
 					</div>
 				</div>
 
-				<h1 className={styles.title}>Оставьте свои контакты</h1>
-				<p className={styles.description}>Мы ответим вам в ближайшее время</p>
-
-				<div className={styles.form}>
-					<p className={styles.question}>Имя</p>
-					<input
-						type="text"
-						name="name"
-						value={name}
-						className={clsx(styles.input, {
-							[styles.errorBorder]: nameErrorMessage.length > 0,
-						})}
-						onInput={this.handleNameChange}
-					/>
-				</div>
-
-				<div className={styles.form}>
-					<p className={styles.question}>Номер телефона</p>
-					<input
-						type="text"
-						name="phone"
-						value={phone}
-						className={clsx(styles.input, {
-							[styles.errorBorder]: phoneErrorMessage.length > 0,
-						})}
-						onInput={this.handlePhoneChange}
-					/>
-				</div>
+				<button className={styles.btn} onClick={this.send}>
+					Отправить
+				</button>
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = (state: State): Map => ({
+	isSuccess: selectIsSuccess(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	send: (category: string, description: string, file?: File) =>
+		dispatch(actions.sendMessageAction(category, description, file)),
+});
+
+export const TechSup = compose(connect(mapStateToProps, mapDispatchToProps))(
+	TechSupComponent,
+);

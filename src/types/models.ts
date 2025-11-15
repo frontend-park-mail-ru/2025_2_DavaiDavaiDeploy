@@ -160,3 +160,20 @@ export interface ModelsUser {
 	updated_at?: string;
 	version: number;
 }
+
+export interface Feedback {
+	created_at: string;
+	id: string;
+	is_mine: boolean;
+	/**
+	 * @min 1
+	 * @max 10
+	 */
+	rating: number;
+	text: string;
+	title: string;
+	updated_at: string;
+	user_avatar: string;
+	user_id: string;
+	user_login: string;
+}
