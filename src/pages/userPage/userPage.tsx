@@ -4,14 +4,19 @@ import { compose, connect } from '@/modules/redux';
 import type { State } from '@/modules/redux/types/store.ts';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
-import { selectIsAuthentificated } from '@/redux/features/user/selectors';
+import {
+	selectIsAdmin,
+	selectIsAuthentificated,
+} from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
+import { CircleDiagram } from '../../components/circleDiagram/circleDiagram.tsx';
 import clsx from '../../modules/clsx/index.ts';
 import styles from './userPage.module.scss';
 
 interface UserPageProps {
 	isAuthentificated: boolean;
+	isAdmin: boolean;
 }
 
 class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
@@ -21,6 +26,7 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 		}
 	}
 	render() {
+		console.log(this.props.isAdmin);
 		return (
 			<>
 				<div className={styles.page}>
@@ -31,7 +37,14 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 					</section>
 				</div>
 				<div className={styles.pageSupport}>
-					<h1 className={styles.title}>Мои обращения в тех. поддержку</h1>
+					<h1 className={styles.title}>
+						{this.props.isAdmin
+							? 'Обращения в тех. поддержку'
+							: 'Мои обращения в тех. поддержку'}
+					</h1>
+					{this.props.isAdmin && (
+						<CircleDiagram all={10} done={6} inProgress={4} />
+					)}
 					<div className={styles.supportRequestsContainer}>
 						<div>
 							<div>
@@ -218,6 +231,7 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 
 const mapStateToProps = (state: State): Map => ({
 	isAuthentificated: selectIsAuthentificated(state),
+	isAdmin: selectIsAdmin(state),
 });
 
 export const UserPage = compose(

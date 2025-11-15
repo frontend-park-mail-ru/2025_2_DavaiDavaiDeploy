@@ -159,4 +159,5 @@ export interface ModelsUser {
 	login: string;
 	updated_at?: string;
 	version: number;
+	isAdmin: boolean;
 }
