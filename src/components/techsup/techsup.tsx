@@ -3,12 +3,6 @@ import { APP_URL_WITH_SCHEMA } from '@/consts/urls';
 import { validateTechSup } from '@/helpers/validateTechSupHelper/validateTechSupHelper';
 import clsx from '@/modules/clsx';
 import HTTPClient from '@/modules/HTTPClient';
-import { compose, connect } from '@/modules/redux';
-import type { Dispatch } from '@/modules/redux/types/actions.ts';
-import type { State } from '@/modules/redux/types/store.ts';
-import actions from '@/redux/features/techSup/actions';
-import { selectIsSuccess } from '@/redux/features/techSup/selectors.ts';
-import type { Map } from '@/types/map';
 import { Component, createRef } from '@robocotik/react';
 import type { FeedBack } from '../feedBack/feedBack';
 import styles from './techsup.module.scss';
@@ -16,8 +10,23 @@ import styles from './techsup.module.scss';
 const MAX_FILE_SIZE_MB = 8;
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
-class TechSupComponent extends Component<{}> {
-	state = {
+interface TechSupState {
+	type: string;
+	typeErrorMessage: string;
+	description: string;
+	descriptionErrorMessage: string;
+	name: string;
+	nameErrorMessage: string;
+	phone: string;
+	phoneErrorMessage: string;
+	file: File | null;
+	error: string;
+	preview: string | null;
+	isSuccess: boolean;
+}
+
+class TechSupComponent extends Component<{}, TechSupState> {
+	state: TechSupState = {
 		type: '',
 		typeErrorMessage: '',
 		description: '',
@@ -87,7 +96,7 @@ class TechSupComponent extends Component<{}> {
 			if (file) {
 				const formData = new FormData();
 				formData.append('attachment', file);
-				const response = await HTTPClient.post<FeedBack>(`/feedback`, {
+				await HTTPClient.post<FeedBack>(`/feedback`, {
 					data: {
 						description,
 						category: type,
@@ -95,7 +104,7 @@ class TechSupComponent extends Component<{}> {
 					},
 				});
 			} else {
-				const response = await HTTPClient.post<FeedBack>(`/feedback`, {
+				await HTTPClient.post<FeedBack>(`/feedback`, {
 					data: {
 						category: type,
 						description,
@@ -150,7 +159,6 @@ class TechSupComponent extends Component<{}> {
 		}
 
 		this.setState({
-			isEditing: true,
 			isSuccess: false,
 		});
 
@@ -160,7 +168,6 @@ class TechSupComponent extends Component<{}> {
 			this.setState({
 				file: selected,
 				error: '',
-				preview: reader.result,
 			});
 		};
 
@@ -182,11 +189,8 @@ class TechSupComponent extends Component<{}> {
 		}
 
 		this.setState({
-			isEditing: false,
 			isSuccess: true,
 		});
-
-		this.setState({ errorShown: false, successShown: false });
 	};
 
 	handleClose = () => {
@@ -283,7 +287,7 @@ class TechSupComponent extends Component<{}> {
 							></input>
 						</div>
 
-						<span className={styles.files}>{file?.name}</span>
+						<span className={styles.files}>{file?.name || 'Без названия'}</span>
 					</div>
 				</div>
 
@@ -295,15 +299,4 @@ class TechSupComponent extends Component<{}> {
 	}
 }
 
-const mapStateToProps = (state: State): Map => ({
-	isSuccess: selectIsSuccess(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	send: (category: string, description: string, file?: File) =>
-		dispatch(actions.sendMessageAction(category, description, file)),
-});
-
-export const TechSup = compose(connect(mapStateToProps, mapDispatchToProps))(
-	TechSupComponent,
-);
+export const TechSup = TechSupComponent;
