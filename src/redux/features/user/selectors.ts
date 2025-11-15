@@ -42,3 +42,7 @@ export const selectNewPasswordLoading: Selector = (state: State): boolean =>
 
 export const selectNewAvatarLoading: Selector = (state: State): boolean =>
 	state.user.newAvatarLoading;
+
+export const selectIsAdmin: Selector = (state: State): boolean =>
+	state.user.isAdmin;
+
