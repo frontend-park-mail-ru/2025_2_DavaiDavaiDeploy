@@ -12,7 +12,7 @@ interface InitialState {
 	avatarChangeError: boolean;
 	newPasswordLoading: boolean;
 	newAvatarLoading: false;
-	isAdmin: boolean;
+	is_admin: boolean;
 }
 
 /**
@@ -27,7 +27,7 @@ const initialState: InitialState = {
 	avatarChangeError: false,
 	newPasswordLoading: false,
 	newAvatarLoading: false,
-	isAdmin: true,
+	is_admin: true,
 };
 
 /**
