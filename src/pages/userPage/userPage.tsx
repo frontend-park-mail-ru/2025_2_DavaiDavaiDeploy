@@ -48,6 +48,7 @@ class UserPageComponent extends Component<
 	}
 
 	render() {
+		console.log(this.props.isAdmin);
 		return (
 			<>
 				<div className={styles.page}>
