@@ -1,0 +1,21 @@
+.content {
+	position: fixed;
+	left: 1vw;
+	bottom: 5vh;
+	display: flex;
+	background-color: var(--color-light);
+	height: 8vh;
+	width: 8vh;
+	z-index: 100;
+	border-radius: var(--border-radius-lg);
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.title {
+	color: var(--color-text);
+	font-size: var(--font-size-2xl);
+	text-align: center;
+	width: 40%;
+}

@@ -1,7 +1,7 @@
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsUser } from '@/types/models';
+import type { ModelsUser, Stats } from '@/types/models';
 import actionTypes from './actionTypes';
 
 interface InitialState {
@@ -12,6 +12,10 @@ interface InitialState {
 	avatarChangeError: boolean;
 	newPasswordLoading: boolean;
 	newAvatarLoading: false;
+	is_admin: boolean;
+	statsError: string | null;
+	statsLoading: boolean;
+	stats: Stats | null;
 }
 
 /**
@@ -26,6 +30,10 @@ const initialState: InitialState = {
 	avatarChangeError: false,
 	newPasswordLoading: false,
 	newAvatarLoading: false,
+	is_admin: false,
+	statsError: null,
+	statsLoading: false,
+	stats: null,
 };
 
 /**
@@ -128,6 +136,41 @@ export const userReducer: Reducer = (
 				newAvatarLoading: false,
 				avatarChangeError: null,
 				user: payload.user,
+			};
+		case actionTypes.MY_REQUESTS_LOADED:
+			return {
+				...state,
+				loading: false,
+				tech_requests: payload.tech_requests,
+			};
+		case actionTypes.MY_REQUESTS_ERROR:
+			return {
+				...state,
+				loading: false,
+				tech_requests: [],
+			};
+		case actionTypes.MY_REQUESTS_LOADING:
+			return {
+				...state,
+				loading: true,
+			};
+
+		case actionTypes.STATS_ERROR:
+			return {
+				statsError: payload.error,
+				statsLoading: false,
+			};
+
+		case actionTypes.STATS_LOADING:
+			return {
+				statsError: null,
+				statsLoading: true,
+			};
+
+		case actionTypes.STATS_LOAD:
+			return {
+				statsLoading: false,
+				stats: payload.stats,
 			};
 
 		default:

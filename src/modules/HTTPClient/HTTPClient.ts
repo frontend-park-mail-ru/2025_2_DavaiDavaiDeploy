@@ -63,12 +63,13 @@ export class HTTPClient {
 		data: any,
 		requestMethod: string,
 		requestHeaders: Headers,
+		path: string,
 	): string | undefined | FormData {
 		if (!data || requestMethod === METHODS.GET) {
 			return undefined;
 		}
 
-		if (data instanceof FormData) {
+		if (data instanceof FormData || path === '/feedback') {
 			return data;
 		}
 
@@ -101,7 +102,12 @@ export class HTTPClient {
 
 		const requestHeaders = this._buildHeaders();
 
-		const requestBody = this._buildBody(data, requestMethod, requestHeaders);
+		const requestBody = this._buildBody(
+			data,
+			requestMethod,
+			requestHeaders,
+			path,
+		);
 
 		const controller = new AbortController();
 		const signal = controller.signal;
