@@ -25,6 +25,11 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 			this.props.router.navigate('/');
 		}
 	}
+	sampleData = {
+		all: 10,
+		done: 6,
+		inProgress: 4,
+	};
 	render() {
 		console.log(this.props.isAdmin);
 		return (
@@ -43,17 +48,23 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 							: 'Мои обращения в тех. поддержку'}
 					</h1>
 					{this.props.isAdmin && (
-						<CircleDiagram all={10} done={6} inProgress={4} />
+						<CircleDiagram
+							all={this.sampleData.all}
+							done={this.sampleData.done}
+							inProgress={this.sampleData.inProgress}
+						/>
 					)}
 					<div className={styles.supportRequestsContainer}>
 						<div>
 							<div>
-								<p className={styles.supportRequestInfo}>Кол-во заявок: 10</p>
 								<p className={styles.supportRequestInfo}>
-									Кол-во решенных заявок: 6
+									Кол-во заявок: {this.sampleData.all}
 								</p>
 								<p className={styles.supportRequestInfo}>
-									Кол-во открытых заявок: 4
+									Кол-во решенных заявок: {this.sampleData.done}
+								</p>
+								<p className={styles.supportRequestInfo}>
+									Кол-во открытых заявок: {this.sampleData.inProgress}
 								</p>
 							</div>
 						</div>

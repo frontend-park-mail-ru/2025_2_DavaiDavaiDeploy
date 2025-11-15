@@ -1,8 +1,92 @@
-.circleDiagram{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30rem;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 2rem;
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+.title {
+	font-size: 1.5rem;
+	margin-bottom: 2rem;
+	color: var(--color-text, #333);
+	text-align: center;
+}
+
+.circleDiagram {
+	position: relative;
+	margin-bottom: 2rem;
+}
+
+.svg {
+	transform: rotate(-90deg);
+	transition: transform 0.3s ease;
+}
+
+.doneCircle,
+.inProgressCircle {
+	transition: stroke-dashoffset 0.8s ease-in-out;
+}
+
+.centerText {
+	font-size: 1.2rem;
+	font-weight: bold;
+	fill: var(--color-text, #333);
+}
+
+.legend {
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+	width: 100%;
+	max-width: 250px;
+}
+
+.legendItem {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	font-size: 0.9rem;
+	color: var(--color-text, #333);
+}
+
+.legendColor {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+	.container {
+		padding: 1rem;
+	}
+
+	.title {
+		font-size: 1.3rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.svg {
+		width: 100px;
+		height: 100px;
+	}
+
+	.centerText {
+		font-size: 1rem;
+	}
+
+	.legend {
+		max-width: 200px;
+	}
+
+	.legendItem {
+		font-size: 0.8rem;
+	}
+}
+
+.doneCircle,
+.inProgressCircle {
+	transition: stroke-dashoffset 1s ease-out;
 }
