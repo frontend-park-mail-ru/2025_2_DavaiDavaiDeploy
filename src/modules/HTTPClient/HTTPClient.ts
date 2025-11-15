@@ -63,7 +63,7 @@ export class HTTPClient {
 		data: any,
 		requestMethod: string,
 		requestHeaders: Headers,
-		path,
+		path: string,
 	): string | undefined | FormData {
 		if (!data || requestMethod === METHODS.GET) {
 			return undefined;

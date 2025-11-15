@@ -64,7 +64,7 @@ class UserPageComponent extends Component<
 							: 'Мои обращения в тех. поддержку'}
 					</h1>
 					<div className={styles.supportRequestsContainer}>
-						{this.state.stats && (
+						{this.props.stats && (
 							<div>
 								<div>
 									<p className={styles.supportRequestInfo}>

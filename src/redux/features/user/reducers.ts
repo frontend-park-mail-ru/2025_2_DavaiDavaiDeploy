@@ -30,10 +30,10 @@ const initialState: InitialState = {
 	avatarChangeError: false,
 	newPasswordLoading: false,
 	newAvatarLoading: false,
+	is_admin: false,
 	statsError: null,
 	statsLoading: false,
 	stats: null,
-	is_admin: false,
 };
 
 /**
@@ -138,10 +138,6 @@ export const userReducer: Reducer = (
 				user: payload.user,
 			};
 		case actionTypes.MY_REQUESTS_LOADED:
-			console.log(
-				'в редьюсере поймал MY_REQUESTS_LOADED',
-				payload.tech_requests,
-			);
 			return {
 				...state,
 				loading: false,
