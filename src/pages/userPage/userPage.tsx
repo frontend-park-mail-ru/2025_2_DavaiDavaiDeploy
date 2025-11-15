@@ -24,7 +24,7 @@ import styles from './userPage.module.scss';
 interface UserPageProps {
 	isAuthentificated: boolean;
 	isAdmin: boolean;
-	getMyRequests: VoidFunction;
+	getMyRequests: () => {};
 	myRequests: TechResponse[];
 }
 
@@ -43,12 +43,11 @@ class UserPageComponent extends Component<
 	};
 
 	onMount() {
+		console.log('СДЕЛАЛ МАУНТ');
 		this.props.getMyRequests();
 	}
 
 	render() {
-		console.log(this.props.isAdmin);
-		console.log(this.props.myRequests);
 		return (
 			<>
 				<div className={styles.page}>
@@ -92,257 +91,37 @@ class UserPageComponent extends Component<
 								<div className={styles.supportRequestDate}>Дата обращения</div>
 								<div className={styles.supportRequestEvents}>События</div>
 							</div>
-							{this.props.myRequests.map((request) => {
-								return (
-									<div className={styles.supportRequestRow}>
-										<div
-											className={clsx(
-												styles.supportRequestStatus,
-												styles.requestActive,
-											)}
-										>
-											{request.status == 'in_progress'
-												? 'В обработке'
-												: 'Завершено'}
+							{this.props.myRequests &&
+								this.props.myRequests.map((request) => {
+									return (
+										<div className={styles.supportRequestRow}>
+											<div
+												className={clsx(
+													styles.supportRequestStatus,
+													styles.requestActive,
+												)}
+											>
+												{request.status == 'in_progress'
+													? 'В обработке'
+													: 'Завершено'}
+											</div>
+											<div className={styles.supportRequestTheme}>
+												{request.description}
+											</div>
+											<div className={styles.supportRequestDate}>
+												{request.created_at}
+											</div>
+											<button
+												onClick={() =>
+													this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+												}
+												className={styles.aboutBtn}
+											>
+												Подробнее
+											</button>
 										</div>
-										<div className={styles.supportRequestTheme}>
-											{request.description}
-										</div>
-										<div className={styles.supportRequestDate}>
-											{request.created_at}
-										</div>
-										<button
-											onClick={() =>
-												this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
-											}
-											className={styles.aboutBtn}
-										>
-											Подробнее
-										</button>
-									</div>
-								);
-							})}
-
-							{/* <div className={styles.supportRequestRow}>
-								<div
-									className={clsx(
-										styles.supportRequestStatus,
-										styles.requestActive,
-									)}
-								>
-									В обработке
-								</div>
-								<div className={styles.supportRequestTheme}>
-									Проблемы с подключением к сервису
-								</div>
-								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button
-									onClick={() =>
-										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
-									}
-									className={styles.aboutBtn}
-								>
-									Подробнее
-								</button>
-							</div>
-							<div className={styles.supportRequestRow}>
-								<div
-									className={clsx(
-										styles.supportRequestStatus,
-										styles.requestDone,
-									)}
-								>
-									Решена
-								</div>
-								<div className={styles.supportRequestTheme}>
-									Проблемы с подключением к сервису
-								</div>
-								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button
-									onClick={() =>
-										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
-									}
-									className={styles.aboutBtn}
-								>
-									Подробнее
-								</button>
-							</div>
-							<div className={styles.supportRequestRow}>
-								<div
-									className={clsx(
-										styles.supportRequestStatus,
-										styles.requestDone,
-									)}
-								>
-									Решена
-								</div>
-								<div className={styles.supportRequestTheme}>
-									Не могу оставить комментарий к фильму, трейлер которого
-									посмотрел!
-								</div>
-								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button
-									onClick={() =>
-										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
-									}
-									className={styles.aboutBtn}
-								>
-									Подробнее
-								</button>
-							</div>
-							<div className={styles.supportRequestRow}>
-								<div
-									className={clsx(
-										styles.supportRequestStatus,
-										styles.requestDone,
-									)}
-								>
-									Решена
-								</div>
-								<div className={styles.supportRequestTheme}>
-									Проблемы с версткой на странице редактирования профиля
-								</div>
-								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button
-									onClick={() =>
-										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
-									}
-									className={styles.aboutBtn}
-								>
-									Подробнее
-								</button>
-							</div>
-							<div className={styles.supportRequestRow}>
-								<div
-									className={clsx(
-										styles.supportRequestStatus,
-										styles.requestDone,
-									)}
-								>
-									Решена
-								</div>
-								<div className={styles.supportRequestTheme}>
-									Проблемы с подключением к сервису
-								</div>
-								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button
-									onClick={() =>
-										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
-									}
-									className={styles.aboutBtn}
-								>
-									Подробнее
-								</button>
-							</div>
-							<div className={styles.supportRequestRow}>
-								<div
-									className={clsx(
-										styles.supportRequestStatus,
-										styles.requestDone,
-									)}
-								>
-									Решена
-								</div>
-								<div className={styles.supportRequestTheme}>
-									Не могу оставить комментарий к фильму, трейлер которого
-									посмотрел!
-								</div>
-								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button
-									onClick={() =>
-										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
-									}
-									className={styles.aboutBtn}
-								>
-									Подробнее
-								</button>
-							</div>
-							<div className={styles.supportRequestRow}>
-								<div
-									className={clsx(
-										styles.supportRequestStatus,
-										styles.requestDone,
-									)}
-								>
-									Решена
-								</div>
-								<div className={styles.supportRequestTheme}>
-									Не могу оставить комментарий к фильму, трейлер которого
-									посмотрел!
-								</div>
-								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button
-									onClick={() =>
-										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
-									}
-									className={styles.aboutBtn}
-								>
-									Подробнее
-								</button>
-							</div>
-
-							<div className={styles.supportRequestRow}>
-								<div
-									className={clsx(
-										styles.supportRequestStatus,
-										styles.requestDone,
-									)}
-								>
-									Решена
-								</div>
-								<div className={styles.supportRequestTheme}>
-									Не могу оставить комментарий к фильму, трейлер которого
-									посмотрел!
-								</div>
-								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button className={styles.aboutBtn}>Подробнее</button>
-							</div>
-							<div className={styles.supportRequestRow}>
-								<div
-									className={clsx(
-										styles.supportRequestStatus,
-										styles.requestDone,
-									)}
-								>
-									Решена
-								</div>
-								<div className={styles.supportRequestTheme}>
-									Не могу оставить комментарий к фильму, трейлер которого
-									посмотрел!
-								</div>
-								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button
-									onClick={() =>
-										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
-									}
-									className={styles.aboutBtn}
-								>
-									Подробнее
-								</button>
-							</div>
-							<div className={styles.supportRequestRow}>
-								<div
-									className={clsx(
-										styles.supportRequestStatus,
-										styles.requestDone,
-									)}
-								>
-									Решена
-								</div>
-								<div className={styles.supportRequestTheme}>
-									Не могу оставить комментарий к фильму, трейлер которого
-									посмотрел!
-								</div>
-								<div className={styles.supportRequestDate}>21.10.2025</div>
-								<button
-									onClick={() =>
-										this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
-									}
-									className={styles.aboutBtn}
-								>
-									Подробнее
-								</button>
-							</div> */}
+									);
+								})}
 						</div>
 					</div>
 				</div>
