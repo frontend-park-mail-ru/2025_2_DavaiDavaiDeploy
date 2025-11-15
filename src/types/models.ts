@@ -159,46 +159,4 @@ export interface ModelsUser {
 	login: string;
 	updated_at?: string;
 	version: number;
-	is_admin: boolean;
-}
-
-export interface Feedback {
-	created_at: string;
-	id: string;
-	is_mine: boolean;
-	/**
-	 * @min 1
-	 * @max 10
-	 */
-	rating: number;
-	text: string;
-	title: string;
-	updated_at: string;
-	user_avatar: string;
-	user_id: string;
-	user_login: string;
-}
-
-type category = 'feature_request' | 'complaint' | 'question';
-type status = 'open' | 'in_progress' | 'closed';
-
-export interface TechResponse {
-	id: string;
-	user_id: string;
-	description: string;
-	category: category;
-	status: status;
-	created_at: string;
-	updated_at: string;
-}
-
-export interface Stats {
-	total: number;
-	open: number;
-	in_progress: number;
-	closed: number;
-	bugs: number;
-	feature_requests: number;
-	complaints: number;
-	questions: number;
 }

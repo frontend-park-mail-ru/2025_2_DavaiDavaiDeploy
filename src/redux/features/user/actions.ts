@@ -5,7 +5,7 @@ import { registrationCodeToErrorHelper } from '@/helpers/registrationCodeToError
 import { storeAuthTokensFromResponse } from '@/helpers/storeAuthTokensFromResponse/storeAuthTokensFromResponse.ts';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import { type ModelsUser, type Stats, type TechResponse } from '@/types/models';
+import type { ModelsUser } from '@/types/models';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -39,12 +39,6 @@ const setNewPasswordLoadingAction = (): Action => {
 const setNewAvatarLoadingAction = (): Action => {
 	return {
 		type: actionTypes.AVATAR_CHANGE_LOADING,
-	};
-};
-
-const setStatsLoadingAction = (): Action => {
-	return {
-		type: actionTypes.STATS_LOADING,
 	};
 };
 
@@ -114,34 +108,6 @@ const deleteUserAction = (userId: string | number): Action => {
 	return {
 		type: actionTypes.USER_DELETE,
 		payload: { userId: userId },
-	};
-};
-
-const returnMyRequestsAction = (data: TechResponse[]): Action => {
-	return {
-		type: actionTypes.MY_REQUESTS_LOADED,
-		payload: { tech_requests: data },
-	};
-};
-
-const returnMyRequestsActionError = (error: string): Action => {
-	return {
-		type: actionTypes.MY_REQUESTS_ERROR,
-		payload: { error: error },
-	};
-};
-
-const returnStatsAction = (data: Stats): Action => {
-	return {
-		type: actionTypes.STATS_LOAD,
-		payload: { stats: data },
-	};
-};
-
-const returnStatsActionError = (error: string): Action => {
-	return {
-		type: actionTypes.STATS_ERROR,
-		payload: { error: error },
 	};
 };
 
@@ -316,65 +282,6 @@ const changeAvatarAction =
 		}
 	};
 
-const getMyRequests: Action = () => async (dispatch: Dispatch) => {
-	try {
-		const response = await HTTPClient.get<TechResponse[]>('/feedback/my');
-		dispatch(returnMyRequestsAction(response.data));
-	} catch (error: unknown) {
-		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
-
-		if (error instanceof Error) {
-			errorMessage = error.message;
-		} else if (typeof error === 'string') {
-			errorMessage = error;
-		}
-
-		dispatch(returnMyRequestsActionError(errorMessage));
-	}
-};
-
-const getAllRequests: Action = () => async (dispatch: Dispatch) => {
-	try {
-		const response = await HTTPClient.get<TechResponse[]>('/feedback');
-		dispatch(returnMyRequestsAction(response.data));
-	} catch (error: unknown) {
-		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
-
-		if (error instanceof Error) {
-			errorMessage = error.message;
-		} else if (typeof error === 'string') {
-			errorMessage = error;
-		}
-
-		dispatch(returnMyRequestsActionError(errorMessage));
-	}
-};
-
-const getMyStats: Action = (isAdmin: boolean) => async (dispatch: Dispatch) => {
-	dispatch(setStatsLoadingAction());
-
-	let path = '/feedback/my/stats';
-
-	if (isAdmin) {
-		path = '/feedback/stats';
-	}
-
-	try {
-		const response = await HTTPClient.get<Stats>(path);
-		dispatch(returnStatsAction(response.data));
-	} catch (error: unknown) {
-		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
-
-		if (error instanceof Error) {
-			errorMessage = error.message;
-		} else if (typeof error === 'string') {
-			errorMessage = error;
-		}
-
-		dispatch(returnStatsActionError(errorMessage));
-	}
-};
-
 export default {
 	registerUserAction,
 	loginUserAction,
@@ -384,7 +291,4 @@ export default {
 	logoutUserAction,
 	changePasswordAction,
 	changeAvatarAction,
-	getMyStats,
-	getMyRequests,
-	getAllRequests,
 };

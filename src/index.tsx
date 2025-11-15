@@ -9,8 +9,6 @@ import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
-import { TechSup } from './components/techsup/techsup.tsx';
-import { TechSupWidget } from './components/techSupWidget/techSupWidget.tsx';
 import { ToastContainer } from './components/toastContainer/toastContainer.tsx';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
@@ -69,69 +67,64 @@ interface AppProps {
 	checkUser: () => {};
 }
 
-if (window.location.pathname === '/techsup') {
-	render(<TechSup />, document.body);
-} else {
-	class AppComponent extends Component<AppProps & WithRouterProps> {
-		onMount() {
-			this.props.checkUser();
-		}
-
-		render() {
-			const isAuthPageOpen =
-				this.props.router.path === '/login' ||
-				this.props.router.path === '/register';
-
-			return (
-				<ModalsProvider>
-					<div class="layout">
-						{this.props.user && <TechSupWidget />}
-						<ToastContainer />
-						<ModalRoot />
-						{!isAuthPageOpen && <Header />}
-						<Routes>
-							<Route href="/" component={<HomePage />} />
-							<Route href="/films/:id" component={<FilmPage />} />
-							<Route href="/actors/:id" component={<ActorPage />} />
-							<Route href="/login" component={<LoginPage />} />
-							<Route href="/register" component={<RegisterPage />} />
-							<Route href="/genres/:id" component={<GenrePage />} />
-							<Route href="/profile" component={<UserPage />} />
-						</Routes>
-						{!isAuthPageOpen && <Footer />}
-					</div>
-				</ModalsProvider>
-			);
-		}
+class AppComponent extends Component<AppProps & WithRouterProps> {
+	onMount() {
+		this.props.checkUser();
 	}
 
-	class ProvidersLayout extends Component {
-		render() {
-			return (
-				<Provider store={store}>
-					<RouterProvider>{this.props.children}</RouterProvider>
-				</Provider>
-			);
-		}
+	render() {
+		const isAuthPageOpen =
+			this.props.router.path === '/login' ||
+			this.props.router.path === '/register';
+
+		return (
+			<ModalsProvider>
+				<div class="layout">
+					<ToastContainer />
+					<ModalRoot />
+					{!isAuthPageOpen && <Header />}
+					<Routes>
+						<Route href="/" component={<HomePage />} />
+						<Route href="/films/:id" component={<FilmPage />} />
+						<Route href="/actors/:id" component={<ActorPage />} />
+						<Route href="/login" component={<LoginPage />} />
+						<Route href="/register" component={<RegisterPage />} />
+						<Route href="/genres/:id" component={<GenrePage />} />
+						<Route href="/profile" component={<UserPage />} />
+					</Routes>
+					{!isAuthPageOpen && <Footer />}
+				</div>
+			</ModalsProvider>
+		);
 	}
-
-	const mapStateToProps = (state: State): Map => ({
-		user: selectUser(state),
-	});
-
-	const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-		checkUser: () => dispatch(actions.checkUserAction()),
-	});
-
-	const App = compose(
-		withRouter,
-		connect(mapStateToProps, mapDispatchToProps),
-	)(AppComponent);
-
-	render(
-		<ProvidersLayout>
-			<App />
-		</ProvidersLayout>,
-		document.body,
-	);
 }
+
+class ProvidersLayout extends Component {
+	render() {
+		return (
+			<Provider store={store}>
+				<RouterProvider>{this.props.children}</RouterProvider>
+			</Provider>
+		);
+	}
+}
+
+const mapStateToProps = (state: State): Map => ({
+	user: selectUser(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	checkUser: () => dispatch(actions.checkUserAction()),
+});
+
+const App = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(AppComponent);
+
+render(
+	<ProvidersLayout>
+		<App />
+	</ProvidersLayout>,
+	document.body,
+);
