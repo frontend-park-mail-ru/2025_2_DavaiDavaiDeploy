@@ -2,8 +2,19 @@
 	position: fixed;
 	left: 5vw;
 	bottom: 5vh;
+	display: flex;
 	background-color: var(--color-light);
-	height: 5vh;
-	width: 5vw;
+	height: 8vh;
+	width: 8vw;
 	z-index: 100;
+	border-radius: var(--border-radius-lg);
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.title {
+	color: var(--color-text);
+	font-size: var(--font-size-2xl);
+	text-align: center;
 }

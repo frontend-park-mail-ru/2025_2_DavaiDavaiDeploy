@@ -69,67 +69,69 @@ interface AppProps {
 	checkUser: () => {};
 }
 
-class AppComponent extends Component<AppProps & WithRouterProps> {
-	onMount() {
-		this.props.checkUser();
+if (window.location.pathname === '/techsup') {
+	render(<TechSup />, document.body);
+} else {
+	class AppComponent extends Component<AppProps & WithRouterProps> {
+		onMount() {
+			this.props.checkUser();
+		}
+
+		render() {
+			const isAuthPageOpen =
+				this.props.router.path === '/login' ||
+				this.props.router.path === '/register';
+
+			return (
+				<ModalsProvider>
+					<div class="layout">
+						<TechSupWidget />
+						<ToastContainer />
+						<ModalRoot />
+						{!isAuthPageOpen && <Header />}
+						<Routes>
+							<Route href="/" component={<HomePage />} />
+							<Route href="/films/:id" component={<FilmPage />} />
+							<Route href="/actors/:id" component={<ActorPage />} />
+							<Route href="/login" component={<LoginPage />} />
+							<Route href="/register" component={<RegisterPage />} />
+							<Route href="/genres/:id" component={<GenrePage />} />
+							<Route href="/profile" component={<UserPage />} />
+						</Routes>
+						{!isAuthPageOpen && <Footer />}
+					</div>
+				</ModalsProvider>
+			);
+		}
 	}
 
-	render() {
-		const isAuthPageOpen =
-			this.props.router.path === '/login' ||
-			this.props.router.path === '/register' ||
-			this.props.router.path === '/techsup';
-
-		return (
-			<ModalsProvider>
-				<div class="layout">
-					<TechSupWidget />
-					<ToastContainer />
-					<ModalRoot />
-					{!isAuthPageOpen && <Header />}
-					<Routes>
-						<Route href="/" component={<HomePage />} />
-						<Route href="/films/:id" component={<FilmPage />} />
-						<Route href="/actors/:id" component={<ActorPage />} />
-						<Route href="/login" component={<LoginPage />} />
-						<Route href="/register" component={<RegisterPage />} />
-						<Route href="/genres/:id" component={<GenrePage />} />
-						<Route href="/profile" component={<UserPage />} />
-						<Route href="/techsup" component={<TechSup />} />
-					</Routes>
-					{!isAuthPageOpen && <Footer />}
-				</div>
-			</ModalsProvider>
-		);
+	class ProvidersLayout extends Component {
+		render() {
+			return (
+				<Provider store={store}>
+					<RouterProvider>{this.props.children}</RouterProvider>
+				</Provider>
+			);
+		}
 	}
+
+	const mapStateToProps = (state: State): Map => ({
+		user: selectUser(state),
+	});
+
+	const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+		checkUser: () => dispatch(actions.checkUserAction()),
+	});
+
+	const App = compose(
+		withRouter,
+		connect(mapStateToProps, mapDispatchToProps),
+	)(AppComponent);
+
+	render(
+		<ProvidersLayout>
+			<App />
+		</ProvidersLayout>,
+		document.body,
+	);
 }
-
-class ProvidersLayout extends Component {
-	render() {
-		return (
-			<Provider store={store}>
-				<RouterProvider>{this.props.children}</RouterProvider>
-			</Provider>
-		);
-	}
-}
-
-const mapStateToProps = (state: State): Map => ({
-	user: selectUser(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	checkUser: () => dispatch(actions.checkUserAction()),
-});
-
-const App = compose(
-	withRouter,
-	connect(mapStateToProps, mapDispatchToProps),
-)(AppComponent);
-
-render(
-	<ProvidersLayout>
-		<App />
-	</ProvidersLayout>,
-	document.body,
-);

@@ -8,8 +8,10 @@ import { ModalContext, type ModalContextValue } from './modalsContext.ts';
 export class ModalRoot extends Component<{}, {}, ModalContextValue> {
 	static readonly contextType = ModalContext;
 	render() {
-		if (document.querySelector('body') !== null) {
-			document.querySelector('body').style.overflow = 'hidden';
+		if (this.context.activeModal && document.querySelector('html') !== null) {
+			document.querySelector('html').style.overflow = 'hidden';
+		} else {
+			document.querySelector('html').style.overflow = 'visible';
 		}
 
 		switch (this.context.activeModal) {

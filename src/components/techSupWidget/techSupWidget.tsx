@@ -9,7 +9,11 @@ export class TechSupWidgetComponent extends Component<WithModalProps> {
 	};
 
 	render() {
-		return <div className={styles.content} onClick={this.handleClick}></div>;
+		return (
+			<div className={styles.content} onClick={this.handleClick}>
+				<p className={styles.title}>?</p>
+			</div>
+		);
 	}
 }
 
