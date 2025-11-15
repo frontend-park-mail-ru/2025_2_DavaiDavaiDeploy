@@ -96,19 +96,18 @@ class TechSupComponent extends Component<{}, TechSupState> {
 			if (file) {
 				const formData = new FormData();
 				formData.append('attachment', file);
+				formData.append('description', description);
+				formData.append('category', type);
+
 				await HTTPClient.post<FeedBack>(`/feedback`, {
-					data: {
-						description,
-						category: type,
-						formData,
-					},
+					data: formData,
 				});
 			} else {
+				const formData = new FormData();
+				formData.append('description', description);
+				formData.append('category', type);
 				await HTTPClient.post<FeedBack>(`/feedback`, {
-					data: {
-						category: type,
-						description,
-					},
+					data: formData,
 				});
 
 				this.setState({ isSuccess: true });

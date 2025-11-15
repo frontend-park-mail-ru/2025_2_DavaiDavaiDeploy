@@ -69,13 +69,8 @@ export class HTTPClient {
 			return undefined;
 		}
 
-		if (data instanceof FormData) {
+		if (data instanceof FormData || path === '/feedback') {
 			return data;
-		}
-
-		if (path === '/feedback') {
-			requestHeaders.set('Content-Type', 'multipart/form-data');
-			return JSON.stringify(data);
 		}
 
 		if (typeof data === 'object') {
