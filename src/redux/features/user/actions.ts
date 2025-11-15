@@ -334,7 +334,6 @@ const getMyRequests: Action = () => async (dispatch: Dispatch) => {
 };
 
 const getMyStats: Action = (isAdmin: boolean) => async (dispatch: Dispatch) => {
-	console.log('в актион');
 	dispatch(setStatsLoadingAction());
 
 	let path = '/feedback/my/stats';
@@ -345,9 +344,6 @@ const getMyStats: Action = (isAdmin: boolean) => async (dispatch: Dispatch) => {
 
 	try {
 		const response = await HTTPClient.get<Stats>(path);
-
-		console.log(response.data);
-
 		dispatch(returnStatsAction(response.data));
 	} catch (error: unknown) {
 		let errorMessage: string = DEFAULT_ERROR_MESSAGE;

@@ -44,7 +44,7 @@ export const selectNewAvatarLoading: Selector = (state: State): boolean =>
 	state.user.newAvatarLoading;
 
 export const selectIsAdmin: Selector = (state: State): boolean =>
-	state.user.is_admin;
+	state.user.user?.is_admin;
 
 export const selectMyRequests: Selector = (state: State): any[] => {
 	console.log('SELECTOR REQUESTS', state);

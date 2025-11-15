@@ -63,6 +63,7 @@ class UserPageComponent extends Component<
 	}
 
 	render() {
+		console.log(this.props.isAdmin);
 		return (
 			<>
 				<div className={styles.page}>
@@ -86,7 +87,7 @@ class UserPageComponent extends Component<
 						/>
 					)}
 					<div className={styles.supportRequestsContainer}>
-						{this.state.stats && (
+						{this.props.stats && (
 							<div>
 								<div>
 									<p className={styles.supportRequestInfo}>

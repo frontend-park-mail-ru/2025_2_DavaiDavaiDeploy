@@ -30,7 +30,7 @@ const initialState: InitialState = {
 	avatarChangeError: false,
 	newPasswordLoading: false,
 	newAvatarLoading: false,
-	is_admin: true,
+	is_admin: false,
 	statsError: null,
 	statsLoading: false,
 	stats: null,
