@@ -21,6 +21,7 @@ export class TechSupModalComponent extends Component<WithModalProps, {}> {
 						className={style.iframe}
 						title="Tech Support"
 						src={TECH_SUP_URL}
+						sandbox="allow-scripts allow-same-origin"
 					></iframe>
 				</div>
 			</div>,
