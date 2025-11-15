@@ -29,10 +29,6 @@ export class TechSupWidgetComponent extends Component<WithModalProps> {
 
 				case 'error':
 					AppToast.error(event.data.text);
-					return;
-
-				default:
-					AppToast.error('Что-то пошло не так');
 			}
 		});
 	}

@@ -107,7 +107,7 @@ class TechSupComponent extends Component<{}> {
 		} catch {
 			this.setState({ isSuccess: false });
 			window.parent.postMessage(
-				{ type: 'error', text: 'Что-то пошло не' },
+				{ type: 'error', text: 'Что-то пошло не так' },
 				APP_URL_WITH_SCHEMA,
 			);
 
