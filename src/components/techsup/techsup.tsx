@@ -1,5 +1,8 @@
+import close from '@/assets/img/close.svg';
+import { APP_URL_WITH_SCHEMA } from '@/consts/urls';
 import { validateTechSup } from '@/helpers/validateTechSupHelper/validateTechSupHelper';
 import clsx from '@/modules/clsx';
+import HTTPClient from '@/modules/HTTPClient';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -7,18 +10,13 @@ import actions from '@/redux/features/techSup/actions';
 import { selectIsSuccess } from '@/redux/features/techSup/selectors.ts';
 import type { Map } from '@/types/map';
 import { Component, createRef } from '@robocotik/react';
-import { AppToast } from '../toastContainer/toastContainer';
+import type { FeedBack } from '../feedBack/feedBack';
 import styles from './techsup.module.scss';
 
 const MAX_FILE_SIZE_MB = 8;
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
-interface TechSupProps {
-	send: (category: string, description: string, file?: File) => void;
-	isSuccess: boolean;
-}
-
-class TechSupComponent extends Component<TechSupProps> {
+class TechSupComponent extends Component<{}> {
 	state = {
 		type: '',
 		typeErrorMessage: '',
@@ -31,29 +29,18 @@ class TechSupComponent extends Component<TechSupProps> {
 		file: null,
 		error: '',
 		preview: null,
-		isEditing: false,
 		isSuccess: false,
-		errorShown: false,
-		successShown: false,
 	};
 
 	fileInputRef = createRef<HTMLElement>();
-
-	onUpdate = () => {
-		if (this.props.isSuccess) {
-			AppToast.success('Обращение успешно отправлено!');
-		}
-	};
 
 	handleTypeChange = (event: Event) => {
 		const target = event.target as HTMLInputElement;
 		const { value } = target;
 		let typeErrorMessage = '';
 
-		if (this.state.typeErrorMessage) {
-			if (value == 'nothing') {
-				typeErrorMessage = 'Выберите тип обращения';
-			}
+		if (value == 'nothing') {
+			typeErrorMessage = 'Выберите тип обращения';
 		}
 
 		this.setState({
@@ -67,10 +54,8 @@ class TechSupComponent extends Component<TechSupProps> {
 		const { value } = target;
 		let descriptionErrorMessage = '';
 
-		if (this.state.descriptionErrorMessage) {
-			const validation = validateTechSup(value, 'description');
-			descriptionErrorMessage = validation.message;
-		}
+		const validation = validateTechSup(value, 'description');
+		descriptionErrorMessage = validation.message;
 
 		this.setState({
 			description: value,
@@ -78,48 +63,43 @@ class TechSupComponent extends Component<TechSupProps> {
 		});
 	};
 
-	handleNameChange = (event: Event) => {
-		const target = event.target as HTMLInputElement;
-		const { value } = target;
-		let nameErrorMessage = '';
-
-		if (this.state.nameErrorMessage) {
-			const validation = validateTechSup(value, 'name');
-			nameErrorMessage = validation.message;
-		}
-
-		this.setState({
-			name: value,
-			nameErrorMessage: nameErrorMessage,
-		});
-	};
-
-	handlePhoneChange = (event: Event) => {
-		const target = event.target as HTMLInputElement;
-		const { value } = target;
-		let phoneErrorMessage = '';
-
-		if (this.state.nameErrorMessage) {
-			const validation = validateTechSup(value, 'phone');
-			phoneErrorMessage = validation.message;
-		}
-
-		this.setState({
-			phone: value,
-			phoneErrorMessage: phoneErrorMessage,
-		});
-	};
-
-	send = () => {
+	send = async () => {
 		const { type, description, file } = this.state;
 
-		if (file) {
-			this.props.send(type, description, file);
+		try {
+			if (file) {
+				const formData = new FormData();
+				formData.append('attachment', file);
+				const response = await HTTPClient.post<FeedBack>(`/feedback`, {
+					data: {
+						description,
+						category: type,
+						formData,
+					},
+				});
+			} else {
+				const response = await HTTPClient.post<FeedBack>(`/feedback`, {
+					data: {
+						category: type,
+						description,
+					},
+				});
 
+				this.setState({ isSuccess: true });
+			}
+		} catch (error: unknown) {
+			this.setState({ isSuccess: false });
+			window.parent.postMessage(
+				{ type: 'error', text: 'Что-то пошло не так' },
+				APP_URL_WITH_SCHEMA,
+			);
 			return;
 		}
 
-		this.props.send(type, description);
+		window.parent.postMessage(
+			{ type: 'success', text: 'Обращение успешно отправлено!' },
+			APP_URL_WITH_SCHEMA,
+		);
 	};
 
 	handleFileChange = (event: Event) => {
@@ -131,12 +111,22 @@ class TechSupComponent extends Component<TechSupProps> {
 		}
 
 		if (!ALLOWED_TYPES.includes(selected.type)) {
-			AppToast.error('Можно загружать только JPG, PNG, WEBP.');
+			window.parent.postMessage(
+				{ type: 'error', text: 'Можно загружать только JPG, PNG, WEBP.' },
+				APP_URL_WITH_SCHEMA,
+			);
+
 			return;
 		}
 
 		if (selected.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-			AppToast.error(`Размер не должен превышать ${MAX_FILE_SIZE_MB} МБ.`);
+			window.parent.postMessage(
+				{
+					type: 'error',
+					text: `Размер не должен превышать ${MAX_FILE_SIZE_MB} МБ.`,
+				},
+				APP_URL_WITH_SCHEMA,
+			);
 
 			return;
 		}
@@ -192,6 +182,7 @@ class TechSupComponent extends Component<TechSupProps> {
 
 		return (
 			<div className={styles.content}>
+				<img src={close} alt="close" className={styles.close} />
 				<h1 className={styles.title}>Расскажите о проблеме</h1>
 				<p className={styles.description}>
 					Если возник вопрос или что-то пошло не так — напишите нам. Мы быстро
@@ -207,16 +198,19 @@ class TechSupComponent extends Component<TechSupProps> {
 						})}
 						onInput={this.handleTypeChange}
 						value={type}
+						placeholder="Не выбрано"
 					>
-						<option value="nothing">Не выбрано</option>
-						<option value="wish">Пожелание</option>
-						<option value="problem">Проблема</option>
+						<option value="nothing" selected disabled>
+							Не выбрано
+						</option>
+						<option value="feature_request">Пожелание</option>
+						<option value="bug">Проблема</option>
 						<option value="question">Вопрос</option>
 					</select>
 
-					{typeErrorMessage && (
-						<p className={styles.errorMessage}>{typeErrorMessage}</p>
-					)}
+					<p className={styles.errorMessage}>
+						{typeErrorMessage ? typeErrorMessage : ''}
+					</p>
 				</div>
 
 				<div className={styles.form}>
@@ -233,9 +227,9 @@ class TechSupComponent extends Component<TechSupProps> {
 					>
 						{description}
 					</textarea>
-					{descriptionErrorMessage && (
-						<p className={styles.errorMessage}>{descriptionErrorMessage}</p>
-					)}
+					<p className={styles.errorMessage}>
+						{descriptionErrorMessage ? descriptionErrorMessage : ''}
+					</p>
 				</div>
 
 				<div className={styles.form}>
@@ -257,11 +251,11 @@ class TechSupComponent extends Component<TechSupProps> {
 							></input>
 						</div>
 
-						<span classname={styles.files}>{file?.name}</span>
+						<span className={styles.files}>{file?.name}</span>
 					</div>
 				</div>
 
-				<button className={styles.btn} onClick={this.send}>
+				<button className={styles.sendBtn} onClick={this.send}>
 					Отправить
 				</button>
 			</div>

@@ -85,7 +85,7 @@ if (window.location.pathname === '/techsup') {
 			return (
 				<ModalsProvider>
 					<div class="layout">
-						<TechSupWidget />
+						{this.props.user && <TechSupWidget />}
 						<ToastContainer />
 						<ModalRoot />
 						{!isAuthPageOpen && <Header />}

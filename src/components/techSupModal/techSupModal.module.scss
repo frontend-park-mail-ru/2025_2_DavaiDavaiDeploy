@@ -16,15 +16,13 @@
 	background-color: var(--color-bg-light);
 	max-width: 90dvw;
 	min-width: 30dvw;
-	min-width: 50dvh;
-	max-height: 80dvh;
 	overflow-y: auto;
 	position: relative;
 	z-index: 1001;
-	border-radius: var(--border-radius-xl);
+	border-radius: var(--border-radius-lg);
 }
 
 .iframe {
 	width: 50vw;
-	height: 50vh;
+	height: 80vh;
 }
