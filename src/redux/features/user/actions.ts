@@ -333,6 +333,23 @@ const getMyRequests: Action = () => async (dispatch: Dispatch) => {
 	}
 };
 
+const getAllRequests: Action = () => async (dispatch: Dispatch) => {
+	try {
+		const response = await HTTPClient.get<TechResponse[]>('/feedback');
+		dispatch(returnMyRequestsAction(response.data));
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(returnMyRequestsActionError(errorMessage));
+	}
+};
+
 const getMyStats: Action = (isAdmin: boolean) => async (dispatch: Dispatch) => {
 	console.log('в актион');
 	dispatch(setStatsLoadingAction());
@@ -373,4 +390,5 @@ export default {
 	changeAvatarAction,
 	getMyStats,
 	getMyRequests,
+	getAllRequests,
 };

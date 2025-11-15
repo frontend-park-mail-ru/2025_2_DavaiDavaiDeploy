@@ -1,6 +1,6 @@
 import type { Selector } from '@/modules/redux/types/selectors';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsUser, Stats } from '@/types/models';
+import type { ModelsUser } from '@/types/models';
 
 /**
  * Селектор для получения данных пользователя из состояния.
@@ -43,12 +43,13 @@ export const selectNewPasswordLoading: Selector = (state: State): boolean =>
 export const selectNewAvatarLoading: Selector = (state: State): boolean =>
 	state.user.newAvatarLoading;
 
-export const selectIsAdmin: Selector = (state: State): boolean =>
-	state.user.is_admin;
-
+export const selectIsAdmin: Selector = (state: State): boolean => {
+	return state.user.user && state.user.user.is_admin;
+};
 export const selectMyRequests: Selector = (state: State): any[] => {
-	console.log('SELECTOR REQUESTS', state);
 	return state.user.tech_requests;
 };
 
-export const selectStats: Selector = (state: State): Stats => state.user.stats;
+export const selectStats: Selector = (state: State): any => {
+	return state.user.stats;
+};
