@@ -30,14 +30,10 @@ const initialState: InitialState = {
 	avatarChangeError: false,
 	newPasswordLoading: false,
 	newAvatarLoading: false,
-<<<<<<< HEAD
 	is_admin: false,
-=======
->>>>>>> 20277599a9b63b5a13eec0a13acbbca6c0682797
 	statsError: null,
 	statsLoading: false,
 	stats: null,
-	is_admin: false,
 };
 
 /**
@@ -142,10 +138,6 @@ export const userReducer: Reducer = (
 				user: payload.user,
 			};
 		case actionTypes.MY_REQUESTS_LOADED:
-			console.log(
-				'в редьюсере поймал MY_REQUESTS_LOADED',
-				payload.tech_requests,
-			);
 			return {
 				...state,
 				loading: false,

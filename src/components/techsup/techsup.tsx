@@ -170,8 +170,6 @@ class TechSupComponent extends Component<{}, TechSupState> {
 			});
 		};
 
-		console.log(selected);
-
 		reader.readAsDataURL(selected);
 	};
 
