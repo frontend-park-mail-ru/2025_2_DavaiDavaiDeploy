@@ -42,14 +42,3 @@ export const selectNewPasswordLoading: Selector = (state: State): boolean =>
 
 export const selectNewAvatarLoading: Selector = (state: State): boolean =>
 	state.user.newAvatarLoading;
-
-export const selectIsAdmin: Selector = (state: State): boolean =>
-	state.user.user?.is_admin;
-
-export const selectMyRequests: Selector = (state: State): any[] => {
-	return state.user.tech_requests;
-};
-
-export const selectStats: Selector = (state: State): any => {
-	return state.user.stats;
-};

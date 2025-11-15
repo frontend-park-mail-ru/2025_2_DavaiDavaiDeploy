@@ -170,21 +170,6 @@ declare global {
 			};
 			legend: BaseHTMLAttributes;
 
-			iframe: BaseHTMLAttributes & {
-				src?: string;
-				srcdoc?: string;
-				name?: string;
-				width?: string | number;
-				height?: string | number;
-				sandbox?: string;
-				allow?: string;
-				allowFullScreen?: boolean;
-				referrerPolicy?: string;
-				loading?: 'eager' | 'lazy';
-				frameBorder?: number | string;
-				allowPaymentRequest?: boolean;
-			};
-
 			// Tables
 			table: BaseHTMLAttributes;
 			caption: BaseHTMLAttributes;
