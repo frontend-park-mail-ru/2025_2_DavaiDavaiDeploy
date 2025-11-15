@@ -5,7 +5,6 @@ import filmReducer from './film/reducers';
 import filmsReducer from './films/reducers';
 import genreReducer from './genre/reducers';
 import promoFilmReducer from './promoFilm/reducers';
-import techSupReducer from './techSup/reducers';
 import userReducer from './user/reducers';
 
 /**
@@ -20,5 +19,4 @@ export const reducer = combineReducers({
 	genre: genreReducer,
 	promoFilm: promoFilmReducer,
 	actor: actorReducer,
-	techSup: techSupReducer,
 });

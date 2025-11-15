@@ -40,6 +40,10 @@ function getPhraseFromRequest(req: string) {
 	}
 }
 
+
+
+
+
 class UserPageComponent extends Component<
 	UserPageProps & WithRouterProps & WithModalProps
 > {
@@ -110,10 +114,8 @@ class UserPageComponent extends Component<
 												className={clsx(styles.supportRequestStatus, {
 													[styles.requestActive]:
 														request.status === 'in_progress',
-													[styles.requestDone]:
-														request.status === 'closed',
-													[styles.requestOpen]:
-														request.status === 'open',
+													[styles.requestDone]: request.status === 'closed',
+													[styles.requestOpen]: request.status === 'open',
 												})}
 											>
 												{getPhraseFromRequest(request.status)}
