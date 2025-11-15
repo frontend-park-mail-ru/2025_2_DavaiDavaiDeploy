@@ -10,6 +10,7 @@ import 'reset-css/reset.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
 import { TechSup } from './components/techsup/techsup.tsx';
+import { TechSupWidget } from './components/techSupWidget/techSupWidget.tsx';
 import { ToastContainer } from './components/toastContainer/toastContainer.tsx';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
@@ -82,6 +83,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 		return (
 			<ModalsProvider>
 				<div class="layout">
+					<TechSupWidget />
 					<ToastContainer />
 					<ModalRoot />
 					{!isAuthPageOpen && <Header />}

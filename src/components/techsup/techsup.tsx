@@ -162,6 +162,7 @@ export class TechSup extends Component<{}> {
 			nameErrorMessage,
 			phone,
 			phoneErrorMessage,
+			file,
 		} = this.state;
 
 		return (
@@ -225,7 +226,7 @@ export class TechSup extends Component<{}> {
 							></input>
 						</div>
 
-						<span classname={styles.files}></span>
+						<span classname={styles.files}>{file?.name}</span>
 					</div>
 				</div>
 
