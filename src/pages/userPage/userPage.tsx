@@ -29,7 +29,7 @@ interface UserPageProps {
 	getMyRequests: () => {};
 	myRequests: TechResponse[];
 	stats: Stats;
-	getStats: VoidFunction;
+	getStats: (isAdmin: boolean) => {};
 }
 
 function getPhraseFromRequest(req: string) {
@@ -42,10 +42,6 @@ function getPhraseFromRequest(req: string) {
 			return 'Завершена';
 	}
 }
-
-
-
-
 
 class UserPageComponent extends Component<
 	UserPageProps & WithRouterProps & WithModalProps
@@ -63,12 +59,10 @@ class UserPageComponent extends Component<
 
 	onMount() {
 		this.props.getMyRequests();
-		console.log('aaa');
-		this.props.getStats();
+		this.props.getStats(this.props.isAdmin);
 	}
 
 	render() {
-		console.log(this.props.stats);
 		return (
 			<>
 				<div className={styles.page}>
@@ -92,19 +86,24 @@ class UserPageComponent extends Component<
 						/>
 					)}
 					<div className={styles.supportRequestsContainer}>
-						<div>
+						{this.state.stats && (
 							<div>
-								<p className={styles.supportRequestInfo}>
-									Кол-во заявок: {this.sampleData.all}
-								</p>
-								<p className={styles.supportRequestInfo}>
-									Кол-во решенных заявок: {this.sampleData.done}
-								</p>
-								<p className={styles.supportRequestInfo}>
-									Кол-во открытых заявок: {this.sampleData.inProgress}
-								</p>
+								<div>
+									<p className={styles.supportRequestInfo}>
+										Кол-во заявок: {this.props.stats.total}
+									</p>
+									<p className={styles.supportRequestInfo}>
+										Кол-во решенных заявок: {this.props.stats.closed}
+									</p>
+									<p className={styles.supportRequestInfo}>
+										Кол-во открытых заявок: {this.props.stats.open}
+									</p>
+									<p className={styles.supportRequestInfo}>
+										Кол-во заявок в работе: {this.props.stats.in_progress}
+									</p>
+								</div>
 							</div>
-						</div>
+						)}
 						<div className={styles.supportRequests}>
 							<div className={styles.supportRequestRow}>
 								<div className={styles.supportRequestStatus}>Статус</div>
@@ -160,7 +159,7 @@ const mapStateToProps = (state: State): Map => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getMyRequests: () => dispatch(actions.getMyRequests()),
-	getStats: () => dispatch(actions.getMyStats),
+	getStats: (isAdmin: boolean) => dispatch(actions.getMyStats(isAdmin)),
 });
 
 export const UserPage = compose(

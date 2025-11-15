@@ -63,6 +63,7 @@ export class HTTPClient {
 		data: any,
 		requestMethod: string,
 		requestHeaders: Headers,
+		path,
 	): string | undefined | FormData {
 		if (!data || requestMethod === METHODS.GET) {
 			return undefined;
@@ -70,6 +71,11 @@ export class HTTPClient {
 
 		if (data instanceof FormData) {
 			return data;
+		}
+
+		if (path === '/feedback') {
+			requestHeaders.set('Content-Type', 'multipart/form-data');
+			return JSON.stringify(data);
 		}
 
 		if (typeof data === 'object') {
@@ -101,7 +107,12 @@ export class HTTPClient {
 
 		const requestHeaders = this._buildHeaders();
 
-		const requestBody = this._buildBody(data, requestMethod, requestHeaders);
+		const requestBody = this._buildBody(
+			data,
+			requestMethod,
+			requestHeaders,
+			path,
+		);
 
 		const controller = new AbortController();
 		const signal = controller.signal;

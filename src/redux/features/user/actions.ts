@@ -316,11 +316,37 @@ const changeAvatarAction =
 		}
 	};
 
-const getMyStats: Action = () => async (dispatch: Dispatch) => {
+const getMyRequests: Action = () => async (dispatch: Dispatch) => {
+	try {
+		const response = await HTTPClient.get<TechResponse[]>('/feedback/my');
+		dispatch(returnMyRequestsAction(response.data));
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(returnMyRequestsActionError(errorMessage));
+	}
+};
+
+const getMyStats: Action = (isAdmin: boolean) => async (dispatch: Dispatch) => {
+	console.log('в актион');
 	dispatch(setStatsLoadingAction());
 
+	let path = '/feedback/my/stats';
+
+	if (isAdmin) {
+		path = '/feedback/stats';
+	}
+
 	try {
-		const response = await HTTPClient.get<Stats>('/feedback/my/stats');
+		const response = await HTTPClient.get<Stats>(path);
+
+		console.log(response.data);
 
 		dispatch(returnStatsAction(response.data));
 	} catch (error: unknown) {
@@ -346,4 +372,5 @@ export default {
 	changePasswordAction,
 	changeAvatarAction,
 	getMyStats,
+	getMyRequests,
 };
