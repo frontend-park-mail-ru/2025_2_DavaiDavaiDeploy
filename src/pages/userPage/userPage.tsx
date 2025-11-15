@@ -13,6 +13,7 @@ import {
 import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
 import { CircleDiagram } from '../../components/circleDiagram/circleDiagram.tsx';
+import { formatDatetime } from '../../helpers/formatDateHelper/formatDateHelper.ts';
 import clsx from '../../modules/clsx/index.ts';
 import { MODALS } from '../../modules/modals/modals.ts';
 import { withModal } from '../../modules/modals/withModal.tsx';
@@ -26,6 +27,17 @@ interface UserPageProps {
 	isAdmin: boolean;
 	getMyRequests: () => {};
 	myRequests: TechResponse[];
+}
+
+function getPhraseFromRequest(req: string) {
+	switch (req) {
+		case 'in_progress':
+			return 'В обработке';
+		case 'open':
+			return 'Открыта';
+		case 'closed':
+			return 'Завершена';
+	}
 }
 
 class UserPageComponent extends Component<
@@ -43,7 +55,6 @@ class UserPageComponent extends Component<
 	};
 
 	onMount() {
-		console.log('СДЕЛАЛ МАУНТ');
 		this.props.getMyRequests();
 	}
 
@@ -96,20 +107,22 @@ class UserPageComponent extends Component<
 									return (
 										<div className={styles.supportRequestRow}>
 											<div
-												className={clsx(
-													styles.supportRequestStatus,
-													styles.requestActive,
-												)}
+												className={clsx(styles.supportRequestStatus, {
+													[styles.requestActive]:
+														request.status === 'in_progress',
+													[styles.requestDone]:
+														request.status === 'closed',
+													[styles.requestOpen]:
+														request.status === 'open',
+												})}
 											>
-												{request.status == 'in_progress'
-													? 'В обработке'
-													: 'Завершено'}
+												{getPhraseFromRequest(request.status)}
 											</div>
 											<div className={styles.supportRequestTheme}>
 												{request.description}
 											</div>
 											<div className={styles.supportRequestDate}>
-												{request.created_at}
+												{formatDatetime(request.created_at)}
 											</div>
 											<button
 												onClick={() =>
