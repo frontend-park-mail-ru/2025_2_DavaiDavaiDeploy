@@ -66,6 +66,23 @@ class TechSupComponent extends Component<{}> {
 	send = async () => {
 		const { type, description, file } = this.state;
 
+		const validation = validateTechSup(description, 'description');
+		const descriptionErrorMessage = validation.message;
+		let typeErrorMessage = '';
+
+		if (type == 'nothing' || type == '') {
+			typeErrorMessage = 'Пожалуйста, выберите тип обращения';
+		}
+
+		if (descriptionErrorMessage || typeErrorMessage) {
+			this.setState({
+				descriptionErrorMessage: descriptionErrorMessage,
+				typeErrorMessage: typeErrorMessage,
+			});
+
+			return;
+		}
+
 		try {
 			if (file) {
 				const formData = new FormData();
@@ -87,12 +104,13 @@ class TechSupComponent extends Component<{}> {
 
 				this.setState({ isSuccess: true });
 			}
-		} catch (error: unknown) {
+		} catch {
 			this.setState({ isSuccess: false });
 			window.parent.postMessage(
 				{ type: 'error', text: 'Что-то пошло не так' },
 				APP_URL_WITH_SCHEMA,
 			);
+
 			return;
 		}
 
@@ -171,6 +189,15 @@ class TechSupComponent extends Component<{}> {
 		this.setState({ errorShown: false, successShown: false });
 	};
 
+	handleClose = () => {
+		window.parent.postMessage(
+			{
+				type: 'close',
+			},
+			APP_URL_WITH_SCHEMA,
+		);
+	};
+
 	render() {
 		const {
 			type,
@@ -182,7 +209,12 @@ class TechSupComponent extends Component<{}> {
 
 		return (
 			<div className={styles.content}>
-				<img src={close} alt="close" className={styles.close} />
+				<img
+					src={close}
+					alt="close"
+					className={styles.close}
+					onClick={this.handleClose}
+				/>
 				<h1 className={styles.title}>Расскажите о проблеме</h1>
 				<p className={styles.description}>
 					Если возник вопрос или что-то пошло не так — напишите нам. Мы быстро
@@ -193,14 +225,14 @@ class TechSupComponent extends Component<{}> {
 					<p className={styles.question}> С чем связано ваше обращение?</p>
 
 					<select
-						className={clsx(styles.input, {
+						className={clsx(styles.select, {
 							[styles.errorBorder]: typeErrorMessage.length > 0,
 						})}
 						onInput={this.handleTypeChange}
 						value={type}
 						placeholder="Не выбрано"
 					>
-						<option value="nothing" selected disabled>
+						<option className={styles.option} value="nothing" selected disabled>
 							Не выбрано
 						</option>
 						<option value="feature_request">Пожелание</option>

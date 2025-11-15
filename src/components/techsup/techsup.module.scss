@@ -121,14 +121,16 @@
 
 .sendBtn {
 	padding: 0.7rem 2rem;
-	background-color: var(--color-accent);
+	background: var(--color-btn-gradient);
 	font-size: var(--font-size-l);
 	border: none;
 	border-radius: var(--border-radius-l);
 	cursor: pointer;
-	color: var(--color-light);
 	box-sizing: border-box;
 	transition: transform 0.3s ease;
+	color: var(--color-text);
+	margin-top: -0.8rem;
+	margin-bottom: -1rem;
 
 	&:hover {
 		transform: scale(1.01);
@@ -146,4 +148,23 @@
 	color: var(--color-error);
 	margin-top: -0.5rem;
 	height: 1rem;
+}
+
+.select {
+	width: 100%;
+	max-width: 100%;
+	padding: 0.8rem 1.25rem;
+	border: 2px solid var(--color-accent);
+	background-color: transparent;
+	border-radius: var(--border-radius-lg);
+	color: var(--color-dack-text);
+	font-size: var(--font-size-xs);
+	outline: none;
+	box-sizing: border-box;
+	word-break: break-all;
+	font-family: 'Golos UI', Arial, sans-serif;
+}
+
+.option {
+	color: var(--color-dark-text);
 }

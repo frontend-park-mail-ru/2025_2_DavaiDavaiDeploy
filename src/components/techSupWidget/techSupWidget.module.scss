@@ -1,6 +1,6 @@
 .content {
 	position: fixed;
-	left: 5vw;
+	left: 1vw;
 	bottom: 5vh;
 	display: flex;
 	background-color: var(--color-light);
@@ -17,4 +17,5 @@
 	color: var(--color-text);
 	font-size: var(--font-size-2xl);
 	text-align: center;
+	width: 40%;
 }

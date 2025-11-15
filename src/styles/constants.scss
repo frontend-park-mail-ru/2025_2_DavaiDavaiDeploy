@@ -39,6 +39,14 @@
 
 	--color-boxshadow-btn: hsl(0deg 0% 0% / 15%);
 
+	--color-btn-gradient: linear-gradient(
+		to right,
+		#283287 0%,
+		#6b25a1 76%,
+		#8c1eaf 90%,
+		#ae17bc 100%
+	);
+
 	--color-promofilm-side-gradient: linear-gradient(
 		to right,
 		hsl(0deg 0% 0% / 85%) 0%,

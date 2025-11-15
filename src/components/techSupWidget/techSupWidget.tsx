@@ -1,3 +1,4 @@
+import message from '@/assets/img/message.svg';
 import { APP_URL_WITH_SCHEMA } from '@/consts/urls';
 import { withModal } from '@/modules/modals/withModal';
 import type { WithModalProps } from '@/modules/modals/withModalProps';
@@ -10,28 +11,28 @@ export class TechSupWidgetComponent extends Component<WithModalProps> {
 		this.props.modal.open(3);
 	};
 
-	onMount(): void | Promise<void> {
+	onMount() {
 		window.addEventListener('message', (event) => {
 			if (event.origin !== APP_URL_WITH_SCHEMA) {
 				return;
 			}
 
-			if (event.data.type === 'success') {
-				this.props.modal.hide();
-				AppToast.success('Обращение успешно отправлено!');
-			} else {
-				AppToast.error('Что-то пошло не так');
-			}
-		});
-	}
+			switch (event.data.type) {
+				case 'close':
+					this.props.modal.hide();
+					return;
 
-	onUnmount(): void | Promise<void> {
-		window.removeEventListener('message', (event) => {
-			if (event.data.type === 'success') {
-				this.props.modal.hide();
-				AppToast.success('Обращение успешно отправлено!');
-			} else {
-				AppToast.error('Что-то пошло не так');
+				case 'success':
+					this.props.modal.hide();
+					AppToast.success(event.data.text);
+					return;
+
+				case 'error':
+					AppToast.error(event.data.text);
+					return;
+
+				default:
+					AppToast.error('Что-то пошло не так');
 			}
 		});
 	}
@@ -39,7 +40,7 @@ export class TechSupWidgetComponent extends Component<WithModalProps> {
 	render() {
 		return (
 			<div className={styles.content} onClick={this.handleClick}>
-				<p className={styles.title}>?</p>
+				<img src={message} className={styles.title}></img>
 			</div>
 		);
 	}
