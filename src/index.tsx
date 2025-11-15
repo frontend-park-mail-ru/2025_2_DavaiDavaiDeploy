@@ -9,6 +9,7 @@ import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
+import { TechSup } from './components/techsup/techsup.tsx';
 import { ToastContainer } from './components/toastContainer/toastContainer.tsx';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
@@ -75,7 +76,8 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 	render() {
 		const isAuthPageOpen =
 			this.props.router.path === '/login' ||
-			this.props.router.path === '/register';
+			this.props.router.path === '/register' ||
+			this.props.router.path === '/techsup';
 
 		return (
 			<ModalsProvider>
@@ -91,6 +93,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 						<Route href="/register" component={<RegisterPage />} />
 						<Route href="/genres/:id" component={<GenrePage />} />
 						<Route href="/profile" component={<UserPage />} />
+						<Route href="/techsup" component={<TechSup />} />
 					</Routes>
 					{!isAuthPageOpen && <Footer />}
 				</div>

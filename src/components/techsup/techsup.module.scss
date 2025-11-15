@@ -1,0 +1,106 @@
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	background-color: var(--color-light);
+	align-items: center;
+	padding: 4rem;
+	border-radius: var(--border-radius-l);
+	height: 100vh;
+}
+
+.title {
+	font-size: var(--font-size-xl);
+	text-align: center;
+}
+
+.description {
+	font-size: var(--font-size-m);
+	text-align: center;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	width: 100%;
+}
+
+.question {
+	font-size: var(--font-size-s);
+	text-align: center;
+}
+
+.input,
+.textarea {
+	width: 100%;
+	max-width: 100%;
+	padding: 0.8rem 1.25rem;
+	border: 2px solid var(--color-accent);
+	background-color: transparent;
+	border-radius: var(--border-radius-lg);
+	color: var(--color-light-text);
+	font-size: var(--font-size-xs);
+	outline: none;
+	box-sizing: border-box;
+	word-break: break-all;
+	font-family: 'Golos UI', Arial, sans-serif;
+}
+
+.textarea {
+	height: 5rem;
+	resize: none;
+}
+
+.inputTitle::placeholder,
+.textarea::placeholder {
+	color: var(--color-dark-text);
+	opacity: 0.5;
+	font-family: 'Golos UI', Arial, sans-serif;
+}
+
+.inputTitle:-webkit-input-placeholder,
+.textarea:-webkit-input-placeholder {
+	font-family: 'Golos UI', Arial, sans-serif;
+}
+
+.errorBorder {
+	border: 2px solid var(--color-error);
+}
+
+.btns {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+}
+
+.wrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.btn {
+	background-color: var(--color-accent);
+	color: var(--color-light);
+	font-size: var(--font-size-xs);
+	border-radius: var(--border-radius-l);
+	padding: 0.5rem 1rem;
+	border: none;
+	cursor: pointer;
+	box-sizing: border-box;
+	transition: transform 0.3s ease;
+	white-space: nowrap;
+	height: 2.25rem;
+	margin-top: 3rem;
+}
+
+.fileInput {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	cursor: pointer;
+}
