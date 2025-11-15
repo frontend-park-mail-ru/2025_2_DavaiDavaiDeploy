@@ -56,6 +56,42 @@ class getTableComponent extends Component<getTableProps & WithModalProps> {
 							inProgress={this.props.stats.in_progress}
 						/>
 					)}
+					<div className={styles.supportRequestRow}>
+						<div className={styles.supportRequestStatus}>Статус</div>
+						<div className={styles.supportRequestTheme}>Тема</div>
+						<div className={styles.supportRequestDate}>Дата обращения</div>
+						<div className={styles.supportRequestEvents}>События</div>
+					</div>
+					{this.props.myRequests &&
+						this.props.myRequests.map((request) => {
+							return (
+								<div className={styles.supportRequestRow}>
+									<div
+										className={clsx(styles.supportRequestStatus, {
+											[styles.requestActive]: request.status === 'in_progress',
+											[styles.requestDone]: request.status === 'closed',
+											[styles.requestOpen]: request.status === 'open',
+										})}
+									>
+										{getPhraseFromRequest(request.status)}
+									</div>
+									<div className={styles.supportRequestTheme}>
+										{request.description}
+									</div>
+									<div className={styles.supportRequestDate}>
+										{formatDatetime(request.created_at)}
+									</div>
+									<button
+										onClick={() =>
+											this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
+										}
+										className={styles.aboutBtn}
+									>
+										Подробнее
+									</button>
+								</div>
+							);
+						})}
 				</>
 			);
 		}
