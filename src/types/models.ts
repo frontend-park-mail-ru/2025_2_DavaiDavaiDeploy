@@ -191,3 +191,14 @@ export interface TechResponse {
 	created_at: string;
 	updated_at: string;
 }
+
+export interface Stats {
+	total: number;
+	open: number;
+	in_progress: number;
+	closed: number;
+	bugs: number;
+	feature_requests: number;
+	complaints: number;
+	questions: number;
+}

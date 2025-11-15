@@ -1,7 +1,7 @@
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsUser } from '@/types/models';
+import type { ModelsUser, Stats } from '@/types/models';
 import actionTypes from './actionTypes';
 
 interface InitialState {
@@ -13,6 +13,9 @@ interface InitialState {
 	newPasswordLoading: boolean;
 	newAvatarLoading: false;
 	is_admin: boolean;
+	statsError: string | null;
+	statsLoading: boolean;
+	stats: Stats | null;
 }
 
 /**
@@ -28,6 +31,9 @@ const initialState: InitialState = {
 	newPasswordLoading: false,
 	newAvatarLoading: false,
 	is_admin: true,
+	statsError: null,
+	statsLoading: false,
+	stats: null,
 };
 
 /**
@@ -152,6 +158,25 @@ export const userReducer: Reducer = (
 				...state,
 				loading: true,
 			};
+
+		case actionTypes.STATS_ERROR:
+			return {
+				statsError: payload.error,
+				statsLoading: false,
+			};
+
+		case actionTypes.STATS_LOADING:
+			return {
+				statsError: null,
+				statsLoading: true,
+			};
+
+		case actionTypes.STATS_LOAD:
+			return {
+				statsLoading: false,
+				stats: payload.stats,
+			};
+
 		default:
 			return state;
 	}

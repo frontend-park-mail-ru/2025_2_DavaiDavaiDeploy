@@ -9,6 +9,7 @@ import {
 	selectIsAdmin,
 	selectIsAuthentificated,
 	selectMyRequests,
+	selectStats,
 } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
@@ -19,7 +20,7 @@ import { MODALS } from '../../modules/modals/modals.ts';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import type { Dispatch } from '../../modules/redux/types/actions.ts';
-import type { TechResponse } from '../../types/models.ts';
+import type { Stats, TechResponse } from '../../types/models.ts';
 import styles from './userPage.module.scss';
 
 interface UserPageProps {
@@ -27,6 +28,8 @@ interface UserPageProps {
 	isAdmin: boolean;
 	getMyRequests: () => {};
 	myRequests: TechResponse[];
+	stats: Stats;
+	getStats: VoidFunction;
 }
 
 function getPhraseFromRequest(req: string) {
@@ -56,9 +59,12 @@ class UserPageComponent extends Component<
 
 	onMount() {
 		this.props.getMyRequests();
+		console.log('aaa');
+		this.props.getStats();
 	}
 
 	render() {
+		console.log(this.props.stats);
 		return (
 			<>
 				<div className={styles.page}>
@@ -110,10 +116,8 @@ class UserPageComponent extends Component<
 												className={clsx(styles.supportRequestStatus, {
 													[styles.requestActive]:
 														request.status === 'in_progress',
-													[styles.requestDone]:
-														request.status === 'closed',
-													[styles.requestOpen]:
-														request.status === 'open',
+													[styles.requestDone]: request.status === 'closed',
+													[styles.requestOpen]: request.status === 'open',
 												})}
 											>
 												{getPhraseFromRequest(request.status)}
@@ -147,10 +151,12 @@ const mapStateToProps = (state: State): Map => ({
 	isAuthentificated: selectIsAuthentificated(state),
 	isAdmin: selectIsAdmin(state),
 	myRequests: selectMyRequests(state),
+	stats: selectStats(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getMyRequests: () => dispatch(actions.getMyRequests()),
+	getStats: () => dispatch(actions.getMyStats),
 });
 
 export const UserPage = compose(

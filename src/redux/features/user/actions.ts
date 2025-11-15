@@ -5,7 +5,7 @@ import { registrationCodeToErrorHelper } from '@/helpers/registrationCodeToError
 import { storeAuthTokensFromResponse } from '@/helpers/storeAuthTokensFromResponse/storeAuthTokensFromResponse.ts';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsUser, TechResponse } from '@/types/models';
+import { type ModelsUser, type Stats, type TechResponse } from '@/types/models';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -39,6 +39,12 @@ const setNewPasswordLoadingAction = (): Action => {
 const setNewAvatarLoadingAction = (): Action => {
 	return {
 		type: actionTypes.AVATAR_CHANGE_LOADING,
+	};
+};
+
+const setStatsLoadingAction = (): Action => {
+	return {
+		type: actionTypes.STATS_LOADING,
 	};
 };
 
@@ -121,6 +127,20 @@ const returnMyRequestsAction = (data: TechResponse[]): Action => {
 const returnMyRequestsActionError = (error: string): Action => {
 	return {
 		type: actionTypes.MY_REQUESTS_ERROR,
+		payload: { error: error },
+	};
+};
+
+const returnStatsAction = (data: Stats): Action => {
+	return {
+		type: actionTypes.STATS_LOAD,
+		payload: { stats: data },
+	};
+};
+
+const returnStatsActionError = (error: string): Action => {
+	return {
+		type: actionTypes.STATS_ERROR,
 		payload: { error: error },
 	};
 };
@@ -296,13 +316,13 @@ const changeAvatarAction =
 		}
 	};
 
-const getMyRequests: Action = () => async (dispatch: Dispatch) => {
-	// dispatch(setFilmLoadingAction());
-	console.log('Я ПОШЕЛ ОТПРАВЛЯТЬ ЗАПРОС');
+const getMyStats: Action = () => async (dispatch: Dispatch) => {
+	dispatch(setStatsLoadingAction());
+
 	try {
-		const response = await HTTPClient.get<TechResponse[]>('/feedback/my');
-		console.log('Я ОТПРАВИЛ ЗАПРОС');
-		dispatch(returnMyRequestsAction(response.data));
+		const response = await HTTPClient.get<Stats>('/feedback/my/stats');
+
+		dispatch(returnStatsAction(response.data));
 	} catch (error: unknown) {
 		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
@@ -312,7 +332,7 @@ const getMyRequests: Action = () => async (dispatch: Dispatch) => {
 			errorMessage = error;
 		}
 
-		dispatch(returnMyRequestsActionError(errorMessage));
+		dispatch(returnStatsActionError(errorMessage));
 	}
 };
 
@@ -325,5 +345,5 @@ export default {
 	logoutUserAction,
 	changePasswordAction,
 	changeAvatarAction,
-	getMyRequests,
+	getMyStats,
 };
