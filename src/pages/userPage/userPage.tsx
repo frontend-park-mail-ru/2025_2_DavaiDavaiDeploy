@@ -37,7 +37,11 @@ class UserPageComponent extends Component<
 			this.props.router.navigate('/');
 		}
 	}
-
+	sampleData = {
+		all: 10,
+		done: 6,
+		inProgress: 4,
+	};
 
 	onMount() {
 		this.props.getStats(this.props.isAdmin);
