@@ -13,10 +13,7 @@ import {
 } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
-import { CircleDiagram } from '../../components/circleDiagram/circleDiagram.tsx';
-import { formatDatetime } from '../../helpers/formatDateHelper/formatDateHelper.ts';
-import clsx from '../../modules/clsx/index.ts';
-import { MODALS } from '../../modules/modals/modals.ts';
+import { GetTable } from '../../components/getTable/getTable.tsx';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import type { Dispatch } from '../../modules/redux/types/actions.ts';
@@ -30,17 +27,6 @@ interface UserPageProps {
 	myRequests: TechResponse[];
 	stats: Stats;
 	getStats: (isAdmin: boolean) => {};
-}
-
-function getPhraseFromRequest(req: string) {
-	switch (req) {
-		case 'in_progress':
-			return 'В обработке';
-		case 'open':
-			return 'Открыта';
-		case 'closed':
-			return 'Завершена';
-	}
 }
 
 class UserPageComponent extends Component<
@@ -58,7 +44,6 @@ class UserPageComponent extends Component<
 	};
 
 	onMount() {
-		this.props.getMyRequests();
 		this.props.getStats(this.props.isAdmin);
 	}
 
@@ -79,13 +64,6 @@ class UserPageComponent extends Component<
 							? 'Обращения в тех. поддержку'
 							: 'Мои обращения в тех. поддержку'}
 					</h1>
-					{this.props.isAdmin && (
-						<CircleDiagram
-							all={this.sampleData.all}
-							done={this.sampleData.done}
-							inProgress={this.sampleData.inProgress}
-						/>
-					)}
 					<div className={styles.supportRequestsContainer}>
 						{this.props.stats && (
 							<div>
@@ -106,43 +84,7 @@ class UserPageComponent extends Component<
 							</div>
 						)}
 						<div className={styles.supportRequests}>
-							<div className={styles.supportRequestRow}>
-								<div className={styles.supportRequestStatus}>Статус</div>
-								<div className={styles.supportRequestTheme}>Тема</div>
-								<div className={styles.supportRequestDate}>Дата обращения</div>
-								<div className={styles.supportRequestEvents}>События</div>
-							</div>
-							{this.props.myRequests &&
-								this.props.myRequests.map((request) => {
-									return (
-										<div className={styles.supportRequestRow}>
-											<div
-												className={clsx(styles.supportRequestStatus, {
-													[styles.requestActive]:
-														request.status === 'in_progress',
-													[styles.requestDone]: request.status === 'closed',
-													[styles.requestOpen]: request.status === 'open',
-												})}
-											>
-												{getPhraseFromRequest(request.status)}
-											</div>
-											<div className={styles.supportRequestTheme}>
-												{request.description}
-											</div>
-											<div className={styles.supportRequestDate}>
-												{formatDatetime(request.created_at)}
-											</div>
-											<button
-												onClick={() =>
-													this.props.modal.open(MODALS.TECH_SUP_REQUEST_MODAL)
-												}
-												className={styles.aboutBtn}
-											>
-												Подробнее
-											</button>
-										</div>
-									);
-								})}
+							<GetTable isAdmin={this.props.isAdmin} />
 						</div>
 					</div>
 				</div>

@@ -30,10 +30,14 @@ const initialState: InitialState = {
 	avatarChangeError: false,
 	newPasswordLoading: false,
 	newAvatarLoading: false,
+<<<<<<< HEAD
 	is_admin: false,
+=======
+>>>>>>> 20277599a9b63b5a13eec0a13acbbca6c0682797
 	statsError: null,
 	statsLoading: false,
 	stats: null,
+	is_admin: false,
 };
 
 /**
