@@ -21,6 +21,7 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
+import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import styles from './registerPage.module.scss';
 
 interface RegistrationPageProps {
@@ -95,8 +96,13 @@ export class RegisterPageNotConnected extends Component<
 
 	onUpdate() {
 		if (this.props.user) {
+			const redirectPath =
+				'from' in this.props.router.params
+					? this.props.router.params.from
+					: '/';
+
 			this.updateProps({ userError: '' });
-			this.props.router.navigate('/');
+			this.props.router.navigate(redirectPath);
 		}
 
 		if (this.props.userError && !this.state.errorShown) {
@@ -194,7 +200,10 @@ export class RegisterPageNotConnected extends Component<
 							</button>
 							<p className={styles.register__button}>
 								Уже есть аккаунт?{' '}
-								<Link className={styles.register} href="/login">
+								<Link
+									className={styles.register}
+									href={getPathWithFrom('login', this.props.router.params)}
+								>
 									Войти
 								</Link>
 							</p>
