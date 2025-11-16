@@ -131,8 +131,9 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /home/ubuntu/frontend/stage
-            git fetch --all
-            git checkout -B ${{ github.ref_name }} origin/${{ github.ref_name }}
+            git fetch
+            git checkout ${{ github.ref_name }}
+            git pull
 
       - name: Build frontend
         uses: appleboy/ssh-action@master
