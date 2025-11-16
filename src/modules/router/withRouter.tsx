@@ -10,6 +10,7 @@ export function withRouter<P>(
 	WrappedComponent: ComponentType<P & WithRouterProps>,
 ) {
 	return class WithRouter extends Component<OmitRouter<P>> {
+		static readonly contextType = RouterContext;
 		render() {
 			return (
 				<RouterContext.Consumer>
