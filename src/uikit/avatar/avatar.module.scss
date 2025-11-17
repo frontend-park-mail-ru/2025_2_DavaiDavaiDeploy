@@ -12,16 +12,21 @@
 }
 
 .sizeL {
+	width: 5rem;
+	height: 5rem;
+}
+
+.sizeM {
 	height: 4.4rem;
 	width: 4.4rem;
 }
 
-.sizeM {
+.sizeS {
 	width: 3rem;
 	height: 3rem;
 }
 
-.sizeS {
+.sizeXS {
 	width: 2.5rem;
 	height: 2.5rem;
 }
@@ -39,12 +44,12 @@
 		width: 7rem;
 	}
 
-	.sizeL {
+	.sizeM {
 		height: 3rem;
 		width: 3rem;
 	}
 
-	.sizeS {
+	.sizeXS {
 		height: 3rem;
 		width: 3rem;
 	}

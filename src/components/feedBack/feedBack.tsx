@@ -10,6 +10,7 @@ import { Avatar } from '@/uikit/avatar/avatar';
 import { Headline } from '@/uikit/headline/headline';
 import { Paragraph } from '@/uikit/paragraph/paragraph';
 import { Rating } from '@/uikit/rating/rating';
+import { Separator } from '@/uikit/separator/separator';
 import { Subhead } from '@/uikit/subhead/subhead';
 import { Component } from '@robocotik/react';
 import styles from './feedBack.module.scss';
@@ -33,7 +34,7 @@ export class FeedBack extends Component<FeedBackProps> {
 			<div className={styles[`feedback-${rating}`]}>
 				<div className={styles.header}>
 					<span className={styles.user}>
-						<Avatar size="l" src={imageSrc} className={styles.avatar} />
+						<Avatar size="m" src={imageSrc} className={styles.avatar} />
 						<Subhead
 							text={user_login}
 							className={styles.login}
@@ -65,7 +66,7 @@ export class FeedBack extends Component<FeedBackProps> {
 						/>
 					)}
 				</div>
-				<hr className={styles.line}></hr>
+				<Separator mode="secondary" className={styles.line} />
 				<div className={styles.content}>
 					<Headline
 						text={title}

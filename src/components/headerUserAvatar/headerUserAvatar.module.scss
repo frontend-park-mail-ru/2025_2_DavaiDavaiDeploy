@@ -84,18 +84,6 @@
 .avatarActionsLink {
 	font-size: var(--font-size-m);
 	position: relative;
-
-	&::after {
-		position: absolute;
-		width: 100%;
-		top: 0;
-		left: 50%;
-		transform: translateX(-50%);
-		content: '';
-		border-bottom: 1px solid var(--color-accent);
-		display: block;
-		margin-top: 2.75rem;
-	}
 }
 
 .avatarActionsLogin {
@@ -109,6 +97,16 @@
 
 .avatar {
 	margin: 0 auto;
+}
+
+.line {
+	position: relative;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	display: block;
+	margin-top: -0.25rem;
+	margin-bottom: -0.25rem;
 }
 
 @media (max-width: 768px) {

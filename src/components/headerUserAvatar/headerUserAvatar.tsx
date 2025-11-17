@@ -5,6 +5,7 @@ import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
 import { Avatar } from '@/uikit/avatar/avatar';
 import { Headline } from '@/uikit/headline/headline';
+import { Separator } from '@/uikit/separator/separator';
 import { Component } from '@robocotik/react';
 import styles from './headerUserAvatar.module.scss';
 interface UserAvatarProps {
@@ -23,7 +24,7 @@ export class UserAvatar extends Component<UserAvatarProps> {
 		return (
 			<div className={clsx(styles.avatarActions, this.props.className)}>
 				<Avatar
-					size="s"
+					size="l"
 					src={getStaticURL(this.props.user?.avatar)}
 					alt={this.props.user?.login}
 					className={styles.avatar}
@@ -42,6 +43,8 @@ export class UserAvatar extends Component<UserAvatarProps> {
 				<Link className={styles.avatarActionsLink} href="/profile">
 					Мой профиль
 				</Link>
+
+				<Separator mode="primary" className={styles.line} />
 
 				<div className={styles.logoutButton} onClick={this.handleLogout}>
 					<img src={exit} alt="logout" />

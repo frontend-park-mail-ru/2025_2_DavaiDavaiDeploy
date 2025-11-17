@@ -5,7 +5,7 @@ import styles from './avatar.module.scss';
 interface AvatarProps {
 	src: string;
 	alt?: string;
-	size?: 'xl' | 'l' | 'm' | 's';
+	size?: 'xl' | 'l' | 'm' | 's' | 'xs';
 	className?: string;
 }
 
@@ -24,6 +24,7 @@ export class Avatar extends Component<AvatarProps> {
 						[styles.sizeL]: size === 'l',
 						[styles.sizeM]: size === 'm',
 						[styles.sizeS]: size === 's',
+						[styles.sizeXS]: size === 'xs',
 					},
 					className,
 				)}

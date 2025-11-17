@@ -19,7 +19,7 @@ export class LoadedUser extends Component<LoadedUserProps> {
 						src={getStaticURL(this.props.user?.avatar)}
 						alt={'avatar'}
 						className={styles.avatar}
-						size="m"
+						size="s"
 					/>
 					<UserAvatar
 						user={this.props.user}
