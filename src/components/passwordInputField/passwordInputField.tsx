@@ -2,6 +2,7 @@ import eyeHideSvg from '@/assets/img/eye_close.svg';
 import eyeShowSvg from '@/assets/img/eye_open.svg';
 import lock from '@/assets/img/lock.svg';
 import clsx from '@/modules/clsx/index.ts';
+import { IconButton } from '@/uikit/iconButton/iconButton';
 import { Subhead } from '@/uikit/subhead/subhead';
 import { Component } from '@robocotik/react';
 import styles from './passwordInputField.module.scss';
@@ -72,7 +73,8 @@ export class PasswordInputField extends Component<
 						value={value}
 						onInput={this.onChange}
 					/>
-					<button
+					<IconButton
+						mode="tertiary"
 						onClick={this.togglePasswordVisibility}
 						className={clsx(styles.inputEye, this.props.inputFieldClass)}
 					>
@@ -81,7 +83,7 @@ export class PasswordInputField extends Component<
 							alt="icon"
 							className={styles.inputIconRight}
 						/>
-					</button>
+					</IconButton>
 				</div>
 				<Subhead
 					text={errorMessage}

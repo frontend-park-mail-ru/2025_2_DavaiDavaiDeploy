@@ -11,6 +11,7 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenres } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
+import { IconButton } from '@/uikit/iconButton/iconButton';
 import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
@@ -203,13 +204,21 @@ class GenreSliderComponent extends Component<
 						))}
 					</div>
 
-					<button className={styles.prevBtn} onClick={this.onPrevBtnClick}>
+					<IconButton
+						mode="tertiary"
+						className={styles.prevBtn}
+						onClick={this.onPrevBtnClick}
+					>
 						<img src={ArrowLeft} alt="Назад" className={styles.prevBtnIcon} />
-					</button>
+					</IconButton>
 
-					<button className={styles.nextBtn} onClick={this.onNextBtnClick}>
+					<IconButton
+						mode="tertiary"
+						className={styles.nextBtn}
+						onClick={this.onNextBtnClick}
+					>
 						<img src={ArrowRight} alt="Вперёд" className={styles.nextBtnIcon} />
-					</button>
+					</IconButton>
 				</div>
 			</section>
 		);

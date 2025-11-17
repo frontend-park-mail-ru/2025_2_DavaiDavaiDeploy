@@ -10,6 +10,7 @@ import actions from '@/redux/features/actor/actions';
 import { selectActorFilms } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { IconButton } from '@/uikit/iconButton/iconButton.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component, createRef } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -288,22 +289,30 @@ class FilmSliderComponent extends Component<
 					onClick={this.onSliderClick}
 				>
 					{this.state.active && (
-						<button className={styles.prevBtn} onClick={this.prev}>
+						<IconButton
+							mode="tertiary"
+							className={styles.prevBtn}
+							onClick={this.prev}
+						>
 							<img
 								src={ArrowLeft}
 								alt="Предыдущий"
 								className={styles.prevBtnIcon}
 							/>
-						</button>
+						</IconButton>
 					)}
 					{this.state.active && (
-						<button className={styles.nextBtn} onClick={this.next}>
+						<IconButton
+							mode="tertiary"
+							className={styles.nextBtn}
+							onClick={this.next}
+						>
 							<img
 								src={ArrowRight}
 								alt="Следующий"
 								className={styles.nextBtnIcon}
 							/>
-						</button>
+						</IconButton>
 					)}
 					<div className={styles.container}>
 						{this.props.films.map((film, i) => (

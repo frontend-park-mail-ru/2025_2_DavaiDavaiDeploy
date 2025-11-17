@@ -11,6 +11,7 @@ import { selectUserFeedback } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
+import { IconButton } from '@/uikit/iconButton/iconButton.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component, createRef } from '@robocotik/react';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
@@ -126,9 +127,13 @@ class FeedbackFormComponent extends Component<
 							weight="bold"
 							color="dark"
 						/>
-						<button className={styles.editButton} onClick={this.handleEdit}>
+						<IconButton
+							mode="quaternary"
+							className={styles.editButton}
+							onClick={this.handleEdit}
+						>
 							<img src={Edit} className={styles.edit} alt="Редактировать" />
-						</button>
+						</IconButton>
 					</div>
 					<FeedBack feedback={userFeedback} />
 				</div>
