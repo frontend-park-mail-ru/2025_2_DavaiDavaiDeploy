@@ -50,6 +50,7 @@ export class FilmCard extends Component<FilmCardProps> {
 							className={styles.info}
 							color="light"
 							size="2xs"
+							align="center"
 						/>
 					</Link>
 				</div>

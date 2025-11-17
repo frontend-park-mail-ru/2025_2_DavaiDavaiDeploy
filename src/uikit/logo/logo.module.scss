@@ -1,0 +1,39 @@
+.logo {
+	width: 12rem;
+	object-fit: contain;
+	flex-shrink: 0;
+	transition: transform 0.3s ease;
+	cursor: pointer;
+
+	&:hover {
+		transform: scale(1.05);
+	}
+}
+
+.sizeL {
+	width: 20rem;
+}
+
+.sizeM {
+	width: 12rem;
+}
+
+@media (max-width: 1600px) {
+	.sizeM {
+		width: 10rem;
+	}
+
+	.sizeL {
+		width: 18rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.sizeM {
+		width: 8rem;
+	}
+
+	.sizeL {
+		width: 16rem;
+	}
+}

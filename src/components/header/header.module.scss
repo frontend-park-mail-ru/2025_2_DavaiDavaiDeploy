@@ -18,18 +18,6 @@
 	box-shadow: inset 0 -0.5px 1px hsl(235deg 20% 32% / 12.5%);
 }
 
-.logo {
-	width: 12rem;
-	object-fit: contain;
-	flex-shrink: 0;
-	transition: transform 0.3s ease;
-	cursor: pointer;
-
-	&:hover {
-		transform: scale(1.05);
-	}
-}
-
 .link {
 	position: relative;
 	color: var(--color-text);
