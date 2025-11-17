@@ -7,6 +7,10 @@
 	align-items: center;
 	padding-block: 1.4rem;
 	margin-top: auto;
+
+	.content {
+		color: var(--color-accent);
+	}
 }
 
 .footer-light {

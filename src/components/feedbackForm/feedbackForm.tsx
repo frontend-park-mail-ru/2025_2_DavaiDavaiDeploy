@@ -9,6 +9,7 @@ import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
+import { Button } from '@/uikit/button/button.tsx';
 import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
@@ -200,9 +201,15 @@ class FeedbackFormComponent extends Component<
 					)}
 				</div>
 
-				<button className={styles.submitButton} onClick={this.handleSubmit}>
+				<Button
+					mode="quaternary"
+					className={styles.submitButton}
+					onClick={this.handleSubmit}
+					borderRadius="l"
+					size="l"
+				>
 					Опубликовать
-				</button>
+				</Button>
 			</div>
 		);
 	}

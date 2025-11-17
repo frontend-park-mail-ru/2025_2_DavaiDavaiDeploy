@@ -37,16 +37,8 @@
 
 .rateBtn {
 	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: var(--color-light);
-	border-radius: var(--border-radius-l);
 	padding: 0.6vw 1.6vw;
-	cursor: pointer;
-	border: 1px solid var(--color-light);
 	z-index: 5;
-	transition: transform 0.2s ease;
 	pointer-events: all;
 }
 
@@ -127,9 +119,6 @@
 
 .smallRateBtn {
 	display: none;
-	justify-content: center;
-	align-items: center;
-	background-color: transparent;
 	border: none;
 	z-index: 5;
 	pointer-events: all;

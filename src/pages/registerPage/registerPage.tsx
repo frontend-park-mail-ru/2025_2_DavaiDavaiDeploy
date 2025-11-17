@@ -20,6 +20,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Button } from '@/uikit/button/button.tsx';
 import { Headline } from '@/uikit/headline/headline.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
@@ -202,12 +203,15 @@ export class RegisterPageNotConnected extends Component<
 							/>
 						</div>
 						<div className={styles.rightSide__actions}>
-							<button
+							<Button
+								mode="primary"
 								onClick={this.handleRegisterUser}
 								className={styles.login__button}
+								size="s"
+								borderRadius="lg"
 							>
 								Зарегистрироваться
-							</button>
+							</Button>
 							<div className={styles.register__button}>
 								Уже есть аккаунт?{' '}
 								<Link

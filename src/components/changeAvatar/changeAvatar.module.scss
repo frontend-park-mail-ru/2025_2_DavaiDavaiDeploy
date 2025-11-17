@@ -58,15 +58,7 @@
 }
 
 .btn {
-	background-color: var(--color-accent);
-	color: var(--color-light);
-	font-size: var(--font-size-xs);
-	border-radius: var(--border-radius-l);
 	padding: 0.5rem 1rem;
-	border: none;
-	cursor: pointer;
-	box-sizing: border-box;
-	transition: transform 0.3s ease;
 	white-space: nowrap;
 	height: 2.25rem;
 }

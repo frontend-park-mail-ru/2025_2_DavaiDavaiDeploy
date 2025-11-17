@@ -63,14 +63,7 @@
 .submitButton {
 	margin-top: 1.25rem;
 	padding: 1.2rem 4.5rem;
-	background-color: var(--color-light);
-	font-size: var(--font-size-l);
 	border: none;
-	border-radius: var(--border-radius-l);
-	cursor: pointer;
-	color: var(--color-text);
-	box-sizing: border-box;
-	transition: transform 0.3s ease;
 
 	&:hover {
 		transform: scale(1.01);

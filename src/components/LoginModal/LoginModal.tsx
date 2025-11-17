@@ -1,4 +1,5 @@
 import Exit from '@/assets/img/exit.svg?react';
+import { Button } from '@/uikit/button/button';
 import { Title } from '@/uikit/title/title';
 import { Component, createPortal } from '@robocotik/react';
 import style from './LoginModal.module.scss';
@@ -25,12 +26,22 @@ export class LoginModal extends Component {
 							/>
 						</div>
 						<div className={style.modalActions}>
-							<button className={style.exitButton}>
-								<Exit />
-							</button>
-							<button className={style.turnBackButton}>
+							<Button
+								mode="secondary"
+								size="m"
+								before={<Exit />}
+								className={style.exitButton}
+							>
+								Выйти
+							</Button>
+							<Button
+								mode="primary"
+								size="m"
+								borderRadius="l"
+								className={style.turnBackButton}
+							>
 								Вернуться на сайт
-							</button>
+							</Button>
 						</div>
 					</div>
 				</div>

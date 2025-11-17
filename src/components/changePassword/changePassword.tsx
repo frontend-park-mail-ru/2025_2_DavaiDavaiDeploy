@@ -10,6 +10,7 @@ import {
 	selectPasswordChangeError,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
+import { Button } from '@/uikit/button/button.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -152,9 +153,15 @@ class ChangePasswordComponent extends Component<
 					accentBorderClass={styles.accentBorder}
 					errorBorderClass={styles.errorBorder}
 				/>
-				<button onClick={this.handleChangePassword} className={styles.saveBtn}>
+				<Button
+					mode="primary"
+					onClick={this.handleChangePassword}
+					className={styles.saveBtn}
+					size="m"
+					borderRadius="l"
+				>
 					Сохранить
-				</button>
+				</Button>
 			</div>
 		);
 	}

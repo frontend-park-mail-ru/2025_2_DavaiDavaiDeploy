@@ -65,21 +65,8 @@
 }
 
 .login__button {
-	background-color: var(--color-accent);
-	border: 1px solid var(--color-accent);
 	width: 100%;
-	cursor: pointer;
 	padding-block: 1rem;
-	border-radius: var(--border-radius-lg);
-	font-size: var(--font-size-s);
-	transition: all 200ms ease;
-	color: var(--color-light);
-
-	&:hover {
-		background: transparent;
-		color: var(--color-accent);
-		transform: translateY(-1px);
-	}
 }
 
 .register__button {

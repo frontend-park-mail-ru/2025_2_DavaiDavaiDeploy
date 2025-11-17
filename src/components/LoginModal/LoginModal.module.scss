@@ -44,26 +44,13 @@
 }
 
 .exitButton {
-	border: none;
-	background: transparent;
 	outline: none;
-	display: flex;
-	align-items: center;
 	gap: 0.5rem;
-	color: var(--color-always-light-text);
-	cursor: pointer;
-	font-size: var(--font-size-m);
 }
 
 .turnBackButton {
-	border: none;
-	border-radius: var(--border-radius-l);
-	background: var(--color-accent);
-	color: var(--color-light);
 	padding: 1rem 2rem;
-	cursor: pointer;
 	outline: none;
-	font-size: var(--font-size-m);
 }
 
 .modalHeader {

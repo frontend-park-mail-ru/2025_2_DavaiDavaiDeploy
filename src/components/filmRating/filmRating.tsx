@@ -10,6 +10,7 @@ import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
+import { Button } from '@/uikit/button/button.tsx';
 import { Paragraph } from '@/uikit/paragraph/paragraph.tsx';
 import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
@@ -55,17 +56,20 @@ class FilmRatingComponent extends Component<
 
 		return (
 			<div>
-				<button
+				<Button
 					className={styles.rateBtn}
 					onMouseLeave={this.handleMouseLeave}
 					onMouseEnter={this.handleMouseEnter}
 					onClick={this.handleMouseEnter}
+					mode="quaternary"
+					borderRadius="l"
 				>
 					{!this.props.userRating && (
 						<Paragraph
 							className={styles.btnText}
 							text="Оценить фильм"
 							size="m"
+							align="center"
 						/>
 					)}
 					{this.props.isAuthentificated && this.props.userRating && (
@@ -92,12 +96,12 @@ class FilmRatingComponent extends Component<
 							<FilmRatingInput isDark={false} />
 						</div>
 					)}
-				</button>
+				</Button>
 
 				{this.props.isAuthentificated && (
-					<button className={styles.smallRateBtn}>
+					<Button mode="tertiary" className={styles.smallRateBtn}>
 						{this.props.isAuthentificated && <FilmRatingInput isDark={false} />}
-					</button>
+					</Button>
 				)}
 			</div>
 		);

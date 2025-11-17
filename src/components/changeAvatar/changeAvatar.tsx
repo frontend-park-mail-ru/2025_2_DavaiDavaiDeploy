@@ -11,6 +11,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Button } from '@/uikit/button/button.tsx';
 import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
@@ -163,9 +164,15 @@ class ChangeAvatarComponent extends Component<
 
 					<div className={styles.btns}>
 						<div className={styles.wrapper}>
-							<button className={styles.btn} onClick={this.handleUpload}>
+							<Button
+								mode="primary"
+								size="xs"
+								borderRadius="l"
+								className={styles.btn}
+								onClick={this.handleUpload}
+							>
 								Изменить фото
-							</button>
+							</Button>
 							<input
 								className={styles.input}
 								type="file"
@@ -174,14 +181,17 @@ class ChangeAvatarComponent extends Component<
 							></input>
 						</div>
 
-						<button
+						<Button
+							mode="primary"
+							size="xs"
+							borderRadius="l"
 							className={clsx(styles.btn, {
 								[styles.hidden]: !file || !isEditing,
 							})}
 							onClick={this.handleUpload}
 						>
 							Сохранить
-						</button>
+						</Button>
 					</div>
 				</div>
 			</div>
