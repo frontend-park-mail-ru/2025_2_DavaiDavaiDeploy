@@ -7,6 +7,7 @@ import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmFeedback } from '@/types/models';
+import { Avatar } from '@/uikit/avatar/avatar';
 import { Headline } from '@/uikit/headline/headline';
 import { Paragraph } from '@/uikit/paragraph/paragraph';
 import { Subhead } from '@/uikit/subhead/subhead';
@@ -32,7 +33,7 @@ export class FeedBack extends Component<FeedBackProps> {
 			<div className={styles[`feedback-${rating}`]}>
 				<div className={styles.header}>
 					<span className={styles.user}>
-						<img src={imageSrc} className={styles.avatar}></img>
+						<Avatar size="l" src={imageSrc} className={styles.avatar} />
 						<Subhead
 							text={user_login}
 							className={styles.login}

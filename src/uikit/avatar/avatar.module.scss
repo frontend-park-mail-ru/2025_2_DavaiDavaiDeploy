@@ -1,0 +1,51 @@
+.avatar {
+	height: 4.4rem;
+	width: 4.4rem;
+	border-radius: 50%;
+	object-fit: cover;
+	object-position: center;
+}
+
+.sizeXL {
+	height: 10.5rem;
+	width: 10.5rem;
+}
+
+.sizeL {
+	height: 4.4rem;
+	width: 4.4rem;
+}
+
+.sizeM {
+	width: 3rem;
+	height: 3rem;
+}
+
+.sizeS {
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+@media (max-width: 1024px) {
+	.sizeXL {
+		height: 9rem;
+		width: 9rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.sizeXL {
+		height: 7rem;
+		width: 7rem;
+	}
+
+	.sizeL {
+		height: 3rem;
+		width: 3rem;
+	}
+
+	.sizeS {
+		height: 3rem;
+		width: 3rem;
+	}
+}

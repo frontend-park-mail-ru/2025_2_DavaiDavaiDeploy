@@ -39,12 +39,6 @@
 	margin-bottom: 3.25rem;
 }
 
-.avatar {
-	border-radius: 50%;
-	height: 10.5rem;
-	width: 10.5rem;
-}
-
 .btns {
 	display: flex;
 	flex-direction: column;
@@ -98,11 +92,6 @@
 		text-align: center;
 	}
 
-	.avatar {
-		height: 9rem;
-		width: 9rem;
-	}
-
 	.changeAvatar {
 		gap: 1rem;
 	}
@@ -111,16 +100,15 @@
 		text-align: center;
 		margin-bottom: 0;
 	}
+
+	.subtitleText {
+		text-align: center;
+	}
 }
 
 @media (max-width: 768px) {
 	.changeAvatar {
 		gap: 1rem;
-	}
-
-	.avatar {
-		height: 7rem;
-		width: 7rem;
 	}
 
 	.title {
@@ -137,6 +125,10 @@
 	.subtitle {
 		text-align: center;
 		gap: 0;
+	}
+
+	.subtitleText {
+		text-align: center;
 	}
 
 	.btn {

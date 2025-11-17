@@ -71,14 +71,6 @@
 	gap: 2vw;
 }
 
-.avatar {
-	height: 4.4rem;
-	width: 4.4rem;
-	border-radius: 50%;
-	object-fit: cover;
-	object-position: center;
-}
-
 .login {
 	white-space: nowrap;
 	overflow: hidden;
@@ -183,11 +175,6 @@
 
 	.smallDate {
 		display: none;
-	}
-
-	.avatar {
-		height: 3rem;
-		width: 3rem;
 	}
 
 	.rating {

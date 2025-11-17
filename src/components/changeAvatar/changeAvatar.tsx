@@ -11,6 +11,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Avatar } from '@/uikit/avatar/avatar.tsx';
 import { Button } from '@/uikit/button/button.tsx';
 import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
@@ -145,21 +146,33 @@ class ChangeAvatarComponent extends Component<
 							color="light"
 							size="xs"
 							opacity="70"
+							className={styles.subtitleText}
 						/>
 						<Subhead
 							text="Вес файла: не более 8МБ"
 							color="light"
 							size="xs"
 							opacity="70"
+							className={styles.subtitleText}
 						/>
 					</div>
 				</div>
 
 				<div className={styles.changeAvatar}>
 					{preview ? (
-						<img className={styles.avatar} src={preview} alt="Preview" />
+						<Avatar
+							size="xl"
+							className={styles.avatar}
+							src={preview}
+							alt="Preview"
+						/>
 					) : (
-						<img className={styles.avatar} src={avatarURL} alt="Аватар"></img>
+						<Avatar
+							size="xl"
+							className={styles.avatar}
+							src={avatarURL}
+							alt="Аватар"
+						/>
 					)}
 
 					<div className={styles.btns}>
