@@ -5,6 +5,7 @@ import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link';
 import type { ModelsFilmPage } from '@/types/models';
+import { Badge } from '@/uikit/badge/badge';
 import { Headline } from '@/uikit/headline/headline';
 import { Paragraph } from '@/uikit/paragraph/paragraph';
 import { Subhead } from '@/uikit/subhead/subhead';
@@ -84,10 +85,13 @@ export class FilmInfo extends Component<FilmInfoProps> {
 								className={styles.cover}
 							/>
 						)}
-						{formattedRating && (
-							<div className={styles[`rating-${ratingType}`]}>
+						{formattedRating && ratingType && (
+							<Badge
+								mode={ratingType}
+								className={styles[`rating-${ratingType}`]}
+							>
 								<Headline text={formattedRating} size="l" />
-							</div>
+							</Badge>
 						)}
 					</div>
 

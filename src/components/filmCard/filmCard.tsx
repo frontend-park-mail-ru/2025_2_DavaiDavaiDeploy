@@ -3,6 +3,7 @@ import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { Badge } from '@/uikit/badge/badge';
 import { Headline } from '@/uikit/headline/headline';
 import { Subhead } from '@/uikit/subhead/subhead';
 import { Title } from '@/uikit/title/title';
@@ -25,9 +26,14 @@ export class FilmCard extends Component<FilmCardProps> {
 				<div className={styles.imageContainer}>
 					<Link href={`/films/${id}`}>
 						<img className={styles.image} src={imageSrc} alt={title}></img>
-						<div className={styles[`rating-${ratingType}`]}>
-							<Headline text={formattedRating} size="l" />
-						</div>
+						{ratingType && (
+							<Badge
+								mode={ratingType}
+								className={styles[`rating-${ratingType}`]}
+							>
+								<Headline text={formattedRating} size="l" />
+							</Badge>
+						)}
 					</Link>
 				</div>
 				<div className={styles.content}>

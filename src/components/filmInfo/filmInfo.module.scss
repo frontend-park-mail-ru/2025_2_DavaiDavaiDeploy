@@ -189,18 +189,6 @@
 	display: none;
 }
 
-.rating-high {
-	background-color: var(--color-rating-high);
-}
-
-.rating-medium {
-	background-color: var(--color-rating-medium);
-}
-
-.rating-low {
-	background-color: var(--color-rating-low);
-}
-
 .smallAbout {
 	display: none;
 }
@@ -324,14 +312,8 @@
 	.rating-high,
 	.rating-medium,
 	.rating-low {
-		position: absolute;
-		top: 2%;
 		left: 8%;
-		border-radius: 0.3125rem;
-		z-index: 2;
 		display: inline-block;
-		padding: 0.35rem 0.77rem;
-		font-size: var(--font-size-l);
 	}
 
 	.smallAbout {

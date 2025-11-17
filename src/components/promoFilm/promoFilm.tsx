@@ -10,6 +10,7 @@ import actions from '@/redux/features/promoFilm/actions';
 import { selectPromoFilm } from '@/redux/features/promoFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsPromoFilm } from '@/types/models';
+import { Badge } from '@/uikit/badge/badge';
 import { Headline } from '@/uikit/headline/headline';
 import { Paragraph } from '@/uikit/paragraph/paragraph';
 import { Subhead } from '@/uikit/subhead/subhead';
@@ -54,9 +55,14 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 						<Link href={`/films/${id}`} className={styles.linkWrap}>
 							<div className={styles.header}>
 								<Title className={styles.title} text={title} size="4xl" />
-								<div className={styles[`rating-${ratingType}`]}>
-									<Headline text={formattedRating} size="l" />
-								</div>
+								{ratingType && (
+									<Badge
+										mode={ratingType}
+										className={styles[`rating-${ratingType}`]}
+									>
+										<Headline text={formattedRating} size="l" />
+									</Badge>
+								)}
 							</div>
 							<div className={styles.info}>
 								<Subhead

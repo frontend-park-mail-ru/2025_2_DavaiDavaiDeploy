@@ -76,20 +76,6 @@
 	font-size: var(--font-size-l);
 }
 
-.rating,
-.rating-high {
-	color: var(--color-light-text);
-	background-color: var(--color-rating-high);
-}
-
-.rating-medium {
-	background-color: var(--color-rating-medium);
-}
-
-.rating-low {
-	background-color: var(--color-rating-low);
-}
-
 .film-card a {
 	text-decoration: none;
 	color: inherit;

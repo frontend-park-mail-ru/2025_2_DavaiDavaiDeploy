@@ -127,27 +127,12 @@
 .rating-medium,
 .rating-low {
 	position: relative;
-	padding: 0.35rem 0.77rem;
-	border-radius: var(--border-radius-m);
 	line-height: 1;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	white-space: nowrap;
 	margin-top: 0.4rem;
-}
-
-.rating,
-.rating-high {
-	background-color: var(--color-rating-high);
-}
-
-.rating-medium {
-	background-color: var(--color-rating-medium);
-}
-
-.rating-low {
-	background-color: var(--color-rating-low);
 }
 
 .linkWrap {
