@@ -3,6 +3,8 @@ import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { Headline } from '@/uikit/headline/headline';
+import { Subhead } from '@/uikit/subhead/subhead';
 import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import styles from './filmCard.module.scss';
@@ -24,7 +26,7 @@ export class FilmCard extends Component<FilmCardProps> {
 					<Link href={`/films/${id}`}>
 						<img className={styles.image} src={imageSrc} alt={title}></img>
 						<div className={styles[`rating-${ratingType}`]}>
-							<h3>{formattedRating}</h3>
+							<Headline text={formattedRating} size="l" />
 						</div>
 					</Link>
 				</div>
@@ -35,8 +37,14 @@ export class FilmCard extends Component<FilmCardProps> {
 							className={styles.title}
 							weight="bold"
 							size="xl"
+							align="center"
 						/>
-						<p className={styles.info}>{info}</p>
+						<Subhead
+							text={info}
+							className={styles.info}
+							color="light"
+							size="2xs"
+						/>
 					</Link>
 				</div>
 			</div>

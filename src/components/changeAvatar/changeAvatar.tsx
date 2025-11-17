@@ -11,6 +11,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -138,8 +139,18 @@ class ChangeAvatarComponent extends Component<
 						weight="bold"
 					/>
 					<div className={styles.subtitle}>
-						<p>{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}</p>
-						<p>Вес файла: не более 8МБ</p>
+						<Subhead
+							text={`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}
+							color="light"
+							size="xs"
+							opacity="70"
+						/>
+						<Subhead
+							text="Вес файла: не более 8МБ"
+							color="light"
+							size="xs"
+							opacity="70"
+						/>
 					</div>
 				</div>
 

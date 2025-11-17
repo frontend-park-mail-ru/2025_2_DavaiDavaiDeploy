@@ -2,8 +2,12 @@
 	font-size: var(--font-size-xs);
 	text-align: left;
 	font-weight: var(--font-weight-regular);
-	color: var(--color-text);
+	color: var(--color-light-text);
 	opacity: 1;
+}
+
+.sizeL {
+	font-size: var(--font-size-l);
 }
 
 .sizeM {
@@ -16,6 +20,10 @@
 
 .sizeXS {
 	font-size: var(--font-size-xs);
+}
+
+.size2XS {
+	font-size: var(--font-size-2xs);
 }
 
 .alignCenter {
@@ -46,6 +54,10 @@
 	color: var(--color-text);
 }
 
+.colorError {
+	color: var(--color-error);
+}
+
 .weightRegular {
 	font-weight: var(--font-weight-regular);
 }
@@ -56,6 +68,10 @@
 
 .opacity100 {
 	opacity: 1;
+}
+
+.opacity80 {
+	opacity: 0.8;
 }
 
 .opacity70 {

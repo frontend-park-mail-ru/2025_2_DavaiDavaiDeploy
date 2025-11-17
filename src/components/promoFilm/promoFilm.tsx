@@ -10,6 +10,9 @@ import actions from '@/redux/features/promoFilm/actions';
 import { selectPromoFilm } from '@/redux/features/promoFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsPromoFilm } from '@/types/models';
+import { Headline } from '@/uikit/headline/headline';
+import { Paragraph } from '@/uikit/paragraph/paragraph';
+import { Subhead } from '@/uikit/subhead/subhead';
 import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import styles from './promoFilm.module.scss';
@@ -51,24 +54,43 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 						<Link href={`/films/${id}`} className={styles.linkWrap}>
 							<div className={styles.header}>
 								<Title className={styles.title} text={title} size="4xl" />
-
 								<div className={styles[`rating-${ratingType}`]}>
-									<h1 className={styles.ratingTitle}>{formattedRating}</h1>
+									<Headline text={formattedRating} size="l" />
 								</div>
 							</div>
-							<ul className={styles.info}>
-								<li className={styles.item}>{year}</li>
-								<li className={styles.item}>{genre}</li>
-								<li className={styles.item}>{formattedDuration}</li>
-							</ul>
+							<div className={styles.info}>
+								<Subhead
+									className={styles.item}
+									size="xs"
+									text={year}
+									color="light"
+								/>
+								<Subhead
+									className={styles.item}
+									size="xs"
+									text={genre}
+									color="light"
+								/>
+								{formattedDuration && (
+									<Subhead
+										className={styles.item}
+										size="xs"
+										text={formattedDuration}
+										color="light"
+									/>
+								)}
+							</div>
 
 							<Title
 								className={styles[`title-${ratingType}`]}
 								text={formattedRating}
 								size="5xl"
 							/>
-
-							<h2 className={styles.description}>{short_description}</h2>
+							<Paragraph
+								text={short_description}
+								className={styles.description}
+								size="m"
+							/>
 						</Link>
 					</div>
 

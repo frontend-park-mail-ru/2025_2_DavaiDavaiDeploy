@@ -3,6 +3,7 @@ import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
 import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
+import { Headline } from '@/uikit/headline/headline';
 import { Component } from '@robocotik/react';
 import styles from './headerUserAvatar.module.scss';
 interface UserAvatarProps {
@@ -25,7 +26,17 @@ export class UserAvatar extends Component<UserAvatarProps> {
 					alt={this.props.user?.login}
 					className={styles.avatar}
 				/>
-				<p className={styles.avatarActionsLogin}>{this.props.user?.login}</p>
+
+				{this.props.user?.login && (
+					<Headline
+						text={this.props.user.login}
+						className={styles.avatarActionsLogin}
+						size="l"
+						color="accent"
+						align="center"
+					/>
+				)}
+
 				<Link className={styles.avatarActionsLink} href="/profile">
 					Мой профиль
 				</Link>

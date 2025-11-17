@@ -42,7 +42,6 @@ class FeedbackFormComponent extends Component<
 
 	onMount() {
 		const throttledScrollHandler = throttle(this.handleScroll, THROTTLE_DELAY);
-
 		window.addEventListener('scroll', throttledScrollHandler);
 	}
 

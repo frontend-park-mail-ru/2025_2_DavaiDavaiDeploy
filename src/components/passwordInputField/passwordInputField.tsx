@@ -2,6 +2,7 @@ import eyeHideSvg from '@/assets/img/eye_close.svg';
 import eyeShowSvg from '@/assets/img/eye_open.svg';
 import lock from '@/assets/img/lock.svg';
 import clsx from '@/modules/clsx/index.ts';
+import { Subhead } from '@/uikit/subhead/subhead';
 import { Component } from '@robocotik/react';
 import styles from './passwordInputField.module.scss';
 
@@ -82,7 +83,12 @@ export class PasswordInputField extends Component<
 						/>
 					</button>
 				</div>
-				<p className={styles.errorMessage}>{errorMessage}</p>
+				<Subhead
+					text={errorMessage}
+					className={styles.errorMessage}
+					size="2xs"
+					color="error"
+				/>
 			</div>
 		);
 	}

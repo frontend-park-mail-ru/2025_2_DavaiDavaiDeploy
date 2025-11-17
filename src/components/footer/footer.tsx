@@ -1,3 +1,4 @@
+import { Paragraph } from '@/uikit/paragraph/paragraph.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -8,7 +9,12 @@ class FooterComponent extends Component<WithRouterProps> {
 		const type = this.props.router.path.startsWith('/films') ? 'light' : 'dark';
 		return (
 			<footer id="footer" className={styles[`footer-${type}`]}>
-				<p className={styles.content}>© Davai Film, 2025</p>
+				<Paragraph
+					text="© Davai Film, 2025"
+					className={styles.content}
+					color="accent"
+					size="m"
+				/>
 			</footer>
 		);
 	}

@@ -20,6 +20,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Headline } from '@/uikit/headline/headline.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
@@ -164,9 +165,12 @@ export class RegisterPageNotConnected extends Component<
 								size="4xl"
 								weight="bold"
 							/>
-							<h3 className={styles.rightSide__subtitle}>
-								Присоединяйтесь к сообществу киноманов
-							</h3>
+							<Headline
+								text="Присоединяйтесь к сообществу киноманов"
+								className={styles.rightSide__subtitle}
+								color="light"
+								size="s"
+							/>
 						</div>
 						<div className={styles.rightSide__inputFields}>
 							<InputField
@@ -204,7 +208,7 @@ export class RegisterPageNotConnected extends Component<
 							>
 								Зарегистрироваться
 							</button>
-							<p className={styles.register__button}>
+							<div className={styles.register__button}>
 								Уже есть аккаунт?{' '}
 								<Link
 									className={styles.register}
@@ -212,7 +216,7 @@ export class RegisterPageNotConnected extends Component<
 								>
 									Войти
 								</Link>
-							</p>
+							</div>
 						</div>
 					</div>
 				</div>

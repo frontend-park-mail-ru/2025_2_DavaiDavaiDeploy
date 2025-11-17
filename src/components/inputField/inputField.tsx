@@ -1,4 +1,5 @@
 import clsx from '@/modules/clsx/index.ts';
+import { Subhead } from '@/uikit/subhead/subhead';
 import { Component } from '@robocotik/react';
 import styles from './inputField.module.scss';
 interface InputFieldProps {
@@ -46,7 +47,12 @@ export class InputField extends Component<InputFieldProps> {
 					/>
 				</div>
 
-				<p className={styles.errorMessage}>{this.props.errorMessage}</p>
+				<Subhead
+					text={this.props.errorMessage}
+					className={styles.errorMessage}
+					size="2xs"
+					color="error"
+				/>
 			</div>
 		);
 	}

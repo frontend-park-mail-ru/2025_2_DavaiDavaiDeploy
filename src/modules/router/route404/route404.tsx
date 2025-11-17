@@ -1,3 +1,6 @@
+import { Paragraph } from '@/uikit/paragraph/paragraph';
+import { Subhead } from '@/uikit/subhead/subhead';
+import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import { Link } from '../link';
 import styles from './route404.module.scss';
@@ -7,12 +10,30 @@ export class Route404 extends Component {
 		return (
 			<div className={styles.page}>
 				<div className={styles.err}>
-					<h1 className={styles.title}>404</h1>
+					<Title
+						className={styles.title}
+						text="404"
+						weight="bold"
+						color="accent"
+					/>
 					<div className={styles.content} class="err__content">
-						<p className={styles.text}>Похоже, вы забрели в тёмный космос</p>
-						<p className={styles.text}>Страница не найдена</p>
+						<Paragraph
+							className={styles.text}
+							text="Похоже, вы забрели в тёмный космос"
+							size="m"
+						/>
+						<Paragraph
+							className={styles.text}
+							text="Страница не найдена"
+							size="m"
+						/>
+
 						<Link href="/">
-							<p className={styles.link}>Вернуться на главную</p>
+							<Subhead
+								className={styles.link}
+								text="Вернуться на главную"
+								color="accent"
+							/>
 						</Link>
 					</div>
 				</div>

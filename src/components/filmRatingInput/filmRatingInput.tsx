@@ -8,6 +8,7 @@ import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/film/actions';
 import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import type { Map } from '@/types/map';
+import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -24,7 +25,7 @@ class FilmRatingInputComponent extends Component<
 > {
 	leaveRating = (event: MouseEvent): void => {
 		const target = event.currentTarget as HTMLElement | null;
-		const number = target?.getAttribute('data-number');
+		const number = target?.getAttribute('data');
 
 		if (!number) {
 			return;
@@ -37,11 +38,7 @@ class FilmRatingInputComponent extends Component<
 	render() {
 		return (
 			<div className={styles.ratingInput}>
-				<div
-					onClick={this.leaveRating}
-					data-number={1}
-					className={styles.starWrap}
-				>
+				<div onClick={this.leaveRating} data={1} className={styles.starWrap}>
 					<Star
 						className={clsx({
 							[styles.darkLeftStarIcon]: this.props.isDark,
@@ -52,22 +49,22 @@ class FilmRatingInputComponent extends Component<
 				{Array.from({ length: RATING_COUNT }, (_, i) => {
 					const number = i + 1;
 					return (
-						<p
-							data-number={number}
+						<Title
+							text={number}
 							className={clsx(styles['ratingNumber-' + getRatingType(number)], {
 								[styles[`cur-${getRatingType(number)}`]]:
 									this.props.userRating === number,
 								[styles.dark]: this.props.isDark,
 							})}
 							onClick={this.leaveRating}
-						>
-							{number}
-						</p>
+							data={number}
+							size="2xl"
+						/>
 					);
 				})}
 				<div
 					onClick={this.leaveRating}
-					data-number={RATING_COUNT}
+					data={RATING_COUNT}
 					className={styles.starWrap}
 				>
 					<Star

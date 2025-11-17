@@ -79,23 +79,11 @@
 }
 
 .errorMessage {
-	color: var(--color-error);
-	text-align: left;
 	height: 1rem;
 	margin-top: -1rem;
 }
 
-.ratingErrorMessage {
-	color: var(--color-error);
-	text-align: left;
-	font-size: var(--font-size-m);
-	margin-top: -1.8rem;
-	margin-bottom: -1.5rem;
-}
-
 .defaultMessage {
-	color: var(--color-bg);
-	text-align: left;
 	height: 1rem;
 	margin-top: -1rem;
 }

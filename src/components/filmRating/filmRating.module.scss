@@ -8,9 +8,6 @@
 }
 
 .subtitle {
-	opacity: 0.6;
-	color: var(--color-light-text);
-	font-size: var(--font-size-xs);
 	margin-top: -0.5rem;
 }
 
@@ -54,7 +51,6 @@
 }
 
 .btnText {
-	font-size: var(--font-size-m);
 	white-space: nowrap;
 	width: min(15vw, 10rem);
 }
@@ -110,7 +106,6 @@
 
 .userRatingTitle {
 	display: flex;
-	font-size: var(--font-size-m);
 }
 
 .userStarIcon {

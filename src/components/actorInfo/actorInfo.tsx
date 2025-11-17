@@ -11,6 +11,8 @@ import {
 } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsActorPage } from '@/types/models';
+import { Headline } from '@/uikit/headline/headline.tsx';
+import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -82,7 +84,14 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 							<Title className={styles.title} text={russian_name} size="5xl" />
 						)}
 						<span className={styles.subtitle}>
-							{original_name && <h3>{original_name}</h3>}
+							{original_name && (
+								<Subhead
+									text={original_name}
+									color="light"
+									size="xs"
+									opacity="80"
+								/>
+							)}
 						</span>
 					</div>
 
@@ -97,36 +106,91 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 						<div className={styles.table}>
 							{formattedHeight && (
 								<>
-									<p className={styles.fact}>Рост</p>
-									<p className={styles.value}>{formattedHeight}</p>
+									<Headline
+										className={styles.fact}
+										text="Рост"
+										size="l"
+										weight="bold"
+									/>
+									<Subhead
+										text={formattedHeight}
+										className={styles.value}
+										opacity="80"
+										size="m"
+										color="light"
+									/>
 								</>
 							)}
 
 							{marital_status && (
 								<>
-									<p className={styles.fact}>Семья</p>
-									<p className={styles.value}>{marital_status}</p>
+									<Headline
+										className={styles.fact}
+										text="Семья"
+										size="l"
+										weight="bold"
+									/>
+									<Subhead
+										text={marital_status}
+										className={styles.value}
+										opacity="80"
+										size="m"
+										color="light"
+									/>
 								</>
 							)}
 
 							{birthInfo && (
 								<>
-									<p className={styles.fact}>Дата рождения</p>
-									<p className={styles.value}>{birthInfo}</p>
+									<Headline
+										className={styles.fact}
+										text="Дата рождения"
+										size="l"
+										weight="bold"
+									/>
+									<Subhead
+										text={birthInfo}
+										className={styles.value}
+										opacity="80"
+										size="m"
+										color="light"
+									/>
 								</>
 							)}
 
 							{!!films_number && (
 								<>
-									<p className={styles.fact}>Всего фильмов</p>
-									<p className={styles.value}>{films_number}</p>
+									<Headline
+										className={styles.fact}
+										text="Всего фильмов"
+										size="l"
+										weight="bold"
+									/>
+									<Subhead
+										text={films_number}
+										className={styles.value}
+										opacity="80"
+										size="m"
+										color="light"
+									/>
 								</>
 							)}
 
 							{birth_place && (
 								<>
-									<p className={styles.fact}>Место рождения</p>
-									<p className={styles.value}>{birth_place}</p>
+									<Headline
+										className={styles.fact}
+										text="Место рождения"
+										size="l"
+										weight="bold"
+									/>
+									<Subhead
+										text={birth_place}
+										className={styles.value}
+										opacity="80"
+										size="m"
+										color="light"
+									/>
 								</>
 							)}
 						</div>
@@ -134,36 +198,91 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 						<div className={styles.smallTable}>
 							{formattedHeight && (
 								<>
-									<p className={styles.fact}>Рост</p>
-									<p className={styles.value}>{formattedHeight}</p>
+									<Headline
+										className={styles.fact}
+										text="Рост"
+										size="l"
+										weight="bold"
+									/>
+									<Subhead
+										text={formattedHeight}
+										className={styles.value}
+										opacity="80"
+										size="m"
+										color="light"
+									/>
 								</>
 							)}
 
 							{marital_status && (
 								<>
-									<p className={styles.fact}>Семья</p>
-									<p className={styles.value}>{marital_status}</p>
+									<Headline
+										className={styles.fact}
+										text="Семья"
+										size="l"
+										weight="bold"
+									/>
+									<Subhead
+										text={marital_status}
+										className={styles.value}
+										opacity="80"
+										size="m"
+										color="light"
+									/>
 								</>
 							)}
 
 							{smallBirthInfo && (
 								<>
-									<p className={styles.fact}>Дата рождения</p>
-									<p className={styles.value}>{smallBirthInfo}</p>
+									<Headline
+										className={styles.fact}
+										text="Дата рождения"
+										size="l"
+										weight="bold"
+									/>
+									<Subhead
+										text={smallBirthInfo}
+										className={styles.value}
+										opacity="80"
+										size="m"
+										color="light"
+									/>
 								</>
 							)}
 
 							{birth_place && (
 								<>
-									<p className={styles.fact}>Место рождения</p>
-									<p className={styles.value}>{birth_place}</p>
+									<Headline
+										className={styles.fact}
+										text="Место рождения"
+										size="l"
+										weight="bold"
+									/>
+									<Subhead
+										text={birth_place}
+										className={styles.value}
+										opacity="80"
+										size="m"
+										color="light"
+									/>
 								</>
 							)}
 
 							{!!films_number && (
 								<>
-									<p className={styles.fact}>Всего фильмов</p>
-									<p className={styles.value}>{films_number}</p>
+									<Headline
+										className={styles.fact}
+										text="Всего фильмов"
+										size="l"
+										weight="bold"
+									/>
+									<Subhead
+										text={films_number}
+										className={styles.value}
+										opacity="80"
+										size="m"
+										color="light"
+									/>
 								</>
 							)}
 						</div>

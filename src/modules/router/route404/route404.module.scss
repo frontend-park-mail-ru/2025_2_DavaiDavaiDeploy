@@ -10,8 +10,6 @@
 
 .title {
 	font-size: 12rem;
-	font-weight: var(--font-weight-bold);
-	color: var(--color-accent);
 	line-height: 1;
 	transform: translateX(-2rem);
 }
@@ -23,7 +21,6 @@
 }
 
 .text {
-	font-size: var(--font-size-m);
 	margin-bottom: 0.5rem;
 	max-width: 31.25rem;
 }
@@ -36,7 +33,6 @@
 	background: transparent;
 	border: 2px solid var(--color-accent);
 	border-radius: 0.5rem;
-	color: var(--color-accent);
 	cursor: pointer;
 	transition: all 0.4s ease;
 	height: 2.25rem;

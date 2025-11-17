@@ -10,6 +10,8 @@ import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
+import { Paragraph } from '@/uikit/paragraph/paragraph.tsx';
+import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -60,16 +62,22 @@ class FilmRatingComponent extends Component<
 					onClick={this.handleMouseEnter}
 				>
 					{!this.props.userRating && (
-						<p className={styles.btnText}>Оценить фильм</p>
+						<Paragraph
+							className={styles.btnText}
+							text="Оценить фильм"
+							size="m"
+						/>
 					)}
 					{this.props.isAuthentificated && this.props.userRating && (
 						<span className={styles.userRating}>
-							<p className={styles.btnText}>Изменить</p>
+							<Paragraph className={styles.btnText} text="Изменить" size="m" />
 							<div className={styles[`rating-${userRatingType}`]}>
 								<Star className={styles.userStarIcon} />
-								<h3 className={styles.userRatingTitle}>
-									{this.props.userRating}
-								</h3>
+								<Paragraph
+									className={styles.userRatingTitle}
+									text={this.props.userRating}
+									size="m"
+								/>
 							</div>
 						</span>
 					)}
@@ -119,7 +127,16 @@ class FilmRatingComponent extends Component<
 							size="5xl"
 						/>
 					)}
-					{ratingNumber && <p className={styles.subtitle}>{ratingNumber}</p>}
+					{ratingNumber && (
+						<Subhead
+							className={styles.subtitle}
+							text={ratingNumber}
+							size="xs"
+							color="light"
+							opacity="60"
+						/>
+					)}
+
 					{this.renderButton()}
 				</div>
 			</div>

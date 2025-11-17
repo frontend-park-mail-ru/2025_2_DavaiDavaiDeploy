@@ -80,9 +80,6 @@
 }
 
 .login {
-	color: var(--color-dark-text);
-	opacity: 0.8;
-	font-size: var(--font-size-l);
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -92,7 +89,6 @@
 .rating {
 	display: flex;
 	flex-direction: row;
-	font-size: var(--font-size-l);
 	align-items: center;
 	gap: 0.5vw;
 	white-space: nowrap;
@@ -129,17 +125,11 @@
 }
 
 .date {
-	color: var(--color-dark-text);
-	opacity: 0.5;
-	font-size: var(--font-size-s);
 	flex-wrap: wrap;
 }
 
 .smallDate {
 	display: none;
-	color: var(--color-dark-text);
-	opacity: 0.5;
-	font-size: var(--font-size-s);
 	flex-wrap: wrap;
 }
 
@@ -161,16 +151,11 @@
 }
 
 .title {
-	color: var(--color-dark-text);
-	font-size: var(--font-size-l);
-	font-weight: var(--font-weight-bold);
 	flex-wrap: wrap;
 	overflow-wrap: break-word;
 }
 
 .text {
-	color: var(--color-dark-text);
-	font-size: var(--font-size-m);
 	flex-wrap: wrap;
 	overflow-wrap: break-word;
 }

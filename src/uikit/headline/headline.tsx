@@ -3,20 +3,25 @@ import { Component } from '@robocotik/react';
 import styles from './headline.module.scss';
 
 interface HeadlineProps {
-	text: string;
+	text: string | number;
 	size?: 'l' | 'm' | 's';
 	align?: 'center' | 'left';
-	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue';
+	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue' | 'error';
 	weight?: 'regular' | 'bold';
 	className?: string;
+	onClick?: (event: MouseEvent) => void;
+	data?: any;
 }
 
 export class Headline extends Component<HeadlineProps> {
 	render() {
-		const { size, align, color, weight, text, className } = this.props;
+		const { size, align, color, weight, text, className, onClick, data } =
+			this.props;
 
 		return (
 			<h2
+				onClick={onClick}
+				data={data}
 				className={clsx(
 					styles.headline,
 					{
@@ -30,6 +35,7 @@ export class Headline extends Component<HeadlineProps> {
 						[styles.colorBlue]: color === 'blue',
 						[styles.colorBase]: color === 'base',
 						[styles.colorLight]: color === 'light',
+						[styles.colorError]: color === 'error',
 						[styles.weightRegular]: weight === 'regular',
 						[styles.weightBold]: weight === 'bold',
 					},

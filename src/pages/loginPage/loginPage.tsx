@@ -19,6 +19,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Headline } from '@/uikit/headline/headline.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
@@ -139,9 +140,12 @@ export class LoginPageNotConnected extends Component<
 								size="4xl"
 								weight="bold"
 							/>
-							<h3 className={styles.rightSide__subtitle}>
-								Войти, чтобы получить доступ ко всем возможностям
-							</h3>
+							<Headline
+								text="Войти, чтобы получить доступ ко всем возможностям"
+								className={styles.rightSide__subtitle}
+								color="light"
+								size="s"
+							/>
 						</div>
 						<div className={styles.rightSide__inputFields}>
 							<InputField
@@ -169,7 +173,7 @@ export class LoginPageNotConnected extends Component<
 							>
 								Войти
 							</button>
-							<p className={styles.register__button}>
+							<div className={styles.register__button}>
 								У меня нет аккаунта.{' '}
 								<Link
 									className={styles.register}
@@ -177,7 +181,7 @@ export class LoginPageNotConnected extends Component<
 								>
 									Регистрация
 								</Link>
-							</p>
+							</div>
 						</div>
 					</div>
 				</div>

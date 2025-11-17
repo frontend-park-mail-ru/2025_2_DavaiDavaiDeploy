@@ -1,22 +1,27 @@
 import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
-import styles from './title.module.scss';
+import styles from './paragraph.module.scss';
 
 interface ParagraphProps {
-	text: string;
+	text: string | number;
 	size?: 'l' | 'm' | 's';
 	align?: 'center' | 'left';
-	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue';
+	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue' | 'error';
 	weight?: 'regular' | 'bold';
 	className?: string;
+	onClick?: (event: MouseEvent) => void;
+	data?: any;
 }
 
 export class Paragraph extends Component<ParagraphProps> {
 	render() {
-		const { size, align, color, weight, text, className } = this.props;
+		const { size, align, color, weight, text, className, onClick, data } =
+			this.props;
 
 		return (
-			<h2
+			<p
+				onClick={onClick}
+				data={data}
 				className={clsx(
 					styles.paragraph,
 					{
@@ -30,6 +35,7 @@ export class Paragraph extends Component<ParagraphProps> {
 						[styles.colorBlue]: color === 'blue',
 						[styles.colorBase]: color === 'base',
 						[styles.colorLight]: color === 'light',
+						[styles.colorError]: color === 'error',
 						[styles.weightRegular]: weight === 'regular',
 						[styles.weightBold]: weight === 'bold',
 					},
@@ -37,7 +43,7 @@ export class Paragraph extends Component<ParagraphProps> {
 				)}
 			>
 				{text}
-			</h2>
+			</p>
 		);
 	}
 }

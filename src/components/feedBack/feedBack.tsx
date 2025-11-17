@@ -7,6 +7,9 @@ import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmFeedback } from '@/types/models';
+import { Headline } from '@/uikit/headline/headline';
+import { Paragraph } from '@/uikit/paragraph/paragraph';
+import { Subhead } from '@/uikit/subhead/subhead';
 import { Component } from '@robocotik/react';
 import styles from './feedBack.module.scss';
 
@@ -30,19 +33,58 @@ export class FeedBack extends Component<FeedBackProps> {
 				<div className={styles.header}>
 					<span className={styles.user}>
 						<img src={imageSrc} className={styles.avatar}></img>
-						<h3 className={styles.login}>{user_login}</h3>
+						<Subhead
+							text={user_login}
+							className={styles.login}
+							color="dark"
+							opacity="80"
+							size="l"
+						/>
 					</span>
 					<span className={styles.rating}>
 						<Star className={styles[`star-${ratingType}`]} />
-						<p className={styles[`rating-${ratingType}`]}>{formattedRating}</p>
+						<Headline
+							text={formattedRating}
+							className={styles[`rating-${ratingType}`]}
+							size="l"
+						/>
 					</span>
-					<p className={styles.date}>{formattedDatetime}</p>
-					<p className={styles.smallDate}>{smallDatetime}</p>
+					{formattedDatetime && (
+						<Subhead
+							text={formattedDatetime}
+							className={styles.date}
+							color="dark"
+							size="s"
+							opacity="50"
+						/>
+					)}
+
+					{smallDatetime && (
+						<Subhead
+							text={smallDatetime}
+							className={styles.smallDate}
+							color="dark"
+							size="s"
+							opacity="50"
+						/>
+					)}
 				</div>
 				<hr className={styles.line}></hr>
 				<div className={styles.content}>
-					<h2 className={styles.title}>{title}</h2>
-					<p className={styles.text}>{text}</p>
+					<Headline
+						text={title}
+						className={styles.title}
+						color="dark"
+						size="l"
+						weight="bold"
+					/>
+
+					<Paragraph
+						text={text}
+						className={styles.text}
+						color="dark"
+						size="m"
+					/>
 				</div>
 			</div>
 		);

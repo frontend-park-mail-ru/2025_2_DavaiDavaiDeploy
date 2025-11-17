@@ -9,6 +9,7 @@ import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
+import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -156,13 +157,19 @@ class FeedbackFormComponent extends Component<
 					/>
 
 					{this.state.titleErrorMessage ? (
-						<p className={styles.errorMessage}>
-							{this.state.titleErrorMessage}
-						</p>
+						<Subhead
+							className={styles.errorMessage}
+							text={this.state.titleErrorMessage}
+							color="error"
+							size="2xs"
+						/>
 					) : (
-						<p className={styles.defaultMessage}>
-							Придумайте короткий заголовок
-						</p>
+						<Subhead
+							className={styles.defaultMessage}
+							text="Придумайте короткий заголовок"
+							color="blue"
+							size="2xs"
+						/>
 					)}
 
 					<textarea
@@ -177,11 +184,19 @@ class FeedbackFormComponent extends Component<
 					</textarea>
 
 					{this.state.textErrorMessage ? (
-						<p className={styles.errorMessage}>{this.state.textErrorMessage}</p>
+						<Subhead
+							className={styles.errorMessage}
+							text={this.state.textErrorMessage}
+							color="error"
+							size="2xs"
+						/>
 					) : (
-						<p className={styles.defaultMessage}>
-							Расскажите, что вы думаете о фильме - от 30 символов
-						</p>
+						<Subhead
+							className={styles.defaultMessage}
+							text="Расскажите, что вы думаете о фильме - от 30 символов"
+							color="blue"
+							size="2xs"
+						/>
 					)}
 				</div>
 

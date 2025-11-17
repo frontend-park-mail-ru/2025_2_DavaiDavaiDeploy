@@ -85,21 +85,15 @@
 	flex-wrap: nowrap;
 	gap: 1rem;
 	white-space: nowrap;
-	color: var(--color-light-text);
 }
 
 .item {
-	font-weight: 400;
-	color: var(--color-text-secondary);
 	text-decoration: none;
 	background: transparent;
-	font-size: var(--font-size-xs);
 }
 
 .description {
-	color: var(--color-white);
 	text-decoration: none;
-	font-size: var(--font-size-m);
 	line-height: 1.2;
 }
 
@@ -141,7 +135,6 @@
 	justify-content: center;
 	white-space: nowrap;
 	margin-top: 0.4rem;
-	font-size: var(--font-size-l);
 }
 
 .rating,

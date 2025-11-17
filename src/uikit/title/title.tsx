@@ -3,20 +3,25 @@ import { Component } from '@robocotik/react';
 import styles from './title.module.scss';
 
 interface TitleProps {
-	text: string;
+	text: string | number;
 	size?: '6xl' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl';
 	align?: 'center' | 'left';
-	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue';
+	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue' | 'error';
 	weight?: 'regular' | 'bold';
 	className?: string;
+	onClick?: (event: MouseEvent) => void;
+	data?: any;
 }
 
 export class Title extends Component<TitleProps> {
 	render() {
-		const { size, align, color, weight, text, className } = this.props;
+		const { size, align, color, weight, text, className, onClick, data } =
+			this.props;
 
 		return (
 			<h1
+				onClick={onClick}
+				data={data}
 				className={clsx(
 					styles.title,
 					{
@@ -33,6 +38,7 @@ export class Title extends Component<TitleProps> {
 						[styles.colorBlue]: color === 'blue',
 						[styles.colorBase]: color === 'base',
 						[styles.colorLight]: color === 'light',
+						[styles.colorError]: color === 'error',
 						[styles.weightRegular]: weight === 'regular',
 						[styles.weightBold]: weight === 'bold',
 					},

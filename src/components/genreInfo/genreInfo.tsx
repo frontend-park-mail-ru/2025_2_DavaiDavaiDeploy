@@ -8,6 +8,7 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenre } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
+import { Paragraph } from '@/uikit/paragraph/paragraph.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import { withModal } from '../../modules/modals/withModal.tsx';
@@ -47,7 +48,12 @@ class GenreInfoComponent extends Component<
 		return (
 			<div className={styles.genre}>
 				<img src={titleSRC} alt={title} className={styles.title} />
-				<p className={styles.description}>{description}</p>
+				<Paragraph
+					text={description}
+					className={styles.description}
+					size="m"
+					align="center"
+				/>
 			</div>
 		);
 	}
