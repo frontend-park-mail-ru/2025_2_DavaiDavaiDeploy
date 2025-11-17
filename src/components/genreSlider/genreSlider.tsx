@@ -11,6 +11,7 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenres } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
+import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
 import styles from './genreSlider.module.scss';
@@ -194,7 +195,7 @@ class GenreSliderComponent extends Component<
 
 		return (
 			<section className={styles.genreSlider}>
-				<h2 className={styles.title}>Жанры</h2>
+				<Title className={styles.title} text="Жанры" size="3xl" weight="bold" />
 				<div className={styles.container} onClick={this.onSliderClick}>
 					<div className={clsx(styles.slider, animationClass)}>
 						{visibleGenres.map((genre) => (

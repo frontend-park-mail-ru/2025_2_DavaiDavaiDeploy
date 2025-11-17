@@ -11,6 +11,7 @@ import {
 } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsActorPage } from '@/types/models';
+import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -29,7 +30,15 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 
 	render() {
 		if (this.props.error) {
-			return <div className={styles.err}>Актер не найден</div>;
+			return (
+				<Title
+					className={styles.err}
+					text="Актер не найден"
+					size="5xl"
+					weight="bold"
+					color="accent"
+				/>
+			);
 		}
 
 		if (!this.props.actor) {
@@ -69,14 +78,21 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 
 				<div className={styles.info}>
 					<div className={styles.main}>
-						{russian_name && <h1 className={styles.title}>{russian_name}</h1>}
+						{russian_name && (
+							<Title className={styles.title} text={russian_name} size="5xl" />
+						)}
 						<span className={styles.subtitle}>
 							{original_name && <h3>{original_name}</h3>}
 						</span>
 					</div>
 
 					<div className={styles.about}>
-						<h1 className={styles.aboutTitle}>Информация</h1>
+						<Title
+							className={styles.aboutTitle}
+							text="Информация"
+							size="3xl"
+							weight="bold"
+						/>
 
 						<div className={styles.table}>
 							{formattedHeight && (

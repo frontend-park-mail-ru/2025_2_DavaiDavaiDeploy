@@ -103,7 +103,6 @@
 }
 
 .title {
-	font-size: var(--font-size-3xl);
 	margin-left: -0.3rem;
 }
 
@@ -136,8 +135,6 @@
 }
 
 .aboutTitle {
-	font-size: var(--font-size-xl);
-	font-weight: var(--font-weight-bold);
 	white-space: nowrap;
 	margin-left: -0.2rem;
 }
@@ -168,11 +165,8 @@
 
 .roles {
 	flex: 1;
-	font-size: var(--font-size-xl);
-	font-weight: var(--font-weight-bold);
 	white-space: nowrap;
 	width: 100%;
-	text-align: left;
 	margin-left: -0.2rem;
 }
 
@@ -241,9 +235,6 @@
 	align-items: center;
 	justify-content: center;
 	min-height: calc(100vh - 4rem);
-	font-size: var(--font-size-3xl);
-	font-weight: var(--font-weight-bold);
-	color: var(--color-accent);
 	line-height: 1;
 }
 

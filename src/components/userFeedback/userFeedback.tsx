@@ -11,6 +11,7 @@ import { selectUserFeedback } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
+import { Title } from '@/uikit/title/title.tsx';
 import { Component, createRef } from '@robocotik/react';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import styles from './userFeedback.module.scss';
@@ -76,7 +77,13 @@ class FeedbackFormComponent extends Component<
 		if (!this.props.user) {
 			return (
 				<div className={styles.notAuth}>
-					<p className={styles.notAuthTitle}>Хотите оставить отзыв?</p>
+					<Title
+						className={styles.notAuthTitle}
+						text="Хотите оставить отзыв?"
+						size="3xl"
+						weight="bold"
+						color="dark"
+					/>
 
 					<span className={styles.notAuthText}>
 						<Link
@@ -113,7 +120,13 @@ class FeedbackFormComponent extends Component<
 			return (
 				<div className={styles.feedbackContainer}>
 					<div className={styles.header}>
-						<h1 className={styles.title}>Ваш отзыв</h1>
+						<Title
+							className={styles.title}
+							text="Ваш отзыв"
+							size="3xl"
+							weight="bold"
+							color="dark"
+						/>
 						<button className={styles.editButton} onClick={this.handleEdit}>
 							<img src={Edit} className={styles.edit} alt="Редактировать" />
 						</button>

@@ -19,6 +19,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import styles from './loginPage.module.scss';
@@ -132,7 +133,12 @@ export class LoginPageNotConnected extends Component<
 
 					<div className={styles.rightSide}>
 						<div className={styles.rightSide__titles}>
-							<h1 className={styles.rightSide__title}>С возвращением!</h1>
+							<Title
+								className={styles.rightSide__title}
+								text="С возвращением!"
+								size="4xl"
+								weight="bold"
+							/>
 							<h3 className={styles.rightSide__subtitle}>
 								Войти, чтобы получить доступ ко всем возможностям
 							</h3>

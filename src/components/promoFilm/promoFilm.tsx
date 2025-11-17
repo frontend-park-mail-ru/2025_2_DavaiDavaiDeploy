@@ -10,6 +10,7 @@ import actions from '@/redux/features/promoFilm/actions';
 import { selectPromoFilm } from '@/redux/features/promoFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsPromoFilm } from '@/types/models';
+import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import styles from './promoFilm.module.scss';
 
@@ -49,7 +50,8 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 					<div className={styles.content}>
 						<Link href={`/films/${id}`} className={styles.linkWrap}>
 							<div className={styles.header}>
-								<h1 className={styles.title}>{title}</h1>
+								<Title className={styles.title} text={title} size="4xl" />
+
 								<div className={styles[`rating-${ratingType}`]}>
 									<h1 className={styles.ratingTitle}>{formattedRating}</h1>
 								</div>
@@ -59,9 +61,13 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 								<li className={styles.item}>{genre}</li>
 								<li className={styles.item}>{formattedDuration}</li>
 							</ul>
-							<h2 className={styles[`title-${ratingType}`]}>
-								{formattedRating}
-							</h2>
+
+							<Title
+								className={styles[`title-${ratingType}`]}
+								text={formattedRating}
+								size="5xl"
+							/>
+
 							<h2 className={styles.description}>{short_description}</h2>
 						</Link>
 					</div>

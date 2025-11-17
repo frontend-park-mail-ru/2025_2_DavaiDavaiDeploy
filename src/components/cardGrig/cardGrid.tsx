@@ -7,6 +7,7 @@ import actions from '@/redux/features/films/actions';
 import { selectFilms } from '@/redux/features/films/selectors.js';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './cardGrid.module.scss';
@@ -32,13 +33,18 @@ export class CardGridComponent extends Component<
 
 	render() {
 		if (!this.props.films || this.props.films.length === 0) {
-			return <div className={styles.err}></div>;
+			return <div></div>;
 		}
 
 		return (
 			<div className={styles.cardGrid}>
 				{!this.props.router.params.id && (
-					<h2 className={styles.title}>Все фильмы</h2>
+					<Title
+						className={styles.title}
+						text="Все фильмы"
+						size="3xl"
+						weight="bold"
+					/>
 				)}
 				<div className={styles.grid}>
 					{this.props.films.map((film) => (

@@ -46,12 +46,6 @@
 	flex: 1;
 }
 
-.feedback {
-	color: var(--color-dark-text);
-	font-weight: var(--font-weight-bold);
-	font-size: var(--font-size-xl);
-}
-
 @media (max-width: 1024px) {
 	.content {
 		flex-direction: column;

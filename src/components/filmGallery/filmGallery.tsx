@@ -1,5 +1,6 @@
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import type { ModelsFilmPage } from '@/types/models';
+import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import styles from './filmGallery.module.scss';
 
@@ -17,7 +18,15 @@ export class FilmGallery extends Component<FilmGalleryProps> {
 
 		return (
 			<div className={styles.content}>
-				{image1 && <h1 className={styles.title}>Фотогалерея фильма</h1>}
+				{image1 && (
+					<Title
+						className={styles.title}
+						text="Фотогалерея фильма"
+						size="3xl"
+						weight="bold"
+						color="dark"
+					/>
+				)}
 				{image1 && <img className={styles.image} src={image1} />}
 				{image1 && <img className={styles.image} src={image1} />}
 				{image1 && <img className={styles.image} src={image1} />}

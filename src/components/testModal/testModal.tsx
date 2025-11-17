@@ -1,3 +1,4 @@
+import { Title } from '@/uikit/title/title.tsx';
 import { Component, createPortal } from '@robocotik/react';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
@@ -18,8 +19,16 @@ export class TestModalComponent extends Component<WithModalProps, {}> {
 				>
 					<div className={style.modalLogout}>
 						<div className={style.modalHeader}>
-							<h1 className={style.modalTitle}>Уже уходите?</h1>
-							<h1 className={style.modalTitle}>Мы будем скучать!</h1>
+							<Title
+								className={style.modalTitle}
+								text="Уже уходите?"
+								size="2xl"
+							/>
+							<Title
+								className={style.modalTitle}
+								text="Мы будем скучать!"
+								size="2xl"
+							/>
 						</div>
 						ЭТО ТЕСТ МОДАЛКА
 					</div>

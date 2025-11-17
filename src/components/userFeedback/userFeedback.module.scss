@@ -18,16 +18,10 @@
 	text-align: left;
 }
 
-.notAuthTitle {
-	color: var(--color-dark-text);
-	font-weight: var(--font-weight-bold);
-	font-size: var(--font-size-xl);
-}
-
 .notAuthText {
 	font-weight: var(--font-weight-bold);
 	color: var(--color-dark-text);
-	font-size: var(--font-size-xl);
+	font-size: var(--font-size-3xl);
 }
 
 .notAuthLink {
@@ -40,12 +34,6 @@
 	&:hover {
 		transform: scale(1.02);
 	}
-}
-
-.title {
-	color: var(--color-dark-text);
-	font-weight: var(--font-weight-bold);
-	font-size: var(--font-size-xl);
 }
 
 .feedbackContainer {

@@ -59,12 +59,6 @@
 	width: min(15vw, 10rem);
 }
 
-.title-low,
-.title-medium,
-.title-high {
-	font-size: var(--font-size-3xl);
-}
-
 .title-high {
 	color: var(--color-rating-high);
 }
@@ -122,26 +116,6 @@
 .userStarIcon {
 	color: var(--color-text);
 	width: 1.2rem;
-}
-
-.userTitle-low,
-.userTitle-medium,
-.userTitle-high {
-	display: none;
-	font-size: var(--font-size-3xl);
-	margin-bottom: -0.2rem;
-}
-
-.userTitle-high {
-	color: var(--color-rating-high);
-}
-
-.userTitle-medium {
-	color: var(--color-rating-medium);
-}
-
-.userTitle-low {
-	color: var(--color-rating-low);
 }
 
 .content {
@@ -223,7 +197,7 @@
 	}
 
 	.btnText {
-		font-size: var(--font-size-xxxxxs);
+		font-size: var(--font-size-3xs);
 		color: var(--color-light-text);
 		opacity: 0.6;
 		text-align: center;

@@ -8,6 +8,7 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenre } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
+import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
@@ -28,7 +29,15 @@ class GenreInfoComponent extends Component<
 
 	render() {
 		if (!this.props.genre) {
-			return <div className={styles.err}></div>;
+			return (
+				<Title
+					className={styles.err}
+					text="Жанр не найден"
+					size="5xl"
+					weight="bold"
+					color="accent"
+				/>
+			);
 		}
 
 		const { title, description, icon } = this.props.genre;

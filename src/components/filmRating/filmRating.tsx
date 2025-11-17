@@ -10,6 +10,7 @@ import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
+import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -112,7 +113,11 @@ class FilmRatingComponent extends Component<
 			<div className={styles.content}>
 				<div className={styles.rating}>
 					{formattedRating && (
-						<h2 className={styles[`title-${ratingType}`]}>{formattedRating}</h2>
+						<Title
+							className={styles[`title-${ratingType}`]}
+							text={formattedRating}
+							size="5xl"
+						/>
 					)}
 					{ratingNumber && <p className={styles.subtitle}>{ratingNumber}</p>}
 					{this.renderButton()}

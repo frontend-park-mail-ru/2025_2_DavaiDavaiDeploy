@@ -16,6 +16,7 @@ import {
 } from '@/redux/features/film/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
+import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import styles from './filmPage.module.scss';
 
@@ -104,7 +105,14 @@ class FilmPageComponent extends Component<
 				index === 0 && item.is_mine ? null : <FeedBack feedback={item} />,
 			);
 		} else {
-			return <h1 className={styles.feedback}>Отзывов пока нет</h1>;
+			return (
+				<Title
+					className={styles.feedback}
+					text="Отзывов пока нет"
+					size="3xl"
+					weight="bold"
+				/>
+			);
 		}
 	}
 

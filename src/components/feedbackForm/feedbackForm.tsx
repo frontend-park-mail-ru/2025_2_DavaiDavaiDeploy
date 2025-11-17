@@ -9,6 +9,7 @@ import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
+import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -121,10 +122,22 @@ class FeedbackFormComponent extends Component<
 		return (
 			<div className={styles.feedbackForm}>
 				{!this.props.isEditing && (
-					<h2 className={styles.title}>Оставить отзыв</h2>
+					<Title
+						className={styles.title}
+						text="Оставить отзыв"
+						size="3xl"
+						weight="bold"
+						color="medium"
+					/>
 				)}
 				{this.props.isEditing && (
-					<h2 className={styles.title}>Редактирование</h2>
+					<Title
+						className={styles.title}
+						text="Редактирование"
+						size="3xl"
+						weight="bold"
+						color="medium"
+					/>
 				)}
 				<div className={styles.header}>
 					<FilmRatingInput isDark={true} />

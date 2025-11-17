@@ -10,6 +10,7 @@ import {
 	selectPasswordChangeError,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
+import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -109,7 +110,12 @@ class ChangePasswordComponent extends Component<
 	render() {
 		return (
 			<div className={styles.changePasswordForm}>
-				<h1 className={styles.title}>Сменить пароль</h1>
+				<Title
+					className={styles.title}
+					text="Сменить пароль"
+					size="3xl"
+					weight="bold"
+				/>
 				<PasswordInputField
 					label="Старый пароль"
 					defaultValue=""

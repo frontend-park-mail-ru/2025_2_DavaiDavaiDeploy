@@ -5,6 +5,7 @@ import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsFilmPage } from '@/types/models';
+import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import { FilmRating } from '../filmRating/filmRating';
 import styles from './filmInfo.module.scss';
@@ -17,7 +18,15 @@ interface FilmInfoProps {
 export class FilmInfo extends Component<FilmInfoProps> {
 	render() {
 		if (this.props.error) {
-			return <div className={styles.err}>Фильм не найден</div>;
+			return (
+				<Title
+					className={styles.err}
+					text="Фильм не найден"
+					size="5xl"
+					weight="bold"
+					color="accent"
+				/>
+			);
 		}
 
 		if (!this.props.film) {
@@ -82,7 +91,9 @@ export class FilmInfo extends Component<FilmInfoProps> {
 					<div className={styles.info}>
 						<div className={styles.firstRow}>
 							<div className={styles.main}>
-								{title && <h1 className={styles.title}>{title}</h1>}
+								{title && (
+									<Title className={styles.title} text={title} size="5xl" />
+								)}
 								<span className={styles.subtitle}>
 									{original_title && <h3>{original_title}</h3>}
 									{age_category && <h3>{age_category}</h3>}
@@ -116,7 +127,12 @@ export class FilmInfo extends Component<FilmInfoProps> {
 
 						<div className={styles.secondRow}>
 							<div className={styles.about}>
-								<h1 className={styles.aboutTitle}>О фильме</h1>
+								<Title
+									className={styles.aboutTitle}
+									text="О фильме"
+									size="3xl"
+									weight="bold"
+								/>
 								<div className={styles.table}>
 									{!!year && (
 										<>
@@ -172,7 +188,12 @@ export class FilmInfo extends Component<FilmInfoProps> {
 							{actors?.length > 0 && (
 								<div className={styles.cast}>
 									<div className={styles.castContent}>
-										<h1 className={styles.roles}>В главных ролях</h1>
+										<Title
+											className={styles.roles}
+											text="В главных ролях"
+											size="3xl"
+											weight="bold"
+										/>
 										{actors.map((actor) => (
 											<Link href={`/actors/${actor.id}`}>
 												<p className={styles.actors}>{actor.russian_name}</p>

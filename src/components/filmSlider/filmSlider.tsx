@@ -10,6 +10,7 @@ import actions from '@/redux/features/actor/actions';
 import { selectActorFilms } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { Title } from '@/uikit/title/title.tsx';
 import { Component, createRef } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -280,7 +281,7 @@ class FilmSliderComponent extends Component<
 
 		return (
 			<div className={styles.content}>
-				<h1 className={styles.title}>ПРОЕКТЫ</h1>
+				<Title text="ПРОЕКТЫ" size="6xl" className={styles.title} />
 				<div
 					ref={this.sliderRef}
 					className={styles.slider}

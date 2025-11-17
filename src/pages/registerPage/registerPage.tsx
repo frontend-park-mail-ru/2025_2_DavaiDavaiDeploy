@@ -20,6 +20,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import styles from './registerPage.module.scss';
@@ -157,7 +158,12 @@ export class RegisterPageNotConnected extends Component<
 
 					<div className={styles.rightSide}>
 						<div className={styles.rightSide__titles}>
-							<h1 className={styles.rightSide__title}>Создать аккаунт</h1>
+							<Title
+								className={styles.rightSide__title}
+								text="Создать аккаунт"
+								size="4xl"
+								weight="bold"
+							/>
 							<h3 className={styles.rightSide__subtitle}>
 								Присоединяйтесь к сообществу киноманов
 							</h3>

@@ -6,6 +6,7 @@ import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts'
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
+import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import styles from './userPage.module.scss';
 
@@ -22,7 +23,11 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 	render() {
 		return (
 			<div className={styles.page}>
-				<h1 className={styles.title}>Добро пожаловать в ваш профиль</h1>
+				<Title
+					className={styles.title}
+					text="Добро пожаловать в ваш профиль"
+					size="5xl"
+				/>
 				<section className={styles.profile}>
 					<ChangeAvatar />
 					<ChangePassword />

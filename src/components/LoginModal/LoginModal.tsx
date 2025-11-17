@@ -1,4 +1,5 @@
 import Exit from '@/assets/img/exit.svg?react';
+import { Title } from '@/uikit/title/title';
 import { Component, createPortal } from '@robocotik/react';
 import style from './LoginModal.module.scss';
 
@@ -12,8 +13,16 @@ export class LoginModal extends Component {
 				>
 					<div className={style.modalLogout}>
 						<div className={style.modalHeader}>
-							<h1 className={style.modalTitle}>Уже уходите?</h1>
-							<h1 className={style.modalTitle}>Мы будем скучать!</h1>
+							<Title
+								className={style.modalTitle}
+								text="Уже уходите?"
+								size="2xl"
+							/>
+							<Title
+								className={style.modalTitle}
+								text="Мы будем скучать!"
+								size="2xl"
+							/>
 						</div>
 						<div className={style.modalActions}>
 							<button className={style.exitButton}>
