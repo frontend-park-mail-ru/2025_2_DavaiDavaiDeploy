@@ -1,4 +1,3 @@
-import Star from '@/assets/img/Star.svg?react';
 import {
 	formatDatetime,
 	formatSmallDatetime,
@@ -10,6 +9,7 @@ import type { ModelsFilmFeedback } from '@/types/models';
 import { Avatar } from '@/uikit/avatar/avatar';
 import { Headline } from '@/uikit/headline/headline';
 import { Paragraph } from '@/uikit/paragraph/paragraph';
+import { Rating } from '@/uikit/rating/rating';
 import { Subhead } from '@/uikit/subhead/subhead';
 import { Component } from '@robocotik/react';
 import styles from './feedBack.module.scss';
@@ -42,14 +42,9 @@ export class FeedBack extends Component<FeedBackProps> {
 							size="l"
 						/>
 					</span>
-					<span className={styles.rating}>
-						<Star className={styles[`star-${ratingType}`]} />
-						<Headline
-							text={formattedRating}
-							className={styles[`rating-${ratingType}`]}
-							size="l"
-						/>
-					</span>
+					{formattedRating && ratingType && (
+						<Rating rating={formattedRating} mode={ratingType} />
+					)}
 					{formattedDatetime && (
 						<Subhead
 							text={formattedDatetime}

@@ -78,44 +78,6 @@
 	max-width: 12vw;
 }
 
-.rating {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: 0.5vw;
-	white-space: nowrap;
-}
-
-.star-low {
-	color: var(--color-feedback-text-low);
-}
-
-.star-high {
-	color: var(--color-feedback-text-high);
-}
-
-.star-medium {
-	color: var(--color-feedback-text-medium);
-}
-
-.rating-low,
-.rating-high,
-.rating-medium {
-	font-size: var(--font-size-l);
-}
-
-.rating-low {
-	color: var(--color-feedback-text-low);
-}
-
-.rating-high {
-	color: var(--color-feedback-text-high);
-}
-
-.rating-medium {
-	color: var(--color-feedback-text-medium);
-}
-
 .date {
 	flex-wrap: wrap;
 }
@@ -175,10 +137,6 @@
 
 	.smallDate {
 		display: none;
-	}
-
-	.rating {
-		margin-right: 0;
 	}
 
 	.login {
