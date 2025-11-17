@@ -127,7 +127,7 @@ class FeedbackFormComponent extends Component<
 						text="Оставить отзыв"
 						size="3xl"
 						weight="bold"
-						color="medium"
+						color="blue"
 					/>
 				)}
 				{this.props.isEditing && (
@@ -136,7 +136,7 @@ class FeedbackFormComponent extends Component<
 						text="Редактирование"
 						size="3xl"
 						weight="bold"
-						color="medium"
+						color="blue"
 					/>
 				)}
 				<div className={styles.header}>

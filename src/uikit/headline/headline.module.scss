@@ -1,32 +1,20 @@
-.title {
-	font-size: var(--font-size-3xl);
+.headline {
+	font-size: var(--font-size-l);
 	text-align: left;
 	font-weight: var(--font-weight-regular);
 	color: var(--color-text);
 }
 
-.size6xl {
-	font-size: var(--font-size-6xl);
+.sizeL {
+	font-size: var(--font-size-l);
 }
 
-.size5xl {
-	font-size: var(--font-size-5xl);
+.sizeM {
+	font-size: var(--font-size-m);
 }
 
-.size4xl {
-	font-size: var(--font-size-4xl);
-}
-
-.size3xl {
-	font-size: var(--font-size-3xl);
-}
-
-.size2xl {
-	font-size: var(--font-size-2xl);
-}
-
-.sizexl {
-	font-size: var(--font-size-xl);
+.sizeS {
+	font-size: var(--font-size-s);
 }
 
 .alignCenter {

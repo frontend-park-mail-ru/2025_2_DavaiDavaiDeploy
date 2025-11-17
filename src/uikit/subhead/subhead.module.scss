@@ -1,32 +1,21 @@
-.title {
-	font-size: var(--font-size-3xl);
+.subhead {
+	font-size: var(--font-size-xs);
 	text-align: left;
 	font-weight: var(--font-weight-regular);
 	color: var(--color-text);
+	opacity: 1;
 }
 
-.size6xl {
-	font-size: var(--font-size-6xl);
+.sizeM {
+	font-size: var(--font-size-m);
 }
 
-.size5xl {
-	font-size: var(--font-size-5xl);
+.sizeS {
+	font-size: var(--font-size-s);
 }
 
-.size4xl {
-	font-size: var(--font-size-4xl);
-}
-
-.size3xl {
-	font-size: var(--font-size-3xl);
-}
-
-.size2xl {
-	font-size: var(--font-size-2xl);
-}
-
-.sizexl {
-	font-size: var(--font-size-xl);
+.sizeXS {
+	font-size: var(--font-size-xs);
 }
 
 .alignCenter {
@@ -63,4 +52,24 @@
 
 .weightBold {
 	font-weight: var(--font-weight-bold);
+}
+
+.opacity100 {
+	opacity: 1;
+}
+
+.opacity70 {
+	opacity: 0.7;
+}
+
+.opacity60 {
+	opacity: 0.6;
+}
+
+.opacity50 {
+	opacity: 0.5;
+}
+
+.opacity30 {
+	opacity: 0.3;
 }
