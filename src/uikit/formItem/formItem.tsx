@@ -28,7 +28,7 @@ export class FormItem extends Component<FormItemProps> {
 		const {
 			mode,
 			value,
-			defaultValue,
+			defaultValue = '',
 			after,
 			before,
 			type = 'text',

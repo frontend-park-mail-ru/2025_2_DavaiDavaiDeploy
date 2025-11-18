@@ -29,19 +29,8 @@
 }
 
 .textarea {
-	width: 100%;
-	max-width: 100%;
 	padding: 0.8rem 1.25rem;
-	border: 2px solid transparent;
-	border-radius: var(--border-radius-l);
-	font-size: var(--font-size-xs);
-	color: var(--color-dark-text);
-	outline: none;
-	box-sizing: border-box;
-	word-break: break-all;
-	font-family: 'Golos UI', Arial, sans-serif;
 	height: 20vh;
-	resize: none;
 }
 
 .inputTitle::placeholder,
@@ -67,33 +56,10 @@
 	}
 }
 
-.errorMessage {
-	height: 1rem;
-	margin-top: -1rem;
-}
-
-.defaultMessage {
-	height: 1rem;
-	margin-top: -1rem;
-}
-
-.errorBorder {
-	border: 2px solid var(--color-error);
-}
-
 @media (max-width: 1600px) {
 	.feedbackForm {
 		gap: 0.5rem;
 		padding: 2rem 1.5rem;
-	}
-
-	.ratingErrorMessage {
-		margin-top: -0.2rem;
-		margin-bottom: -1rem;
-	}
-
-	.defaultMessage {
-		margin-top: -0.4rem;
 	}
 
 	.textarea {
@@ -136,19 +102,6 @@
 	.submitButton {
 		padding: 0.6rem 2.5rem;
 		font-size: var(--font-size-l);
-	}
-
-	.errorMessage {
-		margin-top: -0.6rem;
-	}
-
-	.ratingErrorMessage {
-		margin-top: -1.2rem;
-		margin-bottom: -1.2rem;
-	}
-
-	.defaultMessage {
-		margin-top: -0.6rem;
 	}
 }
 

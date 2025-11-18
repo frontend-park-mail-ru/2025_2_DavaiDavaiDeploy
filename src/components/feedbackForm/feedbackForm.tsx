@@ -1,6 +1,5 @@
 import { validateFeedbackText } from '@/helpers/validateFeedbackText/validateFeedbackText.ts';
 import { validateFeedbackTitle } from '@/helpers/validateFeedbackTitle/validateFeedbackTitle.ts';
-import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -11,7 +10,7 @@ import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
 import { Button } from '@/uikit/button/button.tsx';
 import { FormItem } from '@/uikit/formItem/formItem.tsx';
-import { Subhead } from '@/uikit/subhead/subhead.tsx';
+import { Textarea } from '@/uikit/textarea/textarea.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -68,9 +67,7 @@ class FeedbackFormComponent extends Component<
 		});
 	};
 
-	handleTextChange = (event: Event) => {
-		const target = event.target as HTMLTextAreaElement;
-		const { value } = target;
+	handleTextChange = (value: string) => {
 		let textErrorMessage = '';
 
 		if (this.state.textErrorMessage !== '') {
@@ -151,25 +148,18 @@ class FeedbackFormComponent extends Component<
 						}
 					/>
 
-					<textarea
-						name="text"
-						placeholder="Текст"
-						className={clsx(styles.textarea, {
-							[styles.errorBorder]: this.state.textErrorMessage.length > 0,
-						})}
-						onInput={this.handleTextChange}
+					<Textarea
 						value={text}
+						placeholder="Текст"
+						className={styles.textarea}
+						onChange={this.handleTextChange}
+						status={this.state.textErrorMessage ? 'error' : 'default'}
+						bottom={
+							this.state.textErrorMessage
+								? this.state.textErrorMessage
+								: 'Расскажите, что вы думаете о фильме - от 30 символов'
+						}
 					/>
-
-					{this.state.textErrorMessage ? (
-						<Subhead className={styles.errorMessage} color="error" size="2xs">
-							{this.state.textErrorMessage}
-						</Subhead>
-					) : (
-						<Subhead className={styles.defaultMessage} color="blue" size="2xs">
-							Расскажите, что вы думаете о фильме - от 30 символов
-						</Subhead>
-					)}
 				</div>
 
 				<Button
