@@ -129,7 +129,11 @@ export const userReducer: Reducer = (
 				avatarChangeError: null,
 				user: payload.user,
 			};
-
+		case actionTypes.USER_ERROR_RESET:
+			return {
+				...state,
+				error: null,
+			};
 		default:
 			return state;
 	}

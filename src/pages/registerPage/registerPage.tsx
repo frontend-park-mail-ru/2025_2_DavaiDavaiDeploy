@@ -23,6 +23,7 @@ import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import { Redirect } from '../../modules/router/redirect.tsx';
+import { store } from '../../redux/store';
 import styles from './registerPage.module.scss';
 
 interface RegistrationPageProps {
@@ -56,7 +57,7 @@ export class RegisterPageNotConnected extends Component<
 	};
 
 	onMount() {
-		this.updateProps({ ...this.props, userError: '' });
+		store.dispatch(actions.resetUserError());
 		window.addEventListener('resize', this.handleResize);
 	}
 
@@ -97,7 +98,7 @@ export class RegisterPageNotConnected extends Component<
 
 	onUpdate() {
 		if (this.props.user) {
-			this.updateProps({ userError: '' });
+			store.dispatch(actions.resetUserError());
 		}
 
 		if (this.props.userError && !this.state.errorShown) {
