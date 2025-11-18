@@ -1,6 +1,5 @@
 import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
-import { InputField } from '@/components/inputField/inputField.tsx';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
 import { AppToast } from '@/components/toastContainer/toastContainer';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
@@ -21,6 +20,7 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Button } from '@/uikit/button/button.tsx';
+import { FormItem } from '@/uikit/formItem/formItem.tsx';
 import { Headline } from '@/uikit/headline/headline.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
@@ -174,16 +174,24 @@ export class RegisterPageNotConnected extends Component<
 							/>
 						</div>
 						<div className={styles.rightSide__inputFields}>
-							<InputField
-								label="Имя пользователя"
+							<FormItem
+								mode="primary"
+								top="Имя пользователя"
 								defaultValue=""
-								preIconSrc={userSvg}
+								before={
+									<img src={userSvg} alt="icon" className={styles.inputIcon} />
+								}
 								placeholder="Введите логин"
-								errorMessage={this.state.validationErrors.username}
+								bottom={this.state.validationErrors.username}
+								status={
+									this.state.validationErrors.username ? 'error' : 'default'
+								}
 								value={this.state.username}
 								onChange={(value) => this.onFieldChange(value, 'username')}
 							/>
+
 							<PasswordInputField
+								mode="primary"
 								label="Пароль"
 								defaultValue=""
 								placeholder="Введите пароль"
@@ -192,6 +200,7 @@ export class RegisterPageNotConnected extends Component<
 								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
 							<PasswordInputField
+								mode="primary"
 								label="Подтверждение пароля"
 								defaultValue=""
 								errorMessage={this.state.validationErrors.repeatPassword}

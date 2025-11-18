@@ -10,6 +10,7 @@ import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
 import { Button } from '@/uikit/button/button.tsx';
+import { FormItem } from '@/uikit/formItem/formItem.tsx';
 import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
@@ -53,9 +54,7 @@ class FeedbackFormComponent extends Component<
 		errorShown: false,
 	};
 
-	handleTitleChange = (event: Event) => {
-		const target = event.target as HTMLInputElement;
-		const { value } = target;
+	handleTitleChange = (value: string) => {
 		let titleErrorMessage = '';
 
 		if (this.state.titleErrorMessage) {
@@ -146,32 +145,19 @@ class FeedbackFormComponent extends Component<
 				</div>
 
 				<div className={styles.input}>
-					<input
-						type="text"
-						name="title"
+					<FormItem
+						mode="tertiary"
 						value={title}
 						placeholder="Заголовок"
-						className={clsx(styles.inputTitle, {
-							[styles.errorBorder]: this.state.titleErrorMessage.length > 0,
-						})}
-						onInput={this.handleTitleChange}
+						className={styles.inputTitle}
+						onChange={this.handleTitleChange}
+						status={this.state.titleErrorMessage ? 'error' : 'default'}
+						bottom={
+							this.state.titleErrorMessage
+								? this.state.titleErrorMessage
+								: 'Придумайте короткий заголовок'
+						}
 					/>
-
-					{this.state.titleErrorMessage ? (
-						<Subhead
-							className={styles.errorMessage}
-							text={this.state.titleErrorMessage}
-							color="error"
-							size="2xs"
-						/>
-					) : (
-						<Subhead
-							className={styles.defaultMessage}
-							text="Придумайте короткий заголовок"
-							color="blue"
-							size="2xs"
-						/>
-					)}
 
 					<textarea
 						name="text"

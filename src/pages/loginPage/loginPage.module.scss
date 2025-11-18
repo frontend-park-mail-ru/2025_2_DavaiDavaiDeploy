@@ -103,6 +103,14 @@
 	left: 0;
 }
 
+.inputIcon {
+	width: 1rem;
+	height: 1rem;
+	position: absolute;
+	left: 1rem;
+	pointer-events: none;
+}
+
 @media (max-width: 1024px) {
 	.loginImg {
 		display: none;

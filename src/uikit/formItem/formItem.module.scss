@@ -6,31 +6,49 @@
 	align-items: flex-start;
 }
 
-.inputLabel {
-	font-weight: var(--font-weight-medium);
-	font-size: var(--font-size-s);
-	color: var(--color-text);
-}
-
 .inputWrapper {
 	display: flex;
 	align-items: center;
 	width: 100%;
 	justify-content: start;
 	gap: 1.125rem;
-	border-radius: var(--border-radius-l);
 	height: 3.25rem;
 	position: relative;
 }
 
-.inputField {
+.primary {
+	border: 2px solid var(--color-accent);
+	border-radius: var(--border-radius-l);
+}
+
+.secondary {
+	background-color: var(--color-light);
+	border-radius: var(--border-radius-lg);
+	border: 2px solid hsl(48deg 14% 93% / 60.3%);
+}
+
+.tertiary,
+.before,
+.after {
+	display: contents;
+}
+
+.error {
+	border: 2px solid var(--color-error);
+}
+
+.input {
 	border: none;
-	background: transparent;
 	outline: none;
+	font-size: var(--font-size-xs);
+	width: 100%;
+	font-family: 'Golos UI', Arial, sans-serif;
+}
+
+.inputWithIcon {
+	background: transparent;
 	color: var(--color-light-text);
 	height: 100%;
-	width: 100%;
-	font-size: var(--font-size-xs);
 	padding-left: 3.25rem;
 
 	&:-moz-autofill,
@@ -54,22 +72,24 @@
 	}
 }
 
-.errorMessage {
-	height: 1rem;
+.tertiaryInput {
+	max-width: 100%;
+	padding: 0.8rem 1.25rem;
+	color: var(--color-dark-text);
+	box-sizing: border-box;
+	word-break: break-all;
+	border-radius: var(--border-radius-l);
+	border: 2px solid transparent;
 }
 
-.accentBorder {
-	border: 2px solid var(--color-accent);
-}
-
-.errorBorder {
+.errorTertiaryInput {
 	border: 2px solid var(--color-error);
 }
 
-.inputIcon {
-	width: 1rem;
+.bottom {
 	height: 1rem;
-	position: absolute;
-	left: 1rem;
-	pointer-events: none;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 100%;
 }

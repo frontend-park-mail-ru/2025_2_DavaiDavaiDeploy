@@ -118,40 +118,28 @@ class ChangePasswordComponent extends Component<
 					weight="bold"
 				/>
 				<PasswordInputField
+					mode="secondary"
 					label="Старый пароль"
 					defaultValue=""
 					placeholder="Введите пароль"
 					errorMessage={this.state.validationErrors.password}
 					onChange={(value) => this.onFieldChange(value, 'password')}
-					inputFieldClass={styles.inputField}
-					inputLabelClass={styles.inputLabel}
-					inputWrapperClass={styles.inputWrapper}
-					accentBorderClass={styles.accentBorder}
-					errorBorderClass={styles.errorBorder}
 				/>
 				<PasswordInputField
+					mode="secondary"
 					label="Новый пароль"
 					defaultValue=""
 					placeholder="Введите пароль"
 					errorMessage={this.state.validationErrors.newPassword}
 					onChange={(value) => this.onFieldChange(value, 'newPassword')}
-					inputFieldClass={styles.inputField}
-					inputLabelClass={styles.inputLabel}
-					inputWrapperClass={styles.inputWrapper}
-					accentBorderClass={styles.accentBorder}
-					errorBorderClass={styles.errorBorder}
 				/>
 				<PasswordInputField
+					mode="secondary"
 					label="Подтверждение пароля"
 					defaultValue=""
 					errorMessage={this.state.validationErrors.repeatNewPassword}
 					placeholder="Повторите пароль"
 					onChange={(value) => this.onFieldChange(value, 'repeatNewPassword')}
-					inputFieldClass={styles.inputField}
-					inputLabelClass={styles.inputLabel}
-					inputWrapperClass={styles.inputWrapper}
-					accentBorderClass={styles.accentBorder}
-					errorBorderClass={styles.errorBorder}
 				/>
 				<Button
 					mode="primary"
