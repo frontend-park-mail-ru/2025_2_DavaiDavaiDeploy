@@ -10,6 +10,7 @@ import actions from '@/redux/features/actor/actions';
 import { selectActorFilms } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { Flex } from '@/uikit/flex/flex.tsx';
 import { IconButton } from '@/uikit/iconButton/iconButton.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component, createRef } from '@robocotik/react';
@@ -285,10 +286,12 @@ class FilmSliderComponent extends Component<
 				<Title size="6xl" className={styles.title}>
 					ПРОЕКТЫ
 				</Title>
-				<div
+				<Flex
 					ref={this.sliderRef}
 					className={styles.slider}
 					onClick={this.onSliderClick}
+					direction="row"
+					align="top"
 				>
 					{this.state.active && (
 						<IconButton
@@ -316,7 +319,7 @@ class FilmSliderComponent extends Component<
 							/>
 						</IconButton>
 					)}
-					<div className={styles.container}>
+					<Flex className={styles.container} justify="center" align="start">
 						{this.props.films.map((film, i) => (
 							<div
 								key={film.id}
@@ -327,8 +330,8 @@ class FilmSliderComponent extends Component<
 								<FilmCard film={film} />
 							</div>
 						))}
-					</div>
-				</div>
+					</Flex>
+				</Flex>
 			</div>
 		);
 	}

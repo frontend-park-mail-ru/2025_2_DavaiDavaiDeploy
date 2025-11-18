@@ -4,6 +4,7 @@ import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/actor/actions';
 import type { Map } from '@/types/map';
+import { Flex } from '@/uikit/flex/flex';
 import { Component } from '@robocotik/react';
 import styles from './actorPage.module.scss';
 
@@ -18,12 +19,12 @@ class ActorPageComponent extends Component<ActorPageProps> {
 
 	render() {
 		return (
-			<div className={styles.page}>
-				<main className={styles.main}>
+			<Flex className={styles.page} direction="column">
+				<Flex className={styles.main} direction="column">
 					<ActorInfo />
 					<FilmSlider />
-				</main>
-			</div>
+				</Flex>
+			</Flex>
 		);
 	}
 }

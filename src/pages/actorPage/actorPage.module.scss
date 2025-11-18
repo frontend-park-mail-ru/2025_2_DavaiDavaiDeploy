@@ -1,14 +1,10 @@
 .page {
-	display: flex;
-	flex-direction: column;
 	gap: 3.75rem;
 	width: 100%;
 	margin-bottom: 3rem;
 }
 
 .main {
-	display: flex;
-	flex-direction: column;
 	width: 100%;
 	max-width: 100vw;
 	box-sizing: border-box;
@@ -17,7 +13,6 @@
 
 @media (max-width: 768px) {
 	.main {
-		display: flex;
 		flex-direction: column;
 		width: 100%;
 		max-width: 100vw;

@@ -1,3 +1,4 @@
+import { Button } from '@/uikit/button/button.tsx';
 import { Component } from '@robocotik/react';
 import type { NavigateButtonProps } from './types/navigateButton.props.ts';
 import type { RouterContextValue } from './types/routerContext.ts';
@@ -16,9 +17,14 @@ export class NavigateButtonComponent extends Component<
 
 	render() {
 		return (
-			<button className={this.props.className} onClick={this.handleClick}>
+			<Button
+				mode="primary"
+				className={this.props.className}
+				onClick={this.handleClick}
+				borderRadius="l"
+			>
 				{this.props.children}
-			</button>
+			</Button>
 		);
 	}
 }

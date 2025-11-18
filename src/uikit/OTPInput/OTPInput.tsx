@@ -1,4 +1,5 @@
 import { Component } from '@robocotik/react';
+import { Flex } from '../flex/flex';
 import styles from './OTPInput.module.scss';
 
 interface OTPInputProps {
@@ -69,7 +70,7 @@ export class OTPInput extends Component<OTPInputProps, OTPInputState> {
 		}
 
 		return (
-			<div className={styles.inputWrapper}>
+			<Flex className={styles.inputWrapper}>
 				{Array.from({ length }, (_, i) => (
 					<input
 						type="text"
@@ -81,7 +82,7 @@ export class OTPInput extends Component<OTPInputProps, OTPInputState> {
 						onKeyDown={this.handleKeyDown}
 					/>
 				))}
-			</div>
+			</Flex>
 		);
 	}
 }

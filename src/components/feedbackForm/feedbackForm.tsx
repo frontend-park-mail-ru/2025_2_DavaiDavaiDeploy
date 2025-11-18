@@ -9,6 +9,7 @@ import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
 import { Button } from '@/uikit/button/button.tsx';
+import { Flex } from '@/uikit/flex/flex.tsx';
 import { FormItem } from '@/uikit/formItem/formItem.tsx';
 import { Textarea } from '@/uikit/textarea/textarea.tsx';
 import { Title } from '@/uikit/title/title.tsx';
@@ -118,7 +119,12 @@ class FeedbackFormComponent extends Component<
 		const { title, text } = this.state;
 
 		return (
-			<div className={styles.feedbackForm}>
+			<Flex
+				className={styles.feedbackForm}
+				direction="column"
+				align="center"
+				justify="center"
+			>
 				{!this.props.isEditing && (
 					<Title className={styles.title} size="3xl" weight="bold" color="blue">
 						Оставить отзыв
@@ -129,11 +135,11 @@ class FeedbackFormComponent extends Component<
 						Редактирование
 					</Title>
 				)}
-				<div className={styles.header}>
+				<Flex className={styles.header} align="center" direction="column">
 					<FilmRatingInput isDark={true} />
-				</div>
+				</Flex>
 
-				<div className={styles.input}>
+				<Flex className={styles.input} direction="column">
 					<FormItem
 						mode="tertiary"
 						value={title}
@@ -160,7 +166,7 @@ class FeedbackFormComponent extends Component<
 								: 'Расскажите, что вы думаете о фильме - от 30 символов'
 						}
 					/>
-				</div>
+				</Flex>
 
 				<Button
 					mode="quaternary"
@@ -171,7 +177,7 @@ class FeedbackFormComponent extends Component<
 				>
 					Опубликовать
 				</Button>
-			</div>
+			</Flex>
 		);
 	}
 }

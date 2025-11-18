@@ -8,8 +8,6 @@
 .feedback-8,
 .feedback-9,
 .feedback-10 {
-	display: flex;
-	flex-direction: column;
 	gap: 1vh;
 	border-radius: var(--border-radius-xl);
 	padding: 3rem 2.2rem;
@@ -56,18 +54,7 @@
 	background-color: var(--color-feedback-10);
 }
 
-.header {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-}
-
 .user {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
 	gap: 2vw;
 }
 
@@ -90,8 +77,6 @@
 .content {
 	margin-top: 1vh;
 	color: var(--color-dark-text);
-	display: flex;
-	flex-direction: column;
 	gap: 3vh;
 }
 
@@ -111,21 +96,11 @@
 	}
 
 	.smallDate {
-		display: flex;
+		display: inline;
 	}
 }
 
 @media (max-width: 768px) {
-	.feedback-low,
-	.feedback-medium,
-	.feedback-high {
-		display: flex;
-		flex-direction: column;
-		gap: 1vh;
-		border-radius: var(--border-radius-xl);
-		padding: 2rem 1.8rem;
-	}
-
 	.smallDate {
 		display: none;
 	}

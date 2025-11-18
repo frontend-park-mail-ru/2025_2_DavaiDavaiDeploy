@@ -20,6 +20,7 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Button } from '@/uikit/button/button.tsx';
+import { Flex } from '@/uikit/flex/flex.tsx';
 import { FormItem } from '@/uikit/formItem/formItem.tsx';
 import { Headline } from '@/uikit/headline/headline.tsx';
 import { Title } from '@/uikit/title/title.tsx';
@@ -144,8 +145,13 @@ export class RegisterPageNotConnected extends Component<
 		}
 
 		return (
-			<main className={styles.main}>
-				<div className={styles.form}>
+			<div className={styles.main}>
+				<Flex
+					className={styles.form}
+					direction="row"
+					justify="center"
+					align="center"
+				>
 					<Link className={styles.closeLink} href="/">
 						<img src={close} alt="close" />
 					</Link>
@@ -163,7 +169,11 @@ export class RegisterPageNotConnected extends Component<
 						/>
 					)}
 
-					<div className={styles.rightSide}>
+					<Flex
+						className={styles.rightSide}
+						direction="column"
+						justify="between"
+					>
 						<div className={styles.rightSide__titles}>
 							<Title
 								className={styles.rightSide__title}
@@ -180,7 +190,7 @@ export class RegisterPageNotConnected extends Component<
 								Присоединяйтесь к сообществу киноманов
 							</Headline>
 						</div>
-						<div className={styles.rightSide__inputFields}>
+						<Flex className={styles.rightSide__inputFields} direction="column">
 							<FormItem
 								mode="primary"
 								top="Имя пользователя"
@@ -217,8 +227,8 @@ export class RegisterPageNotConnected extends Component<
 									this.onFieldChange(value, 'repeatPassword')
 								}
 							/>
-						</div>
-						<div className={styles.rightSide__actions}>
+						</Flex>
+						<Flex className={styles.rightSide__actions} direction="column">
 							<Button
 								mode="primary"
 								onClick={this.handleRegisterUser}
@@ -237,10 +247,10 @@ export class RegisterPageNotConnected extends Component<
 									Войти
 								</Link>
 							</div>
-						</div>
-					</div>
-				</div>
-			</main>
+						</Flex>
+					</Flex>
+				</Flex>
+			</div>
 		);
 	}
 }

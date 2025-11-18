@@ -2,6 +2,7 @@ import { Toast } from '@/components/toast/toast';
 import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices';
 import type { ToastType } from '@/consts/toasts';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
+import { Flex } from '@/uikit/flex/flex';
 import { Component } from '@robocotik/react';
 import styles from './toastContainer.module.scss';
 
@@ -108,7 +109,7 @@ export class ToastContainer extends Component<{}, ToastContainerState> {
 		const { toasts } = this.state;
 
 		return (
-			<div className={styles.toasts}>
+			<Flex className={styles.toasts} direction="column" align="center">
 				{toasts.map((toast: ToastItem) => {
 					if (!toast.isActive) {
 						this.removeToastById(toast.id);
@@ -123,7 +124,7 @@ export class ToastContainer extends Component<{}, ToastContainerState> {
 						/>
 					);
 				})}
-			</div>
+			</Flex>
 		);
 	}
 }

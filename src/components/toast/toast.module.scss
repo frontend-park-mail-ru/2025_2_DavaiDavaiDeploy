@@ -1,8 +1,5 @@
 .toast {
-	display: flex;
 	position: relative;
-	flex-direction: row;
-	align-items: center;
 	gap: 1rem;
 	z-index: 1000;
 	background-color: var(--color-accent-2);

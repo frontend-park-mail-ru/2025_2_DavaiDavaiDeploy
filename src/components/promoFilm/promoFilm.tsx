@@ -11,6 +11,7 @@ import { selectPromoFilm } from '@/redux/features/promoFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsPromoFilm } from '@/types/models';
 import { Badge } from '@/uikit/badge/badge';
+import { Flex } from '@/uikit/flex/flex';
 import { Headline } from '@/uikit/headline/headline';
 import { Paragraph } from '@/uikit/paragraph/paragraph';
 import { Subhead } from '@/uikit/subhead/subhead';
@@ -50,10 +51,10 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 
 		return (
 			<a aria-label="Card for promo film" className={styles.promoFilm}>
-				<section>
-					<div className={styles.content}>
+				<Flex className={styles.section}>
+					<Flex className={styles.content} direction="column" justify="center">
 						<Link href={`/films/${id}`} className={styles.linkWrap}>
-							<div className={styles.header}>
+							<Flex className={styles.header} align="center" direction="row">
 								<Title className={styles.title} size="4xl">
 									{title}
 								</Title>
@@ -65,8 +66,8 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 										<Headline size="l">{formattedRating}</Headline>
 									</Badge>
 								)}
-							</div>
-							<div className={styles.info}>
+							</Flex>
+							<Flex className={styles.info} justify="between">
 								<Subhead className={styles.item} size="xs" color="light">
 									{year.toString()}
 								</Subhead>
@@ -78,7 +79,7 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 										{formattedDuration}
 									</Subhead>
 								)}
-							</div>
+							</Flex>
 
 							<Title className={styles[`title-${ratingType}`]} size="5xl">
 								{formattedRating}
@@ -87,10 +88,10 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 								{short_description}
 							</Paragraph>
 						</Link>
-					</div>
+					</Flex>
 
 					<img src={imageSrc} alt={title} className={styles.image} />
-				</section>
+				</Flex>
 			</a>
 		);
 	}

@@ -4,6 +4,7 @@ import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
 import { Avatar } from '@/uikit/avatar/avatar';
+import { Flex } from '@/uikit/flex/flex';
 import { Headline } from '@/uikit/headline/headline';
 import { Separator } from '@/uikit/separator/separator';
 import { Component } from '@robocotik/react';
@@ -22,7 +23,10 @@ export class UserAvatar extends Component<UserAvatarProps> {
 
 	render() {
 		return (
-			<div className={clsx(styles.avatarActions, this.props.className)}>
+			<Flex
+				className={clsx(styles.avatarActions, this.props.className)}
+				direction="column"
+			>
 				<Avatar
 					size="l"
 					src={getStaticURL(this.props.user?.avatar)}
@@ -47,11 +51,16 @@ export class UserAvatar extends Component<UserAvatarProps> {
 
 				<Separator mode="primary" className={styles.line} />
 
-				<div className={styles.logoutButton} onClick={this.handleLogout}>
+				<Flex
+					className={styles.logoutButton}
+					onClick={this.handleLogout}
+					align="center"
+					justify="center"
+				>
 					<img src={exit} alt="logout" />
 					Выйти
-				</div>
-			</div>
+				</Flex>
+			</Flex>
 		);
 	}
 }

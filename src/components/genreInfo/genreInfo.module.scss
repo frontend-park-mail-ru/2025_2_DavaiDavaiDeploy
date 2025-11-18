@@ -1,8 +1,4 @@
 .genre {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	margin-top: max(5vh, 4vw);
 }
 
@@ -16,9 +12,6 @@
 }
 
 .err {
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	min-height: calc(100vh - 4rem);
 	line-height: 1;
 }

@@ -11,6 +11,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import { Button } from '@/uikit/button/button.tsx';
+import { Flex } from '@/uikit/flex/flex.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -110,7 +111,11 @@ class ChangePasswordComponent extends Component<
 
 	render() {
 		return (
-			<div className={styles.changePasswordForm}>
+			<Flex
+				className={styles.changePasswordForm}
+				align="center"
+				direction="column"
+			>
 				<Title className={styles.title} size="3xl" weight="bold">
 					Сменить пароль
 				</Title>
@@ -147,7 +152,7 @@ class ChangePasswordComponent extends Component<
 				>
 					Сохранить
 				</Button>
-			</div>
+			</Flex>
 		);
 	}
 }

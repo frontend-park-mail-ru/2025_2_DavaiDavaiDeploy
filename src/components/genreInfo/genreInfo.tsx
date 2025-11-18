@@ -8,6 +8,7 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenre } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
+import { Flex } from '@/uikit/flex/flex.tsx';
 import { Paragraph } from '@/uikit/paragraph/paragraph.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
@@ -42,12 +43,17 @@ class GenreInfoComponent extends Component<
 		const titleSRC = getImageURL(icon);
 
 		return (
-			<div className={styles.genre}>
+			<Flex
+				className={styles.genre}
+				justify="center"
+				align="center"
+				direction="column"
+			>
 				<img src={titleSRC} alt={title} className={styles.title} />
 				<Paragraph className={styles.description} size="m" align="center">
 					{description}
 				</Paragraph>
-			</div>
+			</Flex>
 		);
 	}
 }

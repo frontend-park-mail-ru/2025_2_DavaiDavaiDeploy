@@ -4,6 +4,7 @@ import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Badge } from '@/uikit/badge/badge';
+import { Flex } from '@/uikit/flex/flex';
 import { Headline } from '@/uikit/headline/headline';
 import { Subhead } from '@/uikit/subhead/subhead';
 import { Title } from '@/uikit/title/title';
@@ -22,7 +23,7 @@ export class FilmCard extends Component<FilmCardProps> {
 		const info = `${genre}, ${year}`;
 		const imageSrc = getImageURL(cover);
 		return (
-			<div className={styles.filmCard}>
+			<Flex className={styles.filmCard} direction="column">
 				<div className={styles.imageContainer}>
 					<Link href={`/films/${id}`}>
 						<img className={styles.image} src={imageSrc} alt={title} />
@@ -36,7 +37,7 @@ export class FilmCard extends Component<FilmCardProps> {
 						)}
 					</Link>
 				</div>
-				<div className={styles.content}>
+				<Flex className={styles.content} direction="column" align="center">
 					<Link href={`/films/${id}`}>
 						<Title
 							className={styles.title}
@@ -55,8 +56,8 @@ export class FilmCard extends Component<FilmCardProps> {
 							{info}
 						</Subhead>
 					</Link>
-				</div>
-			</div>
+				</Flex>
+			</Flex>
 		);
 	}
 }

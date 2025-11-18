@@ -1,41 +1,30 @@
 .page {
-	display: flex;
-	flex-direction: column;
 	gap: 3.75rem;
 	width: 100%;
 }
 
 .loadMoreTrigger {
-	display: flex;
+	height: 0;
+	width: 0;
 }
 
 .content {
 	background-color: var(--color-text);
-	display: flex;
-	flex-direction: row;
 	gap: 3vw;
-	align-items: flex-start;
-	justify-content: space-between;
 	padding: var(--side-padding);
 }
 
 .left {
-	display: flex;
-	flex-direction: column;
 	gap: 1.875rem;
 	width: 41.5vw;
 }
 
 .right {
-	display: flex;
-	flex-direction: column;
 	gap: 4rem;
 	width: 41.5vw;
 }
 
 .feedbacks {
-	display: flex;
-	flex-direction: column;
 	gap: 1.875rem;
 }
 

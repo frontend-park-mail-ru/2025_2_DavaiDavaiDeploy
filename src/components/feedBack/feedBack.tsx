@@ -7,6 +7,7 @@ import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingForm
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmFeedback } from '@/types/models';
 import { Avatar } from '@/uikit/avatar/avatar';
+import { Flex } from '@/uikit/flex/flex';
 import { Headline } from '@/uikit/headline/headline';
 import { Paragraph } from '@/uikit/paragraph/paragraph';
 import { Rating } from '@/uikit/rating/rating';
@@ -31,9 +32,19 @@ export class FeedBack extends Component<FeedBackProps> {
 		const imageSrc = getImageURL(user_avatar);
 
 		return (
-			<div className={styles[`feedback-${rating}`]}>
-				<div className={styles.header}>
-					<span className={styles.user}>
+			<Flex className={styles[`feedback-${rating}`]} direction="column">
+				<Flex
+					className={styles.header}
+					align="center"
+					direction="row"
+					justify="between"
+				>
+					<Flex
+						className={styles.user}
+						align="center"
+						direction="row"
+						justify="between"
+					>
 						<Avatar size="m" src={imageSrc} className={styles.avatar} />
 						<Subhead
 							className={styles.login}
@@ -43,7 +54,7 @@ export class FeedBack extends Component<FeedBackProps> {
 						>
 							{user_login}
 						</Subhead>
-					</span>
+					</Flex>
 					{formattedRating && ratingType && (
 						<Rating rating={formattedRating} mode={ratingType} />
 					)}
@@ -62,9 +73,9 @@ export class FeedBack extends Component<FeedBackProps> {
 							{smallDatetime}
 						</Subhead>
 					)}
-				</div>
+				</Flex>
 				<Separator mode="secondary" className={styles.line} />
-				<div className={styles.content}>
+				<Flex className={styles.content} direction="column">
 					<Headline
 						className={styles.title}
 						color="dark"
@@ -76,8 +87,8 @@ export class FeedBack extends Component<FeedBackProps> {
 					<Paragraph className={styles.text} color="dark" size="m">
 						{text}
 					</Paragraph>
-				</div>
-			</div>
+				</Flex>
+			</Flex>
 		);
 	}
 }

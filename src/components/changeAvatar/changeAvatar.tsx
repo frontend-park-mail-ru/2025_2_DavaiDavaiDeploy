@@ -14,6 +14,7 @@ import type { ModelsUser } from '@/types/models.ts';
 import { Avatar } from '@/uikit/avatar/avatar.tsx';
 import { Button } from '@/uikit/button/button.tsx';
 import { File as FileInput } from '@/uikit/file/file.tsx';
+import { Flex } from '@/uikit/flex/flex.tsx';
 import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component, createRef } from '@robocotik/react';
@@ -139,12 +140,12 @@ class ChangeAvatarComponent extends Component<
 		const avatarURL = getImageURL(avatar);
 
 		return (
-			<div className={styles.content}>
-				<div className={styles.text}>
+			<Flex className={styles.content} direction="row">
+				<Flex className={styles.text} direction="column" justify="between">
 					<Title className={styles.title} size="3xl" weight="bold">
 						Хочется чего-то нового? Обновите фото профиля
 					</Title>
-					<div className={styles.subtitle}>
+					<Flex className={styles.subtitle} direction="column">
 						<Subhead
 							color="light"
 							size="xs"
@@ -161,10 +162,10 @@ class ChangeAvatarComponent extends Component<
 						>
 							Вес файла: не более 8МБ
 						</Subhead>
-					</div>
-				</div>
+					</Flex>
+				</Flex>
 
-				<div className={styles.changeAvatar}>
+				<Flex className={styles.changeAvatar} direction="column" align="center">
 					{preview ? (
 						<Avatar
 							size="xl"
@@ -181,7 +182,7 @@ class ChangeAvatarComponent extends Component<
 						/>
 					)}
 
-					<div className={styles.btns}>
+					<Flex className={styles.btns} align="center" direction="column">
 						<FileInput
 							ref={this.fileInputRef}
 							onClick={this.handleFileUpload}
@@ -200,9 +201,9 @@ class ChangeAvatarComponent extends Component<
 						>
 							Сохранить
 						</Button>
-					</div>
-				</div>
-			</div>
+					</Flex>
+				</Flex>
+			</Flex>
 		);
 	}
 }

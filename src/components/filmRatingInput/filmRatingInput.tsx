@@ -8,6 +8,7 @@ import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/film/actions';
 import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import type { Map } from '@/types/map';
+import { Flex } from '@/uikit/flex/flex.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -37,7 +38,7 @@ class FilmRatingInputComponent extends Component<
 
 	render() {
 		return (
-			<div className={styles.ratingInput}>
+			<Flex className={styles.ratingInput} direction="row" align="center">
 				<div onClick={this.leaveRating} data={1} className={styles.starWrap}>
 					<Star
 						className={clsx({
@@ -75,7 +76,7 @@ class FilmRatingInputComponent extends Component<
 						})}
 					/>
 				</div>
-			</div>
+			</Flex>
 		);
 	}
 }

@@ -11,8 +11,6 @@
 	visibility: hidden;
 	transform: translateY(-0.5rem);
 	transition: all 0.3s ease;
-	display: flex;
-	flex-direction: column;
 	gap: 0.75rem;
 	box-shadow: 0 4px 20px rgb(0 0 0 / 50%);
 
@@ -58,9 +56,6 @@
 	border: none;
 	outline: none;
 	background: transparent;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	gap: 0.5rem;
 	color: var(--color-text);
 	padding: 0.5rem;

@@ -1,5 +1,6 @@
 import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
+import { Flex } from '../flex/flex';
 import { Headline } from '../headline/headline';
 import { Subhead } from '../subhead/subhead';
 import styles from './textarea.module.scss';
@@ -33,7 +34,7 @@ export class Textarea extends Component<TextareaProps> {
 		} = this.props;
 
 		return (
-			<div className={styles.inputContainer}>
+			<Flex className={styles.inputContainer} direction="column" align="start">
 				{top && (
 					<Headline size="s" className={styles.label}>
 						{top}
@@ -63,7 +64,7 @@ export class Textarea extends Component<TextareaProps> {
 				>
 					{bottom}
 				</Subhead>
-			</div>
+			</Flex>
 		);
 	}
 }

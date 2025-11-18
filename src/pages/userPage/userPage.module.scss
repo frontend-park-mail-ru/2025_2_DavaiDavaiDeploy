@@ -1,11 +1,8 @@
 .page {
 	position: relative;
-	display: flex;
-	flex-direction: column;
 	gap: 7vw;
 	width: 100vw;
 	min-height: 75vh;
-	align-items: center;
 	padding: var(--wide-side-padding);
 	margin-top: 10rem;
 	background: transparent;
@@ -46,11 +43,8 @@
 }
 
 .profile {
-	display: flex;
-	flex-direction: row;
 	gap: 9.4rem;
 	width: 100%;
-	align-items: flex-start;
 }
 
 .title {
@@ -67,7 +61,6 @@
 	}
 
 	.profile {
-		display: flex;
 		flex-direction: column;
 		gap: 2rem;
 		align-items: center;

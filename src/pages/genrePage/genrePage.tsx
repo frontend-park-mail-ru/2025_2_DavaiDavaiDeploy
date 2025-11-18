@@ -4,6 +4,7 @@ import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/genre/actions';
 import type { Map } from '@/types/map';
+import { Flex } from '@/uikit/flex/flex';
 import { Component } from '@robocotik/react';
 import styles from './genrePage.module.scss';
 
@@ -18,12 +19,12 @@ class GenrePageComponent extends Component<GenrePageProps> {
 
 	render() {
 		return (
-			<div className={styles.page}>
+			<Flex className={styles.page} direction="column">
 				<GenreInfo />
-				<section className={styles.films}>
+				<Flex className={styles.films} direction="column">
 					<GenreCardGrid />
-				</section>
-			</div>
+				</Flex>
+			</Flex>
 		);
 	}
 }

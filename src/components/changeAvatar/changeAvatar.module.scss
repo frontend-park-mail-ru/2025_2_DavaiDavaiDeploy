@@ -1,31 +1,11 @@
 .changeAvatar {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	gap: 2.8rem;
 }
 
-.avatarForm {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	justify-content: flex-end;
-	gap: 1.5rem;
-	z-index: 15;
-}
-
 .content {
-	display: flex;
-	flex-direction: row;
 	width: 45vw;
 	z-index: 15;
 	gap: 1rem;
-}
-
-.text {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
 }
 
 .title {
@@ -33,16 +13,11 @@
 }
 
 .subtitle {
-	display: flex;
-	flex-direction: column;
 	gap: 0.5rem;
 	margin-bottom: 3.25rem;
 }
 
 .btns {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	gap: 1rem;
 }
 

@@ -1,5 +1,6 @@
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import type { ModelsFilmPage } from '@/types/models';
+import { Flex } from '@/uikit/flex/flex';
 import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import styles from './filmGallery.module.scss';
@@ -17,7 +18,7 @@ export class FilmGallery extends Component<FilmGalleryProps> {
 		const image1 = getImageURL('posters/pic44.jpg');
 
 		return (
-			<div className={styles.content}>
+			<Flex className={styles.content} direction="column">
 				{image1 && (
 					<Title className={styles.title} size="3xl" weight="bold" color="dark">
 						Фотогалерея фильма
@@ -26,7 +27,7 @@ export class FilmGallery extends Component<FilmGalleryProps> {
 				{image1 && <img className={styles.image} src={image1} />}
 				{image1 && <img className={styles.image} src={image1} />}
 				{image1 && <img className={styles.image} src={image1} />}
-			</div>
+			</Flex>
 		);
 	}
 }

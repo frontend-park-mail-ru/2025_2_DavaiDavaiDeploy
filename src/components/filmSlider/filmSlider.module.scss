@@ -15,9 +15,6 @@
 
 .slider {
 	padding: var(--side-padding);
-	display: flex;
-	flex-direction: row;
-	align-items: top;
 	position: relative;
 	width: 100vw;
 	margin: 0 auto;
@@ -27,14 +24,11 @@
 .container {
 	height: 100%;
 	width: 100%;
-	display: flex;
 	position: relative;
 	perspective: 1000px;
 	transform-style: preserve-3d;
 	margin: 0 auto;
 	overflow: visible;
-	align-items: flex-start;
-	justify-content: center;
 }
 
 .slide {
@@ -113,7 +107,6 @@
 	.slide {
 		position: absolute;
 		top: 0;
-		display: flex;
 		left: 25%;
 		width: 50%;
 	}

@@ -6,6 +6,7 @@ import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link';
 import type { ModelsFilmPage } from '@/types/models';
 import { Badge } from '@/uikit/badge/badge';
+import { Flex } from '@/uikit/flex/flex';
 import { Headline } from '@/uikit/headline/headline';
 import { Paragraph } from '@/uikit/paragraph/paragraph';
 import { Subhead } from '@/uikit/subhead/subhead';
@@ -61,7 +62,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 		const formattedFees = formatMoney(worldwide_fees);
 
 		return (
-			<div className={styles.film}>
+			<Flex className={styles.film} direction="column">
 				<div className={styles.container}>
 					{posterSRC && (
 						<img
@@ -72,8 +73,8 @@ export class FilmInfo extends Component<FilmInfoProps> {
 					)}
 				</div>
 
-				<div className={styles.content}>
-					<div className={styles.media}>
+				<Flex className={styles.content} direction="row" align="start">
+					<Flex className={styles.media} align="start" justify="center">
 						{coverSRC && (
 							<img
 								src={coverSRC}
@@ -90,18 +91,23 @@ export class FilmInfo extends Component<FilmInfoProps> {
 								<Headline size="l">{formattedRating}</Headline>
 							</Badge>
 						)}
-					</div>
+					</Flex>
 
-					<div className={styles.info}>
-						<div className={styles.firstRow}>
-							<div className={styles.main}>
+					<Flex className={styles.info} direction="column" align="start">
+						<Flex
+							className={styles.firstRow}
+							direction="row"
+							align="start"
+							justify="between"
+						>
+							<Flex className={styles.main} direction="column" align="start">
 								{title && (
 									<Title className={styles.title} size="5xl">
 										{title}
 									</Title>
 								)}
 
-								<span className={styles.subtitle}>
+								<Flex className={styles.subtitle} direction="row">
 									{original_title && (
 										<Subhead color="light" size="xs" opacity="80">
 											{original_title}
@@ -113,9 +119,13 @@ export class FilmInfo extends Component<FilmInfoProps> {
 											{age_category}
 										</Subhead>
 									)}
-								</span>
+								</Flex>
 
-								<div className={styles.smallAbout}>
+								<Flex
+									className={styles.smallAbout}
+									align="center"
+									justify="around"
+								>
 									{!!year && (
 										<Subhead
 											className={styles.value}
@@ -166,25 +176,30 @@ export class FilmInfo extends Component<FilmInfoProps> {
 											{formattedDuration}
 										</Subhead>
 									)}
-								</div>
+								</Flex>
 
-								<div className={styles.smallRating}>
+								<Flex className={styles.smallRating}>
 									<FilmRating film={this.props.film} />
-								</div>
+								</Flex>
 
 								{description && (
 									<Paragraph className={styles.description} size="m">
 										{description}
 									</Paragraph>
 								)}
-							</div>
+							</Flex>
 
-							<div className={styles.bigRating}>
+							<Flex className={styles.bigRating}>
 								<FilmRating film={this.props.film} />
-							</div>
-						</div>
+							</Flex>
+						</Flex>
 
-						<div className={styles.secondRow}>
+						<Flex
+							className={styles.secondRow}
+							align="start"
+							direction="row"
+							justify="between"
+						>
 							<div className={styles.about}>
 								<Title className={styles.aboutTitle} size="3xl" weight="bold">
 									О фильме
@@ -306,8 +321,12 @@ export class FilmInfo extends Component<FilmInfoProps> {
 							</div>
 
 							{actors?.length > 0 && (
-								<div className={styles.cast}>
-									<div className={styles.castContent}>
+								<Flex className={styles.cast} align="end" direction="column">
+									<Flex
+										className={styles.castContent}
+										direction="column"
+										align="start"
+									>
 										<Title className={styles.roles} size="3xl" weight="bold">
 											В главных ролях
 										</Title>
@@ -319,13 +338,13 @@ export class FilmInfo extends Component<FilmInfoProps> {
 												</Paragraph>
 											</Link>
 										))}
-									</div>
-								</div>
+									</Flex>
+								</Flex>
 							)}
-						</div>
-					</div>
-				</div>
-			</div>
+						</Flex>
+					</Flex>
+				</Flex>
+			</Flex>
 		);
 	}
 }

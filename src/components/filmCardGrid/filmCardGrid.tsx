@@ -8,6 +8,7 @@ import { selectFilms } from '@/redux/features/films/selectors.js';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { CardGrid } from '@/uikit/cardGrig/cardGrid';
+import { Flex } from '@/uikit/flex/flex';
 import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
@@ -34,7 +35,7 @@ class FilmCardGridComponent extends Component<
 		}
 
 		return (
-			<div className={styles.filmCardGrid}>
+			<Flex className={styles.filmCardGrid} direction="column">
 				<Title className={styles.title} size="3xl" weight="bold">
 					Все фильмы
 				</Title>
@@ -43,7 +44,7 @@ class FilmCardGridComponent extends Component<
 						<FilmCard film={film} />
 					))}
 				</CardGrid>
-			</div>
+			</Flex>
 		);
 	}
 }

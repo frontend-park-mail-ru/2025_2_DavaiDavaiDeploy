@@ -1,3 +1,4 @@
+import { Flex } from '@/uikit/flex/flex';
 import { Paragraph } from '@/uikit/paragraph/paragraph';
 import { Subhead } from '@/uikit/subhead/subhead';
 import { Title } from '@/uikit/title/title';
@@ -9,12 +10,17 @@ export class Route404 extends Component {
 	render() {
 		return (
 			<div className={styles.page}>
-				<div className={styles.err}>
+				<Flex
+					className={styles.err}
+					direction="row"
+					align="center"
+					justify="center"
+				>
 					<Title className={styles.title} weight="bold" color="accent">
 						404
 					</Title>
 
-					<div className={styles.content}>
+					<Flex className={styles.content} direction="column" align="start">
 						<Paragraph className={styles.text} size="m">
 							Похоже, вы забрели в тёмный космос
 						</Paragraph>
@@ -28,8 +34,8 @@ export class Route404 extends Component {
 								Вернуться на главную
 							</Subhead>
 						</Link>
-					</div>
-				</div>
+					</Flex>
+				</Flex>
 			</div>
 		);
 	}

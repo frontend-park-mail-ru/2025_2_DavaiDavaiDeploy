@@ -1,6 +1,4 @@
 .page {
-	display: flex;
-	flex-direction: column;
 	margin-bottom: 3rem;
 	width: 100%;
 	min-height: calc(100vh - 8rem);
@@ -10,8 +8,6 @@
 }
 
 .films {
-	display: flex;
-	flex-direction: column;
 	gap: 1.875rem;
 }
 
@@ -23,8 +19,6 @@
 	}
 
 	.films {
-		display: flex;
-		flex-direction: column;
 		gap: 1.875rem;
 	}
 }

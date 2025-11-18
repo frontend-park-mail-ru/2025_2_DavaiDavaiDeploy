@@ -14,6 +14,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Flex } from '@/uikit/flex/flex.tsx';
 import { Logo } from '@/uikit/logo/logo.tsx';
 import { Component } from '@robocotik/react';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
@@ -57,12 +58,19 @@ class HeaderComponent extends Component<
 
 	render() {
 		return (
-			<header id="header" className={styles.header}>
+			<Flex
+				id="header"
+				className={styles.header}
+				justify="between"
+				align="center"
+			>
 				<Link href="/">
 					<Logo className={styles.logo} />
 				</Link>
-				<div className={styles.user}>{this.renderUserSection()}</div>
-			</header>
+				<Flex className={styles.user} align="center">
+					{this.renderUserSection()}
+				</Flex>
+			</Flex>
 		);
 	}
 }

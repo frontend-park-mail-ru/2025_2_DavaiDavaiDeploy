@@ -11,6 +11,7 @@ import {
 } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsActorPage } from '@/types/models';
+import { Flex } from '@/uikit/flex/flex.tsx';
 import { Headline } from '@/uikit/headline/headline.tsx';
 import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
@@ -63,8 +64,8 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 		const photoSRC = getImageURL(photo);
 
 		return (
-			<div className={styles.actor}>
-				<div className={styles.media}>
+			<Flex className={styles.actor} direction="row" align="start">
+				<Flex className={styles.media} align="center" justify="center">
 					{photoSRC && (
 						<img
 							src={photoSRC}
@@ -72,25 +73,25 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 							className={styles.cover}
 						/>
 					)}
-				</div>
+				</Flex>
 
-				<div className={styles.info}>
-					<div className={styles.main}>
+				<Flex className={styles.info} direction="column" align="start">
+					<Flex className={styles.main} direction="column" align="start">
 						{russian_name && (
 							<Title className={styles.title} size="5xl">
 								{russian_name}
 							</Title>
 						)}
-						<span className={styles.subtitle}>
+						<Flex className={styles.subtitle} direction="row">
 							{original_name && (
 								<Subhead color="light" size="xs" opacity="80">
 									{original_name}
 								</Subhead>
 							)}
-						</span>
-					</div>
+						</Flex>
+					</Flex>
 
-					<div className={styles.about}>
+					<Flex className={styles.about} direction="column" align="start">
 						<Title className={styles.aboutTitle} size="3xl" weight="bold">
 							Информация
 						</Title>
@@ -258,9 +259,9 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 								</>
 							)}
 						</div>
-					</div>
-				</div>
-			</div>
+					</Flex>
+				</Flex>
+			</Flex>
 		);
 	}
 }

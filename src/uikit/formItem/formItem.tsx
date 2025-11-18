@@ -1,5 +1,6 @@
 import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
+import { Flex } from '../flex/flex';
 import { Headline } from '../headline/headline';
 import { Subhead } from '../subhead/subhead';
 import styles from './formItem.module.scss';
@@ -41,13 +42,15 @@ export class FormItem extends Component<FormItemProps> {
 		} = this.props;
 
 		return (
-			<div className={styles.inputContainer}>
+			<Flex className={styles.inputContainer} direction="column" align="start">
 				{top && (
 					<Headline size="s" className={styles.label}>
 						{top}
 					</Headline>
 				)}
-				<div
+				<Flex
+					align="center"
+					justify="start"
 					className={clsx(
 						styles.inputWrapper,
 						{
@@ -80,7 +83,7 @@ export class FormItem extends Component<FormItemProps> {
 						{children}
 					</input>
 					{after && <span className={styles.after}>{after}</span>}
-				</div>
+				</Flex>
 				<Subhead
 					className={styles.bottom}
 					size="2xs"
@@ -88,7 +91,7 @@ export class FormItem extends Component<FormItemProps> {
 				>
 					{bottom}
 				</Subhead>
-			</div>
+			</Flex>
 		);
 	}
 }

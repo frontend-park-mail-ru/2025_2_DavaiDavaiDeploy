@@ -20,8 +20,8 @@ export class Button extends Component<ButtonProps> {
 	render() {
 		const {
 			mode,
-			size,
-			borderRadius,
+			size = 's',
+			borderRadius = 'l',
 			after,
 			before,
 			className,

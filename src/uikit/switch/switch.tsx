@@ -1,5 +1,6 @@
 import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
+import { Flex } from '../flex/flex';
 import styles from './switch.module.scss';
 
 interface SwitchProps {
@@ -29,14 +30,14 @@ export class Switch extends Component<SwitchProps, SwitchState> {
 		const { checked } = this.state;
 
 		return (
-			<div onClick={this.onClick} className={styles.switch}>
+			<Flex onClick={this.onClick} className={styles.switch}>
 				<div
 					className={clsx(styles.circle, {
 						[styles.on]: checked,
 						[styles.off]: !checked,
 					})}
 				></div>
-			</div>
+			</Flex>
 		);
 	}
 }

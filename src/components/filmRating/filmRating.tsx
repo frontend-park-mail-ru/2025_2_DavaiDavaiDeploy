@@ -11,6 +11,7 @@ import { selectIsAuthentificated } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
 import { Button } from '@/uikit/button/button.tsx';
+import { Flex } from '@/uikit/flex/flex.tsx';
 import { Paragraph } from '@/uikit/paragraph/paragraph.tsx';
 import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
@@ -70,29 +71,40 @@ class FilmRatingComponent extends Component<
 						</Paragraph>
 					)}
 					{this.props.isAuthentificated && this.props.userRating && (
-						<span className={styles.userRating}>
+						<Flex
+							className={styles.userRating}
+							direction="row"
+							justify="between"
+							align="center"
+						>
 							<Paragraph className={styles.btnText} size="m">
 								Изменить
 							</Paragraph>
 
-							<div className={styles[`rating-${userRatingType}`]}>
+							<Flex
+								direction="row"
+								className={styles[`rating-${userRatingType}`]}
+								align="center"
+							>
 								<Star className={styles.userStarIcon} />
 								<Paragraph className={styles.userRatingTitle} size="m">
 									{this.props.userRating.toString()}
 								</Paragraph>
-							</div>
-						</span>
+							</Flex>
+						</Flex>
 					)}
 
 					{this.props.isAuthentificated && (
-						<div
+						<Flex
+							direction="row"
+							align="center"
 							className={clsx(styles.rateMenu, {
 								[styles.active]: this.state.isMenuActive,
 							})}
 							onClick={this.handleRatingLeave}
 						>
 							<FilmRatingInput isDark={false} />
-						</div>
+						</Flex>
 					)}
 				</Button>
 
@@ -120,8 +132,13 @@ class FilmRatingComponent extends Component<
 		const ratingType = getRatingType(rating);
 
 		return (
-			<div className={styles.content}>
-				<div className={styles.rating}>
+			<Flex className={styles.content} direction="row">
+				<Flex
+					className={styles.rating}
+					direction="column"
+					align="center"
+					justify="center"
+				>
 					{formattedRating && (
 						<Title className={styles[`title-${ratingType}`]} size="5xl">
 							{formattedRating}
@@ -139,8 +156,8 @@ class FilmRatingComponent extends Component<
 					)}
 
 					{this.renderButton()}
-				</div>
-			</div>
+				</Flex>
+			</Flex>
 		);
 	}
 }

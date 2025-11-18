@@ -3,6 +3,7 @@ import Info from '@/assets/img/info.svg';
 import Success from '@/assets/img/success.svg';
 import type { ToastType } from '@/consts/toasts';
 import clsx from '@/modules/clsx';
+import { Flex } from '@/uikit/flex/flex';
 import { Headline } from '@/uikit/headline/headline';
 import { Component } from '@robocotik/react';
 import styles from './toast.module.scss';
@@ -28,7 +29,9 @@ export class Toast extends Component<ToastProps> {
 	render() {
 		const { id, message } = this.props;
 		return (
-			<div
+			<Flex
+				direction="row"
+				align="center"
 				id={`toast-${id}`}
 				className={clsx(styles.toast, { [styles.hide]: !this.props.isActive })}
 			>
@@ -36,7 +39,7 @@ export class Toast extends Component<ToastProps> {
 				<Headline className={styles.title} size="l">
 					{message}
 				</Headline>
-			</div>
+			</Flex>
 		);
 	}
 }

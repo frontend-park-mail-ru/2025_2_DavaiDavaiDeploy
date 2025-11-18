@@ -16,6 +16,7 @@ import {
 } from '@/redux/features/film/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
+import { Flex } from '@/uikit/flex/flex';
 import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import styles from './filmPage.module.scss';
@@ -115,22 +116,29 @@ class FilmPageComponent extends Component<
 
 	render() {
 		return (
-			<div className={styles.page}>
+			<Flex className={styles.page} direction="column">
 				<FilmInfo film={this.props.film} error={this.props.filmError} />
 				{this.props.film && (
-					<section className={styles.content}>
-						<div className={styles.left}>
-							<div className={styles.feedbacks}>{this.renderFeedbacks()}</div>
+					<Flex
+						className={styles.content}
+						direction="row"
+						align="start"
+						justify="between"
+					>
+						<Flex className={styles.left} direction="column">
+							<Flex className={styles.feedbacks} direction="column">
+								{this.renderFeedbacks()}
+							</Flex>
 							<div className={styles.loadMoreTrigger}></div>
-						</div>
-						<div className={styles.right}>
+						</Flex>
+						<Flex className={styles.right} direction="column">
 							<div class="wrapper">
 								<Userfeedback />
 							</div>
-						</div>
-					</section>
+						</Flex>
+					</Flex>
 				)}
-			</div>
+			</Flex>
 		);
 	}
 }

@@ -1,6 +1,4 @@
 .feedbackForm {
-	display: flex;
-	flex-direction: column;
 	gap: 1.875rem;
 	border-radius: var(--border-radius-xl);
 	padding: 2.5rem 2rem;
@@ -8,22 +6,15 @@
 	max-width: 100%;
 	box-sizing: border-box;
 	background-color: var(--color-light-text);
-	align-items: center;
-	justify-content: center;
 }
 
 .header {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	width: 100%;
 	margin-top: 0.7rem;
 }
 
 .input {
 	margin-top: 1.25rem;
-	display: flex;
-	flex-direction: column;
 	gap: 1.8rem;
 	width: 100%;
 }

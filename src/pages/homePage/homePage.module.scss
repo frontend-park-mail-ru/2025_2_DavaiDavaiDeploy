@@ -1,14 +1,10 @@
 .page {
-	display: flex;
-	flex-direction: column;
 	gap: 3.75rem;
 	width: 100%;
 	overflow-x: hidden;
 }
 
 .main {
-	display: flex;
-	flex-direction: column;
 	width: 100%;
 	max-width: 100vw;
 	box-sizing: border-box;
@@ -16,22 +12,16 @@
 }
 
 .films {
-	display: flex;
-	flex-direction: column;
 	gap: 1.875rem;
 	padding: var(--side-padding);
 }
 
 @media (max-width: 768px) {
 	.films {
-		display: flex;
-		flex-direction: column;
 		gap: 1.875rem;
 	}
 
 	.main {
-		display: flex;
-		flex-direction: column;
 		width: 100%;
 		max-width: 100vw;
 		box-sizing: border-box;

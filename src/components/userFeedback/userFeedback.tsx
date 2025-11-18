@@ -11,6 +11,7 @@ import { selectUserFeedback } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
+import { Flex } from '@/uikit/flex/flex.tsx';
 import { IconButton } from '@/uikit/iconButton/iconButton.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component, createRef } from '@robocotik/react';
@@ -76,7 +77,7 @@ class FeedbackFormComponent extends Component<
 	renderContent = () => {
 		if (!this.props.user) {
 			return (
-				<div className={styles.notAuth}>
+				<Flex className={styles.notAuth} direction="column" align="start">
 					<Title
 						className={styles.notAuthTitle}
 						size="3xl"
@@ -102,7 +103,7 @@ class FeedbackFormComponent extends Component<
 						</Link>
 						!
 					</span>
-				</div>
+				</Flex>
 			);
 		}
 
@@ -119,8 +120,8 @@ class FeedbackFormComponent extends Component<
 			);
 		} else if (userFeedback) {
 			return (
-				<div className={styles.feedbackContainer}>
-					<div className={styles.header}>
+				<Flex className={styles.feedbackContainer} direction="column">
+					<Flex className={styles.header} direction="row" align="center">
 						<Title
 							className={styles.title}
 							size="3xl"
@@ -136,9 +137,9 @@ class FeedbackFormComponent extends Component<
 						>
 							<img src={Edit} className={styles.edit} alt="Редактировать" />
 						</IconButton>
-					</div>
+					</Flex>
 					<FeedBack feedback={userFeedback} />
-				</div>
+				</Flex>
 			);
 		}
 

@@ -11,6 +11,7 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenres } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
+import { Flex } from '@/uikit/flex/flex';
 import { IconButton } from '@/uikit/iconButton/iconButton';
 import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
@@ -195,11 +196,15 @@ class GenreSliderComponent extends Component<
 		const animationClass = this.getClass();
 
 		return (
-			<section className={styles.genreSlider}>
+			<Flex className={styles.genreSlider} direction="column">
 				<Title className={styles.title} size="3xl" weight="bold">
 					Жанры
 				</Title>
-				<div className={styles.container} onClick={this.onSliderClick}>
+				<Flex
+					className={styles.container}
+					direction="row"
+					onClick={this.onSliderClick}
+				>
 					<div className={clsx(styles.slider, animationClass)}>
 						{visibleGenres.map((genre) => (
 							<GenreSliderItem genre={genre} />
@@ -221,8 +226,8 @@ class GenreSliderComponent extends Component<
 					>
 						<img src={ArrowRight} alt="Вперёд" className={styles.nextBtnIcon} />
 					</IconButton>
-				</div>
-			</section>
+				</Flex>
+			</Flex>
 		);
 	}
 }

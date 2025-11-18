@@ -11,9 +11,6 @@
 }
 
 .notAuth {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
 	gap: 0.25rem;
 	text-align: left;
 }
@@ -37,16 +34,11 @@
 }
 
 .feedbackContainer {
-	display: flex;
-	flex-direction: column;
 	background-color: transparent;
 	gap: 1.875rem;
 }
 
 .header {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
 	gap: 1rem;
 }
 

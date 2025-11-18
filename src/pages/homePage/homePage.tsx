@@ -1,21 +1,22 @@
 import { FilmCardGrid } from '@/components/filmCardGrid/filmCardGrid';
 import { GenreSlider } from '@/components/genreSlider/genreSlider';
 import { PromoFilm } from '@/components/promoFilm/promoFilm';
+import { Flex } from '@/uikit/flex/flex';
 import { Component } from '@robocotik/react';
 import styles from './homePage.module.scss';
 
 export class HomePage extends Component {
 	render() {
 		return (
-			<div className={styles.page}>
-				<main className={styles.main}>
+			<Flex className={styles.page} direction="column">
+				<Flex className={styles.main} direction="column">
 					<PromoFilm />
 					<GenreSlider />
-					<section className={styles.films}>
+					<Flex className={styles.films} direction="column">
 						<FilmCardGrid />
-					</section>
-				</main>
-			</div>
+					</Flex>
+				</Flex>
+			</Flex>
 		);
 	}
 }

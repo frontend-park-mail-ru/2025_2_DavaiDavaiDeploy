@@ -1,5 +1,6 @@
 import Exit from '@/assets/img/exit.svg?react';
 import { Button } from '@/uikit/button/button';
+import { Flex } from '@/uikit/flex/flex';
 import { Title } from '@/uikit/title/title';
 import { Component, createPortal } from '@robocotik/react';
 import style from './LoginModal.module.scss';
@@ -7,21 +8,34 @@ import style from './LoginModal.module.scss';
 export class LoginModal extends Component {
 	render() {
 		return createPortal(
-			<div className={style.modalWrapper}>
+			<Flex className={style.modalWrapper} align="center" justify="center">
 				<div
 					className={style.modalContent}
 					onClick={(e) => e.stopPropagation()}
 				>
-					<div className={style.modalLogout}>
-						<div className={style.modalHeader}>
+					<Flex
+						className={style.modalLogout}
+						direction="column"
+						justify="between"
+						align="center"
+					>
+						<Flex
+							className={style.modalHeader}
+							align="center"
+							direction="column"
+						>
 							<Title className={style.modalTitle} size="2xl">
 								Уже уходите?
 							</Title>
 							<Title className={style.modalTitle} size="2xl">
 								Мы будем скучать!
 							</Title>
-						</div>
-						<div className={style.modalActions}>
+						</Flex>
+						<Flex
+							className={style.modalActions}
+							align="center"
+							direction="column"
+						>
 							<Button
 								mode="secondary"
 								size="m"
@@ -38,10 +52,10 @@ export class LoginModal extends Component {
 							>
 								Вернуться на сайт
 							</Button>
-						</div>
-					</div>
+						</Flex>
+					</Flex>
 				</div>
-			</div>,
+			</Flex>,
 			document.body,
 		);
 	}

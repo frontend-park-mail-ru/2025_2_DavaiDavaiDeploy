@@ -6,6 +6,7 @@ import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts'
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
+import { Flex } from '@/uikit/flex/flex';
 import { Title } from '@/uikit/title/title';
 import { Component } from '@robocotik/react';
 import { Redirect } from '../../modules/router/redirect';
@@ -22,15 +23,15 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 		}
 
 		return (
-			<div className={styles.page}>
+			<Flex className={styles.page} direction="column" align="center">
 				<Title className={styles.title} size="5xl">
 					Добро пожаловать в ваш профиль
 				</Title>
-				<section className={styles.profile}>
+				<Flex className={styles.profile} direction="row" align="start">
 					<ChangeAvatar />
 					<ChangePassword />
-				</section>
-			</div>
+				</Flex>
+			</Flex>
 		);
 	}
 }

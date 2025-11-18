@@ -1,5 +1,6 @@
 import Star from '@/assets/img/Star.svg?react';
 import { Component } from '@robocotik/react';
+import { Flex } from '../flex/flex';
 import { Headline } from '../headline/headline';
 import styles from './rating.module.scss';
 
@@ -14,12 +15,12 @@ export class Rating extends Component<RatingProps> {
 		const { rating, mode } = this.props;
 
 		return (
-			<span className={styles.rating}>
+			<Flex className={styles.rating} direction="row" align="center">
 				<Star className={styles[`star-${mode}`]} />
 				<Headline className={styles[`rating-${mode}`]} size="l">
 					{rating}
 				</Headline>
-			</span>
+			</Flex>
 		);
 	}
 }
