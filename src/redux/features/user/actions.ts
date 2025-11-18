@@ -115,13 +115,6 @@ const deleteUserAction = (userId: string | number): Action => {
  * Создает асинхронное действие для проверки авторизации пользователя.
  */
 const checkUserAction = (): Action => async (dispatch: Dispatch) => {
-	if (
-		window.location.pathname === '/login' ||
-		window.location.pathname === '/register'
-	) {
-		return;
-	}
-
 	dispatch(setUserLoadingAction());
 
 	try {

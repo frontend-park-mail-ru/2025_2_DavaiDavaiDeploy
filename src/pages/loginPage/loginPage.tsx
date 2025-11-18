@@ -21,6 +21,7 @@ import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
+import { Redirect } from '../../modules/router/redirect';
 import styles from './loginPage.module.scss';
 
 interface LoginPageProps {
@@ -84,13 +85,7 @@ export class LoginPageNotConnected extends Component<
 
 	onUpdate() {
 		if (this.props.user) {
-			const redirectPath =
-				'from' in this.props.router.params
-					? this.props.router.params.from
-					: '/';
-
 			this.updateProps({ userError: '' });
-			this.props.router.navigate(redirectPath);
 		}
 
 		if (this.props.userError && !this.state.errorShown) {
@@ -110,6 +105,15 @@ export class LoginPageNotConnected extends Component<
 	}
 
 	render() {
+		if (this.props.user) {
+			const redirectPath =
+				'from' in this.props.router.params
+					? this.props.router.params.from
+					: '/';
+
+			return <Redirect to={redirectPath} />;
+		}
+
 		return (
 			<main className={styles.main}>
 				<div className={styles.form}>
