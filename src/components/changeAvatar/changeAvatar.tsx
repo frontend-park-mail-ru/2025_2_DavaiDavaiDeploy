@@ -13,9 +13,10 @@ import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Avatar } from '@/uikit/avatar/avatar.tsx';
 import { Button } from '@/uikit/button/button.tsx';
+import { File as FileInput } from '@/uikit/file/file.tsx';
 import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
-import { Component } from '@robocotik/react';
+import { Component, createRef } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { AppToast } from '../toastContainer/toastContainer.tsx';
@@ -45,6 +46,8 @@ class ChangeAvatarComponent extends Component<
 		errorShown: false,
 		successShown: false,
 	};
+
+	fileInputRef = createRef<HTMLElement>();
 
 	handleFileChange = (event: Event) => {
 		const target = event.target as HTMLInputElement | null;
@@ -81,6 +84,10 @@ class ChangeAvatarComponent extends Component<
 		};
 
 		reader.readAsDataURL(selected);
+	};
+
+	handleFileUpload = async () => {
+		this.fileInputRef?.current?.click();
 	};
 
 	handleUpload = async () => {
@@ -175,23 +182,12 @@ class ChangeAvatarComponent extends Component<
 					)}
 
 					<div className={styles.btns}>
-						<div className={styles.wrapper}>
-							<Button
-								mode="primary"
-								size="xs"
-								borderRadius="l"
-								className={styles.btn}
-								onClick={this.handleUpload}
-							>
-								Изменить фото
-							</Button>
-							<input
-								className={styles.input}
-								type="file"
-								accept=".jpg, .jpeg, .png"
-								onChange={this.handleFileChange}
-							/>
-						</div>
+						<FileInput
+							ref={this.fileInputRef}
+							onClick={this.handleFileUpload}
+							onChange={this.handleFileChange}
+							accept=".jpg, .jpeg, .png"
+						/>
 
 						<Button
 							mode="primary"
