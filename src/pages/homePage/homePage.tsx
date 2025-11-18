@@ -1,4 +1,4 @@
-import { CardGrid } from '@/components/cardGrig/cardGrid';
+import { FilmCardGrid } from '@/components/filmCardGrid/filmCardGrid';
 import { GenreSlider } from '@/components/genreSlider/genreSlider';
 import { PromoFilm } from '@/components/promoFilm/promoFilm';
 import { Component } from '@robocotik/react';
@@ -12,7 +12,7 @@ export class HomePage extends Component {
 					<PromoFilm />
 					<GenreSlider />
 					<section className={styles.films}>
-						<CardGrid />
+						<FilmCardGrid />
 					</section>
 				</main>
 			</div>
