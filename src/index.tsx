@@ -70,7 +70,6 @@ interface AppProps {
 class AppComponent extends Component<AppProps & WithRouterProps> {
 	onMount() {
 		this.props.checkUser();
-		window.scrollTo(0, 0);
 	}
 
 	render() {
