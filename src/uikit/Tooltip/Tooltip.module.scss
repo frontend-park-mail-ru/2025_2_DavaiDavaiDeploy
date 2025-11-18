@@ -1,0 +1,100 @@
+@use '../Tokens/Tokens';
+
+.tooltipWrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip {
+	position: absolute;
+	padding: 0.7rem 1rem;
+	background-color: var(--color-light);
+	border-radius: var(--border-radius-l);
+	white-space: nowrap;
+	z-index: 5000;
+	transition: all 0.3 ease;
+}
+
+.placementTop {
+	bottom: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-bottom: 1rem;
+
+	&::before {
+		content: '';
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%) rotate(45deg);
+		bottom: -0.4rem;
+		width: 0.8rem;
+		height: 0.8rem;
+		background: var(--color-light);
+		z-index: 1;
+	}
+}
+
+.placementBottom {
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-top: 1rem;
+
+	&::before {
+		content: '';
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%) rotate(45deg);
+		top: -0.4rem;
+		width: 0.8rem;
+		height: 0.8rem;
+		background: var(--color-light);
+		z-index: 1;
+	}
+}
+
+.placementLeft {
+	right: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+	margin-right: 1rem;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%) rotate(45deg);
+		right: -0.4rem;
+		width: 0.8rem;
+		height: 0.8rem;
+		background: var(--color-light);
+		z-index: 1;
+	}
+}
+
+.placementRight {
+	left: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+	margin-left: 1rem;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%) rotate(45deg);
+		left: -0.4rem;
+		width: 0.8rem;
+		height: 0.8rem;
+		background: var(--color-light);
+		z-index: 1;
+	}
+}
+
+.visible {
+	opacity: 1;
+}
+
+.notVisible {
+	opacity: 0;
+}

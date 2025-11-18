@@ -1,5 +1,5 @@
 import { Component } from '@robocotik/react';
-import { Flex } from '../flex/flex';
+import { Flex } from '../Flex/Flex';
 import styles from './OTPInput.module.scss';
 
 interface OTPInputProps {
