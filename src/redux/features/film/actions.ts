@@ -142,7 +142,7 @@ const createRatingAction =
 	async (dispatch: Dispatch) => {
 		try {
 			const response = await HTTPClient.post<ExtendedFilmFeedback>(
-				`/films/${id}/rating`,
+				`/films/${id}/Rating`,
 				{
 					data: {
 						rating,

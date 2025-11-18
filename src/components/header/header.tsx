@@ -14,8 +14,8 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Flex } from '@/uikit/flex/flex.tsx';
-import { Logo } from '@/uikit/logo/logo.tsx';
+import { Flex } from '@/uikit/Flex/Flex.tsx';
+import { Logo } from '@/uikit/Logo/Logo.tsx';
 import { Component } from '@robocotik/react';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import { withModal } from '../../modules/modals/withModal.tsx';

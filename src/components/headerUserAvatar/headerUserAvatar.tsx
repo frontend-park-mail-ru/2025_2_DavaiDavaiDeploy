@@ -2,10 +2,10 @@ import Exit from '@/assets/img/exit.svg?react';
 import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
-import { Avatar } from '@/uikit/avatar/avatar';
-import { Flex } from '@/uikit/flex/flex';
-import { Headline } from '@/uikit/headline/headline';
-import { Separator } from '@/uikit/separator/separator';
+import { Avatar } from '@/uikit/Avatar/Avatar';
+import { Flex } from '@/uikit/Flex/Flex';
+import { Headline } from '@/uikit/Headline/Headline';
+import { Separator } from '@/uikit/Separator/Separator';
 import { Component } from '@robocotik/react';
 import styles from './headerUserAvatar.module.scss';
 interface UserAvatarProps {

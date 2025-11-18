@@ -4,7 +4,7 @@ import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/actor/actions';
 import type { Map } from '@/types/map';
-import { Flex } from '@/uikit/flex/flex';
+import { Flex } from '@/uikit/Flex/Flex';
 import { Component } from '@robocotik/react';
 import styles from './actorPage.module.scss';
 

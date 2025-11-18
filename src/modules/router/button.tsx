@@ -1,4 +1,4 @@
-import { Button } from '@/uikit/button/button.tsx';
+import { Button } from '@/uikit/Button/Button.tsx';
 import { Component } from '@robocotik/react';
 import type { NavigateButtonProps } from './types/navigateButton.props.ts';
 import type { RouterContextValue } from './types/routerContext.ts';

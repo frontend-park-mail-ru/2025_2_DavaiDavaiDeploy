@@ -5,13 +5,13 @@ import {
 import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmFeedback } from '@/types/models';
-import { Avatar } from '@/uikit/avatar/avatar';
-import { Flex } from '@/uikit/flex/flex';
-import { Headline } from '@/uikit/headline/headline';
-import { Paragraph } from '@/uikit/paragraph/paragraph';
-import { Rating } from '@/uikit/rating/rating';
-import { Separator } from '@/uikit/separator/separator';
-import { Subhead } from '@/uikit/subhead/subhead';
+import { Avatar } from '@/uikit/Avatar/Avatar';
+import { Flex } from '@/uikit/Flex/Flex';
+import { Headline } from '@/uikit/Headline/Headline';
+import { Paragraph } from '@/uikit/Paragraph/Paragraph';
+import { Rating } from '@/uikit/Rating/Rating';
+import { Separator } from '@/uikit/Separator/Separator';
+import { Subhead } from '@/uikit/Subhead/Subhead';
 import { Component } from '@robocotik/react';
 import styles from './feedBack.module.scss';
 

@@ -1,7 +1,7 @@
 import { FilmCardGrid } from '@/components/filmCardGrid/filmCardGrid';
 import { GenreSlider } from '@/components/genreSlider/genreSlider';
 import { PromoFilm } from '@/components/promoFilm/promoFilm';
-import { Flex } from '@/uikit/flex/flex';
+import { Flex } from '@/uikit/Flex/Flex';
 import { Component } from '@robocotik/react';
 import styles from './homePage.module.scss';
 

@@ -2,12 +2,12 @@ import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { Badge } from '@/uikit/badge/badge';
-import { Flex } from '@/uikit/flex/flex';
-import { Headline } from '@/uikit/headline/headline';
+import { Badge } from '@/uikit/Badge/Badge';
+import { Flex } from '@/uikit/Flex/Flex';
+import { Headline } from '@/uikit/Headline/Headline';
 import { Image } from '@/uikit/Image/Image';
-import { Subhead } from '@/uikit/subhead/subhead';
-import { Title } from '@/uikit/title/title';
+import { Subhead } from '@/uikit/Subhead/Subhead';
+import { Title } from '@/uikit/Title/Title';
 import { Component } from '@robocotik/react';
 import styles from './filmCard.module.scss';
 

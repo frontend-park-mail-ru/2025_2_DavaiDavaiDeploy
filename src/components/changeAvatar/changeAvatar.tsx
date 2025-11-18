@@ -10,13 +10,13 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Avatar } from '@/uikit/avatar/avatar.tsx';
-import { Button } from '@/uikit/button/button.tsx';
+import { Avatar } from '@/uikit/Avatar/Avatar.tsx';
+import { Button } from '@/uikit/Button/Button.tsx';
 import { FileButton } from '@/uikit/FileButton/FileButton.tsx';
-import { Flex } from '@/uikit/flex/flex.tsx';
-import { Subhead } from '@/uikit/subhead/subhead.tsx';
-import { Title } from '@/uikit/title/title.tsx';
-import { Component, createRef } from '@robocotik/react';
+import { Flex } from '@/uikit/Flex/Flex.tsx';
+import { Subhead } from '@/uikit/Subhead/Subhead.tsx';
+import { Title } from '@/uikit/Title/Title.tsx';
+import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { AppToast } from '../toastContainer/toastContainer.tsx';
@@ -46,8 +46,6 @@ class ChangeAvatarComponent extends Component<
 		errorShown: false,
 		successShown: false,
 	};
-
-	fileInputRef = createRef<HTMLElement>();
 
 	handleFileChange = (event: Event) => {
 		const target = event.target as HTMLInputElement | null;
@@ -84,10 +82,6 @@ class ChangeAvatarComponent extends Component<
 		};
 
 		reader.readAsDataURL(selected);
-	};
-
-	handleFileUpload = async () => {
-		this.fileInputRef?.current?.click();
 	};
 
 	handleUpload = async () => {
@@ -170,6 +164,7 @@ class ChangeAvatarComponent extends Component<
 							className={styles.avatar}
 							src={preview}
 							alt="Preview"
+							preview={true}
 						/>
 					) : (
 						<Avatar
@@ -182,8 +177,6 @@ class ChangeAvatarComponent extends Component<
 
 					<Flex className={styles.btns} align="center" direction="column">
 						<FileButton
-							getRootRef={this.fileInputRef}
-							onClick={this.handleFileUpload}
 							onChange={this.handleFileChange}
 							accept=".jpg, .jpeg, .png"
 						/>

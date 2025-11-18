@@ -1,18 +1,23 @@
-import { Component } from '@robocotik/react';
+import { Component, createRef } from '@robocotik/react';
 import { Button } from '../Button/Button';
 import styles from './FileButton.module.scss';
 
 interface FileButtonProps {
 	accept: string;
 	onChange: (event: Event) => void;
-	onClick: (event: MouseEvent) => void;
 	className?: string;
 	getRootRef?: any;
 }
 
 export class FileButton extends Component<FileButtonProps> {
+	fileInputRef = createRef<HTMLElement>();
+
+	handleFileUpload = async () => {
+		this.fileInputRef?.current?.click();
+	};
+
 	render() {
-		const { onChange, onClick, accept, getRootRef } = this.props;
+		const { onChange, accept } = this.props;
 
 		return (
 			<div className={styles.wrapper}>
@@ -21,13 +26,13 @@ export class FileButton extends Component<FileButtonProps> {
 					level="10"
 					borderRadius="l"
 					className={styles.btn}
-					onClick={onClick}
+					onClick={this.handleFileUpload}
 				>
 					Изменить фото
 				</Button>
 				<input
 					className={styles.input}
-					ref={getRootRef}
+					ref={this.fileInputRef}
 					type="file"
 					accept={accept}
 					onChange={onChange}

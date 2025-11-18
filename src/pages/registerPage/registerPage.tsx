@@ -19,11 +19,11 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Button } from '@/uikit/button/button.tsx';
-import { Flex } from '@/uikit/flex/flex.tsx';
-import { FormItem } from '@/uikit/formItem/formItem.tsx';
-import { Headline } from '@/uikit/headline/headline.tsx';
-import { Title } from '@/uikit/title/title.tsx';
+import { Button } from '@/uikit/Button/Button.tsx';
+import { Flex } from '@/uikit/Flex/Flex.tsx';
+import { FormItem } from '@/uikit/FormItem/FormItem.tsx';
+import { Headline } from '@/uikit/Headline/Headline.tsx';
+import { Title } from '@/uikit/Title/Title.tsx';
 import { Component } from '@robocotik/react';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import { Redirect } from '../../modules/router/redirect.tsx';
