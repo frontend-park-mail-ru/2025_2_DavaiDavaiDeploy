@@ -74,8 +74,8 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 
 	render() {
 		const isAuthPageOpen =
-			this.props.router.path === '/login' ||
-			this.props.router.path === '/register';
+			this.props.router.path.startsWith('/login') ||
+			this.props.router.path.startsWith('/register');
 
 		return (
 			<ModalsProvider>

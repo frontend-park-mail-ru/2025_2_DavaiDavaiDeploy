@@ -24,6 +24,8 @@ import { Headline } from '@/uikit/headline/headline.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
+import { Redirect } from '../../modules/router/redirect';
+import { store } from '../../redux/store';
 import styles from './loginPage.module.scss';
 
 interface LoginPageProps {
@@ -70,7 +72,7 @@ export class LoginPageNotConnected extends Component<
 	}
 
 	onMount() {
-		this.updateProps({ ...this.props, userError: '' });
+		store.dispatch(actions.resetUserError());
 		window.addEventListener('resize', this.handleResize);
 	}
 
@@ -87,13 +89,7 @@ export class LoginPageNotConnected extends Component<
 
 	onUpdate() {
 		if (this.props.user) {
-			const redirectPath =
-				'from' in this.props.router.params
-					? this.props.router.params.from
-					: '/';
-
-			this.updateProps({ userError: '' });
-			this.props.router.navigate(redirectPath);
+			store.dispatch(actions.resetUserError());
 		}
 
 		if (this.props.userError && !this.state.errorShown) {
@@ -113,6 +109,15 @@ export class LoginPageNotConnected extends Component<
 	}
 
 	render() {
+		if (this.props.user) {
+			const redirectPath =
+				'from' in this.props.router.params
+					? this.props.router.params.from
+					: '/';
+
+			return <Redirect to={redirectPath} />;
+		}
+
 		return (
 			<main className={styles.main}>
 				<div className={styles.form}>

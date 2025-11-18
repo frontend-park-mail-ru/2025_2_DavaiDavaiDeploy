@@ -24,6 +24,18 @@ class RoutesNotConnected extends Component<WithRouterProps> {
 
 			for (const child of this.props.children) {
 				const href = normalize(child.props?.href as string);
+
+				if (href === '*') {
+					const pathSegments = pathname.split('/').filter(Boolean);
+
+					if (pathSegments.length > 0) {
+						search.id = pathSegments[pathSegments.length - 1];
+					}
+
+					this.props.router.params = search;
+					return child;
+				}
+
 				const escapedPattern = href.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
 				const pattern = escapedPattern.replace(/:\w+/g, '([^/]+)');
 				const regex = new RegExp(`^${pattern}$`);
