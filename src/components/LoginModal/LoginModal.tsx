@@ -1,7 +1,5 @@
 import Exit from '@/assets/img/exit.svg?react';
-import { Button } from '@/uikit/Button/Button';
-import { Flex } from '@/uikit/Flex/Flex';
-import { Title } from '@/uikit/Title/Title';
+import { Button, Flex, Title } from '@/uikit/index';
 import { Component, createPortal } from '@robocotik/react';
 import style from './LoginModal.module.scss';
 

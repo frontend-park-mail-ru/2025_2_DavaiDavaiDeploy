@@ -4,13 +4,15 @@ import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link';
 import type { ModelsFilmPage } from '@/types/models';
-import { Badge } from '@/uikit/Badge/Badge';
-import { Flex } from '@/uikit/Flex/Flex';
-import { Headline } from '@/uikit/Headline/Headline';
-import { Image } from '@/uikit/Image/Image';
-import { Paragraph } from '@/uikit/Paragraph/Paragraph';
-import { Subhead } from '@/uikit/Subhead/Subhead';
-import { Title } from '@/uikit/Title/Title';
+import {
+	Badge,
+	Flex,
+	Headline,
+	Image,
+	Paragraph,
+	Subhead,
+	Title,
+} from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { FilmRating } from '../filmRating/filmRating';
 import styles from './filmInfo.module.scss';

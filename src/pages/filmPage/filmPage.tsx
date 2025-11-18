@@ -16,8 +16,7 @@ import {
 } from '@/redux/features/film/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
-import { Flex } from '@/uikit/Flex/Flex';
-import { Title } from '@/uikit/Title/Title';
+import { Flex, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './filmPage.module.scss';
 

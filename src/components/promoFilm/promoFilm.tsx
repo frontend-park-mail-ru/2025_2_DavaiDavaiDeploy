@@ -9,13 +9,15 @@ import actions from '@/redux/features/promoFilm/actions';
 import { selectPromoFilm } from '@/redux/features/promoFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsPromoFilm } from '@/types/models';
-import { Badge } from '@/uikit/Badge/Badge';
-import { Flex } from '@/uikit/Flex/Flex';
-import { Headline } from '@/uikit/Headline/Headline';
-import { Image } from '@/uikit/Image/Image';
-import { Paragraph } from '@/uikit/Paragraph/Paragraph';
-import { Subhead } from '@/uikit/Subhead/Subhead';
-import { Title } from '@/uikit/Title/Title';
+import {
+	Badge,
+	Flex,
+	Headline,
+	Image,
+	Paragraph,
+	Subhead,
+	Title,
+} from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './promoFilm.module.scss';
 

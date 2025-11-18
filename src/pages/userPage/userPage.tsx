@@ -6,8 +6,7 @@ import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts'
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
-import { Flex } from '@/uikit/Flex/Flex';
-import { Title } from '@/uikit/Title/Title';
+import { Flex, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { Redirect } from '../../modules/router/redirect';
 import styles from './userPage.module.scss';

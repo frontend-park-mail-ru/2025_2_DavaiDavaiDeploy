@@ -1,6 +1,6 @@
 import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
-import styles from './tooltip.module.scss';
+import styles from './Tooltip.module.scss';
 
 interface TooltipProps {
 	text: string;

@@ -1,4 +1,4 @@
-import { Title } from '@/uikit/Title/Title.tsx';
+import { Title } from '@/uikit/index';
 import { Component, createPortal } from '@robocotik/react';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';

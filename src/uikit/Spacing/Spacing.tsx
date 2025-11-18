@@ -1,6 +1,6 @@
 import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
-import styles from './spacing.module.scss';
+import styles from './Spacing.module.scss';
 
 interface SpacingProps {
 	level?: '7' | '8' | '9';

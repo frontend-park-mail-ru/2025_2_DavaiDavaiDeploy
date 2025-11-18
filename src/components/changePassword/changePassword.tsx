@@ -10,9 +10,7 @@ import {
 	selectPasswordChangeError,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
-import { Button } from '@/uikit/Button/Button.tsx';
-import { Flex } from '@/uikit/Flex/Flex.tsx';
-import { Title } from '@/uikit/Title/Title.tsx';
+import { Button, Flex, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';

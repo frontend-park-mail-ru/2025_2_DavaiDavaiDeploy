@@ -10,12 +10,14 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Avatar } from '@/uikit/Avatar/Avatar.tsx';
-import { Button } from '@/uikit/Button/Button.tsx';
-import { FileButton } from '@/uikit/FileButton/FileButton.tsx';
-import { Flex } from '@/uikit/Flex/Flex.tsx';
-import { Subhead } from '@/uikit/Subhead/Subhead.tsx';
-import { Title } from '@/uikit/Title/Title.tsx';
+import {
+	Avatar,
+	Button,
+	FileButton,
+	Flex,
+	Subhead,
+	Title,
+} from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';

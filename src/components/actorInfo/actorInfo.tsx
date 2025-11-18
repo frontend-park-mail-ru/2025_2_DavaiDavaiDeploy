@@ -10,11 +10,7 @@ import {
 } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsActorPage } from '@/types/models';
-import { Flex } from '@/uikit/Flex/Flex.tsx';
-import { Headline } from '@/uikit/Headline/Headline.tsx';
-import { Image } from '@/uikit/Image/Image.tsx';
-import { Subhead } from '@/uikit/Subhead/Subhead.tsx';
-import { Title } from '@/uikit/Title/Title.tsx';
+import { Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
