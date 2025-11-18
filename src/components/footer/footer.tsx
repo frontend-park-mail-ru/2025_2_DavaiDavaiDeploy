@@ -15,7 +15,7 @@ class FooterComponent extends Component<WithRouterProps> {
 				justify="center"
 				align="center"
 			>
-				<Paragraph className={styles.content} color="accent" size="m">
+				<Paragraph className={styles.content} color="accent" level="8">
 					© Davai Film, 2025
 				</Paragraph>
 			</Flex>

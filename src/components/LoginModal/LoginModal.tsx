@@ -24,10 +24,10 @@ export class LoginModal extends Component {
 							align="center"
 							direction="column"
 						>
-							<Title className={style.modalTitle} size="2xl">
+							<Title className={style.modalTitle} level="5">
 								Уже уходите?
 							</Title>
-							<Title className={style.modalTitle} size="2xl">
+							<Title className={style.modalTitle} level="5">
 								Мы будем скучать!
 							</Title>
 						</Flex>
@@ -38,7 +38,7 @@ export class LoginModal extends Component {
 						>
 							<Button
 								mode="secondary"
-								size="m"
+								level="8"
 								before={<Exit />}
 								className={style.exitButton}
 							>
@@ -46,7 +46,7 @@ export class LoginModal extends Component {
 							</Button>
 							<Button
 								mode="primary"
-								size="m"
+								level="8"
 								borderRadius="l"
 								className={style.turnBackButton}
 							>

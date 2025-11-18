@@ -5,14 +5,16 @@ import styles from './separator.module.scss';
 interface SeparatorProps {
 	mode: 'primary' | 'secondary';
 	className?: string;
+	getRootRef?: any;
 }
 
 export class Separator extends Component<SeparatorProps> {
 	render() {
-		const { className, mode } = this.props;
+		const { className, mode, getRootRef } = this.props;
 
 		return (
 			<hr
+				ref={getRootRef}
 				className={clsx(
 					styles.separator,
 					{

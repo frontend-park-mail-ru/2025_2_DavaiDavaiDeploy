@@ -5,6 +5,7 @@ import styles from './OTPInput.module.scss';
 interface OTPInputProps {
 	length: number;
 	onFinish: (otp: string) => void;
+	getRootRef?: any;
 }
 
 interface OTPInputState {
@@ -62,7 +63,7 @@ export class OTPInput extends Component<OTPInputProps, OTPInputState> {
 	};
 
 	render() {
-		const { length = 6 } = this.props;
+		const { length = 6, getRootRef } = this.props;
 		const { values } = this.state;
 
 		if (values.length === 0) {
@@ -70,7 +71,7 @@ export class OTPInput extends Component<OTPInputProps, OTPInputState> {
 		}
 
 		return (
-			<Flex className={styles.inputWrapper}>
+			<Flex className={styles.inputWrapper} getRootRef={getRootRef}>
 				{Array.from({ length }, (_, i) => (
 					<input
 						type="text"

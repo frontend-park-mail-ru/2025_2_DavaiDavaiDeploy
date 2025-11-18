@@ -1,5 +1,5 @@
-import ArrowLeft from '@/assets/img/arrowLeft.svg';
-import ArrowRight from '@/assets/img/arrowRight.svg';
+import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
+import ArrowRight from '@/assets/img/arrowRight.svg?react';
 import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper.ts';
@@ -271,7 +271,7 @@ class FilmSliderComponent extends Component<
 
 	render() {
 		if (this.props.films.length === 0) {
-			return <div></div>;
+			return <div />;
 		}
 
 		const slider = this.sliderRef.current;
@@ -283,11 +283,11 @@ class FilmSliderComponent extends Component<
 
 		return (
 			<div className={styles.content}>
-				<Title size="6xl" className={styles.title}>
+				<Title level="1" className={styles.title}>
 					ПРОЕКТЫ
 				</Title>
 				<Flex
-					ref={this.sliderRef}
+					getRootRef={this.sliderRef}
 					className={styles.slider}
 					onClick={this.onSliderClick}
 					direction="row"
@@ -299,11 +299,7 @@ class FilmSliderComponent extends Component<
 							className={styles.prevBtn}
 							onClick={this.prev}
 						>
-							<img
-								src={ArrowLeft}
-								alt="Предыдущий"
-								className={styles.prevBtnIcon}
-							/>
+							<ArrowLeft alt="Предыдущий" className={styles.prevBtnIcon} />
 						</IconButton>
 					)}
 					{this.state.active && (
@@ -312,11 +308,7 @@ class FilmSliderComponent extends Component<
 							className={styles.nextBtn}
 							onClick={this.next}
 						>
-							<img
-								src={ArrowRight}
-								alt="Следующий"
-								className={styles.nextBtnIcon}
-							/>
+							<ArrowRight alt="Следующий" className={styles.nextBtnIcon} />
 						</IconButton>
 					)}
 					<Flex className={styles.container} justify="center" align="start">

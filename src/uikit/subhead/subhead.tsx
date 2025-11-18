@@ -3,42 +3,42 @@ import { Component } from '@robocotik/react';
 import styles from './subhead.module.scss';
 
 interface SubheadProps {
-	size?: 'l' | 'm' | 's' | 'xs' | '2xs';
+	level?: '7' | '8' | '9' | '10' | '11';
 	align?: 'center' | 'left';
 	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue' | 'error';
 	weight?: 'regular' | 'bold';
 	opacity?: '100' | '80' | '70' | '60' | '50' | '30';
 	className?: string;
 	onClick?: (event: MouseEvent) => void;
-	data?: any;
+	getRootRef?: any;
 }
 
 export class Subhead extends Component<SubheadProps> {
 	render() {
 		const {
-			size,
+			level,
 			align,
 			color,
 			weight,
 			opacity,
 			className,
 			onClick,
-			data,
 			children,
+			getRootRef,
 		} = this.props;
 
 		return (
 			<h3
 				onClick={onClick}
-				data={data}
+				ref={getRootRef}
 				className={clsx(
 					styles.subhead,
 					{
-						[styles.sizeL]: size === 'l',
-						[styles.sizeM]: size === 'm',
-						[styles.sizeS]: size === 's',
-						[styles.sizeXS]: size === 'xs',
-						[styles.size2XS]: size === '2xs',
+						[styles.level7]: level === '7',
+						[styles.level8]: level === '8',
+						[styles.level9]: level === '9',
+						[styles.level10]: level === '10',
+						[styles.level11]: level === '11',
 						[styles.alignCenter]: align === 'center',
 						[styles.alignLeft]: align === 'left',
 						[styles.colorDark]: color === 'dark',

@@ -1,4 +1,3 @@
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
 import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
@@ -13,7 +12,7 @@ import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Avatar } from '@/uikit/avatar/avatar.tsx';
 import { Button } from '@/uikit/button/button.tsx';
-import { File as FileInput } from '@/uikit/file/file.tsx';
+import { FileButton } from '@/uikit/FileButton/FileButton.tsx';
 import { Flex } from '@/uikit/flex/flex.tsx';
 import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
@@ -132,23 +131,22 @@ class ChangeAvatarComponent extends Component<
 
 	render() {
 		if (!this.props.user) {
-			return <div></div>;
+			return <div />;
 		}
 
 		const { avatar } = this.props.user;
 		const { preview, file, isEditing } = this.state;
-		const avatarURL = getImageURL(avatar);
 
 		return (
 			<Flex className={styles.content} direction="row">
 				<Flex className={styles.text} direction="column" justify="between">
-					<Title className={styles.title} size="3xl" weight="bold">
+					<Title className={styles.title} level="4" weight="bold">
 						Хочется чего-то нового? Обновите фото профиля
 					</Title>
 					<Flex className={styles.subtitle} direction="column">
 						<Subhead
 							color="light"
-							size="xs"
+							level="10"
 							opacity="70"
 							className={styles.subtitleText}
 						>
@@ -156,7 +154,7 @@ class ChangeAvatarComponent extends Component<
 						</Subhead>
 						<Subhead
 							color="light"
-							size="xs"
+							level="10"
 							opacity="70"
 							className={styles.subtitleText}
 						>
@@ -168,23 +166,23 @@ class ChangeAvatarComponent extends Component<
 				<Flex className={styles.changeAvatar} direction="column" align="center">
 					{preview ? (
 						<Avatar
-							size="xl"
+							level="6"
 							className={styles.avatar}
 							src={preview}
 							alt="Preview"
 						/>
 					) : (
 						<Avatar
-							size="xl"
+							level="6"
 							className={styles.avatar}
-							src={avatarURL}
+							src={avatar}
 							alt="Аватар"
 						/>
 					)}
 
 					<Flex className={styles.btns} align="center" direction="column">
-						<FileInput
-							ref={this.fileInputRef}
+						<FileButton
+							getRootRef={this.fileInputRef}
 							onClick={this.handleFileUpload}
 							onChange={this.handleFileChange}
 							accept=".jpg, .jpeg, .png"
@@ -192,7 +190,7 @@ class ChangeAvatarComponent extends Component<
 
 						<Button
 							mode="primary"
-							size="xs"
+							level="10"
 							borderRadius="l"
 							className={clsx(styles.btn, {
 								[styles.hidden]: !file || !isEditing,

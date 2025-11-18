@@ -8,16 +8,22 @@ interface RatingProps {
 	rating: string;
 	mode: 'low' | 'medium' | 'high';
 	className?: string;
+	getRootRef?: any;
 }
 
 export class Rating extends Component<RatingProps> {
 	render() {
-		const { rating, mode } = this.props;
+		const { rating, mode, getRootRef } = this.props;
 
 		return (
-			<Flex className={styles.rating} direction="row" align="center">
+			<Flex
+				className={styles.rating}
+				direction="row"
+				align="center"
+				getRootRef={getRootRef}
+			>
 				<Star className={styles[`star-${mode}`]} />
-				<Headline className={styles[`rating-${mode}`]} size="l">
+				<Headline className={styles[`rating-${mode}`]} level="7">
 					{rating}
 				</Headline>
 			</Flex>

@@ -5,7 +5,7 @@ import styles from './button.module.scss';
 interface ButtonProps {
 	mode: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
 	disabled?: boolean;
-	size?: 'l' | 'm' | 's' | 'xs';
+	level?: '7' | '8' | '9' | '10';
 	borderRadius?: 'lg' | 'l';
 	after?: any;
 	before?: any;
@@ -14,13 +14,14 @@ interface ButtonProps {
 	onMouseLeave?: any;
 	onMouseEnter?: any;
 	children?: any;
+	getRootRef?: any;
 }
 
 export class Button extends Component<ButtonProps> {
 	render() {
 		const {
 			mode,
-			size = 's',
+			level = '9',
 			borderRadius = 'l',
 			after,
 			before,
@@ -29,6 +30,7 @@ export class Button extends Component<ButtonProps> {
 			onMouseLeave,
 			onMouseEnter,
 			children,
+			getRootRef,
 		} = this.props;
 
 		return (
@@ -36,13 +38,14 @@ export class Button extends Component<ButtonProps> {
 				onClick={onClick}
 				onMouseLeave={onMouseLeave}
 				onMouseEnter={onMouseEnter}
+				ref={getRootRef}
 				className={clsx(
 					styles.button,
 					{
-						[styles.sizeL]: size === 'l',
-						[styles.sizeM]: size === 'm',
-						[styles.sizeS]: size === 's',
-						[styles.sizeXS]: size === 'xs',
+						[styles.level7]: level === '7',
+						[styles.level8]: level === '8',
+						[styles.level9]: level === '9',
+						[styles.level10]: level === '10',
 						[styles.primary]: mode === 'primary',
 						[styles.secondary]: mode === 'secondary',
 						[styles.tertiary]: mode === 'tertiary',

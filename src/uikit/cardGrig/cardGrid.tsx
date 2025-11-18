@@ -2,10 +2,20 @@ import { Component } from '@robocotik/react';
 import { Flex } from '../flex/flex';
 import styles from './cardGrid.module.scss';
 
-export class CardGrid extends Component<{}> {
+interface CardGridProps {
+	getRootRef?: any;
+}
+
+export class CardGrid extends Component<CardGridProps> {
 	render() {
+		const { getRootRef } = this.props;
+
 		return (
-			<Flex className={styles.wrapper} direction="column">
+			<Flex
+				getRootRef={getRootRef}
+				className={styles.wrapper}
+				direction="column"
+			>
 				<div className={styles.grid}>{this.props.children}</div>
 			</Flex>
 		);

@@ -1,4 +1,4 @@
-import Edit from '@/assets/img/edit.svg';
+import Edit from '@/assets/img/edit.svg?react';
 import { FeedBack } from '@/components/feedBack/feedBack.tsx';
 import { FeedbackForm } from '@/components/feedbackForm/feedbackForm.tsx';
 import { throttle } from '@/helpers/throttleHelper/throttleHelper';
@@ -80,7 +80,7 @@ class FeedbackFormComponent extends Component<
 				<Flex className={styles.notAuth} direction="column" align="start">
 					<Title
 						className={styles.notAuthTitle}
-						size="3xl"
+						level="4"
 						weight="bold"
 						color="dark"
 					>
@@ -124,7 +124,7 @@ class FeedbackFormComponent extends Component<
 					<Flex className={styles.header} direction="row" align="center">
 						<Title
 							className={styles.title}
-							size="3xl"
+							level="4"
 							weight="bold"
 							color="dark"
 						>
@@ -135,7 +135,7 @@ class FeedbackFormComponent extends Component<
 							className={styles.editButton}
 							onClick={this.handleEdit}
 						>
-							<img src={Edit} className={styles.edit} alt="Редактировать" />
+							<Edit className={styles.edit} alt="Редактировать" />
 						</IconButton>
 					</Flex>
 					<FeedBack feedback={userFeedback} />

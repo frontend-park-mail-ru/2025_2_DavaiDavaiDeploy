@@ -1,4 +1,3 @@
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -9,6 +8,7 @@ import { selectGenre } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
 import { Flex } from '@/uikit/flex/flex.tsx';
+import { Image } from '@/uikit/Image/Image.tsx';
 import { Paragraph } from '@/uikit/paragraph/paragraph.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
@@ -32,15 +32,13 @@ class GenreInfoComponent extends Component<
 	render() {
 		if (!this.props.genre) {
 			return (
-				<Title className={styles.err} size="5xl" weight="bold" color="accent">
+				<Title className={styles.err} level="2" weight="bold" color="accent">
 					Жанр не найден
 				</Title>
 			);
 		}
 
 		const { title, description, icon } = this.props.genre;
-
-		const titleSRC = getImageURL(icon);
 
 		return (
 			<Flex
@@ -49,8 +47,8 @@ class GenreInfoComponent extends Component<
 				align="center"
 				direction="column"
 			>
-				<img src={titleSRC} alt={title} className={styles.title} />
-				<Paragraph className={styles.description} size="m" align="center">
+				<Image src={icon} alt={title} className={styles.title} />
+				<Paragraph className={styles.description} level="8" align="center">
 					{description}
 				</Paragraph>
 			</Flex>

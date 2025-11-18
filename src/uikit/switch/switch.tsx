@@ -6,6 +6,7 @@ import styles from './switch.module.scss';
 interface SwitchProps {
 	checked?: boolean;
 	onClick?: (checked: boolean) => void;
+	getRootRef?: any;
 }
 
 interface SwitchState {
@@ -28,9 +29,14 @@ export class Switch extends Component<SwitchProps, SwitchState> {
 
 	render() {
 		const { checked } = this.state;
+		const { getRootRef } = this.props;
 
 		return (
-			<Flex onClick={this.onClick} className={styles.switch}>
+			<Flex
+				getRootRef={getRootRef}
+				onClick={this.onClick}
+				className={styles.switch}
+			>
 				<div
 					className={clsx(styles.circle, {
 						[styles.on]: checked,

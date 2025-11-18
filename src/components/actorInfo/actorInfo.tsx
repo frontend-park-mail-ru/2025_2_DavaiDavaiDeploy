@@ -1,6 +1,5 @@
 import { formatBirthInfo } from '@/helpers/formatBitrhInfoHelper/formatBitrhInfoHelper';
 import { formatHeight } from '@/helpers/formatHeightHelper/formatHeightHelper';
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -13,6 +12,7 @@ import type { Map } from '@/types/map';
 import type { ModelsActorPage } from '@/types/models';
 import { Flex } from '@/uikit/flex/flex.tsx';
 import { Headline } from '@/uikit/headline/headline.tsx';
+import { Image } from '@/uikit/Image/Image.tsx';
 import { Subhead } from '@/uikit/subhead/subhead.tsx';
 import { Title } from '@/uikit/title/title.tsx';
 import { Component } from '@robocotik/react';
@@ -34,14 +34,14 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 	render() {
 		if (this.props.error) {
 			return (
-				<Title className={styles.err} size="5xl" weight="bold" color="accent">
+				<Title className={styles.err} level="2" weight="bold" color="accent">
 					Актер не найден
 				</Title>
 			);
 		}
 
 		if (!this.props.actor) {
-			return <div></div>;
+			return <div />;
 		}
 
 		const {
@@ -61,30 +61,26 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 		const birthInfo = formatBirthInfo(birth_date, age, zodiac_sign);
 		const smallBirthInfo = formatBirthInfo(birth_date);
 
-		const photoSRC = getImageURL(photo);
-
 		return (
 			<Flex className={styles.actor} direction="row" align="start">
 				<Flex className={styles.media} align="center" justify="center">
-					{photoSRC && (
-						<img
-							src={photoSRC}
-							alt={russian_name || 'Photo'}
-							className={styles.cover}
-						/>
-					)}
+					<Image
+						src={photo}
+						alt={russian_name || 'Photo'}
+						className={styles.cover}
+					/>
 				</Flex>
 
 				<Flex className={styles.info} direction="column" align="start">
 					<Flex className={styles.main} direction="column" align="start">
 						{russian_name && (
-							<Title className={styles.title} size="5xl">
+							<Title className={styles.title} level="2">
 								{russian_name}
 							</Title>
 						)}
 						<Flex className={styles.subtitle} direction="row">
 							{original_name && (
-								<Subhead color="light" size="xs" opacity="80">
+								<Subhead color="light" level="10" opacity="80">
 									{original_name}
 								</Subhead>
 							)}
@@ -92,20 +88,20 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 					</Flex>
 
 					<Flex className={styles.about} direction="column" align="start">
-						<Title className={styles.aboutTitle} size="3xl" weight="bold">
+						<Title className={styles.aboutTitle} level="4" weight="bold">
 							Информация
 						</Title>
 
 						<div className={styles.table}>
 							{formattedHeight && (
 								<>
-									<Headline className={styles.fact} size="l" weight="bold">
+									<Headline className={styles.fact} level="7" weight="bold">
 										Рост
 									</Headline>
 									<Subhead
 										className={styles.value}
 										opacity="80"
-										size="m"
+										level="8"
 										color="light"
 									>
 										{formattedHeight}
@@ -115,13 +111,13 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 
 							{marital_status && (
 								<>
-									<Headline className={styles.fact} size="l" weight="bold">
+									<Headline className={styles.fact} level="7" weight="bold">
 										Семья
 									</Headline>
 									<Subhead
 										className={styles.value}
 										opacity="80"
-										size="m"
+										level="8"
 										color="light"
 									>
 										{marital_status}
@@ -131,13 +127,13 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 
 							{birthInfo && (
 								<>
-									<Headline className={styles.fact} size="l" weight="bold">
+									<Headline className={styles.fact} level="7" weight="bold">
 										Дата рождения
 									</Headline>
 									<Subhead
 										className={styles.value}
 										opacity="80"
-										size="m"
+										level="8"
 										color="light"
 									>
 										{birthInfo}
@@ -147,13 +143,13 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 
 							{!!films_number && (
 								<>
-									<Headline className={styles.fact} size="l" weight="bold">
+									<Headline className={styles.fact} level="7" weight="bold">
 										Всего фильмов
 									</Headline>
 									<Subhead
 										className={styles.value}
 										opacity="80"
-										size="m"
+										level="8"
 										color="light"
 									>
 										{films_number.toString()}
@@ -163,13 +159,13 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 
 							{birth_place && (
 								<>
-									<Headline className={styles.fact} size="l" weight="bold">
+									<Headline className={styles.fact} level="7" weight="bold">
 										Место рождения
 									</Headline>
 									<Subhead
 										className={styles.value}
 										opacity="80"
-										size="m"
+										level="8"
 										color="light"
 									>
 										{birth_place}
@@ -181,13 +177,13 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 						<div className={styles.smallTable}>
 							{formattedHeight && (
 								<>
-									<Headline className={styles.fact} size="l" weight="bold">
+									<Headline className={styles.fact} level="7" weight="bold">
 										Рост
 									</Headline>
 									<Subhead
 										className={styles.value}
 										opacity="80"
-										size="m"
+										level="8"
 										color="light"
 									>
 										{formattedHeight}
@@ -197,13 +193,13 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 
 							{marital_status && (
 								<>
-									<Headline className={styles.fact} size="l" weight="bold">
+									<Headline className={styles.fact} level="7" weight="bold">
 										Семья
 									</Headline>
 									<Subhead
 										className={styles.value}
 										opacity="80"
-										size="m"
+										level="8"
 										color="light"
 									>
 										{marital_status}
@@ -213,13 +209,13 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 
 							{smallBirthInfo && (
 								<>
-									<Headline className={styles.fact} size="l" weight="bold">
+									<Headline className={styles.fact} level="7" weight="bold">
 										Дата рождения
 									</Headline>
 									<Subhead
 										className={styles.value}
 										opacity="80"
-										size="m"
+										level="8"
 										color="light"
 									>
 										{smallBirthInfo}
@@ -229,13 +225,13 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 
 							{birth_place && (
 								<>
-									<Headline className={styles.fact} size="l" weight="bold">
+									<Headline className={styles.fact} level="7" weight="bold">
 										Место рождения
 									</Headline>
 									<Subhead
 										className={styles.value}
 										opacity="80"
-										size="m"
+										level="8"
 										color="light"
 									>
 										{birth_place}
@@ -245,13 +241,13 @@ class ActorInfoComponent extends Component<ActorInfoProps & WithRouterProps> {
 
 							{!!films_number && (
 								<>
-									<Headline className={styles.fact} size="l" weight="bold">
+									<Headline className={styles.fact} level="7" weight="bold">
 										Всего фильмов
 									</Headline>
 									<Subhead
 										className={styles.value}
 										opacity="80"
-										size="m"
+										level="8"
 										color="light"
 									>
 										{films_number.toString()}

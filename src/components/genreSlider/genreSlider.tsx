@@ -1,5 +1,5 @@
-import ArrowLeft from '@/assets/img/arrowLeft.svg';
-import ArrowRight from '@/assets/img/arrowRight.svg';
+import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
+import ArrowRight from '@/assets/img/arrowRight.svg?react';
 import { WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper';
@@ -189,7 +189,7 @@ class GenreSliderComponent extends Component<
 		const { genres } = this.props;
 
 		if (!genres || !genres.length) {
-			return <div></div>;
+			return <div />;
 		}
 
 		const visibleGenres = this.getVisibleGenres();
@@ -197,7 +197,7 @@ class GenreSliderComponent extends Component<
 
 		return (
 			<Flex className={styles.genreSlider} direction="column">
-				<Title className={styles.title} size="3xl" weight="bold">
+				<Title className={styles.title} level="4" weight="bold">
 					Жанры
 				</Title>
 				<Flex
@@ -216,7 +216,7 @@ class GenreSliderComponent extends Component<
 						className={styles.prevBtn}
 						onClick={this.onPrevBtnClick}
 					>
-						<img src={ArrowLeft} alt="Назад" className={styles.prevBtnIcon} />
+						<ArrowLeft alt="Назад" className={styles.prevBtnIcon} />
 					</IconButton>
 
 					<IconButton
@@ -224,7 +224,7 @@ class GenreSliderComponent extends Component<
 						className={styles.nextBtn}
 						onClick={this.onNextBtnClick}
 					>
-						<img src={ArrowRight} alt="Вперёд" className={styles.nextBtnIcon} />
+						<ArrowRight alt="Вперёд" className={styles.nextBtnIcon} />
 					</IconButton>
 				</Flex>
 			</Flex>

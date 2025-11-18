@@ -5,6 +5,7 @@ import styles from './tooltip.module.scss';
 interface TooltipProps {
 	text: string;
 	placement?: 'top' | 'bottom' | 'left' | 'right';
+	getRootRef?: any;
 }
 
 interface TooltipState {
@@ -17,7 +18,7 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
 	};
 
 	render() {
-		const { placement = 'right', children, text } = this.props;
+		const { placement = 'right', children, text, getRootRef } = this.props;
 		const { visible } = this.state;
 
 		return (
@@ -25,6 +26,7 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
 				onMouseEnter={() => this.setState({ visible: true })}
 				onMouseLeave={() => this.setState({ visible: false })}
 				className={styles.tooltipWrapper}
+				ref={getRootRef}
 			>
 				<div
 					className={clsx(styles.tooltip, {

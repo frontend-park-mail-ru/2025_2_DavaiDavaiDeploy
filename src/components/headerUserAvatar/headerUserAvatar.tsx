@@ -1,5 +1,4 @@
-import exit from '@/assets/img/exit.svg';
-import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
+import Exit from '@/assets/img/exit.svg?react';
 import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
@@ -28,8 +27,8 @@ export class UserAvatar extends Component<UserAvatarProps> {
 				direction="column"
 			>
 				<Avatar
-					size="l"
-					src={getStaticURL(this.props.user?.avatar)}
+					level="7"
+					src={this.props.user?.avatar}
 					alt={this.props.user?.login}
 					className={styles.avatar}
 				/>
@@ -37,7 +36,7 @@ export class UserAvatar extends Component<UserAvatarProps> {
 				{this.props.user?.login && (
 					<Headline
 						className={styles.avatarActionsLogin}
-						size="l"
+						level="7"
 						color="accent"
 						align="center"
 					>
@@ -57,7 +56,7 @@ export class UserAvatar extends Component<UserAvatarProps> {
 					align="center"
 					justify="center"
 				>
-					<img src={exit} alt="logout" />
+					<Exit alt="logout" />
 					Выйти
 				</Flex>
 			</Flex>

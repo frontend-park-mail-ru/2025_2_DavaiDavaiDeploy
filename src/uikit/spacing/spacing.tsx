@@ -3,19 +3,21 @@ import { Component } from '@robocotik/react';
 import styles from './spacing.module.scss';
 
 interface SpacingProps {
-	size?: 'l' | 'm' | 's';
+	level?: '7' | '8' | '9';
+	getRootRef?: any;
 }
 
 export class Spacing extends Component<SpacingProps> {
 	render() {
-		const { size = 'm' } = this.props;
+		const { level = '8', getRootRef } = this.props;
 
 		return (
 			<div
+				ref={getRootRef}
 				className={clsx({
-					[styles.sizeL]: size === 'l',
-					[styles.sizeM]: size === 'm',
-					[styles.sizeS]: size === 's',
+					[styles.level7]: level === '7',
+					[styles.level8]: level === '8',
+					[styles.level9]: level === '9',
 				})}
 			></div>
 		);

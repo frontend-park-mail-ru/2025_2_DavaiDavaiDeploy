@@ -19,8 +19,8 @@ export class TestModalComponent extends Component<WithModalProps, {}> {
 				>
 					<div className={style.modalLogout}>
 						<div className={style.modalHeader}>
-							<Title className={style.modalTitle} size="2xl" />
-							<Title className={style.modalTitle} size="2xl" />
+							<Title className={style.modalTitle} level="5" />
+							<Title className={style.modalTitle} level="5" />
 						</div>
 						ЭТО ТЕСТ МОДАЛКА
 					</div>

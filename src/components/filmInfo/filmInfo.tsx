@@ -1,6 +1,5 @@
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link';
@@ -8,6 +7,7 @@ import type { ModelsFilmPage } from '@/types/models';
 import { Badge } from '@/uikit/badge/badge';
 import { Flex } from '@/uikit/flex/flex';
 import { Headline } from '@/uikit/headline/headline';
+import { Image } from '@/uikit/Image/Image';
 import { Paragraph } from '@/uikit/paragraph/paragraph';
 import { Subhead } from '@/uikit/subhead/subhead';
 import { Title } from '@/uikit/title/title';
@@ -24,7 +24,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 	render() {
 		if (this.props.error) {
 			return (
-				<Title className={styles.err} size="5xl" weight="bold" color="accent">
+				<Title className={styles.err} level="2" weight="bold" color="accent">
 					Фильм не найден
 				</Title>
 			);
@@ -55,8 +55,6 @@ export class FilmInfo extends Component<FilmInfoProps> {
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
 		const formattedDuration = formatDuration(duration);
-		const coverSRC = getImageURL(cover);
-		const posterSRC = getImageURL(poster);
 
 		const formattedBudget = formatMoney(budget);
 		const formattedFees = formatMoney(worldwide_fees);
@@ -64,31 +62,27 @@ export class FilmInfo extends Component<FilmInfoProps> {
 		return (
 			<Flex className={styles.film} direction="column">
 				<div className={styles.container}>
-					{posterSRC && (
-						<img
-							src={posterSRC}
-							alt={title || 'Poster'}
-							className={styles.image}
-						/>
-					)}
+					<Image
+						src={poster}
+						alt={title || 'Poster'}
+						className={styles.image}
+					/>
 				</div>
 
 				<Flex className={styles.content} direction="row" align="start">
 					<Flex className={styles.media} align="start" justify="center">
-						{coverSRC && (
-							<img
-								src={coverSRC}
-								alt={title || 'Cover'}
-								className={styles.cover}
-							/>
-						)}
+						<Image
+							src={cover}
+							alt={title || 'Cover'}
+							className={styles.cover}
+						/>
 
 						{formattedRating && ratingType && (
 							<Badge
 								mode={ratingType}
 								className={styles[`rating-${ratingType}`]}
 							>
-								<Headline size="l">{formattedRating}</Headline>
+								<Headline level="7">{formattedRating}</Headline>
 							</Badge>
 						)}
 					</Flex>
@@ -102,20 +96,20 @@ export class FilmInfo extends Component<FilmInfoProps> {
 						>
 							<Flex className={styles.main} direction="column" align="start">
 								{title && (
-									<Title className={styles.title} size="5xl">
+									<Title className={styles.title} level="2">
 										{title}
 									</Title>
 								)}
 
 								<Flex className={styles.subtitle} direction="row">
 									{original_title && (
-										<Subhead color="light" size="xs" opacity="80">
+										<Subhead color="light" level="10" opacity="80">
 											{original_title}
 										</Subhead>
 									)}
 
 									{age_category && (
-										<Subhead color="light" size="xs" opacity="80">
+										<Subhead color="light" level="10" opacity="80">
 											{age_category}
 										</Subhead>
 									)}
@@ -130,7 +124,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 										<Subhead
 											className={styles.value}
 											color="light"
-											size="m"
+											level="8"
 											opacity="80"
 										>
 											{year.toString()}
@@ -140,7 +134,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 										<Subhead
 											className={styles.value}
 											color="light"
-											size="m"
+											level="8"
 											opacity="80"
 										>
 											{age_category}
@@ -150,7 +144,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 										<Subhead
 											className={styles.value}
 											color="light"
-											size="m"
+											level="8"
 											opacity="80"
 										>
 											{country}
@@ -160,7 +154,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 										<Subhead
 											className={styles.value}
 											color="light"
-											size="m"
+											level="8"
 											opacity="80"
 										>
 											{genre}
@@ -170,7 +164,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 										<Subhead
 											className={styles.value}
 											color="light"
-											size="m"
+											level="8"
 											opacity="80"
 										>
 											{formattedDuration}
@@ -183,7 +177,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 								</Flex>
 
 								{description && (
-									<Paragraph className={styles.description} size="m">
+									<Paragraph className={styles.description} level="8">
 										{description}
 									</Paragraph>
 								)}
@@ -201,20 +195,20 @@ export class FilmInfo extends Component<FilmInfoProps> {
 							justify="between"
 						>
 							<div className={styles.about}>
-								<Title className={styles.aboutTitle} size="3xl" weight="bold">
+								<Title className={styles.aboutTitle} level="4" weight="bold">
 									О фильме
 								</Title>
 
 								<div className={styles.table}>
 									{!!year && (
 										<>
-											<Headline className={styles.fact} size="l" weight="bold">
+											<Headline className={styles.fact} level="7" weight="bold">
 												Год производства
 											</Headline>
 											<Subhead
 												className={styles.value}
 												color="light"
-												size="m"
+												level="8"
 												opacity="80"
 											>
 												{year.toString()}
@@ -224,13 +218,13 @@ export class FilmInfo extends Component<FilmInfoProps> {
 
 									{country && (
 										<>
-											<Headline className={styles.fact} size="l" weight="bold">
+											<Headline className={styles.fact} level="7" weight="bold">
 												Страна
 											</Headline>
 											<Subhead
 												className={styles.value}
 												color="light"
-												size="m"
+												level="8"
 												opacity="80"
 											>
 												{country}
@@ -240,13 +234,13 @@ export class FilmInfo extends Component<FilmInfoProps> {
 
 									{genre && (
 										<>
-											<Headline className={styles.fact} size="l" weight="bold">
+											<Headline className={styles.fact} level="7" weight="bold">
 												Жанр
 											</Headline>
 											<Subhead
 												className={styles.value}
 												color="light"
-												size="m"
+												level="8"
 												opacity="80"
 											>
 												{genre}
@@ -256,13 +250,13 @@ export class FilmInfo extends Component<FilmInfoProps> {
 
 									{slogan && (
 										<>
-											<Headline className={styles.fact} size="l" weight="bold">
+											<Headline className={styles.fact} level="7" weight="bold">
 												Слоган
 											</Headline>
 											<Subhead
 												className={styles.value}
 												color="light"
-												size="m"
+												level="8"
 												opacity="80"
 											>
 												{slogan}
@@ -272,13 +266,13 @@ export class FilmInfo extends Component<FilmInfoProps> {
 
 									{formattedBudget && (
 										<>
-											<Headline className={styles.fact} size="l" weight="bold">
+											<Headline className={styles.fact} level="7" weight="bold">
 												Бюджет
 											</Headline>
 											<Subhead
 												className={styles.value}
 												color="light"
-												size="m"
+												level="8"
 												opacity="80"
 											>
 												{formattedBudget}
@@ -288,13 +282,13 @@ export class FilmInfo extends Component<FilmInfoProps> {
 
 									{formattedFees && (
 										<>
-											<Headline className={styles.fact} size="l" weight="bold">
+											<Headline className={styles.fact} level="7" weight="bold">
 												Сборы в мире
 											</Headline>
 											<Subhead
 												className={styles.value}
 												color="light"
-												size="m"
+												level="8"
 												opacity="80"
 											>
 												{formattedFees}
@@ -304,13 +298,13 @@ export class FilmInfo extends Component<FilmInfoProps> {
 
 									{formattedDuration && (
 										<>
-											<Headline className={styles.fact} size="l" weight="bold">
+											<Headline className={styles.fact} level="7" weight="bold">
 												Длительность
 											</Headline>
 											<Subhead
 												className={styles.value}
 												color="light"
-												size="m"
+												level="8"
 												opacity="80"
 											>
 												{formattedDuration}
@@ -327,13 +321,13 @@ export class FilmInfo extends Component<FilmInfoProps> {
 										direction="column"
 										align="start"
 									>
-										<Title className={styles.roles} size="3xl" weight="bold">
+										<Title className={styles.roles} level="4" weight="bold">
 											В главных ролях
 										</Title>
 
 										{actors.map((actor) => (
 											<Link href={`/actors/${actor.id}`}>
-												<Paragraph className={styles.actors} size="m">
+												<Paragraph className={styles.actors} level="8">
 													{actor.russian_name}
 												</Paragraph>
 											</Link>

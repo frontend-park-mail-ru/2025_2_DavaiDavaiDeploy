@@ -177,7 +177,7 @@ export class RegisterPageNotConnected extends Component<
 						<div className={styles.rightSide__titles}>
 							<Title
 								className={styles.rightSide__title}
-								size="4xl"
+								level="3"
 								weight="bold"
 							>
 								Создать аккаунт
@@ -185,7 +185,7 @@ export class RegisterPageNotConnected extends Component<
 							<Headline
 								className={styles.rightSide__subtitle}
 								color="light"
-								size="s"
+								level="9"
 							>
 								Присоединяйтесь к сообществу киноманов
 							</Headline>
@@ -233,7 +233,7 @@ export class RegisterPageNotConnected extends Component<
 								mode="primary"
 								onClick={this.handleRegisterUser}
 								className={styles.login__button}
-								size="s"
+								level="9"
 								borderRadius="lg"
 							>
 								Зарегистрироваться

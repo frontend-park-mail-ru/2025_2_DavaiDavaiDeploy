@@ -36,7 +36,7 @@ export class Toast extends Component<ToastProps> {
 				className={clsx(styles.toast, { [styles.hide]: !this.props.isActive })}
 			>
 				{this.renderIcon()}
-				<Headline className={styles.title} size="l">
+				<Headline className={styles.title} level="7">
 					{message}
 				</Headline>
 			</Flex>

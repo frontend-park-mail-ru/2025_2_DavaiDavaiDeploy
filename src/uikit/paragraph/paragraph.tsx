@@ -3,30 +3,38 @@ import { Component } from '@robocotik/react';
 import styles from './paragraph.module.scss';
 
 interface ParagraphProps {
-	size?: 'l' | 'm' | 's';
+	level?: '7' | '8' | '9';
 	align?: 'center' | 'left';
 	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue' | 'error';
 	weight?: 'regular' | 'bold';
 	className?: string;
 	onClick?: (event: MouseEvent) => void;
-	data?: any;
+	getRootRef?: any;
 }
 
 export class Paragraph extends Component<ParagraphProps> {
 	render() {
-		const { size, align, color, weight, className, onClick, data, children } =
-			this.props;
+		const {
+			level,
+			align,
+			color,
+			weight,
+			className,
+			onClick,
+			children,
+			getRootRef,
+		} = this.props;
 
 		return (
 			<p
 				onClick={onClick}
-				data={data}
+				ref={getRootRef}
 				className={clsx(
 					styles.paragraph,
 					{
-						[styles.sizeL]: size === 'l',
-						[styles.sizeM]: size === 'm',
-						[styles.sizeS]: size === 's',
+						[styles.level7]: level === '7',
+						[styles.level8]: level === '8',
+						[styles.level9]: level === '9',
 						[styles.alignCenter]: align === 'center',
 						[styles.alignLeft]: align === 'left',
 						[styles.colorDark]: color === 'dark',

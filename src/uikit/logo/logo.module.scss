@@ -10,30 +10,30 @@
 	}
 }
 
-.sizeL {
+.level7 {
 	width: 20rem;
 }
 
-.sizeM {
+.level8 {
 	width: 12rem;
 }
 
 @media (max-width: 1600px) {
-	.sizeM {
+	.level8 {
 		width: 10rem;
 	}
 
-	.sizeL {
+	.level7 {
 		width: 18rem;
 	}
 }
 
 @media (max-width: 768px) {
-	.sizeM {
+	.level8 {
 		width: 8rem;
 	}
 
-	.sizeL {
+	.level7 {
 		width: 16rem;
 	}
 }

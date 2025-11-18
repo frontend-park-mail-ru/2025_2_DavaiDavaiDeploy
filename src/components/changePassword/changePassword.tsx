@@ -116,7 +116,7 @@ class ChangePasswordComponent extends Component<
 				align="center"
 				direction="column"
 			>
-				<Title className={styles.title} size="3xl" weight="bold">
+				<Title className={styles.title} level="4" weight="bold">
 					Сменить пароль
 				</Title>
 				<PasswordInputField
@@ -147,7 +147,7 @@ class ChangePasswordComponent extends Component<
 					mode="primary"
 					onClick={this.handleChangePassword}
 					className={styles.saveBtn}
-					size="m"
+					level="8"
 					borderRadius="l"
 				>
 					Сохранить

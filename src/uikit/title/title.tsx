@@ -3,33 +3,41 @@ import { Component } from '@robocotik/react';
 import styles from './title.module.scss';
 
 interface TitleProps {
-	size?: '6xl' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl';
+	level?: '1' | '2' | '3' | '4' | '5' | '6';
 	align?: 'center' | 'left';
 	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue' | 'error';
 	weight?: 'regular' | 'bold';
 	className?: string;
 	onClick?: (event: MouseEvent) => void;
-	data?: any;
+	getRootRef?: any;
 }
 
 export class Title extends Component<TitleProps> {
 	render() {
-		const { size, align, color, weight, className, onClick, data, children } =
-			this.props;
+		const {
+			level,
+			align,
+			color,
+			weight,
+			className,
+			onClick,
+			children,
+			getRootRef,
+		} = this.props;
 
 		return (
 			<h1
 				onClick={onClick}
-				data={data}
+				ref={getRootRef}
 				className={clsx(
 					styles.title,
 					{
-						[styles.size6xl]: size === '6xl',
-						[styles.size5xl]: size === '5xl',
-						[styles.size4xl]: size === '4xl',
-						[styles.size3xl]: size === '3xl',
-						[styles.size2xl]: size === '2xl',
-						[styles.sizexl]: size === 'xl',
+						[styles.level1]: level === '1',
+						[styles.level2]: level === '2',
+						[styles.level3]: level === '3',
+						[styles.level4]: level === '4',
+						[styles.level5]: level === '5',
+						[styles.level6]: level === '6',
 						[styles.alignCenter]: align === 'center',
 						[styles.alignLeft]: align === 'left',
 						[styles.colorDark]: color === 'dark',

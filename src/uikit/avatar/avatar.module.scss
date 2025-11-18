@@ -6,50 +6,50 @@
 	object-position: center;
 }
 
-.sizeXL {
+.level6 {
 	height: 10.5rem;
 	width: 10.5rem;
 }
 
-.sizeL {
+.level7 {
 	width: 5rem;
 	height: 5rem;
 }
 
-.sizeM {
+.level8 {
 	height: 4.4rem;
 	width: 4.4rem;
 }
 
-.sizeS {
+.level9 {
 	width: 3rem;
 	height: 3rem;
 }
 
-.sizeXS {
+.level10 {
 	width: 2.5rem;
 	height: 2.5rem;
 }
 
 @media (max-width: 1024px) {
-	.sizeXL {
+	.level6 {
 		height: 9rem;
 		width: 9rem;
 	}
 }
 
 @media (max-width: 768px) {
-	.sizeXL {
+	.level6 {
 		height: 7rem;
 		width: 7rem;
 	}
 
-	.sizeM {
+	.level8 {
 		height: 3rem;
 		width: 3rem;
 	}
 
-	.sizeXS {
+	.level10 {
 		height: 3rem;
 		width: 3rem;
 	}

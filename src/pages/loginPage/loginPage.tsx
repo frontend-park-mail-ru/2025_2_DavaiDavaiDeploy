@@ -152,7 +152,7 @@ export class LoginPageNotConnected extends Component<
 						<div className={styles.rightSide__titles}>
 							<Title
 								className={styles.rightSide__title}
-								size="4xl"
+								level="3"
 								weight="bold"
 							>
 								С возвращением!
@@ -160,7 +160,7 @@ export class LoginPageNotConnected extends Component<
 							<Headline
 								className={styles.rightSide__subtitle}
 								color="light"
-								size="s"
+								level="9"
 							>
 								Войти, чтобы получить доступ ко всем возможностям
 							</Headline>
@@ -196,7 +196,7 @@ export class LoginPageNotConnected extends Component<
 								mode="primary"
 								onClick={this.handleLoginUser}
 								className={styles.login__button}
-								size="s"
+								level="9"
 								borderRadius="lg"
 							>
 								Войти

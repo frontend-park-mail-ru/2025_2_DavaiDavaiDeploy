@@ -31,12 +31,12 @@ class FilmCardGridComponent extends Component<
 
 	render() {
 		if (!this.props.films || this.props.films.length === 0) {
-			return <div></div>;
+			return <div />;
 		}
 
 		return (
 			<Flex className={styles.filmCardGrid} direction="column">
-				<Title className={styles.title} size="3xl" weight="bold">
+				<Title className={styles.title} level="4" weight="bold">
 					Все фильмы
 				</Title>
 				<CardGrid>

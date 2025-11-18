@@ -21,11 +21,11 @@ export class Route404 extends Component {
 					</Title>
 
 					<Flex className={styles.content} direction="column" align="start">
-						<Paragraph className={styles.text} size="m">
+						<Paragraph className={styles.text} level="8">
 							Похоже, вы забрели в тёмный космос
 						</Paragraph>
 
-						<Paragraph className={styles.text} size="m">
+						<Paragraph className={styles.text} level="8">
 							Страница не найдена
 						</Paragraph>
 

@@ -2,7 +2,6 @@ import {
 	formatDatetime,
 	formatSmallDatetime,
 } from '@/helpers/formatDateHelper/formatDateHelper';
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmFeedback } from '@/types/models';
@@ -29,7 +28,6 @@ export class FeedBack extends Component<FeedBackProps> {
 		const formattedDatetime = formatDatetime(updated_at);
 		const smallDatetime = formatSmallDatetime(updated_at);
 		const ratingType = getRatingType(rating);
-		const imageSrc = getImageURL(user_avatar);
 
 		return (
 			<Flex className={styles[`feedback-${rating}`]} direction="column">
@@ -45,12 +43,12 @@ export class FeedBack extends Component<FeedBackProps> {
 						direction="row"
 						justify="between"
 					>
-						<Avatar size="m" src={imageSrc} className={styles.avatar} />
+						<Avatar level="8" src={user_avatar} className={styles.avatar} />
 						<Subhead
 							className={styles.login}
 							color="dark"
 							opacity="80"
-							size="l"
+							level="7"
 						>
 							{user_login}
 						</Subhead>
@@ -59,7 +57,12 @@ export class FeedBack extends Component<FeedBackProps> {
 						<Rating rating={formattedRating} mode={ratingType} />
 					)}
 					{formattedDatetime && (
-						<Subhead className={styles.date} color="dark" size="s" opacity="50">
+						<Subhead
+							className={styles.date}
+							color="dark"
+							level="9"
+							opacity="50"
+						>
 							{formattedDatetime}
 						</Subhead>
 					)}
@@ -67,7 +70,7 @@ export class FeedBack extends Component<FeedBackProps> {
 						<Subhead
 							className={styles.smallDate}
 							color="dark"
-							size="s"
+							level="9"
 							opacity="50"
 						>
 							{smallDatetime}
@@ -79,12 +82,12 @@ export class FeedBack extends Component<FeedBackProps> {
 					<Headline
 						className={styles.title}
 						color="dark"
-						size="l"
+						level="7"
 						weight="bold"
 					>
 						{title}
 					</Headline>
-					<Paragraph className={styles.text} color="dark" size="m">
+					<Paragraph className={styles.text} color="dark" level="8">
 						{text}
 					</Paragraph>
 				</Flex>

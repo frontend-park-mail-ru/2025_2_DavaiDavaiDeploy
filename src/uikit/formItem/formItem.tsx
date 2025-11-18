@@ -18,6 +18,7 @@ interface FormItemProps {
 	value?: string;
 	className?: string;
 	onChange: (value: string) => void;
+	getRootRef?: any;
 }
 
 export class FormItem extends Component<FormItemProps> {
@@ -39,12 +40,18 @@ export class FormItem extends Component<FormItemProps> {
 			children,
 			top,
 			bottom,
+			getRootRef,
 		} = this.props;
 
 		return (
-			<Flex className={styles.inputContainer} direction="column" align="start">
+			<Flex
+				className={styles.inputContainer}
+				getRootRef={getRootRef}
+				direction="column"
+				align="start"
+			>
 				{top && (
-					<Headline size="s" className={styles.label}>
+					<Headline level="9" className={styles.label}>
 						{top}
 					</Headline>
 				)}
@@ -86,7 +93,7 @@ export class FormItem extends Component<FormItemProps> {
 				</Flex>
 				<Subhead
 					className={styles.bottom}
-					size="2xs"
+					level="11"
 					color={status === 'error' ? 'error' : 'blue'}
 				>
 					{bottom}

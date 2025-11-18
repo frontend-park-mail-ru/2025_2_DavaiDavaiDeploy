@@ -126,12 +126,12 @@ class FeedbackFormComponent extends Component<
 				justify="center"
 			>
 				{!this.props.isEditing && (
-					<Title className={styles.title} size="3xl" weight="bold" color="blue">
+					<Title className={styles.title} level="4" weight="bold" color="blue">
 						Оставить отзыв
 					</Title>
 				)}
 				{this.props.isEditing && (
-					<Title className={styles.title} size="3xl" weight="bold" color="blue">
+					<Title className={styles.title} level="4" weight="bold" color="blue">
 						Редактирование
 					</Title>
 				)}
@@ -173,7 +173,7 @@ class FeedbackFormComponent extends Component<
 					className={styles.submitButton}
 					onClick={this.handleSubmit}
 					borderRadius="l"
-					size="l"
+					level="7"
 				>
 					Опубликовать
 				</Button>

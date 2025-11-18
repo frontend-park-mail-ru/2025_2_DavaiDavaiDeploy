@@ -24,22 +24,19 @@ interface FilmRatingInputProps {
 class FilmRatingInputComponent extends Component<
 	FilmRatingInputProps & WithRouterProps
 > {
-	leaveRating = (event: MouseEvent): void => {
-		const target = event.currentTarget as HTMLElement | null;
-		const number = target?.getAttribute('data');
-
-		if (!number) {
-			return;
-		}
-
-		const rating = parseInt(number, RATING_COUNT);
-		this.props.createRating(rating, this.props.router.params.id);
+	leaveRating = (number: number): void => {
+		this.props.createRating(number, this.props.router.params.id);
 	};
 
 	render() {
 		return (
 			<Flex className={styles.ratingInput} direction="row" align="center">
-				<div onClick={this.leaveRating} data={1} className={styles.starWrap}>
+				<div
+					onClick={() => {
+						this.leaveRating(1);
+					}}
+					className={styles.starWrap}
+				>
 					<Star
 						className={clsx({
 							[styles.darkLeftStarIcon]: this.props.isDark,
@@ -56,17 +53,19 @@ class FilmRatingInputComponent extends Component<
 									this.props.userRating === number,
 								[styles.dark]: this.props.isDark,
 							})}
-							onClick={this.leaveRating}
-							data={number}
-							size="2xl"
+							onClick={() => {
+								this.leaveRating(number);
+							}}
+							level="5"
 						>
 							{number.toString()}
 						</Title>
 					);
 				})}
 				<div
-					onClick={this.leaveRating}
-					data={RATING_COUNT}
+					onClick={() => {
+						this.leaveRating(RATING_COUNT);
+					}}
 					className={styles.starWrap}
 				>
 					<Star

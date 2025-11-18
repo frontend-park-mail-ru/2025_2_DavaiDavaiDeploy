@@ -8,20 +8,28 @@ interface FlexProps {
 	justify?: 'start' | 'center' | 'end' | 'between' | 'around';
 	id?: string;
 	onClick?: (event: MouseEvent) => void;
-	ref?: any;
 	className?: string;
+	getRootRef?: any;
 }
 
 export class Flex extends Component<FlexProps> {
 	render() {
-		const { onClick, ref, className, align, justify, children, direction, id } =
-			this.props;
+		const {
+			onClick,
+			getRootRef,
+			className,
+			align,
+			justify,
+			children,
+			direction,
+			id,
+		} = this.props;
 
 		return (
 			<div
 				id={id}
 				onClick={onClick}
-				ref={ref}
+				ref={getRootRef}
 				className={clsx(
 					styles.flex,
 					{

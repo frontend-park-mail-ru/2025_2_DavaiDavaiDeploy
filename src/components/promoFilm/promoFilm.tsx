@@ -1,5 +1,4 @@
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { connect } from '@/modules/redux';
@@ -13,6 +12,7 @@ import type { ModelsPromoFilm } from '@/types/models';
 import { Badge } from '@/uikit/badge/badge';
 import { Flex } from '@/uikit/flex/flex';
 import { Headline } from '@/uikit/headline/headline';
+import { Image } from '@/uikit/Image/Image';
 import { Paragraph } from '@/uikit/paragraph/paragraph';
 import { Subhead } from '@/uikit/subhead/subhead';
 import { Title } from '@/uikit/title/title';
@@ -47,7 +47,6 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 		const formattedDuration = formatDuration(duration);
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
-		const imageSrc = getImageURL(image);
 
 		return (
 			<a aria-label="Card for promo film" className={styles.promoFilm}>
@@ -55,7 +54,7 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 					<Flex className={styles.content} direction="column" justify="center">
 						<Link href={`/films/${id}`} className={styles.linkWrap}>
 							<Flex className={styles.header} align="center" direction="row">
-								<Title className={styles.title} size="4xl">
+								<Title className={styles.title} level="3">
 									{title}
 								</Title>
 								{ratingType && (
@@ -63,34 +62,34 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 										mode={ratingType}
 										className={styles[`rating-${ratingType}`]}
 									>
-										<Headline size="l">{formattedRating}</Headline>
+										<Headline level="7">{formattedRating}</Headline>
 									</Badge>
 								)}
 							</Flex>
 							<Flex className={styles.info} justify="between">
-								<Subhead className={styles.item} size="xs" color="light">
+								<Subhead className={styles.item} level="10" color="light">
 									{year.toString()}
 								</Subhead>
-								<Subhead className={styles.item} size="xs" color="light">
+								<Subhead className={styles.item} level="10" color="light">
 									{genre}
 								</Subhead>
 								{formattedDuration && (
-									<Subhead className={styles.item} size="xs" color="light">
+									<Subhead className={styles.item} level="10" color="light">
 										{formattedDuration}
 									</Subhead>
 								)}
 							</Flex>
 
-							<Title className={styles[`title-${ratingType}`]} size="5xl">
+							<Title className={styles[`title-${ratingType}`]} level="2">
 								{formattedRating}
 							</Title>
-							<Paragraph className={styles.description} size="m">
+							<Paragraph className={styles.description} level="8">
 								{short_description}
 							</Paragraph>
 						</Link>
 					</Flex>
 
-					<img src={imageSrc} alt={title} className={styles.image} />
+					<Image src={image} alt={title} className={styles.image} />
 				</Flex>
 			</a>
 		);

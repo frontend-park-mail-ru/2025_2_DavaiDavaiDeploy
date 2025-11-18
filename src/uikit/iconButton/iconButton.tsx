@@ -10,15 +10,24 @@ interface IconButtonProps {
 	onMouseLeave?: any;
 	onMouseEnter?: any;
 	children?: any;
+	getRootRef?: any;
 }
 
 export class IconButton extends Component<IconButtonProps> {
 	render() {
-		const { mode, className, onClick, onMouseLeave, onMouseEnter, children } =
-			this.props;
+		const {
+			mode,
+			className,
+			onClick,
+			onMouseLeave,
+			onMouseEnter,
+			children,
+			getRootRef,
+		} = this.props;
 
 		return (
 			<button
+				ref={getRootRef}
 				onClick={onClick}
 				onMouseLeave={onMouseLeave}
 				onMouseEnter={onMouseEnter}

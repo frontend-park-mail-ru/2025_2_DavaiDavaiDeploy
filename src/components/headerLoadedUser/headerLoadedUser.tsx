@@ -1,5 +1,4 @@
 import { UserAvatar } from '@/components/headerUserAvatar/headerUserAvatar';
-import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
 import type { ModelsUser } from '@/types/models.ts';
 import { Avatar } from '@/uikit/avatar/avatar';
 import { Flex } from '@/uikit/flex/flex';
@@ -17,10 +16,10 @@ export class LoadedUser extends Component<LoadedUserProps> {
 			<Flex className={styles.userInfo} align="center">
 				<div className={styles.avatarContainer}>
 					<Avatar
-						src={getStaticURL(this.props.user?.avatar)}
+						src={this.props.user?.avatar}
 						alt={'avatar'}
 						className={styles.avatar}
-						size="s"
+						level="9"
 					/>
 					<UserAvatar
 						user={this.props.user}

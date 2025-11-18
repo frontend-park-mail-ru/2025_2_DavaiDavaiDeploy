@@ -66,7 +66,11 @@ export class ToastContainer extends Component<{}, ToastContainerState> {
 		this.createToast(message, 'error');
 	};
 
-	createToast = (message: string, type: 'success' | 'error') => {
+	info = (message: string) => {
+		this.createToast(message, 'info');
+	};
+
+	createToast = (message: string, type: 'success' | 'error' | 'info') => {
 		const newToast: ToastItem = {
 			id: Date.now(),
 			type,

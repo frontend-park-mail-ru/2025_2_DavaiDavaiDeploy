@@ -5,14 +5,16 @@ import styles from './badge.module.scss';
 interface BadgeProps {
 	mode: 'low' | 'high' | 'medium';
 	className?: string;
+	getRootRef?: any;
 }
 
 export class Badge extends Component<BadgeProps> {
 	render() {
-		const { className, mode, children } = this.props;
+		const { className, mode, children, getRootRef } = this.props;
 
 		return (
-			<h1
+			<span
+				ref={getRootRef}
 				className={clsx(
 					styles.badge,
 					{
@@ -24,7 +26,7 @@ export class Badge extends Component<BadgeProps> {
 				)}
 			>
 				{children}
-			</h1>
+			</span>
 		);
 	}
 }

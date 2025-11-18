@@ -66,7 +66,7 @@ class FilmRatingComponent extends Component<
 					borderRadius="l"
 				>
 					{!this.props.userRating && (
-						<Paragraph className={styles.btnText} size="m" align="center">
+						<Paragraph className={styles.btnText} level="8" align="center">
 							Оценить фильм
 						</Paragraph>
 					)}
@@ -77,7 +77,7 @@ class FilmRatingComponent extends Component<
 							justify="between"
 							align="center"
 						>
-							<Paragraph className={styles.btnText} size="m">
+							<Paragraph className={styles.btnText} level="8">
 								Изменить
 							</Paragraph>
 
@@ -87,7 +87,7 @@ class FilmRatingComponent extends Component<
 								align="center"
 							>
 								<Star className={styles.userStarIcon} />
-								<Paragraph className={styles.userRatingTitle} size="m">
+								<Paragraph className={styles.userRatingTitle} level="8">
 									{this.props.userRating.toString()}
 								</Paragraph>
 							</Flex>
@@ -140,14 +140,14 @@ class FilmRatingComponent extends Component<
 					justify="center"
 				>
 					{formattedRating && (
-						<Title className={styles[`title-${ratingType}`]} size="5xl">
+						<Title className={styles[`title-${ratingType}`]} level="2">
 							{formattedRating}
 						</Title>
 					)}
 					{ratingNumber && (
 						<Subhead
 							className={styles.subtitle}
-							size="xs"
+							level="10"
 							color="light"
 							opacity="60"
 						>

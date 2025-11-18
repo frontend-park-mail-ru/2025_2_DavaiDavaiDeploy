@@ -24,7 +24,7 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 
 		return (
 			<Flex className={styles.page} direction="column" align="center">
-				<Title className={styles.title} size="5xl">
+				<Title className={styles.title} level="2">
 					Добро пожаловать в ваш профиль
 				</Title>
 				<Flex className={styles.profile} direction="row" align="start">
