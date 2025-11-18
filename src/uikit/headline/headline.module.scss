@@ -1,3 +1,5 @@
+@use '../tokens/tokens';
+
 .headline {
 	font-size: var(--font-size-l);
 	text-align: left;

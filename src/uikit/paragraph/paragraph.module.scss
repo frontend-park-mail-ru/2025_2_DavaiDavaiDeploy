@@ -1,3 +1,5 @@
+@use '../tokens/tokens';
+
 .paragraph {
 	font-size: var(--font-size-m);
 	text-align: left;
