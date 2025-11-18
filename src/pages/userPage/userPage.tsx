@@ -7,6 +7,7 @@ import { withRouter } from '@/modules/router/withRouter.tsx';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
+import { Redirect } from '../../modules/router/redirect';
 import styles from './userPage.module.scss';
 
 interface UserPageProps {
@@ -14,12 +15,11 @@ interface UserPageProps {
 }
 
 class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
-	onUpdate() {
-		if (!this.props.isAuthentificated) {
-			this.props.router.navigate('/');
-		}
-	}
 	render() {
+		if (!this.props.isAuthentificated) {
+			return <Redirect to="/" />;
+		}
+
 		return (
 			<div className={styles.page}>
 				<h1 className={styles.title}>Добро пожаловать в ваш профиль</h1>

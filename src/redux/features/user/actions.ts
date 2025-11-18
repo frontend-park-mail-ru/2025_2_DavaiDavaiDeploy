@@ -14,6 +14,16 @@ const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
  * Создает действие для выхода пользователя из системы.
 
  */
+const resetUserError = (): Action => {
+	return {
+		type: actionTypes.USER_ERROR_RESET,
+	};
+};
+
+/**
+ * Создает действие для выхода пользователя из системы.
+
+ */
 const setUserLogoutAction = (): Action => {
 	return {
 		type: actionTypes.USER_LOGOUT,
@@ -115,13 +125,6 @@ const deleteUserAction = (userId: string | number): Action => {
  * Создает асинхронное действие для проверки авторизации пользователя.
  */
 const checkUserAction = (): Action => async (dispatch: Dispatch) => {
-	if (
-		window.location.pathname === '/login' ||
-		window.location.pathname === '/register'
-	) {
-		return;
-	}
-
 	dispatch(setUserLoadingAction());
 
 	try {
@@ -283,6 +286,7 @@ const changeAvatarAction =
 	};
 
 export default {
+	resetUserError,
 	registerUserAction,
 	loginUserAction,
 	checkUserAction,
