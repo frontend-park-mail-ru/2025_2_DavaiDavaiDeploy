@@ -39,12 +39,9 @@ export class CardGridComponent extends Component<
 		return (
 			<div className={styles.cardGrid}>
 				{!this.props.router.params.id && (
-					<Title
-						className={styles.title}
-						text="Все фильмы"
-						size="3xl"
-						weight="bold"
-					/>
+					<Title className={styles.title} size="3xl" weight="bold">
+						Все фильмы
+					</Title>
 				)}
 				<div className={styles.grid}>
 					{this.props.films.map((film) => (

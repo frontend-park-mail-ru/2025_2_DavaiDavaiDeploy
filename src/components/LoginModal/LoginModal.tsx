@@ -14,16 +14,12 @@ export class LoginModal extends Component {
 				>
 					<div className={style.modalLogout}>
 						<div className={style.modalHeader}>
-							<Title
-								className={style.modalTitle}
-								text="Уже уходите?"
-								size="2xl"
-							/>
-							<Title
-								className={style.modalTitle}
-								text="Мы будем скучать!"
-								size="2xl"
-							/>
+							<Title className={style.modalTitle} size="2xl">
+								Уже уходите?
+							</Title>
+							<Title className={style.modalTitle} size="2xl">
+								Мы будем скучать!
+							</Title>
 						</div>
 						<div className={style.modalActions}>
 							<Button

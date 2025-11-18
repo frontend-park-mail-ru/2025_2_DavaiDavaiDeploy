@@ -3,7 +3,6 @@ import { Component } from '@robocotik/react';
 import styles from './subhead.module.scss';
 
 interface SubheadProps {
-	text: string | number;
 	size?: 'l' | 'm' | 's' | 'xs' | '2xs';
 	align?: 'center' | 'left';
 	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue' | 'error';
@@ -21,11 +20,11 @@ export class Subhead extends Component<SubheadProps> {
 			align,
 			color,
 			weight,
-			text,
 			opacity,
 			className,
 			onClick,
 			data,
+			children,
 		} = this.props;
 
 		return (
@@ -60,7 +59,7 @@ export class Subhead extends Component<SubheadProps> {
 					className,
 				)}
 			>
-				{text}
+				{children}
 			</h3>
 		);
 	}

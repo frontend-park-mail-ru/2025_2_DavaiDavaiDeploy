@@ -25,13 +25,13 @@ export class FilmCard extends Component<FilmCardProps> {
 			<div className={styles.filmCard}>
 				<div className={styles.imageContainer}>
 					<Link href={`/films/${id}`}>
-						<img className={styles.image} src={imageSrc} alt={title}></img>
+						<img className={styles.image} src={imageSrc} alt={title} />
 						{ratingType && (
 							<Badge
 								mode={ratingType}
 								className={styles[`rating-${ratingType}`]}
 							>
-								<Headline text={formattedRating} size="l" />
+								<Headline size="l">{formattedRating}</Headline>
 							</Badge>
 						)}
 					</Link>
@@ -39,19 +39,21 @@ export class FilmCard extends Component<FilmCardProps> {
 				<div className={styles.content}>
 					<Link href={`/films/${id}`}>
 						<Title
-							text={title}
 							className={styles.title}
 							weight="bold"
 							size="xl"
 							align="center"
-						/>
+						>
+							{title}
+						</Title>
 						<Subhead
-							text={info}
 							className={styles.info}
 							color="light"
 							size="2xs"
 							align="center"
-						/>
+						>
+							{info}
+						</Subhead>
 					</Link>
 				</div>
 			</div>

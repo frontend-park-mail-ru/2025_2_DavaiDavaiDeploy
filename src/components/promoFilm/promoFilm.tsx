@@ -54,49 +54,38 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 					<div className={styles.content}>
 						<Link href={`/films/${id}`} className={styles.linkWrap}>
 							<div className={styles.header}>
-								<Title className={styles.title} text={title} size="4xl" />
+								<Title className={styles.title} size="4xl">
+									{title}
+								</Title>
 								{ratingType && (
 									<Badge
 										mode={ratingType}
 										className={styles[`rating-${ratingType}`]}
 									>
-										<Headline text={formattedRating} size="l" />
+										<Headline size="l">{formattedRating}</Headline>
 									</Badge>
 								)}
 							</div>
 							<div className={styles.info}>
-								<Subhead
-									className={styles.item}
-									size="xs"
-									text={year}
-									color="light"
-								/>
-								<Subhead
-									className={styles.item}
-									size="xs"
-									text={genre}
-									color="light"
-								/>
+								<Subhead className={styles.item} size="xs" color="light">
+									{year.toString()}
+								</Subhead>
+								<Subhead className={styles.item} size="xs" color="light">
+									{genre}
+								</Subhead>
 								{formattedDuration && (
-									<Subhead
-										className={styles.item}
-										size="xs"
-										text={formattedDuration}
-										color="light"
-									/>
+									<Subhead className={styles.item} size="xs" color="light">
+										{formattedDuration}
+									</Subhead>
 								)}
 							</div>
 
-							<Title
-								className={styles[`title-${ratingType}`]}
-								text={formattedRating}
-								size="5xl"
-							/>
-							<Paragraph
-								text={short_description}
-								className={styles.description}
-								size="m"
-							/>
+							<Title className={styles[`title-${ratingType}`]} size="5xl">
+								{formattedRating}
+							</Title>
+							<Paragraph className={styles.description} size="m">
+								{short_description}
+							</Paragraph>
 						</Link>
 					</div>
 

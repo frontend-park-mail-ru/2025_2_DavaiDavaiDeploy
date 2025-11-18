@@ -106,12 +106,9 @@ class FilmPageComponent extends Component<
 			);
 		} else {
 			return (
-				<Title
-					className={styles.feedback}
-					text="Отзывов пока нет"
-					size="3xl"
-					weight="bold"
-				/>
+				<Title className={styles.feedback} size="3xl" weight="bold">
+					Отзывов пока нет
+				</Title>
 			);
 		}
 	}

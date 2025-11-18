@@ -10,30 +10,23 @@ export class Route404 extends Component {
 		return (
 			<div className={styles.page}>
 				<div className={styles.err}>
-					<Title
-						className={styles.title}
-						text="404"
-						weight="bold"
-						color="accent"
-					/>
-					<div className={styles.content} class="err__content">
-						<Paragraph
-							className={styles.text}
-							text="Похоже, вы забрели в тёмный космос"
-							size="m"
-						/>
-						<Paragraph
-							className={styles.text}
-							text="Страница не найдена"
-							size="m"
-						/>
+					<Title className={styles.title} weight="bold" color="accent">
+						404
+					</Title>
+
+					<div className={styles.content}>
+						<Paragraph className={styles.text} size="m">
+							Похоже, вы забрели в тёмный космос
+						</Paragraph>
+
+						<Paragraph className={styles.text} size="m">
+							Страница не найдена
+						</Paragraph>
 
 						<Link href="/">
-							<Subhead
-								className={styles.link}
-								text="Вернуться на главную"
-								color="accent"
-							/>
+							<Subhead className={styles.link} color="accent">
+								Вернуться на главную
+							</Subhead>
 						</Link>
 					</div>
 				</div>

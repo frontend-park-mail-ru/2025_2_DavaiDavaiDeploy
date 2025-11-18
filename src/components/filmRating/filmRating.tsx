@@ -65,23 +65,21 @@ class FilmRatingComponent extends Component<
 					borderRadius="l"
 				>
 					{!this.props.userRating && (
-						<Paragraph
-							className={styles.btnText}
-							text="Оценить фильм"
-							size="m"
-							align="center"
-						/>
+						<Paragraph className={styles.btnText} size="m" align="center">
+							Оценить фильм
+						</Paragraph>
 					)}
 					{this.props.isAuthentificated && this.props.userRating && (
 						<span className={styles.userRating}>
-							<Paragraph className={styles.btnText} text="Изменить" size="m" />
+							<Paragraph className={styles.btnText} size="m">
+								Изменить
+							</Paragraph>
+
 							<div className={styles[`rating-${userRatingType}`]}>
 								<Star className={styles.userStarIcon} />
-								<Paragraph
-									className={styles.userRatingTitle}
-									text={this.props.userRating}
-									size="m"
-								/>
+								<Paragraph className={styles.userRatingTitle} size="m">
+									{this.props.userRating.toString()}
+								</Paragraph>
 							</div>
 						</span>
 					)}
@@ -100,7 +98,7 @@ class FilmRatingComponent extends Component<
 
 				{this.props.isAuthentificated && (
 					<Button mode="tertiary" className={styles.smallRateBtn}>
-						{this.props.isAuthentificated && <FilmRatingInput isDark={false} />}
+						<FilmRatingInput isDark={false} />
 					</Button>
 				)}
 			</div>
@@ -125,20 +123,19 @@ class FilmRatingComponent extends Component<
 			<div className={styles.content}>
 				<div className={styles.rating}>
 					{formattedRating && (
-						<Title
-							className={styles[`title-${ratingType}`]}
-							text={formattedRating}
-							size="5xl"
-						/>
+						<Title className={styles[`title-${ratingType}`]} size="5xl">
+							{formattedRating}
+						</Title>
 					)}
 					{ratingNumber && (
 						<Subhead
 							className={styles.subtitle}
-							text={ratingNumber}
 							size="xs"
 							color="light"
 							opacity="60"
-						/>
+						>
+							{ratingNumber}
+						</Subhead>
 					)}
 
 					{this.renderButton()}

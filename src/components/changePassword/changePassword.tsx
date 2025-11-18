@@ -111,12 +111,9 @@ class ChangePasswordComponent extends Component<
 	render() {
 		return (
 			<div className={styles.changePasswordForm}>
-				<Title
-					className={styles.title}
-					text="Сменить пароль"
-					size="3xl"
-					weight="bold"
-				/>
+				<Title className={styles.title} size="3xl" weight="bold">
+					Сменить пароль
+				</Title>
 				<PasswordInputField
 					mode="secondary"
 					label="Старый пароль"

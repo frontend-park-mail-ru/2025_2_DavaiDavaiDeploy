@@ -196,7 +196,9 @@ class GenreSliderComponent extends Component<
 
 		return (
 			<section className={styles.genreSlider}>
-				<Title className={styles.title} text="Жанры" size="3xl" weight="bold" />
+				<Title className={styles.title} size="3xl" weight="bold">
+					Жанры
+				</Title>
 				<div className={styles.container} onClick={this.onSliderClick}>
 					<div className={clsx(styles.slider, animationClass)}>
 						{visibleGenres.map((genre) => (

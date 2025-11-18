@@ -31,13 +31,9 @@ class GenreInfoComponent extends Component<
 	render() {
 		if (!this.props.genre) {
 			return (
-				<Title
-					className={styles.err}
-					text="Жанр не найден"
-					size="5xl"
-					weight="bold"
-					color="accent"
-				/>
+				<Title className={styles.err} size="5xl" weight="bold" color="accent">
+					Жанр не найден
+				</Title>
 			);
 		}
 
@@ -48,12 +44,9 @@ class GenreInfoComponent extends Component<
 		return (
 			<div className={styles.genre}>
 				<img src={titleSRC} alt={title} className={styles.title} />
-				<Paragraph
-					text={description}
-					className={styles.description}
-					size="m"
-					align="center"
-				/>
+				<Paragraph className={styles.description} size="m" align="center">
+					{description}
+				</Paragraph>
 			</div>
 		);
 	}

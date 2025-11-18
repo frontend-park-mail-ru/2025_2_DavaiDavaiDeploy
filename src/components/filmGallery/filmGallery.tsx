@@ -19,13 +19,9 @@ export class FilmGallery extends Component<FilmGalleryProps> {
 		return (
 			<div className={styles.content}>
 				{image1 && (
-					<Title
-						className={styles.title}
-						text="Фотогалерея фильма"
-						size="3xl"
-						weight="bold"
-						color="dark"
-					/>
+					<Title className={styles.title} size="3xl" weight="bold" color="dark">
+						Фотогалерея фильма
+					</Title>
 				)}
 				{image1 && <img className={styles.image} src={image1} />}
 				{image1 && <img className={styles.image} src={image1} />}

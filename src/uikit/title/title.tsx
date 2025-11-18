@@ -3,7 +3,6 @@ import { Component } from '@robocotik/react';
 import styles from './title.module.scss';
 
 interface TitleProps {
-	text: string | number;
 	size?: '6xl' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl';
 	align?: 'center' | 'left';
 	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue' | 'error';
@@ -15,7 +14,7 @@ interface TitleProps {
 
 export class Title extends Component<TitleProps> {
 	render() {
-		const { size, align, color, weight, text, className, onClick, data } =
+		const { size, align, color, weight, className, onClick, data, children } =
 			this.props;
 
 		return (
@@ -45,7 +44,7 @@ export class Title extends Component<TitleProps> {
 					className,
 				)}
 			>
-				{text}
+				{children}
 			</h1>
 		);
 	}

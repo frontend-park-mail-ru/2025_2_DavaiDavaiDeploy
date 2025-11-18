@@ -16,7 +16,9 @@ export class Rating extends Component<RatingProps> {
 		return (
 			<span className={styles.rating}>
 				<Star className={styles[`star-${mode}`]} />
-				<Headline text={rating} className={styles[`rating-${mode}`]} size="l" />
+				<Headline className={styles[`rating-${mode}`]} size="l">
+					{rating}
+				</Headline>
 			</span>
 		);
 	}

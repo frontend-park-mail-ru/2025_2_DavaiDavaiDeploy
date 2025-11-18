@@ -42,7 +42,11 @@ export class FormItem extends Component<FormItemProps> {
 
 		return (
 			<div className={styles.inputContainer}>
-				{top && <Headline size="s" className={styles.label} text={top} />}
+				{top && (
+					<Headline size="s" className={styles.label}>
+						{top}
+					</Headline>
+				)}
 				<div
 					className={clsx(
 						styles.inputWrapper,
@@ -78,11 +82,12 @@ export class FormItem extends Component<FormItemProps> {
 					{after && <span className={styles.after}>{after}</span>}
 				</div>
 				<Subhead
-					text={bottom ? bottom : ''}
 					className={styles.bottom}
 					size="2xs"
 					color={status === 'error' ? 'error' : 'blue'}
-				/>
+				>
+					{bottom}
+				</Subhead>
 			</div>
 		);
 	}

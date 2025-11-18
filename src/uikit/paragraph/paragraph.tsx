@@ -3,7 +3,6 @@ import { Component } from '@robocotik/react';
 import styles from './paragraph.module.scss';
 
 interface ParagraphProps {
-	text: string | number;
 	size?: 'l' | 'm' | 's';
 	align?: 'center' | 'left';
 	color?: 'dark' | 'base' | 'light' | 'accent' | 'blue' | 'error';
@@ -15,7 +14,7 @@ interface ParagraphProps {
 
 export class Paragraph extends Component<ParagraphProps> {
 	render() {
-		const { size, align, color, weight, text, className, onClick, data } =
+		const { size, align, color, weight, className, onClick, data, children } =
 			this.props;
 
 		return (
@@ -42,7 +41,7 @@ export class Paragraph extends Component<ParagraphProps> {
 					className,
 				)}
 			>
-				{text}
+				{children}
 			</p>
 		);
 	}

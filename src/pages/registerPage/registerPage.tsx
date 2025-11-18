@@ -162,16 +162,18 @@ export class RegisterPageNotConnected extends Component<
 						<div className={styles.rightSide__titles}>
 							<Title
 								className={styles.rightSide__title}
-								text="Создать аккаунт"
 								size="4xl"
 								weight="bold"
-							/>
+							>
+								Создать аккаунт
+							</Title>
 							<Headline
-								text="Присоединяйтесь к сообществу киноманов"
 								className={styles.rightSide__subtitle}
 								color="light"
 								size="s"
-							/>
+							>
+								Присоединяйтесь к сообществу киноманов
+							</Headline>
 						</div>
 						<div className={styles.rightSide__inputFields}>
 							<FormItem

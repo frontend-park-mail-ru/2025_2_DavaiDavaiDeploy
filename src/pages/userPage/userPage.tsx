@@ -23,11 +23,9 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 	render() {
 		return (
 			<div className={styles.page}>
-				<Title
-					className={styles.title}
-					text="Добро пожаловать в ваш профиль"
-					size="5xl"
-				/>
+				<Title className={styles.title} size="5xl">
+					Добро пожаловать в ваш профиль
+				</Title>
 				<section className={styles.profile}>
 					<ChangeAvatar />
 					<ChangePassword />

@@ -282,7 +282,9 @@ class FilmSliderComponent extends Component<
 
 		return (
 			<div className={styles.content}>
-				<Title text="ПРОЕКТЫ" size="6xl" className={styles.title} />
+				<Title size="6xl" className={styles.title}>
+					ПРОЕКТЫ
+				</Title>
 				<div
 					ref={this.sliderRef}
 					className={styles.slider}

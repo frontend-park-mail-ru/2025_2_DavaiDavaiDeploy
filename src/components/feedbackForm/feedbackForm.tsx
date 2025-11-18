@@ -64,7 +64,7 @@ class FeedbackFormComponent extends Component<
 
 		this.setState({
 			title: value,
-			titleErrorMessage: titleErrorMessage,
+			titleErrorMessage,
 		});
 	};
 
@@ -123,22 +123,14 @@ class FeedbackFormComponent extends Component<
 		return (
 			<div className={styles.feedbackForm}>
 				{!this.props.isEditing && (
-					<Title
-						className={styles.title}
-						text="Оставить отзыв"
-						size="3xl"
-						weight="bold"
-						color="blue"
-					/>
+					<Title className={styles.title} size="3xl" weight="bold" color="blue">
+						Оставить отзыв
+					</Title>
 				)}
 				{this.props.isEditing && (
-					<Title
-						className={styles.title}
-						text="Редактирование"
-						size="3xl"
-						weight="bold"
-						color="blue"
-					/>
+					<Title className={styles.title} size="3xl" weight="bold" color="blue">
+						Редактирование
+					</Title>
 				)}
 				<div className={styles.header}>
 					<FilmRatingInput isDark={true} />
@@ -166,24 +158,17 @@ class FeedbackFormComponent extends Component<
 							[styles.errorBorder]: this.state.textErrorMessage.length > 0,
 						})}
 						onInput={this.handleTextChange}
-					>
-						{text}
-					</textarea>
+						value={text}
+					/>
 
 					{this.state.textErrorMessage ? (
-						<Subhead
-							className={styles.errorMessage}
-							text={this.state.textErrorMessage}
-							color="error"
-							size="2xs"
-						/>
+						<Subhead className={styles.errorMessage} color="error" size="2xs">
+							{this.state.textErrorMessage}
+						</Subhead>
 					) : (
-						<Subhead
-							className={styles.defaultMessage}
-							text="Расскажите, что вы думаете о фильме - от 30 символов"
-							color="blue"
-							size="2xs"
-						/>
+						<Subhead className={styles.defaultMessage} color="blue" size="2xs">
+							Расскажите, что вы думаете о фильме - от 30 символов
+						</Subhead>
 					)}
 				</div>
 

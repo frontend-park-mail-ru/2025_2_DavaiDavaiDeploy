@@ -79,11 +79,12 @@ class FeedbackFormComponent extends Component<
 				<div className={styles.notAuth}>
 					<Title
 						className={styles.notAuthTitle}
-						text="Хотите оставить отзыв?"
 						size="3xl"
 						weight="bold"
 						color="dark"
-					/>
+					>
+						Хотите оставить отзыв?
+					</Title>
 
 					<span className={styles.notAuthText}>
 						<Link
@@ -122,11 +123,12 @@ class FeedbackFormComponent extends Component<
 					<div className={styles.header}>
 						<Title
 							className={styles.title}
-							text="Ваш отзыв"
 							size="3xl"
 							weight="bold"
 							color="dark"
-						/>
+						>
+							Ваш отзыв
+						</Title>
 						<IconButton
 							mode="quaternary"
 							className={styles.editButton}

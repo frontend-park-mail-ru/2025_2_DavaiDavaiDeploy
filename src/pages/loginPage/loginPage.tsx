@@ -137,16 +137,18 @@ export class LoginPageNotConnected extends Component<
 						<div className={styles.rightSide__titles}>
 							<Title
 								className={styles.rightSide__title}
-								text="С возвращением!"
 								size="4xl"
 								weight="bold"
-							/>
+							>
+								С возвращением!
+							</Title>
 							<Headline
-								text="Войти, чтобы получить доступ ко всем возможностям"
 								className={styles.rightSide__subtitle}
 								color="light"
 								size="s"
-							/>
+							>
+								Войти, чтобы получить доступ ко всем возможностям
+							</Headline>
 						</div>
 						<div className={styles.rightSide__inputFields}>
 							<FormItem

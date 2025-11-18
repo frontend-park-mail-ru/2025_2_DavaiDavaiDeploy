@@ -36,52 +36,46 @@ export class FeedBack extends Component<FeedBackProps> {
 					<span className={styles.user}>
 						<Avatar size="m" src={imageSrc} className={styles.avatar} />
 						<Subhead
-							text={user_login}
 							className={styles.login}
 							color="dark"
 							opacity="80"
 							size="l"
-						/>
+						>
+							{user_login}
+						</Subhead>
 					</span>
 					{formattedRating && ratingType && (
 						<Rating rating={formattedRating} mode={ratingType} />
 					)}
 					{formattedDatetime && (
-						<Subhead
-							text={formattedDatetime}
-							className={styles.date}
-							color="dark"
-							size="s"
-							opacity="50"
-						/>
+						<Subhead className={styles.date} color="dark" size="s" opacity="50">
+							{formattedDatetime}
+						</Subhead>
 					)}
-
 					{smallDatetime && (
 						<Subhead
-							text={smallDatetime}
 							className={styles.smallDate}
 							color="dark"
 							size="s"
 							opacity="50"
-						/>
+						>
+							{smallDatetime}
+						</Subhead>
 					)}
 				</div>
 				<Separator mode="secondary" className={styles.line} />
 				<div className={styles.content}>
 					<Headline
-						text={title}
 						className={styles.title}
 						color="dark"
 						size="l"
 						weight="bold"
-					/>
-
-					<Paragraph
-						text={text}
-						className={styles.text}
-						color="dark"
-						size="m"
-					/>
+					>
+						{title}
+					</Headline>
+					<Paragraph className={styles.text} color="dark" size="m">
+						{text}
+					</Paragraph>
 				</div>
 			</div>
 		);

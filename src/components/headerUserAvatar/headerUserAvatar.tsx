@@ -32,12 +32,13 @@ export class UserAvatar extends Component<UserAvatarProps> {
 
 				{this.props.user?.login && (
 					<Headline
-						text={this.props.user.login}
 						className={styles.avatarActionsLogin}
 						size="l"
 						color="accent"
 						align="center"
-					/>
+					>
+						{this.props.user.login}
+					</Headline>
 				)}
 
 				<Link className={styles.avatarActionsLink} href="/profile">

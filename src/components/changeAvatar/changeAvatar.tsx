@@ -134,27 +134,26 @@ class ChangeAvatarComponent extends Component<
 		return (
 			<div className={styles.content}>
 				<div className={styles.text}>
-					<Title
-						className={styles.title}
-						text="Хочется чего-то нового? Обновите фото профиля"
-						size="3xl"
-						weight="bold"
-					/>
+					<Title className={styles.title} size="3xl" weight="bold">
+						Хочется чего-то нового? Обновите фото профиля
+					</Title>
 					<div className={styles.subtitle}>
 						<Subhead
-							text={`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}
 							color="light"
 							size="xs"
 							opacity="70"
 							className={styles.subtitleText}
-						/>
+						>
+							{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}
+						</Subhead>
 						<Subhead
-							text="Вес файла: не более 8МБ"
 							color="light"
 							size="xs"
 							opacity="70"
 							className={styles.subtitleText}
-						/>
+						>
+							Вес файла: не более 8МБ
+						</Subhead>
 					</div>
 				</div>
 
@@ -191,7 +190,7 @@ class ChangeAvatarComponent extends Component<
 								type="file"
 								accept=".jpg, .jpeg, .png"
 								onChange={this.handleFileChange}
-							></input>
+							/>
 						</div>
 
 						<Button

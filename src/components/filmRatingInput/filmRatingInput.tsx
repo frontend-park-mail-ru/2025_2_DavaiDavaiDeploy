@@ -50,7 +50,6 @@ class FilmRatingInputComponent extends Component<
 					const number = i + 1;
 					return (
 						<Title
-							text={number}
 							className={clsx(styles['ratingNumber-' + getRatingType(number)], {
 								[styles[`cur-${getRatingType(number)}`]]:
 									this.props.userRating === number,
@@ -59,7 +58,9 @@ class FilmRatingInputComponent extends Component<
 							onClick={this.leaveRating}
 							data={number}
 							size="2xl"
-						/>
+						>
+							{number.toString()}
+						</Title>
 					);
 				})}
 				<div

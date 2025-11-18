@@ -23,13 +23,9 @@ export class FilmInfo extends Component<FilmInfoProps> {
 	render() {
 		if (this.props.error) {
 			return (
-				<Title
-					className={styles.err}
-					text="Фильм не найден"
-					size="5xl"
-					weight="bold"
-					color="accent"
-				/>
+				<Title className={styles.err} size="5xl" weight="bold" color="accent">
+					Фильм не найден
+				</Title>
 			);
 		}
 
@@ -85,12 +81,13 @@ export class FilmInfo extends Component<FilmInfoProps> {
 								className={styles.cover}
 							/>
 						)}
+
 						{formattedRating && ratingType && (
 							<Badge
 								mode={ratingType}
 								className={styles[`rating-${ratingType}`]}
 							>
-								<Headline text={formattedRating} size="l" />
+								<Headline size="l">{formattedRating}</Headline>
 							</Badge>
 						)}
 					</div>
@@ -99,73 +96,75 @@ export class FilmInfo extends Component<FilmInfoProps> {
 						<div className={styles.firstRow}>
 							<div className={styles.main}>
 								{title && (
-									<Title className={styles.title} text={title} size="5xl" />
+									<Title className={styles.title} size="5xl">
+										{title}
+									</Title>
 								)}
+
 								<span className={styles.subtitle}>
 									{original_title && (
-										<Subhead
-											text={original_title}
-											color="light"
-											size="xs"
-											opacity="80"
-										/>
+										<Subhead color="light" size="xs" opacity="80">
+											{original_title}
+										</Subhead>
 									)}
 
 									{age_category && (
-										<Subhead
-											text={age_category}
-											color="light"
-											size="xs"
-											opacity="80"
-										/>
+										<Subhead color="light" size="xs" opacity="80">
+											{age_category}
+										</Subhead>
 									)}
 								</span>
 
 								<div className={styles.smallAbout}>
 									{!!year && (
 										<Subhead
-											text={year}
 											className={styles.value}
 											color="light"
 											size="m"
 											opacity="80"
-										/>
+										>
+											{year.toString()}
+										</Subhead>
 									)}
 									{age_category && (
 										<Subhead
-											text={age_category}
 											className={styles.value}
 											color="light"
 											size="m"
 											opacity="80"
-										/>
+										>
+											{age_category}
+										</Subhead>
 									)}
 									{country && (
 										<Subhead
-											text={country}
 											className={styles.value}
 											color="light"
 											size="m"
 											opacity="80"
-										/>
+										>
+											{country}
+										</Subhead>
 									)}
 									{genre && (
 										<Subhead
-											text={genre}
 											className={styles.value}
 											color="light"
 											size="m"
 											opacity="80"
-										/>
+										>
+											{genre}
+										</Subhead>
 									)}
 									{formattedDuration && (
 										<Subhead
-											text={formattedDuration}
 											className={styles.value}
 											color="light"
 											size="m"
 											opacity="80"
-										/>
+										>
+											{formattedDuration}
+										</Subhead>
 									)}
 								</div>
 
@@ -174,11 +173,9 @@ export class FilmInfo extends Component<FilmInfoProps> {
 								</div>
 
 								{description && (
-									<Paragraph
-										text={description}
-										className={styles.description}
-										size="m"
-									/>
+									<Paragraph className={styles.description} size="m">
+										{description}
+									</Paragraph>
 								)}
 							</div>
 
@@ -189,136 +186,120 @@ export class FilmInfo extends Component<FilmInfoProps> {
 
 						<div className={styles.secondRow}>
 							<div className={styles.about}>
-								<Title
-									className={styles.aboutTitle}
-									text="О фильме"
-									size="3xl"
-									weight="bold"
-								/>
+								<Title className={styles.aboutTitle} size="3xl" weight="bold">
+									О фильме
+								</Title>
+
 								<div className={styles.table}>
 									{!!year && (
 										<>
-											<Headline
-												className={styles.fact}
-												text="Год производства"
-												size="l"
-												weight="bold"
-											/>
+											<Headline className={styles.fact} size="l" weight="bold">
+												Год производства
+											</Headline>
 											<Subhead
-												text={year}
 												className={styles.value}
 												color="light"
 												size="m"
 												opacity="80"
-											/>
+											>
+												{year.toString()}
+											</Subhead>
 										</>
 									)}
 
 									{country && (
 										<>
-											<Headline
-												className={styles.fact}
-												text="Страна"
-												size="l"
-												weight="bold"
-											/>
+											<Headline className={styles.fact} size="l" weight="bold">
+												Страна
+											</Headline>
 											<Subhead
-												text={country}
 												className={styles.value}
 												color="light"
 												size="m"
 												opacity="80"
-											/>
+											>
+												{country}
+											</Subhead>
 										</>
 									)}
 
 									{genre && (
 										<>
-											<Headline
-												className={styles.fact}
-												text="Жанр"
-												size="l"
-												weight="bold"
-											/>
+											<Headline className={styles.fact} size="l" weight="bold">
+												Жанр
+											</Headline>
 											<Subhead
-												text={genre}
 												className={styles.value}
 												color="light"
 												size="m"
 												opacity="80"
-											/>
+											>
+												{genre}
+											</Subhead>
 										</>
 									)}
 
 									{slogan && (
 										<>
-											<Headline
-												className={styles.fact}
-												text="Слоган"
-												size="l"
-												weight="bold"
-											/>
+											<Headline className={styles.fact} size="l" weight="bold">
+												Слоган
+											</Headline>
 											<Subhead
-												text={slogan}
 												className={styles.value}
 												color="light"
 												size="m"
 												opacity="80"
-											/>
+											>
+												{slogan}
+											</Subhead>
 										</>
 									)}
 
 									{formattedBudget && (
 										<>
-											<Headline
-												className={styles.fact}
-												text="Бюджет"
-												size="l"
-												weight="bold"
-											/>
+											<Headline className={styles.fact} size="l" weight="bold">
+												Бюджет
+											</Headline>
 											<Subhead
-												text={formattedBudget}
 												className={styles.value}
 												color="light"
 												size="m"
 												opacity="80"
-											/>
+											>
+												{formattedBudget}
+											</Subhead>
 										</>
 									)}
 
 									{formattedFees && (
 										<>
-											<Headline
-												className={styles.fact}
-												text="Сборы в мире"
-												size="l"
-												weight="bold"
-											/>
+											<Headline className={styles.fact} size="l" weight="bold">
+												Сборы в мире
+											</Headline>
 											<Subhead
-												text={formattedFees}
 												className={styles.value}
 												color="light"
 												size="m"
 												opacity="80"
-											/>
+											>
+												{formattedFees}
+											</Subhead>
 										</>
 									)}
 
 									{formattedDuration && (
 										<>
-											<Headline
-												className={styles.fact}
-												text="Длительность"
-												size="l"
-												weight="bold"
-											/>
+											<Headline className={styles.fact} size="l" weight="bold">
+												Длительность
+											</Headline>
 											<Subhead
-												text={formattedDuration}
 												className={styles.value}
 												color="light"
 												size="m"
 												opacity="80"
-											/>
+											>
+												{formattedDuration}
+											</Subhead>
 										</>
 									)}
 								</div>
@@ -327,19 +308,15 @@ export class FilmInfo extends Component<FilmInfoProps> {
 							{actors?.length > 0 && (
 								<div className={styles.cast}>
 									<div className={styles.castContent}>
-										<Title
-											className={styles.roles}
-											text="В главных ролях"
-											size="3xl"
-											weight="bold"
-										/>
+										<Title className={styles.roles} size="3xl" weight="bold">
+											В главных ролях
+										</Title>
+
 										{actors.map((actor) => (
 											<Link href={`/actors/${actor.id}`}>
-												<Paragraph
-													className={styles.actors}
-													text={actor.russian_name}
-													size="m"
-												/>
+												<Paragraph className={styles.actors} size="m">
+													{actor.russian_name}
+												</Paragraph>
 											</Link>
 										))}
 									</div>

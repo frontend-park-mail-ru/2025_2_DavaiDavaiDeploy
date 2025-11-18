@@ -9,12 +9,9 @@ class FooterComponent extends Component<WithRouterProps> {
 		const type = this.props.router.path.startsWith('/films') ? 'light' : 'dark';
 		return (
 			<footer id="footer" className={styles[`footer-${type}`]}>
-				<Paragraph
-					text="© Davai Film, 2025"
-					className={styles.content}
-					color="accent"
-					size="m"
-				/>
+				<Paragraph className={styles.content} color="accent" size="m">
+					© Davai Film, 2025
+				</Paragraph>
 			</footer>
 		);
 	}
