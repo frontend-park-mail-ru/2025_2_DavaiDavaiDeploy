@@ -132,7 +132,7 @@ jobs:
           script: |
             cd /home/ubuntu/frontend/stage
             git fetch
-            git checkout ${{ github.ref_name }}
+            git checkout -B ${{ github.ref_name }}
             git pull
 
       - name: Build frontend
