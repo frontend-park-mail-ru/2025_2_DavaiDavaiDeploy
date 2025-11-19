@@ -1,11 +1,11 @@
 import { ActorInfo } from '@/components/actorInfo/actorInfo';
 import { FilmSlider } from '@/components/filmSlider/filmSlider';
+import { Component } from '@/modules/react';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/actor/actions';
 import type { Map } from '@/types/map';
 import { Flex } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './actorPage.module.scss';
 
 interface ActorPageProps {

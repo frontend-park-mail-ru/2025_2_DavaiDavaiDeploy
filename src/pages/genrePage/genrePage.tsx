@@ -1,11 +1,11 @@
 import { GenreCardGrid } from '@/components/genreCardGrid/genreCardGrid';
 import { GenreInfo } from '@/components/genreInfo/genreInfo';
+import { Component } from '@/modules/react';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/genre/actions';
 import type { Map } from '@/types/map';
 import { Flex } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './genrePage.module.scss';
 
 interface GenrePageProps {

@@ -1,4 +1,4 @@
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import { LoginModal } from '../../components/LoginModal/LoginModal.tsx';
 import { TestModal } from '../../components/testModal/testModal.tsx';
 import { MODALS } from './modals.ts';

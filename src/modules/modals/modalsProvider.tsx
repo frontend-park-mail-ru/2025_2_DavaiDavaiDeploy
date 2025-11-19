@@ -1,4 +1,4 @@
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import { ModalContext } from './modalsContext.ts';
 
 export class ModalsProvider extends Component {

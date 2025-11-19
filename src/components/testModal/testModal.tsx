@@ -1,5 +1,5 @@
+import { Component, createPortal } from '@/modules/react';
 import { Title } from '@/uikit/index';
-import { Component, createPortal } from '@robocotik/react';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import style from './testModal.module.scss';

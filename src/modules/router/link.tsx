@@ -1,4 +1,4 @@
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import type { LinkProps } from './types/link.props.ts';
 import type { WithRouterProps } from './types/withRouterProps.ts';
 import { withRouter } from './withRouter.tsx';

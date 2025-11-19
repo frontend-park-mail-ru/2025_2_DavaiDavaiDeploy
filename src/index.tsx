@@ -1,10 +1,10 @@
+import { Component, render } from '@/modules/react';
 import { compose, connect, Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { store } from '@/redux/store.ts';
 import '@/styles/constants.scss';
 import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
-import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
 import { Footer } from './components/footer/footer.tsx';

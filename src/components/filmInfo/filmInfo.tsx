@@ -2,6 +2,7 @@ import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHel
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
+import { Component } from '@/modules/react';
 import { Link } from '@/modules/router/link';
 import type { ModelsFilmPage } from '@/types/models';
 import {
@@ -13,7 +14,6 @@ import {
 	Subhead,
 	Title,
 } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import { FilmRating } from '../filmRating/filmRating';
 import styles from './filmInfo.module.scss';
 

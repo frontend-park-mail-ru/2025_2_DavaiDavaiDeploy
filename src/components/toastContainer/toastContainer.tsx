@@ -2,8 +2,8 @@ import { Toast } from '@/components/toast/toast';
 import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices';
 import type { ToastType } from '@/consts/toasts';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
+import { Component } from '@/modules/react';
 import { Flex } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './toastContainer.module.scss';
 
 interface ToastItem {

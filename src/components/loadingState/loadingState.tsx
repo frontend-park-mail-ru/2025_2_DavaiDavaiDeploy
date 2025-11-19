@@ -1,4 +1,4 @@
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import styles from './loadingState.module.scss';
 
 export class LoadingState extends Component {

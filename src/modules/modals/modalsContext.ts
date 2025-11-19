@@ -1,4 +1,4 @@
-import { createContext } from '@robocotik/react';
+import { createContext } from '@/modules/react';
 
 export interface ModalContextValue {
 	activeModal: number | null;

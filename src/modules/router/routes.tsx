@@ -1,4 +1,4 @@
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import { Route404 } from './route404/route404.tsx';
 import type { WithRouterProps } from './types/withRouterProps.ts';
 import { normalize } from './utils/normalize.ts';

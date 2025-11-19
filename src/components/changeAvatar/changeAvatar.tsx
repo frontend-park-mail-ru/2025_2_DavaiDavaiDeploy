@@ -1,4 +1,5 @@
 import clsx from '@/modules/clsx/index.ts';
+import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -18,7 +19,6 @@ import {
 	Subhead,
 	Title,
 } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { AppToast } from '../toastContainer/toastContainer.tsx';

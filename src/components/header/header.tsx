@@ -1,5 +1,6 @@
 import { LoadedUser } from '@/components/headerLoadedUser/headerLoadedUser.tsx';
 import { LoadingState } from '@/components/loadingState/loadingState.tsx';
+import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux/index.ts';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -15,7 +16,6 @@ import {
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Flex, Logo } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';

@@ -1,5 +1,5 @@
+import { Component } from '@/modules/react';
 import { Flex, Paragraph } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import styles from './footer.module.scss';

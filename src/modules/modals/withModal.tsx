@@ -1,5 +1,5 @@
-import type { ComponentType } from '@robocotik/react';
-import { Component } from '@robocotik/react';
+import type { ComponentType } from '@/modules/react';
+import { Component } from '@/modules/react';
 import type { ModalContextValue } from './modalsContext.ts';
 import { ModalContext } from './modalsContext.ts';
 import type { WithModalProps } from './withModalProps.ts';
