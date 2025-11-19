@@ -173,14 +173,15 @@ jobs:
             🔗 Ссылка 🔗
             ${{ secrets.STAGE_URL || 'Отсутствует' }}
 
-  notify_failure:
-    name: ESLint Failure Message
+  notify_eslint_failure:
+    name: ESLint Status Message
     runs-on: ubuntu-latest
     needs:
       - eslint-check
-    if: needs.eslint-check.result == 'failure' 
+    if: always()  
     steps:
       - name: Send Telegram Failure Message
+        if: needs.eslint-check.result == 'failure' 
         uses: PacificPromise/macos-telegram-action@main
         with:
           type: topic
@@ -190,3 +191,17 @@ jobs:
             🔗 Ссылка на пайплайн 🔗
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
+  notify_failure:
+      name: Failure Message
+      if: ${{ needs.deploy.result == 'failure' }}
+      runs-on: ubuntu-latest
+      steps:
+        - name: Send Telegram Failure Message
+          uses: PacificPromise/macos-telegram-action@main
+          with:
+            type: topic
+            message: |
+              ❗️ Произошла ошибка во время деплоя
+
+              🔗 Ссылка на пайплайн 🔗
+              ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
