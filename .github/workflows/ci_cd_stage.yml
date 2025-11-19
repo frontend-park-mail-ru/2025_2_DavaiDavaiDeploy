@@ -174,20 +174,19 @@ jobs:
             ${{ secrets.STAGE_URL || 'Отсутствует' }}
 
   notify_failure:
-    name: Failure Message
+    name: ESLint Failure Message
+    runs-on: ubuntu-latest
     needs:
       - eslint-check
-    if: ${{ needs.eslint-check.result == 'failure' }}
-    runs-on: ubuntu-latest
+    if: always()  
     steps:
       - name: Send Telegram Failure Message
+        if: needs.eslint-check.result == 'failure' 
         uses: PacificPromise/macos-telegram-action@main
         with:
           type: topic
           message: |
-            ❗️ Произошла ошибка во время деплоя
+            ❗️ Произошла ошибка ESLint
 
             🔗 Ссылка на пайплайн 🔗
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
- 
