@@ -12,8 +12,7 @@
 	min-height: 100vh;
 	animation: fadeIn 0.7s ease-in-out forwards;
 
-	section {
-		display: flex;
+	.section {
 		position: relative;
 		width: 100%;
 		min-height: 100vh;
@@ -48,9 +47,6 @@
 	position: relative;
 	z-index: 2;
 	flex: 0 0 50%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
 	gap: 2.5rem;
 	padding: 0 clamp(2rem, 5vw, 7.5rem);
 	backdrop-filter: blur(1px);
@@ -72,35 +68,26 @@
 .title {
 	text-decoration: none;
 	background: transparent;
-	font-size: var(--font-size-2xl);
 	white-space: wrap;
 }
 
 .info {
-	display: flex;
 	width: 40%;
-	justify-content: space-between;
 	padding: 0;
 	list-style: none;
 	margin-top: -1.5rem;
 	flex-wrap: nowrap;
 	gap: 1rem;
 	white-space: nowrap;
-	color: var(--color-light-text);
 }
 
 .item {
-	font-weight: 400;
-	color: var(--color-text-secondary);
 	text-decoration: none;
 	background: transparent;
-	font-size: var(--font-size-xs);
 }
 
 .description {
-	color: var(--color-white);
 	text-decoration: none;
-	font-size: var(--font-size-m);
 	line-height: 1.2;
 }
 
@@ -115,9 +102,6 @@
 }
 
 .header {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
 	gap: 1.2rem;
 }
 
@@ -134,28 +118,12 @@
 .rating-medium,
 .rating-low {
 	position: relative;
-	padding: 0.35rem 0.77rem;
-	border-radius: var(--border-radius-m);
 	line-height: 1;
-	display: inline-flex;
+	display: inline;
 	align-items: center;
 	justify-content: center;
 	white-space: nowrap;
 	margin-top: 0.4rem;
-	font-size: var(--font-size-l);
-}
-
-.rating,
-.rating-high {
-	background-color: var(--color-rating-high);
-}
-
-.rating-medium {
-	background-color: var(--color-rating-medium);
-}
-
-.rating-low {
-	background-color: var(--color-rating-low);
 }
 
 .linkWrap {
@@ -167,7 +135,6 @@
 .title-medium,
 .title-high {
 	display: none;
-	font-size: var(--font-size-3xl);
 	margin-top: -1rem;
 	margin-bottom: -1rem;
 }
@@ -187,11 +154,7 @@
 @media (max-width: 1024px) {
 	.content {
 		flex: 0 0 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
 		padding: 2rem 5vw;
-		justify-content: center;
 		text-align: center;
 		width: 100%;
 		max-width: 100%;
@@ -216,7 +179,6 @@
 	.title-low,
 	.title-medium,
 	.title-high {
-		display: flex;
-		font-size: var(--font-size-3xl);
+		display: inline-block;
 	}
 }

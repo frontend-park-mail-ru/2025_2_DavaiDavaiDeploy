@@ -1,6 +1,5 @@
 import { validateFeedbackText } from '@/helpers/validateFeedbackText/validateFeedbackText.ts';
 import { validateFeedbackTitle } from '@/helpers/validateFeedbackTitle/validateFeedbackTitle.ts';
-import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -9,6 +8,7 @@ import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
+import { Button, Flex, FormItem, Textarea, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -50,9 +50,7 @@ class FeedbackFormComponent extends Component<
 		errorShown: false,
 	};
 
-	handleTitleChange = (event: Event) => {
-		const target = event.target as HTMLInputElement;
-		const { value } = target;
+	handleTitleChange = (value: string) => {
 		let titleErrorMessage = '';
 
 		if (this.state.titleErrorMessage) {
@@ -62,13 +60,11 @@ class FeedbackFormComponent extends Component<
 
 		this.setState({
 			title: value,
-			titleErrorMessage: titleErrorMessage,
+			titleErrorMessage,
 		});
 	};
 
-	handleTextChange = (event: Event) => {
-		const target = event.target as HTMLTextAreaElement;
-		const { value } = target;
+	handleTextChange = (value: string) => {
 		let textErrorMessage = '';
 
 		if (this.state.textErrorMessage !== '') {
@@ -119,63 +115,65 @@ class FeedbackFormComponent extends Component<
 		const { title, text } = this.state;
 
 		return (
-			<div className={styles.feedbackForm}>
+			<Flex
+				className={styles.feedbackForm}
+				direction="column"
+				align="center"
+				justify="center"
+			>
 				{!this.props.isEditing && (
-					<h2 className={styles.title}>Оставить отзыв</h2>
+					<Title className={styles.title} level="4" weight="bold" color="blue">
+						Оставить отзыв
+					</Title>
 				)}
 				{this.props.isEditing && (
-					<h2 className={styles.title}>Редактирование</h2>
+					<Title className={styles.title} level="4" weight="bold" color="blue">
+						Редактирование
+					</Title>
 				)}
-				<div className={styles.header}>
+				<Flex className={styles.header} align="center" direction="column">
 					<FilmRatingInput isDark={true} />
-				</div>
+				</Flex>
 
-				<div className={styles.input}>
-					<input
-						type="text"
-						name="title"
+				<Flex className={styles.input} direction="column">
+					<FormItem
+						mode="tertiary"
 						value={title}
 						placeholder="Заголовок"
-						className={clsx(styles.inputTitle, {
-							[styles.errorBorder]: this.state.titleErrorMessage.length > 0,
-						})}
-						onInput={this.handleTitleChange}
+						className={styles.inputTitle}
+						onChange={this.handleTitleChange}
+						status={this.state.titleErrorMessage ? 'error' : 'default'}
+						bottom={
+							this.state.titleErrorMessage
+								? this.state.titleErrorMessage
+								: 'Придумайте короткий заголовок'
+						}
 					/>
 
-					{this.state.titleErrorMessage ? (
-						<p className={styles.errorMessage}>
-							{this.state.titleErrorMessage}
-						</p>
-					) : (
-						<p className={styles.defaultMessage}>
-							Придумайте короткий заголовок
-						</p>
-					)}
-
-					<textarea
-						name="text"
+					<Textarea
+						value={text}
 						placeholder="Текст"
-						className={clsx(styles.textarea, {
-							[styles.errorBorder]: this.state.textErrorMessage.length > 0,
-						})}
-						onInput={this.handleTextChange}
-					>
-						{text}
-					</textarea>
+						className={styles.textarea}
+						onChange={this.handleTextChange}
+						status={this.state.textErrorMessage ? 'error' : 'default'}
+						bottom={
+							this.state.textErrorMessage
+								? this.state.textErrorMessage
+								: 'Расскажите, что вы думаете о фильме - от 30 символов'
+						}
+					/>
+				</Flex>
 
-					{this.state.textErrorMessage ? (
-						<p className={styles.errorMessage}>{this.state.textErrorMessage}</p>
-					) : (
-						<p className={styles.defaultMessage}>
-							Расскажите, что вы думаете о фильме - от 30 символов
-						</p>
-					)}
-				</div>
-
-				<button className={styles.submitButton} onClick={this.handleSubmit}>
+				<Button
+					mode="quaternary"
+					className={styles.submitButton}
+					onClick={this.handleSubmit}
+					borderRadius="l"
+					size="l"
+				>
 					Опубликовать
-				</button>
-			</div>
+				</Button>
+			</Flex>
 		);
 	}
 }

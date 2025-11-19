@@ -1,0 +1,45 @@
+:root {
+	--color-bg: hsl(235deg 52% 16%);
+	--color-accent: hsl(65deg 78% 57%);
+	--color-text: hsl(48deg 14% 93%);
+	--color-light-text: hsl(210deg 30% 87%);
+	--color-dark-text: hsl(236deg 65% 5%);
+	--color-rating-high: hsl(137deg 54% 48%);
+	--color-rating-medium: hsl(37deg 90% 51%);
+	--color-rating-low: hsl(0deg 79% 57%);
+	--color-error: hsl(346deg 100% 72%);
+	--color-light: hsl(232deg 49% 25%);
+	--color-accent-2: hsl(233deg 52% 34%);
+	--color-bg-light: hsl(44deg 22% 92%);
+	--color-feedback-text-high: hsl(137deg 44% 35%);
+	--color-feedback-text-medium: hsl(38deg 87% 51%);
+	--color-feedback-text-low: hsl(0deg 79% 57%);
+
+	--color-btn-gradient: linear-gradient(
+		to right,
+		hsl(234deg 54% 34%) 0%,
+		hsl(274deg 63% 39%) 76%,
+		hsl(286deg 71% 40%) 90%,
+		hsl(295deg 78% 41%) 100%
+	);
+
+	--font-size-6xl: clamp(2rem, 23vw, 40rem);
+	--font-size-5xl: clamp(2rem, 4vw, 4rem); // 64
+	--font-size-4xl: clamp(1.8rem, 3.5vw, 3rem); // 48
+	--font-size-3xl: clamp(1.6rem, 3.06vw, 2.625rem); // 42
+	--font-size-2xl: clamp(1.5rem, 2.3vw, 2rem); // 32
+	--font-size-xl: clamp(1.375rem, 2vw, 1.625rem); // 26
+	--font-size-l: clamp(1.3rem, 1.75vw, 1.5rem); // 24
+	--font-size-m: clamp(1.2rem, 1.6vw, 1.375rem); // 22
+	--font-size-s: clamp(1.1rem, 1.46vw, 1.25rem); // 20
+	--font-size-xs: clamp(1rem, 1.31vw, 1.125rem); // 18
+	--font-size-2xs: clamp(0.9375rem, 1.15vw, 1rem); // 16
+	--font-size-3xs: clamp(0.5625rem, 0.85vw, 0.75rem); // 12
+
+	--font-weight-bold: 700;
+	--font-weight-medium: 500;
+	--font-weight-regular: 400;
+
+	--border-radius-lg: 1rem; // 16
+	--border-radius-l: 0.625rem; // 10
+}

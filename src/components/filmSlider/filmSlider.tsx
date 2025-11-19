@@ -1,5 +1,5 @@
-import ArrowLeft from '@/assets/img/arrowLeft.svg';
-import ArrowRight from '@/assets/img/arrowRight.svg';
+import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
+import ArrowRight from '@/assets/img/arrowRight.svg?react';
 import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper.ts';
@@ -10,6 +10,7 @@ import actions from '@/redux/features/actor/actions';
 import { selectActorFilms } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component, createRef } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -268,7 +269,7 @@ class FilmSliderComponent extends Component<
 
 	render() {
 		if (this.props.films.length === 0) {
-			return <div></div>;
+			return <div />;
 		}
 
 		const slider = this.sliderRef.current;
@@ -280,31 +281,35 @@ class FilmSliderComponent extends Component<
 
 		return (
 			<div className={styles.content}>
-				<h1 className={styles.title}>ПРОЕКТЫ</h1>
-				<div
-					ref={this.sliderRef}
+				<Title level="1" className={styles.title}>
+					ПРОЕКТЫ
+				</Title>
+				<Flex
+					getRootRef={this.sliderRef}
 					className={styles.slider}
 					onClick={this.onSliderClick}
+					direction="row"
+					align="top"
 				>
 					{this.state.active && (
-						<button className={styles.prevBtn} onClick={this.prev}>
-							<img
-								src={ArrowLeft}
-								alt="Предыдущий"
-								className={styles.prevBtnIcon}
-							/>
-						</button>
+						<IconButton
+							mode="tertiary"
+							className={styles.prevBtn}
+							onClick={this.prev}
+						>
+							<ArrowLeft alt="Предыдущий" className={styles.prevBtnIcon} />
+						</IconButton>
 					)}
 					{this.state.active && (
-						<button className={styles.nextBtn} onClick={this.next}>
-							<img
-								src={ArrowRight}
-								alt="Следующий"
-								className={styles.nextBtnIcon}
-							/>
-						</button>
+						<IconButton
+							mode="tertiary"
+							className={styles.nextBtn}
+							onClick={this.next}
+						>
+							<ArrowRight alt="Следующий" className={styles.nextBtnIcon} />
+						</IconButton>
 					)}
-					<div className={styles.container}>
+					<Flex className={styles.container} justify="center" align="start">
 						{this.props.films.map((film, i) => (
 							<div
 								key={film.id}
@@ -315,8 +320,8 @@ class FilmSliderComponent extends Component<
 								<FilmCard film={film} />
 							</div>
 						))}
-					</div>
-				</div>
+					</Flex>
+				</Flex>
 			</div>
 		);
 	}

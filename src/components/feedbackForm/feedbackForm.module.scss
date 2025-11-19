@@ -1,6 +1,4 @@
 .feedbackForm {
-	display: flex;
-	flex-direction: column;
 	gap: 1.875rem;
 	border-radius: var(--border-radius-xl);
 	padding: 2.5rem 2rem;
@@ -8,50 +6,22 @@
 	max-width: 100%;
 	box-sizing: border-box;
 	background-color: var(--color-light-text);
-	align-items: center;
-	justify-content: center;
 }
 
 .header {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	width: 100%;
 	margin-top: 0.7rem;
 }
 
-.title {
-	font-size: var(--font-size-xl);
-	font-weight: var(--font-weight-bold);
-	color: var(--color-bg);
-}
-
 .input {
 	margin-top: 1.25rem;
-	display: flex;
-	flex-direction: column;
 	gap: 1.8rem;
 	width: 100%;
 }
 
-.inputTitle,
 .textarea {
-	width: 100%;
-	max-width: 100%;
 	padding: 0.8rem 1.25rem;
-	border: 2px solid transparent;
-	border-radius: var(--border-radius-l);
-	font-size: var(--font-size-xs);
-	color: var(--color-dark-text);
-	outline: none;
-	box-sizing: border-box;
-	word-break: break-all;
-	font-family: 'Golos UI', Arial, sans-serif;
-}
-
-.textarea {
 	height: 20vh;
-	resize: none;
 }
 
 .inputTitle::placeholder,
@@ -69,14 +39,7 @@
 .submitButton {
 	margin-top: 1.25rem;
 	padding: 1.2rem 4.5rem;
-	background-color: var(--color-light);
-	font-size: var(--font-size-l);
 	border: none;
-	border-radius: var(--border-radius-l);
-	cursor: pointer;
-	color: var(--color-text);
-	box-sizing: border-box;
-	transition: transform 0.3s ease;
 
 	&:hover {
 		transform: scale(1.01);
@@ -84,45 +47,10 @@
 	}
 }
 
-.errorMessage {
-	color: var(--color-error);
-	text-align: left;
-	height: 1rem;
-	margin-top: -1rem;
-}
-
-.ratingErrorMessage {
-	color: var(--color-error);
-	text-align: left;
-	font-size: var(--font-size-m);
-	margin-top: -1.8rem;
-	margin-bottom: -1.5rem;
-}
-
-.defaultMessage {
-	color: var(--color-bg);
-	text-align: left;
-	height: 1rem;
-	margin-top: -1rem;
-}
-
-.errorBorder {
-	border: 2px solid var(--color-error);
-}
-
 @media (max-width: 1600px) {
 	.feedbackForm {
 		gap: 0.5rem;
 		padding: 2rem 1.5rem;
-	}
-
-	.ratingErrorMessage {
-		margin-top: -0.2rem;
-		margin-bottom: -1rem;
-	}
-
-	.defaultMessage {
-		margin-top: -0.4rem;
 	}
 
 	.textarea {
@@ -165,19 +93,6 @@
 	.submitButton {
 		padding: 0.6rem 2.5rem;
 		font-size: var(--font-size-l);
-	}
-
-	.errorMessage {
-		margin-top: -0.6rem;
-	}
-
-	.ratingErrorMessage {
-		margin-top: -1.2rem;
-		margin-bottom: -1.2rem;
-	}
-
-	.defaultMessage {
-		margin-top: -0.6rem;
 	}
 }
 

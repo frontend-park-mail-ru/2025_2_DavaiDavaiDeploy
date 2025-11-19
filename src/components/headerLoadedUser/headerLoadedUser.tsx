@@ -1,6 +1,6 @@
 import { UserAvatar } from '@/components/headerUserAvatar/headerUserAvatar';
-import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
 import type { ModelsUser } from '@/types/models.ts';
+import { Avatar, Flex } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './headerLoadedUser.module.scss';
 
@@ -12,12 +12,13 @@ interface LoadedUserProps {
 export class LoadedUser extends Component<LoadedUserProps> {
 	render() {
 		return (
-			<div className={styles.userInfo}>
+			<Flex className={styles.userInfo} align="center">
 				<div className={styles.avatarContainer}>
-					<img
-						src={getStaticURL(this.props.user?.avatar)}
+					<Avatar
+						src={this.props.user?.avatar}
 						alt={'avatar'}
 						className={styles.avatar}
+						level="9"
 					/>
 					<UserAvatar
 						user={this.props.user}
@@ -25,7 +26,7 @@ export class LoadedUser extends Component<LoadedUserProps> {
 						className={styles.avatarActions}
 					/>
 				</div>
-			</div>
+			</Flex>
 		);
 	}
 }

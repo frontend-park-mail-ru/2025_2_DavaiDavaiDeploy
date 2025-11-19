@@ -1,6 +1,5 @@
 import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
-import { InputField } from '@/components/inputField/inputField.tsx';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
 import { AppToast } from '@/components/toastContainer/toastContainer';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
@@ -20,6 +19,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Button, Flex, FormItem, Headline, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import { Redirect } from '../../modules/router/redirect.tsx';
@@ -141,8 +141,13 @@ export class RegisterPageNotConnected extends Component<
 		}
 
 		return (
-			<main className={styles.main}>
-				<div className={styles.form}>
+			<div className={styles.main}>
+				<Flex
+					className={styles.form}
+					direction="row"
+					justify="center"
+					align="center"
+				>
 					<Link className={styles.closeLink} href="/">
 						<img src={close} alt="close" />
 					</Link>
@@ -160,24 +165,46 @@ export class RegisterPageNotConnected extends Component<
 						/>
 					)}
 
-					<div className={styles.rightSide}>
+					<Flex
+						className={styles.rightSide}
+						direction="column"
+						justify="between"
+					>
 						<div className={styles.rightSide__titles}>
-							<h1 className={styles.rightSide__title}>Создать аккаунт</h1>
-							<h3 className={styles.rightSide__subtitle}>
+							<Title
+								className={styles.rightSide__title}
+								level="3"
+								weight="bold"
+							>
+								Создать аккаунт
+							</Title>
+							<Headline
+								className={styles.rightSide__subtitle}
+								color="light"
+								level="9"
+							>
 								Присоединяйтесь к сообществу киноманов
-							</h3>
+							</Headline>
 						</div>
-						<div className={styles.rightSide__inputFields}>
-							<InputField
-								label="Имя пользователя"
+						<Flex className={styles.rightSide__inputFields} direction="column">
+							<FormItem
+								mode="primary"
+								top="Имя пользователя"
 								defaultValue=""
-								preIconSrc={userSvg}
+								before={
+									<img src={userSvg} alt="icon" className={styles.inputIcon} />
+								}
 								placeholder="Введите логин"
-								errorMessage={this.state.validationErrors.username}
+								bottom={this.state.validationErrors.username}
+								status={
+									this.state.validationErrors.username ? 'error' : 'default'
+								}
 								value={this.state.username}
 								onChange={(value) => this.onFieldChange(value, 'username')}
 							/>
+
 							<PasswordInputField
+								mode="primary"
 								label="Пароль"
 								defaultValue=""
 								placeholder="Введите пароль"
@@ -186,6 +213,7 @@ export class RegisterPageNotConnected extends Component<
 								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
 							<PasswordInputField
+								mode="primary"
 								label="Подтверждение пароля"
 								defaultValue=""
 								errorMessage={this.state.validationErrors.repeatPassword}
@@ -195,15 +223,18 @@ export class RegisterPageNotConnected extends Component<
 									this.onFieldChange(value, 'repeatPassword')
 								}
 							/>
-						</div>
-						<div className={styles.rightSide__actions}>
-							<button
+						</Flex>
+						<Flex className={styles.rightSide__actions} direction="column">
+							<Button
+								mode="primary"
 								onClick={this.handleRegisterUser}
 								className={styles.login__button}
+								size="s"
+								borderRadius="lg"
 							>
 								Зарегистрироваться
-							</button>
-							<p className={styles.register__button}>
+							</Button>
+							<div className={styles.register__button}>
 								Уже есть аккаунт?{' '}
 								<Link
 									className={styles.register}
@@ -211,11 +242,11 @@ export class RegisterPageNotConnected extends Component<
 								>
 									Войти
 								</Link>
-							</p>
-						</div>
-					</div>
-				</div>
-			</main>
+							</div>
+						</Flex>
+					</Flex>
+				</Flex>
+			</div>
 		);
 	}
 }

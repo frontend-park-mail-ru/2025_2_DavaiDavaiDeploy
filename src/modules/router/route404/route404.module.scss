@@ -1,8 +1,4 @@
 .err {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
 	min-height: calc(100vh - 4rem);
 	gap: 2rem;
 	text-align: left;
@@ -10,33 +6,20 @@
 
 .title {
 	font-size: 12rem;
-	font-weight: var(--font-weight-bold);
-	color: var(--color-accent);
 	line-height: 1;
 	transform: translateX(-2rem);
 }
 
-.content {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-}
-
 .text {
-	font-size: var(--font-size-m);
 	margin-bottom: 0.5rem;
 	max-width: 31.25rem;
 }
 
 .link {
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	padding: 0.5rem 1rem;
 	background: transparent;
-	border: 2px solid var(--color-accent);
 	border-radius: 0.5rem;
-	color: var(--color-accent);
+	border: 2px solid var(--color-accent);
 	cursor: pointer;
 	transition: all 0.4s ease;
 	height: 2.25rem;

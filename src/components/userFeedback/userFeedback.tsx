@@ -1,4 +1,4 @@
-import Edit from '@/assets/img/edit.svg';
+import Edit from '@/assets/img/edit.svg?react';
 import { FeedBack } from '@/components/feedBack/feedBack.tsx';
 import { FeedbackForm } from '@/components/feedbackForm/feedbackForm.tsx';
 import { throttle } from '@/helpers/throttleHelper/throttleHelper';
@@ -11,6 +11,7 @@ import { selectUserFeedback } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
+import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component, createRef } from '@robocotik/react';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import styles from './userFeedback.module.scss';
@@ -41,7 +42,6 @@ class FeedbackFormComponent extends Component<
 
 	onMount() {
 		const throttledScrollHandler = throttle(this.handleScroll, THROTTLE_DELAY);
-
 		window.addEventListener('scroll', throttledScrollHandler);
 	}
 
@@ -75,8 +75,15 @@ class FeedbackFormComponent extends Component<
 	renderContent = () => {
 		if (!this.props.user) {
 			return (
-				<div className={styles.notAuth}>
-					<p className={styles.notAuthTitle}>Хотите оставить отзыв?</p>
+				<Flex className={styles.notAuth} direction="column" align="start">
+					<Title
+						className={styles.notAuthTitle}
+						level="4"
+						weight="bold"
+						color="dark"
+					>
+						Хотите оставить отзыв?
+					</Title>
 
 					<span className={styles.notAuthText}>
 						<Link
@@ -94,7 +101,7 @@ class FeedbackFormComponent extends Component<
 						</Link>
 						!
 					</span>
-				</div>
+				</Flex>
 			);
 		}
 
@@ -111,15 +118,26 @@ class FeedbackFormComponent extends Component<
 			);
 		} else if (userFeedback) {
 			return (
-				<div className={styles.feedbackContainer}>
-					<div className={styles.header}>
-						<h1 className={styles.title}>Ваш отзыв</h1>
-						<button className={styles.editButton} onClick={this.handleEdit}>
-							<img src={Edit} className={styles.edit} alt="Редактировать" />
-						</button>
-					</div>
+				<Flex className={styles.feedbackContainer} direction="column">
+					<Flex className={styles.header} direction="row" align="center">
+						<Title
+							className={styles.title}
+							level="4"
+							weight="bold"
+							color="dark"
+						>
+							Ваш отзыв
+						</Title>
+						<IconButton
+							mode="quaternary"
+							className={styles.editButton}
+							onClick={this.handleEdit}
+						>
+							<Edit className={styles.edit} alt="Редактировать" />
+						</IconButton>
+					</Flex>
 					<FeedBack feedback={userFeedback} />
-				</div>
+				</Flex>
 			);
 		}
 
