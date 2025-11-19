@@ -26,13 +26,13 @@ ARG AWS_DEFAULT_REGION
 ARG S3_BUCKET
 ARG AWS_ENDPOINT
 
-# Синхронизируем с S3
+# Очищаем папку из S3
 RUN aws s3 rm s3://${S3_BUCKET}/assets/stage \
     --recursive \
     --no-verify-ssl \
-    --endpoint-url ${AWS_ENDPOINT} \
+    --endpoint-url ${AWS_ENDPOINT}
 
-
+# Синхронизируем папку с S3
 RUN aws s3 sync . s3://${S3_BUCKET}/assets/stage \
     --delete \
     --acl public-read \
