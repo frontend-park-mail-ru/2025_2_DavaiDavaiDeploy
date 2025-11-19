@@ -9,9 +9,9 @@ export class ModalRoot extends Component<{}, {}, ModalContextValue> {
 	render() {
 		switch (this.context.activeModal) {
 			case MODALS.LOGIN_MODAL:
-				return <LoginModal />;
+				return <LoginModal {...this.context.activeModalProps} />;
 			case MODALS.TEST_MODAL:
-				return <TestModal />;
+				return <TestModal {...this.context.activeModalProps} />;
 			default:
 				return <></>;
 		}

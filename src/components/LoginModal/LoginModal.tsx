@@ -1,14 +1,30 @@
 import Exit from '@/assets/img/exit.svg?react';
+import { withModal } from '@/modules/modals/withModal';
 import { Component, createPortal } from '@robocotik/react';
+import type { WithModalProps } from '../../modules/modals/withModalProps';
 import style from './LoginModal.module.scss';
 
-export class LoginModal extends Component {
+interface LoginModalProps {
+	onLogout: VoidFunction;
+	[key: string]: any;
+}
+
+export class LoginModalComponent extends Component<
+	LoginModalProps & WithModalProps
+> {
+	handleLogout = () => {
+		this.props.onLogout();
+		this.props.modal.hide();
+	};
+
 	render() {
 		return createPortal(
-			<div className={style.modalWrapper}>
+			<div className={style.modalWrapper} onClick={this.props.modal.hide}>
 				<div
 					className={style.modalContent}
-					onClick={(e) => e.stopPropagation()}
+					onClick={(e) => {
+						e.stopPropagation();
+					}}
 				>
 					<div className={style.modalLogout}>
 						<div className={style.modalHeader}>
@@ -16,10 +32,13 @@ export class LoginModal extends Component {
 							<h1 className={style.modalTitle}>Мы будем скучать!</h1>
 						</div>
 						<div className={style.modalActions}>
-							<button className={style.exitButton}>
+							<button onClick={this.handleLogout} className={style.exitButton}>
 								<Exit />
 							</button>
-							<button className={style.turnBackButton}>
+							<button
+								onClick={this.props.modal.hide}
+								className={style.turnBackButton}
+							>
 								Вернуться на сайт
 							</button>
 						</div>
@@ -30,3 +49,5 @@ export class LoginModal extends Component {
 		);
 	}
 }
+
+export const LoginModal = withModal(LoginModalComponent);

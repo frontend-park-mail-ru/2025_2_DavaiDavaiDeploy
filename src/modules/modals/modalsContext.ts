@@ -2,12 +2,14 @@ import { createContext } from '@robocotik/react';
 
 export interface ModalContextValue {
 	activeModal: number | null;
-	open: (id: number) => void;
+	activeModalProps: Record<string, any>[] | null;
+	open: (id: number, props: object) => void;
 	hide: () => void;
 }
 
 export const ModalContext = createContext<ModalContextValue>({
 	activeModal: null,
-	open: (_id: number) => {},
+	activeModalProps: null,
+	open: (_id: number, _props: object) => {},
 	hide: () => {},
 });

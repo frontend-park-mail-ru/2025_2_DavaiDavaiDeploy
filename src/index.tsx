@@ -78,23 +78,21 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 			this.props.router.path.startsWith('/register');
 
 		return (
-			<ModalsProvider>
-				<div class="layout">
-					<ToastContainer />
-					<ModalRoot />
-					{!isAuthPageOpen && <Header />}
-					<Routes>
-						<Route href="/" component={<HomePage />} />
-						<Route href="/films/:id" component={<FilmPage />} />
-						<Route href="/actors/:id" component={<ActorPage />} />
-						<Route href="/login" component={<LoginPage />} />
-						<Route href="/register" component={<RegisterPage />} />
-						<Route href="/genres/:id" component={<GenrePage />} />
-						<Route href="/profile" component={<UserPage />} />
-					</Routes>
-					{!isAuthPageOpen && <Footer />}
-				</div>
-			</ModalsProvider>
+			<div class="layout">
+				<ToastContainer />
+				<ModalRoot />
+				{!isAuthPageOpen && <Header />}
+				<Routes>
+					<Route href="/" component={<HomePage />} />
+					<Route href="/films/:id" component={<FilmPage />} />
+					<Route href="/actors/:id" component={<ActorPage />} />
+					<Route href="/login" component={<LoginPage />} />
+					<Route href="/register" component={<RegisterPage />} />
+					<Route href="/genres/:id" component={<GenrePage />} />
+					<Route href="/profile" component={<UserPage />} />
+				</Routes>
+				{!isAuthPageOpen && <Footer />}
+			</div>
 		);
 	}
 }
@@ -103,7 +101,9 @@ class ProvidersLayout extends Component {
 	render() {
 		return (
 			<Provider store={store}>
-				<RouterProvider>{this.props.children}</RouterProvider>
+				<RouterProvider>
+					<ModalsProvider>{this.props.children}</ModalsProvider>
+				</RouterProvider>
 			</Provider>
 		);
 	}

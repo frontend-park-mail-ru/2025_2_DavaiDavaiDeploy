@@ -4,6 +4,9 @@ import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
 import { Component } from '@robocotik/react';
+import { MODALS } from '../../modules/modals/modals';
+import { withModal } from '../../modules/modals/withModal';
+import type { WithModalProps } from '../../modules/modals/withModalProps';
 import styles from './headerUserAvatar.module.scss';
 interface UserAvatarProps {
 	user: ModelsUser | null;
@@ -11,10 +14,14 @@ interface UserAvatarProps {
 	className: string;
 }
 
-export class UserAvatar extends Component<UserAvatarProps> {
+export class UserAvatarComponent extends Component<
+	UserAvatarProps & WithModalProps
+> {
 	handleLogout = (e: Event) => {
 		e.preventDefault();
-		this.props.logoutUser();
+		this.props.modal.open(MODALS.LOGIN_MODAL, {
+			onLogout: () => this.props.logoutUser(),
+		});
 	};
 
 	render() {
@@ -38,3 +45,5 @@ export class UserAvatar extends Component<UserAvatarProps> {
 		);
 	}
 }
+
+export const UserAvatar = withModal(UserAvatarComponent);
