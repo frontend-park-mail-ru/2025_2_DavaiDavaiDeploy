@@ -175,7 +175,7 @@ jobs:
 
   notify_failure:
     name: Failure Message
-    if: ${{ needs.eslint-check.result == 'failure' }}
+    if: ${{ needs.eslint-check.result == 'cancelled' }}
     runs-on: ubuntu-latest
     steps:
       - name: Send Telegram Failure Message
