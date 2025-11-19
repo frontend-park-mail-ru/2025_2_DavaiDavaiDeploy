@@ -182,6 +182,7 @@ jobs:
       - prettier-check
       - stylelint-check
       - unit-tests
+      - notify_eslint_failure
     steps:
       - name: Pull code
         uses: appleboy/ssh-action@master
