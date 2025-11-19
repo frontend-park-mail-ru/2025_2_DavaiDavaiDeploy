@@ -71,6 +71,8 @@ interface AppProps {
 class AppComponent extends Component<AppProps & WithRouterProps> {
 	onMount() {
 		this.props.checkUser();
+		// eslint-disable-next-line no-console
+		console.log('App mounted');
 	}
 
 	render() {
@@ -101,11 +103,11 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 class ProvidersLayout extends Component {
 	render() {
 		return (
-			<Provider store={store}>
-				<RouterProvider>
-					<ModalsProvider>{this.props.children}</ModalsProvider>
-				</RouterProvider>
-			</Provider>
+			<ModalsProvider>
+				<Provider store={store}>
+					<RouterProvider>{this.props.children}</RouterProvider>
+				</Provider>
+			</ModalsProvider>
 		);
 	}
 }
