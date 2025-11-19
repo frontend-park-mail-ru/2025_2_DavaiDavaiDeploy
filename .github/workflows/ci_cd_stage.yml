@@ -155,8 +155,8 @@ jobs:
             -t stage-deploy .
   
             docker compose -f docker-compose.stage.yml --env-file .env.stage down -v
-            docker compose --env-file .env.stage -f docker-compose.stage.yml build --no-cache
-            docker compose --env-file .env.stage -f docker-compose.stage.yml up -d
+            docker compose --env-file .env.stage -f docker-compose.stage.yml build --no-cache nginx
+            docker compose --env-file .env.stage -f docker-compose.stage.yml up -d nginx
 
   notify_success:
     name: Success Message
