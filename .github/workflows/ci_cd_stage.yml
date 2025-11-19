@@ -61,21 +61,6 @@ jobs:
         run: |
           npm run lint:eslint
 
-  notify_eslint_failure:
-    name: Eslint failure message
-    if: ${{ always() && needs.eslint-check.result == 'failure' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send Telegram Failure Message
-        uses: PacificPromise/macos-telegram-action@main
-        with:
-          type: topic
-          message: |
-            ❗️ Ошибка eslint
-
-            🔗 Ссылка на пайплайн 🔗
-            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
   prettier-check:
     name: Prettier check
     runs-on: ubuntu-latest
@@ -94,21 +79,6 @@ jobs:
         run: |
           npm run lint:prettier
 
-  notify_prettier_failure:
-    name: Prettier failure message
-    if: ${{ needs.prettier-check.result == 'failure' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send Telegram Failure Message
-        uses: PacificPromise/macos-telegram-action@main
-        with:
-          type: topic
-          message: |
-            ❗️ Ошибка prettier
-
-            🔗 Ссылка на пайплайн 🔗
-            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
   stylelint-check:
     name: Stylelint check
     runs-on: ubuntu-latest
@@ -126,21 +96,6 @@ jobs:
       - name: Run Stylelint
         run: npm run lint:stylelint
 
-  notify_stylelint_failure:
-    name: Stylelint failure message
-    if: ${{ needs.stylelint-check.result == 'failure' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send Telegram Failure Message
-        uses: PacificPromise/macos-telegram-action@main
-        with:
-          type: topic
-          message: |
-            ❗️ Ошибка stylelint
-
-            🔗 Ссылка на пайплайн 🔗
-            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
   unit-tests:
     name: Unit tests
     runs-on: ubuntu-latest
@@ -157,21 +112,6 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Run tests
         run: npm run test
-
-  notify_unit_tests_failure:
-      name: Unit tests failure message
-      if: ${{ needs.unit-tests.result == 'failure' }}
-      runs-on: ubuntu-latest
-      steps:
-        - name: Send Telegram Failure Message
-          uses: PacificPromise/macos-telegram-action@main
-          with:
-            type: topic
-            message: |
-              ❗️ Ошибка unit tests
-
-              🔗 Ссылка на пайплайн 🔗
-              ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   deploy:
     name: Deploy to Server
@@ -236,7 +176,7 @@ jobs:
 
   notify_failure:
     name: Failure Message
-    if: ${{ needs.deploy.result == 'failure' }}
+    if: ${{ needs.eslint-check.result == 'failure' }}
     runs-on: ubuntu-latest
     steps:
       - name: Send Telegram Failure Message
@@ -248,3 +188,5 @@ jobs:
 
             🔗 Ссылка на пайплайн 🔗
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+ 
