@@ -134,6 +134,7 @@ jobs:
             cd /home/ubuntu/frontend/prod
             git fetch
             git checkout -B ${{ github.ref_name }}
+            git reset --hard origin/${{ github.ref_name }}
             git pull
 
       - name: Build frontend
