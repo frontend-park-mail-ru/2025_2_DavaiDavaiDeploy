@@ -34,7 +34,6 @@ RUN aws s3 rm s3://${S3_BUCKET}/assets/stage/ --recursive && \
     --no-verify-ssl \
     --endpoint-url ${AWS_ENDPOINT} \
     --cache-control "no-cache"
-    --exact-timestamps
 
 #базовый образ
 FROM nginx:alpine AS nginx
