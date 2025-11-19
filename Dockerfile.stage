@@ -27,8 +27,13 @@ ARG S3_BUCKET
 ARG AWS_ENDPOINT
 
 # Синхронизируем с S3
-RUN aws s3 rm s3://${S3_BUCKET}/assets/stage/ --recursive && \
-    aws s3 sync . s3://${S3_BUCKET}/assets/stage \
+RUN aws s3 rm s3://${S3_BUCKET}/assets/stage \
+    --recursive \
+    --no-verify-ssl \
+    --endpoint-url ${AWS_ENDPOINT} \
+
+
+RUN aws s3 sync . s3://${S3_BUCKET}/assets/stage \
     --delete \
     --acl public-read \
     --no-verify-ssl \
