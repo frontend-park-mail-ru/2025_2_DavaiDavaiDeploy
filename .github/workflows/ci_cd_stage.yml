@@ -142,6 +142,8 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /home/ubuntu/frontend/stage
+            
+            source .env.stage
 
             docker build -f Dockerfile.stage \
             --target deploy \
@@ -153,7 +155,6 @@ jobs:
             -t stage-deploy .
   
             docker compose -f docker-compose.stage.yml --env-file .env.stage down -v
-
             docker compose --env-file .env.stage -f docker-compose.stage.yml build --no-cache
             docker compose --env-file .env.stage -f docker-compose.stage.yml up -d
 

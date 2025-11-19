@@ -143,6 +143,9 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /home/ubuntu/frontend/prod
+            
+            source .env.prod
+            
             docker compose -f docker-compose.prod.yml down -v
             docker compose --env-file .env.production -f docker-compose.prod.yml build --no-cache
             docker compose --env-file .env.production -f docker-compose.prod.yml up -d
