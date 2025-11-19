@@ -144,7 +144,16 @@ jobs:
           script: |
             cd /home/ubuntu/frontend/prod
             
-            source .env.prod
+            source .env.production
+            
+            docker build -f Dockerfile.stage \
+            --target deploy \
+            --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+            --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+            --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
+            --build-arg S3_BUCKET=$S3_BUCKET \
+            --build-arg AWS_ENDPOINT=$AWS_ENDPOINT \
+            -t stage-deploy .
             
             docker compose -f docker-compose.prod.yml down -v
             docker compose --env-file .env.production -f docker-compose.prod.yml build --no-cache
