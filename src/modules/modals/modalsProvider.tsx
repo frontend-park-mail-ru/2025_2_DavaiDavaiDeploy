@@ -8,12 +8,14 @@ export class ModalsProvider extends Component {
 	};
 
 	open = (id: number, props: object) => {
+		console.log('open');
 		this.setState({ activeModal: id, activeModalProps: props });
 	};
 	hide = () => {
 		this.setState({ activeModal: null, activeModalProps: null });
 	};
 	render() {
+		console.log('ModalsProvider.render', this.state);
 		return (
 			<ModalContext.Provider
 				value={{
