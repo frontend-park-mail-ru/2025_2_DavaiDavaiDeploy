@@ -7,6 +7,7 @@ import type { WithModalProps } from './withModalProps';
 
 class ModalRootComponent extends Component<WithModalProps> {
 	render() {
+		console.log('ModalRootComponent.render', this.props.modal);
 		switch (this.props.modal.activeModal) {
 			case MODALS.LOGIN_MODAL:
 				return <LoginModal {...this.props.modal.activeModalProps} />;
