@@ -153,7 +153,7 @@ jobs:
             --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
             --build-arg S3_BUCKET=$S3_BUCKET \
             --build-arg AWS_ENDPOINT=$AWS_ENDPOINT \
-            -t stage-deploy .
+            -t frontend-prod:latest .
             
             docker compose -f docker-compose.prod.yml down -v
             docker compose --env-file .env.production -f docker-compose.prod.yml up -d
