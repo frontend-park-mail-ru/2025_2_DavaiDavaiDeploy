@@ -58,11 +58,11 @@ jobs:
             ~/.npm
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Run ESLint
-        run: |
-          npm run lint:eslint
+        run: npm run lint:eslint
 
   notify_eslint_failure:
     name: Eslint failure message
+    needs: [eslint-check]
     if: ${{ needs.eslint-check.result == 'failure' }}
     runs-on: ubuntu-latest
     steps:
@@ -91,11 +91,11 @@ jobs:
             ~/.npm
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Run Prettier
-        run: |
-          npm run lint:prettier
+        run: npm run lint:prettier
 
   notify_prettier_failure:
     name: Prettier failure message
+    needs: [prettier-check]
     if: ${{ needs.prettier-check.result == 'failure' }}
     runs-on: ubuntu-latest
     steps:
@@ -128,6 +128,7 @@ jobs:
 
   notify_stylelint_failure:
     name: Stylelint failure message
+    needs: [stylelint-check]
     if: ${{ needs.stylelint-check.result == 'failure' }}
     runs-on: ubuntu-latest
     steps:
@@ -159,19 +160,20 @@ jobs:
         run: npm run test
 
   notify_unit_tests_failure:
-      name: Unit tests failure message
-      if: ${{ needs.unit-tests.result == 'failure' }}
-      runs-on: ubuntu-latest
-      steps:
-        - name: Send Telegram Failure Message
-          uses: PacificPromise/macos-telegram-action@main
-          with:
-            type: topic
-            message: |
-              ❗️ Ошибка unit tests
+    name: Unit tests failure message
+    needs: [unit-tests]
+    if: ${{ needs.unit-tests.result == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram Failure Message
+        uses: PacificPromise/macos-telegram-action@main
+        with:
+          type: topic
+          message: |
+            ❗️ Ошибка unit tests
 
-              🔗 Ссылка на пайплайн 🔗
-              ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            🔗 Ссылка на пайплайн 🔗
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   deploy:
     name: Deploy to Server
