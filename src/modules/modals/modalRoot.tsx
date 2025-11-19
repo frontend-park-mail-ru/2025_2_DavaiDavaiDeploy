@@ -2,18 +2,20 @@ import { Component } from '@robocotik/react';
 import { LoginModal } from '../../components/LoginModal/LoginModal.tsx';
 import { TestModal } from '../../components/testModal/testModal.tsx';
 import { MODALS } from './modals.ts';
-import { ModalContext, type ModalContextValue } from './modalsContext.ts';
+import { withModal } from './withModal';
+import type { WithModalProps } from './withModalProps';
 
-export class ModalRoot extends Component<{}, {}, ModalContextValue> {
-	static readonly contextType = ModalContext;
+class ModalRootComponent extends Component<WithModalProps> {
 	render() {
-		switch (this.context.activeModal) {
+		switch (this.props.modal.activeModal) {
 			case MODALS.LOGIN_MODAL:
-				return <LoginModal {...this.context.activeModalProps} />;
+				return <LoginModal {...this.props.modal.activeModalProps} />;
 			case MODALS.TEST_MODAL:
-				return <TestModal {...this.context.activeModalProps} />;
+				return <TestModal {...this.props.modal.activeModalProps} />;
 			default:
 				return <></>;
 		}
 	}
 }
+
+export const ModalRoot = withModal(ModalRootComponent);
