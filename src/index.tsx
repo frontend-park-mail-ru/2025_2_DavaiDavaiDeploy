@@ -68,8 +68,6 @@ interface AppProps {
 	checkUser: () => {};
 }
 
-console.log('test');
-
 class AppComponent extends Component<AppProps & WithRouterProps> {
 	onMount() {
 		this.props.checkUser();
