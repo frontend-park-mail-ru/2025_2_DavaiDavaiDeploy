@@ -1,8 +1,8 @@
-import exit from '@/assets/img/exit.svg';
-import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
+import Exit from '@/assets/img/exit.svg?react';
 import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
+import { Avatar, Flex, Headline, Separator } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { MODALS } from '../../modules/modals/modals';
 import { withModal } from '../../modules/modals/withModal';
@@ -26,22 +26,44 @@ export class UserAvatarComponent extends Component<
 
 	render() {
 		return (
-			<div className={clsx(styles.avatarActions, this.props.className)}>
-				<img
-					src={getStaticURL(this.props.user?.avatar)}
+			<Flex
+				className={clsx(styles.avatarActions, this.props.className)}
+				direction="column"
+			>
+				<Avatar
+					level="7"
+					src={this.props.user?.avatar}
 					alt={this.props.user?.login}
 					className={styles.avatar}
 				/>
-				<p className={styles.avatarActionsLogin}>{this.props.user?.login}</p>
+
+				{this.props.user?.login && (
+					<Headline
+						className={styles.avatarActionsLogin}
+						level="7"
+						color="accent"
+						align="center"
+					>
+						{this.props.user.login}
+					</Headline>
+				)}
+
 				<Link className={styles.avatarActionsLink} href="/profile">
 					Мой профиль
 				</Link>
 
-				<div className={styles.logoutButton} onClick={this.handleLogout}>
-					<img src={exit} alt="logout" />
+				<Separator mode="primary" className={styles.line} />
+
+				<Flex
+					className={styles.logoutButton}
+					onClick={this.handleLogout}
+					align="center"
+					justify="center"
+				>
+					<Exit alt="logout" />
 					Выйти
-				</div>
-			</div>
+				</Flex>
+			</Flex>
 		);
 	}
 }

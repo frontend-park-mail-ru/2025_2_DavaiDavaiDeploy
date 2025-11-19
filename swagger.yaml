@@ -594,7 +594,7 @@ paths:
       summary: Add film review
       tags:
         - films
-  /films/{id}/rating:
+  /films/{id}/Rating:
     post:
       consumes:
         - application/json

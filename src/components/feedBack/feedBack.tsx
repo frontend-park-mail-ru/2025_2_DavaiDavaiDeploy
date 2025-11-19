@@ -1,12 +1,19 @@
-import Star from '@/assets/img/Star.svg?react';
 import {
 	formatDatetime,
 	formatSmallDatetime,
 } from '@/helpers/formatDateHelper/formatDateHelper';
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmFeedback } from '@/types/models';
+import {
+	Avatar,
+	Flex,
+	Headline,
+	Paragraph,
+	Rating,
+	Separator,
+	Subhead,
+} from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './feedBack.module.scss';
 
@@ -23,28 +30,70 @@ export class FeedBack extends Component<FeedBackProps> {
 		const formattedDatetime = formatDatetime(updated_at);
 		const smallDatetime = formatSmallDatetime(updated_at);
 		const ratingType = getRatingType(rating);
-		const imageSrc = getImageURL(user_avatar);
 
 		return (
-			<div className={styles[`feedback-${rating}`]}>
-				<div className={styles.header}>
-					<span className={styles.user}>
-						<img src={imageSrc} className={styles.avatar}></img>
-						<h3 className={styles.login}>{user_login}</h3>
-					</span>
-					<span className={styles.rating}>
-						<Star className={styles[`star-${ratingType}`]} />
-						<p className={styles[`rating-${ratingType}`]}>{formattedRating}</p>
-					</span>
-					<p className={styles.date}>{formattedDatetime}</p>
-					<p className={styles.smallDate}>{smallDatetime}</p>
-				</div>
-				<hr className={styles.line}></hr>
-				<div className={styles.content}>
-					<h2 className={styles.title}>{title}</h2>
-					<p className={styles.text}>{text}</p>
-				</div>
-			</div>
+			<Flex className={styles[`feedback-${rating}`]} direction="column">
+				<Flex
+					className={styles.header}
+					align="center"
+					direction="row"
+					justify="between"
+				>
+					<Flex
+						className={styles.user}
+						align="center"
+						direction="row"
+						justify="between"
+					>
+						<Avatar level="8" src={user_avatar} className={styles.avatar} />
+						<Subhead
+							className={styles.login}
+							color="dark"
+							opacity="80"
+							level="7"
+						>
+							{user_login}
+						</Subhead>
+					</Flex>
+					{formattedRating && ratingType && (
+						<Rating rating={formattedRating} mode={ratingType} />
+					)}
+					{formattedDatetime && (
+						<Subhead
+							className={styles.date}
+							color="dark"
+							level="9"
+							opacity="50"
+						>
+							{formattedDatetime}
+						</Subhead>
+					)}
+					{smallDatetime && (
+						<Subhead
+							className={styles.smallDate}
+							color="dark"
+							level="9"
+							opacity="50"
+						>
+							{smallDatetime}
+						</Subhead>
+					)}
+				</Flex>
+				<Separator mode="secondary" className={styles.line} />
+				<Flex className={styles.content} direction="column">
+					<Headline
+						className={styles.title}
+						color="dark"
+						level="7"
+						weight="bold"
+					>
+						{title}
+					</Headline>
+					<Paragraph className={styles.text} color="dark" level="8">
+						{text}
+					</Paragraph>
+				</Flex>
+			</Flex>
 		);
 	}
 }

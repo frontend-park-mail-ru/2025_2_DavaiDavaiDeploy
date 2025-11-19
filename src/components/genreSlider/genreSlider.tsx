@@ -1,5 +1,5 @@
-import ArrowLeft from '@/assets/img/arrowLeft.svg';
-import ArrowRight from '@/assets/img/arrowRight.svg';
+import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
+import ArrowRight from '@/assets/img/arrowRight.svg?react';
 import { WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper';
@@ -11,6 +11,7 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenres } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
+import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
 import styles from './genreSlider.module.scss';
@@ -186,31 +187,45 @@ class GenreSliderComponent extends Component<
 		const { genres } = this.props;
 
 		if (!genres || !genres.length) {
-			return <div></div>;
+			return <div />;
 		}
 
 		const visibleGenres = this.getVisibleGenres();
 		const animationClass = this.getClass();
 
 		return (
-			<section className={styles.genreSlider}>
-				<h2 className={styles.title}>Жанры</h2>
-				<div className={styles.container} onClick={this.onSliderClick}>
+			<Flex className={styles.genreSlider} direction="column">
+				<Title className={styles.title} level="4" weight="bold">
+					Жанры
+				</Title>
+				<Flex
+					className={styles.container}
+					direction="row"
+					onClick={this.onSliderClick}
+				>
 					<div className={clsx(styles.slider, animationClass)}>
 						{visibleGenres.map((genre) => (
 							<GenreSliderItem genre={genre} />
 						))}
 					</div>
 
-					<button className={styles.prevBtn} onClick={this.onPrevBtnClick}>
-						<img src={ArrowLeft} alt="Назад" className={styles.prevBtnIcon} />
-					</button>
+					<IconButton
+						mode="tertiary"
+						className={styles.prevBtn}
+						onClick={this.onPrevBtnClick}
+					>
+						<ArrowLeft alt="Назад" className={styles.prevBtnIcon} />
+					</IconButton>
 
-					<button className={styles.nextBtn} onClick={this.onNextBtnClick}>
-						<img src={ArrowRight} alt="Вперёд" className={styles.nextBtnIcon} />
-					</button>
-				</div>
-			</section>
+					<IconButton
+						mode="tertiary"
+						className={styles.nextBtn}
+						onClick={this.onNextBtnClick}
+					>
+						<ArrowRight alt="Вперёд" className={styles.nextBtnIcon} />
+					</IconButton>
+				</Flex>
+			</Flex>
 		);
 	}
 }

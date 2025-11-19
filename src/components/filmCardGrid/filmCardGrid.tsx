@@ -7,45 +7,42 @@ import actions from '@/redux/features/films/actions';
 import { selectFilms } from '@/redux/features/films/selectors.js';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
+import { CardGrid, Flex, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
-import styles from './cardGrid.module.scss';
+import styles from './filmCardGrid.module.scss';
 
 const FILM_COUNT: number = 50;
 const OFFSET: number = 0;
 
-interface CardGridProps {
+interface FilmCardGridProps {
 	films: ModelsMainPageFilm[];
 	getFilms: (limit: number, offset: number, id?: string) => void;
 }
 
-export class CardGridComponent extends Component<
-	CardGridProps & WithRouterProps
+class FilmCardGridComponent extends Component<
+	FilmCardGridProps & WithRouterProps
 > {
 	onMount() {
-		if (this.props.router.params.id) {
-			this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
-		} else {
-			this.props.getFilms(FILM_COUNT, OFFSET);
-		}
+		this.props.getFilms(FILM_COUNT, OFFSET);
 	}
 
 	render() {
 		if (!this.props.films || this.props.films.length === 0) {
-			return <div className={styles.err}></div>;
+			return <div />;
 		}
 
 		return (
-			<div className={styles.cardGrid}>
-				{!this.props.router.params.id && (
-					<h2 className={styles.title}>Все фильмы</h2>
-				)}
-				<div className={styles.grid}>
+			<Flex className={styles.filmCardGrid} direction="column">
+				<Title className={styles.title} level="4" weight="bold">
+					Все фильмы
+				</Title>
+				<CardGrid>
 					{this.props.films.map((film) => (
 						<FilmCard film={film} />
 					))}
-				</div>
-			</div>
+				</CardGrid>
+			</Flex>
 		);
 	}
 }
@@ -59,7 +56,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(actions.getFilmsAction(limit, offset)),
 });
 
-export const CardGrid = compose(
+export const FilmCardGrid = compose(
 	withRouter,
 	connect(mapStateToProps, mapDispatchToProps),
-)(CardGridComponent);
+)(FilmCardGridComponent);

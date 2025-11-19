@@ -1,8 +1,4 @@
 .genre {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	margin-top: max(5vh, 4vw);
 }
 
@@ -12,19 +8,11 @@
 }
 
 .description {
-	text-align: center;
 	margin-top: min(-3vh, -2vw);
-	font-size: var(--font-size-m);
 }
 
 .err {
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	min-height: calc(100vh - 4rem);
-	font-size: var(--font-size-3xl);
-	font-weight: var(--font-weight-bold);
-	color: var(--color-accent);
 	line-height: 1;
 }
 

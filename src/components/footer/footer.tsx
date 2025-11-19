@@ -1,3 +1,4 @@
+import { Flex, Paragraph } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -7,9 +8,16 @@ class FooterComponent extends Component<WithRouterProps> {
 	render() {
 		const type = this.props.router.path.startsWith('/films') ? 'light' : 'dark';
 		return (
-			<footer id="footer" className={styles[`footer-${type}`]}>
-				<p className={styles.content}>© Davai Film, 2025</p>
-			</footer>
+			<Flex
+				id="footer"
+				className={styles[`footer-${type}`]}
+				justify="center"
+				align="center"
+			>
+				<Paragraph className={styles.content} color="accent" level="8">
+					© Davai Film, 2025
+				</Paragraph>
+			</Flex>
 		);
 	}
 }

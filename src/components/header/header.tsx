@@ -1,4 +1,3 @@
-import Logo from '@/assets/img/logo.svg?react';
 import { LoadedUser } from '@/components/headerLoadedUser/headerLoadedUser.tsx';
 import { LoadingState } from '@/components/loadingState/loadingState.tsx';
 import { compose, connect } from '@/modules/redux/index.ts';
@@ -15,6 +14,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Flex, Logo } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import { withModal } from '../../modules/modals/withModal.tsx';
@@ -57,12 +57,19 @@ class HeaderComponent extends Component<
 
 	render() {
 		return (
-			<header id="header" className={styles.header}>
+			<Flex
+				id="header"
+				className={styles.header}
+				justify="between"
+				align="center"
+			>
 				<Link href="/">
 					<Logo className={styles.logo} />
 				</Link>
-				<div className={styles.user}>{this.renderUserSection()}</div>
-			</header>
+				<Flex className={styles.user} align="center">
+					{this.renderUserSection()}
+				</Flex>
+			</Flex>
 		);
 	}
 }

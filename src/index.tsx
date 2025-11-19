@@ -9,7 +9,10 @@ import * as Sentry from '@sentry/browser';
 import 'reset-css/reset.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
-import { ToastContainer } from './components/toastContainer/toastContainer.tsx';
+import {
+	AppToast,
+	ToastContainer,
+} from './components/toastContainer/toastContainer.tsx';
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
@@ -53,13 +56,11 @@ if (isProduction && 'serviceWorker' in navigator) {
 }
 
 window.addEventListener('online', () => {
-	// eslint-disable-next-line no-console
-	console.info('online');
+	AppToast.info('Соединение восстановлено!');
 });
 
 window.addEventListener('offline', () => {
-	// eslint-disable-next-line no-console
-	console.info('offline');
+	AppToast.info('Нет подключения к сети — вы в офлайн-режиме!');
 });
 
 interface AppProps {

@@ -1,4 +1,3 @@
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
 import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
@@ -11,6 +10,14 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import {
+	Avatar,
+	Button,
+	FileButton,
+	Flex,
+	Subhead,
+	Title,
+} from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -120,56 +127,76 @@ class ChangeAvatarComponent extends Component<
 
 	render() {
 		if (!this.props.user) {
-			return <div></div>;
+			return <div />;
 		}
 
 		const { avatar } = this.props.user;
 		const { preview, file, isEditing } = this.state;
-		const avatarURL = getImageURL(avatar);
 
 		return (
-			<div className={styles.content}>
-				<div className={styles.text}>
-					<h1 className={styles.title}>
+			<Flex className={styles.content} direction="row">
+				<Flex className={styles.text} direction="column" justify="between">
+					<Title className={styles.title} level="4" weight="bold">
 						Хочется чего-то нового? Обновите фото профиля
-					</h1>
-					<div className={styles.subtitle}>
-						<p>{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}</p>
-						<p>Вес файла: не более 8МБ</p>
-					</div>
-				</div>
+					</Title>
+					<Flex className={styles.subtitle} direction="column">
+						<Subhead
+							color="light"
+							level="10"
+							opacity="70"
+							className={styles.subtitleText}
+						>
+							{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}
+						</Subhead>
+						<Subhead
+							color="light"
+							level="10"
+							opacity="70"
+							className={styles.subtitleText}
+						>
+							Вес файла: не более 8МБ
+						</Subhead>
+					</Flex>
+				</Flex>
 
-				<div className={styles.changeAvatar}>
+				<Flex className={styles.changeAvatar} direction="column" align="center">
 					{preview ? (
-						<img className={styles.avatar} src={preview} alt="Preview" />
+						<Avatar
+							level="6"
+							className={styles.avatar}
+							src={preview}
+							alt="Preview"
+							preview={true}
+						/>
 					) : (
-						<img className={styles.avatar} src={avatarURL} alt="Аватар"></img>
+						<Avatar
+							level="6"
+							className={styles.avatar}
+							src={avatar}
+							alt="Аватар"
+						/>
 					)}
 
-					<div className={styles.btns}>
-						<div className={styles.wrapper}>
-							<button className={styles.btn} onClick={this.handleUpload}>
-								Изменить фото
-							</button>
-							<input
-								className={styles.input}
-								type="file"
-								accept=".jpg, .jpeg, .png"
-								onChange={this.handleFileChange}
-							></input>
-						</div>
+					<Flex className={styles.btns} align="center" direction="column">
+						<FileButton
+							onChange={this.handleFileChange}
+							accept=".jpg, .jpeg, .png"
+						/>
 
-						<button
+						<Button
+							mode="primary"
+							size="xs"
+							borderRadius="l"
 							className={clsx(styles.btn, {
 								[styles.hidden]: !file || !isEditing,
 							})}
 							onClick={this.handleUpload}
 						>
 							Сохранить
-						</button>
-					</div>
-				</div>
-			</div>
+						</Button>
+					</Flex>
+				</Flex>
+			</Flex>
 		);
 	}
 }

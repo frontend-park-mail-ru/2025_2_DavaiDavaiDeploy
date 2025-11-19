@@ -1,8 +1,5 @@
 .ratingInput {
-	display: flex;
-	flex-direction: row;
 	gap: 0.7vw;
-	align-items: center;
 }
 
 .dark {
@@ -13,7 +10,6 @@
 .ratingNumber-high,
 .ratingNumber-medium {
 	transition: all 0.2s ease;
-	font-size: var(--font-size-xlg);
 	cursor: pointer;
 }
 
@@ -97,7 +93,7 @@
 	.ratingNumber-low,
 	.ratingNumber-high,
 	.ratingNumber-medium {
-		font-size: var(--font-size-xl);
+		font-size: var(--font-size-3xl);
 	}
 
 	.starIcon {
@@ -114,7 +110,7 @@
 @media (max-width: 768px) {
 	.ratingInput {
 		gap: 3vw;
-		font-size: var(--font-size-4xl);
+		font-size: var(--font-size-6xl);
 	}
 
 	.starIcon {

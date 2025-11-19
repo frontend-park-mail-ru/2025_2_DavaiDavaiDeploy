@@ -3,9 +3,6 @@
 	max-width: 100%;
 	padding: 1.4rem 5rem;
 	box-sizing: border-box;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
 	position: fixed;
 	left: 0;
 	right: 0;
@@ -16,18 +13,6 @@
 	backdrop-filter: blur(5px);
 	border-bottom: 1px solid hsl(235deg 20% 32% / 23.9%);
 	box-shadow: inset 0 -0.5px 1px hsl(235deg 20% 32% / 12.5%);
-}
-
-.logo {
-	width: 12rem;
-	object-fit: contain;
-	flex-shrink: 0;
-	transition: transform 0.3s ease;
-	cursor: pointer;
-
-	&:hover {
-		transform: scale(1.05);
-	}
 }
 
 .link {
@@ -52,12 +37,6 @@
 	}
 }
 
-.sections {
-	display: flex;
-	gap: 2rem;
-	justify-content: center;
-}
-
 .sectionsLink {
 	font-size: 1.125rem;
 	text-decoration: none;
@@ -68,25 +47,6 @@
 	&:hover {
 		transform: translateY(-1px);
 		color: var(--color-accent);
-	}
-}
-
-.search {
-	display: flex;
-	align-items: center;
-	border: 1px solid transparent;
-	border-radius: 1.25rem;
-	padding: 0.5rem 1rem;
-	width: 100%;
-	max-width: 40.625rem;
-	height: 2.5rem;
-	transition: all 0.4s ease;
-
-	&:focus-within,
-	&:hover {
-		border-color: var(--color-accent);
-		transform: translateY(-1px);
-		box-shadow: 0 0 1rem var(--color-shadow-focus);
 	}
 }
 
@@ -115,35 +75,17 @@
 }
 
 .user {
-	display: flex;
-	align-items: center;
 	gap: 1.875rem;
 	flex-shrink: 0;
 	text-decoration: none;
 }
 
 .loginBtn {
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	padding: 0.625rem 1.875rem;
-	background: var(--color-accent);
-	border: 1px solid var(--color-accent);
-	border-radius: var(--border-radius-l);
-	font-size: var(--font-size-s);
-	cursor: pointer;
-	transition: all 0.4s ease;
 	height: 2.5rem;
 	min-width: 7.5rem;
-	color: var(--color-light);
 	margin-top: 0.3rem;
 	margin-bottom: 0.3rem;
-
-	&:hover {
-		background: transparent;
-		color: var(--color-accent);
-		transform: translateY(-1px);
-	}
 }
 
 .name {
@@ -210,7 +152,7 @@
 	.loginBtn {
 		min-width: auto;
 		padding: 0.25rem 0.75rem;
-		font-size: var(--font-size-xxs);
+		font-size: var(--font-size-2xs);
 		height: 1.75rem;
 	}
 

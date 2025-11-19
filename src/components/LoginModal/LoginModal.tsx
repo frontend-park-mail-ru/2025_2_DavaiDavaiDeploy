@@ -1,6 +1,7 @@
 import Exit from '@/assets/img/exit.svg?react';
-import { withModal } from '@/modules/modals/withModal';
+import { Button, Flex, Title } from '@/uikit/index';
 import { Component, createPortal } from '@robocotik/react';
+import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
 import style from './LoginModal.module.scss';
 
@@ -16,35 +17,63 @@ export class LoginModalComponent extends Component<
 		this.props.onLogout();
 		this.props.modal.hide();
 	};
-
 	render() {
 		return createPortal(
-			<div className={style.modalWrapper} onClick={this.props.modal.hide}>
+			<Flex
+				className={style.modalWrapper}
+				onClick={this.props.modal.hide}
+				align="center"
+				justify="center"
+			>
 				<div
 					className={style.modalContent}
-					onClick={(e) => {
-						e.stopPropagation();
-					}}
+					onClick={(e) => e.stopPropagation()}
 				>
-					<div className={style.modalLogout}>
-						<div className={style.modalHeader}>
-							<h1 className={style.modalTitle}>Уже уходите?</h1>
-							<h1 className={style.modalTitle}>Мы будем скучать!</h1>
-						</div>
-						<div className={style.modalActions}>
-							<button onClick={this.handleLogout} className={style.exitButton}>
-								<Exit />
-							</button>
-							<button
+					<Flex
+						className={style.modalLogout}
+						direction="column"
+						justify="between"
+						align="center"
+					>
+						<Flex
+							className={style.modalHeader}
+							align="center"
+							direction="column"
+						>
+							<Title className={style.modalTitle} level="5">
+								Уже уходите?
+							</Title>
+							<Title className={style.modalTitle} level="5">
+								Мы будем скучать!
+							</Title>
+						</Flex>
+						<Flex
+							className={style.modalActions}
+							align="center"
+							direction="column"
+						>
+							<Button
+								mode="secondary"
+								size="m"
+								before={<Exit />}
+								onClick={this.handleLogout}
+								className={style.exitButton}
+							>
+								Выйти
+							</Button>
+							<Button
+								mode="primary"
+								size="m"
+								borderRadius="l"
 								onClick={this.props.modal.hide}
 								className={style.turnBackButton}
 							>
 								Вернуться на сайт
-							</button>
-						</div>
-					</div>
+							</Button>
+						</Flex>
+					</Flex>
 				</div>
-			</div>,
+			</Flex>,
 			document.body,
 		);
 	}

@@ -1,10 +1,18 @@
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import { Link } from '@/modules/router/link.tsx';
+import { Link } from '@/modules/router/link';
 import type { ModelsFilmPage } from '@/types/models';
+import {
+	Badge,
+	Flex,
+	Headline,
+	Image,
+	Paragraph,
+	Subhead,
+	Title,
+} from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { FilmRating } from '../filmRating/filmRating';
 import styles from './filmInfo.module.scss';
@@ -17,7 +25,11 @@ interface FilmInfoProps {
 export class FilmInfo extends Component<FilmInfoProps> {
 	render() {
 		if (this.props.error) {
-			return <div className={styles.err}>Фильм не найден</div>;
+			return (
+				<Title className={styles.err} level="2" weight="bold" color="accent">
+					Фильм не найден
+				</Title>
+			);
 		}
 
 		if (!this.props.film) {
@@ -45,146 +57,290 @@ export class FilmInfo extends Component<FilmInfoProps> {
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
 		const formattedDuration = formatDuration(duration);
-		const coverSRC = getImageURL(cover);
-		const posterSRC = getImageURL(poster);
 
 		const formattedBudget = formatMoney(budget);
 		const formattedFees = formatMoney(worldwide_fees);
 
 		return (
-			<div className={styles.film}>
+			<Flex className={styles.film} direction="column">
 				<div className={styles.container}>
-					{posterSRC && (
-						<img
-							src={posterSRC}
-							alt={title || 'Poster'}
-							className={styles.image}
-						/>
-					)}
+					<Image
+						src={poster}
+						alt={title || 'Poster'}
+						className={styles.image}
+					/>
 				</div>
 
-				<div className={styles.content}>
-					<div className={styles.media}>
-						{coverSRC && (
-							<img
-								src={coverSRC}
-								alt={title || 'Cover'}
-								className={styles.cover}
-							/>
-						)}
-						{formattedRating && (
-							<div className={styles[`rating-${ratingType}`]}>
-								<h3>{formattedRating}</h3>
-							</div>
-						)}
-					</div>
+				<Flex className={styles.content} direction="row" align="start">
+					<Flex className={styles.media} align="start" justify="center">
+						<Image
+							src={cover}
+							alt={title || 'Cover'}
+							className={styles.cover}
+						/>
 
-					<div className={styles.info}>
-						<div className={styles.firstRow}>
-							<div className={styles.main}>
-								{title && <h1 className={styles.title}>{title}</h1>}
-								<span className={styles.subtitle}>
-									{original_title && <h3>{original_title}</h3>}
-									{age_category && <h3>{age_category}</h3>}
-								</span>
+						{formattedRating && ratingType && (
+							<Badge
+								mode={ratingType}
+								className={styles[`rating-${ratingType}`]}
+							>
+								<Headline level="7">{formattedRating}</Headline>
+							</Badge>
+						)}
+					</Flex>
 
-								<div className={styles.smallAbout}>
-									{!!year && <p className={styles.value}>{year}</p>}
+					<Flex className={styles.info} direction="column" align="start">
+						<Flex
+							className={styles.firstRow}
+							direction="row"
+							align="start"
+							justify="between"
+						>
+							<Flex className={styles.main} direction="column" align="start">
+								{title && (
+									<Title className={styles.title} level="2">
+										{title}
+									</Title>
+								)}
+
+								<Flex className={styles.subtitle} direction="row">
+									{original_title && (
+										<Subhead color="light" level="10" opacity="80">
+											{original_title}
+										</Subhead>
+									)}
+
 									{age_category && (
-										<p className={styles.value}>{age_category}</p>
+										<Subhead color="light" level="10" opacity="80">
+											{age_category}
+										</Subhead>
 									)}
-									{country && <p className={styles.value}>{country}</p>}
-									{genre && <p className={styles.value}>{genre}</p>}
-									{formattedDuration && (
-										<p className={styles.value}>{formattedDuration}</p>
-									)}
-								</div>
+								</Flex>
 
-								<div className={styles.smallRating}>
+								<Flex
+									className={styles.smallAbout}
+									align="center"
+									justify="around"
+								>
+									{!!year && (
+										<Subhead
+											className={styles.value}
+											color="light"
+											level="8"
+											opacity="80"
+										>
+											{year.toString()}
+										</Subhead>
+									)}
+									{age_category && (
+										<Subhead
+											className={styles.value}
+											color="light"
+											level="8"
+											opacity="80"
+										>
+											{age_category}
+										</Subhead>
+									)}
+									{country && (
+										<Subhead
+											className={styles.value}
+											color="light"
+											level="8"
+											opacity="80"
+										>
+											{country}
+										</Subhead>
+									)}
+									{genre && (
+										<Subhead
+											className={styles.value}
+											color="light"
+											level="8"
+											opacity="80"
+										>
+											{genre}
+										</Subhead>
+									)}
+									{formattedDuration && (
+										<Subhead
+											className={styles.value}
+											color="light"
+											level="8"
+											opacity="80"
+										>
+											{formattedDuration}
+										</Subhead>
+									)}
+								</Flex>
+
+								<Flex className={styles.smallRating}>
 									<FilmRating film={this.props.film} />
-								</div>
+								</Flex>
 
 								{description && (
-									<p className={styles.description}>{description}</p>
+									<Paragraph className={styles.description} level="8">
+										{description}
+									</Paragraph>
 								)}
-							</div>
+							</Flex>
 
-							<div className={styles.bigRating}>
+							<Flex className={styles.bigRating}>
 								<FilmRating film={this.props.film} />
-							</div>
-						</div>
+							</Flex>
+						</Flex>
 
-						<div className={styles.secondRow}>
+						<Flex
+							className={styles.secondRow}
+							align="start"
+							direction="row"
+							justify="between"
+						>
 							<div className={styles.about}>
-								<h1 className={styles.aboutTitle}>О фильме</h1>
+								<Title className={styles.aboutTitle} level="4" weight="bold">
+									О фильме
+								</Title>
+
 								<div className={styles.table}>
 									{!!year && (
 										<>
-											<p className={styles.fact}>Год производства</p>
-											<p className={styles.value}>{year}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Год производства
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{year.toString()}
+											</Subhead>
 										</>
 									)}
 
 									{country && (
 										<>
-											<p className={styles.fact}>Страна</p>
-											<p className={styles.value}>{country}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Страна
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{country}
+											</Subhead>
 										</>
 									)}
 
 									{genre && (
 										<>
-											<p className={styles.fact}>Жанр</p>
-											<p className={styles.value}>{genre}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Жанр
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{genre}
+											</Subhead>
 										</>
 									)}
 
 									{slogan && (
 										<>
-											<p className={styles.fact}>Слоган</p>
-											<p className={styles.value}>{slogan}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Слоган
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{slogan}
+											</Subhead>
 										</>
 									)}
 
 									{formattedBudget && (
 										<>
-											<p className={styles.fact}>Бюджет</p>
-											<p className={styles.value}>{formattedBudget}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Бюджет
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{formattedBudget}
+											</Subhead>
 										</>
 									)}
 
 									{formattedFees && (
 										<>
-											<p className={styles.fact}>Сборы в мире</p>
-											<p className={styles.value}>{formattedFees}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Сборы в мире
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{formattedFees}
+											</Subhead>
 										</>
 									)}
 
 									{formattedDuration && (
 										<>
-											<p className={styles.fact}>Длительность</p>
-											<p className={styles.value}>{formattedDuration}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Длительность
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{formattedDuration}
+											</Subhead>
 										</>
 									)}
 								</div>
 							</div>
 
 							{actors?.length > 0 && (
-								<div className={styles.cast}>
-									<div className={styles.castContent}>
-										<h1 className={styles.roles}>В главных ролях</h1>
+								<Flex className={styles.cast} align="end" direction="column">
+									<Flex
+										className={styles.castContent}
+										direction="column"
+										align="start"
+									>
+										<Title className={styles.roles} level="4" weight="bold">
+											В главных ролях
+										</Title>
+
 										{actors.map((actor) => (
 											<Link href={`/actors/${actor.id}`}>
-												<p className={styles.actors}>{actor.russian_name}</p>
+												<Paragraph className={styles.actors} level="8">
+													{actor.russian_name}
+												</Paragraph>
 											</Link>
 										))}
-									</div>
-								</div>
+									</Flex>
+								</Flex>
 							)}
-						</div>
-					</div>
-				</div>
-			</div>
+						</Flex>
+					</Flex>
+				</Flex>
+			</Flex>
 		);
 	}
 }

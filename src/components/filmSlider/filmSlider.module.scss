@@ -4,22 +4,17 @@
 }
 
 .title {
-	font-size: var(--font-size-4xl);
 	text-transform: uppercase;
 	color: transparent;
 	-webkit-text-stroke: 1.7px var(--color-light-text);
 	-moz-text-fill-color: transparent;
 	margin-bottom: calc(-5vh - 8vw);
 	position: relative;
-	text-align: left;
 	margin-left: -3.5vw;
 }
 
 .slider {
 	padding: var(--side-padding);
-	display: flex;
-	flex-direction: row;
-	align-items: top;
 	position: relative;
 	width: 100vw;
 	margin: 0 auto;
@@ -29,14 +24,11 @@
 .container {
 	height: 100%;
 	width: 100%;
-	display: flex;
 	position: relative;
 	perspective: 1000px;
 	transform-style: preserve-3d;
 	margin: 0 auto;
 	overflow: visible;
-	align-items: flex-start;
-	justify-content: center;
 }
 
 .slide {
@@ -70,12 +62,6 @@
 	z-index: 20;
 	position: absolute;
 	top: 40%;
-	background: none;
-	border: none;
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	padding: 0.5rem;
 	transition:
 		transform 0.4s ease,
@@ -121,7 +107,6 @@
 	.slide {
 		position: absolute;
 		top: 0;
-		display: flex;
 		left: 25%;
 		width: 50%;
 	}

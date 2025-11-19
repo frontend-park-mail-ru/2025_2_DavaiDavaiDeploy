@@ -1,6 +1,4 @@
 .film {
-	display: flex;
-	flex-direction: column;
 	overflow: hidden;
 	margin-bottom: 5rem;
 }
@@ -44,10 +42,7 @@
 
 .content {
 	padding: var(--side-padding);
-	display: flex;
-	flex-direction: row;
 	gap: 4.6rem;
-	align-items: start;
 	width: 100%;
 	position: relative;
 	margin-top: -30vh;
@@ -55,29 +50,19 @@
 
 .info {
 	flex: 3;
-	display: flex;
-	flex-direction: column;
 	gap: 5.3rem;
-	align-items: start;
 	width: 100%;
 	position: relative;
 }
 
 .firstRow {
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
 	width: 100%;
 	position: relative;
 	overflow: visible;
-	justify-content: space-between;
 }
 
 .media {
 	flex: 1;
-	display: flex;
-	justify-content: flex-start;
-	align-items: flex-start;
 	position: relative;
 	width: 100%;
 	min-width: 10rem;
@@ -93,51 +78,32 @@
 }
 
 .main {
-	display: flex;
-	flex-direction: column;
 	gap: 0;
-	align-items: start;
 	width: 100%;
 	position: relative;
 	flex: 2;
 }
 
 .title {
-	font-size: var(--font-size-3xl);
 	margin-left: -0.3rem;
 }
 
 .subtitle {
 	margin-top: 0.5rem;
-	font-size: var(--font-size-xs);
-	opacity: 0.7;
-	display: flex;
-	flex-direction: row;
 	gap: 1.375rem;
-
-	h3 {
-		color: var(--color-light-text);
-	}
 }
 
 .description {
-	font-size: var(--font-size-m);
 	margin-top: 1.875rem;
 	margin-right: 1rem;
 }
 
 .secondRow {
-	display: flex;
-	flex-direction: row;
-	align-items: start;
 	width: 100%;
 	position: relative;
-	justify-content: space-between;
 }
 
 .aboutTitle {
-	font-size: var(--font-size-xl);
-	font-weight: var(--font-weight-bold);
 	white-space: nowrap;
 	margin-left: -0.2rem;
 }
@@ -155,48 +121,29 @@
 }
 
 .fact {
-	font-size: var(--font-size-l);
-	font-weight: var(--font-weight-bold);
 	white-space: nowrap;
-}
-
-.value {
-	color: var(--color-light-text);
-	opacity: 0.8;
-	font-size: var(--font-size-m);
 }
 
 .roles {
 	flex: 1;
-	font-size: var(--font-size-xl);
-	font-weight: var(--font-weight-bold);
 	white-space: nowrap;
 	width: 100%;
-	text-align: left;
 	margin-left: -0.2rem;
 }
 
 .cast {
 	flex: 1;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
 	gap: 2.5rem;
 	width: 100%;
 	height: 100%;
 }
 
 .castContent {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
 	gap: 2.5rem;
 }
 
 .actors {
-	font-size: var(--font-size-m);
 	gap: 0.9375rem;
-	text-align: left;
 	width: 100%;
 	cursor: pointer;
 	transition: transform 0.3s ease;
@@ -212,24 +159,8 @@
 	display: none;
 }
 
-.rating-high {
-	background-color: var(--color-rating-high);
-}
-
-.rating-medium {
-	background-color: var(--color-rating-medium);
-}
-
-.rating-low {
-	background-color: var(--color-rating-low);
-}
-
 .smallAbout {
 	display: none;
-}
-
-.bigRating {
-	display: flex;
 }
 
 .smallRating {
@@ -237,13 +168,7 @@
 }
 
 .err {
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	min-height: calc(100vh - 4rem);
-	font-size: var(--font-size-3xl);
-	font-weight: var(--font-weight-bold);
-	color: var(--color-accent);
 	line-height: 1;
 }
 
@@ -343,28 +268,15 @@
 		display: none;
 	}
 
-	.smallRating {
-		display: flex;
-	}
-
 	.rating-high,
 	.rating-medium,
 	.rating-low {
-		position: absolute;
-		top: 2%;
 		left: 8%;
-		border-radius: 0.3125rem;
-		z-index: 2;
 		display: inline-block;
-		padding: 0.35rem 0.77rem;
-		font-size: var(--font-size-l);
 	}
 
 	.smallAbout {
-		display: flex;
 		margin-top: 0.5rem;
-		justify-content: space-around;
-		align-items: center;
 		flex-wrap: wrap;
 		gap: 3vw;
 	}

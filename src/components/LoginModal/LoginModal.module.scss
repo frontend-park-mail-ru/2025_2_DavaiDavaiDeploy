@@ -5,9 +5,6 @@
 	width: 100dvw;
 	height: 100dvh;
 	background-color: rgb(0 0 0 / 50%); /* Затемнение */
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	z-index: 1000;
 	font-size: large;
 }
@@ -32,52 +29,28 @@
 }
 
 .modalLogout {
-	display: flex;
 	background-color: var(--color-light);
 	color: var(--color-text);
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
 	width: 50rem;
 	height: 25rem;
 	padding: 4rem;
 }
 
 .exitButton {
-	border: none;
-	background: transparent;
 	outline: none;
-	display: flex;
-	align-items: center;
 	gap: 0.5rem;
-	color: var(--color-always-light-text);
-	cursor: pointer;
-	font-size: var(--font-size-m);
 }
 
 .turnBackButton {
-	border: none;
-	border-radius: var(--border-radius-l);
-	background: var(--color-accent);
-	color: var(--color-light);
 	padding: 1rem 2rem;
-	cursor: pointer;
 	outline: none;
-	font-size: var(--font-size-m);
 }
 
 .modalHeader {
-	font-size: var(--font-size-xlg);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	gap: 1rem;
 }
 
 .modalActions {
-	display: flex;
 	width: 100%;
-	flex-direction: column;
-	align-items: center;
 	gap: 2rem;
 }

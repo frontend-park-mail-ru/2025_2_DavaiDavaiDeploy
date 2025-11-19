@@ -1,6 +1,5 @@
 import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
-import { InputField } from '@/components/inputField/inputField.tsx';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
 import { AppToast } from '@/components/toastContainer/toastContainer';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
@@ -19,6 +18,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Button, Flex, FormItem, Headline, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import { Redirect } from '../../modules/router/redirect';
@@ -116,8 +116,13 @@ export class LoginPageNotConnected extends Component<
 		}
 
 		return (
-			<main className={styles.main}>
-				<div className={styles.form}>
+			<div className={styles.main}>
+				<Flex
+					className={styles.form}
+					direction="row"
+					align="center"
+					justify="center"
+				>
 					<Link className={styles.closeLink} href="/">
 						<img src={close} alt="close" />
 					</Link>
@@ -135,24 +140,45 @@ export class LoginPageNotConnected extends Component<
 						/>
 					)}
 
-					<div className={styles.rightSide}>
+					<Flex
+						className={styles.rightSide}
+						direction="column"
+						justify="between"
+					>
 						<div className={styles.rightSide__titles}>
-							<h1 className={styles.rightSide__title}>С возвращением!</h1>
-							<h3 className={styles.rightSide__subtitle}>
+							<Title
+								className={styles.rightSide__title}
+								level="3"
+								weight="bold"
+							>
+								С возвращением!
+							</Title>
+							<Headline
+								className={styles.rightSide__subtitle}
+								color="light"
+								level="9"
+							>
 								Войти, чтобы получить доступ ко всем возможностям
-							</h3>
+							</Headline>
 						</div>
-						<div className={styles.rightSide__inputFields}>
-							<InputField
-								label="Имя пользователя"
+						<Flex className={styles.rightSide__inputFields} direction="column">
+							<FormItem
+								mode="primary"
+								top="Имя пользователя"
 								defaultValue=""
-								preIconSrc={userSvg}
+								before={
+									<img src={userSvg} alt="icon" className={styles.inputIcon} />
+								}
 								placeholder="Введите логин"
-								errorMessage={this.state.validationErrors.username}
+								bottom={this.state.validationErrors.username}
+								status={
+									this.state.validationErrors.username ? 'error' : 'default'
+								}
 								value={this.state.username}
 								onChange={(value) => this.onFieldChange(value, 'username')}
 							/>
 							<PasswordInputField
+								mode="primary"
 								label="Пароль"
 								defaultValue=""
 								errorMessage={this.state.validationErrors.password}
@@ -160,15 +186,18 @@ export class LoginPageNotConnected extends Component<
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
-						</div>
-						<div className={styles.rightSide__actions}>
-							<button
+						</Flex>
+						<Flex className={styles.rightSide__actions} direction="column">
+							<Button
+								mode="primary"
 								onClick={this.handleLoginUser}
 								className={styles.login__button}
+								size="s"
+								borderRadius="lg"
 							>
 								Войти
-							</button>
-							<p className={styles.register__button}>
+							</Button>
+							<div className={styles.register__button}>
 								У меня нет аккаунта.{' '}
 								<Link
 									className={styles.register}
@@ -176,11 +205,11 @@ export class LoginPageNotConnected extends Component<
 								>
 									Регистрация
 								</Link>
-							</p>
-						</div>
-					</div>
-				</div>
-			</main>
+							</div>
+						</Flex>
+					</Flex>
+				</Flex>
+			</div>
 		);
 	}
 }
