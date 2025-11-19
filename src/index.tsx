@@ -105,7 +105,7 @@ class ProvidersLayout extends Component {
 		return (
 			<ModalsProvider>
 				<Provider store={store}>
-					<RouterProvider>123</RouterProvider>
+					<RouterProvider>1234</RouterProvider>
 				</Provider>
 			</ModalsProvider>
 		);
