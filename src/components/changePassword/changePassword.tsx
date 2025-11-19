@@ -145,7 +145,7 @@ class ChangePasswordComponent extends Component<
 					mode="primary"
 					onClick={this.handleChangePassword}
 					className={styles.saveBtn}
-					level="8"
+					size="m"
 					borderRadius="l"
 				>
 					Сохранить

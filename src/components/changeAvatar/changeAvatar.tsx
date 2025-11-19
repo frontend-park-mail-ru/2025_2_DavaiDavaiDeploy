@@ -185,7 +185,7 @@ class ChangeAvatarComponent extends Component<
 
 						<Button
 							mode="primary"
-							level="10"
+							size="xs"
 							borderRadius="l"
 							className={clsx(styles.btn, {
 								[styles.hidden]: !file || !isEditing,

@@ -169,7 +169,7 @@ class FeedbackFormComponent extends Component<
 					className={styles.submitButton}
 					onClick={this.handleSubmit}
 					borderRadius="l"
-					level="7"
+					size="l"
 				>
 					Опубликовать
 				</Button>

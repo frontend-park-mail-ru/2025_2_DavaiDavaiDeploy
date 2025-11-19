@@ -5,7 +5,7 @@ import styles from './Button.module.scss';
 interface ButtonProps {
 	mode: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
 	disabled?: boolean;
-	level?: '7' | '8' | '9' | '10';
+	size?: 'l' | 'm' | 's' | 'xs';
 	borderRadius?: 'lg' | 'l';
 	after?: any;
 	before?: any;
@@ -21,7 +21,7 @@ export class Button extends Component<ButtonProps> {
 	render() {
 		const {
 			mode,
-			level = '9',
+			size = 'm',
 			borderRadius = 'l',
 			after,
 			before,
@@ -42,10 +42,10 @@ export class Button extends Component<ButtonProps> {
 				className={clsx(
 					styles.button,
 					{
-						[styles.level7]: level === '7',
-						[styles.level8]: level === '8',
-						[styles.level9]: level === '9',
-						[styles.level10]: level === '10',
+						[styles.sizeL]: size === 'l',
+						[styles.sizeM]: size === 'm',
+						[styles.sizeS]: size === 's',
+						[styles.sizeXS]: size === 'xs',
 						[styles.primary]: mode === 'primary',
 						[styles.secondary]: mode === 'secondary',
 						[styles.tertiary]: mode === 'tertiary',

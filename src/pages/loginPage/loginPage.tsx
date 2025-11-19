@@ -192,7 +192,7 @@ export class LoginPageNotConnected extends Component<
 								mode="primary"
 								onClick={this.handleLoginUser}
 								className={styles.login__button}
-								level="9"
+								size="s"
 								borderRadius="lg"
 							>
 								Войти

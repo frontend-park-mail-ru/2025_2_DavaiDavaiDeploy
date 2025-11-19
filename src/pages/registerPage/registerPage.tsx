@@ -229,7 +229,7 @@ export class RegisterPageNotConnected extends Component<
 								mode="primary"
 								onClick={this.handleRegisterUser}
 								className={styles.login__button}
-								level="9"
+								size="s"
 								borderRadius="lg"
 							>
 								Зарегистрироваться

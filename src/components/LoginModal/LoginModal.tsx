@@ -36,7 +36,7 @@ export class LoginModal extends Component {
 						>
 							<Button
 								mode="secondary"
-								level="8"
+								size="m"
 								before={<Exit />}
 								className={style.exitButton}
 							>
@@ -44,7 +44,7 @@ export class LoginModal extends Component {
 							</Button>
 							<Button
 								mode="primary"
-								level="8"
+								size="m"
 								borderRadius="l"
 								className={style.turnBackButton}
 							>

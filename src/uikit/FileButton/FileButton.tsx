@@ -23,7 +23,7 @@ export class FileButton extends Component<FileButtonProps> {
 			<div className={styles.wrapper}>
 				<Button
 					mode="primary"
-					level="10"
+					size="xs"
 					borderRadius="l"
 					className={styles.btn}
 					onClick={this.handleFileUpload}
