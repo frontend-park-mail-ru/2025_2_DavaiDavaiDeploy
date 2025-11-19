@@ -155,6 +155,7 @@ jobs:
             -t frontend-stage:latest .
   
             docker compose -f docker-compose.stage.yml --env-file .env.stage down -v
+            docker compose --env-file .env.stage -f docker-compose.stage.yml build --no-cache
             docker compose --env-file .env.stage -f docker-compose.stage.yml up -d
 
   notify_success:
