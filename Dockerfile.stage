@@ -26,22 +26,6 @@ ARG AWS_DEFAULT_REGION
 ARG S3_BUCKET
 ARG AWS_ENDPOINT
 
-# Преобразуем ARG в ENV для использования в RUN
-ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-ENV AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
-ENV S3_BUCKET=$S3_BUCKET
-ENV AWS_ENDPOINT=$AWS_ENDPOINT
-
-# Проверяем переменные
-RUN echo "=== DEBUG INFO ==="
-RUN echo "S3_BUCKET: $S3_BUCKET"
-RUN echo "AWS_ENDPOINT: $AWS_ENDPOINT"
-RUN echo "AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION"
-RUN echo "Files in current directory:"
-RUN ls -la
-RUN echo "File count: $(find . -type f | wc -l)"
-
 # Синхронизируем с S3
 RUN aws s3 sync . s3://${S3_BUCKET}/assets/stage \
     --delete \
