@@ -132,9 +132,7 @@ jobs:
           script: |
             cd /home/ubuntu/frontend/stage
             git fetch
-            git checkout -B ${{ github.ref_name }}
             git reset --hard origin/${{ github.ref_name }}
-            git pull
 
       - name: Build frontend
         uses: appleboy/ssh-action@master
