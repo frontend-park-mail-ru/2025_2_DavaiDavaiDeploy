@@ -88,6 +88,16 @@ jobs:
       - name: Run Prettier
         run: |
           npm run lint:prettier
+      - name: Send Telegram Failure Message
+        if: failure() 
+        uses: PacificPromise/macos-telegram-action@main
+        with:
+          type: topic
+          message: |
+            ❗️ Произошла ошибка Prettier
+
+            🔗 Ссылка на пайплайн 🔗
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   stylelint-check:
     name: Stylelint check
@@ -105,6 +115,17 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Run Stylelint
         run: npm run lint:stylelint
+      - name: Send Telegram Failure Message
+        if: failure() 
+        uses: PacificPromise/macos-telegram-action@main
+        with:
+          type: topic
+          message: |
+            ❗️ Произошла ошибка Stylelint
+
+            🔗 Ссылка на пайплайн 🔗
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
 
   unit-tests:
     name: Unit tests
@@ -122,6 +143,16 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Run tests
         run: npm run test
+      - name: Send Telegram Failure Message
+        if: failure() 
+        uses: PacificPromise/macos-telegram-action@main
+        with:
+          type: topic
+          message: |
+            ❗️ Произошла ошибка Unit tests
+
+            🔗 Ссылка на пайплайн 🔗
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   deploy:
     name: Deploy to Server
