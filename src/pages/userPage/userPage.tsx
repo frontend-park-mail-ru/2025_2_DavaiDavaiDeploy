@@ -33,8 +33,6 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 
 		const { favoriteFilms } = this.props;
 
-		console.log(favoriteFilms);
-
 		return (
 			<Flex className={styles.page} direction="column" align="center">
 				<Title className={styles.title} level="2">
@@ -44,7 +42,22 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 					<ChangeAvatar />
 					<ChangePassword />
 				</Flex>
-				{favoriteFilms && <FavoritesFilmCard film={favoriteFilms[0]} />}
+				<Flex className={styles.favorites} direction="column" align="center">
+					<Title className={styles.title} level="2">
+						Избранное
+					</Title>
+					<Flex
+						className={styles.films}
+						direction="column"
+						align="center"
+						justify="center"
+					>
+						{favoriteFilms &&
+							favoriteFilms.map((film) => {
+								return <FavoritesFilmCard film={film} />;
+							})}
+					</Flex>
+				</Flex>
 			</Flex>
 		);
 	}

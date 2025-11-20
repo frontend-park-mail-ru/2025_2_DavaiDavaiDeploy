@@ -1,5 +1,9 @@
 @use '../../styles/globals.scss' as *;
 
+.linkWrap {
+	display: contents;
+}
+
 .filmCard {
 	overflow: hidden;
 	padding: 2rem 2rem;
@@ -105,6 +109,11 @@
 			fill: transparent;
 		}
 	}
+}
+
+.description {
+	overflow-wrap: break-word;
+	word-break: normal;
 }
 
 .filmCard:hover {

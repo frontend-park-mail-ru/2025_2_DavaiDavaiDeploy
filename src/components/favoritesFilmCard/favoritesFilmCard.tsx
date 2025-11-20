@@ -39,7 +39,7 @@ export class FavoritesFilmCard extends Component<FavoritesFilmCardProps> {
 		const ratingType = getRatingType(rating);
 
 		return (
-			<Link href={`/films/${id}`}>
+			<Link href={`/films/${id}`} className={styles.linkWrap}>
 				<Flex className={styles.filmCard} direction="row">
 					<div className={styles.imageContainer}>
 						<Image className={styles.image} src={image} alt={title} />

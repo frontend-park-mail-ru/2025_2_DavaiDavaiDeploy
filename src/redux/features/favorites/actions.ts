@@ -76,7 +76,7 @@ const getFavoritesAction = (): Action => async (dispatch: Dispatch) => {
 			rating: 9.3,
 			image: 'https://example.com/images/shawshank.jpg',
 			short_description:
-				'Два заключенных заводят дружбу на протяжении нескольких лет, находя утешение и искупление через простые поступки.',
+				'Два заключенных заводят дротяжении несколькиение и иску.',
 		},
 		{
 			id: '3',

@@ -1,6 +1,6 @@
 .page {
 	position: relative;
-	gap: 7vw;
+	gap: 5vw;
 	width: 100vw;
 	min-height: 75vh;
 	padding: var(--wide-side-padding);
@@ -49,6 +49,17 @@
 
 .title {
 	z-index: 10;
+}
+
+.favorites {
+	gap: 4rem;
+	margin-bottom: 4rem;
+	width: 100%;
+}
+
+.films {
+	gap: 2rem;
+	width: 100%;
 }
 
 @media (max-width: 1024px) {
