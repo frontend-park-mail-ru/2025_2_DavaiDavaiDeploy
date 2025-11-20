@@ -2,6 +2,7 @@ import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHel
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
+import clsx from '@/modules/clsx';
 import { Link } from '@/modules/router/link';
 import type { ModelsFilmPage } from '@/types/models';
 import {
@@ -156,7 +157,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 									{genre && (
 										<Link href={`/genres/${genre_id}`}>
 											<Subhead
-												className={styles.value}
+												className={clsx(styles.value, styles.genre)}
 												color="light"
 												level="8"
 												opacity="80"
@@ -244,7 +245,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 											</Headline>
 											<Link href={`/genres/${genre_id}`}>
 												<Subhead
-													className={styles.value}
+													className={clsx(styles.genre, styles.value)}
 													color="light"
 													level="8"
 													opacity="80"

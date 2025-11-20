@@ -172,6 +172,18 @@
 	line-height: 1;
 }
 
+.genre {
+	display: inline-block;
+	transform-origin: center;
+	transition: transform 0.3s ease;
+
+	&:hover {
+		color: var(--color-text);
+		opacity: 1;
+		transform: scale(1.02);
+	}
+}
+
 @media (max-width: 1024px) {
 	.film {
 		margin-bottom: 1rem;
