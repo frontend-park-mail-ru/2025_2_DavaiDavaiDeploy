@@ -1,3 +1,4 @@
+import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
@@ -7,6 +8,7 @@ import { Link } from '@/modules/router/link';
 import type { ModelsFilmPage } from '@/types/models';
 import {
 	Badge,
+	Button,
 	Flex,
 	Headline,
 	Image,
@@ -74,21 +76,32 @@ export class FilmInfo extends Component<FilmInfoProps> {
 				</div>
 
 				<Flex className={styles.content} direction="row" align="start">
-					<Flex className={styles.media} align="start" justify="center">
-						<Image
-							src={cover}
-							alt={title || 'Cover'}
-							className={styles.cover}
-						/>
+					<Flex
+						className={styles.right}
+						align="center"
+						justify="center"
+						direction="column"
+					>
+						<Flex className={styles.media} align="start" justify="center">
+							<Image
+								src={cover}
+								alt={title || 'Cover'}
+								className={styles.cover}
+							/>
 
-						{formattedRating && ratingType && (
-							<Badge
-								mode={ratingType}
-								className={styles[`rating-${ratingType}`]}
-							>
-								<Headline level="7">{formattedRating}</Headline>
-							</Badge>
-						)}
+							{formattedRating && ratingType && (
+								<Badge
+									mode={ratingType}
+									className={styles[`rating-${ratingType}`]}
+								>
+									<Headline level="7">{formattedRating}</Headline>
+								</Badge>
+							)}
+						</Flex>
+						<Button mode="secondary" className={styles.favBtn}>
+							<Favorite className={styles.favIcon} />
+							<Headline level="7">Избранное</Headline>
+						</Button>
 					</Flex>
 
 					<Flex className={styles.info} direction="column" align="start">
@@ -178,8 +191,16 @@ export class FilmInfo extends Component<FilmInfoProps> {
 									)}
 								</Flex>
 
-								<Flex className={styles.smallRating}>
+								<Flex
+									className={styles.smallRating}
+									direction="column"
+									align="center"
+								>
 									<FilmRating film={this.props.film} />
+									<Button mode="secondary" className={styles.smallFavBtn}>
+										<Favorite className={styles.favIcon} />
+										<Headline level="7">Избранное</Headline>
+									</Button>
 								</Flex>
 
 								{description && (
