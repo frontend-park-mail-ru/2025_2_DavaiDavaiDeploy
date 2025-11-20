@@ -101,6 +101,10 @@
 	margin-bottom: 2rem;
 }
 
+.wrapper {
+	display: contents;
+}
+
 @media (max-width: 1024px) {
 	.rating-high,
 	.rating-medium,
@@ -118,7 +122,7 @@
 	}
 
 	.smallRateBtn {
-		display: inline;
+		display: flex;
 		margin-top: 1rem;
 		margin-bottom: 1rem;
 	}

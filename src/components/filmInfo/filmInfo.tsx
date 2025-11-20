@@ -39,6 +39,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 		const {
 			title,
 			genre,
+			genre_id,
 			rating,
 			description,
 			age_category,
@@ -153,14 +154,16 @@ export class FilmInfo extends Component<FilmInfoProps> {
 										</Subhead>
 									)}
 									{genre && (
-										<Subhead
-											className={styles.value}
-											color="light"
-											level="8"
-											opacity="80"
-										>
-											{genre}
-										</Subhead>
+										<Link href={`/genres/${genre_id}`}>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{genre}
+											</Subhead>
+										</Link>
 									)}
 									{formattedDuration && (
 										<Subhead
@@ -239,14 +242,16 @@ export class FilmInfo extends Component<FilmInfoProps> {
 											<Headline className={styles.fact} level="7" weight="bold">
 												Жанр
 											</Headline>
-											<Subhead
-												className={styles.value}
-												color="light"
-												level="8"
-												opacity="80"
-											>
-												{genre}
-											</Subhead>
+											<Link href={`/genres/${genre_id}`}>
+												<Subhead
+													className={styles.value}
+													color="light"
+													level="8"
+													opacity="80"
+												>
+													{genre}
+												</Subhead>
+											</Link>
 										</>
 									)}
 

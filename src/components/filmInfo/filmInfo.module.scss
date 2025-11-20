@@ -179,6 +179,10 @@
 		min-height: 100vh;
 	}
 
+	.smallRating {
+		display: flex;
+	}
+
 	.container {
 		display: none;
 	}
@@ -186,9 +190,9 @@
 	.content {
 		padding: 0 2rem;
 		flex-direction: column;
-		gap: 1.5rem;
+		gap: 2rem;
 		align-items: center;
-		margin-top: 5rem;
+		margin-top: 7rem;
 		text-align: center;
 	}
 
@@ -216,6 +220,7 @@
 	}
 
 	.main {
+		gap: 0.5rem;
 		justify-content: center;
 		align-items: center;
 		text-align: center;
@@ -223,6 +228,7 @@
 
 	.title {
 		margin: 0 auto;
+		text-align: center;
 	}
 
 	.subtitle {
@@ -232,6 +238,7 @@
 	.description {
 		margin-top: 1rem;
 		text-align: center;
+		margin-right: 0;
 	}
 
 	.secondRow {
@@ -276,6 +283,7 @@
 	}
 
 	.smallAbout {
+		display: flex;
 		margin-top: 0.5rem;
 		flex-wrap: wrap;
 		gap: 3vw;
