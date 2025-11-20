@@ -1,136 +1,62 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsActorPage, ModelsMainPageFilm } from '@/types/models';
+import type { ModelsFavFilm } from '@/types/models';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
 
-const clearActorAction = (): Action => {
+/**
+ * Устанавливает состояние загрузки избранных фильмов
+ */
+const setFavoritesLoadingAction = (): Action => {
 	return {
-		type: actionTypes.CLEAR_ACTOR,
+		type: actionTypes.FAVORITES_LOADING,
 	};
 };
 
 /**
- * Устанавливает состояние загрузки страницы актера
+ * Возвращает успешно загруженные избранные фильмы
  */
-const setActorLoadingAction = (): Action => {
+const returnFavoritesAction = (data: ModelsFavFilm[]): Action => {
 	return {
-		type: actionTypes.ACTOR_LOADING,
+		type: actionTypes.FAVORITES_LOADED,
+		payload: { favorites: data },
 	};
 };
 
 /**
- * Устанавливает состояние загрузки фильмов актера
+ * Возвращает ошибку загрузки избранных фильмов
  */
-const setActorFilmsLoadingAction = (): Action => {
+const returnFavoritesErrorAction = (error: string): Action => {
 	return {
-		type: actionTypes.ACTOR_FILMS_LOADING,
+		type: actionTypes.FAVORITES_ERROR,
+		payload: { error: error },
 	};
 };
 
 /**
- * Возвращает успешно загруженные данные актера
+ * Загружает избранные фильмы
  */
-const returnActorAction = (data: ModelsActorPage): Action => {
-	return {
-		type: actionTypes.ACTOR_LOADED,
-		payload: { actor: data },
-	};
-};
+const getFavoritesAction = (): Action => async (dispatch: Dispatch) => {
+	dispatch(setFavoritesLoadingAction());
 
-/**
- * Возвращает успешно загруженные фильмы актера
- */
-const returnActorFilmsAction = (data: ModelsMainPageFilm[]): Action => {
-	return {
-		type: actionTypes.ACTOR_FILMS_LOADED,
-		payload: { films: data },
-	};
-};
+	try {
+		const response = await HTTPClient.get<ModelsFavFilm[]>('/films/favorites');
 
-/**
- * Устанавливает состояние ошибки при загрузке данных актера
- */
-const returnActorErrorAction = (error: string): Action => {
-	return {
-		type: actionTypes.ACTOR_ERROR,
-		payload: { error },
-	};
-};
+		dispatch(returnFavoritesAction(response.data));
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
-/**
- * Устанавливает состояние ошибки при загрузке фильмов актера
- */
-const returnActorFilmsErrorAction = (error: string): Action => {
-	return {
-		type: actionTypes.ACTOR_FILMS_ERROR,
-		payload: { error },
-	};
-};
-
-/**
- * Загружает данные актера по ID
- */
-const getActorAction =
-	(id: string | number): Action =>
-	async (dispatch: Dispatch) => {
-		dispatch(setActorLoadingAction());
-
-		try {
-			const response = await HTTPClient.get<ModelsActorPage>(`/actors/${id}`);
-			dispatch(returnActorAction(response.data));
-		} catch (error: unknown) {
-			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
-
-			if (error instanceof Error) {
-				errorMessage = error.message;
-			} else if (typeof error === 'string') {
-				errorMessage = error;
-			}
-
-			dispatch(returnActorErrorAction(errorMessage));
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
 		}
-	};
 
-/**
- * Загружает фильмы актера с пагинацией
- */
-const getActorFilmsAction =
-	(limit: number, offset: number, id: string | number): Action =>
-	async (dispatch: Dispatch) => {
-		dispatch(setActorFilmsLoadingAction());
-
-		try {
-			const response = await HTTPClient.get<ModelsMainPageFilm[]>(
-				`/actors/${id}/films`,
-				{
-					params: { count: limit, offset },
-				},
-			);
-
-			dispatch(returnActorFilmsAction(response.data));
-		} catch (error: unknown) {
-			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
-
-			if (error instanceof Error) {
-				errorMessage = error.message;
-			} else if (typeof error === 'string') {
-				errorMessage = error;
-			}
-
-			dispatch(returnActorFilmsErrorAction(errorMessage));
-		}
-	};
+		dispatch(returnFavoritesErrorAction(errorMessage));
+	}
+};
 
 export default {
-	getActorAction,
-	getActorFilmsAction,
-	setActorLoadingAction,
-	setActorFilmsLoadingAction,
-	returnActorAction,
-	returnActorFilmsAction,
-	returnActorErrorAction,
-	returnActorFilmsErrorAction,
-	clearActorAction,
+	getFavoritesAction,
 };

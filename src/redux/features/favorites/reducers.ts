@@ -1,37 +1,31 @@
-import { decode } from '@/helpers/decodeHelper/decodeHelper';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsActorPage, ModelsMainPageFilm } from '@/types/models';
+import type { ModelsFavFilm } from '@/types/models';
 import actionTypes from './actionTypes';
 
 interface InitialState {
-	actorLoading: boolean;
-	curActor: ModelsActorPage | null;
-	actorError: string | null;
-
-	actorFilmsLoading: boolean;
-	actorFilms: ModelsMainPageFilm[];
-	actorFilmsError: string | null;
+	loading: boolean;
+	favorites: ModelsFavFilm[] | null;
+	error: string | null;
 }
 
 /**
- * Начальное состояние редьюсера жанров.
+ * Начальное состояние редьюсера избранного.
  */
 const initialState: InitialState = {
-	actorLoading: false,
-	curActor: null,
-	actorError: null,
-
-	actorFilmsLoading: false,
-	actorFilms: [],
-	actorFilmsError: null,
+	loading: false,
+	favorites: null,
+	error: null,
 };
 
 /**
- * Редьюсер для управления состоянием жанров.
+ * Редьюсер для управления состоянием избранных фильмов.
  */
-const actorReducer: Reducer = (state = initialState, action: Action): State => {
+const favoritesReducer: Reducer = (
+	state = initialState,
+	action: Action,
+): State => {
 	if (typeof action == 'function') {
 		return state;
 	}
@@ -39,54 +33,29 @@ const actorReducer: Reducer = (state = initialState, action: Action): State => {
 	const { type, payload } = action;
 
 	switch (type) {
-		case actionTypes.ACTOR_LOADING:
+		case actionTypes.FAVORITES_LOADING:
 			return {
 				...state,
-				actorLoading: true,
-				actorError: null,
+				loading: true,
+				error: null,
 			};
-		case actionTypes.ACTOR_LOADED:
+		case actionTypes.FAVORITES_LOADED:
 			return {
 				...state,
-				actorLoading: false,
-				actorError: null,
-				curActor: {
-					...payload.actor,
-					original_name: decode(payload.actor.original_name),
-				},
+				loading: false,
+				error: null,
+				favourites: payload.favorites,
 			};
-		case actionTypes.ACTOR_ERROR:
+		case actionTypes.FAVORITES_ERROR:
 			return {
 				...state,
-				actorLoading: false,
-				actorError: payload.error,
-				curActor: null,
+				loading: false,
+				error: payload.error,
+				favorites: null,
 			};
-		case actionTypes.ACTOR_FILMS_LOADING:
-			return {
-				...state,
-				actorFilmsLoading: true,
-				actorFilmsError: null,
-			};
-		case actionTypes.ACTOR_FILMS_LOADED:
-			return {
-				...state,
-				actorFilmsLoading: false,
-				actorFilmsError: null,
-				actorFilms: payload.films,
-			};
-		case actionTypes.ACTOR_FILMS_ERROR:
-			return {
-				...state,
-				actorFilmsLoading: false,
-				actorFilmsError: payload.error,
-				actorFilms: [],
-			};
-		case actionTypes.CLEAR_ACTOR:
-			return initialState;
 		default:
 			return state;
 	}
 };
 
-export default actorReducer;
+export default favoritesReducer;
