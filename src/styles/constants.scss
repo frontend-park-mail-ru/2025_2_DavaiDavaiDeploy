@@ -39,6 +39,13 @@
 
 	--color-boxshadow-btn: hsl(0deg 0% 0% / 15%);
 
+	--color-bg-gradient: linear-gradient(
+		to right,
+		hsl(228deg 68% 22%) 0%,
+		hsl(231deg 66% 21%) 37%,
+		hsl(237deg 53% 16%) 100%
+	);
+
 	--color-btn-gradient: linear-gradient(
 		to right,
 		hsl(234deg 54% 34%) 0%,

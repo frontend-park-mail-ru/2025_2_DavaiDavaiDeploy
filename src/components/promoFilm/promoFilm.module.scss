@@ -158,6 +158,8 @@
 		text-align: center;
 		width: 100%;
 		max-width: 100%;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.description {
@@ -166,7 +168,12 @@
 
 	.info {
 		justify-content: center;
+		align-items: center;
 		gap: 0.5rem;
+	}
+
+	.title {
+		text-align: center;
 	}
 
 	.rating,
@@ -180,5 +187,6 @@
 	.title-medium,
 	.title-high {
 		display: inline-block;
+		text-align: center;
 	}
 }

@@ -2,6 +2,7 @@ import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHel
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
+import clsx from '@/modules/clsx';
 import { Link } from '@/modules/router/link';
 import type { ModelsFilmPage } from '@/types/models';
 import {
@@ -39,6 +40,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 		const {
 			title,
 			genre,
+			genre_id,
 			rating,
 			description,
 			age_category,
@@ -153,14 +155,16 @@ export class FilmInfo extends Component<FilmInfoProps> {
 										</Subhead>
 									)}
 									{genre && (
-										<Subhead
-											className={styles.value}
-											color="light"
-											level="8"
-											opacity="80"
-										>
-											{genre}
-										</Subhead>
+										<Link href={`/genres/${genre_id}`}>
+											<Subhead
+												className={clsx(styles.value, styles.genre)}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{genre}
+											</Subhead>
+										</Link>
 									)}
 									{formattedDuration && (
 										<Subhead
@@ -239,14 +243,16 @@ export class FilmInfo extends Component<FilmInfoProps> {
 											<Headline className={styles.fact} level="7" weight="bold">
 												Жанр
 											</Headline>
-											<Subhead
-												className={styles.value}
-												color="light"
-												level="8"
-												opacity="80"
-											>
-												{genre}
-											</Subhead>
+											<Link href={`/genres/${genre_id}`}>
+												<Subhead
+													className={clsx(styles.genre, styles.value)}
+													color="light"
+													level="8"
+													opacity="80"
+												>
+													{genre}
+												</Subhead>
+											</Link>
 										</>
 									)}
 
