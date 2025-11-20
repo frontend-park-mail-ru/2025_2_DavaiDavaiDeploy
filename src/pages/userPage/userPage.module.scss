@@ -64,7 +64,7 @@
 
 @media (max-width: 1024px) {
 	.page {
-		gap: 10vw;
+		gap: 7rem;
 		margin-top: 10rem;
 		min-height: 100vh;
 		margin-bottom: 2rem;
@@ -85,7 +85,7 @@
 @media (max-width: 768px) {
 	.page {
 		&::before {
-			top: 40%;
+			top: 30vh;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			width: 110vw;
@@ -93,7 +93,7 @@
 		}
 
 		&::after {
-			top: 30%;
+			top: 30vh;
 			left: 50%;
 			transform: translate(-50%, -50%) rotate(90deg);
 			width: 120vh;
@@ -103,6 +103,11 @@
 
 	.profile {
 		gap: 1rem;
+	}
+
+	.favorites {
+		gap: 3rem;
+		margin-bottom: 2rem;
 	}
 }
 

@@ -129,20 +129,69 @@
 	}
 }
 
-@media (max-width: 1024px) {
-	// .info {
-	// 	justify-content: center;
-	// 	align-items: center;
-	// 	gap: 0.5rem;
-	// }
-
-	// .title {
-	// 	text-align: center;
-	// }
-}
-
 @media (max-width: 768px) {
-	// .film-card {
-	// 	max-width: 18rem;
-	// }
+	.filmCard {
+		flex-direction: column;
+		padding: 2rem 2rem;
+		gap: 1.5rem;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.imageContainer {
+		flex: auto;
+		height: 30vh;
+		position: relative;
+		overflow: hidden;
+		max-height: none;
+		max-width: none;
+	}
+
+	.content {
+		padding: 0.625rem 0;
+		gap: 2rem;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.info {
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.item {
+		text-decoration: none;
+		background: transparent;
+	}
+
+	.rating,
+	.rating-high,
+	.rating-medium,
+	.rating-low {
+		position: absolute;
+		top: 2.8%;
+		left: 4%;
+		border-radius: 0.3125rem;
+		z-index: 2;
+		display: inline-block;
+		padding: 0.35rem 0.77rem;
+		font-size: var(--font-size-l);
+	}
+
+	.iconBtn {
+		top: 15px;
+		right: 15px;
+		height: 2.5rem;
+		width: 2.5rem;
+	}
+
+	.icon {
+		width: 1rem;
+	}
+
+	.description,
+	.title {
+		text-align: center;
+	}
 }

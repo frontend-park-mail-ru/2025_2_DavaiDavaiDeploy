@@ -4,6 +4,7 @@ import { FavoritesFilmCard } from '@/components/favoritesFilmCard/favoritesFilmC
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store.ts';
+import { Redirect } from '@/modules/router/redirect';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/favorites/actions';
@@ -27,9 +28,9 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 	}
 
 	render() {
-		// if (!this.props.isAuthentificated) {
-		// 	return <Redirect to="/" />;
-		// }
+		if (!this.props.isAuthentificated) {
+			return <Redirect to="/" />;
+		}
 
 		const { favoriteFilms } = this.props;
 
