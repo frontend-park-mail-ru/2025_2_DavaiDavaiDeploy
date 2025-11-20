@@ -1,0 +1,139 @@
+@use '../../styles/globals.scss' as *;
+
+.filmCard {
+	overflow: hidden;
+	padding: 2rem 2rem;
+	border-radius: var(--border-radius-3xl);
+	width: 100%;
+	gap: 2.5rem;
+	background: hsl(0deg 0% 100% / 0.1%);
+	backdrop-filter: blur(5px);
+	background: var(--color-glass-gradient);
+	box-shadow:
+		0 4px 30px rgba(0, 0, 0, 0.1),
+		inset 10px 10px 30px rgba(0, 0, 0, 0.15);
+	border: 1px solid hsl(235, 30%, 69%, 0.2);
+}
+
+.imageContainer {
+	flex: 0 0 20%;
+	position: relative;
+	aspect-ratio: 3 / 4;
+	overflow: hidden;
+	max-height: 270px;
+	max-width: 202px;
+	border-radius: var(--border-radius-l);
+}
+
+.image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: brightness(0.95);
+	transition: all 0.4s ease;
+}
+
+.imageContainer:hover .image {
+	filter: brightness(1.2);
+}
+
+.content {
+	padding: 0.625rem 0;
+	background-color: transparent;
+	width: 100%;
+	box-sizing: border-box;
+	gap: 2.5rem;
+}
+
+.title {
+	width: 100%;
+	max-width: 100%;
+	overflow-wrap: break-word;
+	word-break: normal;
+	hyphens: manual;
+}
+
+.info {
+	width: 40%;
+	padding: 0;
+	list-style: none;
+	margin-top: -1.5rem;
+	flex-wrap: nowrap;
+	gap: 1rem;
+	white-space: nowrap;
+}
+
+.item {
+	text-decoration: none;
+	background: transparent;
+}
+
+.rating,
+.rating-high,
+.rating-medium,
+.rating-low {
+	position: absolute;
+	top: 2.8%;
+	left: 4%;
+	border-radius: 0.3125rem;
+	z-index: 2;
+	display: inline-block;
+	padding: 0.35rem 0.77rem;
+	font-size: var(--font-size-l);
+}
+
+.icon {
+	width: 1.5rem;
+	fill: var(--color-text);
+	transition: all 0.3s ease;
+}
+
+.iconBtn {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	height: 3rem;
+	width: 3rem;
+	transition: all 0.3s ease;
+
+	&:hover {
+		transform: scale(1.05);
+		.icon {
+			fill: transparent;
+		}
+	}
+}
+
+.filmCard:hover {
+	background-color: var(--color-light-text);
+
+	.title,
+	.description,
+	.item {
+		color: var(--color-dark-text);
+	}
+	.item {
+		opacity: 0.6;
+	}
+}
+
+@media (max-width: 1024px) {
+	// .info {
+	// 	justify-content: center;
+	// 	align-items: center;
+	// 	gap: 0.5rem;
+	// }
+
+	// .title {
+	// 	text-align: center;
+	// }
+}
+
+@media (max-width: 768px) {
+	// .film-card {
+	// 	max-width: 18rem;
+	// }
+}

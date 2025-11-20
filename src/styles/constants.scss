@@ -93,6 +93,13 @@
 		hsl(235deg 52% 16% / 0%) 100%
 	);
 
+	--color-glass-gradient: linear-gradient(
+		to top,
+		hsla(235, 30%, 69%, 0.06) 0%,
+		hsla(235, 30%, 69%, 0.04) 5%,
+		rgba(187, 189, 212, 0) 20%
+	);
+
 	--color-purple-light: hsl(250deg 9% 42%);
 	--color-purple-border: hsl(266deg 15% 55%);
 	--color-purple-placeholder: hsl(268deg 17% 25%);
@@ -119,6 +126,7 @@
 	--font-weight-medium: 500;
 	--font-weight-regular: 400;
 
+	--border-radius-3xl: 2.5rem; // 40
 	--border-radius-xxl: 2.25rem; // 36
 	--border-radius-xl: 1.875rem; // 30
 	--border-radius-lg: 1rem; // 16

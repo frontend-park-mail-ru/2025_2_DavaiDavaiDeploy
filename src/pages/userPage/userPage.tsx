@@ -1,25 +1,39 @@
 import { ChangeAvatar } from '@/components/changeAvatar/changeAvatar';
 import { ChangePassword } from '@/components/changePassword/changePassword';
+import { FavoritesFilmCard } from '@/components/favoritesFilmCard/favoritesFilmCard';
 import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store.ts';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
+import actions from '@/redux/features/favorites/actions';
+import { selectFavorites } from '@/redux/features/favorites/selectors';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
+import type { ModelsFavFilm } from '@/types/models';
 import { Flex, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
-import { Redirect } from '../../modules/router/redirect';
 import styles from './userPage.module.scss';
 
 interface UserPageProps {
 	isAuthentificated: boolean;
+	favoriteFilms: ModelsFavFilm[];
+	getFavorites: VoidFunction;
 }
 
 class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
+	onMount() {
+		this.props.getFavorites();
+	}
+
 	render() {
-		if (!this.props.isAuthentificated) {
-			return <Redirect to="/" />;
-		}
+		// if (!this.props.isAuthentificated) {
+		// 	return <Redirect to="/" />;
+		// }
+
+		const { favoriteFilms } = this.props;
+
+		console.log(favoriteFilms);
 
 		return (
 			<Flex className={styles.page} direction="column" align="center">
@@ -30,6 +44,7 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 					<ChangeAvatar />
 					<ChangePassword />
 				</Flex>
+				{favoriteFilms && <FavoritesFilmCard film={favoriteFilms[0]} />}
 			</Flex>
 		);
 	}
@@ -37,9 +52,14 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 
 const mapStateToProps = (state: State): Map => ({
 	isAuthentificated: selectIsAuthentificated(state),
+	favoriteFilms: selectFavorites(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	getFavorites: () => dispatch(actions.getFavoritesAction()),
 });
 
 export const UserPage = compose(
 	withRouter,
-	connect(mapStateToProps),
+	connect(mapStateToProps, mapDispatchToProps),
 )(UserPageComponent);

@@ -44,7 +44,7 @@ const favoritesReducer: Reducer = (
 				...state,
 				loading: false,
 				error: null,
-				favourites: payload.favorites,
+				favorites: payload.favorites,
 			};
 		case actionTypes.FAVORITES_ERROR:
 			return {
