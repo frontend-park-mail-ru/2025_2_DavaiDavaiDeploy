@@ -2,21 +2,22 @@ import { Component } from '@/modules/react';
 import { LoginModal } from '../../components/LoginModal/LoginModal.tsx';
 import { TestModal } from '../../components/testModal/testModal.tsx';
 import { MODALS } from './modals.ts';
-import { withModal } from './withModal';
-import type { WithModalProps } from './withModalProps';
 
-class ModalRootComponent extends Component<WithModalProps> {
+type Props = {
+	activeModal: number | null;
+	activeModalProps: object | null;
+};
+
+export class ModalRoot extends Component<Props> {
 	render() {
-		console.log('ModalRootComponent.render', this.props.modal);
-		switch (this.props.modal.activeModal) {
+		console.log('ModalRoot.render', this.props);
+		switch (this.props.activeModal) {
 			case MODALS.LOGIN_MODAL:
-				return <LoginModal {...this.props.modal.activeModalProps} />;
+				return <LoginModal {...this.props.activeModalProps} />;
 			case MODALS.TEST_MODAL:
-				return <TestModal {...this.props.modal.activeModalProps} />;
+				return <TestModal {...this.props.activeModalProps} />;
 			default:
 				return <></>;
 		}
 	}
 }
-
-export const ModalRoot = withModal(ModalRootComponent);

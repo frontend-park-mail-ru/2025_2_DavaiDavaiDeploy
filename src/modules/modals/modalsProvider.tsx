@@ -1,3 +1,4 @@
+import { ModalRoot } from '@/modules/modals/modalRoot.tsx';
 import { Component } from '@/modules/react';
 import { ModalContext } from './modalsContext.ts';
 
@@ -26,6 +27,10 @@ export class ModalsProvider extends Component {
 				}}
 			>
 				{this.props.children}
+				<ModalRoot
+					activeModal={this.state.activeModal}
+					activeModalProps={this.state.activeModalProps}
+				/>
 			</ModalContext.Provider>
 		);
 	}
