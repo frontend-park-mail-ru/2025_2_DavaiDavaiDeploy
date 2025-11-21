@@ -1,0 +1,61 @@
+import type { Action } from '@/modules/redux/types/actions';
+import type { Reducer } from '@/modules/redux/types/reducers';
+import type { State } from '@/modules/redux/types/store';
+import type { ModelsFilmInCalendar } from '@/types/models';
+import actionTypes from './actionTypes';
+
+interface InitialState {
+	loading: boolean;
+	calendar: ModelsFilmInCalendar[] | null;
+	error: string | null;
+}
+
+/**
+ * Начальное состояние редьюсера жанров.
+ */
+const initialState: InitialState = {
+	loading: false,
+	calendar: null,
+	error: null,
+};
+
+/**
+ * Редьюсер для управления состоянием жанров.
+ */
+const calendarReducer: Reducer = (
+	state = initialState,
+	action: Action,
+): State => {
+	if (typeof action == 'function') {
+		return state;
+	}
+
+	const { type, payload } = action;
+
+	switch (type) {
+		case actionTypes.CALENDAR_LOADING:
+			return {
+				...state,
+				loading: true,
+				error: null,
+			};
+		case actionTypes.CALENDAR_LOADED:
+			return {
+				...state,
+				loading: false,
+				error: null,
+				calendar: payload.calendar,
+			};
+		case actionTypes.CALENDAR_ERROR:
+			return {
+				...state,
+				loading: false,
+				error: payload.error,
+				calendar: null,
+			};
+		default:
+			return state;
+	}
+};
+
+export default calendarReducer;
