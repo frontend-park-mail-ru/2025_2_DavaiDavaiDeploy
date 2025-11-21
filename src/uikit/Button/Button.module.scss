@@ -13,10 +13,10 @@
 	background-color: var(--color-accent);
 	color: var(--color-light);
 	transition: all 200ms ease;
+	border: 1px solid var(--color-accent);
 
 	&:hover {
 		background: transparent;
-		border: 1px solid var(--color-accent);
 		color: var(--color-accent);
 		transform: translateY(-1px);
 	}
