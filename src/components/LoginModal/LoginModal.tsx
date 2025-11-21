@@ -1,3 +1,4 @@
+import Close from '@/assets/img/close.svg?react';
 import Exit from '@/assets/img/exit.svg?react';
 import { Button, Flex, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
@@ -26,6 +27,9 @@ export class LoginModalComponent extends Component<
 					justify="between"
 					align="center"
 				>
+					<div className={style.closeButton} onClick={this.props.modal.hide}>
+						<Close />
+					</div>
 					<Flex className={style.modalHeader} align="center" direction="column">
 						<Title className={style.modalTitle} level="5">
 							Уже уходите?

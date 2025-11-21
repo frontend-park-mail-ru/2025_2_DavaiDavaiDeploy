@@ -4,13 +4,17 @@
 	left: 0;
 	width: 100dvw;
 	height: 100dvh;
-	background-color: rgb(0 0 0 / 50%); /* Затемнение */
+	background: rgb(0 0 0 / 50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	z-index: 1000;
-	font-size: large;
+	opacity: 0;
+	animation: fadeIn 0.3s ease-out forwards;
 }
 
 .modalContent {
-	background-color: var(--color-bg-light);
+	border-radius: var(--border-radius-xl);
 	max-width: 90dvw;
 	min-width: 30dvw;
 	min-width: 50dvh;
@@ -18,5 +22,59 @@
 	overflow-y: auto;
 	position: relative;
 	z-index: 1001;
-	border-radius: var(--border-radius-xl);
+	transform: scale(0.8) translateY(-20px);
+	opacity: 0;
+	animation: modalAppear 0.3s ease-out 0.1s forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes modalAppear {
+	from {
+		transform: scale(0.8) translateY(-20px);
+		opacity: 0;
+	}
+
+	to {
+		transform: scale(1) translateY(0);
+		opacity: 1;
+	}
+}
+
+.modalWrapper.closing {
+	animation: fadeOut 0.3s ease-in forwards;
+}
+
+.modalWrapper.closing .modalContent {
+	animation: modalDisappear 0.3s ease-in forwards;
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes modalDisappear {
+	from {
+		transform: scale(1) translateY(0);
+		opacity: 1;
+	}
+
+	to {
+		transform: scale(0.8) translateY(-20px);
+		opacity: 0;
+	}
 }
