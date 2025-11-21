@@ -33,6 +33,13 @@
 	--color-feedback-9: hsl(135deg 38% 84%);
 	--color-feedback-10: hsl(132deg 42% 81%);
 
+	--color-calendar-1: hsl(137deg 56% 51%);
+	--color-calendar-2: hsl(134deg 53% 60%);
+	--color-calendar-3: hsl(131deg 49% 69%);
+	--color-calendar-4: hsl(122deg 43% 78%);
+	--color-calendar-5: hsl(99deg 37% 85%);
+	--color-calendar-6: hsl(48deg 14% 93%);
+
 	--color-scrollbar-thumb: hsl(245deg 48% 30%);
 	--color-scrollbar-track: transparent;
 	--color-scrollbar-thumb-hover: hsl(244deg 48% 60%);
@@ -109,8 +116,8 @@
 	--color-shadow-hover: hsl(180deg 100% 50% / 50%);
 	--color-shadow-focus: hsl(180deg 100% 50% / 30%);
 
-	--font-size-6xl: clamp(2rem, 23vw, 40rem);
-	--font-size-5xl: clamp(2rem, 4vw, 4rem); // 64
+	--font-size-6xl: clamp(2.5rem, 23vw, 40rem);
+	--font-size-5xl: clamp(2.3rem, 4vw, 4rem); // 64
 	--font-size-4xl: clamp(1.8rem, 3.5vw, 3rem); // 48
 	--font-size-3xl: clamp(1.6rem, 3.06vw, 2.625rem); // 42
 	--font-size-2xl: clamp(1.5rem, 2.3vw, 2rem); // 32
