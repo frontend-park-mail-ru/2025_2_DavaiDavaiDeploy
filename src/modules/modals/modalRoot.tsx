@@ -1,19 +1,40 @@
 import { Component } from '@robocotik/react';
-import { LoginModal } from '../../components/LoginModal/LoginModal.tsx';
-import { TestModal } from '../../components/testModal/testModal.tsx';
-import { MODALS } from './modals.ts';
-import { ModalContext, type ModalContextValue } from './modalsContext.ts';
+import { withModal } from './withModal';
+import type { WithModalProps } from './withModalProps';
 
-export class ModalRoot extends Component<{}, {}, ModalContextValue> {
-	static readonly contextType = ModalContext;
+class ModalRootComponent extends Component<WithModalProps> {
 	render() {
-		switch (this.context.activeModal) {
-			case MODALS.LOGIN_MODAL:
-				return <LoginModal />;
-			case MODALS.TEST_MODAL:
-				return <TestModal />;
-			default:
-				return <></>;
+		if (!this.props.modal.activeModal || !this.props.children) {
+			return <></>;
 		}
+
+		if (
+			this.props.children instanceof Function ||
+			typeof this.props.children === 'string'
+		) {
+			return <></>;
+		}
+
+		if (!Array.isArray(this.props.children)) {
+			return this.props.children;
+		}
+
+		const activeModalComponent = this.props.children.find((child) => {
+			return child.props?.id === this.props.modal.activeModal;
+		});
+
+		if (activeModalComponent) {
+			return {
+				...activeModalComponent,
+				props: {
+					...activeModalComponent.props,
+					...this.props.modal.activeModalProps,
+				},
+			};
+		}
+
+		return <></>;
 	}
 }
+
+export const ModalRoot = withModal(ModalRootComponent);

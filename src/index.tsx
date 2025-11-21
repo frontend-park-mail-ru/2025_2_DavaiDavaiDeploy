@@ -16,7 +16,6 @@ import {
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
-import { ModalRoot } from './modules/modals/modalRoot.tsx';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
@@ -79,23 +78,20 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 			this.props.router.path.startsWith('/register');
 
 		return (
-			<ModalsProvider>
-				<div class="layout">
-					<ToastContainer />
-					<ModalRoot />
-					{!isAuthPageOpen && <Header />}
-					<Routes>
-						<Route href="/" component={<HomePage />} />
-						<Route href="/films/:id" component={<FilmPage />} />
-						<Route href="/actors/:id" component={<ActorPage />} />
-						<Route href="/login" component={<LoginPage />} />
-						<Route href="/register" component={<RegisterPage />} />
-						<Route href="/genres/:id" component={<GenrePage />} />
-						<Route href="/profile" component={<UserPage />} />
-					</Routes>
-					{!isAuthPageOpen && <Footer />}
-				</div>
-			</ModalsProvider>
+			<div class="layout">
+				<ToastContainer />
+				{!isAuthPageOpen && <Header />}
+				<Routes>
+					<Route href="/" component={<HomePage />} />
+					<Route href="/films/:id" component={<FilmPage />} />
+					<Route href="/actors/:id" component={<ActorPage />} />
+					<Route href="/login" component={<LoginPage />} />
+					<Route href="/register" component={<RegisterPage />} />
+					<Route href="/genres/:id" component={<GenrePage />} />
+					<Route href="/profile" component={<UserPage />} />
+				</Routes>
+				{!isAuthPageOpen && <Footer />}
+			</div>
 		);
 	}
 }
@@ -103,9 +99,11 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 class ProvidersLayout extends Component {
 	render() {
 		return (
-			<Provider store={store}>
-				<RouterProvider>{this.props.children}</RouterProvider>
-			</Provider>
+			<ModalsProvider>
+				<Provider store={store}>
+					<RouterProvider>{this.props.children}</RouterProvider>
+				</Provider>
+			</ModalsProvider>
 		);
 	}
 }

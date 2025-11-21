@@ -26,13 +26,18 @@ ARG AWS_DEFAULT_REGION
 ARG S3_BUCKET
 ARG AWS_ENDPOINT
 
+# Очищаем папку из S3
+RUN aws s3 rm s3://${S3_BUCKET}/assets/prod \
+    --recursive \
+    --no-verify-ssl \
+    --endpoint-url ${AWS_ENDPOINT}
+
 # Синхронизируем с S3
 RUN aws s3 sync . s3://${S3_BUCKET}/assets/prod \
     --delete \
     --acl public-read \
     --no-verify-ssl \
-    --endpoint-url ${AWS_ENDPOINT} \
-    --cache-control "max-age=31536000"
+    --endpoint-url ${AWS_ENDPOINT}
 
 #базовый образ
 FROM nginx:alpine AS nginx

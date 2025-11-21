@@ -10,6 +10,8 @@ export function withModal<P>(
 	WrappedComponent: ComponentType<P & WithModalProps>,
 ) {
 	return class WithModal extends Component<OmitModal<P>> {
+		static readonly contextType = ModalContext;
+
 		render() {
 			return (
 				<ModalContext.Consumer>
