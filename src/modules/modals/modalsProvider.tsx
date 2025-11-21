@@ -1,4 +1,5 @@
 import { Component } from '@robocotik/react';
+import { ModalRoot } from './modalRoot';
 import { ModalContext } from './modalsContext.ts';
 
 export class ModalsProvider extends Component {
@@ -24,6 +25,7 @@ export class ModalsProvider extends Component {
 				}}
 			>
 				{this.props.children}
+				<ModalRoot />
 			</ModalContext.Provider>
 		);
 	}

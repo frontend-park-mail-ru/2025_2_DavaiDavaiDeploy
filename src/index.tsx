@@ -16,7 +16,6 @@ import {
 import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
-import { ModalRoot } from './modules/modals/modalRoot.tsx';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
@@ -83,7 +82,6 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 		return (
 			<div class="layout">
 				<ToastContainer />
-				<ModalRoot />
 				{!isAuthPageOpen && <Header />}
 				<Routes>
 					<Route href="/" component={<HomePage />} />
