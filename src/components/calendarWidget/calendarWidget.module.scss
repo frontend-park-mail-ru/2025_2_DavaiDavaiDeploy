@@ -62,7 +62,7 @@
 @media (max-width: 1400px) {
 	.films {
 		grid-template-columns: repeat(1, 1fr);
-		grid-template-rows: repeat(6, auto);
+		grid-template-rows: repeat(3, auto);
 		row-gap: 2rem;
 	}
 }
@@ -74,10 +74,13 @@
 
 	.soon {
 		margin-top: -1.5rem;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.title,
 	.subtitle {
 		margin-left: 0;
+		text-align: center;
 	}
 }
