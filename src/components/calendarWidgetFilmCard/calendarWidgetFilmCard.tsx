@@ -3,14 +3,7 @@ import { formatDateForCalendar } from '@/helpers/formatDateForCalendarHelper/for
 import clsx from '@/modules/clsx';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsFilmInCalendar } from '@/types/models';
-import {
-	Flex,
-	Headline,
-	IconButton,
-	Image,
-	Subhead,
-	Title,
-} from '@/uikit/index';
+import { Button, Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './calendarWidgetFilmCard.module.scss';
 
@@ -29,7 +22,12 @@ export class CalendarWidgetFilmCard extends Component<CalendarWidgetFilmCardProp
 
 		return (
 			<Link href={`/films/${id}`} className={styles.linkWrap}>
-				<Flex className={styles.filmCard} direction="row" align="center">
+				<Flex
+					className={styles.filmCard}
+					direction="row"
+					align="center"
+					justify="between"
+				>
 					<Flex className={styles.left} direction="row" align="center">
 						<Headline level="7">{number.toString()}</Headline>
 						<div className={styles.imageContainer}>
@@ -40,7 +38,7 @@ export class CalendarWidgetFilmCard extends Component<CalendarWidgetFilmCardProp
 								className={styles.title}
 								weight="bold"
 								level="9"
-								align="center"
+								align="left"
 							>
 								{title}
 							</Headline>
@@ -48,7 +46,7 @@ export class CalendarWidgetFilmCard extends Component<CalendarWidgetFilmCardProp
 								className={styles.subtitle}
 								color="light"
 								level="11"
-								align="center"
+								align="left"
 							>
 								{original_title}
 							</Subhead>
@@ -57,7 +55,7 @@ export class CalendarWidgetFilmCard extends Component<CalendarWidgetFilmCardProp
 					<Flex className={styles.right} direction="row" align="center">
 						<Flex className={styles.date} direction="column" align="center">
 							<Title
-								className={clsx(styles.day, `styles.day${number}`)}
+								className={clsx(styles.day, styles[`day${number}`])}
 								level="4"
 							>
 								{day}
@@ -66,15 +64,19 @@ export class CalendarWidgetFilmCard extends Component<CalendarWidgetFilmCardProp
 								{month}
 							</Subhead>
 						</Flex>
-						<IconButton
+
+						<Button
 							mode="secondary"
-							className={clsx(styles.iconBtn, {
+							className={clsx(styles.favBtn, {
 								[styles.inFav]: is_liked,
 								[styles.notInFav]: !is_liked,
 							})}
 						>
-							<Favorite className={styles.icon} />
-						</IconButton>
+							<Favorite className={styles.favIcon} />
+							<Subhead level="11" color="base">
+								Избранное
+							</Subhead>
+						</Button>
 					</Flex>
 				</Flex>
 			</Link>

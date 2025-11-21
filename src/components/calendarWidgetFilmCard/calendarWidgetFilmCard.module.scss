@@ -1,11 +1,22 @@
 @use '../../styles/globals.scss' as *;
 
 .filmCard {
-	overflow: hidden;
 	text-align: center;
 	border-radius: 0.625rem;
 	transition: transform 0.3s ease;
 	width: 100%;
+	border-radius: var(--border-radius-xl);
+	padding: 1.25rem 1.875rem;
+	border: 1px solid rgba(212, 222, 232, 0.4);
+	box-shadow: 0px 4px 4px rgba(212, 222, 232, 0.1);
+}
+
+.left {
+	gap: 1.5rem;
+}
+
+.right {
+	gap: 3rem;
 }
 
 .linkWrap {
@@ -13,12 +24,11 @@
 }
 
 .imageContainer {
-	flex: 0 0 25%;
+	display: flex;
 	position: relative;
 	aspect-ratio: 3 / 4;
 	overflow: hidden;
-	max-height: 270px;
-	max-width: 202px;
+	height: 15vh;
 	border-radius: var(--border-radius-l);
 }
 
@@ -38,13 +48,7 @@
 }
 
 .content {
-	flex-grow: 1;
-	min-height: 3.75rem;
-	padding: 0.9375rem 0.625rem;
-	background-color: transparent;
-	width: 100%;
-	box-sizing: border-box;
-	flex-shrink: 0;
+	gap: 0.5rem;
 }
 
 .title {
@@ -59,20 +63,21 @@
 	hyphens: manual;
 }
 
-.icon {
+.favIcon {
 	width: 1rem;
 	transition: all 0.3s ease;
 }
 
-.iconBtn {
-	padding: 0.7rem 1rem;
+.favBtn {
 	display: flex;
 	flex-direction: row;
-	gap: 1rem;
 	transition: all 0.3s ease;
+	gap: 0.5rem;
+	padding: 0.7rem 1rem;
+	align-items: center;
 
 	&:hover {
-		transform: scale(1.05);
+		transform: scale(1.02);
 	}
 }
 
@@ -80,24 +85,24 @@
 }
 
 .inFav {
-	.icon {
+	.favIcon {
 		fill: var(--color-text);
 	}
 
 	&:hover {
-		.icon {
+		.favIcon {
 			fill: transparent;
 		}
 	}
 }
 
 .notInFav {
-	.icon {
+	.favIcon {
 		fill: transparent;
 	}
 
 	&:hover {
-		.icon {
+		.favIcon {
 			fill: var(--color-text);
 		}
 	}
@@ -125,6 +130,9 @@
 
 .day6 {
 	color: var(--color-calendar-6);
+}
+
+.month {
 }
 
 @media (max-width: 768px) {

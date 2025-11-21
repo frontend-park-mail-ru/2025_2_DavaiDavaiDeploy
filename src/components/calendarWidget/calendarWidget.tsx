@@ -49,7 +49,7 @@ class CalendarWidgetComponent extends Component<
 				</Link>
 				<div className={styles.films}>
 					{this.props.films.map((film, number) => (
-						<CalendarWidgetFilmCard film={film} number={number} />
+						<CalendarWidgetFilmCard film={film} number={number + 1} />
 					))}
 				</div>
 			</Flex>
