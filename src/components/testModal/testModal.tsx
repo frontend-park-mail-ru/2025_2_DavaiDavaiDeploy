@@ -6,8 +6,7 @@ import type { BaseModalProps } from '../BaseModal/BaseModal';
 import style from './testModal.module.scss';
 
 export class TestModalComponent extends Component<
-	WithModalProps & BaseModalProps,
-	{}
+	WithModalProps & BaseModalProps
 > {
 	render() {
 		return (

@@ -20,7 +20,7 @@ export class UserAvatarComponent extends Component<
 	handleLogout = (e: Event) => {
 		e.preventDefault();
 		this.props.modal.open(MODALS.LOGIN_MODAL, {
-			onLogout: () => this.props.logoutUser(),
+			onLogout: this.props.logoutUser,
 		});
 	};
 
