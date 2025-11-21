@@ -6,9 +6,8 @@ import type { WithModalProps } from '../../modules/modals/withModalProps';
 import { BaseModal, type BaseModalProps } from '../BaseModal/BaseModal';
 import style from './LoginModal.module.scss';
 
-interface LoginModalProps {
+export interface LoginModalProps {
 	onLogout: VoidFunction;
-	[key: string]: any;
 }
 
 export class LoginModalComponent extends Component<

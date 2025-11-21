@@ -1,5 +1,8 @@
 import { Component } from '@robocotik/react';
-import { LoginModal } from '../../components/LoginModal/LoginModal';
+import {
+	LoginModal,
+	type LoginModalProps,
+} from '../../components/LoginModal/LoginModal';
 import { TestModal } from '../../components/testModal/testModal';
 import { ModalRoot } from './modalRoot';
 import { MODALS } from './modals';
@@ -29,8 +32,14 @@ export class ModalsProvider extends Component {
 			>
 				{this.props.children}
 				<ModalRoot>
-					<LoginModal id={MODALS.LOGIN_MODAL} />
-					<TestModal id={MODALS.TEST_MODAL} />
+					<LoginModal
+						id={MODALS.LOGIN_MODAL}
+						{...((this.state.activeModalProps || {}) as LoginModalProps)}
+					/>
+					<TestModal
+						id={MODALS.TEST_MODAL}
+						{...(this.state.activeModalProps || {})}
+					/>
 				</ModalRoot>
 			</ModalContext.Provider>
 		);
