@@ -1,6 +1,7 @@
 .page {
 	gap: 3.75rem;
 	width: 100%;
+	background-color: var(--color-bg);
 }
 
 .loadMoreTrigger {
@@ -36,6 +37,10 @@
 }
 
 @media (max-width: 1024px) {
+	.page {
+		background: var(--color-bg-gradient);
+	}
+
 	.content {
 		flex-direction: column;
 		gap: 2vw;

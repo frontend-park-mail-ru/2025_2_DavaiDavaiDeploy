@@ -52,7 +52,7 @@ class FilmRatingComponent extends Component<
 		const userRatingType = getRatingType(this.props.userRating);
 
 		return (
-			<div>
+			<div className={styles.wrapper}>
 				<Button
 					className={styles.rateBtn}
 					onMouseLeave={this.handleMouseLeave}

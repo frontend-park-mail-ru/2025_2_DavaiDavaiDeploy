@@ -95,7 +95,7 @@ html {
 	max-width: 100dvw;
 	min-height: 100vh;
 	overflow-x: hidden;
-	background-color: var(--color-bg);
+	background: var(--color-bg-gradient);
 
 	&::-webkit-scrollbar {
 		width: 4px;
