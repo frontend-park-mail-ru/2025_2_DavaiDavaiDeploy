@@ -29,7 +29,6 @@ class ModalRootComponent extends Component<WithModalProps> {
 				props: {
 					...activeModalComponent.props,
 					...this.props.modal.activeModalProps,
-					isClosing: this.props.modal.isClosing,
 				},
 			};
 		}
