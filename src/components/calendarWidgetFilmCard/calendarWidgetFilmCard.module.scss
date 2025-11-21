@@ -1,0 +1,131 @@
+@use '../../styles/globals.scss' as *;
+
+.filmCard {
+	overflow: hidden;
+	text-align: center;
+	border-radius: 0.625rem;
+	transition: transform 0.3s ease;
+	width: 100%;
+}
+
+.linkWrap {
+	display: contents;
+}
+
+.imageContainer {
+	flex: 0 0 25%;
+	position: relative;
+	aspect-ratio: 3 / 4;
+	overflow: hidden;
+	max-height: 270px;
+	max-width: 202px;
+	border-radius: var(--border-radius-l);
+}
+
+.image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: brightness(0.95);
+	transition: all 0.4s ease;
+}
+
+.imageContainer:hover .image {
+	filter: brightness(1.2);
+}
+
+.content {
+	flex-grow: 1;
+	min-height: 3.75rem;
+	padding: 0.9375rem 0.625rem;
+	background-color: transparent;
+	width: 100%;
+	box-sizing: border-box;
+	flex-shrink: 0;
+}
+
+.title {
+	overflow-wrap: break-word;
+	word-break: normal;
+	hyphens: manual;
+}
+
+.subtitle {
+	overflow-wrap: break-word;
+	word-break: normal;
+	hyphens: manual;
+}
+
+.icon {
+	width: 1rem;
+	transition: all 0.3s ease;
+}
+
+.iconBtn {
+	padding: 0.7rem 1rem;
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	transition: all 0.3s ease;
+
+	&:hover {
+		transform: scale(1.05);
+	}
+}
+
+.date {
+}
+
+.inFav {
+	.icon {
+		fill: var(--color-text);
+	}
+
+	&:hover {
+		.icon {
+			fill: transparent;
+		}
+	}
+}
+
+.notInFav {
+	.icon {
+		fill: transparent;
+	}
+
+	&:hover {
+		.icon {
+			fill: var(--color-text);
+		}
+	}
+}
+
+.day1 {
+	color: var(--color-calendar-1);
+}
+
+.day2 {
+	color: var(--color-calendar-2);
+}
+
+.day3 {
+	color: var(--color-calendar-3);
+}
+
+.day4 {
+	color: var(--color-calendar-4);
+}
+
+.day5 {
+	color: var(--color-calendar-5);
+}
+
+.day6 {
+	color: var(--color-calendar-6);
+}
+
+@media (max-width: 768px) {
+}

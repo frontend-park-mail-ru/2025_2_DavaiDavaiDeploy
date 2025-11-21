@@ -1,0 +1,35 @@
+.calendarWidget {
+	gap: 2.5rem;
+	overflow-x: hidden;
+	width: 100%;
+	padding: var(--side-padding);
+}
+
+.title {
+	margin-left: -0.2rem;
+}
+
+.subtitle {
+	margin-left: -0.2rem;
+}
+
+.films {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.linkWrap {
+	display: contents;
+}
+
+.soon {
+	gap: 1rem;
+}
+
+@media (max-width: 768px) {
+	.title {
+		margin-left: 0;
+	}
+}
