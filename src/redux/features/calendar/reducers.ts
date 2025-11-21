@@ -13,7 +13,7 @@ interface InitialState {
 }
 
 /**
- * Начальное состояние редьюсера жанров.
+ * Начальное состояние редьюсера календаря.
  */
 const initialState: InitialState = {
 	loading: false,
@@ -24,7 +24,7 @@ const initialState: InitialState = {
 };
 
 /**
- * Редьюсер для управления состоянием жанров.
+ * Редьюсер для управления состоянием календаря.
  */
 const calendarReducer: Reducer = (
 	state = initialState,

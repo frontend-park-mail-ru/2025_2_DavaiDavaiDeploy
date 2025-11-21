@@ -65,7 +65,7 @@ const getCalendarAction =
 	};
 
 /**
- * Создаёт экшен удаления фильма из избранного
+ * Вызов удаления фильма из избранного
  */
 const processDeleteAction = (id: string): Action => {
 	return {
@@ -108,7 +108,7 @@ const deleteFromFavoritesAction =
 	};
 
 /**
- * Создаёт экшен добавления фильма в избранное
+ * Вызов добавления фильма из избранного
  */
 const processAddAction = (id: string): Action => {
 	return {
