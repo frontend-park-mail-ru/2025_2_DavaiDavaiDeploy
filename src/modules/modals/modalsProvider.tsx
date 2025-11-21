@@ -12,14 +12,24 @@ export class ModalsProvider extends Component {
 	state = {
 		activeModal: null,
 		activeModalProps: null,
+		isClosing: false,
 	};
 
 	open = (id: number, props: object) => {
 		this.setState({ activeModal: id, activeModalProps: props });
 	};
 	hide = () => {
-		this.setState({ activeModal: null, activeModalProps: null });
+		this.setState({ isClosing: true });
+
+		setTimeout(() => {
+			this.setState({
+				activeModal: null,
+				activeModalProps: null,
+				isClosing: false,
+			});
+		}, 300);
 	};
+
 	render() {
 		return (
 			<ModalContext.Provider
@@ -28,6 +38,7 @@ export class ModalsProvider extends Component {
 					open: this.open,
 					hide: this.hide,
 					activeModalProps: this.state.activeModalProps,
+					isClosing: this.state.isClosing,
 				}}
 			>
 				{this.props.children}

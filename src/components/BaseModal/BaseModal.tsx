@@ -9,34 +9,14 @@ export interface BaseModalProps {
 	id: number;
 }
 
-interface BaseModalState {
-	isClosing: boolean;
-}
-
-export class BaseModalComponent extends Component<
-	WithModalProps,
-	BaseModalState
-> {
-	state = {
-		isClosing: false,
-	};
-
-	handleHide = () => {
-		this.setState({ isClosing: true });
-
-		setTimeout(() => {
-			this.props.modal.hide();
-			this.setState({ isClosing: false });
-		}, 300);
-	};
-
+export class BaseModalComponent extends Component<WithModalProps> {
 	render() {
-		const { isClosing } = this.state;
-
 		return createPortal(
 			<Flex
-				className={clsx({ [style.closing]: isClosing }, style.modalWrapper)}
-				onClick={this.handleHide}
+				className={clsx(style.modalWrapper, {
+					[style.closing]: this.props.modal.isClosing,
+				})}
+				onClick={this.props.modal.hide}
 				align="center"
 				justify="center"
 			>
