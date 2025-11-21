@@ -1,5 +1,5 @@
 import Arrow from '@/assets/img/arrowRight.svg?react';
-import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices';
+import { WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -51,8 +51,7 @@ class CalendarWidgetComponent extends Component<
 	handleResize = () => {
 		const width = window.innerWidth;
 		this.setState({
-			filmCount:
-				width <= MIDDLE_SCREEN_WIDTH ? SMALL_FILM_COUNT : MAX_FILM_COUNT,
+			filmCount: width <= WIDE_SCREEN_WIDTH ? SMALL_FILM_COUNT : MAX_FILM_COUNT,
 		});
 	};
 

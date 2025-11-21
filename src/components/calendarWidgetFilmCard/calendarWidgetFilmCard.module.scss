@@ -92,18 +92,6 @@
 	}
 }
 
-.inFav:hover {
-	.favIcon {
-		fill: transparent;
-	}
-}
-
-.notInFav:hover {
-	.favIcon {
-		fill: var(--color-text);
-	}
-}
-
 .day1 {
 	color: var(--color-calendar-1);
 }
@@ -130,6 +118,20 @@
 
 .date {
 	gap: 0.5rem;
+}
+
+@media (max-width: 1500px) {
+	.right {
+		gap: 1rem;
+	}
+
+	.filmCard {
+		padding: 2rem 1.3rem;
+	}
+
+	.favIcon {
+		width: 0.8rem;
+	}
 }
 
 @media (max-width: 768px) {
@@ -171,6 +173,10 @@
 	.favBtn {
 		gap: 0.3rem;
 		padding: 0.5rem 0.8rem;
+	}
+
+	.favIcon {
+		width: 1rem;
 	}
 
 	.day {
