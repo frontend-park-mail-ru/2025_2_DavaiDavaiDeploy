@@ -1,5 +1,6 @@
+import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsFilmInCalendar } from '@/types/models';
+import type { ModelsFavFilm, ModelsFilmInCalendar } from '@/types/models';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -41,85 +42,116 @@ const getCalendarAction =
 	async (dispatch: Dispatch) => {
 		dispatch(setCalendarLoadingAction());
 
-		// try {
-		// 	const response = await HTTPClient.get<ModelsFilmInCalendar[]>(
-		// 		`/films/calendar`,
-		// 		{
-		// 			params: { count: limit, offset },
-		// 		},
-		// 	);
+		try {
+			const response = await HTTPClient.get<ModelsFilmInCalendar[]>(
+				`/films/calendar`,
+				{
+					params: { count: limit, offset },
+				},
+			);
 
-		// 	dispatch(returnCalendarAction(response.data));
-		// } catch (error: unknown) {
-		// 	let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+			dispatch(returnCalendarAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
-		// 	if (error instanceof Error) {
-		// 		errorMessage = error.message;
-		// 	} else if (typeof error === 'string') {
-		// 		errorMessage = error;
-		// 	}
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
 
-		// 	dispatch(returnCalendarErrorAction(errorMessage));
-		// }
+			dispatch(returnCalendarErrorAction(errorMessage));
+		}
+	};
 
-		const films: ModelsFilmInCalendar[] = [
-			{
-				cover: 'films/pic49.png',
-				id: '1',
-				is_liked: true,
-				original_title: 'The Matrix',
-				release_date: '1999-03-31',
-				short_description:
-					'A computer hacker learns about the true nature of reality',
-				title: 'Матрица',
-			},
-			{
-				cover: 'films/pic49.png',
-				id: '2',
-				is_liked: false,
-				original_title: 'Inception',
-				release_date: '2010-07-16',
-				short_description:
-					'A thief who steals corporate secrets through dream-sharing technology',
-				title: 'Начало',
-			},
-			{
-				cover: 'films/pic49.png',
-				id: '3',
-				is_liked: true,
-				release_date: '2022-12-15',
-				short_description: 'Путешествие в неизведанные миры',
-				title: 'Аватар: Путь воды',
-			},
-			{
-				cover: 'films/pic49.png',
-				id: '4',
-				is_liked: false,
-				original_title: 'Interstellar',
-				release_date: '2014-11-07',
-				title: 'Интерстеллар',
-			},
-			{
-				cover: 'films/pic49.png',
-				id: '5',
-				is_liked: true,
-				release_date: '2023-05-25',
-				short_description: 'Приключения в галактике',
-				title: 'Стражи Галактики: Часть 3',
-			},
-			{
-				cover: 'films/pic49.png',
-				id: '6',
-				is_liked: true,
-				release_date: '2023-05-25',
-				short_description: 'Приключения в галактике',
-				title: 'Стражи Галактики: Часть 3',
-			},
-		];
+/**
+ * Создаёт экшен удаления фильма из избранного
+ */
+const processDeleteAction = (id: string): Action => {
+	return {
+		type: actionTypes.DELETE_FROM_FAVORITES,
+		payload: { id },
+	};
+};
 
-		dispatch(returnCalendarAction(films));
+/**
+ * Устанавливает состояние ошибки при удалении фильма из избранного
+ */
+const returnDeleteErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.DELETE_FROM_FAVORITES_ERROR,
+		payload: { error },
+	};
+};
+
+/**
+ * Удаляет фильм из избранного
+ */
+const deleteFromFavoritesAction =
+	(id: string): Action =>
+	async (dispatch: Dispatch) => {
+		try {
+			await HTTPClient.delete<ModelsFavFilm[]>(`/films/${id}/remove`);
+
+			dispatch(processDeleteAction(id));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnDeleteErrorAction(errorMessage));
+		}
+	};
+
+/**
+ * Создаёт экшен добавления фильма в избранное
+ */
+const processAddAction = (id: string): Action => {
+	return {
+		type: actionTypes.ADD_TO_FAVORITES,
+		payload: { id },
+	};
+};
+
+/**
+ * Устанавливает состояние ошибки при добавлении фильма в избранное
+ */
+const returnAddErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.ADD_TO_FAVORITES_ERROR,
+		payload: { error },
+	};
+};
+
+/**
+ * Добавляет фильм в избранное
+ */
+const addToFavoritesAction =
+	(id: string): Action =>
+	async (dispatch: Dispatch) => {
+		try {
+			await HTTPClient.post<ModelsFavFilm[]>(`/films/${id}/save`);
+
+			dispatch(processAddAction(id));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnAddErrorAction(errorMessage));
+		}
 	};
 
 export default {
 	getCalendarAction,
+	deleteFromFavoritesAction,
+	addToFavoritesAction,
 };

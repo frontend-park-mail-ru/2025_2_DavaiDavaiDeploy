@@ -1,7 +1,15 @@
 import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDateForCalendar } from '@/helpers/formatDateForCalendarHelper/formatDateForCalendarHelper';
 import clsx from '@/modules/clsx';
+import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions';
+import type { State } from '@/modules/redux/types/store';
 import { Link } from '@/modules/router/link.tsx';
+import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
+import { withRouter } from '@/modules/router/withRouter';
+import actions from '@/redux/features/calendar/actions';
+import { selectIsAuthentificated } from '@/redux/features/user/selectors';
+import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
 import { Button, Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
@@ -10,9 +18,30 @@ import styles from './calendarWidgetFilmCard.module.scss';
 interface CalendarWidgetFilmCardProps {
 	film: ModelsFilmInCalendar;
 	number: number;
+	deleteFromFavorites: (id: string) => {};
+	addToFavorites: (id: string) => {};
+	isAuthentificated: boolean;
 }
 
-export class CalendarWidgetFilmCard extends Component<CalendarWidgetFilmCardProps> {
+class CalendarWidgetFilmCardComponent extends Component<
+	CalendarWidgetFilmCardProps & WithRouterProps
+> {
+	handleFavorites = (event: MouseEvent) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		if (!this.props.isAuthentificated) {
+			this.props.router.navigate('/login');
+		}
+
+		if (this.props.film.is_liked) {
+			this.props.deleteFromFavorites(this.props.film.id);
+			return;
+		}
+
+		this.props.addToFavorites(this.props.film.id);
+	};
+
 	render() {
 		const { id, title, cover, is_liked, original_title, release_date } =
 			this.props.film;
@@ -71,6 +100,7 @@ export class CalendarWidgetFilmCard extends Component<CalendarWidgetFilmCardProp
 								[styles.inFav]: is_liked,
 								[styles.notInFav]: !is_liked,
 							})}
+							onClick={this.handleFavorites}
 						>
 							<Favorite className={styles.favIcon} />
 							<Subhead level="11" color="base">
@@ -83,3 +113,18 @@ export class CalendarWidgetFilmCard extends Component<CalendarWidgetFilmCardProp
 		);
 	}
 }
+
+const mapStateToProps = (state: State): Map => ({
+	isAuthentificated: selectIsAuthentificated(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	deleteFromFavorites: (id: string) =>
+		dispatch(actions.deleteFromFavoritesAction(id)),
+	addToFavorites: (id: string) => dispatch(actions.addToFavoritesAction(id)),
+});
+
+export const CalendarWidgetFilmCard = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(CalendarWidgetFilmCardComponent);

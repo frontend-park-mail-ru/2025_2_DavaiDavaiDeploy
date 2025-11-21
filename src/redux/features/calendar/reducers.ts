@@ -8,6 +8,8 @@ interface InitialState {
 	loading: boolean;
 	calendar: ModelsFilmInCalendar[] | null;
 	error: string | null;
+	addError: string | null;
+	deleteError: string | null;
 }
 
 /**
@@ -17,6 +19,8 @@ const initialState: InitialState = {
 	loading: false,
 	calendar: null,
 	error: null,
+	addError: null,
+	deleteError: null,
 };
 
 /**
@@ -52,6 +56,34 @@ const calendarReducer: Reducer = (
 				loading: false,
 				error: payload.error,
 				calendar: null,
+			};
+		case actionTypes.ADD_TO_FAVORITES:
+			return {
+				...state,
+				calendar: state.calendar
+					? state.calendar.map((film: ModelsFilmInCalendar) =>
+							film.id === payload.id ? { ...film, is_liked: true } : film,
+						)
+					: null,
+			};
+		case actionTypes.DELETE_FROM_FAVORITES:
+			return {
+				...state,
+				calendar: state.calendar
+					? state.calendar.map((film: ModelsFilmInCalendar) =>
+							film.id === payload.id ? { ...film, is_liked: false } : film,
+						)
+					: null,
+			};
+		case actionTypes.ADD_TO_FAVORITES_ERROR:
+			return {
+				...state,
+				addError: payload.error,
+			};
+		case actionTypes.DELETE_FROM_FAVORITES_ERROR:
+			return {
+				...state,
+				deleteError: payload.error,
 			};
 		default:
 			return state;

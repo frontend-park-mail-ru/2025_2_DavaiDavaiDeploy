@@ -13,6 +13,7 @@ export class HomePage extends Component {
 				<Flex className={styles.main} direction="column">
 					<PromoFilm />
 					<GenreSlider />
+
 					<CalendarWidget />
 					<Flex className={styles.films} direction="column">
 						<FilmCardGrid />
