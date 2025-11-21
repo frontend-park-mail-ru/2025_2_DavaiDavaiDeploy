@@ -74,13 +74,13 @@ class CalendarWidgetComponent extends Component<
 					</Flex>
 				</Link>
 				<div className={styles.films}>
-					{this.props.films.map((film, number) => {
-						if (number < this.state.filmCount) {
+					{this.props.films.map((film, index) => {
+						if (index < this.state.filmCount) {
 							return (
 								<CalendarWidgetFilmCard
 									film={film}
-									number={number + 1}
-									key={number}
+									number={index + 1}
+									key={index}
 								/>
 							);
 						}
