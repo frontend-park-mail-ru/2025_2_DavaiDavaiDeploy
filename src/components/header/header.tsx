@@ -39,7 +39,7 @@ class HeaderComponent extends Component<
 			);
 		}
 
-		if (this.props.user) {
+		if (!this.props.user) {
 			return (
 				<LoadedUser user={this.props.user} logoutUser={this.props.logoutUser} />
 			);

@@ -1,0 +1,22 @@
+.modalWrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100dvw;
+	height: 100dvh;
+	background-color: rgb(0 0 0 / 50%); /* Затемнение */
+	z-index: 1000;
+	font-size: large;
+}
+
+.modalContent {
+	background-color: var(--color-bg-light);
+	max-width: 90dvw;
+	min-width: 30dvw;
+	min-width: 50dvh;
+	max-height: 80dvh;
+	overflow-y: auto;
+	position: relative;
+	z-index: 1001;
+	border-radius: var(--border-radius-xl);
+}
