@@ -8,6 +8,8 @@ import { ModalRoot } from './modalRoot';
 import { MODALS } from './modals';
 import { ModalContext } from './modalsContext.ts';
 
+const CLOSE_DURATION = 300;
+
 export class ModalsProvider extends Component {
 	state = {
 		activeModal: null,
@@ -27,7 +29,7 @@ export class ModalsProvider extends Component {
 				activeModalProps: null,
 				isClosing: false,
 			});
-		}, 300);
+		}, CLOSE_DURATION);
 	};
 
 	render() {
