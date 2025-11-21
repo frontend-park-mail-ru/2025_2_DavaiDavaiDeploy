@@ -16,9 +16,9 @@ import { debounce } from '@sentry/core';
 import { CalendarWidgetFilmCard } from '../calendarWidgetFilmCard/calendarWidgetFilmCard';
 import styles from './calendarWidget.module.scss';
 
-const MAX_FILM_COUNT: number = 6;
-const SMALL_FILM_COUNT: number = 3;
-const OFFSET: number = 0;
+const MAX_FILM_COUNT = 6;
+const SMALL_FILM_COUNT = 3;
+const OFFSET = 0;
 const DEBOUNCE_DELAY = 100;
 
 interface CalendarWidgetProps {
@@ -76,7 +76,13 @@ class CalendarWidgetComponent extends Component<
 				<div className={styles.films}>
 					{this.props.films.map((film, number) => {
 						if (number < this.state.filmCount) {
-							return <CalendarWidgetFilmCard film={film} number={number + 1} />;
+							return (
+								<CalendarWidgetFilmCard
+									film={film}
+									number={number + 1}
+									key={number}
+								/>
+							);
 						}
 					})}
 				</div>
