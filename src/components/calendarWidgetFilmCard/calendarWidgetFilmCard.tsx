@@ -58,7 +58,9 @@ class CalendarWidgetFilmCardComponent extends Component<
 					justify="between"
 				>
 					<Flex className={styles.left} direction="row" align="center">
-						<Headline level="7">{number.toString()}</Headline>
+						<Headline level="7" className={styles.number}>
+							{number.toString()}
+						</Headline>
 						<div className={styles.imageContainer}>
 							<Image className={styles.image} src={cover} alt={title} />
 						</div>

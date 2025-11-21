@@ -1,4 +1,5 @@
 import Arrow from '@/assets/img/arrowRight.svg?react';
+import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -11,23 +12,49 @@ import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
 import { Flex, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { debounce } from '@sentry/core';
 import { CalendarWidgetFilmCard } from '../calendarWidgetFilmCard/calendarWidgetFilmCard';
 import styles from './calendarWidget.module.scss';
 
 const MAX_FILM_COUNT: number = 6;
+const SMALL_FILM_COUNT: number = 3;
 const OFFSET: number = 0;
+const DEBOUNCE_DELAY = 100;
 
 interface CalendarWidgetProps {
 	films: ModelsFilmInCalendar[];
 	getFilms: (limit: number, offset: number) => void;
 }
 
+interface CalendarWidgetState {
+	debounceResizeHandler: (ev?: Event | undefined) => void;
+	filmCount: number;
+}
+
 class CalendarWidgetComponent extends Component<
-	CalendarWidgetProps & WithRouterProps
+	CalendarWidgetProps & WithRouterProps,
+	CalendarWidgetState
 > {
+	state: CalendarWidgetState = {
+		debounceResizeHandler: () => {},
+		filmCount: MAX_FILM_COUNT,
+	};
+
 	onMount() {
 		this.props.getFilms(MAX_FILM_COUNT, OFFSET);
+		const debounceResizeHandler = debounce(this.handleResize, DEBOUNCE_DELAY);
+		this.setState({ debounceResizeHandler });
+		window.addEventListener('resize', debounceResizeHandler);
+		this.handleResize();
 	}
+
+	handleResize = () => {
+		const width = window.innerWidth;
+		this.setState({
+			filmCount:
+				width <= MIDDLE_SCREEN_WIDTH ? SMALL_FILM_COUNT : MAX_FILM_COUNT,
+		});
+	};
 
 	render() {
 		if (!this.props.films || this.props.films.length === 0) {
@@ -48,9 +75,11 @@ class CalendarWidgetComponent extends Component<
 					</Flex>
 				</Link>
 				<div className={styles.films}>
-					{this.props.films.map((film, number) => (
-						<CalendarWidgetFilmCard film={film} number={number + 1} />
-					))}
+					{this.props.films.map((film, number) => {
+						if (number < this.state.filmCount) {
+							return <CalendarWidgetFilmCard film={film} number={number + 1} />;
+						}
+					})}
 				</div>
 			</Flex>
 		);

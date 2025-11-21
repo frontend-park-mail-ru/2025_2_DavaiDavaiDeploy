@@ -18,12 +18,25 @@
 	grid-template-columns: 1fr 1fr;
 	width: 100%;
 	box-sizing: border-box;
-	column-gap: 2vw;
-	row-gap: 1.25rem;
+	gap: 1.25rem 2vw;
 }
 
 .linkWrap {
 	display: contents;
+}
+
+.arrow {
+	width: 0.6rem;
+	stroke-width: 0.2rem;
+	border-radius: 50%;
+	margin-top: 0.2rem;
+	transition:
+		transform 0.4s ease,
+		scale 0.4s ease;
+
+	&:active {
+		transform: translateY(-50%) translateX(-1rem) scale(1.15);
+	}
 }
 
 .soon {
@@ -44,22 +57,24 @@
 	}
 }
 
-.arrow {
-	width: 0.6rem;
-	stroke-width: 0.2rem;
-	border-radius: 50%;
-	margin-top: 0.2rem;
-	transition:
-		transform 0.4s ease,
-		scale 0.4s ease;
-
-	&:active {
-		transform: translateY(-50%) translateX(-1rem) scale(1.15);
+@media (max-width: 1500px) {
+	.films {
+		grid-template-columns: 1fr;
+		row-gap: 2rem;
 	}
 }
 
 @media (max-width: 768px) {
-	.title {
+	.calendarWidget {
+		gap: 1rem;
+	}
+
+	.soon {
+		margin-top: -1.5rem;
+	}
+
+	.title,
+	.subtitle {
 		margin-left: 0;
 	}
 }
