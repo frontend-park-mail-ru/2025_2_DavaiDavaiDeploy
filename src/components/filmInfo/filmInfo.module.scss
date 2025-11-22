@@ -210,10 +210,6 @@
 
 	&:hover {
 		transform: scale(1.02);
-
-		.favIcon {
-			fill: var(--color-text);
-		}
 	}
 }
 
@@ -229,10 +225,18 @@
 
 	&:hover {
 		transform: scale(1.02);
+	}
+}
 
-		.favIcon {
-			fill: var(--color-text);
-		}
+.inFav {
+	.favIcon {
+		fill: var(--color-text);
+	}
+}
+
+.notInFav {
+	.favIcon {
+		fill: transparent;
 	}
 }
 
