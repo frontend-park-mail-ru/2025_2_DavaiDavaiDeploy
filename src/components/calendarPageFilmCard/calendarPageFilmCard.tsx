@@ -64,7 +64,7 @@ class CalendarPageFilmCardComponent extends Component<
 					align="center"
 					justify="between"
 				>
-					<Flex className={styles.left} direction="row">
+					<Flex className={styles.left} direction="row" align="center">
 						<Title level="4" className={styles.number}>
 							{number.toString()}
 						</Title>
@@ -119,7 +119,10 @@ class CalendarPageFilmCardComponent extends Component<
 					<Flex className={styles.right} direction="row" align="center">
 						<Flex className={styles.date} direction="column" align="center">
 							<Title
-								className={clsx(styles.day, styles[`day${number}`])}
+								className={clsx(
+									styles.day,
+									styles[`day${number > 5 ? 5 : number}`],
+								)}
 								level="2"
 							>
 								{day}
