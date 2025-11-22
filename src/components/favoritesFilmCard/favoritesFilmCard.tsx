@@ -2,7 +2,12 @@ import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
+import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions';
 import { Link } from '@/modules/router/link.tsx';
+import { withRouter } from '@/modules/router/withRouter';
+import actions from '@/redux/features/favorites/actions';
+import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
 import {
 	Badge,
@@ -19,9 +24,17 @@ import styles from './favoritesFilmCard.module.scss';
 
 interface FavoritesFilmCardProps {
 	film: ModelsFavFilm;
+	deleteFromFavorites: (id: string) => {};
 }
 
-export class FavoritesFilmCard extends Component<FavoritesFilmCardProps> {
+class FavoritesFilmCardComponent extends Component<FavoritesFilmCardProps> {
+	handleDeletionFromFavorites = (event: MouseEvent) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		this.props.deleteFromFavorites(this.props.film.id);
+	};
+
 	render() {
 		const {
 			duration,
@@ -83,7 +96,11 @@ export class FavoritesFilmCard extends Component<FavoritesFilmCardProps> {
 							{short_description}
 						</Paragraph>
 					</Flex>
-					<IconButton mode="secondary" className={styles.iconBtn}>
+					<IconButton
+						mode="secondary"
+						className={styles.iconBtn}
+						onClick={this.handleDeletionFromFavorites}
+					>
 						<Favorite className={styles.icon} />
 					</IconButton>
 				</Flex>
@@ -91,3 +108,13 @@ export class FavoritesFilmCard extends Component<FavoritesFilmCardProps> {
 		);
 	}
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	deleteFromFavorites: (id: string) =>
+		dispatch(actions.deleteFromFavoritesAction(id)),
+});
+
+export const FavoritesFilmCard = compose(
+	withRouter,
+	connect(undefined, mapDispatchToProps),
+)(FavoritesFilmCardComponent);

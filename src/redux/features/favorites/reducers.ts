@@ -58,7 +58,7 @@ const favoritesReducer: Reducer = (
 		case actionTypes.DELETE_FROM_FAVORITES:
 			return {
 				...state,
-				favorites: payload.favorites,
+				favorites: payload.films,
 				deleteError: null,
 			};
 		case actionTypes.DELETE_FROM_FAVORITES_ERROR:
