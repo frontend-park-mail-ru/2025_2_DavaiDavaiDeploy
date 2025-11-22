@@ -2,7 +2,7 @@ import { defineConfig, mergeConfig } from 'vite';
 import { baseViteConfig } from './vite.config.base';
 import { sentryViteConfig } from './viteSentry.config';
 
-const devViteConfig = defineConfig({
+const devViteConfig = {
 	build: {
 		outDir: 'dist',
 		emptyOutDir: true,
@@ -12,9 +12,11 @@ const devViteConfig = defineConfig({
 			input: 'index.html',
 		},
 	},
-});
+};
 
-export default mergeConfig(
-	mergeConfig(devViteConfig, baseViteConfig),
-	sentryViteConfig,
+export default defineConfig((env) =>
+	mergeConfig(
+		mergeConfig(devViteConfig, baseViteConfig(env)),
+		sentryViteConfig(env),
+	),
 );
