@@ -3,15 +3,21 @@ import { defineConfig } from 'vite';
 
 const isSentryEnabled = process.env.VITE_SENTRY_ENABLED === 'true';
 
+function getPlugins() {
+	if (!isSentryEnabled) {
+		return [];
+	}
+
+	return [
+		sentryVitePlugin({
+			org: process.env.VITE_SENTRY_ORG,
+			project: process.env.VITE_SENTRY_PROJECT,
+			authToken: process.env.VITE_SENTRY_AUTH_TOKEN,
+			release: { name: process.env.VITE_RELEASE_VERSION },
+		}),
+	];
+}
+
 export const sentryViteConfig = defineConfig({
-	plugins: isSentryEnabled
-		? [
-				sentryVitePlugin({
-					org: process.env.VITE_SENTRY_ORG,
-					project: process.env.VITE_SENTRY_PROJECT,
-					authToken: process.env.VITE_SENTRY_AUTH_TOKEN,
-					release: { name: process.env.VITE_RELEASE_VERSION },
-				}),
-			]
-		: [],
+	plugins: getPlugins(),
 });
