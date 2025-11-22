@@ -1,0 +1,70 @@
+import { defineConfig } from 'vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
+import svgr from 'vite-plugin-svgr';
+import tsconfigPaths from 'vite-tsconfig-paths';
+
+export const baseViteConfig = defineConfig({
+	plugins: [
+		tsconfigPaths(),
+		viteStaticCopy({
+			targets: [
+				{
+					src: 'src/sw.js',
+					dest: './',
+				},
+				{
+					src: 'src/assets/screenshots/',
+					dest: './assets',
+				},
+				{
+					src: 'src/assets/favicon/',
+					dest: './assets',
+				},
+				{
+					src: './robots.txt',
+					dest: './',
+				},
+			],
+		}),
+		svgr({
+			svgrOptions: {
+				plugins: ['@svgr/plugin-jsx'],
+				jsxRuntimeImport: {
+					namespace: 'jsx',
+					source: '@robocotik/react/jsx-runtime',
+				},
+				jsxRuntime: 'automatic',
+			},
+			esbuildOptions: {
+				jsx: 'transform',
+				jsxFactory: 'jsx.jsx',
+				jsxFragment: 'Fragment',
+				jsxDev: false,
+			},
+		}),
+	],
+	resolve: {
+		alias: {
+			'@': '/src',
+		},
+	},
+	esbuild: {
+		jsx: 'transform',
+		jsxFactory: 'jsx',
+		jsxFragment: 'Fragment',
+		jsxInject: "import {jsx, Fragment} from '@robocotik/react/jsx-runtime'",
+		jsxDev: false,
+	},
+	server: {
+		host: 'localhost',
+		port: 3000,
+		proxy: {
+			'/api': {
+				target: process.env.VITE_PRODUCTION_API_URL,
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api/, ''),
+			},
+		},
+	},
+	base: process.env.VITE_CDN_ADDRESS || '/',
+});
