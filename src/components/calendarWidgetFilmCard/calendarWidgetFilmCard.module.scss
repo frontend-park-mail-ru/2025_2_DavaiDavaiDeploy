@@ -1,5 +1,3 @@
-@use '../../styles/globals.scss' as *;
-
 .filmCard {
 	text-align: center;
 	transition: transform 0.3s ease;
@@ -130,7 +128,7 @@
 	}
 
 	.favIcon {
-		width: 0.8rem;
+		width: 0.9rem;
 	}
 }
 

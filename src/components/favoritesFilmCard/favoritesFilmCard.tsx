@@ -53,7 +53,7 @@ class FavoritesFilmCardComponent extends Component<FavoritesFilmCardProps> {
 
 		return (
 			<Link href={`/films/${id}`} className={styles.linkWrap}>
-				<Flex className={styles.filmCard} direction="row">
+				<Flex className={styles.filmCard} direction="row" align="center">
 					<div className={styles.imageContainer}>
 						<Image className={styles.image} src={image} alt={title} />
 						{ratingType && (
@@ -66,12 +66,7 @@ class FavoritesFilmCardComponent extends Component<FavoritesFilmCardProps> {
 						)}
 					</div>
 					<Flex className={styles.content} direction="column" align="start">
-						<Title
-							className={styles.title}
-							weight="bold"
-							level="6"
-							align="left"
-						>
+						<Title className={styles.title} level="5" align="left">
 							{title}
 						</Title>
 						<Flex className={styles.info}>

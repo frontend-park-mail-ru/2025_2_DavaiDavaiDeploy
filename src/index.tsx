@@ -24,6 +24,7 @@ import { Routes } from './modules/router/routes.tsx';
 import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
 import { withRouter } from './modules/router/withRouter.tsx';
 import { ActorPage } from './pages/actorPage/actorPage.tsx';
+import { CalendarPage } from './pages/calendarPage/calendarPage.tsx';
 import { FilmPage } from './pages/filmPage/filmPage.tsx';
 import { GenrePage } from './pages/genrePage/genrePage';
 import { HomePage } from './pages/homePage/homePage.tsx';
@@ -89,6 +90,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/register" component={<RegisterPage />} />
 					<Route href="/genres/:id" component={<GenrePage />} />
 					<Route href="/profile" component={<UserPage />} />
+					<Route href="/calendar" component={<CalendarPage />} />
 				</Routes>
 				{!isAuthPageOpen && <Footer />}
 			</div>
