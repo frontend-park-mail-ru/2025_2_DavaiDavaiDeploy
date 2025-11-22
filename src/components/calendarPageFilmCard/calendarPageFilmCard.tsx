@@ -11,7 +11,15 @@ import actions from '@/redux/features/calendar/actions';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
-import { Button, Flex, Image, Paragraph, Subhead, Title } from '@/uikit/index';
+import {
+	Button,
+	Flex,
+	Image,
+	Paragraph,
+	Spacing,
+	Subhead,
+	Title,
+} from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './calendarPageFilmCard.module.scss';
 
@@ -81,7 +89,7 @@ class CalendarPageFilmCardComponent extends Component<
 								<Title
 									className={styles.title}
 									weight="regular"
-									level="4"
+									level="5"
 									align="left"
 								>
 									{title}
@@ -106,6 +114,7 @@ class CalendarPageFilmCardComponent extends Component<
 									{original_title}
 								</Subhead>
 							</Flex>
+							<Spacing level="9" className={styles.spacing} />
 							<Paragraph
 								className={styles.description}
 								color="base"
@@ -118,19 +127,26 @@ class CalendarPageFilmCardComponent extends Component<
 					</Flex>
 					<Flex className={styles.right} direction="row" align="center">
 						<Flex className={styles.date} direction="column" align="center">
-							<Title
-								className={clsx(
-									styles.day,
-									styles[`day${number > 5 ? 5 : number}`],
-								)}
-								level="2"
-							>
+							<Title className={styles.day} level="2">
 								{day}
 							</Title>
 							<Subhead className={styles.month} level="8" color="base">
 								{month}
 							</Subhead>
 						</Flex>
+						<Button
+							mode="secondary"
+							className={clsx(styles.smallFavBtn, {
+								[styles.inFav]: is_liked,
+								[styles.notInFav]: !is_liked,
+							})}
+							onClick={this.handleFavorites}
+						>
+							<Favorite className={styles.favIcon} />
+							<Subhead level="7" color="base">
+								Избранное
+							</Subhead>
+						</Button>
 					</Flex>
 				</Flex>
 			</Link>
