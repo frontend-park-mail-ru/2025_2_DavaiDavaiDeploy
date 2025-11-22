@@ -35,6 +35,9 @@ import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
 import type { ModelsUser } from './types/models.ts';
 
+// eslint-disable-next-line no-console
+console.log('sentryEnabled:', sentryEnabled);
+
 if (sentryEnabled) {
 	Sentry.init({
 		dsn: sentryDSN,
