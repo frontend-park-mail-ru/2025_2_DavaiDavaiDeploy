@@ -41,7 +41,7 @@
 	--color-calendar-6: hsl(48deg 14% 93%);
 
 	--color-scrollbar-thumb: hsl(245deg 48% 30%);
-	--color-scrollbar-track: transparent;
+	--color-scrollbar-track: hsl(245deg 48% 20%);
 	--color-scrollbar-thumb-hover: hsl(244deg 48% 60%);
 
 	--color-boxshadow-btn: hsl(0deg 0% 0% / 15%);
@@ -102,9 +102,9 @@
 
 	--color-glass-gradient: linear-gradient(
 		to top,
-		hsla(235, 30%, 69%, 0.06) 0%,
-		hsla(235, 30%, 69%, 0.04) 5%,
-		rgba(187, 189, 212, 0) 20%
+		hsl(235deg 30% 69% / 6%) 0%,
+		hsl(235deg 30% 69% / 4%) 5%,
+		rgb(187 189 212 / 0%) 20%
 	);
 
 	--color-purple-light: hsl(250deg 9% 42%);
