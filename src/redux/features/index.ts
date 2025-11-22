@@ -2,6 +2,7 @@ import { combineReducers } from '@/modules/redux';
 import actorReducer from './actor/reducers';
 import calendarReducer from './calendar/reducers';
 import counterReducer from './counter/reducers';
+import favoritesReducer from './favorites/reducers';
 import filmReducer from './film/reducers';
 import filmsReducer from './films/reducers';
 import genreReducer from './genre/reducers';
@@ -20,5 +21,6 @@ export const reducer = combineReducers({
 	genre: genreReducer,
 	promoFilm: promoFilmReducer,
 	actor: actorReducer,
+	favorites: favoritesReducer,
 	calendar: calendarReducer,
 });

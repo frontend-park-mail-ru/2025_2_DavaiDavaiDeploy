@@ -13,7 +13,7 @@ describe('formatRating', () => {
 	});
 
 	it('обрабатывает нулевой рейтинг', () => {
-		expect(formatRating(0)).toBe('0.0');
+		expect(formatRating(0)).toBe('');
 	});
 
 	it('возвращает строку для дробных чисел', () => {

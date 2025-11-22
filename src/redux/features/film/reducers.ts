@@ -17,6 +17,8 @@ interface InitialState {
 	userFeedback: ModelsFilmFeedback | null;
 	leaveRatingError: string | null;
 	leaveFeedbackError: string | null;
+	addError: string | null;
+	deleteError: string | null;
 }
 
 /**
@@ -33,6 +35,8 @@ const initialState: InitialState = {
 	userFeedback: null,
 	leaveRatingError: null,
 	leaveFeedbackError: null,
+	addError: null,
+	deleteError: null,
 };
 
 /**
@@ -119,7 +123,32 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 						? (payload.rating as ModelsFilmFeedback)
 						: null,
 			};
-
+		case actionTypes.ADD_TO_FAVORITES:
+			return {
+				...state,
+				film: {
+					...state.film,
+					is_liked: true,
+				},
+			};
+		case actionTypes.DELETE_FROM_FAVORITES:
+			return {
+				...state,
+				film: {
+					...state.film,
+					is_liked: false,
+				},
+			};
+		case actionTypes.ADD_TO_FAVORITES_ERROR:
+			return {
+				...state,
+				addError: payload.error,
+			};
+		case actionTypes.DELETE_FROM_FAVORITES_ERROR:
+			return {
+				...state,
+				deleteError: payload.error,
+			};
 		default:
 			return state;
 	}

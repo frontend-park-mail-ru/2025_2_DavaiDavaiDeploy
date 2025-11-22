@@ -58,6 +58,10 @@ const calendarReducer: Reducer = (
 				calendar: null,
 			};
 		case actionTypes.ADD_TO_FAVORITES:
+			if (!payload || !payload.id) {
+				return state;
+			}
+
 			return {
 				...state,
 				calendar: state.calendar
@@ -67,6 +71,10 @@ const calendarReducer: Reducer = (
 					: null,
 			};
 		case actionTypes.DELETE_FROM_FAVORITES:
+			if (!payload || !payload.id) {
+				return state;
+			}
+
 			return {
 				...state,
 				calendar: state.calendar
