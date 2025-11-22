@@ -13,7 +13,6 @@ import {
 	AppToast,
 	ToastContainer,
 } from './components/toastContainer/toastContainer.tsx';
-import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { isSwEnabled } from './consts/sw';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
@@ -39,7 +38,7 @@ import type { ModelsUser } from './types/models.ts';
 if (sentryEnabled) {
 	Sentry.init({
 		dsn: sentryDSN,
-		enabled: isProduction,
+		enabled: true,
 		integrations: [Sentry.browserTracingIntegration()],
 		tracePropagationTargets: [PRODUCTION_URL_WITH_SCHEMA],
 		release: import.meta.env.VITE_RELEASE_VERSION,
