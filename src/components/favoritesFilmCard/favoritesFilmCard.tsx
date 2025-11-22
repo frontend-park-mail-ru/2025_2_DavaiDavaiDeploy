@@ -116,5 +116,5 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const FavoritesFilmCard = compose(
 	withRouter,
-	connect(undefined, mapDispatchToProps),
+	connect(null, mapDispatchToProps),
 )(FavoritesFilmCardComponent);

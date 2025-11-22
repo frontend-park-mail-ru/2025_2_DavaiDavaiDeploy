@@ -47,7 +47,7 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 					<Title className={styles.title} level="2">
 						Избранное
 					</Title>
-					{favoriteFilms.length == 0 && (
+					{favoriteFilms && favoriteFilms.length == 0 && (
 						<Headline className={styles.subtitle} level="7" align="center">
 							Похоже, вы ещё ничего не добавили в избранное
 						</Headline>
