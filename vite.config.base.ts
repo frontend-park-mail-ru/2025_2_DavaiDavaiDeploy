@@ -43,7 +43,11 @@ export const baseViteConfig = defineConfig({
 			},
 		}),
 	],
-
+	resolve: {
+		alias: {
+			'@': '/src',
+		},
+	},
 	esbuild: {
 		jsx: 'transform',
 		jsxFactory: 'jsx',
