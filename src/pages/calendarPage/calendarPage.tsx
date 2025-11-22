@@ -1,4 +1,4 @@
-import { CalendarWidgetFilmCard } from '@/components/calendarWidgetFilmCard/calendarWidgetFilmCard';
+import { CalendarPageFilmCard } from '@/components/calendarPageFilmCard/calendarPageFilmCard';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -36,11 +36,7 @@ class CalendarPageComponent extends Component<CalendarPageProps> {
 				</Title>
 				<Flex className={styles.films} direction="column" align="center">
 					{this.props.films.map((film, index) => (
-						<CalendarWidgetFilmCard
-							film={film}
-							number={index + 1}
-							key={index}
-						/>
+						<CalendarPageFilmCard film={film} number={index + 1} key={index} />
 					))}
 				</Flex>
 			</Flex>
