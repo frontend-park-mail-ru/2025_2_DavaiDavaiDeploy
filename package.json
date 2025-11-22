@@ -23,7 +23,6 @@
     "lint:stylelint": "npx stylelint \"**/*.css\" --allow-empty-input",
     "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix --allow-empty-input",
     "prepare": "husky",
-    "pre-commit": "npm run lint:stylelint:fix && npm run lint:eslint:fix && npm run lint:prettier:fix",
     "preview": "npm run build && vite preview",
     "preview:stage": "npm run build:stage && vite preview"
   },
