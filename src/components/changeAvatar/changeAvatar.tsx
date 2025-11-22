@@ -5,6 +5,7 @@ import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/user/actions';
 import {
 	selectAvatarChangeError,
+	selectIsTwoFactorEnabled,
 	selectNewAvatarLoading,
 	selectUser,
 } from '@/redux/features/user/selectors.ts';
@@ -16,6 +17,7 @@ import {
 	FileButton,
 	Flex,
 	Subhead,
+	Switch,
 	Title,
 } from '@/uikit/index';
 import { Component } from '@robocotik/react';
@@ -28,7 +30,10 @@ interface ChangeAvatarProps {
 	error: string | null;
 	user: ModelsUser;
 	loading: boolean;
+	OTPActivated: boolean;
 	setAvatar: (file: File) => void;
+	activateOTP: () => void;
+	deactivateOTP: () => void;
 }
 
 const MAX_FILE_SIZE_MB = 8;
@@ -125,6 +130,14 @@ class ChangeAvatarComponent extends Component<
 		}
 	}
 
+	handleToggleOTP = () => {
+		if (this.props.OTPActivated) {
+			this.props.deactivateOTP();
+		} else {
+			this.props.activateOTP();
+		}
+	};
+
 	render() {
 		if (!this.props.user) {
 			return <div />;
@@ -156,6 +169,10 @@ class ChangeAvatarComponent extends Component<
 						>
 							Вес файла: не более 8МБ
 						</Subhead>
+					</Flex>
+					<Flex>
+						<Switch onClick={this.handleToggleOTP} checked={isEditing} />
+						<p>Двухфакторная аутентификация</p>
 					</Flex>
 				</Flex>
 
@@ -203,12 +220,15 @@ class ChangeAvatarComponent extends Component<
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
+	OTPActivated: selectIsTwoFactorEnabled(state),
 	error: selectAvatarChangeError(state),
 	loading: selectNewAvatarLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	setAvatar: (file: File) => dispatch(actions.changeAvatarAction(file)),
+	activateOTP: () => dispatch(actions.sendActivateOTP()),
+	deactivateOTP: () => dispatch(actions.sendDeactivateOTP()),
 });
 
 export const ChangeAvatar = compose(

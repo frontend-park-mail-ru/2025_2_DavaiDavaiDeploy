@@ -42,3 +42,6 @@ export const selectNewPasswordLoading: Selector = (state: State): boolean =>
 
 export const selectNewAvatarLoading: Selector = (state: State): boolean =>
 	state.user.newAvatarLoading;
+
+export const selectIsTwoFactorEnabled: Selector = (state: State): boolean =>
+	state.user.user?.twoFactorEnabled ?? false;

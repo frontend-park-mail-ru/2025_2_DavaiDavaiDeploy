@@ -12,6 +12,9 @@ interface InitialState {
 	avatarChangeError: boolean;
 	newPasswordLoading: boolean;
 	newAvatarLoading: false;
+	twoFactorLoading: boolean;
+	twoFactorEnabled: boolean;
+	qrCodeBlob: Blob | null;
 }
 
 /**
@@ -26,6 +29,9 @@ const initialState: InitialState = {
 	avatarChangeError: false,
 	newPasswordLoading: false,
 	newAvatarLoading: false,
+	twoFactorLoading: false,
+	twoFactorEnabled: false,
+	qrCodeBlob: null,
 };
 
 /**
@@ -133,6 +139,45 @@ export const userReducer: Reducer = (
 			return {
 				...state,
 				error: null,
+			};
+
+		case actionTypes.USER_OTP_DEACTIVATE:
+			return {
+				...state,
+				user: {
+					...state.user,
+					twoFactorEnabled: false,
+					twoFactorLoading: false,
+					qrCodeBlob: null,
+				},
+			};
+		case actionTypes.USER_OTP_ACTIVATE:
+			return {
+				...state,
+				user: {
+					...state.user,
+					twoFactorEnabled: true,
+					twoFactorLoading: false,
+					qrCodeBlob: payload.qrImage,
+				},
+			};
+		case actionTypes.USER_OTP_LOADING:
+			return {
+				...state,
+				user: {
+					...state.user,
+					twoFactorLoading: true,
+				},
+			};
+
+		case actionTypes.USER_OTP_ERROR:
+			return {
+				...state,
+				user: {
+					...state.user,
+					error: payload.error,
+					twoFactorLoading: false,
+				},
 			};
 		default:
 			return state;

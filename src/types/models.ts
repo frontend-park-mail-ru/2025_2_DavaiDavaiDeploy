@@ -184,3 +184,7 @@ export interface ModelsUser {
 	updated_at?: string;
 	version: number;
 }
+
+export interface ModelsOTPUser {
+	qrImage: Blob | null;
+}
