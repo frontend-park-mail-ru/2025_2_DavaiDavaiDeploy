@@ -6,17 +6,20 @@
 
 .filmCard {
 	overflow: hidden;
-	padding: 2rem 2rem;
+	padding: 2rem;
 	border-radius: var(--border-radius-3xl);
 	width: 100%;
 	gap: 2.5rem;
-	background: hsl(0deg 0% 100% / 0.1%);
 	backdrop-filter: blur(5px);
 	background: var(--color-glass-gradient);
 	box-shadow:
-		0 4px 30px rgba(0, 0, 0, 0.1),
-		inset 10px 10px 30px rgba(0, 0, 0, 0.15);
-	border: 1px solid hsl(235, 30%, 69%, 0.2);
+		0 4px 30px rgb(0 0 0 / 10%),
+		inset 10px 10px 30px rgb(0 0 0 / 15%);
+	border: 1px solid hsl(235deg 30% 69% / 20%);
+
+	&:hover {
+		filter: brightness(1.2);
+	}
 }
 
 .imageContainer {
@@ -105,6 +108,7 @@
 
 	&:hover {
 		transform: scale(1.05);
+
 		.icon {
 			fill: transparent;
 		}
@@ -116,23 +120,10 @@
 	word-break: normal;
 }
 
-.filmCard:hover {
-	background-color: var(--color-light-text);
-
-	.title,
-	.description,
-	.item {
-		color: var(--color-dark-text);
-	}
-	.item {
-		opacity: 0.6;
-	}
-}
-
 @media (max-width: 768px) {
 	.filmCard {
 		flex-direction: column;
-		padding: 2rem 2rem;
+		padding: 2rem;
 		gap: 1.5rem;
 		align-items: center;
 		justify-content: center;

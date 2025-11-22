@@ -94,20 +94,6 @@ class CalendarPageFilmCardComponent extends Component<
 								>
 									{title}
 								</Title>
-
-								<Button
-									mode="secondary"
-									className={clsx(styles.favBtn, {
-										[styles.inFav]: is_liked,
-										[styles.notInFav]: !is_liked,
-									})}
-									onClick={this.handleFavorites}
-								>
-									<Favorite className={styles.favIcon} />
-									<Subhead level="7" color="base">
-										Избранное
-									</Subhead>
-								</Button>
 							</Flex>
 							<Flex className={styles.info}>
 								<Subhead className={styles.item} level="10" color="light">
@@ -125,7 +111,7 @@ class CalendarPageFilmCardComponent extends Component<
 							</Paragraph>
 						</Flex>
 					</Flex>
-					<Flex className={styles.right} direction="row" align="center">
+					<Flex className={styles.right} direction="column" align="center">
 						<Flex className={styles.date} direction="column" align="center">
 							<Title className={styles.day} level="2">
 								{day}
@@ -136,7 +122,7 @@ class CalendarPageFilmCardComponent extends Component<
 						</Flex>
 						<Button
 							mode="secondary"
-							className={clsx(styles.smallFavBtn, {
+							className={clsx(styles.favBtn, {
 								[styles.inFav]: is_liked,
 								[styles.notInFav]: !is_liked,
 							})}
