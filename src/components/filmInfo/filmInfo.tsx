@@ -1,12 +1,22 @@
+import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '@/modules/clsx';
+import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions';
+import type { State } from '@/modules/redux/types/store';
 import { Link } from '@/modules/router/link';
+import type { WithRouterProps } from '@/modules/router/types/withRouterProps';
+import { withRouter } from '@/modules/router/withRouter';
+import actions from '@/redux/features/film/actions';
+import { selectIsAuthentificated } from '@/redux/features/user/selectors';
+import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
 import {
 	Badge,
+	Button,
 	Flex,
 	Headline,
 	Image,
@@ -21,9 +31,34 @@ import styles from './filmInfo.module.scss';
 interface FilmInfoProps {
 	film: ModelsFilmPage | null;
 	error: string | null;
+	deleteFromFavorites: (id: string) => {};
+	addToFavorites: (id: string) => {};
+	isAuthentificated: boolean;
 }
 
-export class FilmInfo extends Component<FilmInfoProps> {
+class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
+	handleFavorites = (event: MouseEvent) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		const { film } = this.props;
+
+		if (!film) {
+			return;
+		}
+
+		if (!this.props.isAuthentificated) {
+			this.props.router.navigate('/login');
+		}
+
+		if (film.is_liked) {
+			this.props.deleteFromFavorites(film.id);
+			return;
+		}
+
+		this.props.addToFavorites(film.id);
+	};
+
 	render() {
 		if (this.props.error) {
 			return (
@@ -54,6 +89,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 			original_title,
 			cover,
 			poster,
+			is_liked,
 		} = this.props.film;
 
 		const formattedRating = formatRating(rating);
@@ -74,21 +110,39 @@ export class FilmInfo extends Component<FilmInfoProps> {
 				</div>
 
 				<Flex className={styles.content} direction="row" align="start">
-					<Flex className={styles.media} align="start" justify="center">
-						<Image
-							src={cover}
-							alt={title || 'Cover'}
-							className={styles.cover}
-						/>
+					<Flex
+						className={styles.right}
+						align="center"
+						justify="center"
+						direction="column"
+					>
+						<Flex className={styles.media} align="start" justify="center">
+							<Image
+								src={cover}
+								alt={title || 'Cover'}
+								className={styles.cover}
+							/>
 
-						{formattedRating && ratingType && (
-							<Badge
-								mode={ratingType}
-								className={styles[`rating-${ratingType}`]}
-							>
-								<Headline level="7">{formattedRating}</Headline>
-							</Badge>
-						)}
+							{formattedRating && ratingType && (
+								<Badge
+									mode={ratingType}
+									className={styles[`rating-${ratingType}`]}
+								>
+									<Headline level="7">{formattedRating}</Headline>
+								</Badge>
+							)}
+						</Flex>
+						<Button
+							mode="secondary"
+							className={clsx(styles.favBtn, {
+								[styles.inFav]: is_liked,
+								[styles.notInFav]: !is_liked,
+							})}
+							onClick={this.handleFavorites}
+						>
+							<Favorite className={styles.favIcon} />
+							<Headline level="7">Избранное</Headline>
+						</Button>
 					</Flex>
 
 					<Flex className={styles.info} direction="column" align="start">
@@ -178,8 +232,23 @@ export class FilmInfo extends Component<FilmInfoProps> {
 									)}
 								</Flex>
 
-								<Flex className={styles.smallRating}>
+								<Flex
+									className={styles.smallRating}
+									direction="column"
+									align="center"
+								>
 									<FilmRating film={this.props.film} />
+									<Button
+										mode="secondary"
+										className={clsx(styles.smallFavBtn, {
+											[styles.inFav]: is_liked,
+											[styles.notInFav]: !is_liked,
+										})}
+										onClick={this.handleFavorites}
+									>
+										<Favorite className={styles.favIcon} />
+										<Headline level="7">Избранное</Headline>
+									</Button>
 								</Flex>
 
 								{description && (
@@ -350,3 +419,18 @@ export class FilmInfo extends Component<FilmInfoProps> {
 		);
 	}
 }
+
+const mapStateToProps = (state: State): Map => ({
+	isAuthentificated: selectIsAuthentificated(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	deleteFromFavorites: (id: string) =>
+		dispatch(actions.deleteFromFavoritesAction(id)),
+	addToFavorites: (id: string) => dispatch(actions.addToFavoritesAction(id)),
+});
+
+export const FilmInfo = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(FilmInfoComponent);

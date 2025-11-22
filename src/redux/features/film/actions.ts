@@ -1,6 +1,10 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
+import type {
+	ModelsFavFilm,
+	ModelsFilmFeedback,
+	ModelsFilmPage,
+} from '@/types/models';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -205,18 +209,96 @@ const createFeedbackAction =
 		}
 	};
 
+/**
+ * Вызов удаления фильма из избранного
+ */
+const processDeleteAction = (): Action => {
+	return {
+		type: actionTypes.DELETE_FROM_FAVORITES,
+	};
+};
+
+/**
+ * Устанавливает состояние ошибки при удалении фильма из избранного
+ */
+const returnDeleteErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.DELETE_FROM_FAVORITES_ERROR,
+		payload: { error },
+	};
+};
+
+/**
+ * Удаляет фильм из избранного
+ */
+const deleteFromFavoritesAction =
+	(id: string): Action =>
+	async (dispatch: Dispatch) => {
+		try {
+			await HTTPClient.delete<ModelsFavFilm[]>(`/films/${id}/remove`);
+
+			dispatch(processDeleteAction());
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnDeleteErrorAction(errorMessage));
+		}
+	};
+
+/**
+ * Вызов добавления фильма из избранного
+ */
+const processAddAction = (): Action => {
+	return {
+		type: actionTypes.ADD_TO_FAVORITES,
+	};
+};
+
+/**
+ * Устанавливает состояние ошибки при добавлении фильма в избранное
+ */
+const returnAddErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.ADD_TO_FAVORITES_ERROR,
+		payload: { error },
+	};
+};
+
+/**
+ * Добавляет фильм в избранное
+ */
+const addToFavoritesAction =
+	(id: string): Action =>
+	async (dispatch: Dispatch) => {
+		try {
+			await HTTPClient.post<ModelsFavFilm[]>(`/films/${id}/save`);
+
+			dispatch(processAddAction());
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnAddErrorAction(errorMessage));
+		}
+	};
+
 export default {
 	getFilmAction,
 	getFeedbacksAction,
-	setFilmLoadingAction,
-	returnFilmAction,
-	returnFilmErrorAction,
+	addToFavoritesAction,
+	deleteFromFavoritesAction,
 	clearFilmAction,
-	setFeedbacksLoadingAction,
-	returnFeedbacksAction,
-	returnFeedbacksErrorAction,
 	createRatingAction,
-	returnNewRatingAction,
-	returnNewRatingErrorAction,
 	createFeedbackAction,
 };
