@@ -3,7 +3,7 @@ import { baseViteConfig } from './vite.config.base';
 import { pwaViteConfig } from './vitePWA.config';
 import { sentryViteConfig } from './viteSentry.config';
 
-const prodViteConfig = defineConfig({
+const prodViteConfig = {
 	build: {
 		outDir: 'dist',
 		emptyOutDir: true,
@@ -13,9 +13,11 @@ const prodViteConfig = defineConfig({
 			input: 'index.html',
 		},
 	},
-});
+};
 
-export default mergeConfig(
-	mergeConfig(prodViteConfig, baseViteConfig),
-	mergeConfig(pwaViteConfig, sentryViteConfig),
+export default defineConfig((env) =>
+	mergeConfig(
+		mergeConfig(prodViteConfig, baseViteConfig(env)),
+		mergeConfig(pwaViteConfig(env), sentryViteConfig(env)),
+	),
 );

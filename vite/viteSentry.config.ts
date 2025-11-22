@@ -1,23 +1,26 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 
-const isSentryEnabled = process.env.VITE_SENTRY_ENABLED === 'true';
+function getPlugins(env: Record<string, string>) {
+	const isSentryEnabled = env.VITE_SENTRY_ENABLED === 'true';
 
-function getPlugins() {
 	if (!isSentryEnabled) {
 		return [];
 	}
 
 	return [
 		sentryVitePlugin({
-			org: process.env.VITE_SENTRY_ORG,
-			project: process.env.VITE_SENTRY_PROJECT,
-			authToken: process.env.VITE_SENTRY_AUTH_TOKEN,
-			release: { name: process.env.VITE_RELEASE_VERSION },
+			org: env.VITE_SENTRY_ORG,
+			project: env.VITE_SENTRY_PROJECT,
+			authToken: env.VITE_SENTRY_AUTH_TOKEN,
+			release: { name: env.VITE_RELEASE_VERSION },
 		}),
 	];
 }
 
-export const sentryViteConfig = defineConfig({
-	plugins: getPlugins(),
+export const sentryViteConfig = defineConfig(({ mode }) => {
+	const env = loadEnv(mode, process.cwd(), '');
+	return {
+		plugins: getPlugins(env),
+	};
 });
