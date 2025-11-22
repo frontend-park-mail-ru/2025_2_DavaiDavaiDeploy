@@ -13,8 +13,9 @@ import {
 	AppToast,
 	ToastContainer,
 } from './components/toastContainer/toastContainer.tsx';
-import { isProduction, isSwEnabled } from './consts/isProduction';
+import { isProduction } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
+import { isSwEnabled } from './consts/sw';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
 import type { Dispatch } from './modules/redux/types/actions.ts';
