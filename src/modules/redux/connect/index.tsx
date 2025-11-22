@@ -11,7 +11,7 @@ type WrappedToConnected<Props, ComponentState, Context> = (
 ) => ConnectedConstructor<Props>;
 
 export function connect<Props = any, ComponentState = any, Context = any>(
-	mapStateToProps?: (state: State) => Record<string, any>,
+	mapStateToProps?: ((state: State) => Record<string, any>) | null,
 	mapDispatchToProps?: (dispatch: Dispatch) => Record<string, any>,
 ): WrappedToConnected<Props, ComponentState, Context> {
 	return (
