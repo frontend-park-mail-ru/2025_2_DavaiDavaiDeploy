@@ -10,7 +10,7 @@
     "start:stage": "vite --config vite/vite.config.stage.ts",
     "start:prod": "vite --config vite/vite.config.prod.ts",
     "build": "tsc && vite build --config vite/vite.config.dev.ts",
-    "build:stage": "tsc && vite build --config vite/vite.config.stage.ts",
+    "build:stage": "tsc && vite build --config vite/vite.config.stage.ts --mode stage",
     "build:prod": "tsc && vite build --config vite/vite.config.prod.ts",
     "genTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/types -n models.ts --no-client",
     "test": "vitest --config vite/vite.config.dev.ts",
