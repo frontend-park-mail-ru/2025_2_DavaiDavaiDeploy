@@ -12,7 +12,7 @@ import { selectFavorites } from '@/redux/features/favorites/selectors';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
-import { Flex, Title } from '@/uikit/index';
+import { Flex, Headline, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './userPage.module.scss';
 
@@ -47,6 +47,11 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 					<Title className={styles.title} level="2">
 						Избранное
 					</Title>
+					{favoriteFilms.length == 0 && (
+						<Headline className={styles.subtitle} level="7" align="center">
+							Похоже, вы ещё ничего не добавили в избранное
+						</Headline>
+					)}
 					<Flex
 						className={styles.films}
 						direction="column"

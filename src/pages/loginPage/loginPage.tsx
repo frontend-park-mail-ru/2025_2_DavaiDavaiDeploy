@@ -18,7 +18,7 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Button, Flex, FormItem, Headline, Title } from '@/uikit/index';
+import { Button, Flex, FormItem, Headline, Logo, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import { Redirect } from '../../modules/router/redirect';
@@ -127,17 +127,20 @@ export class LoginPageNotConnected extends Component<
 						<img src={close} alt="close" />
 					</Link>
 					{this.state.showVideo && (
-						<video
-							src={getStaticURL('/video/login_signup.mp4')}
-							alt="loginVideo"
-							className={styles.loginImg}
-							autoplay
-							muted
-							loop
-							playsinline
-							disablePictureInPicture
-							controlsList="nodownload noremoteplayback"
-						/>
+						<div className={styles.videoContainer}>
+							<video
+								src={getStaticURL('/video/login_signup.mp4')}
+								alt="loginVideo"
+								className={styles.loginImg}
+								autoplay
+								muted
+								loop
+								playsinline
+								disablePictureInPicture
+								controlsList="nodownload noremoteplayback"
+							/>
+							<Logo level="7" className={styles.logo} />
+						</div>
 					)}
 
 					<Flex
