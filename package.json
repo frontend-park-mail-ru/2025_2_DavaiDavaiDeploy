@@ -12,7 +12,7 @@
     "build": "tsc && vite build --config vite.config.prod.ts",
     "build:stage": "tsc && vite build --config vite.config.stage.ts",
     "genTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/types -n models.ts --no-client",
-    "test": "vitest",
+    "test": "vitest --config vite.config.dev.ts",
     "test:coverage": "vitest run --coverage",
     "tsc:check": "npx tsc --noEmit",
     "lint:eslint": "npx eslint .",
