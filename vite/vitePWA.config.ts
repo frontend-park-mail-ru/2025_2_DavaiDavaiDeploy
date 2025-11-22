@@ -1,16 +1,8 @@
-import { sentryVitePlugin } from '@sentry/vite-plugin';
-import { defineConfig, mergeConfig } from 'vite';
+import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
-import { baseViteConfig } from './vite.config.base';
 
-export const prodViteConfig = defineConfig({
+export const pwaViteConfig = defineConfig({
 	plugins: [
-		sentryVitePlugin({
-			org: process.env.VITE_SENTRY_ORG,
-			project: process.env.VITE_SENTRY_PROJECT,
-			authToken: process.env.VITE_SENTRY_AUTH_TOKEN,
-			release: { name: process.env.VITE_RELEASE_VERSION },
-		}),
 		VitePWA({
 			includeAssets: ['assets/favicon-86x86.png'],
 			outDir: 'dist/assets',
@@ -58,15 +50,4 @@ export const prodViteConfig = defineConfig({
 			},
 		}),
 	],
-	build: {
-		outDir: 'dist',
-		emptyOutDir: true,
-		assetsDir: 'assets/prod',
-		sourcemap: true,
-		rollupOptions: {
-			input: 'index.html',
-		},
-	},
 });
-
-export default mergeConfig(prodViteConfig, baseViteConfig);

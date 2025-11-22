@@ -1,7 +1,8 @@
 import { defineConfig, mergeConfig } from 'vite';
 import { baseViteConfig } from './vite.config.base';
+import { sentryViteConfig } from './viteSentry.config';
 
-export const devViteConfig = defineConfig({
+const stageViteConfig = defineConfig({
 	build: {
 		outDir: 'dist',
 		emptyOutDir: true,
@@ -13,4 +14,7 @@ export const devViteConfig = defineConfig({
 	},
 });
 
-export default mergeConfig(devViteConfig, baseViteConfig);
+export default mergeConfig(
+	mergeConfig(stageViteConfig, baseViteConfig),
+	sentryViteConfig,
+);
