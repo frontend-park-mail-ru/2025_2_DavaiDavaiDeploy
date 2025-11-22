@@ -30,16 +30,14 @@ ARG AWS_ENDPOINT
 RUN aws s3 rm s3://${S3_BUCKET}/assets/stage \
     --recursive \
     --no-verify-ssl \
-    --endpoint-url ${AWS_ENDPOINT} \
-    --cache-control "no-cache"
+    --endpoint-url ${AWS_ENDPOINT}
 
 # Синхронизируем папку с S3
 RUN aws s3 sync . s3://${S3_BUCKET}/assets/stage \
     --delete \
     --acl public-read \
     --no-verify-ssl \
-    --endpoint-url ${AWS_ENDPOINT} \
-    --cache-control "no-cache"
+    --endpoint-url ${AWS_ENDPOINT}
 
 #базовый образ
 FROM nginx:alpine AS nginx

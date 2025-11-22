@@ -127,6 +127,7 @@ export class HTTPClient {
 						url: requestUrl.toString(),
 						method: requestMethod,
 						status: response.status,
+						path
 					},
 				});
 
