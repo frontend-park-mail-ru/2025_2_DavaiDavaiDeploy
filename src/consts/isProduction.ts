@@ -1,4 +1,3 @@
 export const isProduction = import.meta.env.PROD;
 
-export const isStage =
-	import.meta.env.VITE_PRODUCTION_URL === 'stage.ddfilms.online';
+export const isSwEnabled = import.meta.env.IS_SW_ENABLED === 'true';

@@ -13,7 +13,7 @@ import {
 	AppToast,
 	ToastContainer,
 } from './components/toastContainer/toastContainer.tsx';
-import { isProduction, isStage } from './consts/isProduction';
+import { isProduction, isSwEnabled } from './consts/isProduction';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
@@ -45,7 +45,7 @@ if (sentryEnabled) {
 	});
 }
 
-if (isProduction && !isStage && 'serviceWorker' in navigator) {
+if (isSwEnabled && 'serviceWorker' in navigator) {
 	window.addEventListener('load', () => {
 		navigator.serviceWorker
 			.register('/sw.js', { scope: '/' })
