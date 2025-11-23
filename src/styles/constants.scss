@@ -107,18 +107,18 @@
 		rgb(187 189 212 / 0%) 20%
 	);
 
+	// --color-search-gradient: linear-gradient(
+	// 	to top,
+	// 	hsl(235deg 30% 69% / 10%) 0%,
+	// 	hsl(235deg 30% 69% / 6%) 50%,
+	// 	rgb(8 10 38 / 0%) 80%
+	// );
+
 	--color-search-gradient: linear-gradient(
 		to top,
-		hsl(235deg 30% 69% / 10%) 0%,
-		hsl(235deg 30% 69% / 6%) 50%,
-		rgb(8 10 38 / 0%) 80%
-	);
-
-	--color-dark-search-gradient: linear-gradient(
-		to top,
-		hsl(235deg 21% 43% / 10%) 0%,
-		/* светлый низ */ hsl(235deg 30% 50% / 25%) 30%,
-		/* мягкий переход */ hsl(235deg 30% 20% / 45%) 60%
+		rgb(100 102 120 / 25%) 0%,
+		rgb(60 62 80 / 35%) 30%,
+		rgb(3 4 15 / 30%) 70%
 	);
 
 	--color-purple-light: hsl(250deg 9% 42%);
