@@ -62,13 +62,11 @@
 
 .user {
 	gap: 1.875rem;
-	flex-shrink: 0;
 	text-decoration: none;
 }
 
 .right {
 	gap: 3rem;
-	flex-shrink: 0;
 	text-decoration: none;
 }
 
@@ -161,7 +159,6 @@
 @media (max-width: 768px) {
 	.header {
 		padding: 1rem 1.5rem;
-		gap: 1rem;
 	}
 
 	.text1 {

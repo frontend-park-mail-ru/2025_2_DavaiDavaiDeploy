@@ -26,6 +26,7 @@
 	color: var(--color-text);
 	font-family: 'Golos UI', Arial, sans-serif;
 	outline: none;
+	flex-grow: 1;
 
 	&::placeholder {
 		color: var(--color-light-text);
@@ -106,6 +107,7 @@
 		height: 2.75rem;
 		width: 100%;
 		border: none;
+		gap: 0.5rem;
 	}
 
 	.input {
