@@ -9,7 +9,7 @@ import { selectSearchResult } from '@/redux/features/search/selectors';
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsSearchResponse } from '@/types/models';
-import { CardGrid, Flex, Paragraph, Spacing, Title } from '@/uikit/index';
+import { CardGrid, Flex, Paragraph, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './searchPage.module.scss';
 
@@ -19,7 +19,7 @@ interface SearchPageProps {
 
 class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 	onMount() {
-		store.dispatch(actions.getSearchResultAction('любовь'));
+		store.dispatch(actions.getSearchResultAction('леонардо'));
 	}
 
 	renderActors = () => {
@@ -27,7 +27,7 @@ class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 
 		return (
 			<Flex direction="column" className={styles.grid}>
-				<Title className={styles.subtitle} level="2" weight="regular">
+				<Title className={styles.subtitle} level="4" weight="bold">
 					Актеры
 				</Title>
 				<CardGrid>
@@ -42,7 +42,7 @@ class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 
 		return (
 			<Flex direction="column" className={styles.grid}>
-				<Title className={styles.subtitle} level="2" weight="regular">
+				<Title className={styles.subtitle} level="4" weight="bold">
 					Фильмы
 				</Title>
 				<CardGrid>
@@ -74,10 +74,10 @@ class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 							className={styles.nothingFoundSubtitle}
 							level="4"
 							color="light"
+							weight="bold"
 						>
 							Что делать?
 						</Title>
-						<Spacing level="10" />
 						<Paragraph
 							className={styles.nothingFoundItem}
 							level="7"
@@ -109,7 +109,7 @@ class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 
 		return (
 			<>
-				<Title className={styles.title} level="2" weight="regular">
+				<Title className={styles.title} level="2">
 					Возможно вы искали:
 				</Title>
 				{films?.length !== 0 && this.renderFilms()}

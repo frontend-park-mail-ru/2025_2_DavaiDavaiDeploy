@@ -44,7 +44,7 @@ const getSearchResultAction =
 
 		try {
 			const response = await HTTPClient.get<ModelsSearchResponse>(`/search`, {
-				params: { g: searchText },
+				params: { q: searchText },
 			});
 
 			dispatch(returnSearchResultAction(response.data));
