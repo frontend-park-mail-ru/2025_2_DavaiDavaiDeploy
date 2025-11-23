@@ -80,8 +80,22 @@
 	width: 1rem;
 }
 
+.closeBtn {
+	outline: none;
+}
+
+.close {
+	width: 1rem;
+	stroke-width: 0.2rem;
+}
+
 @media (max-width: 768px) {
 	.searchInput {
-		height: 1.75rem;
+		border-radius: var(--border-radius-lg);
+		padding: 0 1rem;
+		height: 2.75rem;
+		width: 100%;
+		justify-content: space-between;
+		border: none;
 	}
 }

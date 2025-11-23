@@ -1,3 +1,4 @@
+import Close from '@/assets/img/close.svg?react';
 import Loupe from '@/assets/img/loupe.svg?react';
 import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
@@ -12,6 +13,9 @@ import styles from './searchInput.module.scss';
 
 interface SearchInputProps {
 	getSearchResult: (searchRequest: string) => void;
+	onClose?: VoidFunction;
+	type: 'small' | 'big';
+	className: string;
 }
 
 interface SearchInputState {
@@ -46,6 +50,34 @@ class SearchInputComponent extends Component<
 	};
 
 	render() {
+		if (this.props.type === 'big') {
+			return (
+				<Flex
+					className={clsx(styles.searchInput, this.props.className, {
+						[styles.active]: this.state.searchRequest !== '',
+					})}
+					direction="row"
+					align="center"
+				>
+					<input
+						type="text"
+						placeholder="Поиск фильмов, актеров..."
+						value={this.state.searchRequest}
+						onInput={this.handleSearchRequestChange}
+						className={styles.input}
+						onKeyDown={this.handleKeyDown}
+					></input>
+					<IconButton
+						mode="tertiary"
+						className={styles.loupeBtn}
+						onClick={this.props.onClose}
+					>
+						<Loupe className={styles.loupe} />
+					</IconButton>
+				</Flex>
+			);
+		}
+
 		return (
 			<Flex
 				className={clsx(styles.searchInput, {
@@ -54,6 +86,13 @@ class SearchInputComponent extends Component<
 				direction="row"
 				align="center"
 			>
+				<IconButton
+					mode="tertiary"
+					className={styles.loupeBtn}
+					onClick={this.search}
+				>
+					<Loupe className={styles.loupe} />
+				</IconButton>
 				<input
 					type="text"
 					placeholder="Поиск фильмов, актеров..."
@@ -62,12 +101,13 @@ class SearchInputComponent extends Component<
 					className={styles.input}
 					onKeyDown={this.handleKeyDown}
 				></input>
+
 				<IconButton
 					mode="tertiary"
-					className={styles.loupeBtn}
-					onClick={this.search}
+					className={styles.closeBtn}
+					onClick={this.props.onClose}
 				>
-					<Loupe className={styles.loupe} />
+					<Close className={styles.close} />
 				</IconButton>
 			</Flex>
 		);

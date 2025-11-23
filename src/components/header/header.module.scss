@@ -116,6 +116,32 @@
 	height: 3rem;
 }
 
+.loupeBtn {
+	outline: none;
+	position: relative;
+	display: none;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 1.7rem;
+		height: 1.7rem;
+		background: var(--color-accent);
+		opacity: 0.1;
+		border-radius: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 0;
+	}
+}
+
+.loupe {
+	position: relative;
+	z-index: 10;
+	width: 1rem;
+}
+
 @media (max-width: 1600px) {
 	.header {
 		padding: 0.8rem 1.5rem;
@@ -150,5 +176,17 @@
 
 	.logo {
 		width: 8rem;
+	}
+
+	.bigSearch {
+		display: none;
+	}
+
+	.loupeBtn {
+		display: flex;
+	}
+
+	.right {
+		gap: 1rem;
 	}
 }
