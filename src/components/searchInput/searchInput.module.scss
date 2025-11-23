@@ -58,6 +58,7 @@
 .loupeBtn {
 	outline: none;
 	position: relative;
+	transition: all 0.4 ease;
 
 	&::before {
 		content: '';
@@ -72,6 +73,10 @@
 		transform: translate(-50%, -50%);
 		z-index: 0;
 	}
+
+	&:hover {
+		transform: scale(1.05);
+	}
 }
 
 .loupe {
@@ -82,6 +87,11 @@
 
 .closeBtn {
 	outline: none;
+	transition: all 0.4 ease;
+
+	&:hover {
+		transform: scale(1.05);
+	}
 }
 
 .close {

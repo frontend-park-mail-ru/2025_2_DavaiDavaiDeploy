@@ -120,6 +120,7 @@
 	outline: none;
 	position: relative;
 	display: none;
+	transition: all 0.4 ease;
 
 	&::before {
 		content: '';
@@ -133,6 +134,10 @@
 		border-radius: 50%;
 		transform: translate(-50%, -50%);
 		z-index: 0;
+	}
+
+	&:hover {
+		transform: scale(1.05);
 	}
 }
 
