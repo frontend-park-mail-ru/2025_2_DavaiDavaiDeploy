@@ -32,6 +32,7 @@ import { GenrePage } from './pages/genrePage/genrePage';
 import { HomePage } from './pages/homePage/homePage.tsx';
 import { LoginPage } from './pages/loginPage/loginPage.tsx';
 import { RegisterPage } from './pages/registerPage/registerPage.tsx';
+import { SearchPage } from './pages/searchPage/searchPage.tsx';
 import { UserPage } from './pages/userPage/userPage.tsx';
 import actions from './redux/features/user/actions.ts';
 import { selectUser } from './redux/features/user/selectors.ts';
@@ -93,6 +94,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/genres/:id" component={<GenrePage />} />
 					<Route href="/profile" component={<UserPage />} />
 					<Route href="/calendar" component={<CalendarPage />} />
+					<Route href="/search" component={<SearchPage />} />
 				</Routes>
 				{!isAuthPageOpen && <Footer />}
 			</div>

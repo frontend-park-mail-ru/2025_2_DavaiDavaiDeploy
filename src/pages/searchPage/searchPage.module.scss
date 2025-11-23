@@ -1,0 +1,63 @@
+.page {
+	gap: 3.75rem;
+	width: 100%;
+	overflow-x: hidden;
+	padding: var(--wide-side-padding);
+	margin-bottom: 3rem;
+}
+
+.title {
+	margin-top: 10rem;
+}
+
+.nothingFound {
+	width: 70%;
+	gap: 2rem;
+}
+
+.nothingFoundTitle {
+	width: 70%;
+}
+
+.nothingFoundSubtitle {
+	opacity: 0.7;
+}
+
+.nothingFoundItem {
+	position: relative;
+	padding-left: 1.2em;
+	margin: 0.4em 0;
+	opacity: 0.7;
+
+	&::before {
+		content: '•';
+		position: absolute;
+		left: 0;
+		top: 0;
+		font-size: 1.2em;
+		line-height: 1;
+	}
+}
+
+@media (max-width: 1024px) {
+	.page {
+		padding: var(--side-padding);
+		gap: 3rem;
+	}
+
+	.title {
+		margin-top: 8rem;
+		text-align: center;
+	}
+}
+
+@media (max-width: 768px) {
+	.page {
+		padding: var(--side-padding);
+		gap: 2rem;
+	}
+
+	.films {
+		gap: 1.875rem;
+	}
+}
