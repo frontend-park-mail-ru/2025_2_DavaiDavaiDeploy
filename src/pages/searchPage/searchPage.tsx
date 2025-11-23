@@ -1,3 +1,4 @@
+import { ActorCard } from '@/components/actorCard/actorCard';
 import { FilmCard } from '@/components/filmCard/filmCard';
 import { compose, connect } from '@/modules/redux';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -22,7 +23,7 @@ class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 	}
 
 	renderActors = () => {
-		const { films } = this.props.searchResult;
+		const { actors } = this.props.searchResult;
 
 		return (
 			<Flex direction="column" className={styles.grid}>
@@ -30,7 +31,7 @@ class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 					Актеры
 				</Title>
 				<CardGrid>
-					{films && films.map((film) => <FilmCard film={film} />)}
+					{actors && actors.map((actor) => <ActorCard actor={actor} />)}
 				</CardGrid>
 			</Flex>
 		);
