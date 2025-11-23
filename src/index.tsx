@@ -1,3 +1,5 @@
+import 'reset-css/reset.css';
+
 import { compose, connect, Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { store } from '@/redux/store.ts';

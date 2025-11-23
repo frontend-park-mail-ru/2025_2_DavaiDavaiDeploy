@@ -84,7 +84,7 @@ export class HTTPClient {
 		method = METHODS.GET,
 		path,
 		params = {},
-		data = {},
+		data,
 	}: RequestConfig): Promise<Response<T>> {
 		const requestMethod = method.toUpperCase();
 
