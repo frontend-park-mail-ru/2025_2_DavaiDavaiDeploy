@@ -1,5 +1,5 @@
 .filmCardGrid {
-	gap: 2.5rem;
+	gap: 3rem;
 	overflow-x: hidden;
 	width: 100%;
 }
@@ -9,6 +9,10 @@
 }
 
 @media (max-width: 1024px) {
+	.filmCardGrid {
+		gap: 3.5rem;
+	}
+
 	.title {
 		margin-left: 0;
 		text-align: center;
@@ -17,6 +21,6 @@
 
 @media (max-width: 768px) {
 	.filmCardGrid {
-		gap: 1.5rem;
+		gap: 2rem;
 	}
 }

@@ -1,5 +1,5 @@
 .genreSlider {
-	gap: 1.875rem;
+	gap: 3rem;
 	padding: var(--side-padding);
 	position: relative;
 	overflow: hidden;
@@ -68,9 +68,19 @@
 	}
 }
 
+@media (max-width: 1024px) {
+	.title {
+		text-align: center;
+	}
+
+	.genreSlider {
+		gap: 3.5rem;
+	}
+}
+
 @media (max-width: 768px) {
 	.genreSlider {
-		gap: 1.25rem;
+		gap: 2rem;
 		padding: 0 2rem;
 		align-items: center;
 	}
