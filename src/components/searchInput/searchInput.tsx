@@ -31,6 +31,10 @@ class SearchInputComponent extends Component<
 	};
 
 	search = () => {
+		if (this.state.searchRequest === '') {
+			return;
+		}
+
 		this.props.getSearchResult(this.state.searchRequest);
 
 		if (this.props.router.path !== '/search') {
