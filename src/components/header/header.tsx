@@ -81,7 +81,7 @@ class HeaderComponent extends Component<
 				<Flex
 					id="header"
 					className={styles.header}
-					justify="between"
+					justify="center"
 					align="center"
 				>
 					<SearchInput
