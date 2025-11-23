@@ -298,6 +298,19 @@ definitions:
     - id
     - title
     type: object
+  models.MainPageActor:
+    properties:
+      id:
+        type: string
+      photo:
+        type: string
+      russian_name:
+        type: string
+    required:
+    - id
+    - photo
+    - russian_name
+    type: object
   models.MainPageFilm:
     properties:
       cover:
@@ -352,15 +365,29 @@ definitions:
     - title
     - year
     type: object
+  models.SearchResponse:
+    properties:
+      actors:
+        items:
+          $ref: '#/definitions/models.MainPageActor'
+        type: array
+      films:
+        items:
+          $ref: '#/definitions/models.MainPageFilm'
+        type: array
+    type: object
   models.SignInInput:
     properties:
       login:
         type: string
       password:
         type: string
+      qr_code:
+        type: string
     required:
     - login
     - password
+    - qr_code
     type: object
   models.SignUpInput:
     properties:
@@ -378,6 +405,8 @@ definitions:
         type: string
       created_at:
         type: string
+      has_2fa:
+        type: boolean
       id:
         type: string
       login:
@@ -388,6 +417,7 @@ definitions:
         type: integer
     required:
     - avatar
+    - has_2fa
     - id
     - login
     - version
@@ -714,6 +744,10 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.FavFilm'
+            type: array
         "400":
           description: Bad Request
         "401":
@@ -888,6 +922,46 @@ paths:
       summary: Get films by genre
       tags:
       - genres
+  /search:
+    get:
+      parameters:
+      - description: Search string
+        in: query
+        name: q
+        required: true
+        type: string
+      - default: 10
+        description: Number of films
+        in: query
+        name: films_count
+        type: integer
+      - default: 0
+        description: Offset
+        in: query
+        name: films_offset
+        type: integer
+      - default: 10
+        description: Number of actors
+        in: query
+        name: actors_count
+        type: integer
+      - default: 0
+        description: Offset
+        in: query
+        name: actors_offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SearchResponse'
+        "500":
+          description: Internal Server Error
+      summary: Search films and actors
+      tags:
+      - search
   /users/{id}:
     get:
       parameters:
