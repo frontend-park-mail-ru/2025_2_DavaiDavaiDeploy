@@ -4,9 +4,7 @@ import { compose, connect } from '@/modules/redux';
 import type { State } from '@/modules/redux/types/store.ts';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
-import actions from '@/redux/features/search/actions';
 import { selectSearchResult } from '@/redux/features/search/selectors';
-import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsSearchResponse } from '@/types/models';
 import { CardGrid, Flex, Paragraph, Title } from '@/uikit/index';
@@ -18,10 +16,6 @@ interface SearchPageProps {
 }
 
 class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
-	onMount() {
-		store.dispatch(actions.getSearchResultAction('леонардо'));
-	}
-
 	renderActors = () => {
 		const { actors } = this.props.searchResult;
 

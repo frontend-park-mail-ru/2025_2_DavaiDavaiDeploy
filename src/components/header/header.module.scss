@@ -50,20 +50,6 @@
 	}
 }
 
-.input {
-	flex: 1;
-	background: transparent;
-	border: none;
-	outline: none;
-	font-size: 16px;
-	height: 100%;
-	padding: 0;
-
-	&::placeholder {
-		color: var(--color-light-text);
-	}
-}
-
 .icon {
 	width: 1.25rem;
 	height: 1.25rem;
@@ -76,6 +62,12 @@
 
 .user {
 	gap: 1.875rem;
+	flex-shrink: 0;
+	text-decoration: none;
+}
+
+.right {
+	gap: 3rem;
 	flex-shrink: 0;
 	text-decoration: none;
 }

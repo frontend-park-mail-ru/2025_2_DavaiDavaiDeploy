@@ -20,6 +20,7 @@ import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.t
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
+import { SearchInput } from '../searchInput/searchInput.tsx';
 import styles from './header.module.scss';
 interface HeaderProps {
 	user: ModelsUser | null;
@@ -66,8 +67,11 @@ class HeaderComponent extends Component<
 				<Link href="/">
 					<Logo className={styles.logo} />
 				</Link>
-				<Flex className={styles.user} align="center">
-					{this.renderUserSection()}
+				<Flex className={styles.right} direction="row" align="center">
+					<SearchInput />
+					<Flex className={styles.user} align="center">
+						{this.renderUserSection()}
+					</Flex>
 				</Flex>
 			</Flex>
 		);
