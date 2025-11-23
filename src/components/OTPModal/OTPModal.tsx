@@ -5,12 +5,23 @@ import type { WithModalProps } from '../../modules/modals/withModalProps';
 import { BaseModal, type BaseModalProps } from '../BaseModal/BaseModal';
 import style from './OTPModal.module.scss';
 
+export interface OTPModalProps {
+	qrCode: string;
+}
+
 export class OTPModalComponent extends Component<
-	BaseModalProps & WithModalProps
+	BaseModalProps & WithModalProps & OTPModalProps
 > {
+	handleClose = () => {
+		this.props.modal.hide();
+
+		if (this.props.qrCode) {
+			URL.revokeObjectURL(this.props.qrCode);
+		}
+	};
 	render() {
 		return (
-			<BaseModal>
+			<BaseModal closeOnOverlayClick={false}>
 				<Flex
 					className={style.modalLogout}
 					direction="column"
@@ -30,11 +41,12 @@ export class OTPModalComponent extends Component<
 						align="center"
 						direction="column"
 					>
+						<img src={this.props.qrCode || ''} alt="QR Code for OTP" />
 						<Button
 							mode="primary"
 							size="m"
 							borderRadius="l"
-							onClick={this.props.modal.hide}
+							onClick={this.handleClose}
 							className={style.turnBackButton}
 						>
 							Я сохранил QR код

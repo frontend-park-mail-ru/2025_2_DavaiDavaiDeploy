@@ -143,10 +143,16 @@ export class HTTPClient {
 
 			let responseData: T;
 
-			try {
-				responseData = await response.json();
-			} catch {
-				responseData = {} as T;
+			const contentType = response.headers.get('content-type');
+
+			if (contentType && contentType.includes('image/')) {
+				responseData = (await response.blob()) as T;
+			} else {
+				try {
+					responseData = await response.json();
+				} catch {
+					responseData = {} as T;
+				}
 			}
 
 			return {

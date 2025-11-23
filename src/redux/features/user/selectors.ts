@@ -40,8 +40,12 @@ export const selectAvatarChangeError: Selector = (
 export const selectNewPasswordLoading: Selector = (state: State): boolean =>
 	state.user.newPasswordLoading;
 
-export const selectNewAvatarLoading: Selector = (state: State): boolean =>
-	state.user.newAvatarLoading;
+export const selectNewAvatarLoading: Selector = (state: State): boolean => {
+	return state.user.newAvatarLoading;
+};
 
 export const selectIsTwoFactorEnabled: Selector = (state: State): boolean =>
-	state.user.user?.twoFactorEnabled ?? false;
+	state.user.user?.has_2fa;
+
+export const selectOTPQRCode: Selector = (state: State): string | null =>
+	state.user.user.qrCode;

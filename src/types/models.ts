@@ -186,5 +186,7 @@ export interface ModelsUser {
 }
 
 export interface ModelsOTPUser {
-	qrImage: Blob | null;
+	twoFactorLoading: boolean;
+	has_2fa: boolean;
+	qrCode: string | null;
 }

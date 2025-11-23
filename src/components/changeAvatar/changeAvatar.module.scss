@@ -32,6 +32,14 @@
 	pointer-events: none;
 }
 
+.otp {
+	gap: 0.5rem;
+}
+
+.otpText {
+	text-wrap: pretty;
+}
+
 @media (max-width: 1024px) {
 	.content {
 		width: 100%;

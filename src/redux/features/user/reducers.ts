@@ -1,20 +1,17 @@
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsUser } from '@/types/models';
+import type { ModelsOTPUser, ModelsUser } from '@/types/models';
 import actionTypes from './actionTypes';
 
 interface InitialState {
 	loading: boolean;
-	user: ModelsUser | null;
+	user: (ModelsUser & ModelsOTPUser) | null;
 	error: string | null;
 	passwordChangeError: string | null;
 	avatarChangeError: boolean;
 	newPasswordLoading: boolean;
 	newAvatarLoading: false;
-	twoFactorLoading: boolean;
-	twoFactorEnabled: boolean;
-	qrCodeBlob: Blob | null;
 }
 
 /**
@@ -29,9 +26,6 @@ const initialState: InitialState = {
 	avatarChangeError: false,
 	newPasswordLoading: false,
 	newAvatarLoading: false,
-	twoFactorLoading: false,
-	twoFactorEnabled: false,
-	qrCodeBlob: null,
 };
 
 /**
@@ -146,9 +140,10 @@ export const userReducer: Reducer = (
 				...state,
 				user: {
 					...state.user,
-					twoFactorEnabled: false,
+					has_2fa: false,
 					twoFactorLoading: false,
-					qrCodeBlob: null,
+					qrCode: null,
+					error: null,
 				},
 			};
 		case actionTypes.USER_OTP_ACTIVATE:
@@ -156,9 +151,10 @@ export const userReducer: Reducer = (
 				...state,
 				user: {
 					...state.user,
-					twoFactorEnabled: true,
+					has_2fa: true,
 					twoFactorLoading: false,
-					qrCodeBlob: payload.qrImage,
+					error: null,
+					qrCode: payload.qrImage,
 				},
 			};
 		case actionTypes.USER_OTP_LOADING:
@@ -166,6 +162,7 @@ export const userReducer: Reducer = (
 				...state,
 				user: {
 					...state.user,
+					error: null,
 					twoFactorLoading: true,
 				},
 			};

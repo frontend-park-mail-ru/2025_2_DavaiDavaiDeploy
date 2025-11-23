@@ -7,6 +7,7 @@ import {
 	selectAvatarChangeError,
 	selectIsTwoFactorEnabled,
 	selectNewAvatarLoading,
+	selectOTPQRCode,
 	selectUser,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
@@ -21,6 +22,9 @@ import {
 	Title,
 } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { MODALS } from '../../modules/modals/modals';
+import { withModal } from '../../modules/modals/withModal';
+import type { WithModalProps } from '../../modules/modals/withModalProps';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { AppToast } from '../toastContainer/toastContainer.tsx';
@@ -31,6 +35,7 @@ interface ChangeAvatarProps {
 	user: ModelsUser;
 	loading: boolean;
 	OTPActivated: boolean;
+	OTPQR: string | null;
 	setAvatar: (file: File) => void;
 	activateOTP: () => void;
 	deactivateOTP: () => void;
@@ -42,7 +47,7 @@ const IDEAL_SIZE = 200;
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 class ChangeAvatarComponent extends Component<
-	ChangeAvatarProps & WithRouterProps
+	ChangeAvatarProps & WithRouterProps & WithModalProps
 > {
 	state = {
 		file: null,
@@ -52,6 +57,7 @@ class ChangeAvatarComponent extends Component<
 		isSuccess: false,
 		errorShown: false,
 		successShown: false,
+		OTPActivated: false,
 	};
 
 	handleFileChange = (event: Event) => {
@@ -128,6 +134,15 @@ class ChangeAvatarComponent extends Component<
 			AppToast.success('Фото успешно сохранено!');
 			this.setState({ successShown: true });
 		}
+
+		if (this.state.OTPActivated === false && this.props.OTPActivated === true) {
+			this.props.modal.open(MODALS.OTP_MODAL, { qrCode: this.props.OTPQR });
+			this.setState({ OTPActivated: true });
+		}
+
+		if (this.state.OTPActivated === true && this.props.OTPActivated === false) {
+			this.setState({ OTPActivated: false });
+		}
 	}
 
 	handleToggleOTP = () => {
@@ -137,6 +152,10 @@ class ChangeAvatarComponent extends Component<
 			this.props.activateOTP();
 		}
 	};
+
+	onMount(): void | Promise<void> {
+		this.setState({ OTPActivated: this.props.OTPActivated });
+	}
 
 	render() {
 		if (!this.props.user) {
@@ -170,9 +189,12 @@ class ChangeAvatarComponent extends Component<
 							Вес файла: не более 8МБ
 						</Subhead>
 					</Flex>
-					<Flex>
-						<Switch onClick={this.handleToggleOTP} checked={isEditing} />
-						<p>Двухфакторная аутентификация</p>
+					<Flex className={styles.otp} align="center">
+						<Switch
+							onClick={this.handleToggleOTP}
+							checked={this.props.OTPActivated}
+						/>
+						<p className={styles.otpText}>Двухфакторная аутентификация</p>
 					</Flex>
 				</Flex>
 
@@ -221,6 +243,7 @@ class ChangeAvatarComponent extends Component<
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 	OTPActivated: selectIsTwoFactorEnabled(state),
+	OTPQR: selectOTPQRCode(state),
 	error: selectAvatarChangeError(state),
 	loading: selectNewAvatarLoading(state),
 });
@@ -233,5 +256,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const ChangeAvatar = compose(
 	withRouter,
+	withModal,
 	connect(mapStateToProps, mapDispatchToProps),
 )(ChangeAvatarComponent);
