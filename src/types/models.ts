@@ -144,6 +144,12 @@ export interface ModelsGenre {
 	updated_at?: string;
 }
 
+export interface ModelsMainPageActor {
+	id: string;
+	photo: string;
+	russian_name: string;
+}
+
 export interface ModelsMainPageFilm {
 	cover: string;
 	genre: string;
@@ -166,9 +172,15 @@ export interface ModelsPromoFilm {
 	year: number;
 }
 
+export interface ModelsSearchResponse {
+	actors?: ModelsMainPageActor[];
+	films?: ModelsMainPageFilm[];
+}
+
 export interface ModelsSignInInput {
 	login: string;
 	password: string;
+	qr_code: string;
 }
 
 export interface ModelsSignUpInput {
@@ -179,6 +191,7 @@ export interface ModelsSignUpInput {
 export interface ModelsUser {
 	avatar: string;
 	created_at?: string;
+	has_2fa: boolean;
 	id: string;
 	login: string;
 	updated_at?: string;

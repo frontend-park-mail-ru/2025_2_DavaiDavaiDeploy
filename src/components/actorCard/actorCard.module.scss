@@ -1,4 +1,4 @@
-.filmCard {
+.actorCard {
 	overflow: hidden;
 	text-align: center;
 	border-radius: 0.625rem;
@@ -49,22 +49,4 @@
 	overflow-wrap: break-word;
 	word-break: normal;
 	hyphens: manual;
-}
-
-.info {
-	margin-top: 0.375rem;
-}
-
-.rating,
-.rating-high,
-.rating-medium,
-.rating-low {
-	position: absolute;
-	top: 2.8%;
-	left: 4%;
-	border-radius: 0.3125rem;
-	z-index: 2;
-	display: inline-block;
-	padding: 0.35rem 0.77rem;
-	font-size: var(--font-size-l);
 }

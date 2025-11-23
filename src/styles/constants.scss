@@ -107,6 +107,20 @@
 		rgb(187 189 212 / 0%) 20%
 	);
 
+	// --color-search-gradient: linear-gradient(
+	// 	to top,
+	// 	hsl(235deg 30% 69% / 10%) 0%,
+	// 	hsl(235deg 30% 69% / 6%) 50%,
+	// 	rgb(8 10 38 / 0%) 80%
+	// );
+
+	--color-search-gradient: linear-gradient(
+		to top,
+		rgb(100 102 120 / 25%) 0%,
+		rgb(60 62 80 / 35%) 30%,
+		rgb(3 4 15 / 30%) 70%
+	);
+
 	--color-purple-light: hsl(250deg 9% 42%);
 	--color-purple-border: hsl(266deg 15% 55%);
 	--color-purple-placeholder: hsl(268deg 17% 25%);
