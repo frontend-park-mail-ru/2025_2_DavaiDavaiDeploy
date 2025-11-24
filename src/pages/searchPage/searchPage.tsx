@@ -1,9 +1,11 @@
 import { ActorCard } from '@/components/actorCard/actorCard';
 import { FilmCard } from '@/components/filmCard/filmCard';
 import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store.ts';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
+import actions from '@/redux/features/search/actions';
 import { selectSearchResult } from '@/redux/features/search/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsSearchResponse } from '@/types/models';
@@ -13,9 +15,14 @@ import styles from './searchPage.module.scss';
 
 interface SearchPageProps {
 	searchResult: ModelsSearchResponse;
+	clearResult: VoidFunction;
 }
 
 class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
+	onUnmount() {
+		this.props.clearResult();
+	}
+
 	renderActors = () => {
 		const { actors } = this.props.searchResult;
 
@@ -125,7 +132,11 @@ const mapStateToProps = (state: State): Map => ({
 	searchResult: selectSearchResult(state),
 });
 
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	clearResult: () => dispatch(actions.clearSearchResultAction()),
+});
+
 export const SearchPage = compose(
 	withRouter,
-	connect(mapStateToProps),
+	connect(mapStateToProps, mapDispatchToProps),
 )(SearchPageComponent);
