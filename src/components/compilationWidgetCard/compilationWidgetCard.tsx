@@ -24,20 +24,13 @@ class CompilationWidgetCardComponent extends Component<
 
 		return (
 			<Link href={`/compilations/${id}`} className={styles.linkWrap}>
-				<Flex
-					className={styles.compilationCard}
-					direction="row"
-					align="center"
-					justify="between"
-				>
+				<Flex className={styles.compilationCard} align="center">
 					<Tooltip
 						placement="bottom"
 						className={styles.tooltip}
 						text={description}
 					>
-						<div className={styles.imageContainer}>
-							<Image className={styles.image} src={icon} alt={title} />
-						</div>
+						<Image className={styles.image} src={icon} alt={title} />
 					</Tooltip>
 				</Flex>
 			</Link>

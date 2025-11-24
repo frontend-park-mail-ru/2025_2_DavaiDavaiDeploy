@@ -15,12 +15,6 @@
 	gap: 1rem;
 }
 
-@media (max-width: 1400px) {
-	.compilations {
-		row-gap: 2rem;
-	}
-}
-
 @media (max-width: 1024px) {
 	.title {
 		margin-left: 0;
@@ -30,11 +24,5 @@
 	.compilations {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
-	}
-}
-
-@media (max-width: 768px) {
-	.compilations {
-		gap: 1.5rem 1rem;
 	}
 }
