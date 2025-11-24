@@ -9,13 +9,22 @@ import type { Map } from '@/types/map';
 import type { ModelsSearchResponse } from '@/types/models';
 import { CardGrid, Flex, Paragraph, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import type { Dispatch } from '../../modules/redux/types/actions';
+import actions from '../../redux/features/search/actions';
 import styles from './searchPage.module.scss';
 
 interface SearchPageProps {
 	searchResult: ModelsSearchResponse;
+	getSearchResult: (searchRequest: string) => void;
 }
 
 class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
+	onMount() {
+		if (this.props.router.params['query']) {
+			this.props.getSearchResult(this.props.router.params['query']);
+		}
+	}
+
 	renderActors = () => {
 		const { actors } = this.props.searchResult;
 
@@ -121,11 +130,16 @@ class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 	}
 }
 
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	getSearchResult: (searchRequest: string) =>
+		dispatch(actions.getSearchResultAction(searchRequest)),
+});
+
 const mapStateToProps = (state: State): Map => ({
 	searchResult: selectSearchResult(state),
 });
 
 export const SearchPage = compose(
 	withRouter,
-	connect(mapStateToProps),
+	connect(mapStateToProps, mapDispatchToProps),
 )(SearchPageComponent);

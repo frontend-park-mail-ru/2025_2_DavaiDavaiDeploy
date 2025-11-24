@@ -53,7 +53,7 @@ class SearchInputComponent extends Component<
 		this.props.getSearchResult(this.state.searchRequest);
 
 		if (this.props.router.path !== '/search') {
-			this.props.router.navigate('/search');
+			this.props.router.navigate(`/search?query=${this.state.searchRequest}`);
 		}
 	};
 
@@ -63,6 +63,10 @@ class SearchInputComponent extends Component<
 		if (value.length >= MIN_SEARCH_LENGTH) {
 			this.debouncedSearch(value);
 			this.setState({ isSuggestVisible: true });
+		}
+
+		if (this.state.isSuggestVisible && value.length < MIN_SEARCH_LENGTH) {
+			this.setState({ isSuggestVisible: false });
 		}
 
 		this.setState({ searchRequest: value });
