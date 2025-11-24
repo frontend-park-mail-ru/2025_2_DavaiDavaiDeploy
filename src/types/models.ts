@@ -48,11 +48,21 @@ export interface ModelsChangePasswordInput {
 	old_password: string;
 }
 
+export interface ModelsCompilation {
+	created_at?: string;
+	description: string;
+	icon: string;
+	id: string;
+	title: string;
+	updated_at?: string;
+}
+
 export interface ModelsFavFilm {
 	duration: number;
 	genre: string;
 	id: string;
 	image: string;
+	is_liked?: boolean;
 	rating: number;
 	short_description: string;
 	title: string;
@@ -175,12 +185,13 @@ export interface ModelsPromoFilm {
 export interface ModelsSearchResponse {
 	actors?: ModelsMainPageActor[];
 	films?: ModelsMainPageFilm[];
+	search_string?: string;
 }
 
 export interface ModelsSignInInput {
 	login: string;
 	password: string;
-	qr_code: string;
+	user_code?: string;
 }
 
 export interface ModelsSignUpInput {
