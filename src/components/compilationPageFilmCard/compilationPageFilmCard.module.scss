@@ -204,7 +204,7 @@
 
 	.content {
 		padding: 0;
-		gap: 0.3rem;
+		gap: 2rem;
 		align-items: center;
 		justify-content: center;
 	}
@@ -230,21 +230,8 @@
 
 	.info {
 		width: 100%;
+		margin-top: -1rem;
 		align-items: center;
 		justify-content: center;
-	}
-
-	.rating,
-	.rating-high,
-	.rating-medium,
-	.rating-low {
-		position: absolute;
-		top: 2.8%;
-		left: 4%;
-		border-radius: 0.3125rem;
-		z-index: 2;
-		display: inline-block;
-		padding: 0.35rem 0.77rem;
-		font-size: var(--font-size-l);
 	}
 }

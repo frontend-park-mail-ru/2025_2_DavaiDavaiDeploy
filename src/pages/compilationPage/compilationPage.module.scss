@@ -13,14 +13,13 @@
 @media (max-width: 1024px) {
 	.page {
 		padding: var(--side-padding);
-		gap: 3rem;
 	}
 }
 
 @media (max-width: 768px) {
 	.page {
 		padding: var(--side-padding);
-		gap: 2rem;
+		gap: 3rem;
 	}
 
 	.films {
