@@ -74,26 +74,20 @@
 	.compilationCard {
 		flex-direction: column;
 		align-items: center;
-		gap: 1.5rem;
-		padding: 2rem 1.875rem;
+		padding: 0;
+		border-radius: var(--border-radius-l);
 	}
 
 	.content {
 		display: none;
-		align-items: center;
 	}
 
-	.title {
-		text-align: center;
-		font-size: var(--font-size-xl);
-	}
-
-	.description {
-		text-align: center;
-		font-size: var(--font-size-2xs);
+	.image {
+		border-radius: var(--border-radius-l);
 	}
 
 	.imageContainer {
-		height: 25vh;
+		width: 100%;
+		height: 100%;
 	}
 }
