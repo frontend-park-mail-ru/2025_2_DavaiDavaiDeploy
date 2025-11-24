@@ -100,6 +100,35 @@
 	stroke-width: 0.2rem;
 }
 
+.hint {
+	position: absolute;
+	top: 110%;
+	left: 0%;
+	background: var(--color-accent-2);
+	color: var(--color-light-text);
+	padding: 1.5rem;
+	border-radius: var(--border-radius-lg);
+	font-size: var(--font-size-s);
+	box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+	z-index: 20;
+}
+
+.hintWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: start;
+	gap: 1.875rem;
+}
+
+.hintContent {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: start;
+	gap: 1.25rem;
+}
+
 @media (max-width: 768px) {
 	.searchInput {
 		border-radius: var(--border-radius-lg);
