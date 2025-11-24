@@ -8,7 +8,7 @@ import actions from '@/redux/features/calendar/actions';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompilation } from '@/types/models';
-import { Flex, Image, Tooltip } from '@/uikit/index';
+import { Flex, Image, Subhead } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './compilationWidgetCard.module.scss';
 
@@ -25,13 +25,10 @@ class CompilationWidgetCardComponent extends Component<
 		return (
 			<Link href={`/compilations/${id}`} className={styles.linkWrap}>
 				<Flex className={styles.compilationCard} align="center">
-					<Tooltip
-						placement="bottom"
-						className={styles.tooltip}
-						text={description}
-					>
-						<Image className={styles.image} src={icon} alt={title} />
-					</Tooltip>
+					<Image className={styles.image} src={icon} alt={title} />
+					<Subhead className={styles.description} level="11" align="left">
+						{description}
+					</Subhead>
 				</Flex>
 			</Link>
 		);

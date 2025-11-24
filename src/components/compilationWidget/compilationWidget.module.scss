@@ -15,14 +15,16 @@
 	gap: 1rem;
 }
 
+@media (max-width: 1150px) {
+	.compilations {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+}
+
 @media (max-width: 1024px) {
 	.title {
 		margin-left: 0;
 		text-align: center;
-	}
-
-	.compilations {
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
 	}
 }
