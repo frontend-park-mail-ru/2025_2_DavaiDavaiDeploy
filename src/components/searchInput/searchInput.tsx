@@ -5,21 +5,19 @@ import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/search/actions.ts';
 import type { Map } from '@/types/map';
-import { Badge, Headline, Image } from '@/uikit';
 import { Flex, IconButton } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { debounce } from '../../helpers/debounceHelper/debounceHelper';
-import { formatRating } from '../../helpers/ratingFormatHelper/ratingFormatHelper';
-import { getRatingType } from '../../helpers/ratingTypeHelper/ratingTypeHelper';
 import type { State } from '../../modules/redux/types/store';
-import { Link } from '../../modules/router/link';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { selectSearchResult } from '../../redux/features/search/selectors';
 import type { ModelsSearchResponse } from '../../types/models';
+import { SearchSuggest } from '../SearchSuggest/SearchSuggest';
 import styles from './searchInput.module.scss';
 
 const DEBOUNCE_DELAY = 150;
+const MIN_SEARCH_LENGTH = 3;
 interface SearchInputProps {
 	getSearchResult: (searchRequest: string) => void;
 	getHintResult: (searchRequest: string) => void;
@@ -31,6 +29,7 @@ interface SearchInputProps {
 
 interface SearchInputState {
 	searchRequest: string;
+	isSuggestVisible: boolean;
 }
 
 class SearchInputComponent extends Component<
@@ -39,6 +38,7 @@ class SearchInputComponent extends Component<
 > {
 	state = {
 		searchRequest: '',
+		isSuggestVisible: false,
 	};
 
 	debouncedSearch = debounce((search) => {
@@ -59,9 +59,17 @@ class SearchInputComponent extends Component<
 
 	handleSearchRequestChange = (event: InputEvent) => {
 		const value = (event.target as HTMLInputElement).value;
-		this.debouncedSearch(value);
+
+		if (value.length >= MIN_SEARCH_LENGTH) {
+			this.debouncedSearch(value);
+			this.setState({ isSuggestVisible: true });
+		}
 
 		this.setState({ searchRequest: value });
+	};
+
+	handleCloseSuggest = () => {
+		this.setState({ isSuggestVisible: false });
 	};
 
 	handleKeyDown = (event: KeyboardEvent) => {
@@ -97,72 +105,11 @@ class SearchInputComponent extends Component<
 							<Loupe className={styles.loupe} />
 						</IconButton>
 					</Flex>
-					{this.state.searchRequest !== '' && (
-						<div className={styles.hint}>
-							<div className={styles.hintWrapper}>
-								{(!this.props.hintResult.films ||
-									!this.props.hintResult.actors) && <p>Нет результатов</p>}
-
-								<div className={styles.hintContent}>
-									<h1>Фильмы</h1>
-									{this.props.hintResult.films &&
-										this.props.hintResult.films.length > 0 && (
-											<ul>
-												{this.props.hintResult.films.map((film) => {
-													const formattedRating = formatRating(film.rating);
-													const ratingType = getRatingType(film.rating);
-													return (
-														<Link href={`/films/${film.id}`}>
-															<li>
-																<Image
-																	className={styles.image}
-																	src={film.cover}
-																	alt={film.title}
-																/>
-																<div>
-																	<div>
-																		<h3>{film.title}</h3>
-																		{ratingType && (
-																			<Badge
-																				mode={ratingType}
-																				className={
-																					styles[`rating-${ratingType}`]
-																				}
-																			>
-																				<Headline level="7">
-																					{formattedRating}
-																				</Headline>
-																			</Badge>
-																		)}
-																	</div>
-																	<div>
-																		<p>{film.genre}</p>
-																		<p>{film.year}</p>
-																	</div>
-																</div>
-															</li>
-														</Link>
-													);
-												})}
-											</ul>
-										)}
-								</div>
-								<div className={styles.hintContent}>
-									<h1>Актеры</h1>
-									{this.props.hintResult.actors &&
-										this.props.hintResult.actors.length > 0 && (
-											<ul>
-												{this.props.hintResult.actors.map((actor) => (
-													<li key={actor.id}>
-														<img src={actor.photo} alt={actor.russian_name} />
-														<p>{actor.russian_name}</p>
-													</li>
-												))}
-											</ul>
-										)}
-								</div>
-							</div>
-						</div>
+					{this.state.isSuggestVisible && (
+						<SearchSuggest
+							handleClose={this.handleCloseSuggest}
+							hintResult={this.props.hintResult}
+						/>
 					)}
 				</div>
 			);

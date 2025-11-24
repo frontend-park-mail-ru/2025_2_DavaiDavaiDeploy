@@ -1,0 +1,110 @@
+.hint {
+	position: absolute;
+	top: 110%;
+	left: 0%;
+	background: var(--color-accent-2);
+	color: var(--color-light-text);
+	padding: 1.5rem;
+	border-radius: var(--border-radius-lg);
+	font-size: var(--font-size-s);
+	box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+	z-index: 20;
+	width: 100%;
+}
+
+.hintWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: start;
+	gap: 1.875rem;
+	max-height: 30rem;
+	overflow-y: auto;
+}
+
+.hintContent {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: start;
+	gap: 1.25rem;
+	width: 100%;
+}
+
+.image {
+	border-radius: 0.625rem;
+	width: 6rem;
+	height: 8rem;
+	object-fit: cover;
+}
+
+.titleRow {
+	display: flex;
+	align-items: baseline;
+	gap: 0.5rem;
+	font-size: var(--font-size-m);
+	color: var(--color-text);
+}
+
+.subtitleRow {
+	color: var(--color-light-text);
+	font-size: var(--font-size-xs);
+}
+
+.link {
+	display: flex;
+	align-items: center;
+	gap: 0.875rem;
+	justify-content: start;
+	width: 100%;
+}
+
+.badge {
+	position: static;
+}
+
+.filmInfo {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.hintTitle {
+	font-size: var(--font-size-2xl);
+	color: var(--color-text);
+	font-weight: 700;
+}
+
+.ullist {
+	width: 100%;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.lilist {
+	width: 100%;
+}
+
+.customScrollbar {
+	&::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: var(--color-scrollbar-thumb);
+		border-radius: 2px;
+
+		&:hover {
+			background: var(--color-scrollbar-thumb-hover);
+		}
+	}
+
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
+}

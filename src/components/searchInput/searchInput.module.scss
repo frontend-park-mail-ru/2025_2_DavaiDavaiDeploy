@@ -2,8 +2,7 @@
 	border-radius: var(--border-radius-lg);
 	height: 2.5rem;
 	padding: 0 1.2rem;
-	width: 40vw;
-	max-width: 28rem;
+	width: 100%;
 	justify-content: space-between;
 	backdrop-filter: blur(10px);
 	background: var(--color-search-gradient);
@@ -100,33 +99,10 @@
 	stroke-width: 0.2rem;
 }
 
-.hint {
-	position: absolute;
-	top: 110%;
-	left: 0%;
-	background: var(--color-accent-2);
-	color: var(--color-light-text);
-	padding: 1.5rem;
-	border-radius: var(--border-radius-lg);
-	font-size: var(--font-size-s);
-	box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
-	z-index: 20;
-}
-
-.hintWrapper {
-	display: flex;
-	flex-direction: column;
-	align-items: start;
-	justify-content: start;
-	gap: 1.875rem;
-}
-
-.hintContent {
-	display: flex;
-	flex-direction: column;
-	align-items: start;
-	justify-content: start;
-	gap: 1.25rem;
+.bigSearchWrapper {
+	position: relative;
+	width: 40dvw;
+	max-width: 28rem;
 }
 
 @media (max-width: 768px) {
