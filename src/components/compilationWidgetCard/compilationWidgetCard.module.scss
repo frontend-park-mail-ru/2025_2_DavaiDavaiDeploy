@@ -2,6 +2,32 @@
 	display: contents;
 }
 
+.image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 1;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: all 0.3s ease;
+	border-radius: var(--border-radius-xl);
+}
+
+.description {
+	display: flex;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	padding: 1.5rem;
+	box-sizing: border-box;
+	transition: all 0.3s ease;
+	align-items: end;
+}
+
 .compilationCard {
 	border-radius: var(--border-radius-xl);
 	transition: all 0.3s ease;
@@ -11,23 +37,28 @@
 	width: 100%;
 	height: 100%;
 	aspect-ratio: 1 / 1;
+	background: hsl(237deg 53% 16%);
 
 	&:hover {
-		filter: brightness(1.2);
+		.description {
+			opacity: 1;
+		}
+
+		.image {
+			opacity: 0;
+		}
 	}
 }
 
-.image {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	transition: all 0.4s ease;
-	border-radius: var(--border-radius-xl);
-}
-
-.tooltip {
-	width: 11vw;
+@media (max-width: 1300px) {
+	.description {
+		padding: 0 0.5rem;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
 }
