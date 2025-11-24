@@ -37,7 +37,7 @@ class CompilationWidgetCardComponent extends Component<
 						<Headline
 							className={styles.title}
 							weight="bold"
-							level="9"
+							level="8"
 							align="left"
 						>
 							{title}
@@ -47,6 +47,7 @@ class CompilationWidgetCardComponent extends Component<
 							color="light"
 							level="11"
 							align="left"
+							opacity="70"
 						>
 							{description}
 						</Subhead>

@@ -1,11 +1,23 @@
 .compilationCard {
 	text-align: center;
-	transition: transform 0.3s ease;
 	width: 100%;
 	border-radius: var(--border-radius-xl);
 	padding: 1.25rem 1.875rem;
-	border: 1px solid rgb(212 222 232 / 40%);
-	box-shadow: 0 4px 4px rgb(212 222 232 / 10%);
+
+	// border: 1px solid rgb(212 222 232 / 40%);
+	// box-shadow: 0 4px 4px rgb(212 222 232 / 10%);
+	gap: 2rem;
+	transition: all 0.3s ease;
+	backdrop-filter: blur(5px);
+	background: var(--color-glass-gradient);
+	box-shadow:
+		0 4px 30px rgb(0 0 0 / 10%),
+		inset 10px 10px 30px rgb(0 0 0 / 15%);
+	border: 1px solid hsl(235deg 30% 69% / 20%);
+
+	&:hover {
+		filter: brightness(1.2);
+	}
 }
 
 .linkWrap {
@@ -15,10 +27,9 @@
 .imageContainer {
 	display: flex;
 	position: relative;
-	aspect-ratio: 1 / 1;
-	overflow: hidden;
 	height: 15vh;
-	border-radius: var(--border-radius-l);
+	width: 15vh;
+	aspect-ratio: 1 / 1;
 }
 
 .image {
@@ -30,6 +41,7 @@
 	object-fit: cover;
 	filter: brightness(0.95);
 	transition: all 0.4s ease;
+	border-radius: var(--border-radius-l);
 }
 
 .imageContainer:hover .image {
@@ -37,7 +49,7 @@
 }
 
 .content {
-	gap: 0.5rem;
+	gap: 1rem;
 }
 
 .title {

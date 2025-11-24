@@ -4,16 +4,16 @@ import type { State } from '@/modules/redux/types/store.ts';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/compilations/actions';
-import { selectCompilationFilms } from '@/redux/features/compilations/selectors';
+import { selectCompilations } from '@/redux/features/compilations/selectors';
 import type { Map } from '@/types/map';
-import type { ModelsFilmInCalendar } from '@/types/models';
+import type { ModelsCompilation } from '@/types/models';
 import { Flex, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { CompilationWidgetCard } from '../compilationWidgetCard/compilationWidgetCard';
 import styles from './compilationWidget.module.scss';
 
 interface CompilationWidgetProps {
-	films: ModelsFilmInCalendar[];
+	compilations: ModelsCompilation[];
 	getCompilations: VoidFunction;
 }
 
@@ -25,7 +25,7 @@ class CompilationWidgetComponent extends Component<
 	}
 
 	render() {
-		if (!this.props.films || this.props.films.length === 0) {
+		if (!this.props.compilations || this.props.compilations.length === 0) {
 			return <div />;
 		}
 
@@ -34,8 +34,8 @@ class CompilationWidgetComponent extends Component<
 				<Title className={styles.title} level="4" weight="bold">
 					Подборки
 				</Title>
-				<div className={styles.films}>
-					{this.props.films.map((compilation, index) => {
+				<div className={styles.compilations}>
+					{this.props.compilations.map((compilation, index) => {
 						return (
 							<CompilationWidgetCard compilation={compilation} key={index} />
 						);
@@ -47,7 +47,7 @@ class CompilationWidgetComponent extends Component<
 }
 
 const mapStateToProps = (state: State): Map => ({
-	films: selectCompilationFilms(state),
+	compilations: selectCompilations(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
