@@ -8,7 +8,7 @@ import actions from '@/redux/features/calendar/actions';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompilation } from '@/types/models';
-import { Flex, Headline, Image, Subhead } from '@/uikit/index';
+import { Flex, Image, Tooltip } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './compilationWidgetCard.module.scss';
 
@@ -30,28 +30,15 @@ class CompilationWidgetCardComponent extends Component<
 					align="center"
 					justify="between"
 				>
-					<div className={styles.imageContainer}>
-						<Image className={styles.image} src={icon} alt={title} />
-					</div>
-					<Flex className={styles.content} direction="column" align="start">
-						<Headline
-							className={styles.title}
-							weight="bold"
-							level="8"
-							align="left"
-						>
-							{title}
-						</Headline>
-						<Subhead
-							className={styles.description}
-							color="light"
-							level="11"
-							align="left"
-							opacity="70"
-						>
-							{description}
-						</Subhead>
-					</Flex>
+					<Tooltip
+						placement="bottom"
+						className={styles.tooltip}
+						text={description}
+					>
+						<div className={styles.imageContainer}>
+							<Image className={styles.image} src={icon} alt={title} />
+						</div>
+					</Tooltip>
 				</Flex>
 			</Link>
 		);

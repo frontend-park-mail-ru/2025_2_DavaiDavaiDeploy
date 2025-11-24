@@ -34,13 +34,13 @@ class CompilationWidgetComponent extends Component<
 				<Title className={styles.title} level="4" weight="bold">
 					Подборки
 				</Title>
-				<div className={styles.compilations}>
+				<Flex className={styles.compilations} direction="row">
 					{this.props.compilations.map((compilation, index) => {
 						return (
 							<CompilationWidgetCard compilation={compilation} key={index} />
 						);
 					})}
-				</div>
+				</Flex>
 			</Flex>
 		);
 	}
