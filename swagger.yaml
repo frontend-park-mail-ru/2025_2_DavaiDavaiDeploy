@@ -88,6 +88,26 @@ definitions:
     - new_password
     - old_password
     type: object
+  models.Compilation:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      icon:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    required:
+    - description
+    - icon
+    - id
+    - title
+    type: object
   models.FavFilm:
     properties:
       duration:
@@ -98,6 +118,8 @@ definitions:
         type: string
       image:
         type: string
+      is_liked:
+        type: boolean
       rating:
         type: number
       short_description:
@@ -375,6 +397,8 @@ definitions:
         items:
           $ref: '#/definitions/models.MainPageFilm'
         type: array
+      search_string:
+        type: string
     type: object
   models.SignInInput:
     properties:
@@ -382,12 +406,11 @@ definitions:
         type: string
       password:
         type: string
-      qr_code:
+      user_code:
         type: string
     required:
     - login
     - password
-    - qr_code
     type: object
   models.SignUpInput:
     properties:
@@ -496,6 +519,28 @@ paths:
       summary: Check authentication status
       tags:
       - auth
+  /auth/enable2fa:
+    post:
+      description: Verify if user is authenticated and return user data
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              format: int32
+              type: integer
+            type: array
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      summary: Check authentication status
+      tags:
+      - auth
   /auth/logout:
     post:
       description: Clear authentication cookie and log out user
@@ -571,6 +616,116 @@ paths:
       summary: User registration
       tags:
       - auth
+  /compilations/:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает список всех подборок с пагинацией
+      parameters:
+      - description: Количество элементов (по умолчанию 10)
+        in: query
+        name: count
+        type: integer
+      - description: Смещение (по умолчанию 0)
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешный ответ со списком подборок
+          schema:
+            items:
+              $ref: '#/definitions/models.Compilation'
+            type: array
+        "404":
+          description: Подборки не найдены
+          schema:
+            type: object
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            type: object
+      summary: Получить список подборок
+      tags:
+      - compilations
+  /compilations/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает информацию о конкретной подборке по её идентификатору
+      parameters:
+      - description: UUID подборки
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешный ответ с данными подборки
+          schema:
+            $ref: '#/definitions/models.Compilation'
+        "400":
+          description: Неверный формат UUID
+          schema:
+            type: object
+        "404":
+          description: Подборка не найдена
+          schema:
+            type: object
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            type: object
+      summary: Получить подборку по ID
+      tags:
+      - compilations
+  /compilations/{id}/films:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает список фильмов, входящих в конкретную подборку, с пагинацией
+      parameters:
+      - description: UUID подборки
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Количество элементов (по умолчанию 10)
+        in: query
+        name: count
+        type: integer
+      - description: Смещение (по умолчанию 0)
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешный ответ со списком фильмов
+          schema:
+            items:
+              $ref: '#/definitions/models.FavFilm'
+            type: array
+        "400":
+          description: Неверный формат UUID
+          schema:
+            type: object
+        "404":
+          description: Подборка или фильмы не найдены
+          schema:
+            type: object
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            type: object
+      summary: Получить фильмы из подборки
+      tags:
+      - compilations
   /films:
     get:
       parameters:
@@ -816,27 +971,6 @@ paths:
       summary: Get films for calendar
       tags:
       - films
-  /films/favorites:
-    get:
-      description: Get all films saved by the current user
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/models.FavFilm'
-            type: array
-        "401":
-          description: Unauthorized
-        "404":
-          description: Not Found
-        "500":
-          description: Internal Server Error
-      summary: Get user's favorite films
-      tags:
-      - films
   /films/promo:
     get:
       description: Get the promo film
@@ -1041,4 +1175,25 @@ paths:
       summary: Change user password
       tags:
       - users
+  /users/saved:
+    get:
+      description: Get all films saved by the current user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.FavFilm'
+            type: array
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Get user's favorite films
+      tags:
+      - films
 swagger: "2.0"

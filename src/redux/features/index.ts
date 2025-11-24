@@ -1,6 +1,7 @@
 import { combineReducers } from '@/modules/redux';
 import actorReducer from './actor/reducers';
 import calendarReducer from './calendar/reducers';
+import compilationReducer from './compilations/reducers';
 import counterReducer from './counter/reducers';
 import favoritesReducer from './favorites/reducers';
 import filmReducer from './film/reducers';
@@ -25,4 +26,5 @@ export const reducer = combineReducers({
 	favorites: favoritesReducer,
 	calendar: calendarReducer,
 	search: searchReducer,
+	compilation: compilationReducer,
 });
