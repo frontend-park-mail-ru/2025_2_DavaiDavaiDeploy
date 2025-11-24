@@ -74,7 +74,7 @@ class SearchInputComponent extends Component<
 					<IconButton
 						mode="tertiary"
 						className={styles.loupeBtn}
-						onClick={this.props.onClose}
+						onClick={this.search}
 					>
 						<Loupe className={styles.loupe} />
 					</IconButton>
