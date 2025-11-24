@@ -124,8 +124,8 @@ const compilationReducer: Reducer = (
 
 			return {
 				...state,
-				calendar: state.calendar
-					? state.calendar.map((film: ModelsFavFilm) =>
+				compilationFilms: state.compilationFilms
+					? state.compilationFilms.map((film: ModelsFavFilm) =>
 							film.id === payload.id ? { ...film, is_liked: true } : film,
 						)
 					: null,
@@ -137,8 +137,8 @@ const compilationReducer: Reducer = (
 
 			return {
 				...state,
-				calendar: state.calendar
-					? state.calendar.map((film: ModelsFavFilm) =>
+				compilationFilms: state.compilationFilms
+					? state.compilationFilms.map((film: ModelsFavFilm) =>
 							film.id === payload.id ? { ...film, is_liked: false } : film,
 						)
 					: null,

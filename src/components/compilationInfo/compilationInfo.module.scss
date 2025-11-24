@@ -1,0 +1,11 @@
+.compilation {
+	margin-top: 10rem;
+	gap: 3rem;
+}
+
+@media (max-width: 1024px) {
+	.genre {
+		margin-top: 8rem;
+		gap: 2rem;
+	}
+}
