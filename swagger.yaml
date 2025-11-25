@@ -88,6 +88,37 @@ definitions:
     - new_password
     - old_password
     type: object
+  models.CompFilm:
+    properties:
+      duration:
+        type: integer
+      genre:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      is_liked:
+        type: boolean
+      rating:
+        type: number
+      short_description:
+        type: string
+      title:
+        type: string
+      year:
+        type: integer
+    required:
+    - duration
+    - genre
+    - id
+    - image
+    - is_liked
+    - rating
+    - short_description
+    - title
+    - year
+    type: object
   models.Compilation:
     properties:
       created_at:
@@ -118,8 +149,6 @@ definitions:
         type: string
       image:
         type: string
-      is_liked:
-        type: boolean
       rating:
         type: number
       short_description:
@@ -709,7 +738,7 @@ paths:
           description: Успешный ответ со списком фильмов
           schema:
             items:
-              $ref: '#/definitions/models.FavFilm'
+              $ref: '#/definitions/models.CompFilm'
             type: array
         "400":
           description: Неверный формат UUID

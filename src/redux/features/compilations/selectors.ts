@@ -1,6 +1,6 @@
 import type { Selector } from '@/modules/redux/types/selectors';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsCompilation, ModelsFavFilm } from '@/types/models';
+import type { ModelsCompFilm, ModelsCompilation } from '@/types/models';
 
 export const selectCompilations: Selector = (
 	state: State,
@@ -12,7 +12,7 @@ export const selectCompilation: Selector = (
 
 export const selectCompilationFilms: Selector = (
 	state: State,
-): ModelsFavFilm[] => state.compilation.compilationFilms;
+): ModelsCompFilm[] => state.compilation.compilationFilms;
 
 export const selectCompilationFilmsError: Selector = (
 	state: State,

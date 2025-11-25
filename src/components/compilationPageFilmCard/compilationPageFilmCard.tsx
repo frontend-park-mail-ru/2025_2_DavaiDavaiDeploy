@@ -12,7 +12,7 @@ import { withRouter } from '@/modules/router/withRouter';
 import actions from '@/redux/features/calendar/actions';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
-import type { ModelsFavFilm } from '@/types/models';
+import type { ModelsCompFilm } from '@/types/models';
 import {
 	Badge,
 	Button,
@@ -27,7 +27,7 @@ import { Component } from '@robocotik/react';
 import styles from './compilationPageFilmCard.module.scss';
 
 interface CompilationPageFilmCardProps {
-	film: ModelsFavFilm;
+	film: ModelsCompFilm;
 	deleteFromFavorites: (id: string) => {};
 	addToFavorites: (id: string) => {};
 	isAuthentificated: boolean;
