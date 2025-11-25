@@ -52,6 +52,8 @@ class SearchInputComponent extends Component<
 			return;
 		}
 
+		this.setState({ isSuggestVisible: false });
+
 		this.setState({ prevSearchRequest: this.state.searchRequest });
 		this.props.getSearchResult(this.state.searchRequest);
 
@@ -112,7 +114,7 @@ class SearchInputComponent extends Component<
 						<IconButton
 							mode="tertiary"
 							className={styles.loupeBtn}
-							onClick={this.props.onClose}
+							onClick={this.search}
 						>
 							<Loupe className={styles.loupe} />
 						</IconButton>
