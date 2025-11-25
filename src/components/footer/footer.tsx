@@ -14,10 +14,15 @@ interface FooterProps {
 
 class FooterComponent extends Component<WithRouterProps & FooterProps> {
 	render() {
-		const type =
-			this.props.router.path.startsWith('/films') && this.props.isOut
-				? 'light'
-				: 'dark';
+		let type = 'base';
+
+		if (this.props.router.path.startsWith('/films')) {
+			type = 'light';
+
+			if (!this.props.isOut) {
+				type = 'dark';
+			}
+		}
 
 		return (
 			<Flex
