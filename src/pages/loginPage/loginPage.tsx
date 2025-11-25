@@ -210,8 +210,11 @@ export class LoginPageNotConnected extends Component<
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
+
 							{this.hasOTP() && (
-								<OTPInput length={6} onFinish={this.handleOTPFinish} />
+								<div className={styles.otpContainer}>
+									<OTPInput length={6} onFinish={this.handleOTPFinish} />
+								</div>
 							)}
 						</Flex>
 						<Flex className={styles.rightSide__actions} direction="column">
