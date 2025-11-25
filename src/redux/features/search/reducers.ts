@@ -60,6 +60,19 @@ const searchReducer: Reducer = (
 				...state,
 				searchResult: null,
 			};
+
+		case actionTypes.VOICE_SEARCH_LOADED:
+			return {
+				...state,
+				loading: false,
+				error: null,
+				voiceSearchResult: payload.result,
+			};
+		case actionTypes.CLEAR_VOICE_SEARCH_RESULT:
+			return {
+				...state,
+				voiceSearchResult: null,
+			};
 		default:
 			return state;
 	}

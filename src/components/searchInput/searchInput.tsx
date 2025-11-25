@@ -7,13 +7,18 @@ import actions from '@/redux/features/search/actions.ts';
 import type { Map } from '@/types/map';
 import { Flex, IconButton } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { MediaRecorder, register } from 'extendable-media-recorder';
+import { connect as WAVConnect } from 'extendable-media-recorder-wav-encoder';
 import { MICROPHONE_STATES } from '../../consts/microphone';
 import { debounce } from '../../helpers/debounceHelper/debounceHelper';
 import { getMicrophoneIconFromState } from '../../helpers/getMicrophoneIconFromState/getMicrophoneIconFromState';
 import type { State } from '../../modules/redux/types/store';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
-import { selectSearchResult } from '../../redux/features/search/selectors';
+import {
+	selectSearchResult,
+	selectVoiceSearchResult,
+} from '../../redux/features/search/selectors';
 import type { ModelsSearchResponse } from '../../types/models';
 import { SearchSuggest } from '../SearchSuggest/SearchSuggest';
 import styles from './searchInput.module.scss';
@@ -24,10 +29,13 @@ const MIN_SEARCH_LENGTH = 3;
 interface SearchInputProps {
 	getSearchResult: (searchRequest: string) => void;
 	getHintResult: (searchRequest: string) => void;
+	getVoiceSearchResult: (searchWAV: Blob) => void;
+	clearVoiceSearch: VoidFunction;
 	onClose?: VoidFunction;
 	type: 'small' | 'big';
 	className: string;
 	hintResult: ModelsSearchResponse;
+	voiceSearchResult: ModelsSearchResponse;
 }
 
 interface SearchInputState {
@@ -36,6 +44,11 @@ interface SearchInputState {
 	prevSearchRequest: string;
 	microphoneState: (typeof MICROPHONE_STATES)[keyof typeof MICROPHONE_STATES];
 }
+
+await register(await WAVConnect());
+
+const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/wav' });
 
 class SearchInputComponent extends Component<
 	SearchInputProps & WithRouterProps,
@@ -48,6 +61,8 @@ class SearchInputComponent extends Component<
 		microphoneState: MICROPHONE_STATES.INACTIVE,
 	};
 
+	audioChunks: Blob[] = [];
+
 	handleResize = () => {
 		this.setState({ isSuggestVisible: false });
 	};
@@ -56,25 +71,78 @@ class SearchInputComponent extends Component<
 
 	onMount() {
 		window.addEventListener('resize', this.debouncedResize);
+
+		mediaRecorder.ondataavailable = (event) => {
+			if (event.data.size > 0) {
+				this.audioChunks.push(event.data);
+			}
+		};
+
+		mediaRecorder.onstop = () => {
+			const audioBlob = new Blob(this.audioChunks, {
+				type: 'audio/wav',
+			});
+
+			this.audioChunks = [];
+
+			this.props.getVoiceSearchResult(audioBlob);
+		};
 	}
 	onUnmount() {
 		window.removeEventListener('resize', this.debouncedResize);
 	}
 
+	handleStartRecording = () => {
+		this.audioChunks = [];
+		mediaRecorder.start();
+	};
+
+	handleStopRecording = () => {
+		mediaRecorder.stop();
+	};
+
+	onUpdate() {
+		if (
+			this.props.voiceSearchResult &&
+			this.props.voiceSearchResult.search_string &&
+			this.props.voiceSearchResult.search_string?.length > 0
+		) {
+			this.voiceSearch();
+			this.props.clearVoiceSearch();
+		}
+	}
+
 	handleMicrophoneClick = () => {
 		if (this.state.microphoneState === MICROPHONE_STATES.INACTIVE) {
 			this.setState({ microphoneState: MICROPHONE_STATES.ACTIVE });
+			this.handleStartRecording();
 			return;
 		}
 
 		if (this.state.microphoneState === MICROPHONE_STATES.ACTIVE) {
 			this.setState({ microphoneState: MICROPHONE_STATES.LOADING });
+			this.handleStopRecording();
+			this.setState({ microphoneState: MICROPHONE_STATES.INACTIVE });
 		}
 	};
 
 	debouncedSearch = debounce((search) => {
 		this.props.getHintResult(search);
 	}, DEBOUNCE_DELAY);
+
+	voiceSearch = () => {
+		if (
+			!this.props.voiceSearchResult ||
+			!this.props.voiceSearchResult.search_string
+		) {
+			return;
+		}
+
+		this.props.getSearchResult(this.props.voiceSearchResult.search_string);
+		this.props.router.navigate(
+			`/search?query=${this.props.voiceSearchResult.search_string}`,
+		);
+	};
 
 	search = () => {
 		if (this.state.searchRequest === '') {
@@ -214,10 +282,14 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(actions.getSearchResultAction(searchRequest)),
 	getHintResult: (searchRequest: string) =>
 		dispatch(actions.getSearchResultAction(searchRequest)),
+	getVoiceSearchResult: (searchRequest: Blob) =>
+		dispatch(actions.getVoiceSearchResultAction(searchRequest)),
+	clearVoiceSearch: () => dispatch(actions.clearVoiceSearchResultAction()),
 });
 
 const mapStateToProps = (state: State): Map => ({
 	hintResult: selectSearchResult(state),
+	voiceSearchResult: selectVoiceSearchResult(state),
 });
 
 export const SearchInput = compose(

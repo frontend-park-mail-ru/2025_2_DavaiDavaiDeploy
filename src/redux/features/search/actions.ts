@@ -7,6 +7,7 @@ import type {
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
+
 /**
  * Возвращает успешно загруженный результат голосового поиска
  */
@@ -75,6 +76,9 @@ const getSearchResultAction =
 		}
 	};
 
+/**
+ * Очищает результат поиска
+ */
 const clearSearchResultAction = (): Action => {
 	return {
 		type: actionTypes.CLEAR_SEARCH_RESULT,
@@ -82,18 +86,27 @@ const clearSearchResultAction = (): Action => {
 };
 
 /**
+ * Очищает результат голосового поиска
+ */
+const clearVoiceSearchResultAction = (): Action => {
+	return {
+		type: actionTypes.CLEAR_VOICE_SEARCH_RESULT,
+	};
+};
+
+/**
  * Загружает результат голосового поиска
  */
 const getVoiceSearchResultAction =
-	(searchWAV: string): Action =>
+	(searchWAV: Blob): Action =>
 	async (dispatch: Dispatch) => {
 		dispatch(setSearchResultLoadingAction());
 
 		try {
-			const response = await HTTPClient.get<ModelsVoiceSearchResponse>(
+			const response = await HTTPClient.post<ModelsVoiceSearchResponse>(
 				`/voice-search`,
 				{
-					params: { query: searchWAV },
+					data: searchWAV,
 				},
 			);
 
@@ -115,4 +128,5 @@ export default {
 	getVoiceSearchResultAction,
 	getSearchResultAction,
 	clearSearchResultAction,
+	clearVoiceSearchResultAction,
 };
