@@ -52,7 +52,7 @@ class SearchInputComponent extends Component<
 
 		this.props.getSearchResult(this.state.searchRequest);
 
-		if (this.props.router.path !== '/search') {
+		if (!this.props.router.path.startsWith('/search')) {
 			this.props.router.navigate(`/search?query=${this.state.searchRequest}`);
 		}
 	};
@@ -121,37 +121,45 @@ class SearchInputComponent extends Component<
 		}
 
 		return (
-			<Flex
-				className={clsx(styles.searchInput, {
-					[styles.active]: this.state.searchRequest !== '',
-				})}
-				direction="row"
-				align="center"
-			>
-				<IconButton
-					mode="tertiary"
-					className={styles.loupeBtn}
-					onClick={this.search}
+			<div className={styles.bigSearchWrapper}>
+				<Flex
+					className={clsx(styles.searchInput, {
+						[styles.active]: this.state.searchRequest !== '',
+					})}
+					direction="row"
+					align="center"
 				>
-					<Loupe className={styles.loupe} />
-				</IconButton>
-				<input
-					type="text"
-					placeholder="Поиск фильмов, актеров..."
-					value={this.state.searchRequest}
-					onInput={this.handleSearchRequestChange}
-					className={styles.input}
-					onKeyDown={this.handleKeyDown}
-				></input>
+					<IconButton
+						mode="tertiary"
+						className={styles.loupeBtn}
+						onClick={this.search}
+					>
+						<Loupe className={styles.loupe} />
+					</IconButton>
+					<input
+						type="text"
+						placeholder="Поиск фильмов, актеров..."
+						value={this.state.searchRequest}
+						onInput={this.handleSearchRequestChange}
+						className={styles.input}
+						onKeyDown={this.handleKeyDown}
+					></input>
 
-				<IconButton
-					mode="tertiary"
-					className={styles.closeBtn}
-					onClick={this.props.onClose}
-				>
-					<Close className={styles.close} />
-				</IconButton>
-			</Flex>
+					<IconButton
+						mode="tertiary"
+						className={styles.closeBtn}
+						onClick={this.props.onClose}
+					>
+						<Close className={styles.close} />
+					</IconButton>
+				</Flex>
+				{this.state.isSuggestVisible && (
+					<SearchSuggest
+						handleClose={this.handleCloseSuggest}
+						hintResult={this.props.hintResult}
+					/>
+				)}
+			</div>
 		);
 	}
 }
