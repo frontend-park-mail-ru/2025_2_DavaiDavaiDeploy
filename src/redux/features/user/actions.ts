@@ -226,14 +226,20 @@ const registerUserAction =
  * Создает асинхронное действие для входа пользователя в систему.
  */
 const loginUserAction =
-	(login: string, password: string): Action =>
+	(login: string, password: string, otp?: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
 			const response = await HTTPClient.post<ModelsUser>('/auth/signin', {
-				data: {
-					login: login,
-					password: password,
-				},
+				data: otp
+					? {
+							login: login,
+							password: password,
+							user_code: otp,
+						}
+					: {
+							login: login,
+							password: password,
+						},
 			});
 
 			storeAuthTokensFromResponse(response);

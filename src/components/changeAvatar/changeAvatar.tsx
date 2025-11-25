@@ -148,8 +148,10 @@ class ChangeAvatarComponent extends Component<
 	handleToggleOTP = () => {
 		if (this.props.OTPActivated) {
 			this.props.deactivateOTP();
+			AppToast.success('2FA успешно отключена');
 		} else {
 			this.props.activateOTP();
+			AppToast.success('2FA успешно подключена');
 		}
 	};
 

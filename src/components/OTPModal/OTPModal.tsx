@@ -1,4 +1,4 @@
-import { Button, Flex, Title } from '@/uikit/index';
+import { Button, Flex, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
@@ -32,9 +32,9 @@ export class OTPModalComponent extends Component<
 						<Title className={style.modalTitle} level="5">
 							Обязательно сохраните QR-код
 						</Title>
-						<Title className={style.modalTitle} level="5">
+						<Subhead className={style.subTitle} level="11" color={'light'}>
 							Он потребуется Вам при всех дальнейших входах в аккаунт
-						</Title>
+						</Subhead>
 					</Flex>
 					<Flex
 						className={style.modalActions}
