@@ -17,6 +17,7 @@ import { SearchSuggest } from '../SearchSuggest/SearchSuggest';
 import styles from './searchInput.module.scss';
 
 const DEBOUNCE_DELAY = 150;
+const DEBOUNCE_RESIZE_DELAY = 300;
 const MIN_SEARCH_LENGTH = 3;
 interface SearchInputProps {
 	getSearchResult: (searchRequest: string) => void;
@@ -42,6 +43,19 @@ class SearchInputComponent extends Component<
 		isSuggestVisible: false,
 		prevSearchRequest: '',
 	};
+
+	handleResize = () => {
+		this.setState({ isSuggestVisible: false });
+	};
+
+	debouncedResize = debounce(this.handleResize, DEBOUNCE_RESIZE_DELAY);
+
+	onMount() {
+		window.addEventListener('resize', this.debouncedResize);
+	}
+	onUnmount() {
+		window.removeEventListener('resize', this.debouncedResize);
+	}
 
 	debouncedSearch = debounce((search) => {
 		this.props.getHintResult(search);
