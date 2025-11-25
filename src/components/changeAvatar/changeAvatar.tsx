@@ -147,12 +147,12 @@ class ChangeAvatarComponent extends Component<
 		}
 	}
 
-	handleToggleOTP = () => {
-		if (this.props.OTPLoading) {
+	handleToggleOTP = (checked: boolean) => {
+		if (this.props.OTPLoading || checked !== this.props.OTPActivated) {
 			return;
 		}
 
-		if (this.state.OTPActivated) {
+		if (!checked) {
 			this.props.deactivateOTP();
 			AppToast.success('2FA успешно отключена');
 		} else {
