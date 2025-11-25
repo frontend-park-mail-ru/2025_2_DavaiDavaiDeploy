@@ -25,4 +25,4 @@ export const selectUserFeedback: Selector = (
 ): ModelsFilmFeedback | null => state.film.userFeedback;
 
 export const selectIsOut: Selector = (state: State): boolean | null =>
-	state.film.is_out;
+	state.film.film && state.film.film.is_out;
