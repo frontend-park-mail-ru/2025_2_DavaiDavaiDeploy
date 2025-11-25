@@ -1,5 +1,6 @@
 .footer-light,
-.footer-dark {
+.footer-dark,
+.footer-base {
 	width: 100%;
 	background-color: transparent;
 	padding-block: 1.4rem;
@@ -17,4 +18,9 @@
 	.content {
 		color: var(--color-dark-text);
 	}
+}
+
+.footer-dark {
+	background-color: var(--color-bg);
+	margin-top: 0;
 }

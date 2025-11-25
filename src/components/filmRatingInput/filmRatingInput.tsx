@@ -24,6 +24,10 @@ class FilmRatingInputComponent extends Component<
 	FilmRatingInputProps & WithRouterProps
 > {
 	leaveRating = (number: number): void => {
+		if (this.props.userRating === number) {
+			return;
+		}
+
 		this.props.createRating(number, this.props.router.params.id);
 	};
 

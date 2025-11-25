@@ -1,12 +1,29 @@
 import { Flex, Paragraph } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { compose, connect } from '../../modules/redux';
+import type { State } from '../../modules/redux/types/store';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
+import { selectIsOut } from '../../redux/features/film/selectors';
+import type { Map } from '../../types/map';
 import styles from './footer.module.scss';
 
-class FooterComponent extends Component<WithRouterProps> {
+interface FooterProps {
+	isOut: boolean | null;
+}
+
+class FooterComponent extends Component<WithRouterProps & FooterProps> {
 	render() {
-		const type = this.props.router.path.startsWith('/films') ? 'light' : 'dark';
+		let type = 'base';
+
+		if (this.props.router.path.startsWith('/films')) {
+			type = 'light';
+
+			if (!this.props.isOut) {
+				type = 'dark';
+			}
+		}
+
 		return (
 			<Flex
 				id="footer"
@@ -22,4 +39,11 @@ class FooterComponent extends Component<WithRouterProps> {
 	}
 }
 
-export const Footer = withRouter(FooterComponent);
+const mapStateToProps = (state: State): Map => ({
+	isOut: selectIsOut(state),
+});
+
+export const Footer = compose(
+	withRouter,
+	connect(mapStateToProps),
+)(FooterComponent);

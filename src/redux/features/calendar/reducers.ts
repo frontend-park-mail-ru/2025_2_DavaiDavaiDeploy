@@ -1,3 +1,4 @@
+import { decode } from '@/helpers/decodeHelper/decodeHelper';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
@@ -48,8 +49,14 @@ const calendarReducer: Reducer = (
 				...state,
 				loading: false,
 				error: null,
-				calendar: payload.calendar,
+				calendar: payload.calendar.map((film: ModelsFilmInCalendar) => ({
+					...film,
+					original_title: film.original_title
+						? decode(film.original_title)
+						: undefined,
+				})),
 			};
+
 		case actionTypes.CALENDAR_ERROR:
 			return {
 				...state,

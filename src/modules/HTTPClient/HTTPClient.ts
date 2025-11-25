@@ -63,12 +63,17 @@ export class HTTPClient {
 		data: any,
 		requestMethod: string,
 		requestHeaders: Headers,
-	): string | undefined | FormData {
+	): string | undefined | FormData | Blob {
 		if (!data || requestMethod === METHODS.GET) {
 			return undefined;
 		}
 
 		if (data instanceof FormData) {
+			return data;
+		}
+
+		if (data instanceof Blob) {
+			requestHeaders.set('Content-Type', 'audio/wav');
 			return data;
 		}
 
@@ -84,7 +89,7 @@ export class HTTPClient {
 		method = METHODS.GET,
 		path,
 		params = {},
-		data = {},
+		data,
 	}: RequestConfig): Promise<Response<T>> {
 		const requestMethod = method.toUpperCase();
 

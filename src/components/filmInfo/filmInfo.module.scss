@@ -165,12 +165,17 @@
 
 .smallRating {
 	display: none;
-	gap: 0.5rem;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	width: 100%;
 }
 
 .err {
 	min-height: calc(100vh - 4rem);
 	line-height: 1;
+	align-items: center;
+	display: flex;
 }
 
 .genre {
@@ -214,14 +219,15 @@
 }
 
 .smallFavBtn {
-	width: 50%;
+	width: 30%;
 	display: none;
 	align-items: center;
 	flex-direction: row;
 	transition: all 0.3s ease;
 	gap: 0.5rem;
-	padding: 0.7rem 1rem;
-	margin-bottom: 1rem;
+	padding: 1rem 1.5rem;
+	margin-bottom: 0.5rem;
+	margin-top: 1.5rem;
 
 	&:hover {
 		transform: scale(1.02);
@@ -365,8 +371,6 @@
 
 	.favIcon {
 		margin-top: 0.2rem;
-		width: 1rem;
-		transition: all 0.3s ease;
 	}
 
 	.smallFavBtn {
@@ -375,5 +379,12 @@
 
 	.favBtn {
 		display: none;
+	}
+}
+
+@media (max-width: 768px) {
+	.smallFavBtn {
+		width: 50%;
+		padding: 1rem 0.8rem;
 	}
 }

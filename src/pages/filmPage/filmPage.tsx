@@ -117,7 +117,7 @@ class FilmPageComponent extends Component<
 		return (
 			<Flex className={styles.page} direction="column">
 				<FilmInfo film={this.props.film} error={this.props.filmError} />
-				{this.props.film && (
+				{this.props.film && this.props.film.is_out && (
 					<Flex
 						className={styles.content}
 						direction="row"

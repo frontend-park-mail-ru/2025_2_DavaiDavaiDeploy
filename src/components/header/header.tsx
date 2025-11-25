@@ -1,3 +1,4 @@
+import Loupe from '@/assets/img/loupe.svg?react';
 import { LoadedUser } from '@/components/headerLoadedUser/headerLoadedUser.tsx';
 import { LoadingState } from '@/components/loadingState/loadingState.tsx';
 import { compose, connect } from '@/modules/redux/index.ts';
@@ -14,22 +15,42 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Flex, Logo } from '@/uikit/index';
+import { Flex, IconButton, Logo } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
+import { SearchInput } from '../searchInput/searchInput.tsx';
+import { SearchVoice } from '../SearchVoice/SearchVoice';
 import styles from './header.module.scss';
+
 interface HeaderProps {
 	user: ModelsUser | null;
 	isLoading: boolean;
 	logoutUser: VoidFunction;
 }
 
+interface HeaderState {
+	searchOpened: boolean;
+}
+
 class HeaderComponent extends Component<
-	HeaderProps & WithRouterProps & WithModalProps
+	HeaderProps & WithRouterProps & WithModalProps,
+	HeaderState
 > {
+	state = {
+		searchOpened: false,
+	};
+
+	openSearch = () => {
+		this.setState({ searchOpened: true });
+	};
+
+	closeSearch = () => {
+		this.setState({ searchOpened: false });
+	};
+
 	renderUserSection() {
 		if (this.props.isLoading) {
 			return (
@@ -56,6 +77,23 @@ class HeaderComponent extends Component<
 	}
 
 	render() {
+		if (this.state.searchOpened) {
+			return (
+				<Flex
+					id="header"
+					className={styles.header}
+					justify="center"
+					align="center"
+				>
+					<SearchInput
+						type="small"
+						className={styles.smallSearch}
+						onClose={this.closeSearch}
+					/>
+				</Flex>
+			);
+		}
+
 		return (
 			<Flex
 				id="header"
@@ -66,8 +104,19 @@ class HeaderComponent extends Component<
 				<Link href="/">
 					<Logo className={styles.logo} />
 				</Link>
-				<Flex className={styles.user} align="center">
-					{this.renderUserSection()}
+				<Flex className={styles.right} direction="row" align="center">
+					<SearchInput type="big" className={styles.bigSearch} />
+					<SearchVoice className={styles.voiceSearch} />
+					<IconButton
+						mode="tertiary"
+						className={styles.loupeBtn}
+						onClick={this.openSearch}
+					>
+						<Loupe className={styles.loupe} />
+					</IconButton>
+					<Flex className={styles.user} align="center">
+						{this.renderUserSection()}
+					</Flex>
 				</Flex>
 			</Flex>
 		);

@@ -48,6 +48,27 @@ export interface ModelsChangePasswordInput {
 	old_password: string;
 }
 
+export interface ModelsCompFilm {
+	duration: number;
+	genre: string;
+	id: string;
+	image: string;
+	is_liked: boolean;
+	rating: number;
+	short_description: string;
+	title: string;
+	year: number;
+}
+
+export interface ModelsCompilation {
+	created_at?: string;
+	description: string;
+	icon: string;
+	id: string;
+	title: string;
+	updated_at?: string;
+}
+
 export interface ModelsFavFilm {
 	duration: number;
 	genre: string;
@@ -133,6 +154,7 @@ export interface ModelsFilmPage {
 	user_rating?: number;
 	worldwide_fees: number;
 	year: number;
+	is_out: boolean;
 }
 
 export interface ModelsGenre {
@@ -142,6 +164,12 @@ export interface ModelsGenre {
 	id: string;
 	title: string;
 	updated_at?: string;
+}
+
+export interface ModelsMainPageActor {
+	id: string;
+	photo: string;
+	russian_name: string;
 }
 
 export interface ModelsMainPageFilm {
@@ -166,9 +194,16 @@ export interface ModelsPromoFilm {
 	year: number;
 }
 
+export interface ModelsSearchResponse {
+	actors?: ModelsMainPageActor[];
+	films?: ModelsMainPageFilm[];
+	search_string?: string;
+}
+
 export interface ModelsSignInInput {
 	login: string;
 	password: string;
+	user_code?: string;
 }
 
 export interface ModelsSignUpInput {
@@ -179,10 +214,17 @@ export interface ModelsSignUpInput {
 export interface ModelsUser {
 	avatar: string;
 	created_at?: string;
+	has_2fa: boolean;
 	id: string;
 	login: string;
 	updated_at?: string;
 	version: number;
+}
+
+export interface ModelsVoiceSearchResponse {
+	actors?: ModelsMainPageActor[];
+	films?: ModelsMainPageFilm[];
+	search_string?: string;
 }
 
 export interface ModelsOTPUser {

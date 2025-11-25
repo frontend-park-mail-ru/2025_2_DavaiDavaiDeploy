@@ -1,5 +1,5 @@
 .calendarWidget {
-	gap: 2.5rem;
+	gap: 2.4rem;
 	width: 100%;
 	padding: var(--side-padding);
 }
@@ -67,6 +67,19 @@
 	}
 }
 
+@media (max-width: 1024px) {
+	.title,
+	.subtitle {
+		margin-left: 0;
+		text-align: center;
+	}
+
+	.soon {
+		align-items: center;
+		justify-content: center;
+	}
+}
+
 @media (max-width: 768px) {
 	.calendarWidget {
 		gap: 1rem;
@@ -74,13 +87,5 @@
 
 	.soon {
 		margin-top: -1.5rem;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.title,
-	.subtitle {
-		margin-left: 0;
-		text-align: center;
 	}
 }

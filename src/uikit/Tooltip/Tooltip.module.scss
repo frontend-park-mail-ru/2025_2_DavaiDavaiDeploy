@@ -1,16 +1,20 @@
 .tooltipWrapper {
 	position: relative;
-	display: inline-block;
+	display: contents;
+	z-index: 100000;
 }
 
 .tooltip {
-	position: absolute;
+	text-align: center;
+	position: fixed;
 	padding: 0.7rem 1rem;
 	background-color: var(--color-light);
 	border-radius: var(--border-radius-l);
-	white-space: nowrap;
-	z-index: 5000;
-	transition: all 0.3 ease;
+	z-index: 100000;
+	white-space: normal;
+	overflow-wrap: break-word;
+	word-break: keep-all;
+	transition: all 0.4s ease;
 }
 
 .placementTop {

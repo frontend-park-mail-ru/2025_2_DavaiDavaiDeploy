@@ -50,20 +50,6 @@
 	}
 }
 
-.input {
-	flex: 1;
-	background: transparent;
-	border: none;
-	outline: none;
-	font-size: 16px;
-	height: 100%;
-	padding: 0;
-
-	&::placeholder {
-		color: var(--color-light-text);
-	}
-}
-
 .icon {
 	width: 1.25rem;
 	height: 1.25rem;
@@ -76,7 +62,11 @@
 
 .user {
 	gap: 1.875rem;
-	flex-shrink: 0;
+	text-decoration: none;
+}
+
+.right {
+	gap: 3rem;
 	text-decoration: none;
 }
 
@@ -124,6 +114,48 @@
 	height: 3rem;
 }
 
+.loupeBtn {
+	outline: none;
+	position: relative;
+	display: none;
+	transition: all 0.4 ease;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 1.7rem;
+		height: 1.7rem;
+		background: var(--color-accent);
+		opacity: 0.1;
+		border-radius: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 0;
+	}
+
+	&:hover {
+		transform: scale(1.05);
+	}
+}
+
+.loupe {
+	position: relative;
+	z-index: 10;
+	width: 1rem;
+}
+
+.voiceSearch {
+	display: none;
+	cursor: pointer;
+	transition: opacity 0.3s;
+	flex-shrink: 0;
+
+	&:hover {
+		opacity: 0.8;
+	}
+}
+
 @media (max-width: 1600px) {
 	.header {
 		padding: 0.8rem 1.5rem;
@@ -138,7 +170,6 @@
 @media (max-width: 768px) {
 	.header {
 		padding: 1rem 1.5rem;
-		gap: 1rem;
 	}
 
 	.text1 {
@@ -158,5 +189,21 @@
 
 	.logo {
 		width: 8rem;
+	}
+
+	.bigSearch {
+		display: none;
+	}
+
+	.loupeBtn {
+		display: flex;
+	}
+
+	.voiceSearch {
+		display: flex;
+	}
+
+	.right {
+		gap: 1rem;
 	}
 }

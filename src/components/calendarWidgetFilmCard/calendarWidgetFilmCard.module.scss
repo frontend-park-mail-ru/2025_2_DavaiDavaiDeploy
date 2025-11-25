@@ -1,13 +1,14 @@
-@use '../../styles/globals.scss' as *;
-
 .filmCard {
 	text-align: center;
-	transition: transform 0.3s ease;
 	width: 100%;
 	border-radius: var(--border-radius-xl);
 	padding: 1.25rem 1.875rem;
 	border: 1px solid rgb(212 222 232 / 40%);
-	box-shadow: 0 4px 4px rgb(212 222 232 / 10%);
+	transition: all 0.4s ease;
+
+	&:hover {
+		filter: brightness(1.2);
+	}
 }
 
 .left {
@@ -130,7 +131,7 @@
 	}
 
 	.favIcon {
-		width: 0.8rem;
+		width: 0.9rem;
 	}
 }
 

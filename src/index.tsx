@@ -1,3 +1,5 @@
+import 'reset-css/reset.css';
+
 import { compose, connect, Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { store } from '@/redux/store.ts';
@@ -6,7 +8,6 @@ import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
 import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
-import 'reset-css/reset.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
 import {
@@ -24,11 +25,14 @@ import { Routes } from './modules/router/routes.tsx';
 import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
 import { withRouter } from './modules/router/withRouter.tsx';
 import { ActorPage } from './pages/actorPage/actorPage.tsx';
+import { CalendarPage } from './pages/calendarPage/calendarPage.tsx';
+import { CompilationPage } from './pages/compilationPage/compilationPage.tsx';
 import { FilmPage } from './pages/filmPage/filmPage.tsx';
 import { GenrePage } from './pages/genrePage/genrePage';
 import { HomePage } from './pages/homePage/homePage.tsx';
 import { LoginPage } from './pages/loginPage/loginPage.tsx';
 import { RegisterPage } from './pages/registerPage/registerPage.tsx';
+import { SearchPage } from './pages/searchPage/searchPage.tsx';
 import { UserPage } from './pages/userPage/userPage.tsx';
 import actions from './redux/features/user/actions.ts';
 import { selectUser } from './redux/features/user/selectors.ts';
@@ -89,6 +93,9 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/register" component={<RegisterPage />} />
 					<Route href="/genres/:id" component={<GenrePage />} />
 					<Route href="/profile" component={<UserPage />} />
+					<Route href="/calendar" component={<CalendarPage />} />
+					<Route href="/search" component={<SearchPage />} />
+					<Route href="/compilations/:id" component={<CompilationPage />} />
 				</Routes>
 				{!isAuthPageOpen && <Footer />}
 			</div>
