@@ -30,6 +30,7 @@ interface SearchInputProps {
 interface SearchInputState {
 	searchRequest: string;
 	isSuggestVisible: boolean;
+	prevSearchRequest: string;
 }
 
 class SearchInputComponent extends Component<
@@ -39,6 +40,7 @@ class SearchInputComponent extends Component<
 	state = {
 		searchRequest: '',
 		isSuggestVisible: false,
+		prevSearchRequest: '',
 	};
 
 	debouncedSearch = debounce((search) => {
@@ -50,6 +52,7 @@ class SearchInputComponent extends Component<
 			return;
 		}
 
+		this.setState({ prevSearchRequest: this.state.searchRequest });
 		this.props.getSearchResult(this.state.searchRequest);
 
 		if (!this.props.router.path.startsWith('/search')) {
@@ -69,6 +72,7 @@ class SearchInputComponent extends Component<
 			this.setState({ isSuggestVisible: false });
 		}
 
+		this.setState({ prevSearchRequest: this.state.searchRequest });
 		this.setState({ searchRequest: value });
 	};
 
@@ -78,7 +82,10 @@ class SearchInputComponent extends Component<
 
 	handleKeyDown = (event: KeyboardEvent) => {
 		if (event.key === 'Enter') {
-			this.search();
+			if (this.state.prevSearchRequest !== this.state.searchRequest) {
+				this.search();
+			}
+
 			this.setState({ isSuggestVisible: false });
 		}
 	};
