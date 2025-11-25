@@ -7,7 +7,9 @@ import actions from '@/redux/features/search/actions.ts';
 import type { Map } from '@/types/map';
 import { Flex, IconButton } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { MICROPHONE_STATES } from '../../consts/microphone';
 import { debounce } from '../../helpers/debounceHelper/debounceHelper';
+import { getMicrophoneIconFromState } from '../../helpers/getMicrophoneIconFromState/getMicrophoneIconFromState';
 import type { State } from '../../modules/redux/types/store';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -32,6 +34,7 @@ interface SearchInputState {
 	searchRequest: string;
 	isSuggestVisible: boolean;
 	prevSearchRequest: string;
+	microphoneState: (typeof MICROPHONE_STATES)[keyof typeof MICROPHONE_STATES];
 }
 
 class SearchInputComponent extends Component<
@@ -42,6 +45,7 @@ class SearchInputComponent extends Component<
 		searchRequest: '',
 		isSuggestVisible: false,
 		prevSearchRequest: '',
+		microphoneState: MICROPHONE_STATES.INACTIVE,
 	};
 
 	handleResize = () => {
@@ -56,6 +60,17 @@ class SearchInputComponent extends Component<
 	onUnmount() {
 		window.removeEventListener('resize', this.debouncedResize);
 	}
+
+	handleMicrophoneClick = () => {
+		if (this.state.microphoneState === MICROPHONE_STATES.INACTIVE) {
+			this.setState({ microphoneState: MICROPHONE_STATES.ACTIVE });
+			return;
+		}
+
+		if (this.state.microphoneState === MICROPHONE_STATES.ACTIVE) {
+			this.setState({ microphoneState: MICROPHONE_STATES.LOADING });
+		}
+	};
 
 	debouncedSearch = debounce((search) => {
 		this.props.getHintResult(search);
@@ -125,6 +140,13 @@ class SearchInputComponent extends Component<
 							className={styles.input}
 							onKeyDown={this.handleKeyDown}
 						></input>
+						<IconButton
+							mode="tertiary"
+							className={styles.loupeBtn}
+							onClick={this.handleMicrophoneClick}
+						>
+							{getMicrophoneIconFromState(this.state.microphoneState)}
+						</IconButton>
 						<IconButton
 							mode="tertiary"
 							className={styles.loupeBtn}
