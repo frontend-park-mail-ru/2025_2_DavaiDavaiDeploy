@@ -148,7 +148,7 @@ class ChangeAvatarComponent extends Component<
 	}
 
 	handleToggleOTP = (checked: boolean) => {
-		if (this.props.OTPLoading || checked !== this.props.OTPActivated) {
+		if (this.props.OTPLoading || checked === this.props.OTPActivated) {
 			return;
 		}
 
