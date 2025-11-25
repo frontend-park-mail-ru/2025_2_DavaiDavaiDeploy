@@ -79,6 +79,7 @@ class SearchInputComponent extends Component<
 	handleKeyDown = (event: KeyboardEvent) => {
 		if (event.key === 'Enter') {
 			this.search();
+			this.setState({ isSuggestVisible: false });
 		}
 	};
 

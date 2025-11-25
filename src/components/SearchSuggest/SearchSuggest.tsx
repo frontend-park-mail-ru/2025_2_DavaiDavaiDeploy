@@ -54,7 +54,11 @@ export class SearchSuggest extends Component<
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
 		return (
-			<li className={styles.lilist} key={`film-${id}`}>
+			<li
+				onClick={this.props.handleClose}
+				className={styles.lilist}
+				key={`film-${id}`}
+			>
 				<Link className={styles.link} href={`/films/${id}`}>
 					<Image className={styles.image} src={cover} alt={title} />
 					<div className={styles.filmInfo}>
@@ -76,8 +80,12 @@ export class SearchSuggest extends Component<
 	renderActor = (actor: ModelsMainPageActor) => {
 		const { id, photo, russian_name } = actor;
 		return (
-			<li className={styles.lilist} key={`actor-${id}`}>
-				<Link className={styles.link} href={`/actor/${id}`}>
+			<li
+				onClick={this.props.handleClose}
+				className={styles.lilist}
+				key={`actor-${id}`}
+			>
+				<Link className={styles.link} href={`/actors/${id}`}>
 					<Image className={styles.image} src={photo} alt={russian_name} />
 					<p className={styles.titleRow}>{russian_name}</p>
 				</Link>
