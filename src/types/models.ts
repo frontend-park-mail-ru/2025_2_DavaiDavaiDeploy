@@ -220,3 +220,9 @@ export interface ModelsUser {
 	updated_at?: string;
 	version: number;
 }
+
+export interface ModelsVoiceSearchResponse {
+	actors?: ModelsMainPageActor[];
+	films?: ModelsMainPageFilm[];
+	search_string?: string;
+}

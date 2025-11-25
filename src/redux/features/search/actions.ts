@@ -1,9 +1,24 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsSearchResponse } from '@/types/models';
+import type {
+	ModelsSearchResponse,
+	ModelsVoiceSearchResponse,
+} from '@/types/models';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
+
+/**
+ * Возвращает успешно загруженный результат голосового поиска
+ */
+const returnVoiceSearchResultAction = (
+	data: ModelsVoiceSearchResponse,
+): Action => {
+	return {
+		type: actionTypes.VOICE_SEARCH_LOADED,
+		payload: { result: data },
+	};
+};
 
 /**
  * Устанавливает состояние загрузки результата поиска
@@ -61,13 +76,57 @@ const getSearchResultAction =
 		}
 	};
 
+/**
+ * Очищает результат поиска
+ */
 const clearSearchResultAction = (): Action => {
 	return {
 		type: actionTypes.CLEAR_SEARCH_RESULT,
 	};
 };
 
+/**
+ * Очищает результат голосового поиска
+ */
+const clearVoiceSearchResultAction = (): Action => {
+	return {
+		type: actionTypes.CLEAR_VOICE_SEARCH_RESULT,
+	};
+};
+
+/**
+ * Загружает результат голосового поиска
+ */
+const getVoiceSearchResultAction =
+	(searchWAV: Blob): Action =>
+	async (dispatch: Dispatch) => {
+		dispatch(setSearchResultLoadingAction());
+
+		try {
+			const response = await HTTPClient.post<ModelsVoiceSearchResponse>(
+				`/voice-search`,
+				{
+					data: searchWAV,
+				},
+			);
+
+			dispatch(returnVoiceSearchResultAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnSearchResultErrorAction(errorMessage));
+		}
+	};
+
 export default {
+	getVoiceSearchResultAction,
 	getSearchResultAction,
 	clearSearchResultAction,
+	clearVoiceSearchResultAction,
 };

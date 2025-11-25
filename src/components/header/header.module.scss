@@ -145,6 +145,17 @@
 	width: 1rem;
 }
 
+.voiceSearch {
+	display: none;
+	cursor: pointer;
+	transition: opacity 0.3s;
+	flex-shrink: 0;
+
+	&:hover {
+		opacity: 0.8;
+	}
+}
+
 @media (max-width: 1600px) {
 	.header {
 		padding: 0.8rem 1.5rem;
@@ -185,6 +196,10 @@
 	}
 
 	.loupeBtn {
+		display: flex;
+	}
+
+	.voiceSearch {
 		display: flex;
 	}
 
