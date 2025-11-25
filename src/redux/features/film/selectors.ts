@@ -23,3 +23,6 @@ export const selectUserRating: Selector = (state: State): number | null =>
 export const selectUserFeedback: Selector = (
 	state: State,
 ): ModelsFilmFeedback | null => state.film.userFeedback;
+
+export const selectIsOut: Selector = (state: State): boolean | null =>
+	state.film.is_out;

@@ -19,6 +19,7 @@ interface InitialState {
 	leaveFeedbackError: string | null;
 	addError: string | null;
 	deleteError: string | null;
+	is_out: boolean | null;
 }
 
 /**
@@ -37,6 +38,7 @@ const initialState: InitialState = {
 	leaveFeedbackError: null,
 	addError: null,
 	deleteError: null,
+	is_out: null,
 };
 
 /**
