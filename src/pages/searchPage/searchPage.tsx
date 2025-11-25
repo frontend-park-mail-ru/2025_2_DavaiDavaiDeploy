@@ -16,9 +16,16 @@ import styles from './searchPage.module.scss';
 interface SearchPageProps {
 	searchResult: ModelsSearchResponse;
 	clearResult: VoidFunction;
+	getSearchResult: (searchRequest: string) => void;
 }
 
 class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
+	onMount() {
+		if (this.props.router.params['query']) {
+			this.props.getSearchResult(this.props.router.params['query']);
+		}
+	}
+
 	onUnmount() {
 		this.props.clearResult();
 	}
@@ -128,12 +135,14 @@ class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 	}
 }
 
-const mapStateToProps = (state: State): Map => ({
-	searchResult: selectSearchResult(state),
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	getSearchResult: (searchRequest: string) =>
+		dispatch(actions.getSearchResultAction(searchRequest)),
+	clearResult: () => dispatch(actions.clearSearchResultAction()),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	clearResult: () => dispatch(actions.clearSearchResultAction()),
+const mapStateToProps = (state: State): Map => ({
+	searchResult: selectSearchResult(state),
 });
 
 export const SearchPage = compose(
