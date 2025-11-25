@@ -132,6 +132,8 @@ class FilmSliderComponent extends Component<
 		if (this.state.active) {
 			autoSlider.start();
 		}
+
+		this.handleResize();
 	}
 
 	onUnmount() {
