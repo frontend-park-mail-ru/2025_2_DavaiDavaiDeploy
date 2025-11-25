@@ -6,6 +6,7 @@ import actions from '@/redux/features/user/actions';
 import {
 	selectAvatarChangeError,
 	selectIsTwoFactorEnabled,
+	selectIsTwoFactorLoading,
 	selectNewAvatarLoading,
 	selectOTPQRCode,
 	selectUser,
@@ -35,6 +36,7 @@ interface ChangeAvatarProps {
 	user: ModelsUser;
 	loading: boolean;
 	OTPActivated: boolean;
+	OTPLoading: boolean;
 	OTPQR: string | null;
 	setAvatar: (file: File) => void;
 	activateOTP: () => void;
@@ -146,7 +148,11 @@ class ChangeAvatarComponent extends Component<
 	}
 
 	handleToggleOTP = () => {
-		if (this.props.OTPActivated) {
+		if (this.props.OTPLoading) {
+			return;
+		}
+
+		if (this.state.OTPActivated) {
 			this.props.deactivateOTP();
 			AppToast.success('2FA успешно отключена');
 		} else {
@@ -245,6 +251,7 @@ class ChangeAvatarComponent extends Component<
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 	OTPActivated: selectIsTwoFactorEnabled(state),
+	OTPLoading: selectIsTwoFactorLoading(state),
 	OTPQR: selectOTPQRCode(state),
 	error: selectAvatarChangeError(state),
 	loading: selectNewAvatarLoading(state),

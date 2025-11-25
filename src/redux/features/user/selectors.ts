@@ -47,5 +47,8 @@ export const selectNewAvatarLoading: Selector = (state: State): boolean => {
 export const selectIsTwoFactorEnabled: Selector = (state: State): boolean =>
 	state.user.user?.has_2fa;
 
+export const selectIsTwoFactorLoading: Selector = (state: State): boolean =>
+	state.user.user?.twoFactorLoading;
+
 export const selectOTPQRCode: Selector = (state: State): string | null =>
 	state.user.user.qrCode;
