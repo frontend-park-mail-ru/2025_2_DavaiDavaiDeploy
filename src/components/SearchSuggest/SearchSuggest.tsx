@@ -8,7 +8,7 @@ import type {
 	ModelsMainPageFilm,
 } from '../../types/models';
 import { Badge, Headline, Image } from '../../uikit';
-import styles from './searchSuggest.module.scss';
+import styles from './SearchSuggest.module.scss';
 
 interface SearchSuggestProps {
 	hintResult: {
