@@ -35,11 +35,9 @@ class CompilationWidgetComponent extends Component<
 					Подборки
 				</Title>
 				<Flex className={styles.compilations} direction="row">
-					{this.props.compilations.map((compilation, index) => {
-						return (
-							<CompilationWidgetCard compilation={compilation} key={index} />
-						);
-					})}
+					{this.props.compilations.map((compilation, index) => (
+						<CompilationWidgetCard compilation={compilation} key={index} />
+					))}
 				</Flex>
 			</Flex>
 		);
