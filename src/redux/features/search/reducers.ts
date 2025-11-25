@@ -54,6 +54,12 @@ const searchReducer: Reducer = (
 				error: payload.error,
 				searchResult: null,
 			};
+
+		case actionTypes.CLEAR_SEARCH_RESULT:
+			return {
+				...state,
+				searchResult: null,
+			};
 		default:
 			return state;
 	}

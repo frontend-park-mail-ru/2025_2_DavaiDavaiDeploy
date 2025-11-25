@@ -61,6 +61,13 @@ const getSearchResultAction =
 		}
 	};
 
+const clearSearchResultAction = (): Action => {
+	return {
+		type: actionTypes.CLEAR_SEARCH_RESULT,
+	};
+};
+
 export default {
 	getSearchResultAction,
+	clearSearchResultAction,
 };

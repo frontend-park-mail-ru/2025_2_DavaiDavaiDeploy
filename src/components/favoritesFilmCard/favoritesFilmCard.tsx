@@ -70,14 +70,29 @@ class FavoritesFilmCardComponent extends Component<FavoritesFilmCardProps> {
 							{title}
 						</Title>
 						<Flex className={styles.info}>
-							<Subhead className={styles.item} level="10" color="light">
+							<Subhead
+								className={styles.item}
+								level="10"
+								color="light"
+								opacity="80"
+							>
 								{year.toString()}
 							</Subhead>
-							<Subhead className={styles.item} level="10" color="light">
+							<Subhead
+								className={styles.item}
+								level="10"
+								color="light"
+								opacity="80"
+							>
 								{genre}
 							</Subhead>
 							{formattedDuration && (
-								<Subhead className={styles.item} level="10" color="light">
+								<Subhead
+									className={styles.item}
+									level="10"
+									color="light"
+									opacity="80"
+								>
 									{formattedDuration}
 								</Subhead>
 							)}

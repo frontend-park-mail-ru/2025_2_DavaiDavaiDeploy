@@ -1,20 +1,21 @@
 import { ActorCard } from '@/components/actorCard/actorCard';
 import { FilmCard } from '@/components/filmCard/filmCard';
 import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store.ts';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
+import actions from '@/redux/features/search/actions';
 import { selectSearchResult } from '@/redux/features/search/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsSearchResponse } from '@/types/models';
 import { CardGrid, Flex, Paragraph, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
-import type { Dispatch } from '../../modules/redux/types/actions';
-import actions from '../../redux/features/search/actions';
 import styles from './searchPage.module.scss';
 
 interface SearchPageProps {
 	searchResult: ModelsSearchResponse;
+	clearResult: VoidFunction;
 	getSearchResult: (searchRequest: string) => void;
 }
 
@@ -23,6 +24,10 @@ class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 		if (this.props.router.params['query']) {
 			this.props.getSearchResult(this.props.router.params['query']);
 		}
+	}
+
+	onUnmount() {
+		this.props.clearResult();
 	}
 
 	renderActors = () => {
@@ -133,6 +138,7 @@ class SearchPageComponent extends Component<SearchPageProps & WithRouterProps> {
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getSearchResult: (searchRequest: string) =>
 		dispatch(actions.getSearchResultAction(searchRequest)),
+	clearResult: () => dispatch(actions.clearSearchResultAction()),
 });
 
 const mapStateToProps = (state: State): Map => ({

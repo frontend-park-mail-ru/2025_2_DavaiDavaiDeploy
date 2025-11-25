@@ -1,4 +1,5 @@
 import { CalendarWidget } from '@/components/calendarWidget/calendarWidget';
+import { CompilationWidget } from '@/components/compilationWidget/compilationWidget';
 import { FilmCardGrid } from '@/components/filmCardGrid/filmCardGrid';
 import { GenreSlider } from '@/components/genreSlider/genreSlider';
 import { PromoFilm } from '@/components/promoFilm/promoFilm';
@@ -13,7 +14,7 @@ export class HomePage extends Component {
 				<Flex className={styles.main} direction="column">
 					<PromoFilm />
 					<GenreSlider />
-
+					<CompilationWidget />
 					<CalendarWidget />
 					<Flex className={styles.films} direction="column">
 						<FilmCardGrid />
