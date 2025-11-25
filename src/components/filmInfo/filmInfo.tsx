@@ -90,6 +90,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 			cover,
 			poster,
 			is_liked,
+			is_out,
 		} = this.props.film;
 
 		const formattedRating = formatRating(rating);
@@ -237,7 +238,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 									direction="column"
 									align="center"
 								>
-									<FilmRating film={this.props.film} />
+									{is_out && <FilmRating film={this.props.film} />}
 									<Button
 										mode="secondary"
 										className={clsx(styles.smallFavBtn, {
@@ -259,7 +260,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 							</Flex>
 
 							<Flex className={styles.bigRating}>
-								<FilmRating film={this.props.film} />
+								{is_out && <FilmRating film={this.props.film} />}
 							</Flex>
 						</Flex>
 

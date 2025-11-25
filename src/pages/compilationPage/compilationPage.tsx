@@ -11,13 +11,13 @@ import {
 	selectCompilationFilms,
 } from '@/redux/features/compilations/selectors';
 import type { Map } from '@/types/map';
-import type { ModelsCompilation, ModelsFavFilm } from '@/types/models';
+import type { ModelsCompFilm, ModelsCompilation } from '@/types/models';
 import { Flex } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './compilationPage.module.scss';
 
 interface CompilationPageProps {
-	films: ModelsFavFilm[];
+	films: ModelsCompFilm[];
 	compilation: ModelsCompilation;
 	getFilms: (limit: number, offset: number, id: string) => void;
 	getCompilation: (id: string) => void;

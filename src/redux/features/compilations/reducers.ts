@@ -1,7 +1,7 @@
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsCompilation, ModelsFavFilm } from '@/types/models';
+import type { ModelsCompFilm, ModelsCompilation } from '@/types/models';
 import actionTypes from './actionTypes';
 
 interface InitialState {
@@ -14,7 +14,7 @@ interface InitialState {
 	compilationsError: string | null;
 
 	compilationFilmsLoading: boolean;
-	compilationFilms: ModelsFavFilm[];
+	compilationFilms: ModelsCompFilm[];
 	compilationFilmsError: string | null;
 
 	addError: string | null;
@@ -125,7 +125,7 @@ const compilationReducer: Reducer = (
 			return {
 				...state,
 				compilationFilms: state.compilationFilms
-					? state.compilationFilms.map((film: ModelsFavFilm) =>
+					? state.compilationFilms.map((film: ModelsCompFilm) =>
 							film.id === payload.id ? { ...film, is_liked: true } : film,
 						)
 					: null,
@@ -138,7 +138,7 @@ const compilationReducer: Reducer = (
 			return {
 				...state,
 				compilationFilms: state.compilationFilms
-					? state.compilationFilms.map((film: ModelsFavFilm) =>
+					? state.compilationFilms.map((film: ModelsCompFilm) =>
 							film.id === payload.id ? { ...film, is_liked: false } : film,
 						)
 					: null,

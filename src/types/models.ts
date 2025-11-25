@@ -48,6 +48,18 @@ export interface ModelsChangePasswordInput {
 	old_password: string;
 }
 
+export interface ModelsCompFilm {
+	duration: number;
+	genre: string;
+	id: string;
+	image: string;
+	is_liked: boolean;
+	rating: number;
+	short_description: string;
+	title: string;
+	year: number;
+}
+
 export interface ModelsCompilation {
 	created_at?: string;
 	description: string;
@@ -62,7 +74,6 @@ export interface ModelsFavFilm {
 	genre: string;
 	id: string;
 	image: string;
-	is_liked?: boolean;
 	rating: number;
 	short_description: string;
 	title: string;
@@ -143,6 +154,7 @@ export interface ModelsFilmPage {
 	user_rating?: number;
 	worldwide_fees: number;
 	year: number;
+	is_out: boolean;
 }
 
 export interface ModelsGenre {

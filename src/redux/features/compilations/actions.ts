@@ -1,6 +1,6 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsCompilation, ModelsFavFilm } from '@/types/models';
+import type { ModelsCompFilm, ModelsCompilation } from '@/types/models';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -52,7 +52,7 @@ const returnCompilationAction = (data: ModelsCompilation): Action => {
 /**
  * Action: устанавливает успешно загруженные фильмы подборки
  */
-const returnCompilationFilmsAction = (data: ModelsFavFilm[]): Action => {
+const returnCompilationFilmsAction = (data: ModelsCompFilm[]): Action => {
 	return {
 		type: actionTypes.COMPILATION_FILMS_LOADED,
 		payload: { films: data },
@@ -159,7 +159,7 @@ const getCompilationFilmsAction =
 		dispatch(setCompilationFilmsLoadingAction());
 
 		try {
-			const response = await HTTPClient.get<ModelsFavFilm[]>(
+			const response = await HTTPClient.get<ModelsCompFilm[]>(
 				`/compilations/${id}/films`,
 				{
 					params: { count: limit, offset },
@@ -207,7 +207,7 @@ const deleteFromFavoritesAction =
 	(id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			await HTTPClient.delete<ModelsFavFilm[]>(`/films/${id}/remove`);
+			await HTTPClient.delete<ModelsCompFilm[]>(`/films/${id}/remove`);
 
 			dispatch(processDeleteAction(id));
 		} catch (error: unknown) {
@@ -250,7 +250,7 @@ const addToFavoritesAction =
 	(id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			await HTTPClient.post<ModelsFavFilm[]>(`/films/${id}/save`);
+			await HTTPClient.post<ModelsCompFilm[]>(`/films/${id}/save`);
 
 			dispatch(processAddAction(id));
 		} catch (error: unknown) {
