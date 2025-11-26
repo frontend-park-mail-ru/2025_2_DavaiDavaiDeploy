@@ -11,3 +11,20 @@
 		transform: rotate(360deg);
 	}
 }
+
+.microphoneWrap {
+	width: 1.2rem;
+	overflow: visible;
+	justify-content: center;
+}
+
+.microphoneIcon {
+	width: 0.8rem;
+	overflow: visible;
+}
+
+.microphoneActiveIcon {
+	width: 1.2rem;
+	height: 1.2rem;
+	transform: scale(1.06);
+}

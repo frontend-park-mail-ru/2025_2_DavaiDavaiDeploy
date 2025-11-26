@@ -12,6 +12,7 @@ import { connect as WAVConnect } from 'extendable-media-recorder-wav-encoder';
 import { MICROPHONE_STATES } from '../../consts/microphone';
 import { getMicrophoneIconFromState } from '../../helpers/getMicrophoneIconFromState/getMicrophoneIconFromState';
 import type { Map } from '../../types/map';
+import { AppToast } from '../toastContainer/toastContainer';
 
 interface SearchVoiceProps {
 	getVoiceSearchResult: (searchWAV: Blob) => void;
@@ -23,7 +24,6 @@ interface SearchVoiceState {
 	mediaRecorder: IMediaRecorder | null;
 	stream: MediaStream | null;
 	audioChunks: Blob[];
-	isMicrophoneAvailable: boolean;
 }
 
 class SearchVoiceComponent extends Component<
@@ -35,36 +35,13 @@ class SearchVoiceComponent extends Component<
 		mediaRecorder: null,
 		stream: null,
 		audioChunks: [],
-		isMicrophoneAvailable: true,
 	};
 
 	async onMount() {
 		try {
 			await register(await WAVConnect());
-			await this.setupMicrophoneAccessListener();
 		} catch {}
 	}
-
-	setupMicrophoneAccessListener = async () => {
-		if (!navigator.permissions || !navigator.permissions.query) {
-			return;
-		}
-
-		try {
-			const permissionStatus = await navigator.permissions.query({
-				name: 'microphone' as PermissionName,
-			});
-
-			const handlePermissionChange = () => {
-				this.setState({
-					isMicrophoneAvailable: permissionStatus.state === 'granted',
-				});
-			};
-
-			permissionStatus.addEventListener('change', handlePermissionChange);
-			handlePermissionChange();
-		} catch {}
-	};
 
 	onUnmount() {
 		this.cleanupRecording();
@@ -120,6 +97,7 @@ class SearchVoiceComponent extends Component<
 		} catch {
 			this.setState({ microphoneState: MICROPHONE_STATES.INACTIVE });
 			this.cleanupRecording();
+			AppToast.info('Разрешите доступ к микрофону');
 		}
 	};
 
@@ -146,10 +124,6 @@ class SearchVoiceComponent extends Component<
 	};
 
 	render() {
-		if (!this.state.isMicrophoneAvailable) {
-			return <div />;
-		}
-
 		return (
 			<IconButton
 				mode="tertiary"

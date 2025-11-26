@@ -22,7 +22,6 @@ import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { SearchInput } from '../searchInput/searchInput.tsx';
-import { SearchVoice } from '../SearchVoice/SearchVoice';
 import styles from './header.module.scss';
 
 interface HeaderProps {
@@ -106,7 +105,6 @@ class HeaderComponent extends Component<
 				</Link>
 				<Flex className={styles.right} direction="row" align="center">
 					<SearchInput type="big" className={styles.bigSearch} />
-					<SearchVoice className={styles.voiceSearch} />
 					<IconButton
 						mode="tertiary"
 						className={styles.loupeBtn}
