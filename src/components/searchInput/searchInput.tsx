@@ -6,7 +6,7 @@ import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/search/actions.ts';
 import type { Map } from '@/types/map';
 import { Flex, IconButton } from '@/uikit/index';
-import { Component } from '@robocotik/react';
+import { Component, createRef } from '@robocotik/react';
 import { debounce } from '../../helpers/debounceHelper/debounceHelper';
 import type { State } from '../../modules/redux/types/store';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -51,6 +51,8 @@ class SearchInputComponent extends Component<
 		prevSearchRequest: '',
 	};
 
+	inputRef = createRef<HTMLInputElement>();
+
 	handleResize = () => {
 		this.setState({ isSuggestVisible: false });
 	};
@@ -89,12 +91,14 @@ class SearchInputComponent extends Component<
 		}
 
 		this.props.getSearchResult(this.props.voiceSearchResult.search_string);
-		this.props.router.navigate(
-			`/search?query=${this.props.voiceSearchResult.search_string}`,
-		);
+
+		if (this.inputRef && this.inputRef.current) {
+			this.inputRef.current.value = this.props.voiceSearchResult.search_string;
+		}
 
 		this.setState({
 			searchRequest: this.props.voiceSearchResult.search_string,
+			isSuggestVisible: true,
 		});
 	};
 
@@ -149,6 +153,7 @@ class SearchInputComponent extends Component<
 					>
 						<input
 							type="text"
+							ref={this.inputRef}
 							placeholder="Поиск фильмов, актеров..."
 							value={this.state.searchRequest}
 							onInput={this.handleSearchRequestChange}
@@ -195,6 +200,7 @@ class SearchInputComponent extends Component<
 					</IconButton>
 					<input
 						type="text"
+						ref={this.inputRef}
 						placeholder="Поиск фильмов, актеров..."
 						value={this.state.searchRequest}
 						onInput={this.handleSearchRequestChange}
