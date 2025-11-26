@@ -157,7 +157,6 @@ class ChangeAvatarComponent extends Component<
 			AppToast.success('2FA успешно отключена');
 		} else {
 			this.props.activateOTP();
-			AppToast.success('2FA успешно подключена');
 		}
 	};
 

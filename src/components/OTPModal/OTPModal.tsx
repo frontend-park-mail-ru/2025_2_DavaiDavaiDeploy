@@ -3,6 +3,7 @@ import { Component } from '@robocotik/react';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
 import { BaseModal, type BaseModalProps } from '../BaseModal/BaseModal';
+import { AppToast } from '../toastContainer/toastContainer';
 import style from './OTPModal.module.scss';
 
 export interface OTPModalProps {
@@ -18,6 +19,8 @@ export class OTPModalComponent extends Component<
 		if (this.props.qrCode) {
 			URL.revokeObjectURL(this.props.qrCode);
 		}
+
+		AppToast.success('2FA успешно подключена');
 	};
 	render() {
 		return (

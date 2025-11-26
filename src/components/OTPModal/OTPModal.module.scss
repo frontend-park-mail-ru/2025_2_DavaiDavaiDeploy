@@ -43,6 +43,10 @@
 	gap: 2rem;
 }
 
+.modalTitle {
+	text-align: center;
+}
+
 .closeButton {
 	cursor: pointer;
 	position: absolute;
@@ -52,5 +56,15 @@
 
 	&:hover {
 		opacity: 0.7;
+	}
+}
+
+@media (max-width: 768px) {
+	.modalLogout {
+		background-color: var(--color-light);
+		color: var(--color-text);
+		width: 80dvw;
+		height: 36rem;
+		padding: 4rem;
 	}
 }

@@ -360,7 +360,7 @@ const sendDeactivateOTP = (): Action => async (dispatch: Dispatch) => {
 	dispatch(setOTPLoading());
 
 	try {
-		await HTTPClient.post<ModelsUser>('/auth/disable2fa', {});
+		await HTTPClient.post<ModelsUser>('/auth/disable2fa');
 		dispatch(setDeactivatedOTP());
 	} catch (error: unknown) {
 		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
