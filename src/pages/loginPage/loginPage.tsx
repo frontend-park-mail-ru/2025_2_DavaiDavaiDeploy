@@ -213,7 +213,10 @@ export class LoginPageNotConnected extends Component<
 
 							{this.hasOTP() && (
 								<div className={styles.otpContainer}>
-									<OTPInput length={6} onFinish={this.handleOTPFinish} />
+									<div className={styles.otpContent}>
+										<Title level="6">Введите OTP код</Title>
+										<OTPInput length={6} onFinish={this.handleOTPFinish} />
+									</div>
 								</div>
 							)}
 						</Flex>
