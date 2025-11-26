@@ -1,12 +1,12 @@
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsUser } from '@/types/models';
+import type { ModelsOTPUser, ModelsUser } from '@/types/models';
 import actionTypes from './actionTypes';
 
 interface InitialState {
 	loading: boolean;
-	user: ModelsUser | null;
+	user: (ModelsUser & ModelsOTPUser) | null;
 	error: string | null;
 	passwordChangeError: string | null;
 	avatarChangeError: boolean;
@@ -133,6 +133,48 @@ export const userReducer: Reducer = (
 			return {
 				...state,
 				error: null,
+			};
+
+		case actionTypes.USER_OTP_DEACTIVATE:
+			return {
+				...state,
+				user: {
+					...state.user,
+					has_2fa: false,
+					twoFactorLoading: false,
+					qrCode: null,
+					error: null,
+				},
+			};
+		case actionTypes.USER_OTP_ACTIVATE:
+			return {
+				...state,
+				user: {
+					...state.user,
+					has_2fa: true,
+					twoFactorLoading: false,
+					error: null,
+					qrCode: payload.qrImage,
+				},
+			};
+		case actionTypes.USER_OTP_LOADING:
+			return {
+				...state,
+				user: {
+					...state.user,
+					error: null,
+					twoFactorLoading: true,
+				},
+			};
+
+		case actionTypes.USER_OTP_ERROR:
+			return {
+				...state,
+				user: {
+					...state.user,
+					error: payload.error,
+					twoFactorLoading: false,
+				},
 			};
 		default:
 			return state;

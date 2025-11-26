@@ -226,3 +226,9 @@ export interface ModelsVoiceSearchResponse {
 	films?: ModelsMainPageFilm[];
 	search_string?: string;
 }
+
+export interface ModelsOTPUser {
+	twoFactorLoading: boolean;
+	has_2fa: boolean;
+	qrCode: string | null;
+}

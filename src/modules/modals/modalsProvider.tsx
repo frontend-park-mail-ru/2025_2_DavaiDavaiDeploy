@@ -3,6 +3,10 @@ import {
 	LoginModal,
 	type LoginModalProps,
 } from '../../components/LoginModal/LoginModal';
+import {
+	OTPModal,
+	type OTPModalProps,
+} from '../../components/OTPModal/OTPModal';
 import { TestModal } from '../../components/testModal/testModal';
 import { ModalRoot } from './modalRoot';
 import { MODALS } from './modals';
@@ -52,6 +56,10 @@ export class ModalsProvider extends Component {
 					<TestModal
 						id={MODALS.TEST_MODAL}
 						{...(this.state.activeModalProps || {})}
+					/>
+					<OTPModal
+						id={MODALS.OTP_MODAL}
+						{...((this.state.activeModalProps || {}) as OTPModalProps)}
 					/>
 				</ModalRoot>
 			</ModalContext.Provider>

@@ -9,7 +9,7 @@
 	background-color: var(--color-light);
 	color: var(--color-text);
 	width: 50rem;
-	height: 25rem;
+	height: 36rem;
 	padding: 4rem;
 }
 
@@ -43,6 +43,10 @@
 	gap: 2rem;
 }
 
+.modalTitle {
+	text-align: center;
+}
+
 .closeButton {
 	cursor: pointer;
 	position: absolute;
@@ -59,8 +63,8 @@
 	.modalLogout {
 		background-color: var(--color-light);
 		color: var(--color-text);
-		width: 100%;
-		height: 25rem;
+		width: 80dvw;
+		height: 36rem;
 		padding: 4rem;
 	}
 }

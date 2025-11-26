@@ -17,6 +17,26 @@
 	background-color: var(--color-accent-2);
 }
 
+.otpContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-bottom: 1rem;
+}
+
+.otpContent {
+	width: fit-content;
+	border: 1px solid var(--color-bg-light);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 1rem;
+	border-radius: 1rem;
+}
+
 .rightSide__title {
 	margin-bottom: 0.5rem;
 }
@@ -171,5 +191,9 @@
 	.rightSide__inputFields {
 		margin-block: auto;
 		gap: clamp(0.8rem, 1dvh, 1rem);
+	}
+
+	.otpContent {
+		border: none;
 	}
 }

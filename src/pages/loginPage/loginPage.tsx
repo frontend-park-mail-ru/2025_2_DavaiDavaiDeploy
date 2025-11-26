@@ -13,13 +13,23 @@ import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts'
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/user/actions.ts';
 import {
+	selectIsTwoFactorEnabled,
 	selectUser,
 	selectUserErrorNot401,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Button, Flex, FormItem, Headline, Logo, Title } from '@/uikit/index';
+import {
+	Button,
+	Flex,
+	FormItem,
+	Headline,
+	Logo,
+	OTPInput,
+	Title,
+} from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { ERROR_CODES } from '../../consts/errorCodes';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import { Redirect } from '../../modules/router/redirect';
 import { store } from '../../redux/store';
@@ -28,7 +38,9 @@ import styles from './loginPage.module.scss';
 interface LoginPageProps {
 	user: ModelsUser;
 	userError: string;
+	hasOTP: boolean;
 	loginUser: (login: string, password: string) => void;
+	loginUserWithOTP: (login: string, password: string, otp: string) => void;
 }
 
 export class LoginPageNotConnected extends Component<
@@ -52,6 +64,10 @@ export class LoginPageNotConnected extends Component<
 			this.setState({ showVideo: true });
 		}
 	};
+
+	hasOTP() {
+		return this.props.userError === ERROR_CODES.PRECONDITION_FAILED.toString();
+	}
 
 	validateFields() {
 		const usernameValidation = validateLogin(this.state.username);
@@ -80,6 +96,7 @@ export class LoginPageNotConnected extends Component<
 	handleLoginUser = () => {
 		if (this.validateFields()) {
 			this.setState({ errorShown: false });
+
 			this.props.loginUser(this.state.username, this.state.password);
 		}
 	};
@@ -89,7 +106,7 @@ export class LoginPageNotConnected extends Component<
 			store.dispatch(actions.resetUserError());
 		}
 
-		if (this.props.userError && !this.state.errorShown) {
+		if (this.props.userError && !this.state.errorShown && !this.hasOTP()) {
 			AppToast.error(this.props.userError);
 			this.setState({ errorShown: true });
 		}
@@ -104,6 +121,10 @@ export class LoginPageNotConnected extends Component<
 
 		this.validateFields();
 	}
+
+	handleOTPFinish = (otp: string) => {
+		this.props.loginUserWithOTP(this.state.username, this.state.password, otp);
+	};
 
 	render() {
 		if (this.props.user) {
@@ -189,6 +210,15 @@ export class LoginPageNotConnected extends Component<
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
+
+							{this.hasOTP() && (
+								<div className={styles.otpContainer}>
+									<div className={styles.otpContent}>
+										<Title level="6">Введите OTP код</Title>
+										<OTPInput length={6} onFinish={this.handleOTPFinish} />
+									</div>
+								</div>
+							)}
 						</Flex>
 						<Flex className={styles.rightSide__actions} direction="column">
 							<Button
@@ -220,11 +250,15 @@ export class LoginPageNotConnected extends Component<
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 	userError: selectUserErrorNot401(state),
+	hasOTP: selectIsTwoFactorEnabled(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	loginUser: (login: string, password: string) =>
 		dispatch(actions.loginUserAction(login, password)),
+
+	loginUserWithOTP: (login: string, password: string, otp: string) =>
+		dispatch(actions.loginUserAction(login, password, otp)),
 });
 
 export const LoginPage = compose(

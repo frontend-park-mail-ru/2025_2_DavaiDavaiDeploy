@@ -9,14 +9,21 @@ export interface BaseModalProps {
 	id: number;
 }
 
-export class BaseModalComponent extends Component<WithModalProps> {
+interface BaseModalCurrentProps {
+	closeOnOverlayClick?: boolean;
+}
+
+export class BaseModalComponent extends Component<
+	WithModalProps & BaseModalCurrentProps
+> {
 	render() {
+		const { closeOnOverlayClick = true } = this.props;
 		return createPortal(
 			<Flex
 				className={clsx(style.modalWrapper, {
 					[style.closing]: this.props.modal.isClosing,
 				})}
-				onClick={this.props.modal.hide}
+				onClick={closeOnOverlayClick ? this.props.modal.hide : undefined}
 				align="center"
 				justify="center"
 			>

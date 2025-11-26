@@ -12,6 +12,10 @@ export function authorizationCodeToErrorHelper(code: number): string {
 			return 'Неверный логин или пароль';
 		case ERROR_CODES.INTERNAL_ERROR:
 			return 'Внутренняя ошибка сервера';
+		case ERROR_CODES.PRECONDITION_FAILED:
+			return ERROR_CODES.PRECONDITION_FAILED.toString();
+		case ERROR_CODES.UNAUTHORIZED:
+			return 'Ошибка проверки кода';
 		default:
 			return 'Неизвестная ошибка';
 	}

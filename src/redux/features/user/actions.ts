@@ -11,6 +11,52 @@ import actionTypes from './actionTypes';
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
 
 /**
+ * Создает действие для добавления ошибки двухфакторной аутентификации.
+
+ */
+const setOTPError = (err: string): Action => {
+	return {
+		type: actionTypes.USER_OTP_ERROR,
+		payload: {
+			error: err,
+		},
+	};
+};
+
+/**
+ * Создает действие для деактивации двухфакторной аутентификации.
+
+ */
+const setDeactivatedOTP = (): Action => {
+	return {
+		type: actionTypes.USER_OTP_DEACTIVATE,
+	};
+};
+
+/**
+ * Создает действие для активации двухфакторной аутентификации.
+
+ */
+const setActivatedOTP = (qrImage: string | null): Action => {
+	return {
+		type: actionTypes.USER_OTP_ACTIVATE,
+		payload: {
+			qrImage,
+		},
+	};
+};
+
+/**
+ * Создает действие для активации двухфакторной аутентификации.
+
+ */
+const setOTPLoading = (): Action => {
+	return {
+		type: actionTypes.USER_OTP_LOADING,
+	};
+};
+
+/**
  * Создает действие для выхода пользователя из системы.
 
  */
@@ -180,14 +226,20 @@ const registerUserAction =
  * Создает асинхронное действие для входа пользователя в систему.
  */
 const loginUserAction =
-	(login: string, password: string): Action =>
+	(login: string, password: string, otp?: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
 			const response = await HTTPClient.post<ModelsUser>('/auth/signin', {
-				data: {
-					login: login,
-					password: password,
-				},
+				data: otp
+					? {
+							login: login,
+							password: password,
+							user_code: otp,
+						}
+					: {
+							login: login,
+							password: password,
+						},
 			});
 
 			storeAuthTokensFromResponse(response);
@@ -285,6 +337,44 @@ const changeAvatarAction =
 		}
 	};
 
+const sendActivateOTP = (): Action => async (dispatch: Dispatch) => {
+	dispatch(setOTPLoading());
+
+	try {
+		const response = await HTTPClient.post<Blob>('/auth/enable2fa');
+		dispatch(setActivatedOTP(URL.createObjectURL(response.data)));
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(setOTPError(errorMessage));
+	}
+};
+
+const sendDeactivateOTP = (): Action => async (dispatch: Dispatch) => {
+	dispatch(setOTPLoading());
+
+	try {
+		await HTTPClient.post<ModelsUser>('/auth/disable2fa');
+		dispatch(setDeactivatedOTP());
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = avatarChangeCodeToErrorHelper(error.cause as number);
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(setOTPError(errorMessage));
+	}
+};
+
 export default {
 	resetUserError,
 	registerUserAction,
@@ -295,4 +385,10 @@ export default {
 	logoutUserAction,
 	changePasswordAction,
 	changeAvatarAction,
+	setDeactivatedOTP,
+	setActivatedOTP,
+	sendActivateOTP,
+	sendDeactivateOTP,
+	setOTPLoading,
+	setOTPError,
 };
