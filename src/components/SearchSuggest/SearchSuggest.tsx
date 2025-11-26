@@ -65,7 +65,7 @@ export class SearchSuggest extends Component<
 						<div className={styles.titleRow}>
 							<h3>{title}</h3>
 							{ratingType && (
-								<Badge mode={ratingType} className={styles.badge}>
+								<Badge mode={ratingType} className={styles.badge} size="s">
 									<Headline level="7">{formattedRating}</Headline>
 								</Badge>
 							)}

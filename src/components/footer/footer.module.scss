@@ -24,3 +24,9 @@
 	background-color: var(--color-bg);
 	margin-top: 0;
 }
+
+@media (max-width: 1024px) {
+	.footer-dark {
+		background-color: transparent;
+	}
+}

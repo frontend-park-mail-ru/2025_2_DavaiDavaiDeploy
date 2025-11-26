@@ -12,6 +12,7 @@ import { connect as WAVConnect } from 'extendable-media-recorder-wav-encoder';
 import { MICROPHONE_STATES } from '../../consts/microphone';
 import { getMicrophoneIconFromState } from '../../helpers/getMicrophoneIconFromState/getMicrophoneIconFromState';
 import type { Map } from '../../types/map';
+import { AppToast } from '../toastContainer/toastContainer';
 
 interface SearchVoiceProps {
 	getVoiceSearchResult: (searchWAV: Blob) => void;
@@ -96,6 +97,7 @@ class SearchVoiceComponent extends Component<
 		} catch {
 			this.setState({ microphoneState: MICROPHONE_STATES.INACTIVE });
 			this.cleanupRecording();
+			AppToast.info('Разрешите доступ к микрофону');
 		}
 	};
 

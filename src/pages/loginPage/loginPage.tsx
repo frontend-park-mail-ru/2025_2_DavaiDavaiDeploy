@@ -106,7 +106,12 @@ export class LoginPageNotConnected extends Component<
 			store.dispatch(actions.resetUserError());
 		}
 
-		if (this.props.userError && !this.state.errorShown && !this.hasOTP()) {
+		if (
+			this.props.userError &&
+			!this.state.errorShown &&
+			!this.hasOTP() &&
+			!this.props.userError.includes('401')
+		) {
 			AppToast.error(this.props.userError);
 			this.setState({ errorShown: true });
 		}

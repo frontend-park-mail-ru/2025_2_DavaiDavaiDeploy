@@ -101,7 +101,11 @@ export class RegisterPageNotConnected extends Component<
 			store.dispatch(actions.resetUserError());
 		}
 
-		if (this.props.userError && !this.state.errorShown) {
+		if (
+			this.props.userError &&
+			!this.state.errorShown &&
+			!this.props.userError.includes('401')
+		) {
 			AppToast.error(this.props.userError);
 			this.setState({ errorShown: true });
 		}

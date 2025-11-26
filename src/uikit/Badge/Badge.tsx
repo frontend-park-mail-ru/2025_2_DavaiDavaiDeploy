@@ -4,13 +4,14 @@ import styles from './Badge.module.scss';
 
 interface BadgeProps {
 	mode: 'low' | 'high' | 'medium';
+	size?: 'm' | 's';
 	className?: string;
 	getRootRef?: any;
 }
 
 export class Badge extends Component<BadgeProps> {
 	render() {
-		const { className, mode, children, getRootRef } = this.props;
+		const { className, mode, children, getRootRef, size = 'm' } = this.props;
 
 		return (
 			<span
@@ -21,6 +22,7 @@ export class Badge extends Component<BadgeProps> {
 						[styles.low]: mode === 'low',
 						[styles.medium]: mode === 'medium',
 						[styles.high]: mode === 'high',
+						[styles.badgeS]: size === 's',
 					},
 					className,
 				)}

@@ -24,11 +24,12 @@
 	align-items: center;
 	flex-direction: column;
 	margin-bottom: 1rem;
+	margin-top: -1rem;
 }
 
 .otpContent {
 	width: fit-content;
-	border: 1px solid var(--color-bg-light);
+	border: 1px solid transparent;
 	display: flex;
 	justify-content: center;
 	align-items: center;
