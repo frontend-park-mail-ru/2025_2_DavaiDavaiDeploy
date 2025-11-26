@@ -92,6 +92,10 @@ class SearchInputComponent extends Component<
 		this.props.router.navigate(
 			`/search?query=${this.props.voiceSearchResult.search_string}`,
 		);
+
+		this.setState({
+			searchRequest: this.props.voiceSearchResult.search_string,
+		});
 	};
 
 	search = () => {
