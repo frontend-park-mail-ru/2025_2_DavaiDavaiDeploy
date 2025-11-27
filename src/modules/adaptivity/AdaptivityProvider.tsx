@@ -1,4 +1,5 @@
 import { Component } from '@robocotik/react';
+import { getClosestViewWidth } from '../../helpers/getClosestViewWidth/getClosestViewWidth';
 import { AdaptivityContext } from './AdaptivityContext.ts';
 import {
 	DesktopScreen,
@@ -8,12 +9,13 @@ import {
 	TabletScreen,
 } from './adaptivities';
 
-interface AdaptivityState {
+export interface AdaptivityState {
 	isDesktop: boolean;
 	isTablet: boolean;
 	isSmallTablet: boolean;
 	isMobile: boolean;
 	isSmallMobile: boolean;
+	viewWidth: number;
 }
 
 export class AdaptivityProvider extends Component<{}, AdaptivityState> {
@@ -23,6 +25,7 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 		isSmallTablet: SmallTabletScreen.matches,
 		isMobile: MobileScreen.matches,
 		isSmallMobile: SmallMobileScreen.matches,
+		viewWidth: 0,
 	};
 
 	desktopHandler = (e: MediaQueryListEvent) =>
@@ -50,6 +53,7 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 			isSmallTablet: SmallTabletScreen.matches,
 			isMobile: MobileScreen.matches,
 			isSmallMobile: SmallMobileScreen.matches,
+			viewWidth: getClosestViewWidth(this.state),
 		});
 	};
 
