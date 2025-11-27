@@ -95,7 +95,7 @@ class FilmSliderComponent extends Component<
 > {
 	state: FilmSliderState = {
 		curFilm: 0,
-		slideCapacity: 0,
+		slideCapacity: MIN_SLIDE_CAPACITY,
 		cardHeight: SMALL_CARD_HEIGHT,
 		active: false,
 		windowHeight: 0,
@@ -126,9 +126,7 @@ class FilmSliderComponent extends Component<
 			windowHeight: window.innerHeight,
 		});
 
-		if (this.state.active) {
-			autoSlider.start();
-		}
+		autoSlider.start();
 	}
 
 	onUnmount() {
@@ -297,24 +295,24 @@ class FilmSliderComponent extends Component<
 					direction="row"
 					align="top"
 				>
-					{this.state.active && (
-						<IconButton
-							mode="tertiary"
-							className={styles.prevBtn}
-							onClick={this.prev}
-						>
-							<ArrowLeft alt="Предыдущий" className={styles.prevBtnIcon} />
-						</IconButton>
-					)}
-					{this.state.active && (
-						<IconButton
-							mode="tertiary"
-							className={styles.nextBtn}
-							onClick={this.next}
-						>
-							<ArrowRight alt="Следующий" className={styles.nextBtnIcon} />
-						</IconButton>
-					)}
+					{/* {this.state.active && ( */}
+					<IconButton
+						mode="tertiary"
+						className={styles.prevBtn}
+						onClick={this.prev}
+					>
+						<ArrowLeft alt="Предыдущий" className={styles.prevBtnIcon} />
+					</IconButton>
+					{/* )} */}
+					{/* {this.state.active && ( */}
+					<IconButton
+						mode="tertiary"
+						className={styles.nextBtn}
+						onClick={this.next}
+					>
+						<ArrowRight alt="Следующий" className={styles.nextBtnIcon} />
+					</IconButton>
+					{/* )} */}
 					<Flex className={styles.container} justify="center" align="start">
 						{this.props.films.map((film, i) => (
 							<div
