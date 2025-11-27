@@ -35,7 +35,6 @@ interface FilmSliderState {
 		stop: VoidFunction;
 	};
 	inactivityTimer: NodeJS.Timeout | null;
-	viewWidth: number;
 }
 
 const MIN_SLIDE_CAPACITY = 3;
@@ -101,7 +100,6 @@ class FilmSliderComponent extends Component<
 		windowHeight: 0,
 		autoSlider: null,
 		inactivityTimer: null,
-		viewWidth: 0,
 	};
 
 	sliderRef = createRef<HTMLElement>();
@@ -122,7 +120,6 @@ class FilmSliderComponent extends Component<
 			active: getIsActive(this.state.slideCapacity),
 			cardHeight: getCardHeight(this.state.slideCapacity),
 			slideCapacity: getSlideCapacityFromWidth(this.props.adaptivity.viewWidth),
-			viewWidth: this.props.adaptivity.viewWidth,
 			windowHeight: window.innerHeight,
 		});
 
@@ -140,16 +137,17 @@ class FilmSliderComponent extends Component<
 	}
 
 	onUpdate() {
-		if (this.state.viewWidth !== this.props.adaptivity.viewWidth) {
-			this.setState({ viewWidth: this.props.adaptivity.viewWidth });
-			this.handleResize();
-		}
+		this.handleResize();
 	}
 
 	handleResize = () => {
 		let slideCapacity = getSlideCapacityFromWidth(
 			this.props.adaptivity.viewWidth,
 		);
+
+		if (slideCapacity === this.state.slideCapacity) {
+			return;
+		}
 
 		const cardHeight = getCardHeight(slideCapacity);
 
