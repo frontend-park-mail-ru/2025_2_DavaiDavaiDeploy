@@ -1,5 +1,4 @@
 import Arrow from '@/assets/img/arrowRight.svg?react';
-import { WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -12,14 +11,14 @@ import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
 import { Flex, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
-import { debounce } from '@sentry/core';
+import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
+import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { CalendarWidgetFilmCard } from '../calendarWidgetFilmCard/calendarWidgetFilmCard';
 import styles from './calendarWidget.module.scss';
 
 const MAX_FILM_COUNT = 6;
 const SMALL_FILM_COUNT = 3;
 const OFFSET = 0;
-const DEBOUNCE_DELAY = 100;
 
 interface CalendarWidgetProps {
 	films: ModelsFilmInCalendar[];
@@ -27,33 +26,33 @@ interface CalendarWidgetProps {
 }
 
 interface CalendarWidgetState {
-	debounceResizeHandler: (ev?: Event | undefined) => void;
 	filmCount: number;
+	isWideDesktop: boolean;
 }
 
 class CalendarWidgetComponent extends Component<
-	CalendarWidgetProps & WithRouterProps,
+	CalendarWidgetProps & WithRouterProps & WithAdaptivityProps,
 	CalendarWidgetState
 > {
 	state: CalendarWidgetState = {
-		debounceResizeHandler: () => {},
 		filmCount: MAX_FILM_COUNT,
+		isWideDesktop: this.props.adaptivity.isWideDesktop,
 	};
 
 	onMount() {
 		this.props.getFilms(MAX_FILM_COUNT, OFFSET);
-		const debounceResizeHandler = debounce(this.handleResize, DEBOUNCE_DELAY);
-		this.setState({ debounceResizeHandler });
-		window.addEventListener('resize', debounceResizeHandler);
-		this.handleResize();
 	}
 
-	handleResize = () => {
-		const width = window.innerWidth;
-		this.setState({
-			filmCount: width <= WIDE_SCREEN_WIDTH ? SMALL_FILM_COUNT : MAX_FILM_COUNT,
-		});
-	};
+	onUpdate() {
+		if (this.state.isWideDesktop !== this.props.adaptivity.isWideDesktop) {
+			this.setState({
+				isWideDesktop: this.props.adaptivity.isWideDesktop,
+				filmCount: this.props.adaptivity.isWideDesktop
+					? MAX_FILM_COUNT
+					: SMALL_FILM_COUNT,
+			});
+		}
+	}
 
 	render() {
 		if (!this.props.films || this.props.films.length === 0) {
@@ -102,5 +101,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const CalendarWidget = compose(
 	withRouter,
+	withAdaptivity,
 	connect(mapStateToProps, mapDispatchToProps),
 )(CalendarWidgetComponent);

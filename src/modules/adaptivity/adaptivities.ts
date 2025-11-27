@@ -4,6 +4,7 @@ import {
 	SMALL_MOBILE_MAX_WIDTH,
 	SMALL_TABLET_MIN_WIDTH,
 	TABLET_MIN_WIDTH,
+	WIDE_SCREEN_WIDTH,
 } from '@/consts/adaptivity';
 
 export const SmallMobileScreen = window.matchMedia(
@@ -23,5 +24,9 @@ export const TabletScreen = window.matchMedia(
 );
 
 export const DesktopScreen = window.matchMedia(
-	`all and (min-width: ${DESKTOP_MIN_WIDTH}px)`,
+	`all and (min-width: ${DESKTOP_MIN_WIDTH}px) and (max-width: ${WIDE_SCREEN_WIDTH - 1}px)`,
+);
+
+export const WideDesktopScreen = window.matchMedia(
+	`all and (min-width: ${WIDE_SCREEN_WIDTH}px)`,
 );

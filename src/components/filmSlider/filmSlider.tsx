@@ -1,7 +1,6 @@
 import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
 import ArrowRight from '@/assets/img/arrowRight.svg?react';
 import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
-import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
@@ -12,6 +11,8 @@ import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component, createRef } from '@robocotik/react';
+import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
+import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { FilmCard } from '../filmCard/filmCard';
@@ -34,11 +35,10 @@ interface FilmSliderState {
 		stop: VoidFunction;
 	};
 	inactivityTimer: NodeJS.Timeout | null;
-	debounceResizeHandler: (ev?: Event | undefined) => void;
+	viewWidth: number;
 }
 
 const MIN_SLIDE_CAPACITY = 3;
-const DEBOUNCE_DELAY = 100;
 const MAX_SLIDE_CAPACITY = 7;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
@@ -90,7 +90,7 @@ function getSliderHeight(
 }
 
 class FilmSliderComponent extends Component<
-	FilmSliderProps & WithRouterProps,
+	FilmSliderProps & WithRouterProps & WithAdaptivityProps,
 	FilmSliderState
 > {
 	state: FilmSliderState = {
@@ -99,9 +99,9 @@ class FilmSliderComponent extends Component<
 		cardHeight: SMALL_CARD_HEIGHT,
 		active: false,
 		windowHeight: window.innerHeight,
-		debounceResizeHandler: () => {},
 		autoSlider: null,
 		inactivityTimer: null,
+		viewWidth: this.props.adaptivity.viewWidth,
 	};
 
 	sliderRef = createRef<HTMLElement>();
@@ -111,12 +111,6 @@ class FilmSliderComponent extends Component<
 
 	onMount() {
 		this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
-
-		const debounceResizeHandler = debounce(this.handleResize, DEBOUNCE_DELAY);
-
-		this.setState({ debounceResizeHandler });
-
-		window.addEventListener('resize', debounceResizeHandler);
 
 		const autoSlider = createPeriodFunction(
 			() => this.next(),
@@ -137,10 +131,6 @@ class FilmSliderComponent extends Component<
 	}
 
 	onUnmount() {
-		if (this.state.debounceResizeHandler) {
-			window.removeEventListener('resize', this.state.debounceResizeHandler);
-		}
-
 		if (this.state.autoSlider) {
 			this.state.autoSlider.stop();
 		}
@@ -150,9 +140,18 @@ class FilmSliderComponent extends Component<
 		}
 	}
 
+	onUpdate() {
+		if (this.state.viewWidth !== this.props.adaptivity.viewWidth) {
+			this.setState({ viewWidth: this.props.adaptivity.viewWidth });
+			this.handleResize();
+		}
+	}
+
 	handleResize = () => {
-		const width = window.innerWidth;
-		let slideCapacity = getSlideCapacityFromWidth(width);
+		let slideCapacity = getSlideCapacityFromWidth(
+			this.props.adaptivity.viewWidth,
+		);
+
 		const cardHeight = getCardHeight(slideCapacity);
 
 		slideCapacity = Math.min(slideCapacity, this.props.films.length);
@@ -340,5 +339,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const FilmSlider = compose(
 	withRouter,
+	withAdaptivity,
 	connect(mapStateToProps, mapDispatchToProps),
 )(FilmSliderComponent);

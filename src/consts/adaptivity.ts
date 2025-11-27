@@ -1,3 +1,5 @@
+export const WIDE_SCREEN_WIDTH = 1400;
+
 export const DESKTOP_MIN_WIDTH = 1280;
 
 export const TABLET_MIN_WIDTH = 1024;
@@ -9,6 +11,7 @@ export const MOBILE_MIN_WIDTH = 320;
 export const SMALL_MOBILE_MAX_WIDTH = 320;
 
 export const ADAPTIVITIES = {
+	WIDE_SCREEN: 'WIDE_SCREEN',
 	DESKTOP: 'DESKTOP',
 	TABLET: 'TABLET',
 	SMALL_TABLET: 'SMALL_TABLET',
