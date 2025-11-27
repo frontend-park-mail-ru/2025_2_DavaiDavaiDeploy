@@ -46,6 +46,7 @@ if (sentryEnabled) {
 		integrations: [Sentry.browserTracingIntegration()],
 		tracePropagationTargets: [PRODUCTION_URL],
 		release: import.meta.env.VITE_RELEASE_VERSION,
+		environment: import.meta.env.MODE,
 	});
 }
 
