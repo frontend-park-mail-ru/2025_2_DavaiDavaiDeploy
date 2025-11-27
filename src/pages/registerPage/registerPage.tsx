@@ -21,7 +21,10 @@ import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import { Button, Flex, FormItem, Headline, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { SMALL_TABLET_MIN_WIDTH } from '../../consts/adaptivity';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
+import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
+import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { Redirect } from '../../modules/router/redirect.tsx';
 import { store } from '../../redux/store';
 import styles from './registerPage.module.scss';
@@ -33,13 +36,12 @@ interface RegistrationPageProps {
 }
 
 export class RegisterPageNotConnected extends Component<
-	RegistrationPageProps & WithRouterProps
+	RegistrationPageProps & WithRouterProps & WithAdaptivityProps
 > {
 	state = {
 		username: '',
 		password: '',
 		repeatPassword: '',
-		showVideo: window.innerWidth >= 768,
 		validationErrors: {
 			username: '',
 			password: '',
@@ -48,21 +50,8 @@ export class RegisterPageNotConnected extends Component<
 		errorShown: false,
 	};
 
-	handleResize = () => {
-		if (window.innerWidth < 768) {
-			this.setState({ showVideo: false });
-		} else {
-			this.setState({ showVideo: true });
-		}
-	};
-
 	onMount() {
 		store.dispatch(actions.resetUserError());
-		window.addEventListener('resize', this.handleResize);
-	}
-
-	onUnmount() {
-		window.removeEventListener('resize', this.handleResize);
 	}
 
 	validateFields() {
@@ -155,7 +144,7 @@ export class RegisterPageNotConnected extends Component<
 					<Link className={styles.closeLink} href="/">
 						<img src={close} alt="close" />
 					</Link>
-					{this.state.showVideo && (
+					{this.props.adaptivity.viewWidth > SMALL_TABLET_MIN_WIDTH && (
 						<video
 							src={getStaticURL('/video/login_signup.mp4')}
 							alt="loginVideo"
@@ -267,5 +256,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const RegisterPage = compose(
 	withRouter,
+	withAdaptivity,
 	connect(mapStateToProps, mapDispatchToProps),
 )(RegisterPageNotConnected);

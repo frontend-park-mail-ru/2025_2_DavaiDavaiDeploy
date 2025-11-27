@@ -295,7 +295,6 @@ class FilmSliderComponent extends Component<
 					direction="row"
 					align="top"
 				>
-					{/* {this.state.active && ( */}
 					<IconButton
 						mode="tertiary"
 						className={styles.prevBtn}
@@ -303,8 +302,7 @@ class FilmSliderComponent extends Component<
 					>
 						<ArrowLeft alt="Предыдущий" className={styles.prevBtnIcon} />
 					</IconButton>
-					{/* )} */}
-					{/* {this.state.active && ( */}
+
 					<IconButton
 						mode="tertiary"
 						className={styles.nextBtn}
@@ -312,7 +310,7 @@ class FilmSliderComponent extends Component<
 					>
 						<ArrowRight alt="Следующий" className={styles.nextBtnIcon} />
 					</IconButton>
-					{/* )} */}
+
 					<Flex className={styles.container} justify="center" align="start">
 						{this.props.films.map((film, i) => (
 							<div
