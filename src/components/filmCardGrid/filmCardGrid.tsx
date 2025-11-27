@@ -1,31 +1,63 @@
+import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/films/actions';
-import { selectFilms } from '@/redux/features/films/selectors.js';
+import { selectCursor, selectFilms } from '@/redux/features/films/selectors.js';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { CardGrid, Flex, Title } from '@/uikit/index';
-import { Component } from '@robocotik/react';
+import { Component, createRef } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
 
-const FILM_COUNT: number = 50;
-const OFFSET: number = 0;
+const THROTTLE_DELAY: number = 10;
+const ROOT_MARGIN: string = '400px';
 
 interface FilmCardGridProps {
 	films: ModelsMainPageFilm[];
-	getFilms: (limit: number, offset: number, id?: string) => void;
+	getFilms: (cursor: number) => void;
+	cursor: number;
 }
 
 class FilmCardGridComponent extends Component<
 	FilmCardGridProps & WithRouterProps
 > {
+	state = {
+		observer: undefined,
+	};
+
+	loadMoreTriggerRef = createRef<HTMLElement>();
+	observer?: IntersectionObserver;
+
 	onMount() {
-		this.props.getFilms(FILM_COUNT, OFFSET);
+		this.loadMoreFilms();
+
+		const throttledIntersectHandler = throttle(
+			this.loadMoreFilms,
+			THROTTLE_DELAY,
+		);
+
+		this.observer = new IntersectionObserver(throttledIntersectHandler, {
+			rootMargin: ROOT_MARGIN,
+		});
+
+		if (this.loadMoreTriggerRef.current) {
+			this.observer.observe(this.loadMoreTriggerRef.current);
+		}
 	}
+
+	onUnmount() {
+		this.observer?.disconnect();
+	}
+
+	loadMoreFilms = () => {
+		if (this.props.cursor) {
+			this.props.getFilms(this.props.cursor);
+		}
+	};
 
 	render() {
 		if (!this.props.films || this.props.films.length === 0) {
@@ -42,6 +74,10 @@ class FilmCardGridComponent extends Component<
 						<FilmCard film={film} />
 					))}
 				</CardGrid>
+				<div
+					className={styles.loadMoreTrigger}
+					ref={this.loadMoreTriggerRef}
+				></div>
 			</Flex>
 		);
 	}
@@ -49,11 +85,11 @@ class FilmCardGridComponent extends Component<
 
 const mapStateToProps = (state: State): Map => ({
 	films: selectFilms(state),
+	cursor: selectCursor(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	getFilms: (limit: number, offset: number) =>
-		dispatch(actions.getFilmsAction(limit, offset)),
+	getFilms: (cursor: number) => dispatch(actions.getFilmsAction(cursor)),
 });
 
 export const FilmCardGrid = compose(
