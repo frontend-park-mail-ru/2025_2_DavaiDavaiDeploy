@@ -4,6 +4,7 @@ import type {
 	ModelsSearchResponse,
 	ModelsVoiceSearchResponse,
 } from '@/types/models';
+import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -73,6 +74,15 @@ const getSearchResultAction =
 			}
 
 			dispatch(returnSearchResultErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки поиска'), {
+				tags: {
+					category: 'search',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -121,6 +131,15 @@ const getVoiceSearchResultAction =
 			}
 
 			dispatch(returnSearchResultErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки голосового поиска'), {
+				tags: {
+					category: 'voiceSearch',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 

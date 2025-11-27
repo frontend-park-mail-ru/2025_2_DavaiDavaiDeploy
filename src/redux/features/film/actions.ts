@@ -5,6 +5,7 @@ import type {
 	ModelsFilmFeedback,
 	ModelsFilmPage,
 } from '@/types/models';
+import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -93,11 +94,20 @@ const getFilmAction: Action = (id: string) => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(returnFilmErrorAction(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки фильма'), {
+			tags: {
+				category: 'film',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
 	}
 };
 
 /**
- * Thunk: асинхронная загрузка фильма с сервера.
+ * Thunk: асинхронная загрузка отзывов с сервера.
  */
 const getFeedbacksAction: Action =
 	(limit: number, offset: number, id: string) => async (dispatch: Dispatch) => {
@@ -120,6 +130,15 @@ const getFeedbacksAction: Action =
 			}
 
 			dispatch(returnFeedbacksErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки отзывов'), {
+				tags: {
+					category: 'feedbacks',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -161,6 +180,15 @@ const createRatingAction =
 			}
 
 			dispatch(returnNewRatingErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки создания оценки'), {
+				tags: {
+					category: 'rate',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -206,6 +234,15 @@ const createFeedbackAction =
 			}
 
 			dispatch(returnNewFeedbackErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки создания отзыва'), {
+				tags: {
+					category: 'createFeedback',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -248,6 +285,18 @@ const deleteFromFavoritesAction =
 			}
 
 			dispatch(returnDeleteErrorAction(errorMessage));
+
+			Sentry.captureException(
+				new Error('Ошибка ручки удаления из избранного'),
+				{
+					tags: {
+						category: 'removeFromFav',
+					},
+					extra: {
+						error: errorMessage,
+					},
+				},
+			);
 		}
 	};
 
@@ -290,6 +339,18 @@ const addToFavoritesAction =
 			}
 
 			dispatch(returnAddErrorAction(errorMessage));
+
+			Sentry.captureException(
+				new Error('Ошибка ручки добавления в избранное'),
+				{
+					tags: {
+						category: 'addToFav',
+					},
+					extra: {
+						error: errorMessage,
+					},
+				},
+			);
 		}
 	};
 

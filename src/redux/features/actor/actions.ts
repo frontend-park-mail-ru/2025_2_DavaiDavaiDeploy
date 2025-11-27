@@ -1,6 +1,7 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsActorPage, ModelsMainPageFilm } from '@/types/models';
+import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -90,6 +91,15 @@ const getActorAction =
 			}
 
 			dispatch(returnActorErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки актера'), {
+				tags: {
+					category: 'actor',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -120,6 +130,15 @@ const getActorFilmsAction =
 			}
 
 			dispatch(returnActorFilmsErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки фильмов актера'), {
+				tags: {
+					category: 'actorFilms',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 

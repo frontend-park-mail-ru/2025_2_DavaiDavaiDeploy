@@ -1,6 +1,7 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsFavFilm } from '@/types/models';
+import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -54,6 +55,15 @@ const getFavoritesAction = (): Action => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(returnFavoritesErrorAction(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки избранного'), {
+			tags: {
+				category: 'favorites',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
 	}
 };
 
@@ -99,6 +109,18 @@ const deleteFromFavoritesAction =
 			}
 
 			dispatch(returnDeleteErrorAction(errorMessage));
+
+			Sentry.captureException(
+				new Error('Ошибка ручки удаления из избранного'),
+				{
+					tags: {
+						category: 'removeFromFav',
+					},
+					extra: {
+						error: errorMessage,
+					},
+				},
+			);
 		}
 	};
 
