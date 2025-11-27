@@ -131,6 +131,10 @@ const getFeedbacksAction: Action =
 
 			dispatch(returnFeedbacksErrorAction(errorMessage));
 
+			if (error instanceof Error && error.cause === '404') {
+				return;
+			}
+
 			Sentry.captureException(new Error('Ошибка ручки отзывов'), {
 				tags: {
 					category: 'feedbacks',
