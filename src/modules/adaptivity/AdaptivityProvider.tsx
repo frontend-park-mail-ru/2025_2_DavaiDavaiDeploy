@@ -18,12 +18,21 @@ interface AdaptivityState {
 
 export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 	state = {
-		isDesktop: false,
-		isTablet: false,
-		isSmallTablet: false,
-		isMobile: false,
-		isSmallMobile: false,
+		isDesktop: DesktopScreen.matches,
+		isTablet: TabletScreen.matches,
+		isSmallTablet: SmallTabletScreen.matches,
+		isMobile: MobileScreen.matches,
+		isSmallMobile: SmallMobileScreen.matches,
 	};
+
+	desktopHandler = (e: MediaQueryListEvent) =>
+		this.mediaXhandler(e, 'isDesktop');
+	tabletHandler = (e: MediaQueryListEvent) => this.mediaXhandler(e, 'isTablet');
+	smallTabletHandler = (e: MediaQueryListEvent) =>
+		this.mediaXhandler(e, 'isSmallTablet');
+	mobileHandler = (e: MediaQueryListEvent) => this.mediaXhandler(e, 'isMobile');
+	smallMobileHandler = (e: MediaQueryListEvent) =>
+		this.mediaXhandler(e, 'isSmallMobile');
 
 	mediaXhandler = (
 		e: MediaQueryListEvent,
@@ -34,35 +43,41 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 		});
 	};
 
-	mediaHandlers = () => {
-		DesktopScreen.addEventListener('change', (e) =>
-			this.mediaXhandler(e, 'isDesktop'),
-		);
+	initializeState = () => {
+		this.setState({
+			isDesktop: DesktopScreen.matches,
+			isTablet: TabletScreen.matches,
+			isSmallTablet: SmallTabletScreen.matches,
+			isMobile: MobileScreen.matches,
+			isSmallMobile: SmallMobileScreen.matches,
+		});
+	};
 
-		TabletScreen.addEventListener('change', (e) =>
-			this.mediaXhandler(e, 'isTablet'),
-		);
+	subscribeToMediaQueries = () => {
+		DesktopScreen.addEventListener('change', this.desktopHandler);
+		TabletScreen.addEventListener('change', this.tabletHandler);
+		SmallTabletScreen.addEventListener('change', this.smallTabletHandler);
+		MobileScreen.addEventListener('change', this.mobileHandler);
+		SmallMobileScreen.addEventListener('change', this.smallMobileHandler);
+	};
 
-		SmallTabletScreen.addEventListener('change', (e) =>
-			this.mediaXhandler(e, 'isSmallTablet'),
-		);
-
-		MobileScreen.addEventListener('change', (e) =>
-			this.mediaXhandler(e, 'isMobile'),
-		);
-
-		SmallMobileScreen.addEventListener('change', (e) =>
-			this.mediaXhandler(e, 'isSmallMobile'),
-		);
+	unsubscribeFromMediaQueries = () => {
+		DesktopScreen.removeEventListener('change', this.desktopHandler);
+		TabletScreen.removeEventListener('change', this.tabletHandler);
+		SmallTabletScreen.removeEventListener('change', this.smallTabletHandler);
+		MobileScreen.removeEventListener('change', this.mobileHandler);
+		SmallMobileScreen.removeEventListener('change', this.smallMobileHandler);
 	};
 
 	onMount() {
-		window.addEventListener('change', this.mediaHandlers);
+		this.initializeState();
+		this.subscribeToMediaQueries();
 	}
 
 	onUnmount() {
-		window.removeEventListener('change', this.mediaHandlers);
+		this.unsubscribeFromMediaQueries();
 	}
+
 	render() {
 		return (
 			<AdaptivityContext.Provider
