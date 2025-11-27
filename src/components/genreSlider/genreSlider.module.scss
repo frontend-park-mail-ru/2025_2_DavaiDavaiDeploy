@@ -1,22 +1,13 @@
 .genreSlider {
-	display: flex;
-	flex-direction: column;
-	gap: 1.875rem;
+	gap: 3rem;
 	padding: var(--side-padding);
 	position: relative;
 	overflow: hidden;
 }
 
 .container {
-	display: flex;
-	flex-direction: row;
 	gap: 1.875rem;
 	position: relative;
-}
-
-.title {
-	font-weight: var(--font-weight-bold);
-	font-size: var(--font-size-xl);
 }
 
 .slider {
@@ -35,9 +26,6 @@
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
-	background: none;
-	border: none;
-	cursor: pointer;
 	transition:
 		transform 0.4s ease,
 		scale 0.4s ease;
@@ -80,14 +68,26 @@
 	}
 }
 
+@media (max-width: 1024px) {
+	.title {
+		text-align: center;
+	}
+
+	.genreSlider {
+		gap: 3.5rem;
+	}
+}
+
 @media (max-width: 768px) {
 	.genreSlider {
-		gap: 1.25rem;
+		gap: 2rem;
 		padding: 0 2rem;
+		align-items: center;
 	}
 
 	.title {
 		margin-left: 0;
+		text-align: center;
 	}
 
 	.slider {

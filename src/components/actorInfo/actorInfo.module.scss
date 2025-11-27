@@ -1,9 +1,6 @@
 .actor {
-	display: flex;
 	overflow: hidden;
-	flex-direction: row;
 	gap: 4vw;
-	align-items: start;
 	width: 100%;
 	position: relative;
 	margin-top: 16vh;
@@ -12,9 +9,6 @@
 
 .media {
 	flex: 1.5;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	position: relative;
 	width: 100%;
 	min-width: 10rem;
@@ -30,63 +24,36 @@
 
 .info {
 	flex: 3;
-	display: flex;
-	flex-direction: column;
 	gap: 3.5rem;
-	align-items: start;
 	width: 100%;
 	position: relative;
 	margin-top: 1rem;
 }
 
 .main {
-	display: flex;
-	flex-direction: column;
 	gap: 0.9375rem;
-	align-items: start;
 	width: 100%;
 	position: relative;
 	flex: 2;
 }
 
 .title {
-	font-size: var(--font-size-3xl);
 	margin-left: -0.3rem;
 }
 
 .subtitle {
-	font-size: var(--font-size-xs);
-	color: var(--color-light-text);
-	opacity: 0.7;
-	display: flex;
-	flex-direction: row;
 	gap: 1.375rem;
-
-	h3 {
-		color: var(--color-light-text);
-	}
 }
 
 .aboutTitle {
-	font-size: var(--font-size-xl);
-	font-weight: var(--font-weight-bold);
 	white-space: nowrap;
 	margin-left: -0.2rem;
-	text-align: left;
 }
 
 .about {
 	flex: 2;
-	display: flex;
-	flex-direction: column;
 	gap: 1rem;
-	align-items: flex-start;
-}
-
-.container {
-	display: flex;
-	flex-direction: row;
-	gap: 6.25rem;
+	max-width: 100%;
 }
 
 .table {
@@ -99,38 +66,30 @@
 }
 
 .fact {
-	font-size: var(--font-size-l);
-	font-weight: var(--font-weight-bold);
 	white-space: nowrap;
 }
 
 .value {
-	color: var(--color-light-text);
-	opacity: 0.8;
-	font-size: var(--font-size-m);
 	margin-right: 6vw;
 }
 
 .err {
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	min-height: calc(100vh - 4rem);
-	font-size: var(--font-size-3xl);
-	font-weight: var(--font-weight-bold);
-	color: var(--color-accent);
 	line-height: 1;
+	align-items: center;
+	display: flex;
 }
 
 .smallTable {
 	display: none;
-	grid-template-columns: 1fr min-content;
+	grid-template-columns: max-content max-content;
 	gap: 2rem 6vw;
 	margin-top: 3rem;
 	align-items: end;
 	justify-content: flex-start;
 	text-align: left;
 	width: 100%;
+	max-width: 100%;
 }
 
 @media (max-width: 1650px) {
@@ -163,6 +122,11 @@
 }
 
 @media (max-width: 768px) {
+	.smallTable {
+		grid-template-columns: repeat(auto-fill, minmax(30vw, 1fr));
+		justify-content: center;
+	}
+
 	.actor {
 		margin-bottom: 1rem;
 		align-items: center;

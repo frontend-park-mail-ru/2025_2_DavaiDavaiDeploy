@@ -1,0 +1,27 @@
+.badge {
+	position: absolute;
+	top: 2.8%;
+	left: 4%;
+	z-index: 2;
+	display: inline-block;
+	padding: 0.35rem 0.77rem;
+	font-size: var(--font-size-l);
+	border-radius: var(--border-radius-m);
+}
+
+.high {
+	background-color: var(--color-rating-high);
+}
+
+.medium {
+	background-color: var(--color-rating-medium);
+}
+
+.low {
+	background-color: var(--color-rating-low);
+}
+
+.badgeS {
+	padding: 0.2rem 0.5rem;
+	font-size: var(--font-size-2xs);
+}

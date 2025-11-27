@@ -1,3 +1,4 @@
+import { Flex, Paragraph, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { Link } from '../link';
 import styles from './route404.module.scss';
@@ -6,16 +7,32 @@ export class Route404 extends Component {
 	render() {
 		return (
 			<div className={styles.page}>
-				<div className={styles.err}>
-					<h1 className={styles.title}>404</h1>
-					<div className={styles.content} class="err__content">
-						<p className={styles.text}>Похоже, вы забрели в тёмный космос</p>
-						<p className={styles.text}>Страница не найдена</p>
+				<Flex
+					className={styles.err}
+					direction="row"
+					align="center"
+					justify="center"
+				>
+					<Title className={styles.title} weight="bold" color="accent">
+						404
+					</Title>
+
+					<Flex className={styles.content} direction="column" align="start">
+						<Paragraph className={styles.text} level="8">
+							Похоже, вы забрели в тёмный космос
+						</Paragraph>
+
+						<Paragraph className={styles.text} level="8">
+							Страница не найдена
+						</Paragraph>
+
 						<Link href="/">
-							<p className={styles.link}>Вернуться на главную</p>
+							<Subhead className={styles.link} color="accent">
+								Вернуться на главную
+							</Subhead>
 						</Link>
-					</div>
-				</div>
+					</Flex>
+				</Flex>
 			</div>
 		);
 	}

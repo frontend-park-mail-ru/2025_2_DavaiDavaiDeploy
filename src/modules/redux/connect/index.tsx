@@ -1,27 +1,21 @@
-import { Component, createContext } from '@robocotik/react';
+import { Component, createContext, type ComponentType } from '@robocotik/react';
 import type { Dispatch } from '../types/actions';
 import type { State, Store } from '../types/store';
 
 export const StoreContext = createContext<Store | null>(null);
 
-type ComponentConstructor<
-	Props = any,
-	ComponentState = any,
-	Context = any,
-> = new (props: Props) => Component<Props, ComponentState, Context>;
-
-type ConnectedConstructor<Props> = ComponentConstructor<Props, State, Store>;
+type ConnectedConstructor<Props> = ComponentType<Props, State, Store>;
 
 type WrappedToConnected<Props, ComponentState, Context> = (
-	WrappedComponent: ComponentConstructor<Props, ComponentState, Context>,
+	WrappedComponent: ComponentType<Props, ComponentState, Context>,
 ) => ConnectedConstructor<Props>;
 
 export function connect<Props = any, ComponentState = any, Context = any>(
-	mapStateToProps?: (state: State) => Record<string, any>,
+	mapStateToProps?: ((state: State) => Record<string, any>) | null,
 	mapDispatchToProps?: (dispatch: Dispatch) => Record<string, any>,
 ): WrappedToConnected<Props, ComponentState, Context> {
 	return (
-		WrappedComponent: ComponentConstructor<Props, ComponentState, Context>,
+		WrappedComponent: ComponentType<Props, ComponentState, Context>,
 	): ConnectedConstructor<Props> => {
 		class Connect extends Component<Props, State, Store> {
 			static readonly contextType = StoreContext;
@@ -45,7 +39,7 @@ export function connect<Props = any, ComponentState = any, Context = any>(
 			}
 
 			render() {
-				const store = this.context || StoreContext.value;
+				const store = this.context || StoreContext.defaultValue;
 
 				return (
 					<WrappedComponent
@@ -63,6 +57,6 @@ export function connect<Props = any, ComponentState = any, Context = any>(
 			}
 		}
 
-		return Connect as ConnectedConstructor<Props>;
+		return Connect as unknown as ConnectedConstructor<Props>;
 	};
 }

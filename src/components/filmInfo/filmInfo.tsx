@@ -1,10 +1,29 @@
+import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import { Link } from '@/modules/router/link.tsx';
+import clsx from '@/modules/clsx';
+import { compose, connect } from '@/modules/redux';
+import type { Dispatch } from '@/modules/redux/types/actions';
+import type { State } from '@/modules/redux/types/store';
+import { Link } from '@/modules/router/link';
+import type { WithRouterProps } from '@/modules/router/types/withRouterProps';
+import { withRouter } from '@/modules/router/withRouter';
+import actions from '@/redux/features/film/actions';
+import { selectIsAuthentificated } from '@/redux/features/user/selectors';
+import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
+import {
+	Badge,
+	Button,
+	Flex,
+	Headline,
+	Image,
+	Paragraph,
+	Subhead,
+	Title,
+} from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { FilmRating } from '../filmRating/filmRating';
 import styles from './filmInfo.module.scss';
@@ -12,12 +31,41 @@ import styles from './filmInfo.module.scss';
 interface FilmInfoProps {
 	film: ModelsFilmPage | null;
 	error: string | null;
+	deleteFromFavorites: (id: string) => {};
+	addToFavorites: (id: string) => {};
+	isAuthentificated: boolean;
 }
 
-export class FilmInfo extends Component<FilmInfoProps> {
+class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
+	handleFavorites = (event: MouseEvent) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		const { film } = this.props;
+
+		if (!film) {
+			return;
+		}
+
+		if (!this.props.isAuthentificated) {
+			this.props.router.navigate('/login');
+		}
+
+		if (film.is_liked) {
+			this.props.deleteFromFavorites(film.id);
+			return;
+		}
+
+		this.props.addToFavorites(film.id);
+	};
+
 	render() {
 		if (this.props.error) {
-			return <div className={styles.err}>Фильм не найден</div>;
+			return (
+				<Title className={styles.err} level="2" weight="bold" color="accent">
+					Фильм не найден
+				</Title>
+			);
 		}
 
 		if (!this.props.film) {
@@ -27,6 +75,7 @@ export class FilmInfo extends Component<FilmInfoProps> {
 		const {
 			title,
 			genre,
+			genre_id,
 			rating,
 			description,
 			age_category,
@@ -40,151 +89,349 @@ export class FilmInfo extends Component<FilmInfoProps> {
 			original_title,
 			cover,
 			poster,
+			is_liked,
+			is_out,
 		} = this.props.film;
 
 		const formattedRating = formatRating(rating);
 		const ratingType = getRatingType(rating);
 		const formattedDuration = formatDuration(duration);
-		const coverSRC = getImageURL(cover);
-		const posterSRC = getImageURL(poster);
 
 		const formattedBudget = formatMoney(budget);
 		const formattedFees = formatMoney(worldwide_fees);
 
 		return (
-			<div className={styles.film}>
+			<Flex className={styles.film} direction="column">
 				<div className={styles.container}>
-					{posterSRC && (
-						<img
-							src={posterSRC}
-							alt={title || 'Poster'}
-							className={styles.image}
-						/>
-					)}
+					<Image
+						src={poster}
+						alt={title || 'Poster'}
+						className={styles.image}
+					/>
 				</div>
 
-				<div className={styles.content}>
-					<div className={styles.media}>
-						{coverSRC && (
-							<img
-								src={coverSRC}
+				<Flex className={styles.content} direction="row" align="start">
+					<Flex
+						className={styles.right}
+						align="center"
+						justify="center"
+						direction="column"
+					>
+						<Flex className={styles.media} align="start" justify="center">
+							<Image
+								src={cover}
 								alt={title || 'Cover'}
 								className={styles.cover}
 							/>
-						)}
-						{formattedRating && (
-							<div className={styles[`rating-${ratingType}`]}>
-								<h3>{formattedRating}</h3>
-							</div>
-						)}
-					</div>
 
-					<div className={styles.info}>
-						<div className={styles.firstRow}>
-							<div className={styles.main}>
-								{title && <h1 className={styles.title}>{title}</h1>}
-								<span className={styles.subtitle}>
-									{original_title && <h3>{original_title}</h3>}
-									{age_category && <h3>{age_category}</h3>}
-								</span>
+							{formattedRating && ratingType && (
+								<Badge
+									mode={ratingType}
+									className={styles[`rating-${ratingType}`]}
+								>
+									<Headline level="7">{formattedRating}</Headline>
+								</Badge>
+							)}
+						</Flex>
+						<Button
+							mode="secondary"
+							className={clsx(styles.favBtn, {
+								[styles.inFav]: is_liked,
+								[styles.notInFav]: !is_liked,
+							})}
+							onClick={this.handleFavorites}
+						>
+							<Favorite className={styles.favIcon} />
+							<Headline level="7">Избранное</Headline>
+						</Button>
+					</Flex>
 
-								<div className={styles.smallAbout}>
-									{!!year && <p className={styles.value}>{year}</p>}
+					<Flex className={styles.info} direction="column" align="start">
+						<Flex
+							className={styles.firstRow}
+							direction="row"
+							align="start"
+							justify="between"
+						>
+							<Flex className={styles.main} direction="column" align="start">
+								{title && (
+									<Title className={styles.title} level="2">
+										{title}
+									</Title>
+								)}
+
+								<Flex className={styles.subtitle} direction="row">
+									{original_title && (
+										<Subhead color="light" level="10" opacity="80">
+											{original_title}
+										</Subhead>
+									)}
+
 									{age_category && (
-										<p className={styles.value}>{age_category}</p>
+										<Subhead color="light" level="10" opacity="80">
+											{age_category}
+										</Subhead>
 									)}
-									{country && <p className={styles.value}>{country}</p>}
-									{genre && <p className={styles.value}>{genre}</p>}
-									{formattedDuration && (
-										<p className={styles.value}>{formattedDuration}</p>
-									)}
-								</div>
+								</Flex>
 
-								<div className={styles.smallRating}>
-									<FilmRating film={this.props.film} />
-								</div>
+								<Flex
+									className={styles.smallAbout}
+									align="center"
+									justify="around"
+								>
+									{!!year && (
+										<Subhead
+											className={styles.value}
+											color="light"
+											level="8"
+											opacity="80"
+										>
+											{year.toString()}
+										</Subhead>
+									)}
+									{age_category && (
+										<Subhead
+											className={styles.value}
+											color="light"
+											level="8"
+											opacity="80"
+										>
+											{age_category}
+										</Subhead>
+									)}
+									{country && (
+										<Subhead
+											className={styles.value}
+											color="light"
+											level="8"
+											opacity="80"
+										>
+											{country}
+										</Subhead>
+									)}
+									{genre && (
+										<Link href={`/genres/${genre_id}`}>
+											<Subhead
+												className={clsx(styles.value, styles.genre)}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{genre}
+											</Subhead>
+										</Link>
+									)}
+									{formattedDuration && (
+										<Subhead
+											className={styles.value}
+											color="light"
+											level="8"
+											opacity="80"
+										>
+											{formattedDuration}
+										</Subhead>
+									)}
+								</Flex>
+
+								<Flex
+									className={styles.smallRating}
+									direction="column"
+									align="center"
+								>
+									{is_out && <FilmRating film={this.props.film} />}
+									<Button
+										mode="secondary"
+										className={clsx(styles.smallFavBtn, {
+											[styles.inFav]: is_liked,
+											[styles.notInFav]: !is_liked,
+										})}
+										onClick={this.handleFavorites}
+									>
+										<Favorite className={styles.favIcon} />
+										<Headline level="7">Избранное</Headline>
+									</Button>
+								</Flex>
 
 								{description && (
-									<p className={styles.description}>{description}</p>
+									<Paragraph className={styles.description} level="8">
+										{description}
+									</Paragraph>
 								)}
-							</div>
+							</Flex>
 
-							<div className={styles.bigRating}>
-								<FilmRating film={this.props.film} />
-							</div>
-						</div>
+							<Flex className={styles.bigRating}>
+								{is_out && <FilmRating film={this.props.film} />}
+							</Flex>
+						</Flex>
 
-						<div className={styles.secondRow}>
+						<Flex
+							className={styles.secondRow}
+							align="start"
+							direction="row"
+							justify="between"
+						>
 							<div className={styles.about}>
-								<h1 className={styles.aboutTitle}>О фильме</h1>
+								<Title className={styles.aboutTitle} level="4" weight="bold">
+									О фильме
+								</Title>
+
 								<div className={styles.table}>
 									{!!year && (
 										<>
-											<p className={styles.fact}>Год производства</p>
-											<p className={styles.value}>{year}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Год производства
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{year.toString()}
+											</Subhead>
 										</>
 									)}
 
 									{country && (
 										<>
-											<p className={styles.fact}>Страна</p>
-											<p className={styles.value}>{country}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Страна
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{country}
+											</Subhead>
 										</>
 									)}
 
 									{genre && (
 										<>
-											<p className={styles.fact}>Жанр</p>
-											<p className={styles.value}>{genre}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Жанр
+											</Headline>
+											<Link href={`/genres/${genre_id}`}>
+												<Subhead
+													className={clsx(styles.genre, styles.value)}
+													color="light"
+													level="8"
+													opacity="80"
+												>
+													{genre}
+												</Subhead>
+											</Link>
 										</>
 									)}
 
 									{slogan && (
 										<>
-											<p className={styles.fact}>Слоган</p>
-											<p className={styles.value}>{slogan}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Слоган
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{slogan}
+											</Subhead>
 										</>
 									)}
 
 									{formattedBudget && (
 										<>
-											<p className={styles.fact}>Бюджет</p>
-											<p className={styles.value}>{formattedBudget}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Бюджет
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{formattedBudget}
+											</Subhead>
 										</>
 									)}
 
 									{formattedFees && (
 										<>
-											<p className={styles.fact}>Сборы в мире</p>
-											<p className={styles.value}>{formattedFees}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Сборы в мире
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{formattedFees}
+											</Subhead>
 										</>
 									)}
 
 									{formattedDuration && (
 										<>
-											<p className={styles.fact}>Длительность</p>
-											<p className={styles.value}>{formattedDuration}</p>
+											<Headline className={styles.fact} level="7" weight="bold">
+												Длительность
+											</Headline>
+											<Subhead
+												className={styles.value}
+												color="light"
+												level="8"
+												opacity="80"
+											>
+												{formattedDuration}
+											</Subhead>
 										</>
 									)}
 								</div>
 							</div>
 
 							{actors?.length > 0 && (
-								<div className={styles.cast}>
-									<div className={styles.castContent}>
-										<h1 className={styles.roles}>В главных ролях</h1>
+								<Flex className={styles.cast} align="end" direction="column">
+									<Flex
+										className={styles.castContent}
+										direction="column"
+										align="start"
+									>
+										<Title className={styles.roles} level="4" weight="bold">
+											В главных ролях
+										</Title>
+
 										{actors.map((actor) => (
 											<Link href={`/actors/${actor.id}`}>
-												<p className={styles.actors}>{actor.russian_name}</p>
+												<Paragraph className={styles.actors} level="8">
+													{actor.russian_name}
+												</Paragraph>
 											</Link>
 										))}
-									</div>
-								</div>
+									</Flex>
+								</Flex>
 							)}
-						</div>
-					</div>
-				</div>
-			</div>
+						</Flex>
+					</Flex>
+				</Flex>
+			</Flex>
 		);
 	}
 }
+
+const mapStateToProps = (state: State): Map => ({
+	isAuthentificated: selectIsAuthentificated(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): Map => ({
+	deleteFromFavorites: (id: string) =>
+		dispatch(actions.deleteFromFavoritesAction(id)),
+	addToFavorites: (id: string) => dispatch(actions.addToFavoritesAction(id)),
+});
+
+export const FilmInfo = compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps),
+)(FilmInfoComponent);

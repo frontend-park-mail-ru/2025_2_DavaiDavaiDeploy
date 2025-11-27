@@ -1,7 +1,7 @@
 import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
-import { InputField } from '@/components/inputField/inputField.tsx';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
+import { AppToast } from '@/components/toastContainer/toastContainer';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
 import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 import { validatePassword } from '@/helpers/validatePassword/validatePassword.ts';
@@ -11,26 +11,40 @@ import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
-import type { WithToastsProps } from '@/modules/toasts/withToastasProps';
-import { withToasts } from '@/modules/toasts/withToasts';
 import actions from '@/redux/features/user/actions.ts';
 import {
+	selectIsTwoFactorEnabled,
 	selectUser,
 	selectUserErrorNot401,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import {
+	Button,
+	Flex,
+	FormItem,
+	Headline,
+	Logo,
+	OTPInput,
+	Title,
+} from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { ERROR_CODES } from '../../consts/errorCodes';
+import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
+import { Redirect } from '../../modules/router/redirect';
+import { store } from '../../redux/store';
 import styles from './loginPage.module.scss';
 
 interface LoginPageProps {
 	user: ModelsUser;
 	userError: string;
+	hasOTP: boolean;
 	loginUser: (login: string, password: string) => void;
+	loginUserWithOTP: (login: string, password: string, otp: string) => void;
 }
 
 export class LoginPageNotConnected extends Component<
-	LoginPageProps & WithRouterProps & WithToastsProps
+	LoginPageProps & WithRouterProps
 > {
 	state = {
 		username: '',
@@ -51,6 +65,10 @@ export class LoginPageNotConnected extends Component<
 		}
 	};
 
+	hasOTP() {
+		return this.props.userError === ERROR_CODES.PRECONDITION_FAILED.toString();
+	}
+
 	validateFields() {
 		const usernameValidation = validateLogin(this.state.username);
 		const passwordValidation = validatePassword(this.state.password);
@@ -67,7 +85,7 @@ export class LoginPageNotConnected extends Component<
 	}
 
 	onMount() {
-		this.updateProps({ ...this.props, userError: '' });
+		store.dispatch(actions.resetUserError());
 		window.addEventListener('resize', this.handleResize);
 	}
 
@@ -78,18 +96,23 @@ export class LoginPageNotConnected extends Component<
 	handleLoginUser = () => {
 		if (this.validateFields()) {
 			this.setState({ errorShown: false });
+
 			this.props.loginUser(this.state.username, this.state.password);
 		}
 	};
 
 	onUpdate() {
 		if (this.props.user) {
-			this.updateProps({ userError: '' });
-			this.props.router.navigate('/');
+			store.dispatch(actions.resetUserError());
 		}
 
-		if (this.props.userError && !this.state.errorShown) {
-			this.props.toast.error(this.props.userError);
+		if (
+			this.props.userError &&
+			!this.state.errorShown &&
+			!this.hasOTP() &&
+			!this.props.userError.includes('401')
+		) {
+			AppToast.error(this.props.userError);
 			this.setState({ errorShown: true });
 		}
 	}
@@ -104,45 +127,87 @@ export class LoginPageNotConnected extends Component<
 		this.validateFields();
 	}
 
+	handleOTPFinish = (otp: string) => {
+		this.props.loginUserWithOTP(this.state.username, this.state.password, otp);
+	};
+
 	render() {
+		if (this.props.user) {
+			const redirectPath =
+				'from' in this.props.router.params
+					? this.props.router.params.from
+					: '/';
+
+			return <Redirect to={redirectPath} />;
+		}
+
 		return (
-			<main className={styles.main}>
-				<div className={styles.form}>
+			<div className={styles.main}>
+				<Flex
+					className={styles.form}
+					direction="row"
+					align="center"
+					justify="center"
+				>
 					<Link className={styles.closeLink} href="/">
 						<img src={close} alt="close" />
 					</Link>
 					{this.state.showVideo && (
-						<video
-							src={getStaticURL('/video/login_signup.mp4')}
-							alt="loginVideo"
-							className={styles.loginImg}
-							autoplay
-							muted
-							loop
-							playsinline
-							disablePictureInPicture
-							controlsList="nodownload noremoteplayback"
-						/>
+						<div className={styles.videoContainer}>
+							<video
+								src={getStaticURL('/video/login_signup.mp4')}
+								alt="loginVideo"
+								className={styles.loginImg}
+								autoplay
+								muted
+								loop
+								playsinline
+								disablePictureInPicture
+								controlsList="nodownload noremoteplayback"
+							/>
+							<Logo level="7" className={styles.logo} />
+						</div>
 					)}
 
-					<div className={styles.rightSide}>
+					<Flex
+						className={styles.rightSide}
+						direction="column"
+						justify="between"
+					>
 						<div className={styles.rightSide__titles}>
-							<h1 className={styles.rightSide__title}>С возвращением!</h1>
-							<h3 className={styles.rightSide__subtitle}>
+							<Title
+								className={styles.rightSide__title}
+								level="3"
+								weight="bold"
+							>
+								С возвращением!
+							</Title>
+							<Headline
+								className={styles.rightSide__subtitle}
+								color="light"
+								level="9"
+							>
 								Войти, чтобы получить доступ ко всем возможностям
-							</h3>
+							</Headline>
 						</div>
-						<div className={styles.rightSide__inputFields}>
-							<InputField
-								label="Имя пользователя"
+						<Flex className={styles.rightSide__inputFields} direction="column">
+							<FormItem
+								mode="primary"
+								top="Имя пользователя"
 								defaultValue=""
-								preIconSrc={userSvg}
+								before={
+									<img src={userSvg} alt="icon" className={styles.inputIcon} />
+								}
 								placeholder="Введите логин"
-								errorMessage={this.state.validationErrors.username}
+								bottom={this.state.validationErrors.username}
+								status={
+									this.state.validationErrors.username ? 'error' : 'default'
+								}
 								value={this.state.username}
 								onChange={(value) => this.onFieldChange(value, 'username')}
 							/>
 							<PasswordInputField
+								mode="primary"
 								label="Пароль"
 								defaultValue=""
 								errorMessage={this.state.validationErrors.password}
@@ -150,24 +215,39 @@ export class LoginPageNotConnected extends Component<
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
 							/>
-						</div>
-						<div className={styles.rightSide__actions}>
-							<button
+
+							{this.hasOTP() && (
+								<div className={styles.otpContainer}>
+									<div className={styles.otpContent}>
+										<Title level="6">Введите OTP код</Title>
+										<OTPInput length={6} onFinish={this.handleOTPFinish} />
+									</div>
+								</div>
+							)}
+						</Flex>
+						<Flex className={styles.rightSide__actions} direction="column">
+							<Button
+								mode="primary"
 								onClick={this.handleLoginUser}
 								className={styles.login__button}
+								size="m"
+								borderRadius="lg"
 							>
 								Войти
-							</button>
-							<p className={styles.register__button}>
+							</Button>
+							<div className={styles.register__button}>
 								У меня нет аккаунта.{' '}
-								<Link className={styles.register} href="/register">
+								<Link
+									className={styles.register}
+									href={getPathWithFrom('register', this.props.router.params)}
+								>
 									Регистрация
 								</Link>
-							</p>
-						</div>
-					</div>
-				</div>
-			</main>
+							</div>
+						</Flex>
+					</Flex>
+				</Flex>
+			</div>
 		);
 	}
 }
@@ -175,15 +255,18 @@ export class LoginPageNotConnected extends Component<
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 	userError: selectUserErrorNot401(state),
+	hasOTP: selectIsTwoFactorEnabled(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	loginUser: (login: string, password: string) =>
 		dispatch(actions.loginUserAction(login, password)),
+
+	loginUserWithOTP: (login: string, password: string, otp: string) =>
+		dispatch(actions.loginUserAction(login, password, otp)),
 });
 
 export const LoginPage = compose(
 	withRouter,
-	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(LoginPageNotConnected);

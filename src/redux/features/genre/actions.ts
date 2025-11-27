@@ -1,6 +1,7 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsGenre, ModelsMainPageFilm } from '@/types/models';
+import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -120,6 +121,15 @@ const getGenreAction =
 			}
 
 			dispatch(returnGenreErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки жанра'), {
+				tags: {
+					category: 'genre',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -145,6 +155,15 @@ const getGenresAction = (): Action => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(returnGenresErrorAction(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки жанров'), {
+			tags: {
+				category: 'genres',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
 	}
 };
 
@@ -175,6 +194,15 @@ const getGenreFilmsAction =
 			}
 
 			dispatch(returnGenreFilmsErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки фильмов жанра'), {
+				tags: {
+					category: 'genreFilms',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 

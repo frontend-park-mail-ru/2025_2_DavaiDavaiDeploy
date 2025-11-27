@@ -10,6 +10,7 @@ import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
+import { Button, Flex, Paragraph, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -51,44 +52,62 @@ class FilmRatingComponent extends Component<
 		const userRatingType = getRatingType(this.props.userRating);
 
 		return (
-			<div>
-				<button
+			<div className={styles.wrapper}>
+				<Button
 					className={styles.rateBtn}
 					onMouseLeave={this.handleMouseLeave}
 					onMouseEnter={this.handleMouseEnter}
 					onClick={this.handleMouseEnter}
+					mode="quaternary"
+					borderRadius="l"
 				>
 					{!this.props.userRating && (
-						<p className={styles.btnText}>Оценить фильм</p>
+						<Paragraph className={styles.btnText} level="8" align="center">
+							Оценить фильм
+						</Paragraph>
 					)}
 					{this.props.isAuthentificated && this.props.userRating && (
-						<span className={styles.userRating}>
-							<p className={styles.btnText}>Изменить</p>
-							<div className={styles[`rating-${userRatingType}`]}>
+						<Flex
+							className={styles.userRating}
+							direction="row"
+							justify="between"
+							align="center"
+						>
+							<Paragraph className={styles.btnText} level="8">
+								Изменить
+							</Paragraph>
+
+							<Flex
+								direction="row"
+								className={styles[`rating-${userRatingType}`]}
+								align="center"
+							>
 								<Star className={styles.userStarIcon} />
-								<h3 className={styles.userRatingTitle}>
-									{this.props.userRating}
-								</h3>
-							</div>
-						</span>
+								<Paragraph className={styles.userRatingTitle} level="8">
+									{this.props.userRating.toString()}
+								</Paragraph>
+							</Flex>
+						</Flex>
 					)}
 
 					{this.props.isAuthentificated && (
-						<div
+						<Flex
+							direction="row"
+							align="center"
 							className={clsx(styles.rateMenu, {
 								[styles.active]: this.state.isMenuActive,
 							})}
 							onClick={this.handleRatingLeave}
 						>
 							<FilmRatingInput isDark={false} />
-						</div>
+						</Flex>
 					)}
-				</button>
+				</Button>
 
 				{this.props.isAuthentificated && (
-					<button className={styles.smallRateBtn}>
-						{this.props.isAuthentificated && <FilmRatingInput isDark={false} />}
-					</button>
+					<Button mode="tertiary" className={styles.smallRateBtn}>
+						<FilmRatingInput isDark={false} />
+					</Button>
 				)}
 			</div>
 		);
@@ -109,15 +128,32 @@ class FilmRatingComponent extends Component<
 		const ratingType = getRatingType(rating);
 
 		return (
-			<div className={styles.content}>
-				<div className={styles.rating}>
+			<Flex className={styles.content} direction="row">
+				<Flex
+					className={styles.rating}
+					direction="column"
+					align="center"
+					justify="center"
+				>
 					{formattedRating && (
-						<h2 className={styles[`title-${ratingType}`]}>{formattedRating}</h2>
+						<Title className={styles[`title-${ratingType}`]} level="2">
+							{formattedRating}
+						</Title>
 					)}
-					{ratingNumber && <p className={styles.subtitle}>{ratingNumber}</p>}
+					{ratingNumber && (
+						<Subhead
+							className={styles.subtitle}
+							level="10"
+							color="light"
+							opacity="60"
+						>
+							{ratingNumber}
+						</Subhead>
+					)}
+
 					{this.renderButton()}
-				</div>
-			</div>
+				</Flex>
+			</Flex>
 		);
 	}
 }

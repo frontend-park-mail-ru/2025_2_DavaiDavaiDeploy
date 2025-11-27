@@ -8,20 +8,20 @@ export class RouterProvider extends Component {
 		params: {},
 	};
 
-	back() {
-		window.scrollTo(0, 0);
-		window.history.back();
-	}
-
-	navigate = (to: string) => {
+	navigate = (to: string | number) => {
 		if (to === this.state.path) {
 			return;
 		}
 
+		if (to === -1) {
+			window.scrollTo(0, 0);
+			window.history.back();
+		}
+
 		window.scrollTo(0, 0);
 
-		window.history.pushState({}, '', trimRoute(to));
-		this.setState({ path: trimRoute(to), params: {} });
+		window.history.pushState({}, '', trimRoute(to.toString()));
+		this.setState({ path: trimRoute(to.toString()), params: {} });
 	};
 
 	handlePopState = () => {
@@ -48,7 +48,6 @@ export class RouterProvider extends Component {
 					path: this.state.path,
 					navigate: this.navigate,
 					params: this.state.params,
-					back: this.back,
 				}}
 			>
 				{this.props.children}

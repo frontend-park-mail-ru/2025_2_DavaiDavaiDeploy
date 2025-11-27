@@ -1,0 +1,27 @@
+.button {
+	display: flex;
+	cursor: pointer;
+	box-sizing: border-box;
+	align-items: center;
+	text-align: center;
+	justify-content: center;
+	border: none;
+}
+
+.primary {
+	background-color: var(--color-accent);
+	border-radius: 50%;
+}
+
+.secondary {
+	background: var(--color-btn-gradient);
+	border-radius: 50%;
+}
+
+.tertiary {
+	background-color: transparent;
+}
+
+.quaternary {
+	background-color: var(--color-light);
+}

@@ -10,6 +10,10 @@
  * ---------------------------------------------------------------
  */
 
+export interface GenFilmRatingInput {
+	rating?: number;
+}
+
 export interface ModelsActor {
 	birth_date: string;
 	birth_place: string;
@@ -44,8 +48,36 @@ export interface ModelsChangePasswordInput {
 	old_password: string;
 }
 
-export interface ModelsError {
-	message?: string;
+export interface ModelsCompFilm {
+	duration: number;
+	genre: string;
+	id: string;
+	image: string;
+	is_liked: boolean;
+	rating: number;
+	short_description: string;
+	title: string;
+	year: number;
+}
+
+export interface ModelsCompilation {
+	created_at?: string;
+	description: string;
+	icon: string;
+	id: string;
+	title: string;
+	updated_at?: string;
+}
+
+export interface ModelsFavFilm {
+	duration: number;
+	genre: string;
+	id: string;
+	image: string;
+	rating: number;
+	short_description: string;
+	title: string;
+	year: number;
 }
 
 export interface ModelsFilmFeedback {
@@ -53,6 +85,7 @@ export interface ModelsFilmFeedback {
 	film_id: string;
 	id: string;
 	is_mine: boolean;
+	new_film_rating: number;
 	/**
 	 * @min 1
 	 * @max 10
@@ -84,6 +117,16 @@ export interface ModelsFilmFeedbackInput {
 	title: string;
 }
 
+export interface ModelsFilmInCalendar {
+	cover: string;
+	id: string;
+	is_liked: boolean;
+	original_title?: string;
+	release_date: string;
+	short_description?: string;
+	title: string;
+}
+
 export interface ModelsFilmPage {
 	actors: ModelsActor[];
 	age_category: string;
@@ -93,10 +136,13 @@ export interface ModelsFilmPage {
 	description: string;
 	duration: number;
 	genre: string;
+	genre_id: string;
 	id: string;
 	image1?: string;
 	image2?: string;
 	image3?: string;
+	is_liked: boolean;
+	is_reviewed: boolean;
 	number_of_ratings: number;
 	original_title?: string;
 	poster: string;
@@ -105,10 +151,10 @@ export interface ModelsFilmPage {
 	slogan?: string;
 	title: string;
 	trailer_url: string;
+	user_rating?: number;
 	worldwide_fees: number;
 	year: number;
-	is_reviewed: boolean;
-	user_rating?: number;
+	is_out: boolean;
 }
 
 export interface ModelsGenre {
@@ -118,6 +164,12 @@ export interface ModelsGenre {
 	id: string;
 	title: string;
 	updated_at?: string;
+}
+
+export interface ModelsMainPageActor {
+	id: string;
+	photo: string;
+	russian_name: string;
 }
 
 export interface ModelsMainPageFilm {
@@ -142,9 +194,16 @@ export interface ModelsPromoFilm {
 	year: number;
 }
 
+export interface ModelsSearchResponse {
+	actors?: ModelsMainPageActor[];
+	films?: ModelsMainPageFilm[];
+	search_string?: string;
+}
+
 export interface ModelsSignInInput {
 	login: string;
 	password: string;
+	user_code?: string;
 }
 
 export interface ModelsSignUpInput {
@@ -155,8 +214,21 @@ export interface ModelsSignUpInput {
 export interface ModelsUser {
 	avatar: string;
 	created_at?: string;
+	has_2fa: boolean;
 	id: string;
 	login: string;
 	updated_at?: string;
 	version: number;
+}
+
+export interface ModelsVoiceSearchResponse {
+	actors?: ModelsMainPageActor[];
+	films?: ModelsMainPageFilm[];
+	search_string?: string;
+}
+
+export interface ModelsOTPUser {
+	twoFactorLoading: boolean;
+	has_2fa: boolean;
+	qrCode: string | null;
 }

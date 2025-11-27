@@ -1,0 +1,190 @@
+.filmCard {
+	text-align: center;
+	width: 100%;
+	border-radius: var(--border-radius-xl);
+	padding: 1.25rem 1.875rem;
+	border: 1px solid rgb(212 222 232 / 40%);
+	transition: all 0.4s ease;
+
+	&:hover {
+		filter: brightness(1.2);
+	}
+}
+
+.left {
+	gap: 1.5rem;
+}
+
+.right {
+	gap: 3rem;
+}
+
+.linkWrap {
+	display: contents;
+}
+
+.imageContainer {
+	display: flex;
+	position: relative;
+	aspect-ratio: 3 / 4;
+	overflow: hidden;
+	height: 15vh;
+	border-radius: var(--border-radius-l);
+}
+
+.image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: brightness(0.95);
+	transition: all 0.4s ease;
+}
+
+.imageContainer:hover .image {
+	filter: brightness(1.2);
+}
+
+.content {
+	gap: 0.5rem;
+}
+
+.title {
+	overflow-wrap: break-word;
+	word-break: normal;
+	hyphens: manual;
+}
+
+.subtitle {
+	overflow-wrap: break-word;
+	word-break: normal;
+	hyphens: manual;
+}
+
+.favIcon {
+	width: 1rem;
+	transition: all 0.3s ease;
+}
+
+.favBtn {
+	display: flex;
+	flex-direction: row;
+	transition: all 0.3s ease;
+	gap: 0.5rem;
+	padding: 0.7rem 1rem;
+	align-items: center;
+
+	&:hover {
+		transform: scale(1.02);
+	}
+}
+
+.inFav {
+	.favIcon {
+		fill: var(--color-text);
+	}
+}
+
+.notInFav {
+	.favIcon {
+		fill: transparent;
+	}
+}
+
+.day1 {
+	color: var(--color-calendar-1);
+}
+
+.day2 {
+	color: var(--color-calendar-2);
+}
+
+.day3 {
+	color: var(--color-calendar-3);
+}
+
+.day4 {
+	color: var(--color-calendar-4);
+}
+
+.day5 {
+	color: var(--color-calendar-5);
+}
+
+.day6 {
+	color: var(--color-calendar-6);
+}
+
+.date {
+	gap: 0.5rem;
+}
+
+@media (max-width: 1500px) {
+	.right {
+		gap: 1rem;
+	}
+
+	.filmCard {
+		padding: 2rem 1.3rem;
+	}
+
+	.favIcon {
+		width: 0.9rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.number {
+		display: none;
+	}
+
+	.filmCard {
+		flex-direction: column;
+		align-items: center;
+		gap: 1.5rem;
+		padding: 2rem 1.875rem;
+	}
+
+	.left {
+		flex-direction: column;
+		align-items: center;
+		gap: 1.5rem;
+	}
+
+	.content {
+		align-items: center;
+	}
+
+	.title {
+		text-align: center;
+		font-size: var(--font-size-xl);
+	}
+
+	.subtitle {
+		text-align: center;
+		font-size: var(--font-size-2xs);
+	}
+
+	.imageContainer {
+		height: 25vh;
+	}
+
+	.favBtn {
+		gap: 0.3rem;
+		padding: 0.5rem 0.8rem;
+	}
+
+	.favIcon {
+		width: 1rem;
+	}
+
+	.day {
+		font-size: var(--font-size-5xl);
+	}
+
+	.right {
+		gap: 1.5rem;
+	}
+}

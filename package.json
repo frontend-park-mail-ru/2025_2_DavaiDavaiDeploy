@@ -6,11 +6,14 @@
   "private": true,
   "main": "index.tsx",
   "scripts": {
-    "start": "vite",
-    "build": "tsc && vite build",
-    "build:stage": "tsc && vite build --mode stage",
+    "start": "vite --config vite/vite.config.dev.ts",
+    "start:stage": "vite --config vite/vite.config.stage.ts",
+    "start:prod": "vite --config vite/vite.config.prod.ts",
+    "build": "tsc && vite build --config vite/vite.config.dev.ts",
+    "build:stage": "tsc && vite build --config vite/vite.config.stage.ts --mode stage",
+    "build:prod": "tsc && vite build --config vite/vite.config.prod.ts",
     "genTypes": "npx swagger-typescript-api generate -p ./swagger.yaml -o ./src/types -n models.ts --no-client",
-    "test": "vitest",
+    "test": "vitest --config vite/vite.config.dev.ts",
     "test:coverage": "vitest run --coverage",
     "tsc:check": "npx tsc --noEmit",
     "lint:eslint": "npx eslint .",
@@ -20,7 +23,8 @@
     "lint:stylelint": "npx stylelint \"**/*.css\" --allow-empty-input",
     "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix --allow-empty-input",
     "prepare": "husky",
-    "pre-commit": "npm run lint:stylelint:fix && npm run lint:eslint:fix && npm run lint:prettier:fix"
+    "preview": "npm run build && vite preview",
+    "preview:stage": "npm run build:stage && vite preview"
   },
   "repository": {
     "type": "git",
@@ -40,12 +44,14 @@
   "homepage": "https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy#readme",
   "dependencies": {
     "@fontsource/golos-ui": "^4.5.3",
-    "@robocotik/react": "^1.0.28",
+    "@robocotik/react": "^1.6.0",
     "@sentry/browser": "^10.21.0",
     "@sentry/core": "^10.21.0",
     "@sentry/vite-plugin": "^2.14.1",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
+    "extendable-media-recorder": "^9.2.31",
+    "extendable-media-recorder-wav-encoder": "^7.0.132",
     "reset-css": "^5.0.2",
     "vite-plugin-svgr": "^4.5.0"
   },

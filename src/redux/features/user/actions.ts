@@ -1,13 +1,71 @@
 import { authorizationCodeToErrorHelper } from '@/helpers/authorizationCodeToErrorHelper/authorizationCodeToErrorHelper.ts';
+import { avatarChangeCodeToErrorHelper } from '@/helpers/avatarChangeCodeToErrorHelper/avatarChangeCodeToErrorHelper';
 import LocalStorageHelper from '@/helpers/localStorageHelper/localStorageHelper.ts';
 import { registrationCodeToErrorHelper } from '@/helpers/registrationCodeToError/registrationCodeToError.ts';
 import { storeAuthTokensFromResponse } from '@/helpers/storeAuthTokensFromResponse/storeAuthTokensFromResponse.ts';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsUser } from '@/types/models';
+import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
+
+/**
+ * Создает действие для добавления ошибки двухфакторной аутентификации.
+
+ */
+const setOTPError = (err: string): Action => {
+	return {
+		type: actionTypes.USER_OTP_ERROR,
+		payload: {
+			error: err,
+		},
+	};
+};
+
+/**
+ * Создает действие для деактивации двухфакторной аутентификации.
+
+ */
+const setDeactivatedOTP = (): Action => {
+	return {
+		type: actionTypes.USER_OTP_DEACTIVATE,
+	};
+};
+
+/**
+ * Создает действие для активации двухфакторной аутентификации.
+
+ */
+const setActivatedOTP = (qrImage: string | null): Action => {
+	return {
+		type: actionTypes.USER_OTP_ACTIVATE,
+		payload: {
+			qrImage,
+		},
+	};
+};
+
+/**
+ * Создает действие для активации двухфакторной аутентификации.
+
+ */
+const setOTPLoading = (): Action => {
+	return {
+		type: actionTypes.USER_OTP_LOADING,
+	};
+};
+
+/**
+ * Создает действие для выхода пользователя из системы.
+
+ */
+const resetUserError = (): Action => {
+	return {
+		type: actionTypes.USER_ERROR_RESET,
+	};
+};
 
 /**
  * Создает действие для выхода пользователя из системы.
@@ -35,6 +93,12 @@ const setNewPasswordLoadingAction = (): Action => {
 	};
 };
 
+const setNewAvatarLoadingAction = (): Action => {
+	return {
+		type: actionTypes.AVATAR_CHANGE_LOADING,
+	};
+};
+
 /**
  * Создает действие для успешной загрузки данных пользователя.
  * @function
@@ -43,6 +107,20 @@ const returnUserAction = (data: ModelsUser): Action => {
 	return {
 		type: actionTypes.USER_LOADED,
 		payload: { user: data, error: null },
+	};
+};
+
+const returnChangeAvatarAction = (data: ModelsUser): Action => {
+	return {
+		type: actionTypes.AVATAR_CHANGE_LOAD,
+		payload: { user: data },
+	};
+};
+
+const returnChangePasswordAction = (data: ModelsUser): Action => {
+	return {
+		type: actionTypes.PASSWORD_CHANGE_LOAD,
+		payload: { user: data },
 	};
 };
 
@@ -94,13 +172,6 @@ const deleteUserAction = (userId: string | number): Action => {
  * Создает асинхронное действие для проверки авторизации пользователя.
  */
 const checkUserAction = (): Action => async (dispatch: Dispatch) => {
-	if (
-		window.location.pathname === '/login' ||
-		window.location.pathname === '/register'
-	) {
-		return;
-	}
-
 	dispatch(setUserLoadingAction());
 
 	try {
@@ -116,6 +187,15 @@ const checkUserAction = (): Action => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(returnUserErrorAction(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки проверки аутентификации'), {
+			tags: {
+				category: 'check',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
 	}
 };
 
@@ -149,6 +229,15 @@ const registerUserAction =
 			}
 
 			dispatch(returnUserErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки регистрации'), {
+				tags: {
+					category: 'signup',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -156,14 +245,20 @@ const registerUserAction =
  * Создает асинхронное действие для входа пользователя в систему.
  */
 const loginUserAction =
-	(login: string, password: string): Action =>
+	(login: string, password: string, otp?: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
 			const response = await HTTPClient.post<ModelsUser>('/auth/signin', {
-				data: {
-					login: login,
-					password: password,
-				},
+				data: otp
+					? {
+							login: login,
+							password: password,
+							user_code: otp,
+						}
+					: {
+							login: login,
+							password: password,
+						},
 			});
 
 			storeAuthTokensFromResponse(response);
@@ -178,6 +273,15 @@ const loginUserAction =
 			}
 
 			dispatch(returnUserErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки входа'), {
+				tags: {
+					category: 'signin',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -196,6 +300,15 @@ const logoutUserAction = () => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(returnUserErrorAction(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки выхода'), {
+			tags: {
+				category: 'logout',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
 	}
 };
 
@@ -216,17 +329,25 @@ const changePasswordAction =
 			);
 
 			storeAuthTokensFromResponse(response);
-			dispatch(returnPasswordChangeErrorAction(null));
+			dispatch(returnChangePasswordAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
 			if (error instanceof Error) {
-				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
+				errorMessage = error.message;
 			} else if (typeof error === 'string') {
 				errorMessage = error;
 			}
 
 			dispatch(returnPasswordChangeErrorAction(errorMessage));
+			Sentry.captureException(new Error('Ошибка ручки смены пароля'), {
+				tags: {
+					category: 'passChange',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -236,7 +357,7 @@ const changeAvatarAction =
 		const formData = new FormData();
 		formData.append('avatar', file);
 
-		dispatch(setUserLoadingAction());
+		dispatch(setNewAvatarLoadingAction());
 
 		try {
 			const response = await HTTPClient.put<ModelsUser>(
@@ -247,21 +368,86 @@ const changeAvatarAction =
 			);
 
 			storeAuthTokensFromResponse(response);
-			dispatch(returnUserAction(response.data));
+			dispatch(returnChangeAvatarAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
 
 			if (error instanceof Error) {
-				errorMessage = authorizationCodeToErrorHelper(error.cause as number);
+				errorMessage = avatarChangeCodeToErrorHelper(error.cause as number);
 			} else if (typeof error === 'string') {
 				errorMessage = error;
 			}
 
 			dispatch(returnAvatarChangeErrorAction(errorMessage));
+			Sentry.captureException(new Error('Ошибка ручки смены аватара'), {
+				tags: {
+					category: 'avatarChange',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
+const sendActivateOTP = (): Action => async (dispatch: Dispatch) => {
+	dispatch(setOTPLoading());
+
+	try {
+		const response = await HTTPClient.post<Blob>('/auth/enable2fa');
+		dispatch(setActivatedOTP(URL.createObjectURL(response.data)));
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(setOTPError(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки активации 2FA'), {
+			tags: {
+				category: 'enable2fa',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
+	}
+};
+
+const sendDeactivateOTP = (): Action => async (dispatch: Dispatch) => {
+	dispatch(setOTPLoading());
+
+	try {
+		await HTTPClient.post<ModelsUser>('/auth/disable2fa');
+		dispatch(setDeactivatedOTP());
+	} catch (error: unknown) {
+		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+		if (error instanceof Error) {
+			errorMessage = avatarChangeCodeToErrorHelper(error.cause as number);
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(setOTPError(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки деактивации 2FA'), {
+			tags: {
+				category: 'disable2fa',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
+	}
+};
+
 export default {
+	resetUserError,
 	registerUserAction,
 	loginUserAction,
 	checkUserAction,
@@ -270,4 +456,10 @@ export default {
 	logoutUserAction,
 	changePasswordAction,
 	changeAvatarAction,
+	setDeactivatedOTP,
+	setActivatedOTP,
+	sendActivateOTP,
+	sendDeactivateOTP,
+	setOTPLoading,
+	setOTPError,
 };

@@ -1,26 +1,46 @@
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
 import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
-import type { WithToastsProps } from '@/modules/toasts/withToastasProps.ts';
-import { withToasts } from '@/modules/toasts/withToasts.tsx';
 import actions from '@/redux/features/user/actions';
 import {
 	selectAvatarChangeError,
+	selectIsTwoFactorEnabled,
+	selectIsTwoFactorLoading,
+	selectNewAvatarLoading,
+	selectOTPQRCode,
 	selectUser,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import {
+	Avatar,
+	Button,
+	FileButton,
+	Flex,
+	Subhead,
+	Switch,
+	Title,
+} from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { MODALS } from '../../modules/modals/modals';
+import { withModal } from '../../modules/modals/withModal';
+import type { WithModalProps } from '../../modules/modals/withModalProps';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
+import { AppToast } from '../toastContainer/toastContainer.tsx';
 import styles from './changeAvatar.module.scss';
 
 interface ChangeAvatarProps {
 	error: string | null;
 	user: ModelsUser;
+	loading: boolean;
+	OTPActivated: boolean;
+	OTPLoading: boolean;
+	OTPQR: string | null;
 	setAvatar: (file: File) => void;
+	activateOTP: () => void;
+	deactivateOTP: () => void;
 }
 
 const MAX_FILE_SIZE_MB = 8;
@@ -29,7 +49,7 @@ const IDEAL_SIZE = 200;
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 class ChangeAvatarComponent extends Component<
-	ChangeAvatarProps & WithRouterProps & WithToastsProps
+	ChangeAvatarProps & WithRouterProps & WithModalProps
 > {
 	state = {
 		file: null,
@@ -39,6 +59,7 @@ class ChangeAvatarComponent extends Component<
 		isSuccess: false,
 		errorShown: false,
 		successShown: false,
+		OTPActivated: false,
 	};
 
 	handleFileChange = (event: Event) => {
@@ -50,14 +71,12 @@ class ChangeAvatarComponent extends Component<
 		}
 
 		if (!ALLOWED_TYPES.includes(selected.type)) {
-			this.setState({ error: 'Можно загружать только JPG, PNG, WEBP.' });
+			AppToast.error('Можно загружать только JPG, PNG, WEBP.');
 			return;
 		}
 
 		if (selected.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-			this.setState({
-				error: `Размер не должен превышать ${MAX_FILE_SIZE_MB} МБ.`,
-			});
+			AppToast.error(`Размер не должен превышать ${MAX_FILE_SIZE_MB} МБ.`);
 
 			return;
 		}
@@ -102,85 +121,149 @@ class ChangeAvatarComponent extends Component<
 	};
 
 	onUpdate() {
-		if (this.props.error && !this.state.errorShown) {
-			this.props.toast.error(this.props.error);
+		if (this.props.error && !this.props.loading && !this.state.errorShown) {
+			AppToast.error(this.props.error);
 			this.setState({ errorShown: true });
 			return;
 		}
 
-		if (this.state.isSuccess && !this.state.successShown) {
-			this.props.toast.success('Фото успешно сохранено!');
+		if (
+			this.state.isSuccess &&
+			!this.props.loading &&
+			!this.state.successShown &&
+			!this.props.error
+		) {
+			AppToast.success('Фото успешно сохранено!');
 			this.setState({ successShown: true });
 		}
+
+		if (this.state.OTPActivated === false && this.props.OTPActivated === true) {
+			this.props.modal.open(MODALS.OTP_MODAL, { qrCode: this.props.OTPQR });
+			this.setState({ OTPActivated: true });
+		}
+
+		if (this.state.OTPActivated === true && this.props.OTPActivated === false) {
+			this.setState({ OTPActivated: false });
+		}
+	}
+
+	handleToggleOTP = (checked: boolean) => {
+		if (this.props.OTPLoading || checked === this.props.OTPActivated) {
+			return;
+		}
+
+		if (!checked) {
+			this.props.deactivateOTP();
+			AppToast.success('2FA успешно отключена');
+		} else {
+			this.props.activateOTP();
+		}
+	};
+
+	onMount(): void | Promise<void> {
+		this.setState({ OTPActivated: this.props.OTPActivated });
 	}
 
 	render() {
 		if (!this.props.user) {
-			return <div></div>;
+			return <div />;
 		}
 
 		const { avatar } = this.props.user;
 		const { preview, file, isEditing } = this.state;
-		const avatarURL = getImageURL(avatar);
 
 		return (
-			<div className={styles.content}>
-				<div className={styles.text}>
-					<h1 className={styles.title}>
+			<Flex className={styles.content} direction="row">
+				<Flex className={styles.text} direction="column" justify="between">
+					<Title className={styles.title} level="4" weight="bold">
 						Хочется чего-то нового? Обновите фото профиля
-					</h1>
-					<div className={styles.subtitle}>
-						<p>{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}</p>
-						<p>Вес файла: не более 8МБ</p>
-					</div>
-				</div>
+					</Title>
+					<Flex className={styles.subtitle} direction="column">
+						<Subhead
+							color="light"
+							level="10"
+							opacity="70"
+							className={styles.subtitleText}
+						>
+							{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}
+						</Subhead>
+						<Subhead
+							color="light"
+							level="10"
+							opacity="70"
+							className={styles.subtitleText}
+						>
+							Вес файла: не более 8МБ
+						</Subhead>
+					</Flex>
+					<Flex className={styles.otp} align="center">
+						<Switch
+							onClick={this.handleToggleOTP}
+							checked={this.props.OTPActivated}
+						/>
+						<p className={styles.otpText}>Двухфакторная аутентификация</p>
+					</Flex>
+				</Flex>
 
-				<div className={styles.changeAvatar}>
+				<Flex className={styles.changeAvatar} direction="column" align="center">
 					{preview ? (
-						<img className={styles.avatar} src={preview} alt="Preview" />
+						<Avatar
+							level="6"
+							className={styles.avatar}
+							src={preview}
+							alt="Preview"
+							preview={true}
+						/>
 					) : (
-						<img className={styles.avatar} src={avatarURL} alt="Аватар"></img>
+						<Avatar
+							level="6"
+							className={styles.avatar}
+							src={avatar}
+							alt="Аватар"
+						/>
 					)}
 
-					<div className={styles.btns}>
-						<div className={styles.wrapper}>
-							<button className={styles.btn} onClick={this.handleUpload}>
-								Изменить фото
-							</button>
-							<input
-								className={styles.input}
-								type="file"
-								accept="image/*"
-								onChange={this.handleFileChange}
-							></input>
-						</div>
+					<Flex className={styles.btns} align="center" direction="column">
+						<FileButton
+							onChange={this.handleFileChange}
+							accept=".jpg, .jpeg, .png"
+						/>
 
-						<button
+						<Button
+							mode="primary"
+							size="xs"
+							borderRadius="l"
 							className={clsx(styles.btn, {
 								[styles.hidden]: !file || !isEditing,
 							})}
 							onClick={this.handleUpload}
 						>
 							Сохранить
-						</button>
-					</div>
-				</div>
-			</div>
+						</Button>
+					</Flex>
+				</Flex>
+			</Flex>
 		);
 	}
 }
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
+	OTPActivated: selectIsTwoFactorEnabled(state),
+	OTPLoading: selectIsTwoFactorLoading(state),
+	OTPQR: selectOTPQRCode(state),
 	error: selectAvatarChangeError(state),
+	loading: selectNewAvatarLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	setAvatar: (file: File) => dispatch(actions.changeAvatarAction(file)),
+	activateOTP: () => dispatch(actions.sendActivateOTP()),
+	deactivateOTP: () => dispatch(actions.sendDeactivateOTP()),
 });
 
 export const ChangeAvatar = compose(
 	withRouter,
-	withToasts,
+	withModal,
 	connect(mapStateToProps, mapDispatchToProps),
 )(ChangeAvatarComponent);

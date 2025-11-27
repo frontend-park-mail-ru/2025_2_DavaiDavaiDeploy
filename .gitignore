@@ -5,3 +5,4 @@ src/build/
 dist/
 .vite
 .env.production
+.env.local

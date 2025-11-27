@@ -1,3 +1,5 @@
+import 'reset-css/reset.css';
+
 import { compose, connect, Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { store } from '@/redux/store.ts';
@@ -6,27 +8,31 @@ import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
 import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
-import 'reset-css/reset.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
-import { ToastContainer } from './components/toastContainer/toastContainer.tsx';
-import { isProduction } from './consts/isProduction';
+import {
+	AppToast,
+	ToastContainer,
+} from './components/toastContainer/toastContainer.tsx';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
-import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
+import { isSwEnabled } from './consts/sw';
+import { PRODUCTION_URL } from './consts/urls.ts';
+import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import { Route } from './modules/router/route.tsx';
 import { Routes } from './modules/router/routes.tsx';
 import type { WithRouterProps } from './modules/router/types/withRouterProps.ts';
 import { withRouter } from './modules/router/withRouter.tsx';
-import { ToastsProvider } from './modules/toasts/ToastsProvider.tsx';
-import { withToasts } from './modules/toasts/withToasts.tsx';
 import { ActorPage } from './pages/actorPage/actorPage.tsx';
+import { CalendarPage } from './pages/calendarPage/calendarPage.tsx';
+import { CompilationPage } from './pages/compilationPage/compilationPage.tsx';
 import { FilmPage } from './pages/filmPage/filmPage.tsx';
 import { GenrePage } from './pages/genrePage/genrePage';
 import { HomePage } from './pages/homePage/homePage.tsx';
 import { LoginPage } from './pages/loginPage/loginPage.tsx';
 import { RegisterPage } from './pages/registerPage/registerPage.tsx';
+import { SearchPage } from './pages/searchPage/searchPage.tsx';
 import { UserPage } from './pages/userPage/userPage.tsx';
 import actions from './redux/features/user/actions.ts';
 import { selectUser } from './redux/features/user/selectors.ts';
@@ -36,14 +42,15 @@ import type { ModelsUser } from './types/models.ts';
 if (sentryEnabled) {
 	Sentry.init({
 		dsn: sentryDSN,
-		enabled: isProduction,
+		enabled: true,
 		integrations: [Sentry.browserTracingIntegration()],
-		tracePropagationTargets: [PRODUCTION_URL_WITH_SCHEMA],
+		tracePropagationTargets: [PRODUCTION_URL],
 		release: import.meta.env.VITE_RELEASE_VERSION,
+		environment: import.meta.env.MODE,
 	});
 }
 
-if (isProduction && 'serviceWorker' in navigator) {
+if (isSwEnabled && 'serviceWorker' in navigator) {
 	window.addEventListener('load', () => {
 		navigator.serviceWorker
 			.register('/sw.js', { scope: '/' })
@@ -53,13 +60,11 @@ if (isProduction && 'serviceWorker' in navigator) {
 }
 
 window.addEventListener('online', () => {
-	// eslint-disable-next-line no-console
-	console.info('online');
+	AppToast.info('Соединение восстановлено!');
 });
 
 window.addEventListener('offline', () => {
-	// eslint-disable-next-line no-console
-	console.info('offline');
+	AppToast.info('Нет подключения к сети — вы в офлайн-режиме!');
 });
 
 interface AppProps {
@@ -73,15 +78,14 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 	}
 
 	render() {
-		const showExtraFields =
-			this.props.router.path !== '/login' &&
-			this.props.router.path !== '/register';
+		const isAuthPageOpen =
+			this.props.router.path.startsWith('/login') ||
+			this.props.router.path.startsWith('/register');
 
 		return (
 			<div class="layout">
 				<ToastContainer />
-				{showExtraFields && <Header />}
-				<div id="modal-root"></div>
+				{!isAuthPageOpen && <Header />}
 				<Routes>
 					<Route href="/" component={<HomePage />} />
 					<Route href="/films/:id" component={<FilmPage />} />
@@ -90,8 +94,11 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/register" component={<RegisterPage />} />
 					<Route href="/genres/:id" component={<GenrePage />} />
 					<Route href="/profile" component={<UserPage />} />
+					<Route href="/calendar" component={<CalendarPage />} />
+					<Route href="/search" component={<SearchPage />} />
+					<Route href="/compilations/:id" component={<CompilationPage />} />
 				</Routes>
-				{showExtraFields && <Footer />}
+				{!isAuthPageOpen && <Footer />}
 			</div>
 		);
 	}
@@ -100,11 +107,11 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 class ProvidersLayout extends Component {
 	render() {
 		return (
-			<Provider store={store}>
-				<ToastsProvider>
+			<ModalsProvider>
+				<Provider store={store}>
 					<RouterProvider>{this.props.children}</RouterProvider>
-				</ToastsProvider>
-			</Provider>
+				</Provider>
+			</ModalsProvider>
 		);
 	}
 }
@@ -119,7 +126,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 const App = compose(
 	withRouter,
-	withToasts,
 	connect(mapStateToProps, mapDispatchToProps),
 )(AppComponent);
 

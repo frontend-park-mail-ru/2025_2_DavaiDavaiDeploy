@@ -8,6 +8,7 @@ import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/film/actions';
 import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import type { Map } from '@/types/map';
+import { Flex, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -22,24 +23,21 @@ interface FilmRatingInputProps {
 class FilmRatingInputComponent extends Component<
 	FilmRatingInputProps & WithRouterProps
 > {
-	leaveRating = (event: MouseEvent): void => {
-		const target = event.currentTarget as HTMLElement | null;
-		const number = target?.getAttribute('data-number');
-
-		if (!number) {
+	leaveRating = (number: number): void => {
+		if (this.props.userRating === number) {
 			return;
 		}
 
-		const rating = parseInt(number, RATING_COUNT);
-		this.props.createRating(rating, this.props.router.params.id);
+		this.props.createRating(number, this.props.router.params.id);
 	};
 
 	render() {
 		return (
-			<div className={styles.ratingInput}>
+			<Flex className={styles.ratingInput} direction="row" align="center">
 				<div
-					onClick={this.leaveRating}
-					data-number={1}
+					onClick={() => {
+						this.leaveRating(1);
+					}}
 					className={styles.starWrap}
 				>
 					<Star
@@ -52,22 +50,25 @@ class FilmRatingInputComponent extends Component<
 				{Array.from({ length: RATING_COUNT }, (_, i) => {
 					const number = i + 1;
 					return (
-						<p
-							data-number={number}
+						<Title
 							className={clsx(styles['ratingNumber-' + getRatingType(number)], {
 								[styles[`cur-${getRatingType(number)}`]]:
 									this.props.userRating === number,
 								[styles.dark]: this.props.isDark,
 							})}
-							onClick={this.leaveRating}
+							onClick={() => {
+								this.leaveRating(number);
+							}}
+							level="5"
 						>
-							{number}
-						</p>
+							{number.toString()}
+						</Title>
 					);
 				})}
 				<div
-					onClick={this.leaveRating}
-					data-number={RATING_COUNT}
+					onClick={() => {
+						this.leaveRating(RATING_COUNT);
+					}}
 					className={styles.starWrap}
 				>
 					<Star
@@ -77,7 +78,7 @@ class FilmRatingInputComponent extends Component<
 						})}
 					/>
 				</div>
-			</div>
+			</Flex>
 		);
 	}
 }

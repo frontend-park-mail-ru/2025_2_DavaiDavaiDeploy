@@ -1,11 +1,8 @@
 .page {
 	position: relative;
-	display: flex;
-	flex-direction: column;
-	gap: 7vw;
+	gap: 5vw;
 	width: 100vw;
 	min-height: 75vh;
-	align-items: center;
 	padding: var(--wide-side-padding);
 	margin-top: 10rem;
 	background: transparent;
@@ -13,7 +10,7 @@
 	&::before {
 		content: '';
 		position: absolute;
-		top: 50%;
+		top: 30vh;
 		left: 50%;
 		transform: translate(-50%, -50%);
 		width: 100vw;
@@ -30,7 +27,7 @@
 	&::after {
 		content: '';
 		position: absolute;
-		top: 50%;
+		top: 30vh;
 		left: 50%;
 		transform: translate(-50%, -50%) rotate(90deg);
 		width: 95vh;
@@ -46,21 +43,28 @@
 }
 
 .profile {
-	display: flex;
-	flex-direction: row;
 	gap: 9.4rem;
 	width: 100%;
-	align-items: flex-start;
 }
 
 .title {
-	font-size: var(--font-size-3xl);
 	z-index: 10;
+}
+
+.favorites {
+	gap: 4rem;
+	margin-bottom: 4rem;
+	width: 100%;
+}
+
+.films {
+	gap: 2rem;
+	width: 100%;
 }
 
 @media (max-width: 1024px) {
 	.page {
-		gap: 10vw;
+		gap: 7rem;
 		margin-top: 10rem;
 		min-height: 100vh;
 		margin-bottom: 2rem;
@@ -68,24 +72,20 @@
 	}
 
 	.profile {
-		display: flex;
 		flex-direction: column;
-		gap: 8rem;
+		gap: 2rem;
 		align-items: center;
 	}
 
 	.title {
-		font-size: var(--font-size-3xl);
 		text-align: center;
 	}
 }
 
 @media (max-width: 768px) {
 	.page {
-		margin-top: 8rem;
-
 		&::before {
-			top: 40%;
+			top: 30vh;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			width: 110vw;
@@ -93,7 +93,7 @@
 		}
 
 		&::after {
-			top: 30%;
+			top: 30vh;
 			left: 50%;
 			transform: translate(-50%, -50%) rotate(90deg);
 			width: 120vh;
@@ -102,7 +102,12 @@
 	}
 
 	.profile {
-		gap: 6rem;
+		gap: 1rem;
+	}
+
+	.favorites {
+		gap: 3rem;
+		margin-bottom: 2rem;
 	}
 }
 

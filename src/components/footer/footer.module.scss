@@ -1,16 +1,13 @@
 .footer-light,
-.footer-dark {
+.footer-dark,
+.footer-base {
 	width: 100%;
 	background-color: transparent;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	padding-block: 1.4rem;
 	margin-top: auto;
 
 	.content {
 		color: var(--color-accent);
-		font-size: var(--font-size-m);
 	}
 }
 
@@ -20,5 +17,16 @@
 
 	.content {
 		color: var(--color-dark-text);
+	}
+}
+
+.footer-dark {
+	background-color: var(--color-bg);
+	margin-top: 0;
+}
+
+@media (max-width: 1024px) {
+	.footer-dark {
+		background-color: transparent;
 	}
 }

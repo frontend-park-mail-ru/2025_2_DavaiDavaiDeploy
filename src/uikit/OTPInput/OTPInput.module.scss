@@ -1,0 +1,19 @@
+.inputWrapper {
+	gap: 0.625rem;
+}
+
+.input {
+	width: 3rem;
+	height: 3rem;
+	text-align: center;
+	font-size: var(--font-size-2xl);
+	border: none;
+	border-bottom: 3px solid var(--color-text);
+	color: var(--color-text);
+	background-color: transparent;
+	outline: none;
+
+	&:focus {
+		border-bottom-color: var(--color-accent);
+	}
+}
