@@ -1,10 +1,8 @@
 import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
 import ArrowRight from '@/assets/img/arrowRight.svg?react';
-import { WIDE_SCREEN_WIDTH } from '@/consts/devices';
-import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper';
 import clsx from '@/modules/clsx';
-import { connect } from '@/modules/redux';
+import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/genre/actions';
@@ -13,6 +11,8 @@ import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
 import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
+import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
 import styles from './genreSlider.module.scss';
 
@@ -27,22 +27,21 @@ interface GenreSliderState {
 	isAnimating: boolean;
 	phase: 'out' | 'in' | null;
 	direction: 'left' | 'right' | null;
-	debounceResizeHandler: (ev?: Event | undefined) => void;
 	autoSlider: null | {
 		start: VoidFunction;
 		isWorking: () => boolean;
 		stop: VoidFunction;
 	};
 	inactivityTimer: NodeJS.Timeout | null;
+	isWideDesktop: boolean;
 }
 
-const THROTTLE_DELAY = 100;
 const ANIMATION_DURATION = 350;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
 
 class GenreSliderComponent extends Component<
-	GenreSliderProps,
+	GenreSliderProps & WithAdaptivityProps,
 	GenreSliderState
 > {
 	state: GenreSliderState = {
@@ -51,21 +50,13 @@ class GenreSliderComponent extends Component<
 		isAnimating: false,
 		phase: null,
 		direction: null,
-		debounceResizeHandler: () => {},
 		autoSlider: null,
 		inactivityTimer: null,
+		isWideDesktop: this.props.adaptivity.isWideDesktop,
 	};
 
 	onMount() {
 		this.props.getGenres();
-
-		this.state.debounceResizeHandler = debounce(
-			this.handleResize,
-			THROTTLE_DELAY,
-		);
-
-		window.addEventListener('resize', this.state.debounceResizeHandler);
-		this.handleResize();
 
 		if (this.state.autoSlider && this.state.autoSlider.isWorking()) {
 			this.state.autoSlider.stop();
@@ -80,20 +71,25 @@ class GenreSliderComponent extends Component<
 			AUTO_SLIDE_DURATION,
 		);
 
+		this.setState({
+			slideCapacity: this.props.adaptivity.isWideDesktop ? 8 : 4,
+		});
+
 		this.state.autoSlider.start();
 	}
 
 	onUnmount() {
-		window.removeEventListener('resize', this.state.debounceResizeHandler);
 		this.state.autoSlider?.stop();
 	}
 
-	handleResize = () => {
-		const width = window.innerWidth;
-		this.setState({
-			slideCapacity: width <= WIDE_SCREEN_WIDTH ? 4 : 8,
-		});
-	};
+	onUpdate() {
+		if (this.state.isWideDesktop !== this.props.adaptivity.isWideDesktop) {
+			this.setState({
+				isWideDesktop: this.props.adaptivity.isWideDesktop,
+				slideCapacity: this.props.adaptivity.isWideDesktop ? 8 : 4,
+			});
+		}
+	}
 
 	animate(direction: 'left' | 'right', nextIndex: number) {
 		if (this.state.isAnimating) {
@@ -238,7 +234,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getGenres: () => dispatch(actions.getGenresAction()),
 });
 
-export const GenreSlider = connect(
-	mapStateToProps,
-	mapDispatchToProps,
+export const GenreSlider = compose(
+	withAdaptivity,
+	connect(mapStateToProps, mapDispatchToProps),
 )(GenreSliderComponent);
