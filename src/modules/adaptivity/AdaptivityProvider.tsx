@@ -1,4 +1,11 @@
 import { Component } from '@robocotik/react';
+import {
+	DESKTOP_MIN_WIDTH,
+	MOBILE_MIN_WIDTH,
+	SMALL_MOBILE_MAX_WIDTH,
+	SMALL_TABLET_MIN_WIDTH,
+	TABLET_MIN_WIDTH,
+} from '../../consts/adaptivity';
 import { getClosestViewWidth } from '../../helpers/getClosestViewWidth/getClosestViewWidth';
 import { AdaptivityContext } from './AdaptivityContext.ts';
 import {
@@ -28,14 +35,27 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 		viewWidth: 0,
 	};
 
-	desktopHandler = (e: MediaQueryListEvent) =>
+	desktopHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isDesktop');
-	tabletHandler = (e: MediaQueryListEvent) => this.mediaXhandler(e, 'isTablet');
-	smallTabletHandler = (e: MediaQueryListEvent) =>
+		this.setState({ viewWidth: DESKTOP_MIN_WIDTH });
+	};
+
+	tabletHandler = (e: MediaQueryListEvent) => {
+		this.mediaXhandler(e, 'isTablet');
+		this.setState({ viewWidth: TABLET_MIN_WIDTH });
+	};
+	smallTabletHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isSmallTablet');
-	mobileHandler = (e: MediaQueryListEvent) => this.mediaXhandler(e, 'isMobile');
-	smallMobileHandler = (e: MediaQueryListEvent) =>
+		this.setState({ viewWidth: SMALL_TABLET_MIN_WIDTH });
+	};
+	mobileHandler = (e: MediaQueryListEvent) => {
+		this.mediaXhandler(e, 'isMobile');
+		this.setState({ viewWidth: MOBILE_MIN_WIDTH });
+	};
+	smallMobileHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isSmallMobile');
+		this.setState({ viewWidth: SMALL_MOBILE_MAX_WIDTH });
+	};
 
 	mediaXhandler = (
 		e: MediaQueryListEvent,
