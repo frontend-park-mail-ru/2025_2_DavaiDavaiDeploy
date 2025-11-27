@@ -1,5 +1,4 @@
 import { Toast } from '@/components/toast/toast';
-import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices';
 import type { ToastType } from '@/consts/toasts';
 
 import { Flex } from '@/uikit/index';
@@ -63,8 +62,7 @@ class ToastContainerComponent extends Component<
 			this.removeToast(newToast.id);
 		}, ACTIVE_TIME);
 
-		const maxToastNumber =
-			this.props.adaptivity.viewWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4;
+		const maxToastNumber = this.props.adaptivity.isTablet ? 4 : 2;
 
 		this.setState((prevState) => {
 			const updatedToasts = [...prevState.toasts];

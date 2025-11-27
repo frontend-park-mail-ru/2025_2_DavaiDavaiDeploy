@@ -11,7 +11,6 @@ import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
 import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
-import { WIDE_SCREEN_WIDTH } from '../../consts/adaptivity';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
@@ -46,9 +45,7 @@ class GenreSliderComponent extends Component<
 > {
 	state: GenreSliderState = {
 		curGenre: 0,
-		slideCapacity: this.getSlideCapacityFromWidth(
-			this.props.adaptivity.viewWidth,
-		),
+		slideCapacity: this.getSlideCapacityFromWidth(),
 		isAnimating: false,
 		phase: null,
 		direction: null,
@@ -56,19 +53,14 @@ class GenreSliderComponent extends Component<
 		inactivityTimer: null,
 	};
 
-	getSlideCapacityFromWidth(width: number) {
-		return width < WIDE_SCREEN_WIDTH ? 4 : 8;
+	getSlideCapacityFromWidth() {
+		return this.props.adaptivity.isWideDesktop ? 8 : 4;
 	}
 
 	onUpdate() {
-		if (
-			this.getSlideCapacityFromWidth(this.props.adaptivity.viewWidth) !==
-			this.state.slideCapacity
-		) {
+		if (this.getSlideCapacityFromWidth() !== this.state.slideCapacity) {
 			this.setState({
-				slideCapacity: this.getSlideCapacityFromWidth(
-					this.props.adaptivity.viewWidth,
-				),
+				slideCapacity: this.getSlideCapacityFromWidth(),
 			});
 		}
 	}

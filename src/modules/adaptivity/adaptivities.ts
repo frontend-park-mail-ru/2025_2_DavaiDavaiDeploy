@@ -12,19 +12,19 @@ export const SmallMobileScreen = window.matchMedia(
 );
 
 export const MobileScreen = window.matchMedia(
-	`all and (min-width: ${MOBILE_MIN_WIDTH}px) and (max-width: ${SMALL_TABLET_MIN_WIDTH - 1}px)`,
+	`all and (min-width: ${MOBILE_MIN_WIDTH}px)`,
 );
 
 export const SmallTabletScreen = window.matchMedia(
-	`all and (min-width: ${SMALL_TABLET_MIN_WIDTH}px) and (max-width: ${TABLET_MIN_WIDTH - 1}px)`,
+	`all and (min-width: ${SMALL_TABLET_MIN_WIDTH}px)`,
 );
 
 export const TabletScreen = window.matchMedia(
-	`all and (min-width: ${TABLET_MIN_WIDTH}px) and (max-width: ${DESKTOP_MIN_WIDTH - 1}px)`,
+	`all and (min-width: ${TABLET_MIN_WIDTH}px)`,
 );
 
 export const DesktopScreen = window.matchMedia(
-	`all and (min-width: ${DESKTOP_MIN_WIDTH}px) and (max-width: ${WIDE_SCREEN_WIDTH - 1}px)`,
+	`all and (min-width: ${DESKTOP_MIN_WIDTH}px)`,
 );
 
 export const WideDesktopScreen = window.matchMedia(

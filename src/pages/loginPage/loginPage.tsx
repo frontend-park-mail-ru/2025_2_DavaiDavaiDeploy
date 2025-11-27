@@ -29,7 +29,6 @@ import {
 	Title,
 } from '@/uikit/index';
 import { Component } from '@robocotik/react';
-import { SMALL_TABLET_MIN_WIDTH } from '../../consts/adaptivity';
 import { ERROR_CODES } from '../../consts/errorCodes';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
@@ -141,7 +140,7 @@ export class LoginPageNotConnected extends Component<
 					<Link className={styles.closeLink} href="/">
 						<img src={close} alt="close" />
 					</Link>
-					{this.props.adaptivity.viewWidth > SMALL_TABLET_MIN_WIDTH && (
+					{this.props.adaptivity.isSmallTablet && (
 						<div className={styles.videoContainer}>
 							<video
 								src={getStaticURL('/video/login_signup.mp4')}
