@@ -43,7 +43,7 @@ const getPromoFilmAction: Action = () => async (dispatch: Dispatch) => {
 	dispatch(setPromoFilmLoadingAction());
 
 	try {
-		const response = await HTTPClient.get<ModelsPromoFilm>(`/films/promo`);
+		const response = await HTTPClient.get<ModelsPromoFilm>(`/test/films/promo`);
 
 		dispatch(returnPromoFilmAction(response.data));
 	} catch (error: unknown) {

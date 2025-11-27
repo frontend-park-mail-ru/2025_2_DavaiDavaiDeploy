@@ -42,7 +42,7 @@ const getFavoritesAction = (): Action => async (dispatch: Dispatch) => {
 	dispatch(setFavoritesLoadingAction());
 
 	try {
-		const response = await HTTPClient.get<ModelsFavFilm[]>('/users/saved');
+		const response = await HTTPClient.get<ModelsFavFilm[]>('/test/users/saved');
 
 		dispatch(returnFavoritesAction(response.data));
 	} catch (error: unknown) {
@@ -95,7 +95,7 @@ const deleteFromFavoritesAction =
 	async (dispatch: Dispatch) => {
 		try {
 			const response = await HTTPClient.delete<ModelsFavFilm[]>(
-				`/films/${id}/remove`,
+				`/test/films/${id}/remove`,
 			);
 
 			dispatch(processDeleteAction(response.data));

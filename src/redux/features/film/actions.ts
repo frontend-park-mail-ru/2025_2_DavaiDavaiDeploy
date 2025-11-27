@@ -81,7 +81,7 @@ const getFilmAction: Action = (id: string) => async (dispatch: Dispatch) => {
 	dispatch(setFilmLoadingAction());
 
 	try {
-		const response = await HTTPClient.get<ModelsFilmPage>(`/films/${id}`);
+		const response = await HTTPClient.get<ModelsFilmPage>(`/test/films/${id}`);
 
 		dispatch(returnFilmAction(response.data));
 	} catch (error: unknown) {
@@ -115,7 +115,7 @@ const getFeedbacksAction: Action =
 
 		try {
 			const response = await HTTPClient.get<ModelsFilmFeedback[]>(
-				`/films/${id}/feedbacks`,
+				`/test/films/${id}/feedbacks`,
 				{ params: { count: limit, offset } },
 			);
 
@@ -161,7 +161,7 @@ const createRatingAction =
 	async (dispatch: Dispatch) => {
 		try {
 			const response = await HTTPClient.post<ModelsFilmFeedback>(
-				`/films/${id}/rating`,
+				`/test/films/${id}/rating`,
 				{
 					data: {
 						rating,
@@ -213,7 +213,7 @@ const createFeedbackAction =
 	async (dispatch: Dispatch) => {
 		try {
 			const response = await HTTPClient.post<ModelsFilmFeedback>(
-				`/films/${id}/feedback`,
+				`/test/films/${id}/feedback`,
 				{
 					data: {
 						rating,
@@ -272,7 +272,7 @@ const deleteFromFavoritesAction =
 	(id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			await HTTPClient.delete<ModelsFavFilm[]>(`/films/${id}/remove`);
+			await HTTPClient.delete<ModelsFavFilm[]>(`/test/films/${id}/remove`);
 
 			dispatch(processDeleteAction());
 		} catch (error: unknown) {
@@ -326,7 +326,7 @@ const addToFavoritesAction =
 	(id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			await HTTPClient.post<ModelsFavFilm[]>(`/films/${id}/save`);
+			await HTTPClient.post<ModelsFavFilm[]>(`/test/films/${id}/save`);
 
 			dispatch(processAddAction());
 		} catch (error: unknown) {

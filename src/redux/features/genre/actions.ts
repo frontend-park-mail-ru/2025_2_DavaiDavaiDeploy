@@ -109,7 +109,7 @@ const getGenreAction =
 		dispatch(setGenreLoadingAction());
 
 		try {
-			const response = await HTTPClient.get<ModelsGenre>(`/genres/${id}`);
+			const response = await HTTPClient.get<ModelsGenre>(`/test/genres/${id}`);
 			dispatch(returnGenreAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
@@ -140,7 +140,7 @@ const getGenresAction = (): Action => async (dispatch: Dispatch) => {
 	dispatch(setGenresLoadingAction());
 
 	try {
-		const response = await HTTPClient.get<ModelsGenre[]>('/genres/', {
+		const response = await HTTPClient.get<ModelsGenre[]>('/test/genres/', {
 			params: { count: 24, offset: 0 },
 		});
 
@@ -177,7 +177,7 @@ const getGenreFilmsAction =
 
 		try {
 			const response = await HTTPClient.get<ModelsMainPageFilm[]>(
-				`/genres/${id}/films`,
+				`/test/genres/${id}/films`,
 				{
 					params: { count: limit, offset },
 				},
