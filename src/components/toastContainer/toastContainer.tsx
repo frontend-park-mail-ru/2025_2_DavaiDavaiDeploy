@@ -1,9 +1,12 @@
 import { Toast } from '@/components/toast/toast';
 import { MIDDLE_SCREEN_WIDTH } from '@/consts/devices';
 import type { ToastType } from '@/consts/toasts';
-import { debounce } from '@/helpers/debounceHelper/debounceHelper';
+
 import { Flex } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
+import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
+import { compose } from '../../modules/redux';
 import styles from './toastContainer.module.scss';
 
 interface ToastItem {
@@ -16,46 +19,47 @@ interface ToastItem {
 
 const REMOVE_DELAY = 1000;
 const ACTIVE_TIME = 4000;
-const DEBOUNCE_DELAY = 100;
-
-let maxToastNumber = window && window.innerWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4;
 
 interface ToastContainerState {
 	toasts: ToastItem[];
-	debounceResizeHandler: (ev?: Event | undefined) => void;
+	viewWidth: number;
+	maxToastNumber: number;
 }
 
-export let AppToast: ToastContainer = null as unknown as ToastContainer;
+export let AppToast: typeof ToastContainer = null;
 
-export class ToastContainer extends Component<{}, ToastContainerState> {
+class ToastContainerComponent extends Component<
+	WithAdaptivityProps,
+	ToastContainerState
+> {
 	state: ToastContainerState = {
 		toasts: [],
-		debounceResizeHandler: () => {},
+		viewWidth: this.props.adaptivity.viewWidth,
+		maxToastNumber:
+			this.props.adaptivity.viewWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4,
 	};
 
-	constructor() {
-		super({}, null);
+	constructor(props: WithAdaptivityProps) {
+		super(props, null);
 		AppToast = this;
 	}
 
 	onMount() {
-		const debounceResizeHandler = debounce(this.handleResize, DEBOUNCE_DELAY);
-
-		this.setState({ debounceResizeHandler });
-
-		window.addEventListener('resize', debounceResizeHandler);
-
 		this.handleResize();
 	}
 
-	onUnmount() {
-		if (this.state.debounceResizeHandler) {
-			window.removeEventListener('resize', this.state.debounceResizeHandler);
+	onUpdate() {
+		if (this.state.viewWidth !== this.props.adaptivity.viewWidth) {
+			this.setState({ viewWidth: this.props.adaptivity.viewWidth });
+			this.handleResize();
 		}
 	}
 
 	handleResize() {
-		maxToastNumber = window && window.innerWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4;
+		this.setState({
+			maxToastNumber:
+				this.props.adaptivity.viewWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4,
+		});
 	}
 
 	success = (message: string) => {
@@ -85,8 +89,8 @@ export class ToastContainer extends Component<{}, ToastContainerState> {
 		this.setState((prevState) => {
 			const updatedToasts = [...prevState.toasts];
 
-			if (updatedToasts.length + 1 > maxToastNumber) {
-				const id = updatedToasts.length - maxToastNumber;
+			if (updatedToasts.length + 1 > this.state.maxToastNumber) {
+				const id = updatedToasts.length - this.state.maxToastNumber;
 				updatedToasts[id] = { ...updatedToasts[id], isActive: false };
 				clearTimeout(updatedToasts[id].timer);
 			}
@@ -132,3 +136,5 @@ export class ToastContainer extends Component<{}, ToastContainerState> {
 		);
 	}
 }
+
+export const ToastContainer = compose(withAdaptivity)(ToastContainerComponent);
