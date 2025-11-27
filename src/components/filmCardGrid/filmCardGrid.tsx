@@ -13,8 +13,8 @@ import { Component, createRef } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
 
-const THROTTLE_DELAY: number = 10;
-const ROOT_MARGIN: string = '300px';
+const THROTTLE_DELAY = 10;
+const ROOT_MARGIN = '650px';
 const INITIAL_DELAY = 300;
 
 interface FilmCardGridProps {
