@@ -91,6 +91,7 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 					isSmallTablet: this.state.isSmallTablet,
 					isMobile: this.state.isMobile,
 					isSmallMobile: this.state.isSmallMobile,
+					viewWidth: this.state.viewWidth,
 				}}
 			>
 				{this.props.children}
