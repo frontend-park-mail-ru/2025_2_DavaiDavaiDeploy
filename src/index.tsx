@@ -16,7 +16,7 @@ import {
 } from './components/toastContainer/toastContainer.tsx';
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { isSwEnabled } from './consts/sw';
-import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
+import { PRODUCTION_URL } from './consts/urls.ts';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
@@ -44,8 +44,9 @@ if (sentryEnabled) {
 		dsn: sentryDSN,
 		enabled: true,
 		integrations: [Sentry.browserTracingIntegration()],
-		tracePropagationTargets: [PRODUCTION_URL_WITH_SCHEMA],
+		tracePropagationTargets: [PRODUCTION_URL],
 		release: import.meta.env.VITE_RELEASE_VERSION,
+		environment: import.meta.env.MODE,
 	});
 }
 

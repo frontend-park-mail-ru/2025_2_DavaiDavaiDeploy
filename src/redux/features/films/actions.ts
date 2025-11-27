@@ -1,6 +1,7 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsMainPageFilm } from '@/types/models';
+import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
 
 /**
@@ -65,6 +66,15 @@ const getFilmsAction: Action =
 			}
 
 			dispatch(returnFilmsErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки фильмов'), {
+				tags: {
+					category: 'films',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 

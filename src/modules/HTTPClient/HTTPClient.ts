@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser';
 import { METHODS } from './methods';
 import type { Config, DefaultConfig, RequestConfig } from './types/configs';
 import type { Response } from './types/response';
@@ -9,7 +8,7 @@ import type { Response } from './types/response';
  */
 export class HTTPClient {
 	/**
-	 * Создаёт экземпляр HTTPClient.
+	 * Создаёт экземпляр HTTPClient
 	 * @constructor
 	 */
 
@@ -126,16 +125,6 @@ export class HTTPClient {
 
 			if (!response.ok) {
 				const errorMessage = `HTTP error! status: ${response.status}`;
-
-				Sentry.captureException(new Error(errorMessage), {
-					extra: {
-						url: requestUrl.toString(),
-						method: requestMethod,
-						status: response.status,
-						path,
-					},
-				});
-
 				throw new Error(errorMessage, { cause: response.status });
 			}
 
@@ -168,13 +157,6 @@ export class HTTPClient {
 			};
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				Sentry.captureException(error, {
-					extra: {
-						url: requestUrl.toString(),
-						method: requestMethod,
-					},
-				});
-
 				if (error.name === 'TypeError' && error.message.includes('fetch')) {
 					throw new Error('Network error');
 				}

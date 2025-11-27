@@ -1,6 +1,7 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsFavFilm, ModelsFilmInCalendar } from '@/types/models';
+import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -61,6 +62,15 @@ const getCalendarAction =
 			}
 
 			dispatch(returnCalendarErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки календаря'), {
+				tags: {
+					category: 'calendar',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -104,6 +114,18 @@ const deleteFromFavoritesAction =
 			}
 
 			dispatch(returnDeleteErrorAction(errorMessage));
+
+			Sentry.captureException(
+				new Error('Ошибка ручки удаления из избранного'),
+				{
+					tags: {
+						category: 'removeFromFav',
+					},
+					extra: {
+						error: errorMessage,
+					},
+				},
+			);
 		}
 	};
 
@@ -147,6 +169,18 @@ const addToFavoritesAction =
 			}
 
 			dispatch(returnAddErrorAction(errorMessage));
+
+			Sentry.captureException(
+				new Error('Ошибка ручки добавления в избранное'),
+				{
+					tags: {
+						category: 'addToFav',
+					},
+					extra: {
+						error: errorMessage,
+					},
+				},
+			);
 		}
 	};
 

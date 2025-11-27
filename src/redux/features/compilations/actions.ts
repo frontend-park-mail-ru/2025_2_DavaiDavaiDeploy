@@ -1,6 +1,7 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsCompFilm, ModelsCompilation } from '@/types/models';
+import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -123,6 +124,15 @@ const getCompilationAction =
 			}
 
 			dispatch(returnCompilationErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки подборки'), {
+				tags: {
+					category: 'compilation',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -147,6 +157,15 @@ const getCompilationsAction = (): Action => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(returnCompilationsErrorAction(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки подборок'), {
+			tags: {
+				category: 'compilations',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
 	}
 };
 
@@ -177,6 +196,15 @@ const getCompilationFilmsAction =
 			}
 
 			dispatch(returnCompilationFilmsErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки фильмов подборки'), {
+				tags: {
+					category: 'compilationFilms',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -220,6 +248,18 @@ const deleteFromFavoritesAction =
 			}
 
 			dispatch(returnDeleteErrorAction(errorMessage));
+
+			Sentry.captureException(
+				new Error('Ошибка ручки удаления из избранного'),
+				{
+					tags: {
+						category: 'removeFromFav',
+					},
+					extra: {
+						error: errorMessage,
+					},
+				},
+			);
 		}
 	};
 
@@ -263,6 +303,18 @@ const addToFavoritesAction =
 			}
 
 			dispatch(returnAddErrorAction(errorMessage));
+
+			Sentry.captureException(
+				new Error('Ошибка ручки добавления в избранное'),
+				{
+					tags: {
+						category: 'addToFav',
+					},
+					extra: {
+						error: errorMessage,
+					},
+				},
+			);
 		}
 	};
 
