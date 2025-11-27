@@ -48,9 +48,9 @@ const SMALL_CARD_HEIGHT = 30;
 const BIG_CARD_HEIGHT = 50;
 
 function getSlideCapacityFromWidth(width: number) {
-	if (width > WIDE_SCREEN_WIDTH) {
+	if (width >= WIDE_SCREEN_WIDTH) {
 		return MAX_SLIDE_CAPACITY;
-	} else if (width < NARROW_SCREEN_WIDTH) {
+	} else if (width <= NARROW_SCREEN_WIDTH) {
 		return MIN_SLIDE_CAPACITY;
 	}
 
