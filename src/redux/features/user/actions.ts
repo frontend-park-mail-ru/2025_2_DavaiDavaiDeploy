@@ -6,6 +6,7 @@ import { storeAuthTokensFromResponse } from '@/helpers/storeAuthTokensFromRespon
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsUser } from '@/types/models';
+import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -186,6 +187,15 @@ const checkUserAction = (): Action => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(returnUserErrorAction(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки проверки аутентификации'), {
+			tags: {
+				category: 'check',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
 	}
 };
 
@@ -219,6 +229,15 @@ const registerUserAction =
 			}
 
 			dispatch(returnUserErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки регистрации'), {
+				tags: {
+					category: 'signup',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -254,6 +273,15 @@ const loginUserAction =
 			}
 
 			dispatch(returnUserErrorAction(errorMessage));
+
+			Sentry.captureException(new Error('Ошибка ручки входа'), {
+				tags: {
+					category: 'signin',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -272,6 +300,15 @@ const logoutUserAction = () => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(returnUserErrorAction(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки выхода'), {
+			tags: {
+				category: 'logout',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
 	}
 };
 
@@ -303,6 +340,14 @@ const changePasswordAction =
 			}
 
 			dispatch(returnPasswordChangeErrorAction(errorMessage));
+			Sentry.captureException(new Error('Ошибка ручки смены пароля'), {
+				tags: {
+					category: 'passChange',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -334,6 +379,14 @@ const changeAvatarAction =
 			}
 
 			dispatch(returnAvatarChangeErrorAction(errorMessage));
+			Sentry.captureException(new Error('Ошибка ручки смены аватара'), {
+				tags: {
+					category: 'avatarChange',
+				},
+				extra: {
+					error: errorMessage,
+				},
+			});
 		}
 	};
 
@@ -353,6 +406,15 @@ const sendActivateOTP = (): Action => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(setOTPError(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки активации 2FA'), {
+			tags: {
+				category: 'enable2fa',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
 	}
 };
 
@@ -372,6 +434,15 @@ const sendDeactivateOTP = (): Action => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(setOTPError(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки деактивации 2FA'), {
+			tags: {
+				category: 'disable2fa',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
 	}
 };
 

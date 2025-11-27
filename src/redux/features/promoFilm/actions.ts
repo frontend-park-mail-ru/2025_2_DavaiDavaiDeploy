@@ -1,6 +1,7 @@
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsPromoFilm } from '@/types/models';
+import * as Sentry from '@sentry/browser';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -55,6 +56,15 @@ const getPromoFilmAction: Action = () => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(returnPromoFilmErrorAction(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки промо фильма'), {
+			tags: {
+				category: 'promo',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
 	}
 };
 
