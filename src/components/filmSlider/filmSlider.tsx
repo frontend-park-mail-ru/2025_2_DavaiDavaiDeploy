@@ -95,13 +95,13 @@ class FilmSliderComponent extends Component<
 > {
 	state: FilmSliderState = {
 		curFilm: 0,
-		slideCapacity: getSlideCapacityFromWidth(window.innerWidth),
+		slideCapacity: 0,
 		cardHeight: SMALL_CARD_HEIGHT,
 		active: false,
-		windowHeight: window.innerHeight,
+		windowHeight: 0,
 		autoSlider: null,
 		inactivityTimer: null,
-		viewWidth: this.props.adaptivity.viewWidth,
+		viewWidth: 0,
 	};
 
 	sliderRef = createRef<HTMLElement>();
@@ -121,13 +121,14 @@ class FilmSliderComponent extends Component<
 			autoSlider,
 			active: getIsActive(this.state.slideCapacity),
 			cardHeight: getCardHeight(this.state.slideCapacity),
+			slideCapacity: getSlideCapacityFromWidth(this.props.adaptivity.viewWidth),
+			viewWidth: this.props.adaptivity.viewWidth,
+			windowHeight: window.innerHeight,
 		});
 
 		if (this.state.active) {
 			autoSlider.start();
 		}
-
-		this.handleResize();
 	}
 
 	onUnmount() {
@@ -154,7 +155,9 @@ class FilmSliderComponent extends Component<
 
 		const cardHeight = getCardHeight(slideCapacity);
 
-		slideCapacity = Math.min(slideCapacity, this.props.films.length);
+		if (this.props.films.length > 0) {
+			slideCapacity = Math.min(slideCapacity, this.props.films.length);
+		}
 
 		const active = getIsActive(slideCapacity);
 
@@ -224,7 +227,9 @@ class FilmSliderComponent extends Component<
 
 	getStyles = (index: number) => {
 		const total = this.props.films.length;
-		const stepPx = (window.innerWidth * this.state.cardHeight) / (100 * 1.7);
+		const stepPx =
+			(this.props.adaptivity.viewWidth * this.state.cardHeight) / (100 * 1.7);
+
 		const curIndex = this.state.curFilm;
 
 		let diff = (index - curIndex + total) % total;
