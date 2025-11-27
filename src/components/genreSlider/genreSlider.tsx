@@ -11,6 +11,7 @@ import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
 import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { WIDE_SCREEN_WIDTH } from '../../consts/adaptivity';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
@@ -33,7 +34,6 @@ interface GenreSliderState {
 		stop: VoidFunction;
 	};
 	inactivityTimer: NodeJS.Timeout | null;
-	isWideDesktop: boolean;
 }
 
 const ANIMATION_DURATION = 350;
@@ -46,14 +46,32 @@ class GenreSliderComponent extends Component<
 > {
 	state: GenreSliderState = {
 		curGenre: 0,
-		slideCapacity: 8,
+		slideCapacity: this.getSlideCapacityFromWidth(
+			this.props.adaptivity.viewWidth,
+		),
 		isAnimating: false,
 		phase: null,
 		direction: null,
 		autoSlider: null,
 		inactivityTimer: null,
-		isWideDesktop: this.props.adaptivity.isWideDesktop,
 	};
+
+	getSlideCapacityFromWidth(width: number) {
+		return width < WIDE_SCREEN_WIDTH ? 4 : 8;
+	}
+
+	onUpdate() {
+		if (
+			this.getSlideCapacityFromWidth(this.props.adaptivity.viewWidth) !==
+			this.state.slideCapacity
+		) {
+			this.setState({
+				slideCapacity: this.getSlideCapacityFromWidth(
+					this.props.adaptivity.viewWidth,
+				),
+			});
+		}
+	}
 
 	onMount() {
 		this.props.getGenres();
@@ -80,15 +98,6 @@ class GenreSliderComponent extends Component<
 
 	onUnmount() {
 		this.state.autoSlider?.stop();
-	}
-
-	onUpdate() {
-		if (this.state.isWideDesktop !== this.props.adaptivity.isWideDesktop) {
-			this.setState({
-				isWideDesktop: this.props.adaptivity.isWideDesktop,
-				slideCapacity: this.props.adaptivity.isWideDesktop ? 8 : 4,
-			});
-		}
 	}
 
 	animate(direction: 'left' | 'right', nextIndex: number) {
