@@ -25,41 +25,21 @@ interface CalendarWidgetProps {
 	getFilms: (limit: number, offset: number) => void;
 }
 
-interface CalendarWidgetState {
-	filmCount: number;
-	isWideDesktop: boolean;
-}
-
 class CalendarWidgetComponent extends Component<
-	CalendarWidgetProps & WithRouterProps & WithAdaptivityProps,
-	CalendarWidgetState
+	CalendarWidgetProps & WithRouterProps & WithAdaptivityProps
 > {
-	state: CalendarWidgetState = {
-		filmCount: this.props.adaptivity.isWideDesktop
-			? MAX_FILM_COUNT
-			: SMALL_FILM_COUNT,
-		isWideDesktop: this.props.adaptivity.isWideDesktop,
-	};
-
 	onMount() {
 		this.props.getFilms(MAX_FILM_COUNT, OFFSET);
-	}
-
-	onUpdate() {
-		if (this.state.isWideDesktop !== this.props.adaptivity.isWideDesktop) {
-			this.setState({
-				isWideDesktop: this.props.adaptivity.isWideDesktop,
-				filmCount: this.props.adaptivity.isWideDesktop
-					? MAX_FILM_COUNT
-					: SMALL_FILM_COUNT,
-			});
-		}
 	}
 
 	render() {
 		if (!this.props.films || this.props.films.length === 0) {
 			return <div />;
 		}
+
+		const filmCount = this.props.adaptivity.isWideDesktop
+			? MAX_FILM_COUNT
+			: SMALL_FILM_COUNT;
 
 		return (
 			<Flex className={styles.calendarWidget} direction="column">
@@ -76,7 +56,7 @@ class CalendarWidgetComponent extends Component<
 				</Link>
 				<div className={styles.films}>
 					{this.props.films.map((film, index) => {
-						if (index < this.state.filmCount) {
+						if (index < filmCount) {
 							return (
 								<CalendarWidgetFilmCard
 									film={film}
