@@ -17,6 +17,7 @@ import {
 import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { isSwEnabled } from './consts/sw';
 import { PRODUCTION_URL_WITH_SCHEMA } from './consts/urls';
+import { AdaptivityProvider } from './modules/adaptivity/AdaptivityProvider';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
@@ -108,7 +109,9 @@ class ProvidersLayout extends Component {
 		return (
 			<ModalsProvider>
 				<Provider store={store}>
-					<RouterProvider>{this.props.children}</RouterProvider>
+					<RouterProvider>
+						<AdaptivityProvider>{this.props.children}</AdaptivityProvider>
+					</RouterProvider>
 				</Provider>
 			</ModalsProvider>
 		);
