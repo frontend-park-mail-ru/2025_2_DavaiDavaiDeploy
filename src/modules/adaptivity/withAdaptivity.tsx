@@ -6,10 +6,10 @@ import type { WithAdaptivityProps } from './withAdaptivityProps.ts';
 
 type OmitAdaptivity<T> = Omit<T, keyof WithAdaptivityProps>;
 
-export function withModal<P>(
+export function withAdaptivity<P>(
 	WrappedComponent: ComponentType<P & WithAdaptivityProps>,
 ) {
-	return class WithModal extends Component<OmitAdaptivity<P>> {
+	return class WithAdaptivity extends Component<OmitAdaptivity<P>> {
 		static readonly contextType = AdaptivityContext;
 
 		render() {

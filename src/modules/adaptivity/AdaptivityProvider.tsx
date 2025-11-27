@@ -1,56 +1,77 @@
 import { Component } from '@robocotik/react';
-import { debounce } from '../../helpers/debounceHelper/debounceHelper';
 import { AdaptivityContext } from './AdaptivityContext.ts';
+import {
+	DesktopScreen,
+	MobileScreen,
+	SmallMobileScreen,
+	SmallTabletScreen,
+	TabletScreen,
+} from './adaptivities';
 
-const DESKTOP_MIN_WIDTH = 1280;
-const TABLET_MIN_WIDTH = 1024;
-const DEBOUNCE_DELAY = 100;
+interface AdaptivityState {
+	isDesktop: boolean;
+	isTablet: boolean;
+	isSmallTablet: boolean;
+	isMobile: boolean;
+	isSmallMobile: boolean;
+}
 
-export class AdaptivityProvider extends Component {
+export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 	state = {
 		isDesktop: false,
 		isTablet: false,
+		isSmallTablet: false,
+		isMobile: false,
+		isSmallMobile: false,
 	};
 
-	handleResize = () => {
-		if (
-			window.matchMedia(`(width >= ${DESKTOP_MIN_WIDTH}px)`).matches ===
-			this.state.isDesktop
-		) {
-			this.setState({
-				isDesktop: window.matchMedia(`(width >= ${DESKTOP_MIN_WIDTH}px)`)
-					.matches,
-			});
-		}
-
-		if (
-			window.matchMedia(
-				`(width >= ${TABLET_MIN_WIDTH}px) and (width <= ${DESKTOP_MIN_WIDTH}px)`,
-			).matches === this.state.isTablet
-		) {
-			this.setState({
-				isTablet: window.matchMedia(
-					`(width >= ${TABLET_MIN_WIDTH}px) and (width <= ${DESKTOP_MIN_WIDTH}px)`,
-				),
-			});
-		}
+	mediaXhandler = (
+		e: MediaQueryListEvent,
+		key: keyof AdaptivityState,
+	): void => {
+		this.setState({
+			[key]: e.matches,
+		});
 	};
 
-	debounceResize = debounce(this.handleResize, DEBOUNCE_DELAY);
+	mediaHandlers = () => {
+		DesktopScreen.addEventListener('change', (e) =>
+			this.mediaXhandler(e, 'isDesktop'),
+		);
+
+		TabletScreen.addEventListener('change', (e) =>
+			this.mediaXhandler(e, 'isTablet'),
+		);
+
+		SmallTabletScreen.addEventListener('change', (e) =>
+			this.mediaXhandler(e, 'isSmallTablet'),
+		);
+
+		MobileScreen.addEventListener('change', (e) =>
+			this.mediaXhandler(e, 'isMobile'),
+		);
+
+		SmallMobileScreen.addEventListener('change', (e) =>
+			this.mediaXhandler(e, 'isSmallMobile'),
+		);
+	};
 
 	onMount() {
-		window.addEventListener('resize', this.debounceResize);
+		window.addEventListener('change', this.mediaHandlers);
 	}
 
 	onUnmount() {
-		window.removeEventListener('resize', this.debounceResize);
+		window.removeEventListener('change', this.mediaHandlers);
 	}
-
 	render() {
 		return (
 			<AdaptivityContext.Provider
 				value={{
 					isDesktop: this.state.isDesktop,
+					isTablet: this.state.isTablet,
+					isSmallTablet: this.state.isSmallTablet,
+					isMobile: this.state.isMobile,
+					isSmallMobile: this.state.isSmallMobile,
 				}}
 			>
 				{this.props.children}
