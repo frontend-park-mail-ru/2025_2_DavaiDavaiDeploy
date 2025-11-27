@@ -35,7 +35,9 @@ class CalendarWidgetComponent extends Component<
 	CalendarWidgetState
 > {
 	state: CalendarWidgetState = {
-		filmCount: MAX_FILM_COUNT,
+		filmCount: this.props.adaptivity.isWideDesktop
+			? MAX_FILM_COUNT
+			: SMALL_FILM_COUNT,
 		isWideDesktop: this.props.adaptivity.isWideDesktop,
 	};
 
