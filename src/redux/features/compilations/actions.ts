@@ -110,7 +110,7 @@ const getCompilationAction =
 
 		try {
 			const response = await HTTPClient.get<ModelsCompilation>(
-				`/test/compilations/${id}`,
+				`/compilations/${id}`,
 			);
 
 			dispatch(returnCompilationAction(response.data));
@@ -143,9 +143,8 @@ const getCompilationsAction = (): Action => async (dispatch: Dispatch) => {
 	dispatch(setCompilationsLoadingAction());
 
 	try {
-		const response = await HTTPClient.get<ModelsCompilation[]>(
-			'/test/compilations/',
-		);
+		const response =
+			await HTTPClient.get<ModelsCompilation[]>('/compilations/');
 
 		dispatch(returnCompilationsAction(response.data));
 	} catch (error: unknown) {
@@ -180,7 +179,7 @@ const getCompilationFilmsAction =
 
 		try {
 			const response = await HTTPClient.get<ModelsCompFilm[]>(
-				`/test/compilations/${id}/films`,
+				`/compilations/${id}/films`,
 				{
 					params: { count: limit, offset },
 				},
@@ -236,7 +235,7 @@ const deleteFromFavoritesAction =
 	(id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			await HTTPClient.delete<ModelsCompFilm[]>(`/test/films/${id}/remove`);
+			await HTTPClient.delete<ModelsCompFilm[]>(`/films/${id}/remove`);
 
 			dispatch(processDeleteAction(id));
 		} catch (error: unknown) {
@@ -291,7 +290,7 @@ const addToFavoritesAction =
 	(id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			await HTTPClient.post<ModelsCompFilm[]>(`/test/films/${id}/save`);
+			await HTTPClient.post<ModelsCompFilm[]>(`/films/${id}/save`);
 
 			dispatch(processAddAction(id));
 		} catch (error: unknown) {

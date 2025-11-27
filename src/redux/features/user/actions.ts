@@ -175,7 +175,7 @@ const checkUserAction = (): Action => async (dispatch: Dispatch) => {
 	dispatch(setUserLoadingAction());
 
 	try {
-		const response = await HTTPClient.get<ModelsUser>('/test/auth/check');
+		const response = await HTTPClient.get<ModelsUser>('/auth/check');
 		dispatch(returnUserAction(response.data));
 	} catch (error: unknown) {
 		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
@@ -210,7 +210,7 @@ const registerUserAction =
 	(login: string, password: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			const response = await HTTPClient.post<ModelsUser>('/test/auth/signup', {
+			const response = await HTTPClient.post<ModelsUser>('/auth/signup', {
 				data: {
 					login: login,
 					password: password,
@@ -248,7 +248,7 @@ const loginUserAction =
 	(login: string, password: string, otp?: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			const response = await HTTPClient.post<ModelsUser>('/test/auth/signin', {
+			const response = await HTTPClient.post<ModelsUser>('/auth/signin', {
 				data: otp
 					? {
 							login: login,
@@ -287,7 +287,7 @@ const loginUserAction =
 
 const logoutUserAction = () => async (dispatch: Dispatch) => {
 	try {
-		await HTTPClient.post<ModelsUser>('/test/auth/logout');
+		await HTTPClient.post<ModelsUser>('/auth/logout');
 		dispatch(setUserLogoutAction());
 		LocalStorageHelper.removeItem('x-csrf-token');
 	} catch (error: unknown) {
@@ -319,7 +319,7 @@ const changePasswordAction =
 
 		try {
 			const response = await HTTPClient.put<ModelsUser>(
-				'/test/users/change/password',
+				'/users/change/password',
 				{
 					data: {
 						new_password,
@@ -361,7 +361,7 @@ const changeAvatarAction =
 
 		try {
 			const response = await HTTPClient.put<ModelsUser>(
-				'/test/users/change/avatar',
+				'/users/change/avatar',
 				{
 					data: formData,
 				},
@@ -394,7 +394,7 @@ const sendActivateOTP = (): Action => async (dispatch: Dispatch) => {
 	dispatch(setOTPLoading());
 
 	try {
-		const response = await HTTPClient.post<Blob>('/test/auth/enable2fa');
+		const response = await HTTPClient.post<Blob>('/auth/enable2fa');
 		dispatch(setActivatedOTP(URL.createObjectURL(response.data)));
 	} catch (error: unknown) {
 		let errorMessage: string = DEFAULT_ERROR_MESSAGE;
@@ -422,7 +422,7 @@ const sendDeactivateOTP = (): Action => async (dispatch: Dispatch) => {
 	dispatch(setOTPLoading());
 
 	try {
-		await HTTPClient.post<ModelsUser>('/test/auth/disable2fa');
+		await HTTPClient.post<ModelsUser>('/auth/disable2fa');
 		dispatch(setDeactivatedOTP());
 	} catch (error: unknown) {
 		let errorMessage: string = DEFAULT_ERROR_MESSAGE;

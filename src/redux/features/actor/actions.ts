@@ -79,9 +79,7 @@ const getActorAction =
 		dispatch(setActorLoadingAction());
 
 		try {
-			const response = await HTTPClient.get<ModelsActorPage>(
-				`/test/actors/${id}`,
-			);
+			const response = await HTTPClient.get<ModelsActorPage>(`/actors/${id}`);
 
 			dispatch(returnActorAction(response.data));
 		} catch (error: unknown) {
@@ -116,7 +114,7 @@ const getActorFilmsAction =
 
 		try {
 			const response = await HTTPClient.get<ModelsMainPageFilm[]>(
-				`/test/actors/${id}/films`,
+				`/actors/${id}/films`,
 				{
 					params: { count: limit, offset },
 				},

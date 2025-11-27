@@ -45,7 +45,7 @@ const getCalendarAction =
 
 		try {
 			const response = await HTTPClient.get<ModelsFilmInCalendar[]>(
-				`/test/films/calendar`,
+				`/films/calendar`,
 				{
 					params: { count: limit, offset },
 				},
@@ -101,7 +101,7 @@ const deleteFromFavoritesAction =
 	(id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			await HTTPClient.delete<ModelsFavFilm[]>(`/test/films/${id}/remove`);
+			await HTTPClient.delete<ModelsFavFilm[]>(`/films/${id}/remove`);
 
 			dispatch(processDeleteAction(id));
 		} catch (error: unknown) {
@@ -156,7 +156,7 @@ const addToFavoritesAction =
 	(id: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
-			await HTTPClient.post<ModelsFavFilm[]>(`/test/films/${id}/save`);
+			await HTTPClient.post<ModelsFavFilm[]>(`/films/${id}/save`);
 
 			dispatch(processAddAction(id));
 		} catch (error: unknown) {

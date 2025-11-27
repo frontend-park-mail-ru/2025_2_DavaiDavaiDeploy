@@ -59,12 +59,9 @@ const getSearchResultAction =
 		dispatch(setSearchResultLoadingAction());
 
 		try {
-			const response = await HTTPClient.get<ModelsSearchResponse>(
-				`/test/search`,
-				{
-					params: { q: searchText },
-				},
-			);
+			const response = await HTTPClient.get<ModelsSearchResponse>(`/search`, {
+				params: { q: searchText },
+			});
 
 			dispatch(returnSearchResultAction(response.data));
 		} catch (error: unknown) {
@@ -117,7 +114,7 @@ const getVoiceSearchResultAction =
 
 		try {
 			const response = await HTTPClient.post<ModelsVoiceSearchResponse>(
-				`/test/voice-search`,
+				`/voice-search`,
 				{
 					data: searchWAV,
 				},

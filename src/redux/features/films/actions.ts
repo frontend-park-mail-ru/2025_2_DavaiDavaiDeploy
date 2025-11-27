@@ -51,12 +51,9 @@ const getFilmsAction: Action =
 		dispatch(setFilmsLoadingAction());
 
 		try {
-			const response = await HTTPClient.get<ModelsMainPageFilm[]>(
-				'/test/films/',
-				{
-					params: { count: limit, offset },
-				},
-			);
+			const response = await HTTPClient.get<ModelsMainPageFilm[]>('/films/', {
+				params: { count: limit, offset },
+			});
 
 			dispatch(returnFilmsAction(response.data));
 		} catch (error: unknown) {
