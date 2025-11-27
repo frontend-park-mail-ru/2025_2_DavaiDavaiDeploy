@@ -22,8 +22,6 @@ const ACTIVE_TIME = 4000;
 
 interface ToastContainerState {
 	toasts: ToastItem[];
-	viewWidth: number;
-	maxToastNumber: number;
 }
 
 export let AppToast: typeof ToastContainer = null;
@@ -34,32 +32,11 @@ class ToastContainerComponent extends Component<
 > {
 	state: ToastContainerState = {
 		toasts: [],
-		viewWidth: this.props.adaptivity.viewWidth,
-		maxToastNumber:
-			this.props.adaptivity.viewWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4,
 	};
 
 	constructor(props: WithAdaptivityProps) {
 		super(props, null);
 		AppToast = this;
-	}
-
-	onMount() {
-		this.handleResize();
-	}
-
-	onUpdate() {
-		if (this.state.viewWidth !== this.props.adaptivity.viewWidth) {
-			this.setState({ viewWidth: this.props.adaptivity.viewWidth });
-			this.handleResize();
-		}
-	}
-
-	handleResize() {
-		this.setState({
-			maxToastNumber:
-				this.props.adaptivity.viewWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4,
-		});
 	}
 
 	success = (message: string) => {
@@ -86,11 +63,14 @@ class ToastContainerComponent extends Component<
 			this.removeToast(newToast.id);
 		}, ACTIVE_TIME);
 
+		const maxToastNumber =
+			this.props.adaptivity.viewWidth < MIDDLE_SCREEN_WIDTH ? 2 : 4;
+
 		this.setState((prevState) => {
 			const updatedToasts = [...prevState.toasts];
 
-			if (updatedToasts.length + 1 > this.state.maxToastNumber) {
-				const id = updatedToasts.length - this.state.maxToastNumber;
+			if (updatedToasts.length + 1 > maxToastNumber) {
+				const id = updatedToasts.length - maxToastNumber;
 				updatedToasts[id] = { ...updatedToasts[id], isActive: false };
 				clearTimeout(updatedToasts[id].timer);
 			}
