@@ -9,7 +9,7 @@ interface InitialState {
 	loading: boolean;
 	films: ModelsMainPageFilm[];
 	error: string | null;
-	cursor: number | null;
+	cursor: string | null;
 }
 
 /**
@@ -43,7 +43,7 @@ const filmsReducer: Reducer = (state = initialState, action: Action): State => {
 				...state,
 				loading: false,
 				films: mergeUnique(state.films, payload.films),
-				cursor: payload.cursor,
+				cursor: payload.cursor ? payload.cursor : null,
 			};
 		case actionTypes.FILMS_ERROR:
 			return {

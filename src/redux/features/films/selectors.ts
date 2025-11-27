@@ -11,5 +11,5 @@ export const selectFilms: Selector = (state: State): ModelsMainPageFilm[] =>
 export const selectFilmsError: Selector = (state: State): string | null =>
 	state.films.error;
 
-export const selectCursor: Selector = (state: State): number | null =>
+export const selectCursor: Selector = (state: State): string | null =>
 	state.films.cursor;

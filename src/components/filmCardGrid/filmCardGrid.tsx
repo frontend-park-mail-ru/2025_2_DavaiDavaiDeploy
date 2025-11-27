@@ -14,39 +14,45 @@ import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
 
 const THROTTLE_DELAY: number = 10;
-const ROOT_MARGIN: string = '400px';
+const ROOT_MARGIN: string = '300px';
+const INITIAL_DELAY = 300;
 
 interface FilmCardGridProps {
 	films: ModelsMainPageFilm[];
-	getFilms: (cursor: number) => void;
-	cursor: number;
+	getFilms: (cursor: string) => void;
+	cursor: string;
 }
 
 class FilmCardGridComponent extends Component<
 	FilmCardGridProps & WithRouterProps
 > {
-	state = {
-		observer: undefined,
-	};
-
 	loadMoreTriggerRef = createRef<HTMLElement>();
 	observer?: IntersectionObserver;
 
 	onMount() {
-		this.loadMoreFilms();
+		this.props.getFilms(this.props.cursor);
 
 		const throttledIntersectHandler = throttle(
-			this.loadMoreFilms,
+			() => this.loadMoreFilms(),
 			THROTTLE_DELAY,
 		);
 
-		this.observer = new IntersectionObserver(throttledIntersectHandler, {
-			rootMargin: ROOT_MARGIN,
-		});
+		this.observer = new IntersectionObserver(
+			(entries) => {
+				const entry = entries[0];
 
-		if (this.loadMoreTriggerRef.current) {
-			this.observer.observe(this.loadMoreTriggerRef.current);
-		}
+				if (entry.isIntersecting) {
+					throttledIntersectHandler();
+				}
+			},
+			{ rootMargin: ROOT_MARGIN },
+		);
+
+		setTimeout(() => {
+			if (this.loadMoreTriggerRef.current && this.observer) {
+				this.observer.observe(this.loadMoreTriggerRef.current);
+			}
+		}, INITIAL_DELAY);
 	}
 
 	onUnmount() {
@@ -89,7 +95,7 @@ const mapStateToProps = (state: State): Map => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	getFilms: (cursor: number) => dispatch(actions.getFilmsAction(cursor)),
+	getFilms: (cursor: string) => dispatch(actions.getFilmsAction(cursor)),
 });
 
 export const FilmCardGrid = compose(

@@ -19,7 +19,7 @@ const setFilmsLoadingAction = (): Action => {
  */
 const returnFilmsAction = (
 	data: ModelsMainPageFilm[],
-	cursor: number,
+	cursor?: string,
 ): Action => {
 	return {
 		type: actionTypes.FILMS_LOADED,
@@ -58,9 +58,9 @@ const getFilmsAction: Action =
 				params: { cursor },
 			});
 
-			const cursor2 = 2;
-
-			dispatch(returnFilmsAction(response.data, cursor2));
+			dispatch(
+				returnFilmsAction(response.data, response.headers['x-next-cursor']),
+			);
 		} catch (error: unknown) {
 			let errorMessage: string = 'Произошла ошибка';
 
