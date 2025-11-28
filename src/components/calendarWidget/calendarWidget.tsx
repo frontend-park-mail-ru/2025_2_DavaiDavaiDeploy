@@ -55,16 +55,14 @@ class CalendarWidgetComponent extends Component<
 					</Flex>
 				</Link>
 				<div className={styles.films}>
-					{this.props.films.map((film, index) => {
-						if (index < filmCount) {
-							return (
-								<CalendarWidgetFilmCard
-									film={film}
-									number={index + 1}
-									key={index}
-								/>
-							);
-						}
+					{this.props.films.slice(0, filmCount).map((film, index) => {
+						return (
+							<CalendarWidgetFilmCard
+								film={film}
+								number={index + 1}
+								key={index}
+							/>
+						);
 					})}
 				</div>
 			</Flex>
