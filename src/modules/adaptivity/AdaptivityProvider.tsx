@@ -29,7 +29,7 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 		isSmallTablet: SmallTabletScreen.matches,
 		isMobile: MobileScreen.matches,
 		isSmallMobile: SmallMobileScreen.matches,
-		viewWidth: 0,
+		viewWidth: getClosestViewWidth(window.innerWidth),
 	};
 
 	wideDesktopHandler = (e: MediaQueryListEvent) => {
@@ -60,18 +60,6 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 		});
 	};
 
-	initializeState = () => {
-		this.setState({
-			isWideDesktop: WideDesktopScreen.matches,
-			isDesktop: DesktopScreen.matches,
-			isTablet: TabletScreen.matches,
-			isSmallTablet: SmallTabletScreen.matches,
-			isMobile: MobileScreen.matches,
-			isSmallMobile: SmallMobileScreen.matches,
-			viewWidth: getClosestViewWidth(this.state),
-		});
-	};
-
 	subscribeToMediaQueries = () => {
 		WideDesktopScreen.addEventListener('change', this.wideDesktopHandler);
 		DesktopScreen.addEventListener('change', this.desktopHandler);
@@ -91,7 +79,6 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 	};
 
 	onMount() {
-		this.initializeState();
 		this.subscribeToMediaQueries();
 	}
 

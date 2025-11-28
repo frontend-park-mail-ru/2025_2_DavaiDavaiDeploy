@@ -34,6 +34,7 @@ interface FilmSliderState {
 
 const MIN_SLIDEABLE_COUNT = 2;
 const MIN_SLIDE_CAPACITY = 3;
+const MEDIUM_SLIDE_CAPACITY = 5;
 const MAX_SLIDE_CAPACITY = 7;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
@@ -95,7 +96,7 @@ class FilmSliderComponent extends Component<
 		if (this.props.adaptivity.isWideDesktop) {
 			return MAX_SLIDE_CAPACITY;
 		} else if (this.props.adaptivity.isSmallTablet) {
-			return 5;
+			return MEDIUM_SLIDE_CAPACITY;
 		}
 
 		return MIN_SLIDE_CAPACITY;
@@ -170,7 +171,7 @@ class FilmSliderComponent extends Component<
 		};
 	}
 
-	getStyles = (index: number, cardHeight: number) => {
+	getStyles = (index: number, cardHeight: number, slideCapacity: number) => {
 		const total = this.props.films.length;
 		const stepPx = (this.props.adaptivity.viewWidth * cardHeight) / (100 * 1.7);
 
@@ -182,7 +183,7 @@ class FilmSliderComponent extends Component<
 			diff -= total;
 		}
 
-		const maxVisible = (this.slideCapacity - 1) / 2;
+		const maxVisible = (slideCapacity - 1) / 2;
 
 		if (diff === 0) {
 			return this.getSlideStyle(10, 1, 0, 0, 0);
@@ -218,29 +219,6 @@ class FilmSliderComponent extends Component<
 	};
 
 	render() {
-		this.slideCapacity = this.getSlideCapacityFromWidth();
-
-		const cardHeight = getCardHeight(this.slideCapacity);
-
-		if (this.props.films.length > 0) {
-			this.slideCapacity = Math.min(
-				this.slideCapacity,
-				this.props.films.length,
-			);
-		}
-
-		const active = getIsActive(this.slideCapacity);
-
-		if (!active && this.state.autoSlider) {
-			this.state.autoSlider.stop();
-		} else if (
-			active &&
-			this.state.autoSlider &&
-			!this.state.autoSlider.isWorking()
-		) {
-			this.state.autoSlider.start();
-		}
-
 		if (this.props.films.length === 0) {
 			return <div />;
 		}
@@ -250,6 +228,26 @@ class FilmSliderComponent extends Component<
 
 		if (slider && slides.length > 0) {
 			slider.style.height = getSliderHeight(slider, slides) + 'px';
+		}
+
+		let slideCapacity = this.getSlideCapacityFromWidth();
+
+		if (this.props.films.length > 0) {
+			slideCapacity = Math.min(slideCapacity, this.props.films.length);
+		}
+
+		const cardHeight = getCardHeight(slideCapacity);
+
+		const active = getIsActive(slideCapacity);
+
+		if (!active && this.state.autoSlider) {
+			this.state.autoSlider.stop();
+		} else if (
+			active &&
+			this.state.autoSlider &&
+			!this.state.autoSlider.isWorking()
+		) {
+			this.state.autoSlider.start();
 		}
 
 		return (
@@ -290,7 +288,7 @@ class FilmSliderComponent extends Component<
 								key={film.id}
 								ref={this.slideRefMap[i]}
 								className={styles.slide}
-								style={{ ...this.getStyles(i, cardHeight) }}
+								style={{ ...this.getStyles(i, cardHeight, slideCapacity) }}
 							>
 								<FilmCard film={film} />
 							</div>
