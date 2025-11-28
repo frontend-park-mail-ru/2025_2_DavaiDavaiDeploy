@@ -1,12 +1,5 @@
 import { Component } from '@robocotik/react';
-import {
-	DESKTOP_MIN_WIDTH,
-	MOBILE_MIN_WIDTH,
-	SMALL_MOBILE_MAX_WIDTH,
-	SMALL_TABLET_MIN_WIDTH,
-	TABLET_MIN_WIDTH,
-	WIDE_SCREEN_WIDTH,
-} from '../../consts/adaptivity';
+import { ADAPTIVITIES } from '../../consts/adaptivity';
 import { getClosestViewWidth } from '../../helpers/getClosestViewWidth/getClosestViewWidth';
 import { AdaptivityContext } from './AdaptivityContext.ts';
 import {
@@ -29,15 +22,6 @@ export interface AdaptivityState {
 }
 
 type AdaptivityKey = Exclude<keyof AdaptivityState, 'viewWidth'>;
-
-const typeToWidthMap: Record<AdaptivityKey, number> = {
-	isWideDesktop: WIDE_SCREEN_WIDTH,
-	isDesktop: DESKTOP_MIN_WIDTH,
-	isTablet: TABLET_MIN_WIDTH,
-	isSmallTablet: SMALL_TABLET_MIN_WIDTH,
-	isMobile: MOBILE_MIN_WIDTH,
-	isSmallMobile: SMALL_MOBILE_MAX_WIDTH,
-};
 
 export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 	state = {
@@ -74,7 +58,7 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 	mediaXhandler = (e: MediaQueryListEvent, key: AdaptivityKey): void => {
 		this.setState({
 			[key]: e.matches,
-			viewWidth: typeToWidthMap[key],
+			viewWidth: ADAPTIVITIES[key],
 		});
 	};
 
