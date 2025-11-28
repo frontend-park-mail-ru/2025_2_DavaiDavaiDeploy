@@ -106,17 +106,7 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 		);
 
 		return (
-			<AdaptivityContext.Provider
-				value={{
-					isWideDesktop: this.state.isWideDesktop,
-					isDesktop: this.state.isDesktop,
-					isTablet: this.state.isTablet,
-					isSmallTablet: this.state.isSmallTablet,
-					isMobile: this.state.isMobile,
-					isSmallMobile: this.state.isSmallMobile,
-					viewWidth: this.state.viewWidth,
-				}}
-			>
+			<AdaptivityContext.Provider value={this.state}>
 				{this.props.children}
 			</AdaptivityContext.Provider>
 		);
