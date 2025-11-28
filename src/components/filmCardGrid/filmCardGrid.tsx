@@ -1,4 +1,3 @@
-import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -13,9 +12,8 @@ import { Component, createRef } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
 
-const THROTTLE_DELAY = 300;
-const ROOT_MARGIN = '650px';
-const INITIAL_DELAY = 300;
+const ROOT_MARGIN = '100%';
+const INITIAL_DELAY = 400;
 
 interface FilmCardGridProps {
 	films: ModelsMainPageFilm[];
@@ -32,20 +30,15 @@ class FilmCardGridComponent extends Component<
 	onMount() {
 		this.props.getFilms(this.props.cursor);
 
-		const throttledIntersectHandler = throttle(
-			() => this.loadMoreFilms(),
-			THROTTLE_DELAY,
-		);
-
 		this.observer = new IntersectionObserver(
 			(entries) => {
 				const entry = entries[0];
 
 				if (entry.isIntersecting) {
-					throttledIntersectHandler();
+					this.loadMoreFilms();
 				}
 			},
-			{ rootMargin: ROOT_MARGIN },
+			{ root: null, rootMargin: ROOT_MARGIN, threshold: 0 },
 		);
 
 		setTimeout(() => {
@@ -60,9 +53,11 @@ class FilmCardGridComponent extends Component<
 	}
 
 	loadMoreFilms = () => {
-		if (this.props.cursor) {
-			this.props.getFilms(this.props.cursor);
+		if (!this.props.cursor) {
+			return;
 		}
+
+		this.props.getFilms(this.props.cursor);
 	};
 
 	render() {
