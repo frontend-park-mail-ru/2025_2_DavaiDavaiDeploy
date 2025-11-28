@@ -29,7 +29,6 @@ export class Textarea extends Component<TextareaProps> {
 			status,
 			placeholder,
 			className,
-			children,
 			top,
 			bottom,
 			getRootRef,
@@ -51,7 +50,6 @@ export class Textarea extends Component<TextareaProps> {
 				<textarea
 					placeholder={placeholder}
 					defaultValue={defaultValue}
-					value={value}
 					onInput={this.onChange}
 					className={clsx(
 						styles.textarea,
@@ -61,7 +59,7 @@ export class Textarea extends Component<TextareaProps> {
 						className,
 					)}
 				>
-					{children}
+					{value}
 				</textarea>
 
 				<Subhead

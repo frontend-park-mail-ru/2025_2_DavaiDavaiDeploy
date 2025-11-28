@@ -23,8 +23,8 @@
 
 .bottom {
 	height: 1rem;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
+	white-space: normal;
+	word-break: keep-all;
+	overflow-wrap: break-word;
 	width: 100%;
 }

@@ -17,10 +17,13 @@ const setFilmsLoadingAction = (): Action => {
  * Action: успешная загрузка фильмов.
  *
  */
-const returnFilmsAction = (data: ModelsMainPageFilm[]): Action => {
+const returnFilmsAction = (
+	data: ModelsMainPageFilm[],
+	cursor?: string,
+): Action => {
 	return {
 		type: actionTypes.FILMS_LOADED,
-		payload: { films: data },
+		payload: { films: data, cursor },
 	};
 };
 
@@ -47,15 +50,17 @@ const clearFilmsAction = (): Action => {
  * Thunk: асинхронная загрузка фильмов с сервера.
  */
 const getFilmsAction: Action =
-	(limit: number, offset: number) => async (dispatch: Dispatch) => {
+	(cursor: number) => async (dispatch: Dispatch) => {
 		dispatch(setFilmsLoadingAction());
 
 		try {
 			const response = await HTTPClient.get<ModelsMainPageFilm[]>('/films/', {
-				params: { count: limit, offset },
+				params: { cursor },
 			});
 
-			dispatch(returnFilmsAction(response.data));
+			dispatch(
+				returnFilmsAction(response.data, response.headers['x-next-cursor']),
+			);
 		} catch (error: unknown) {
 			let errorMessage: string = 'Произошла ошибка';
 

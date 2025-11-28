@@ -2,6 +2,7 @@ import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
+import clsx from '@/modules/clsx';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import { Link } from '@/modules/router/link.tsx';
@@ -27,13 +28,49 @@ interface FavoritesFilmCardProps {
 	deleteFromFavorites: (id: string) => {};
 }
 
-class FavoritesFilmCardComponent extends Component<FavoritesFilmCardProps> {
+interface FavoritesFilmCardState {
+	isBlinking: boolean;
+}
+
+const ANIMATION_DURATION = 2500;
+
+class FavoritesFilmCardComponent extends Component<
+	FavoritesFilmCardProps,
+	FavoritesFilmCardState
+> {
+	state = {
+		isBlinking: false,
+	};
+
+	timeout: NodeJS.Timeout | null = null;
+
 	handleDeletionFromFavorites = (event: MouseEvent) => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		this.props.deleteFromFavorites(this.props.film.id);
+		if (!this.timeout) {
+			this.setState({
+				isBlinking: true,
+			});
+
+			this.timeout = setTimeout(() => {
+				this.props.deleteFromFavorites(this.props.film.id);
+				this.setState({ isBlinking: false });
+			}, ANIMATION_DURATION);
+
+			return;
+		}
+
+		clearTimeout(this.timeout);
+		this.timeout = null;
+		this.setState({ isBlinking: false });
 	};
+
+	onUnmount() {
+		if (this.timeout) {
+			clearTimeout(this.timeout);
+		}
+	}
 
 	render() {
 		const {
@@ -53,7 +90,13 @@ class FavoritesFilmCardComponent extends Component<FavoritesFilmCardProps> {
 
 		return (
 			<Link href={`/films/${id}`} className={styles.linkWrap}>
-				<Flex className={styles.filmCard} direction="row" align="center">
+				<Flex
+					className={clsx(styles.filmCard, {
+						[styles.blink]: this.state.isBlinking,
+					})}
+					direction="row"
+					align="center"
+				>
 					<div className={styles.imageContainer}>
 						<Image className={styles.image} src={image} alt={title} />
 						{ratingType && (
@@ -111,7 +154,11 @@ class FavoritesFilmCardComponent extends Component<FavoritesFilmCardProps> {
 						className={styles.iconBtn}
 						onClick={this.handleDeletionFromFavorites}
 					>
-						<Favorite className={styles.icon} />
+						<Favorite
+							className={clsx(styles.icon, {
+								[styles.removed]: this.state.isBlinking,
+							})}
+						/>
 					</IconButton>
 				</Flex>
 			</Link>
