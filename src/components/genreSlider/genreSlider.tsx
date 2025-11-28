@@ -52,6 +52,12 @@ class GenreSliderComponent extends Component<
 	};
 
 	getSlideCapacityFromWidth() {
+		// eslint-disable-next-line no-console
+		console.log(
+			'getSlideCapacityFromWidth',
+			this.props.adaptivity.isWideDesktop ? 8 : 4,
+		);
+
 		return this.props.adaptivity.isWideDesktop ? 8 : 4;
 	}
 
