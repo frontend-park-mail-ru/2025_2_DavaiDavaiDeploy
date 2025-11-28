@@ -90,8 +90,6 @@ class FilmSliderComponent extends Component<
 		createRef<HTMLElement>(),
 	);
 
-	slideCapacity = MIN_SLIDE_CAPACITY;
-
 	getSlideCapacityFromWidth() {
 		if (this.props.adaptivity.isWideDesktop) {
 			return MAX_SLIDE_CAPACITY;
