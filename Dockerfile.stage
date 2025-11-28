@@ -38,7 +38,7 @@ RUN aws s3 sync . s3://${S3_BUCKET}/assets/stage \
     --acl public-read \
     --no-verify-ssl \
     --endpoint-url ${AWS_ENDPOINT} \
-    --cache-control "no-cache"
+    --cache-control "no-cache, no-store, must-revalidate"
 
 #базовый образ
 FROM nginx:alpine AS nginx

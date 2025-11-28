@@ -18,6 +18,8 @@ import type { ModelsUser } from '@/types/models.ts';
 import { Flex, IconButton, Logo } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
+import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
+import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
@@ -35,7 +37,7 @@ interface HeaderState {
 }
 
 class HeaderComponent extends Component<
-	HeaderProps & WithRouterProps & WithModalProps,
+	HeaderProps & WithRouterProps & WithModalProps & WithAdaptivityProps,
 	HeaderState
 > {
 	state = {
@@ -133,5 +135,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 export const Header = compose(
 	withRouter,
 	withModal,
+	withAdaptivity,
 	connect(mapStateToProps, mapDispatchToProps),
 )(HeaderComponent);

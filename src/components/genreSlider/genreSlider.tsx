@@ -1,10 +1,8 @@
 import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
 import ArrowRight from '@/assets/img/arrowRight.svg?react';
-import { WIDE_SCREEN_WIDTH } from '@/consts/devices';
-import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper';
 import clsx from '@/modules/clsx';
-import { connect } from '@/modules/redux';
+import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import actions from '@/redux/features/genre/actions';
@@ -13,6 +11,8 @@ import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
 import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
+import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
 import styles from './genreSlider.module.scss';
 
@@ -23,11 +23,9 @@ interface GenreSliderProps {
 
 interface GenreSliderState {
 	curGenre: number;
-	slideCapacity: number;
 	isAnimating: boolean;
 	phase: 'out' | 'in' | null;
 	direction: 'left' | 'right' | null;
-	debounceResizeHandler: (ev?: Event | undefined) => void;
 	autoSlider: null | {
 		start: VoidFunction;
 		isWorking: () => boolean;
@@ -36,36 +34,37 @@ interface GenreSliderState {
 	inactivityTimer: NodeJS.Timeout | null;
 }
 
-const THROTTLE_DELAY = 100;
 const ANIMATION_DURATION = 350;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
 
 class GenreSliderComponent extends Component<
-	GenreSliderProps,
+	GenreSliderProps & WithAdaptivityProps,
 	GenreSliderState
 > {
 	state: GenreSliderState = {
 		curGenre: 0,
-		slideCapacity: 8,
 		isAnimating: false,
 		phase: null,
 		direction: null,
-		debounceResizeHandler: () => {},
 		autoSlider: null,
 		inactivityTimer: null,
 	};
 
-	onMount() {
-		this.props.getGenres();
-
-		this.state.debounceResizeHandler = debounce(
-			this.handleResize,
-			THROTTLE_DELAY,
+	getSlideCapacityFromWidth() {
+		// eslint-disable-next-line no-console
+		console.log(
+			'getSlideCapacityFromWidth',
+			this.props.adaptivity.isWideDesktop ? 8 : 4,
+			'width',
+			this.props.adaptivity.viewWidth,
 		);
 
-		window.addEventListener('resize', this.state.debounceResizeHandler);
-		this.handleResize();
+		return this.props.adaptivity.isWideDesktop ? 8 : 4;
+	}
+
+	onMount() {
+		this.props.getGenres();
 
 		if (this.state.autoSlider && this.state.autoSlider.isWorking()) {
 			this.state.autoSlider.stop();
@@ -84,16 +83,8 @@ class GenreSliderComponent extends Component<
 	}
 
 	onUnmount() {
-		window.removeEventListener('resize', this.state.debounceResizeHandler);
 		this.state.autoSlider?.stop();
 	}
-
-	handleResize = () => {
-		const width = window.innerWidth;
-		this.setState({
-			slideCapacity: width <= WIDE_SCREEN_WIDTH ? 4 : 8,
-		});
-	};
 
 	animate(direction: 'left' | 'right', nextIndex: number) {
 		if (this.state.isAnimating) {
@@ -119,7 +110,7 @@ class GenreSliderComponent extends Component<
 		}
 
 		const nextIndex =
-			(this.state.curGenre + this.state.slideCapacity) % genres.length;
+			(this.state.curGenre + this.getSlideCapacityFromWidth()) % genres.length;
 
 		this.animate('left', nextIndex);
 	};
@@ -132,9 +123,10 @@ class GenreSliderComponent extends Component<
 		}
 
 		const nextIndex =
-			this.state.curGenre - this.state.slideCapacity < 0
-				? genres.length + (this.state.curGenre - this.state.slideCapacity)
-				: this.state.curGenre - this.state.slideCapacity;
+			this.state.curGenre - this.getSlideCapacityFromWidth() < 0
+				? genres.length +
+					(this.state.curGenre - this.getSlideCapacityFromWidth())
+				: this.state.curGenre - this.getSlideCapacityFromWidth();
 
 		this.animate('right', nextIndex);
 	};
@@ -155,13 +147,13 @@ class GenreSliderComponent extends Component<
 
 	getVisibleGenres() {
 		const { genres } = this.props;
-		const { curGenre, slideCapacity } = this.state;
+		const { curGenre } = this.state;
 
 		if (!genres.length) {
 			return [];
 		}
 
-		return Array.from({ length: slideCapacity }, (_, i) => {
+		return Array.from({ length: this.getSlideCapacityFromWidth() }, (_, i) => {
 			const idx = (curGenre + i) % genres.length;
 			return genres[idx];
 		});
@@ -238,7 +230,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getGenres: () => dispatch(actions.getGenresAction()),
 });
 
-export const GenreSlider = connect(
-	mapStateToProps,
-	mapDispatchToProps,
+export const GenreSlider = compose(
+	withAdaptivity,
+	connect(mapStateToProps, mapDispatchToProps),
 )(GenreSliderComponent);

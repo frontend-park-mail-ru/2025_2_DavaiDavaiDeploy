@@ -31,6 +31,8 @@ import {
 import { Component } from '@robocotik/react';
 import { ERROR_CODES } from '../../consts/errorCodes';
 import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
+import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
+import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';
 import { Redirect } from '../../modules/router/redirect';
 import { store } from '../../redux/store';
 import styles from './loginPage.module.scss';
@@ -44,25 +46,16 @@ interface LoginPageProps {
 }
 
 export class LoginPageNotConnected extends Component<
-	LoginPageProps & WithRouterProps
+	LoginPageProps & WithRouterProps & WithAdaptivityProps
 > {
 	state = {
 		username: '',
 		password: '',
-		showVideo: window.innerWidth >= 768,
 		validationErrors: {
 			username: '',
 			password: '',
 		},
 		errorShown: false,
-	};
-
-	handleResize = () => {
-		if (window.innerWidth < 768) {
-			this.setState({ showVideo: false });
-		} else {
-			this.setState({ showVideo: true });
-		}
 	};
 
 	hasOTP() {
@@ -86,11 +79,6 @@ export class LoginPageNotConnected extends Component<
 
 	onMount() {
 		store.dispatch(actions.resetUserError());
-		window.addEventListener('resize', this.handleResize);
-	}
-
-	onUnmount() {
-		window.removeEventListener('resize', this.handleResize);
 	}
 
 	handleLoginUser = () => {
@@ -152,7 +140,7 @@ export class LoginPageNotConnected extends Component<
 					<Link className={styles.closeLink} href="/">
 						<img src={close} alt="close" />
 					</Link>
-					{this.state.showVideo && (
+					{this.props.adaptivity.isSmallTablet && (
 						<div className={styles.videoContainer}>
 							<video
 								src={getStaticURL('/video/login_signup.mp4')}
@@ -268,5 +256,6 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 
 export const LoginPage = compose(
 	withRouter,
+	withAdaptivity,
 	connect(mapStateToProps, mapDispatchToProps),
 )(LoginPageNotConnected);
