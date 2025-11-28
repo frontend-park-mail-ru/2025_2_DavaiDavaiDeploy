@@ -12,7 +12,7 @@ export const MOBILE_MIN_WIDTH = 420;
 
 export const SMALL_MOBILE_MAX_WIDTH = 420;
 
-type AdaptivityKey = Exclude<keyof AdaptivityState, 'viewWidth'>;
+export type AdaptivityKey = Exclude<keyof AdaptivityState, 'viewWidth'>;
 
 export const ADAPTIVITIES: Record<AdaptivityKey, number> = {
 	isWideDesktop: WIDE_SCREEN_WIDTH,

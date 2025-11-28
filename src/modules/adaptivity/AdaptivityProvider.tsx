@@ -1,5 +1,5 @@
 import { Component } from '@robocotik/react';
-import { ADAPTIVITIES } from '../../consts/adaptivity';
+import { ADAPTIVITIES, type AdaptivityKey } from '../../consts/adaptivity';
 import { getClosestViewWidth } from '../../helpers/getClosestViewWidth/getClosestViewWidth';
 import { AdaptivityContext } from './AdaptivityContext.ts';
 import {
@@ -20,8 +20,6 @@ export interface AdaptivityState {
 	isSmallMobile: boolean;
 	viewWidth: number;
 }
-
-type AdaptivityKey = Exclude<keyof AdaptivityState, 'viewWidth'>;
 
 export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 	state = {
