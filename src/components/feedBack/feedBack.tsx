@@ -4,6 +4,7 @@ import {
 } from '@/helpers/formatDateHelper/formatDateHelper';
 import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
+import { Component } from '@/modules/react';
 import type { ModelsFilmFeedback } from '@/types/models';
 import {
 	Avatar,
@@ -14,7 +15,6 @@ import {
 	Separator,
 	Subhead,
 } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './feedBack.module.scss';
 
 interface FeedBackProps {

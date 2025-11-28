@@ -16,8 +16,8 @@ import type {
 	ModelsVoiceSearchResponse,
 } from '@/types/models';
 
+import { Component } from '@/modules/react';
 import { CardGrid, Flex, Paragraph, Title } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './searchPage.module.scss';
 
 interface SearchPageProps {

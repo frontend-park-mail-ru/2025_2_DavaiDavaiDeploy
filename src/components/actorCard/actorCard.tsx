@@ -1,7 +1,7 @@
+import { Component } from '@/modules/react';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageActor } from '@/types/models';
 import { Flex, Image, Title } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './actorCard.module.scss';
 
 interface ActorCardProps {

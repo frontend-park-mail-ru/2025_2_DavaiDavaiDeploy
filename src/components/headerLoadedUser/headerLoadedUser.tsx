@@ -1,7 +1,7 @@
 import { UserAvatar } from '@/components/headerUserAvatar/headerUserAvatar';
+import { Component } from '@/modules/react';
 import type { ModelsUser } from '@/types/models.ts';
 import { Avatar, Flex } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './headerLoadedUser.module.scss';
 
 interface LoadedUserProps {

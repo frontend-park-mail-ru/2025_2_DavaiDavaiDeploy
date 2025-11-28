@@ -1,4 +1,5 @@
 import { CalendarPageFilmCard } from '@/components/calendarPageFilmCard/calendarPageFilmCard';
+import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -8,7 +9,6 @@ import { selectCalendarFilms } from '@/redux/features/calendar/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
 import { Flex, Title } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './calendarPage.module.scss';
 
 interface CalendarPageProps {

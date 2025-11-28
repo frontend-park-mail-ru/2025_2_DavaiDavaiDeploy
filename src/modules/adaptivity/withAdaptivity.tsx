@@ -1,5 +1,5 @@
-import type { ComponentType } from '@robocotik/react';
-import { Component } from '@robocotik/react';
+import type { ComponentType } from '@/modules/react';
+import { Component } from '@/modules/react';
 import type { AdaptivityContextValue } from './AdaptivityContext.ts';
 import { AdaptivityContext } from './AdaptivityContext.ts';
 import type { WithAdaptivityProps } from './withAdaptivityProps.ts';

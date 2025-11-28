@@ -1,4 +1,4 @@
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import type { RouteConfig } from './types/routeConfig';
 
 export class Route extends Component<RouteConfig, {}> {

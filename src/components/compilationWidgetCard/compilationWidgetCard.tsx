@@ -1,3 +1,4 @@
+import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store';
@@ -9,7 +10,6 @@ import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompilation } from '@/types/models';
 import { Flex, Image, Subhead } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './compilationWidgetCard.module.scss';
 
 interface CompilationWidgetCardProps {

@@ -1,4 +1,4 @@
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import { withModal } from './withModal';
 import type { WithModalProps } from './withModalProps';
 

@@ -1,4 +1,4 @@
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import { RouterContext } from './routerContext.ts';
 import { trimRoute } from './utils/trimRoute.ts';
 

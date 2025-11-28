@@ -2,6 +2,7 @@ import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
+import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import { Link } from '@/modules/router/link.tsx';
@@ -19,7 +20,6 @@ import {
 	Subhead,
 	Title,
 } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './favoritesFilmCard.module.scss';
 
 interface FavoritesFilmCardProps {

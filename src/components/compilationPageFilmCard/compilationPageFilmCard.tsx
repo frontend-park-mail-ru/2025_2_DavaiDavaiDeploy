@@ -3,6 +3,7 @@ import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHel
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '@/modules/clsx';
+import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store';
@@ -23,7 +24,6 @@ import {
 	Subhead,
 	Title,
 } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './compilationPageFilmCard.module.scss';
 
 interface CompilationPageFilmCardProps {

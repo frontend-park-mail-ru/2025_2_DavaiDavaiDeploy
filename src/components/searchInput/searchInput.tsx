@@ -1,12 +1,12 @@
 import Close from '@/assets/img/close.svg?react';
 import Loupe from '@/assets/img/loupe.svg?react';
 import clsx from '@/modules/clsx/index.ts';
+import { Component, createRef } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/search/actions.ts';
 import type { Map } from '@/types/map';
 import { Flex, IconButton } from '@/uikit/index';
-import { Component, createRef } from '@robocotik/react';
 import { debounce } from '../../helpers/debounceHelper/debounceHelper';
 import { withAdaptivity } from '../../modules/adaptivity/withAdaptivity';
 import type { WithAdaptivityProps } from '../../modules/adaptivity/withAdaptivityProps';

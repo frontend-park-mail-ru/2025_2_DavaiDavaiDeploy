@@ -1,8 +1,8 @@
+import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/search/actions.ts';
 import { IconButton } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import {
 	type IMediaRecorder,
 	MediaRecorder,

@@ -1,12 +1,12 @@
 import 'reset-css/reset.css';
 
+import { Component, render } from '@/modules/react';
 import { compose, connect, Provider } from '@/modules/redux';
 import { RouterProvider } from '@/modules/router/RouterProvider.tsx';
 import { store } from '@/redux/store.ts';
 import '@/styles/constants.scss';
 import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
-import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
@@ -84,25 +84,23 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 			this.props.router.path.startsWith('/register');
 
 		return (
-			<AdaptivityProvider>
-				<div class="layout">
-					<ToastContainer />
-					{!isAuthPageOpen && <Header />}
-					<Routes>
-						<Route href="/" component={<HomePage />} />
-						<Route href="/films/:id" component={<FilmPage />} />
-						<Route href="/actors/:id" component={<ActorPage />} />
-						<Route href="/login" component={<LoginPage />} />
-						<Route href="/register" component={<RegisterPage />} />
-						<Route href="/genres/:id" component={<GenrePage />} />
-						<Route href="/profile" component={<UserPage />} />
-						<Route href="/calendar" component={<CalendarPage />} />
-						<Route href="/search" component={<SearchPage />} />
-						<Route href="/compilations/:id" component={<CompilationPage />} />
-					</Routes>
-					{!isAuthPageOpen && <Footer />}
-				</div>
-			</AdaptivityProvider>
+			<div class="layout">
+				<ToastContainer />
+				{!isAuthPageOpen && <Header />}
+				<Routes>
+					<Route href="/" component={<HomePage />} />
+					<Route href="/films/:id" component={<FilmPage />} />
+					<Route href="/actors/:id" component={<ActorPage />} />
+					<Route href="/login" component={<LoginPage />} />
+					<Route href="/register" component={<RegisterPage />} />
+					<Route href="/genres/:id" component={<GenrePage />} />
+					<Route href="/profile" component={<UserPage />} />
+					<Route href="/calendar" component={<CalendarPage />} />
+					<Route href="/search" component={<SearchPage />} />
+					<Route href="/compilations/:id" component={<CompilationPage />} />
+				</Routes>
+				{!isAuthPageOpen && <Footer />}
+			</div>
 		);
 	}
 }
@@ -110,11 +108,13 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 class ProvidersLayout extends Component {
 	render() {
 		return (
-			<ModalsProvider>
-				<Provider store={store}>
-					<RouterProvider>{this.props.children}</RouterProvider>
-				</Provider>
-			</ModalsProvider>
+			<AdaptivityProvider>
+				<ModalsProvider>
+					<Provider store={store}>
+						<RouterProvider>{this.props.children}</RouterProvider>
+					</Provider>
+				</ModalsProvider>
+			</AdaptivityProvider>
 		);
 	}
 }

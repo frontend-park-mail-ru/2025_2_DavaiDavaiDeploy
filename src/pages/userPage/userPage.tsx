@@ -1,6 +1,7 @@
 import { ChangeAvatar } from '@/components/changeAvatar/changeAvatar';
 import { ChangePassword } from '@/components/changePassword/changePassword';
 import { FavoritesFilmCard } from '@/components/favoritesFilmCard/favoritesFilmCard';
+import { Component } from '@/modules/react';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -13,7 +14,6 @@ import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
 import { Flex, Headline, Title } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import styles from './userPage.module.scss';
 
 interface UserPageProps {

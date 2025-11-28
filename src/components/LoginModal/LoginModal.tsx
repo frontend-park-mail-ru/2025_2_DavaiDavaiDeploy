@@ -1,7 +1,7 @@
 import Close from '@/assets/img/close.svg?react';
 import Exit from '@/assets/img/exit.svg?react';
+import { Component } from '@/modules/react';
 import { Button, Flex, Title } from '@/uikit/index';
-import { Component } from '@robocotik/react';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
 import { BaseModal, type BaseModalProps } from '../BaseModal/BaseModal';

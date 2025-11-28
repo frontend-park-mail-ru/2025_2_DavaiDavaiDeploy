@@ -1,5 +1,5 @@
 import { getClosestViewWidth } from '@/helpers/getClosestViewWidth/getClosestViewWidth.ts';
-import { Component } from '@robocotik/react';
+import { Component } from '@/modules/react';
 import { AdaptivityContext } from './AdaptivityContext.ts';
 import {
 	DesktopScreen,

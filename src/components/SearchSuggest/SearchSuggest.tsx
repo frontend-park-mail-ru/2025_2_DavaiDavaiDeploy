@@ -1,4 +1,4 @@
-import { Component, createRef, type Ref } from '@robocotik/react';
+import { Component, createRef, type Ref } from '@/modules/react';
 import { formatRating } from '../../helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '../../helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '../../modules/clsx';
