@@ -8,13 +8,13 @@ export const SMALL_TABLET_MIN_WIDTH = 768;
 
 export const MOBILE_MIN_WIDTH = 420;
 
-export const SMALL_MOBILE_MAX_WIDTH = 320;
+export const SMALL_MOBILE_MAX_WIDTH = 420;
 
-export const ADAPTIVITIES = {
-	WIDE_SCREEN: 'WIDE_SCREEN',
-	DESKTOP: 'DESKTOP',
-	TABLET: 'TABLET',
-	SMALL_TABLET: 'SMALL_TABLET',
-	MOBILE: 'MOBILE',
-	SMALL_MOBILE: 'SMALL_MOBILE',
+const ADAPTIVITIES: Record<AdaptivityKey, number> = {
+	isWideDesktop: WIDE_SCREEN_WIDTH,
+	isDesktop: DESKTOP_MIN_WIDTH,
+	isTablet: TABLET_MIN_WIDTH,
+	isSmallTablet: SMALL_TABLET_MIN_WIDTH,
+	isMobile: MOBILE_MIN_WIDTH,
+	isSmallMobile: SMALL_MOBILE_MAX_WIDTH,
 };

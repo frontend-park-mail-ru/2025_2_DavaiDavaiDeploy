@@ -28,6 +28,17 @@ export interface AdaptivityState {
 	viewWidth: number;
 }
 
+type AdaptivityKey = Exclude<keyof AdaptivityState, 'viewWidth'>;
+
+const typeToWidthMap: Record<AdaptivityKey, number> = {
+	isWideDesktop: WIDE_SCREEN_WIDTH,
+	isDesktop: DESKTOP_MIN_WIDTH,
+	isTablet: TABLET_MIN_WIDTH,
+	isSmallTablet: SMALL_TABLET_MIN_WIDTH,
+	isMobile: MOBILE_MIN_WIDTH,
+	isSmallMobile: SMALL_MOBILE_MAX_WIDTH,
+};
+
 export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 	state = {
 		isWideDesktop: WideDesktopScreen.matches,
@@ -41,37 +52,29 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 
 	wideDesktopHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isWideDesktop');
-		this.setState({ viewWidth: WIDE_SCREEN_WIDTH });
 	};
 
 	desktopHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isDesktop');
-		this.setState({ viewWidth: DESKTOP_MIN_WIDTH });
 	};
 
 	tabletHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isTablet');
-		this.setState({ viewWidth: TABLET_MIN_WIDTH });
 	};
 	smallTabletHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isSmallTablet');
-		this.setState({ viewWidth: SMALL_TABLET_MIN_WIDTH });
 	};
 	mobileHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isMobile');
-		this.setState({ viewWidth: MOBILE_MIN_WIDTH });
 	};
 	smallMobileHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isSmallMobile');
-		this.setState({ viewWidth: SMALL_MOBILE_MAX_WIDTH });
 	};
 
-	mediaXhandler = (
-		e: MediaQueryListEvent,
-		key: keyof AdaptivityState,
-	): void => {
+	mediaXhandler = (e: MediaQueryListEvent, key: AdaptivityKey): void => {
 		this.setState({
 			[key]: e.matches,
+			viewWidth: typeToWidthMap[key],
 		});
 	};
 
