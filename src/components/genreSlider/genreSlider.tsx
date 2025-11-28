@@ -23,7 +23,6 @@ interface GenreSliderProps {
 
 interface GenreSliderState {
 	curGenre: number;
-	slideCapacity: number;
 	isAnimating: boolean;
 	phase: 'out' | 'in' | null;
 	direction: 'left' | 'right' | null;
@@ -45,7 +44,6 @@ class GenreSliderComponent extends Component<
 > {
 	state: GenreSliderState = {
 		curGenre: 0,
-		slideCapacity: this.getSlideCapacityFromWidth(),
 		isAnimating: false,
 		phase: null,
 		direction: null,
@@ -53,16 +51,8 @@ class GenreSliderComponent extends Component<
 		inactivityTimer: null,
 	};
 
-	getSlideCapacityFromWidth() {
+	getSlideCapacity() {
 		return this.props.adaptivity.isWideDesktop ? 8 : 4;
-	}
-
-	onUpdate() {
-		if (this.getSlideCapacityFromWidth() !== this.state.slideCapacity) {
-			this.setState({
-				slideCapacity: this.getSlideCapacityFromWidth(),
-			});
-		}
 	}
 
 	onMount() {
@@ -80,10 +70,6 @@ class GenreSliderComponent extends Component<
 			this.onNextBtnClick,
 			AUTO_SLIDE_DURATION,
 		);
-
-		this.setState({
-			slideCapacity: this.props.adaptivity.isWideDesktop ? 8 : 4,
-		});
 
 		this.state.autoSlider.start();
 	}
@@ -116,7 +102,7 @@ class GenreSliderComponent extends Component<
 		}
 
 		const nextIndex =
-			(this.state.curGenre + this.state.slideCapacity) % genres.length;
+			(this.state.curGenre + this.getSlideCapacity()) % genres.length;
 
 		this.animate('left', nextIndex);
 	};
@@ -128,10 +114,11 @@ class GenreSliderComponent extends Component<
 			return;
 		}
 
+		const slideCapacity = this.getSlideCapacity();
 		const nextIndex =
-			this.state.curGenre - this.state.slideCapacity < 0
-				? genres.length + (this.state.curGenre - this.state.slideCapacity)
-				: this.state.curGenre - this.state.slideCapacity;
+			this.state.curGenre - slideCapacity < 0
+				? genres.length + (this.state.curGenre - slideCapacity)
+				: this.state.curGenre - slideCapacity;
 
 		this.animate('right', nextIndex);
 	};
@@ -152,12 +139,13 @@ class GenreSliderComponent extends Component<
 
 	getVisibleGenres() {
 		const { genres } = this.props;
-		const { curGenre, slideCapacity } = this.state;
+		const { curGenre } = this.state;
 
 		if (!genres.length) {
 			return [];
 		}
 
+		const slideCapacity = this.getSlideCapacity();
 		return Array.from({ length: slideCapacity }, (_, i) => {
 			const idx = (curGenre + i) % genres.length;
 			return genres[idx];

@@ -1,13 +1,5 @@
+import { getClosestViewWidth } from '@/helpers/getClosestViewWidth/getClosestViewWidth.ts';
 import { Component } from '@robocotik/react';
-import {
-	DESKTOP_MIN_WIDTH,
-	MOBILE_MIN_WIDTH,
-	SMALL_MOBILE_MAX_WIDTH,
-	SMALL_TABLET_MIN_WIDTH,
-	TABLET_MIN_WIDTH,
-	WIDE_SCREEN_WIDTH,
-} from '../../consts/adaptivity';
-import { getClosestViewWidth } from '../../helpers/getClosestViewWidth/getClosestViewWidth';
 import { AdaptivityContext } from './AdaptivityContext.ts';
 import {
 	DesktopScreen,
@@ -36,55 +28,38 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 		isSmallTablet: SmallTabletScreen.matches,
 		isMobile: MobileScreen.matches,
 		isSmallMobile: SmallMobileScreen.matches,
-		viewWidth: 0,
+		viewWidth: window.innerWidth,
 	};
 
 	wideDesktopHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isWideDesktop');
-		this.setState({ viewWidth: WIDE_SCREEN_WIDTH });
 	};
 
 	desktopHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isDesktop');
-		this.setState({ viewWidth: DESKTOP_MIN_WIDTH });
 	};
 
 	tabletHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isTablet');
-		this.setState({ viewWidth: TABLET_MIN_WIDTH });
 	};
 	smallTabletHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isSmallTablet');
-		this.setState({ viewWidth: SMALL_TABLET_MIN_WIDTH });
 	};
 	mobileHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isMobile');
-		this.setState({ viewWidth: MOBILE_MIN_WIDTH });
 	};
 	smallMobileHandler = (e: MediaQueryListEvent) => {
 		this.mediaXhandler(e, 'isSmallMobile');
-		this.setState({ viewWidth: SMALL_MOBILE_MAX_WIDTH });
 	};
 
 	mediaXhandler = (
 		e: MediaQueryListEvent,
 		key: keyof AdaptivityState,
 	): void => {
-		this.setState({
+		this.setState((state) => ({
 			[key]: e.matches,
-		});
-	};
-
-	initializeState = () => {
-		this.setState({
-			isWideDesktop: WideDesktopScreen.matches,
-			isDesktop: DesktopScreen.matches,
-			isTablet: TabletScreen.matches,
-			isSmallTablet: SmallTabletScreen.matches,
-			isMobile: MobileScreen.matches,
-			isSmallMobile: SmallMobileScreen.matches,
-			viewWidth: getClosestViewWidth(this.state),
-		});
+			viewWidth: getClosestViewWidth({ ...state, [key]: e.matches }),
+		}));
 	};
 
 	subscribeToMediaQueries = () => {
@@ -106,7 +81,6 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 	};
 
 	onMount() {
-		this.initializeState();
 		this.subscribeToMediaQueries();
 	}
 

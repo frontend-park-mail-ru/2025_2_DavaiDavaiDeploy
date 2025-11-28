@@ -8,7 +8,7 @@ export const SMALL_TABLET_MIN_WIDTH = 768;
 
 export const MOBILE_MIN_WIDTH = 420;
 
-export const SMALL_MOBILE_MAX_WIDTH = 320;
+export const SMALL_MOBILE_MAX_WIDTH = 420;
 
 export const ADAPTIVITIES = {
 	WIDE_SCREEN: 'WIDE_SCREEN',
