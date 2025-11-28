@@ -87,6 +87,24 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 	}
 
 	render() {
+		// eslint-disable-next-line no-console
+		console.log(
+			'isWide',
+			this.state.isWideDesktop,
+			'isDesktop',
+			this.state.isDesktop,
+			'isTablet',
+			this.state.isTablet,
+			'isSmallTablet',
+			this.state.isSmallTablet,
+			'isMobile',
+			this.state.isMobile,
+			'isSmallMobile',
+			this.state.isSmallMobile,
+			'viewWidth',
+			this.state.viewWidth,
+		);
+
 		return (
 			<AdaptivityContext.Provider
 				value={{
