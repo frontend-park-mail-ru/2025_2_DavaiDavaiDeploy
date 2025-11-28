@@ -84,23 +84,25 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 			this.props.router.path.startsWith('/register');
 
 		return (
-			<div class="layout">
-				<ToastContainer />
-				{!isAuthPageOpen && <Header />}
-				<Routes>
-					<Route href="/" component={<HomePage />} />
-					<Route href="/films/:id" component={<FilmPage />} />
-					<Route href="/actors/:id" component={<ActorPage />} />
-					<Route href="/login" component={<LoginPage />} />
-					<Route href="/register" component={<RegisterPage />} />
-					<Route href="/genres/:id" component={<GenrePage />} />
-					<Route href="/profile" component={<UserPage />} />
-					<Route href="/calendar" component={<CalendarPage />} />
-					<Route href="/search" component={<SearchPage />} />
-					<Route href="/compilations/:id" component={<CompilationPage />} />
-				</Routes>
-				{!isAuthPageOpen && <Footer />}
-			</div>
+			<AdaptivityProvider>
+				<div class="layout">
+					<ToastContainer />
+					{!isAuthPageOpen && <Header />}
+					<Routes>
+						<Route href="/" component={<HomePage />} />
+						<Route href="/films/:id" component={<FilmPage />} />
+						<Route href="/actors/:id" component={<ActorPage />} />
+						<Route href="/login" component={<LoginPage />} />
+						<Route href="/register" component={<RegisterPage />} />
+						<Route href="/genres/:id" component={<GenrePage />} />
+						<Route href="/profile" component={<UserPage />} />
+						<Route href="/calendar" component={<CalendarPage />} />
+						<Route href="/search" component={<SearchPage />} />
+						<Route href="/compilations/:id" component={<CompilationPage />} />
+					</Routes>
+					{!isAuthPageOpen && <Footer />}
+				</div>
+			</AdaptivityProvider>
 		);
 	}
 }
@@ -108,13 +110,11 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 class ProvidersLayout extends Component {
 	render() {
 		return (
-			<AdaptivityProvider>
-				<ModalsProvider>
-					<Provider store={store}>
-						<RouterProvider>{this.props.children}</RouterProvider>
-					</Provider>
-				</ModalsProvider>
-			</AdaptivityProvider>
+			<ModalsProvider>
+				<Provider store={store}>
+					<RouterProvider>{this.props.children}</RouterProvider>
+				</Provider>
+			</ModalsProvider>
 		);
 	}
 }
