@@ -56,6 +56,8 @@ class GenreSliderComponent extends Component<
 		console.log(
 			'getSlideCapacityFromWidth',
 			this.props.adaptivity.isWideDesktop ? 8 : 4,
+			'width',
+			this.props.adaptivity.viewWidth,
 		);
 
 		return this.props.adaptivity.isWideDesktop ? 8 : 4;
