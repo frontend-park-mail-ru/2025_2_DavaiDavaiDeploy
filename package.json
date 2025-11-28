@@ -24,7 +24,7 @@
     "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix --allow-empty-input",
     "prepare": "husky",
     "preview": "npm run build && vite preview",
-    "preview:stage": "npm run build:stage && vite preview"
+    "preview:stage": "npm run build:stage && vite preview --config vite/vite.config.stage.ts"
   },
   "repository": {
     "type": "git",

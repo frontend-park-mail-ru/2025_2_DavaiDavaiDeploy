@@ -6,25 +6,26 @@ import {
 	TABLET_MIN_WIDTH,
 	WIDE_SCREEN_WIDTH,
 } from '../../consts/adaptivity';
+import type { AdaptivityState } from '../../modules/adaptivity/AdaptivityProvider';
 
-export const getClosestViewWidth = (width: number): number => {
-	if (width > WIDE_SCREEN_WIDTH) {
+export const getClosestViewWidth = (state: AdaptivityState): number => {
+	if (state.isWideDesktop) {
 		return WIDE_SCREEN_WIDTH;
 	}
 
-	if (width > DESKTOP_MIN_WIDTH) {
+	if (state.isDesktop) {
 		return DESKTOP_MIN_WIDTH;
 	}
 
-	if (width > TABLET_MIN_WIDTH) {
+	if (state.isTablet) {
 		return TABLET_MIN_WIDTH;
 	}
 
-	if (width > SMALL_TABLET_MIN_WIDTH) {
+	if (state.isSmallTablet) {
 		return SMALL_TABLET_MIN_WIDTH;
 	}
 
-	if (width > MOBILE_MIN_WIDTH) {
+	if (state.isMobile) {
 		return MOBILE_MIN_WIDTH;
 	}
 

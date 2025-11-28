@@ -1,5 +1,4 @@
 import { Component } from '@robocotik/react';
-import { ADAPTIVITIES, type AdaptivityKey } from '../../consts/adaptivity';
 import { getClosestViewWidth } from '../../helpers/getClosestViewWidth/getClosestViewWidth';
 import { AdaptivityContext } from './AdaptivityContext.ts';
 import {
@@ -29,7 +28,7 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 		isSmallTablet: SmallTabletScreen.matches,
 		isMobile: MobileScreen.matches,
 		isSmallMobile: SmallMobileScreen.matches,
-		viewWidth: getClosestViewWidth(window.innerWidth),
+		viewWidth: window.innerWidth,
 	};
 
 	wideDesktopHandler = (e: MediaQueryListEvent) => {
@@ -53,11 +52,14 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 		this.mediaXhandler(e, 'isSmallMobile');
 	};
 
-	mediaXhandler = (e: MediaQueryListEvent, key: AdaptivityKey): void => {
-		this.setState({
+	mediaXhandler = (
+		e: MediaQueryListEvent,
+		key: keyof AdaptivityState,
+	): void => {
+		this.setState((state) => ({
 			[key]: e.matches,
-			viewWidth: ADAPTIVITIES[key],
-		});
+			viewWidth: getClosestViewWidth({ ...state, [key]: e.matches }),
+		}));
 	};
 
 	subscribeToMediaQueries = () => {
@@ -87,26 +89,18 @@ export class AdaptivityProvider extends Component<{}, AdaptivityState> {
 	}
 
 	render() {
-		// eslint-disable-next-line no-console
-		console.log(
-			'isWide',
-			this.state.isWideDesktop,
-			'isDesktop',
-			this.state.isDesktop,
-			'isTablet',
-			this.state.isTablet,
-			'isSmallTablet',
-			this.state.isSmallTablet,
-			'isMobile',
-			this.state.isMobile,
-			'isSmallMobile',
-			this.state.isSmallMobile,
-			'viewWidth',
-			this.state.viewWidth,
-		);
-
 		return (
-			<AdaptivityContext.Provider value={this.state}>
+			<AdaptivityContext.Provider
+				value={{
+					isWideDesktop: this.state.isWideDesktop,
+					isDesktop: this.state.isDesktop,
+					isTablet: this.state.isTablet,
+					isSmallTablet: this.state.isSmallTablet,
+					isMobile: this.state.isMobile,
+					isSmallMobile: this.state.isSmallMobile,
+					viewWidth: this.state.viewWidth,
+				}}
+			>
 				{this.props.children}
 			</AdaptivityContext.Provider>
 		);
