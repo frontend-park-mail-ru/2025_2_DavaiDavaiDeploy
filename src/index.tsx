@@ -108,13 +108,13 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 class ProvidersLayout extends Component {
 	render() {
 		return (
-			<AdaptivityProvider>
-				<ModalsProvider>
-					<Provider store={store}>
+			<ModalsProvider>
+				<Provider store={store}>
+					<AdaptivityProvider>
 						<RouterProvider>{this.props.children}</RouterProvider>
-					</Provider>
-				</ModalsProvider>
-			</AdaptivityProvider>
+					</AdaptivityProvider>
+				</Provider>
+			</ModalsProvider>
 		);
 	}
 }

@@ -16,6 +16,8 @@ export function withAdaptivity<P>(
 			return (
 				<AdaptivityContext.Consumer>
 					{(context: AdaptivityContextValue) => {
+						// eslint-disable-next-line no-console
+						console.log('В WITH ADAPTIVITY CONTEXT ', context);
 						return (
 							<WrappedComponent {...(this.props as any)} adaptivity={context} />
 						);
