@@ -1,7 +1,6 @@
 import { FeedBack } from '@/components/feedBack/feedBack';
 import { FilmInfo } from '@/components/filmInfo/filmInfo';
 import { Userfeedback } from '@/components/userFeedback/userFeedback';
-import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -30,51 +29,14 @@ interface FilmPageProps {
 	clearFilm: VoidFunction;
 }
 
-interface FilmPageState {
-	offset: number;
-	observer?: IntersectionObserver;
-	throttledIntersectHandler?: VoidFunction;
-}
+const FEEDBACKS_COUNT: number = 30;
 
-const FEEDBACKS_COUNT: number = 3;
-const THROTTLE_DELAY: number = 10;
-const ROOT_MARGIN: string = '400px';
-const INITIAL_RESIZE_DELAY = 300;
-
-class FilmPageComponent extends Component<
-	FilmPageProps & WithRouterProps,
-	FilmPageState
-> {
-	state = {
-		offset: 0,
-		observer: undefined,
-	};
-
+class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 	onMount() {
 		const filmId = this.props.router.params.id;
 
 		this.props.getFilm(filmId);
-		this.loadMoreFeedbacks();
-
-		const throttledIntersectHandler = throttle(
-			this.loadMoreFeedbacks,
-			THROTTLE_DELAY,
-		);
-
-		const observer = new IntersectionObserver(throttledIntersectHandler, {
-			rootMargin: ROOT_MARGIN,
-		});
-
-		this.setState({ observer });
-
-		setTimeout(() => {
-			const trigger = document.querySelector(`.${styles.loadMoreTrigger}`);
-			const observer = this.state.observer as IntersectionObserver | undefined;
-
-			if (trigger && observer) {
-				observer.observe(trigger);
-			}
-		}, INITIAL_RESIZE_DELAY);
+		this.props.getFeedbacks(FEEDBACKS_COUNT, 0, filmId);
 	}
 
 	onUnmount() {
@@ -82,20 +44,6 @@ class FilmPageComponent extends Component<
 		const observer = this.state.observer as IntersectionObserver | undefined;
 		observer?.disconnect();
 	}
-
-	loadMoreFeedbacks = () => {
-		if (this.props.feedbackError) {
-			return;
-		}
-
-		this.props.getFeedbacks(
-			FEEDBACKS_COUNT,
-			this.state.offset,
-			this.props.router.params.id,
-		);
-
-		this.setState({ offset: this.state.offset + FEEDBACKS_COUNT });
-	};
 
 	renderFeedbacks() {
 		const { feedbacks } = this.props;
@@ -128,7 +76,6 @@ class FilmPageComponent extends Component<
 							<Flex className={styles.feedbacks} direction="column">
 								{this.renderFeedbacks()}
 							</Flex>
-							<div className={styles.loadMoreTrigger}></div>
 						</Flex>
 						<Flex className={styles.right} direction="column">
 							<div class="wrapper">
