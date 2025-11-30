@@ -187,19 +187,6 @@ const checkUserAction = (): Action => async (dispatch: Dispatch) => {
 		}
 
 		dispatch(returnUserErrorAction(errorMessage));
-
-		if (error instanceof Error && error.cause === '401') {
-			return;
-		}
-
-		Sentry.captureException(new Error('Ошибка ручки проверки аутентификации'), {
-			tags: {
-				category: 'check',
-			},
-			extra: {
-				error: errorMessage,
-			},
-		});
 	}
 };
 
