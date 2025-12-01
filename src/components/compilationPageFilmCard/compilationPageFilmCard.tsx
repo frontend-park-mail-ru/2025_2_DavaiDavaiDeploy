@@ -1,5 +1,6 @@
 import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
+import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '@/modules/clsx';
@@ -41,7 +42,9 @@ class CompilationPageFilmCardComponent extends Component<
 		event.stopPropagation();
 
 		if (!this.props.isAuthentificated) {
-			this.props.router.navigate('/login');
+			this.props.router.navigate(
+				getPathWithPath('login', this.props.router.path),
+			);
 		}
 
 		if (this.props.film.is_liked) {

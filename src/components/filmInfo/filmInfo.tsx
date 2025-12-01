@@ -1,6 +1,7 @@
 import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
+import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '@/modules/clsx';
@@ -48,7 +49,9 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 		}
 
 		if (!this.props.isAuthentificated) {
-			this.props.router.navigate('/login');
+			this.props.router.navigate(
+				getPathWithPath('login', this.props.router.path),
+			);
 		}
 
 		if (film.is_liked) {

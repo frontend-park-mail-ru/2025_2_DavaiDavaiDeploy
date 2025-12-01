@@ -1,5 +1,6 @@
 import Star from '@/assets/img/Star.svg?react';
 import { formatRatingNumber } from '@/helpers/formatRatingNumberHelper/formatRatingNumberHelper';
+import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '@/modules/clsx/index.ts';
@@ -115,7 +116,11 @@ class FilmRatingComponent extends Component<
 
 	renderButton = () => {
 		if (!this.props.isAuthentificated) {
-			return <Link href="/login">{this.renderButtonContent()}</Link>;
+			return (
+				<Link href={getPathWithPath('login', this.props.router.path)}>
+					{this.renderButtonContent()}
+				</Link>
+			);
 		}
 
 		return this.renderButtonContent();
