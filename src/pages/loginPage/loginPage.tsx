@@ -2,13 +2,16 @@ import close from '@/assets/img/close.svg';
 import userSvg from '@/assets/img/user.svg';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
 import { AppToast } from '@/components/toastContainer/toastContainer';
+import { ERROR_CODES } from '@/consts/errorCodes';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';
+import { getPathWithFrom } from '@/helpers/getPathWithFrom/getPathWithFrom.ts';
 import { validateLogin } from '@/helpers/validateLogin/validateLogin.ts';
 import { validatePassword } from '@/helpers/validatePassword/validatePassword.ts';
 import { compose, connect } from '@/modules/redux/index.ts';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
+import { Redirect } from '@/modules/router/redirect';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/user/actions.ts';
@@ -17,6 +20,7 @@ import {
 	selectUser,
 	selectUserErrorNot401,
 } from '@/redux/features/user/selectors.ts';
+import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
 import {
@@ -29,10 +33,6 @@ import {
 	Title,
 } from '@/uikit/index';
 import { Component } from '@robocotik/react';
-import { ERROR_CODES } from '../../consts/errorCodes';
-import { getPathWithFrom } from '../../helpers/getPathWithFrom/getPathWithFrom.ts';
-import { Redirect } from '../../modules/router/redirect';
-import { store } from '../../redux/store';
 import styles from './loginPage.module.scss';
 
 interface LoginPageProps {
@@ -132,12 +132,10 @@ export class LoginPageNotConnected extends Component<
 	};
 
 	render() {
-		if (this.props.user) {
-			const redirectPath =
-				'from' in this.props.router.params
-					? this.props.router.params.from
-					: '/';
+		const redirectPath =
+			'from' in this.props.router.params ? this.props.router.params.from : '/';
 
+		if (this.props.user) {
 			return <Redirect to={redirectPath} />;
 		}
 
@@ -149,7 +147,7 @@ export class LoginPageNotConnected extends Component<
 					align="center"
 					justify="center"
 				>
-					<Link className={styles.closeLink} href="/">
+					<Link className={styles.closeLink} href={redirectPath}>
 						<img src={close} alt="close" />
 					</Link>
 					{this.state.showVideo && (

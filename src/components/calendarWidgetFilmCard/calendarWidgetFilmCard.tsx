@@ -1,5 +1,6 @@
 import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDateForCalendar } from '@/helpers/formatDateForCalendarHelper/formatDateForCalendarHelper';
+import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import clsx from '@/modules/clsx';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
@@ -31,7 +32,9 @@ class CalendarWidgetFilmCardComponent extends Component<
 		event.stopPropagation();
 
 		if (!this.props.isAuthentificated) {
-			this.props.router.navigate('/login');
+			this.props.router.navigate(
+				getPathWithPath('login', this.props.router.path),
+			);
 		}
 
 		if (this.props.film.is_liked) {
