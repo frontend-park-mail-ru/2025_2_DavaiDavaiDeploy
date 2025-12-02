@@ -3,12 +3,17 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export const pwaViteConfig = defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
+	const manifestPath =
+		mode === 'stage'
+			? 'assets/stage/manifest.webmanifest'
+			: 'assets/prod/manifest.webmanifest';
+
 	return {
 		plugins: [
 			VitePWA({
 				includeAssets: ['assets/favicon-86x86.png'],
 				outDir: 'dist/assets',
-				manifestFilename: 'assets/prod/manifest.webmanifest',
+				manifestFilename: manifestPath,
 				injectRegister: false,
 				manifest: {
 					name: 'DDFilms - Онлайн кинотеатр',
