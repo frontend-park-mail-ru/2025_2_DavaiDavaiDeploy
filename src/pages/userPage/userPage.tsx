@@ -25,6 +25,23 @@ interface UserPageProps {
 class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 	onMount() {
 		this.props.getFavorites();
+
+		if (this.props.router.params.anchor) {
+			const anchorElement = document.querySelector(
+				`#${this.props.router.params.anchor}`,
+			);
+
+			if (!anchorElement) {
+				return;
+			}
+
+			const { top } = anchorElement.getBoundingClientRect();
+			const height = top - window.innerHeight * 0.2;
+			window.scrollTo({
+				top: height,
+				behavior: 'smooth',
+			});
+		}
 	}
 
 	render() {
@@ -44,7 +61,7 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 					<ChangePassword />
 				</Flex>
 				<Flex className={styles.favorites} direction="column" align="center">
-					<Title className={styles.title} level="2">
+					<Title className={styles.title} level="2" id="favorites">
 						Избранное
 					</Title>
 					{favoriteFilms && favoriteFilms.length == 0 && (

@@ -48,9 +48,15 @@ export class UserAvatarComponent extends Component<
 					</Headline>
 				)}
 
-				<Link className={styles.avatarActionsLink} href="/profile">
-					Мой профиль
-				</Link>
+				<Flex direction="column" align="center" className={styles.links}>
+					<Link className={styles.avatarActionsLink} href="/profile">
+						Мой профиль
+					</Link>
+
+					<Link className={styles.avatarActionsLink} href="/profile#favorites">
+						Избранное
+					</Link>
+				</Flex>
 
 				<Separator mode="primary" className={styles.line} />
 

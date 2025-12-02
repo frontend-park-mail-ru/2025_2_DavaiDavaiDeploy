@@ -10,6 +10,7 @@ interface TitleProps {
 	className?: string;
 	onClick?: (event: MouseEvent) => void;
 	getRootRef?: any;
+	id?: string;
 }
 
 export class Title extends Component<TitleProps> {
@@ -23,12 +24,14 @@ export class Title extends Component<TitleProps> {
 			onClick,
 			children,
 			getRootRef,
+			id,
 		} = this.props;
 
 		return (
 			<h1
 				onClick={onClick}
 				ref={getRootRef}
+				id={id}
 				className={clsx(
 					styles.title,
 					{
