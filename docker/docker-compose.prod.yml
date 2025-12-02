@@ -2,16 +2,16 @@ services:
   nginx:
     container_name: frontend-prod
     build:
-      context: .
-      dockerfile: Dockerfile.prod
+      context: ..
+      dockerfile: docker/Dockerfile.prod
       target: nginx
     networks:
       - ddd-network
       
   deploy-s3:
     build:
-      context: .
-      dockerfile: Dockerfile.prod
+      context: ..
+      dockerfile: docker/Dockerfile.prod
       target: deploy
       args:
         - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
