@@ -132,6 +132,13 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 	}
 
 	onUpdate() {
+		if (
+			(!this.props.films || this.props.films.length === 0) &&
+			this.state.active
+		) {
+			this.setState({ active: false });
+		}
+
 		if (this.props.films.length > 1 && !this.state.active) {
 			this.handleResize();
 		}

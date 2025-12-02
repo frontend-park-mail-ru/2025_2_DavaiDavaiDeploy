@@ -47,6 +47,7 @@ class ActorPageComponent extends Component<ActorPageProps & WithRouterProps> {
 			!this.props.actorLoading &&
 			!this.props.actorFilmsLoading
 		) {
+			this.props.clearActor();
 			const actorId = this.props.router.params.id;
 			this.props.getFilms(FILM_COUNT, OFFSET, actorId);
 			this.props.getActor(actorId);
