@@ -14,3 +14,9 @@ export const selectActorError: Selector = (state: State): string | null =>
 
 export const selectActorFilmsError: Selector = (state: State): string | null =>
 	state.actor.actorFilmsError;
+
+export const selectActorFilmsLoading: Selector = (state: State): boolean =>
+	state.actor.actorFilmsLoading;
+
+export const selectActorLoading: Selector = (state: State): boolean =>
+	state.actor.actorLoading;
