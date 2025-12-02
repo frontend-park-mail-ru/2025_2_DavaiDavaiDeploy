@@ -125,15 +125,11 @@ class FilmSliderComponent extends Component<
 
 		this.setState({
 			autoSlider,
-			active: getIsActive(this.state.slideCapacity),
-			cardHeight: getCardHeight(this.state.slideCapacity),
 		});
 
 		if (this.state.active) {
 			autoSlider.start();
 		}
-
-		this.handleResize();
 	}
 
 	onUnmount() {
@@ -150,12 +146,22 @@ class FilmSliderComponent extends Component<
 		}
 	}
 
+	onUpdate() {
+		if (this.props.films.length > 1 && !this.state.active) {
+			this.handleResize();
+		}
+	}
+
 	handleResize = () => {
 		const width = window.innerWidth;
 		let slideCapacity = getSlideCapacityFromWidth(width);
 		const cardHeight = getCardHeight(slideCapacity);
 
-		slideCapacity = Math.min(slideCapacity, this.props.films.length);
+		if (this.props.films.length > 0) {
+			slideCapacity = Math.min(slideCapacity, this.props.films.length);
+		} else {
+			slideCapacity = 1;
+		}
 
 		const active = getIsActive(slideCapacity);
 
