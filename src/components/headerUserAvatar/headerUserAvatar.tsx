@@ -8,6 +8,7 @@ import { MODALS } from '../../modules/modals/modals';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
 import styles from './headerUserAvatar.module.scss';
+
 interface UserAvatarProps {
 	user: ModelsUser | null;
 	logoutUser: VoidFunction;
@@ -48,9 +49,15 @@ export class UserAvatarComponent extends Component<
 					</Headline>
 				)}
 
-				<Link className={styles.avatarActionsLink} href="/profile">
-					Мой профиль
-				</Link>
+				<Flex direction="column" align="center" className={styles.links}>
+					<Link className={styles.avatarActionsLink} href="/profile">
+						Мой профиль
+					</Link>
+
+					<Link className={styles.avatarActionsLink} href="/profile#favorites">
+						Избранное
+					</Link>
+				</Flex>
 
 				<Separator mode="primary" className={styles.line} />
 

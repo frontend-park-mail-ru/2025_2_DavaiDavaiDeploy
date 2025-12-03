@@ -10,6 +10,7 @@ interface FlexProps {
 	onClick?: (event: MouseEvent) => void;
 	className?: string;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class Flex extends Component<FlexProps> {
@@ -23,6 +24,7 @@ export class Flex extends Component<FlexProps> {
 			children,
 			direction,
 			id,
+			...rest
 		} = this.props;
 
 		return (
@@ -47,6 +49,7 @@ export class Flex extends Component<FlexProps> {
 					},
 					className,
 				)}
+				{...rest}
 			>
 				{children}
 			</div>

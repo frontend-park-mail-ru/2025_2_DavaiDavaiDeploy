@@ -1,22 +1,26 @@
+import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
 import { Flex } from '../Flex/Flex';
 import styles from './CardGrid.module.scss';
 
 interface CardGridProps {
 	getRootRef?: any;
+	className?: string;
+	[key: string]: any;
 }
 
 export class CardGrid extends Component<CardGridProps> {
 	render() {
-		const { getRootRef } = this.props;
+		const { getRootRef, className, children, ...rest } = this.props;
 
 		return (
 			<Flex
 				getRootRef={getRootRef}
-				className={styles.wrapper}
+				className={clsx(styles.wrapper, className)}
 				direction="column"
+				{...rest}
 			>
-				<div className={styles.grid}>{this.props.children}</div>
+				<div className={styles.grid}>{children}</div>
 			</Flex>
 		);
 	}

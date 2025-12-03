@@ -3,23 +3,14 @@ import ArrowRight from '@/assets/img/arrowRight.svg?react';
 import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper.ts';
-import { compose, connect } from '@/modules/redux';
-import type { Dispatch } from '@/modules/redux/types/actions.ts';
-import type { State } from '@/modules/redux/types/store.ts';
-import actions from '@/redux/features/actor/actions';
-import { selectActorFilms } from '@/redux/features/actor/selectors';
-import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component, createRef } from '@robocotik/react';
-import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
-import { withRouter } from '../../modules/router/withRouter.tsx';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmSlider.module.scss';
 
 interface FilmSliderProps {
 	films: ModelsMainPageFilm[];
-	getFilms: (limit: number, offset: number, id: string) => void;
 }
 
 interface FilmSliderState {
@@ -43,7 +34,6 @@ const MAX_SLIDE_CAPACITY = 7;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
 const FILM_COUNT: number = 50;
-const OFFSET: number = 0;
 const SMALL_CARD_HEIGHT = 30;
 const BIG_CARD_HEIGHT = 50;
 
@@ -89,10 +79,7 @@ function getSliderHeight(
 	}
 }
 
-class FilmSliderComponent extends Component<
-	FilmSliderProps & WithRouterProps,
-	FilmSliderState
-> {
+export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 	state: FilmSliderState = {
 		curFilm: 0,
 		slideCapacity: getSlideCapacityFromWidth(window.innerWidth),
@@ -110,8 +97,6 @@ class FilmSliderComponent extends Component<
 	);
 
 	onMount() {
-		this.props.getFilms(FILM_COUNT, OFFSET, this.props.router.params.id);
-
 		const debounceResizeHandler = debounce(this.handleResize, DEBOUNCE_DELAY);
 
 		this.setState({ debounceResizeHandler });
@@ -125,15 +110,11 @@ class FilmSliderComponent extends Component<
 
 		this.setState({
 			autoSlider,
-			active: getIsActive(this.state.slideCapacity),
-			cardHeight: getCardHeight(this.state.slideCapacity),
 		});
 
 		if (this.state.active) {
 			autoSlider.start();
 		}
-
-		this.handleResize();
 	}
 
 	onUnmount() {
@@ -150,12 +131,29 @@ class FilmSliderComponent extends Component<
 		}
 	}
 
+	onUpdate() {
+		if (
+			(!this.props.films || this.props.films.length === 0) &&
+			this.state.active
+		) {
+			this.setState({ active: false });
+		}
+
+		if (this.props.films.length > 1 && !this.state.active) {
+			this.handleResize();
+		}
+	}
+
 	handleResize = () => {
 		const width = window.innerWidth;
 		let slideCapacity = getSlideCapacityFromWidth(width);
 		const cardHeight = getCardHeight(slideCapacity);
 
-		slideCapacity = Math.min(slideCapacity, this.props.films.length);
+		if (this.props.films.length > 0) {
+			slideCapacity = Math.min(slideCapacity, this.props.films.length);
+		} else {
+			slideCapacity = 1;
+		}
 
 		const active = getIsActive(slideCapacity);
 
@@ -328,17 +326,3 @@ class FilmSliderComponent extends Component<
 		);
 	}
 }
-
-const mapStateToProps = (state: State): Map => ({
-	films: selectActorFilms(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	getFilms: (limit: number, offset: number, id: string) =>
-		dispatch(actions.getActorFilmsAction(limit, offset, id)),
-});
-
-export const FilmSlider = compose(
-	withRouter,
-	connect(mapStateToProps, mapDispatchToProps),
-)(FilmSliderComponent);

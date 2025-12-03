@@ -4,7 +4,10 @@ import type { State } from '@/modules/redux/types/store.ts';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps.ts';
 import { withRouter } from '@/modules/router/withRouter.tsx';
 import actions from '@/redux/features/genre/actions';
-import { selectGenre } from '@/redux/features/genre/selectors';
+import {
+	selectGenre,
+	selectGenreError,
+} from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
 import { Flex, Image, Paragraph, Title } from '@/uikit/index';
@@ -14,7 +17,7 @@ import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import styles from './genreInfo.module.scss';
 
 interface GenreInfoProps {
-	genre: ModelsGenre | null;
+	genre: ModelsGenre;
 	error: string | null;
 	getGenre: (id: string) => void;
 }
@@ -27,12 +30,16 @@ class GenreInfoComponent extends Component<
 	}
 
 	render() {
-		if (!this.props.genre) {
+		if (this.props.error) {
 			return (
 				<Title className={styles.err} level="2" weight="bold" color="accent">
 					Жанр не найден
 				</Title>
 			);
+		}
+
+		if (!this.props.genre) {
+			return <div />;
 		}
 
 		const { title, description, icon } = this.props.genre;
@@ -55,6 +62,7 @@ class GenreInfoComponent extends Component<
 
 const mapStateToProps = (state: State): Map => ({
 	genre: selectGenre(state),
+	error: selectGenreError(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

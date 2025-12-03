@@ -4,7 +4,6 @@ import styles from './Button.module.scss';
 
 interface ButtonProps {
 	mode: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
-	disabled?: boolean;
 	size?: 'l' | 'm' | 's' | 'xs';
 	borderRadius?: 'lg' | 'l';
 	after?: any;
@@ -15,6 +14,7 @@ interface ButtonProps {
 	onMouseEnter?: any;
 	children?: any;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class Button extends Component<ButtonProps> {
@@ -31,6 +31,7 @@ export class Button extends Component<ButtonProps> {
 			onMouseEnter,
 			children,
 			getRootRef,
+			...rest
 		} = this.props;
 
 		return (
@@ -55,6 +56,7 @@ export class Button extends Component<ButtonProps> {
 					},
 					className,
 				)}
+				{...rest}
 			>
 				{before && <span className={styles.before}>{before}</span>}
 				{children}

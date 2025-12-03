@@ -6,11 +6,12 @@ interface SeparatorProps {
 	mode: 'primary' | 'secondary';
 	className?: string;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class Separator extends Component<SeparatorProps> {
 	render() {
-		const { className, mode, getRootRef } = this.props;
+		const { className, mode, getRootRef, ...rest } = this.props;
 
 		return (
 			<hr
@@ -23,6 +24,7 @@ export class Separator extends Component<SeparatorProps> {
 					},
 					className,
 				)}
+				{...rest}
 			/>
 		);
 	}

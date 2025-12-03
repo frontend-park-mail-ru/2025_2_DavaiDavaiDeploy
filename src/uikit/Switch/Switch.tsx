@@ -5,8 +5,10 @@ import styles from './Switch.module.scss';
 
 interface SwitchProps {
 	checked?: boolean;
-	onClick?: (checked: boolean) => void;
+	onChange?: (checked: boolean) => void;
 	getRootRef?: any;
+	className?: string;
+	[key: string]: any;
 }
 
 interface SwitchState {
@@ -22,20 +24,23 @@ export class Switch extends Component<SwitchProps, SwitchState> {
 		const newChecked = !this.state.checked;
 		this.setState({ checked: newChecked });
 
-		if (this.props.onClick) {
-			this.props.onClick(newChecked);
+		if (this.props.onChange) {
+			this.props.onChange(newChecked);
 		}
 	};
 
 	render() {
 		const { checked } = this.state;
-		const { getRootRef } = this.props;
+		const { getRootRef, className, ...rest } = this.props;
 
 		return (
 			<Flex
 				getRootRef={getRootRef}
 				onClick={this.onClick}
-				className={styles.switch}
+				className={clsx(styles.switch, className, {
+					[styles.checked]: checked,
+				})}
+				{...rest}
 			>
 				<div
 					className={clsx(styles.circle, {

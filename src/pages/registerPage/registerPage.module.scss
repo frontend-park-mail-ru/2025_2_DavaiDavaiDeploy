@@ -22,7 +22,7 @@
 }
 
 .loginImg {
-	width: 50%;
+	width: 100%;
 	border-radius: var(--border-radius-xxl);
 	object-fit: cover;
 	height: 100%;
@@ -100,8 +100,26 @@
 	pointer-events: none;
 }
 
+.logo {
+	position: absolute;
+	top: 15%;
+	left: 25%;
+	transform: translateX(-50%);
+}
+
+.videoContainer {
+	display: flex;
+	width: 50%;
+	border-radius: var(--border-radius-xxl);
+	object-fit: cover;
+	height: 100%;
+	pointer-events: none;
+}
+
 @media (max-width: 1024px) {
-	.loginImg {
+	.loginImg,
+	.logo,
+	.videoContainer {
 		display: none;
 	}
 
@@ -152,6 +170,6 @@
 
 	.rightSide__inputFields {
 		margin-block: auto;
-		gap: clamp(0.8rem, 1dvh, 1rem);
+		gap: clamp(1.5rem, 1dvh, 1rem);
 	}
 }

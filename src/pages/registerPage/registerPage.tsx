@@ -22,7 +22,7 @@ import {
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Button, Flex, FormItem, Headline, Title } from '@/uikit/index';
+import { Button, Flex, FormItem, Headline, Logo, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './registerPage.module.scss';
 
@@ -154,17 +154,20 @@ export class RegisterPageNotConnected extends Component<
 						<img src={close} alt="close" />
 					</Link>
 					{this.state.showVideo && (
-						<video
-							src={getStaticURL('/video/login_signup.mp4')}
-							alt="loginVideo"
-							className={styles.loginImg}
-							autoplay
-							muted
-							loop
-							playsinline
-							disablePictureInPicture
-							controlsList="nodownload noremoteplayback"
-						/>
+						<div className={styles.videoContainer}>
+							<video
+								src={getStaticURL('/video/login_signup.mp4')}
+								alt="loginVideo"
+								className={styles.loginImg}
+								autoplay
+								muted
+								loop
+								playsinline
+								disablePictureInPicture
+								controlsList="nodownload noremoteplayback"
+							/>
+							<Logo level="7" className={styles.logo} />
+						</div>
 					)}
 
 					<Flex

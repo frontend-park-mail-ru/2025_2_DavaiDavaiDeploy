@@ -19,6 +19,7 @@ interface FormItemProps {
 	className?: string;
 	onChange: (value: string) => void;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class FormItem extends Component<FormItemProps> {
