@@ -37,7 +37,9 @@ export class Switch extends Component<SwitchProps, SwitchState> {
 			<Flex
 				getRootRef={getRootRef}
 				onClick={this.onClick}
-				className={clsx(styles.switch, className)}
+				className={clsx(styles.switch, className, {
+					[styles.checked]: checked,
+				})}
 				{...rest}
 			>
 				<div
