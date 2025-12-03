@@ -1,5 +1,5 @@
-import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Component } from '@robocotik/react';
+import { getImageURL } from '../helpers/getCDNImageHelper/getCDNImageHelper';
 
 interface ImageProps {
 	src?: string;

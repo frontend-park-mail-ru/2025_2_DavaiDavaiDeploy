@@ -1,5 +1,5 @@
-import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
+import clsx from '../clsx';
 import { Flex } from '../Flex/Flex';
 import styles from './OTPInput.module.scss';
 

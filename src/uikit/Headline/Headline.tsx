@@ -1,5 +1,5 @@
-import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
+import clsx from '../clsx';
 import styles from './Headline.module.scss';
 
 interface HeadlineProps {

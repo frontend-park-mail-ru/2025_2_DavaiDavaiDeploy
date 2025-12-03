@@ -1,6 +1,6 @@
-import clsx from '@/modules/clsx';
 import { Component, createRef } from '@robocotik/react';
 import { Button } from '../Button/Button';
+import clsx from '../clsx';
 import styles from './FileButton.module.scss';
 
 interface FileButtonProps {

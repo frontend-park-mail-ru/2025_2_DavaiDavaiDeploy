@@ -1,5 +1,5 @@
-import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
+import clsx from '../clsx';
 import styles from './Subhead.module.scss';
 
 interface SubheadProps {

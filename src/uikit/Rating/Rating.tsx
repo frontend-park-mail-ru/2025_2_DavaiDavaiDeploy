@@ -1,6 +1,6 @@
-import Star from '@/assets/img/Star.svg?react';
-import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
+import Star from '../assets/star.svg?react';
+import clsx from '../clsx';
 import { Flex } from '../Flex/Flex';
 import { Headline } from '../Headline/Headline';
 import styles from './Rating.module.scss';
