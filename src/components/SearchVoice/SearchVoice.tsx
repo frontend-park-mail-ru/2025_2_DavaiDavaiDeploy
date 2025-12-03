@@ -66,12 +66,7 @@ class SearchVoiceComponent extends Component<
 	handleStartRecording = async () => {
 		try {
 			const stream = await navigator.mediaDevices.getUserMedia({
-				audio: {
-					channelCount: 1,
-					sampleRate: 16000,
-					echoCancellation: true,
-					noiseSuppression: true,
-				},
+				audio: true,
 			});
 
 			const mediaRecorder = new MediaRecorder(stream, {
