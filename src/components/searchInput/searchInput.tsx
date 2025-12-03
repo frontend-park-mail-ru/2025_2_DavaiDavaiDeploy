@@ -13,6 +13,7 @@ import type { WithRouterProps } from '../../modules/router/types/withRouterProps
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import {
 	selectSearchResult,
+	selectVoiceIsWorking,
 	selectVoiceSearchResult,
 } from '../../redux/features/search/selectors';
 import type { ModelsSearchResponse } from '../../types/models';
@@ -33,6 +34,7 @@ interface SearchInputProps {
 	className: string;
 	hintResult: ModelsSearchResponse;
 	voiceSearchResult: ModelsSearchResponse;
+	isVoiceWorking: boolean;
 }
 
 interface SearchInputState {
@@ -159,6 +161,7 @@ class SearchInputComponent extends Component<
 							onInput={this.handleSearchRequestChange}
 							className={styles.input}
 							onKeyDown={this.handleKeyDown}
+							disabled={this.props.isVoiceWorking ? true : undefined}
 						></input>
 
 						<SearchVoice className={styles.loupeBtn} />
@@ -206,6 +209,7 @@ class SearchInputComponent extends Component<
 						onInput={this.handleSearchRequestChange}
 						className={styles.input}
 						onKeyDown={this.handleKeyDown}
+						disabled={this.props.isVoiceWorking ? true : undefined}
 					></input>
 
 					<IconButton
@@ -230,6 +234,7 @@ class SearchInputComponent extends Component<
 const mapStateToProps = (state: State): Map => ({
 	hintResult: selectSearchResult(state),
 	voiceSearchResult: selectVoiceSearchResult(state),
+	isVoiceWorking: selectVoiceIsWorking(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
