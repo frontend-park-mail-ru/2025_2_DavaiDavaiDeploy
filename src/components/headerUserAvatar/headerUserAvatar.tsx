@@ -8,6 +8,7 @@ import { MODALS } from '../../modules/modals/modals';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
 import styles from './headerUserAvatar.module.scss';
+
 interface UserAvatarProps {
 	user: ModelsUser | null;
 	logoutUser: VoidFunction;
