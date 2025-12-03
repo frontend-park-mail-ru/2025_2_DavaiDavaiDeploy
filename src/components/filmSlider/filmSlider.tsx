@@ -1,5 +1,5 @@
-import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
-import ArrowRight from '@/assets/img/arrowRight.svg?react';
+import ArrowLeft from '@/assets/arrowLeft.svg?react';
+import ArrowRight from '@/assets/arrowRight.svg?react';
 import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper.ts';

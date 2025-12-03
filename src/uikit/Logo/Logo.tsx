@@ -1,4 +1,4 @@
-import LogoSVG from '@/assets/img/logo.svg?react';
+import LogoSVG from '@/assets/logo.svg?react';
 import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
 import styles from './Logo.module.scss';

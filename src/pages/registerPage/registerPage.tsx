@@ -1,5 +1,5 @@
-import close from '@/assets/img/close.svg';
-import userSvg from '@/assets/img/user.svg';
+import close from '@/assets/close.svg';
+import userSvg from '@/assets/user.svg';
 import { PasswordInputField } from '@/components/passwordInputField/passwordInputField.tsx';
 import { AppToast } from '@/components/toastContainer/toastContainer';
 import { getStaticURL } from '@/helpers/getCDNImageHelper/getStaticURL.ts';

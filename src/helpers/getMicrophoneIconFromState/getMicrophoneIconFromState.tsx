@@ -1,6 +1,6 @@
-import Microphone from '@/assets/img/microphone.svg?react';
-import MicrophoneLoadingIcon from '@/assets/img/microphone_is_loading.svg?react';
-import MicrophoneActiveIcon from '@/assets/img/microphone_is_work.svg?react';
+import Microphone from '@/assets/microphone.svg?react';
+import MicrophoneLoadingIcon from '@/assets/microphone_is_loading.svg?react';
+import MicrophoneActiveIcon from '@/assets/microphone_is_work.svg?react';
 import { Flex } from '@/uikit';
 import { MICROPHONE_STATES } from '../../consts/microphone';
 import clsx from '../../modules/clsx';
