@@ -95,7 +95,7 @@ class SearchVoiceComponent extends Component<
 			});
 
 			this.setState({
-				destination.stream,
+				stream: destination.stream,
 				mediaRecorder,
 				audioChunks: [],
 			});
