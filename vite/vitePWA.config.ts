@@ -26,55 +26,55 @@ export const pwaViteConfig = defineConfig(({ mode }) => {
 					scope: env.VITE_PRODUCTION_URL,
 					icons: [
 						{
-							src: `${env.VITE_CDN_ADDRESS}/assets/favicon/apple-touch-icon-180x180.png`,
+							src: `${env.VITE_CDN_ADDRESS}/static/favicon/apple-touch-icon-180x180.png`,
 							sizes: '180x180',
 							type: 'image/png',
 						},
 						{
-							src: `${env.VITE_CDN_ADDRESS}/assets/favicon/apple-touch-icon-167x167.png`,
+							src: `${env.VITE_CDN_ADDRESS}/static/favicon/apple-touch-icon-167x167.png`,
 							sizes: '167x167',
 							type: 'image/png',
 						},
 						{
-							src: `${env.VITE_CDN_ADDRESS}/assets/favicon/apple-touch-icon-152x152.png`,
+							src: `${env.VITE_CDN_ADDRESS}/static/favicon/apple-touch-icon-152x152.png`,
 							sizes: '152x152',
 							type: 'image/png',
 						},
 						{
-							src: `${env.VITE_CDN_ADDRESS}/assets/favicon/apple-touch-icon-120x120.png`,
+							src: `${env.VITE_CDN_ADDRESS}/static/favicon/apple-touch-icon-120x120.png`,
 							sizes: '120x120',
 							type: 'image/png',
 						},
 						{
-							src: `${env.VITE_CDN_ADDRESS}/assets/favicon/favicon-512x512.png`,
+							src: `${env.VITE_CDN_ADDRESS}/static/favicon/favicon-512x512.png`,
 							sizes: '512x512',
 							type: 'image/png',
 						},
 						{
-							src: `${env.VITE_CDN_ADDRESS}/assets/favicon/favicon-144x144.png`,
+							src: `${env.VITE_CDN_ADDRESS}/static/favicon/favicon-144x144.png`,
 							sizes: '144x144',
 							type: 'image/png',
 						},
 						{
-							src: `${env.VITE_CDN_ADDRESS}/assets/favicon/favicon-86x86.png`,
+							src: `${env.VITE_CDN_ADDRESS}/static/favicon/favicon-86x86.png`,
 							sizes: '86x86',
 							type: 'image/png',
 						},
 						{
-							src: `${env.VITE_CDN_ADDRESS}/assets/favicon/favicon-32x32.png`,
+							src: `${env.VITE_CDN_ADDRESS}/static/favicon/favicon-32x32.png`,
 							sizes: '32x32',
 							type: 'image/png',
 						},
 					],
 					screenshots: [
 						{
-							src: `${env.VITE_CDN_ADDRESS}/assets/screenshots/screenshot-narrow.png`,
+							src: `${env.VITE_CDN_ADDRESS}/static/screenshots/screenshot-narrow.png`,
 							type: 'image/png',
 							sizes: '538x819',
 							form_factor: 'narrow',
 						},
 						{
-							src: `${env.VITE_CDN_ADDRESS}/assets/screenshots/screenshot-wide.png`,
+							src: `${env.VITE_CDN_ADDRESS}/static/screenshots/screenshot-wide.png`,
 							type: 'image/png',
 							sizes: '1899x1027',
 							form_factor: 'wide',
