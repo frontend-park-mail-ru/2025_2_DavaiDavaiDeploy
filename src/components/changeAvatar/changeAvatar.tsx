@@ -175,26 +175,28 @@ class ChangeAvatarComponent extends Component<
 		return (
 			<Flex className={styles.content} direction="row">
 				<Flex className={styles.text} direction="column" justify="between">
-					<Title className={styles.title} level="4" weight="bold">
-						Хочется чего-то нового? Обновите фото профиля
-					</Title>
-					<Flex className={styles.subtitle} direction="column">
-						<Subhead
-							color="light"
-							level="10"
-							opacity="70"
-							className={styles.subtitleText}
-						>
-							{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}
-						</Subhead>
-						<Subhead
-							color="light"
-							level="10"
-							opacity="70"
-							className={styles.subtitleText}
-						>
-							Вес файла: не более 8МБ
-						</Subhead>
+					<Flex className={styles.wrap} direction="column" justify="between">
+						<Title className={styles.title} level="4" weight="bold">
+							Хочется чего-то нового? Обновите фото профиля
+						</Title>
+						<Flex className={styles.subtitle} direction="column">
+							<Subhead
+								color="light"
+								level="10"
+								opacity="70"
+								className={styles.subtitleText}
+							>
+								{`Идеальный размер файла ${IDEAL_SIZE} * ${IDEAL_SIZE} px`}
+							</Subhead>
+							<Subhead
+								color="light"
+								level="10"
+								opacity="70"
+								className={styles.subtitleText}
+							>
+								Вес файла: не более 8МБ
+							</Subhead>
+						</Flex>
 					</Flex>
 					<Flex className={styles.otp} align="center">
 						<Switch

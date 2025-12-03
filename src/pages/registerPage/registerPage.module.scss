@@ -100,8 +100,26 @@
 	pointer-events: none;
 }
 
+.logo {
+	position: absolute;
+	top: 15%;
+	left: 25%;
+	transform: translateX(-50%);
+}
+
+.videoContainer {
+	display: flex;
+	width: 50%;
+	border-radius: var(--border-radius-xxl);
+	object-fit: cover;
+	height: 100%;
+	pointer-events: none;
+}
+
 @media (max-width: 1024px) {
-	.loginImg {
+	.loginImg,
+	.logo,
+	.videoContainer {
 		display: none;
 	}
 

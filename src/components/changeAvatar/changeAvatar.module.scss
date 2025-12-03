@@ -40,6 +40,10 @@
 	text-wrap: pretty;
 }
 
+.wrap {
+	display: contents;
+}
+
 @media (max-width: 1024px) {
 	.content {
 		width: 100%;
@@ -56,6 +60,14 @@
 	}
 
 	.text {
+		gap: 3rem;
+		text-align: center;
+		flex-flow: column-reverse;
+		margin-top: -2rem;
+	}
+
+	.wrap {
+		display: flex;
 		gap: 2rem;
 		text-align: center;
 	}
@@ -72,6 +84,11 @@
 	.subtitleText {
 		text-align: center;
 	}
+
+	.otp {
+		flex-flow: column-reverse;
+		gap: 1rem;
+	}
 }
 
 @media (max-width: 768px) {
@@ -87,7 +104,8 @@
 
 	.text {
 		text-align: center;
-		gap: 0.7rem;
+		gap: 2rem;
+		margin-top: -3rem;
 	}
 
 	.subtitle {
