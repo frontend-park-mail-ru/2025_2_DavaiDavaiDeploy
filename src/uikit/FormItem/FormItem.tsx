@@ -42,7 +42,6 @@ export class FormItem extends Component<FormItemProps> {
 			top,
 			bottom,
 			getRootRef,
-			...rest
 		} = this.props;
 
 		return (
@@ -51,7 +50,6 @@ export class FormItem extends Component<FormItemProps> {
 				getRootRef={getRootRef}
 				direction="column"
 				align="start"
-				{...rest}
 			>
 				{top && (
 					<Headline level="9" className={styles.label}>

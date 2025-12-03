@@ -38,12 +38,18 @@ const FEEDBACKS_COUNT: number = 30;
 class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 	onMount() {
 		const filmId = this.props.router.params.id;
-
 		this.props.getFilm(filmId);
-		this.props.getFeedbacks(FEEDBACKS_COUNT, 0, filmId);
 	}
 
 	onUpdate() {
+		if (
+			this.props.film?.is_out &&
+			!this.props.feedbacks &&
+			!this.props.filmFeedbacksLoading
+		) {
+			this.props.getFeedbacks(FEEDBACKS_COUNT, 0, this.props.router.params.id);
+		}
+
 		if (
 			this.props.film &&
 			this.props.film.id !== this.props.router.params.id &&
@@ -55,6 +61,10 @@ class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 			this.props.getFilm(filmId);
 			this.props.getFeedbacks(FEEDBACKS_COUNT, 0, filmId);
 		}
+	}
+
+	onUnmount() {
+		this.props.clearFilm();
 	}
 
 	renderFeedbacks() {
