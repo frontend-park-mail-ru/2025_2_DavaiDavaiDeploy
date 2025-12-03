@@ -90,12 +90,12 @@ class SearchVoiceComponent extends Component<
 			source.connect(monoProcessor);
 			monoProcessor.connect(destination);
 
-			const mediaRecorder = new MediaRecorder(stream, {
+			const mediaRecorder = new MediaRecorder(destination.stream, {
 				mimeType: 'audio/wav',
 			});
 
 			this.setState({
-				stream,
+				destination.stream,
 				mediaRecorder,
 				audioChunks: [],
 			});
