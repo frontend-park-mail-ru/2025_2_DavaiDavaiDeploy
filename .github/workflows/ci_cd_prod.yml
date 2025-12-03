@@ -186,7 +186,7 @@ jobs:
             
             source .env.production
             
-            docker build -f Dockerfile.prod \
+            docker build -f docker/Dockerfile.prod \
             --target deploy \
             --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
             --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
@@ -195,9 +195,9 @@ jobs:
             --build-arg AWS_ENDPOINT=$AWS_ENDPOINT \
             -t frontend-prod:latest .
             
-            docker compose -f docker-compose.prod.yml down -v
-            docker compose --env-file .env.production -f docker-compose.prod.yml build --no-cache
-            docker compose --env-file .env.production -f docker-compose.prod.yml up -d
+            docker compose -f docker/docker-compose.prod.yml down -v
+            docker compose --env-file .env.production -f docker/docker-compose.prod.yml build --no-cache
+            docker compose --env-file .env.production -f docker/docker-compose.prod.yml up -d
 
   notify_success:
     name: Success Message

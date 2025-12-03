@@ -2,8 +2,8 @@ services:
   nginx:
     container_name: frontend-stage
     build:
-      context: .
-      dockerfile: Dockerfile.stage
+      context: ..
+      dockerfile: docker/Dockerfile.stage
       target: nginx
     networks:
       - ddd-network

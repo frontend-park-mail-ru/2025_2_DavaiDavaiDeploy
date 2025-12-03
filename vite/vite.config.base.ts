@@ -16,14 +16,6 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 						dest: './',
 					},
 					{
-						src: 'src/assets/screenshots/',
-						dest: './assets',
-					},
-					{
-						src: 'src/assets/favicon/',
-						dest: './assets',
-					},
-					{
 						src: './robots.txt',
 						dest: './',
 					},
