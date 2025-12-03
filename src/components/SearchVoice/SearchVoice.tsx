@@ -77,6 +77,19 @@ class SearchVoiceComponent extends Component<
 				},
 			});
 
+			const audioContext = new AudioContext();
+			await audioContext.audioWorklet.addModule('mono-processor.js');
+			const source = audioContext.createMediaStreamSource(stream);
+			const monoProcessor = new AudioWorkletNode(
+				audioContext,
+				'mono-processor',
+			);
+
+			const destination = audioContext.createMediaStreamDestination();
+
+			source.connect(monoProcessor);
+			monoProcessor.connect(destination);
+
 			const mediaRecorder = new MediaRecorder(stream, {
 				mimeType: 'audio/wav',
 			});
