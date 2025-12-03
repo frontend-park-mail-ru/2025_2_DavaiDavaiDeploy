@@ -1,5 +1,5 @@
-import Close from '@/assets/img/close.svg?react';
-import Exit from '@/assets/img/exit.svg?react';
+import Close from '@/assets/close.svg?react';
+import Exit from '@/assets/exit.svg?react';
 import { Button, Flex, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { withModal } from '../../modules/modals/withModal';

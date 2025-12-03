@@ -1,5 +1,5 @@
-import Close from '@/assets/img/close.svg?react';
-import Loupe from '@/assets/img/loupe.svg?react';
+import Close from '@/assets/close.svg?react';
+import Loupe from '@/assets/loupe.svg?react';
 import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';

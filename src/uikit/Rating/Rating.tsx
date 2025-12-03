@@ -1,4 +1,4 @@
-import Star from '@/assets/img/Star.svg?react';
+import Star from '@/assets/Star.svg?react';
 import { Component } from '@robocotik/react';
 import { Flex } from '../Flex/Flex';
 import { Headline } from '../Headline/Headline';

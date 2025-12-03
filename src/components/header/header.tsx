@@ -1,4 +1,4 @@
-import Loupe from '@/assets/img/loupe.svg?react';
+import Loupe from '@/assets/loupe.svg?react';
 import { LoadedUser } from '@/components/headerLoadedUser/headerLoadedUser.tsx';
 import { LoadingState } from '@/components/loadingState/loadingState.tsx';
 import { compose, connect } from '@/modules/redux/index.ts';

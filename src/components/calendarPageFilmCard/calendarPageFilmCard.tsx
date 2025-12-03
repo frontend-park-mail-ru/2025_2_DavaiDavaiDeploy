@@ -1,4 +1,4 @@
-import Favorite from '@/assets/img/favorite.svg?react';
+import Favorite from '@/assets/favorite.svg?react';
 import { formatDateForCalendar } from '@/helpers/formatDateForCalendarHelper/formatDateForCalendarHelper';
 import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import clsx from '@/modules/clsx';
