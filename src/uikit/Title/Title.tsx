@@ -11,6 +11,7 @@ interface TitleProps {
 	onClick?: (event: MouseEvent) => void;
 	getRootRef?: any;
 	id?: string;
+	[key: string]: any;
 }
 
 export class Title extends Component<TitleProps> {
@@ -25,6 +26,7 @@ export class Title extends Component<TitleProps> {
 			children,
 			getRootRef,
 			id,
+			...rest
 		} = this.props;
 
 		return (
@@ -54,6 +56,7 @@ export class Title extends Component<TitleProps> {
 					},
 					className,
 				)}
+				{...rest}
 			>
 				{children}
 			</h1>

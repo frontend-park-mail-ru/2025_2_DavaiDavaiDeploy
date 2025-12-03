@@ -10,6 +10,7 @@ interface HeadlineProps {
 	className?: string;
 	onClick?: (event: MouseEvent) => void;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class Headline extends Component<HeadlineProps> {
@@ -23,6 +24,7 @@ export class Headline extends Component<HeadlineProps> {
 			onClick,
 			children,
 			getRootRef,
+			...rest
 		} = this.props;
 
 		return (
@@ -48,6 +50,7 @@ export class Headline extends Component<HeadlineProps> {
 					},
 					className,
 				)}
+				{...rest}
 			>
 				{children}
 			</h2>

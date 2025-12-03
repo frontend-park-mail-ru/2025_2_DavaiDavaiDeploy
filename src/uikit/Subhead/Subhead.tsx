@@ -11,6 +11,7 @@ interface SubheadProps {
 	className?: string;
 	onClick?: (event: MouseEvent) => void;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class Subhead extends Component<SubheadProps> {
@@ -25,6 +26,7 @@ export class Subhead extends Component<SubheadProps> {
 			onClick,
 			children,
 			getRootRef,
+			...rest
 		} = this.props;
 
 		return (
@@ -58,6 +60,7 @@ export class Subhead extends Component<SubheadProps> {
 					},
 					className,
 				)}
+				{...rest}
 			>
 				{children}
 			</h3>

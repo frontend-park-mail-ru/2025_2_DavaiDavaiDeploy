@@ -200,7 +200,7 @@ class ChangeAvatarComponent extends Component<
 					</Flex>
 					<Flex className={styles.otp} align="center">
 						<Switch
-							onClick={this.handleToggleOTP}
+							onChange={this.handleToggleOTP}
 							checked={this.props.OTPActivated}
 						/>
 						<p className={styles.otpText}>Двухфакторная аутентификация</p>

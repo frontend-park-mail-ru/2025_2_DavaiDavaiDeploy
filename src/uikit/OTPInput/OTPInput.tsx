@@ -1,3 +1,4 @@
+import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
 import { Flex } from '../Flex/Flex';
 import styles from './OTPInput.module.scss';
@@ -6,6 +7,8 @@ interface OTPInputProps {
 	length: number;
 	onFinish: (otp: string) => void;
 	getRootRef?: any;
+	className?: string;
+	[key: string]: any;
 }
 
 interface OTPInputState {
@@ -63,7 +66,7 @@ export class OTPInput extends Component<OTPInputProps, OTPInputState> {
 	};
 
 	render() {
-		const { length = 6, getRootRef } = this.props;
+		const { length = 6, getRootRef, className, ...rest } = this.props;
 		const { values } = this.state;
 
 		if (values.length === 0) {
@@ -71,7 +74,11 @@ export class OTPInput extends Component<OTPInputProps, OTPInputState> {
 		}
 
 		return (
-			<Flex className={styles.inputWrapper} getRootRef={getRootRef}>
+			<Flex
+				className={clsx(styles.inputWrapper, className)}
+				getRootRef={getRootRef}
+				{...rest}
+			>
 				{Array.from({ length }, (_, i) => (
 					<input
 						type="text"

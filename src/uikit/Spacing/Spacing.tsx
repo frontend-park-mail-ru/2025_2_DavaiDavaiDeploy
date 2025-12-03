@@ -6,11 +6,12 @@ interface SpacingProps {
 	level?: '7' | '8' | '9' | '10';
 	getRootRef?: any;
 	className?: string;
+	[key: string]: any;
 }
 
 export class Spacing extends Component<SpacingProps> {
 	render() {
-		const { level = '8', getRootRef, className } = this.props;
+		const { level = '8', getRootRef, className, ...rest } = this.props;
 
 		return (
 			<div
@@ -24,6 +25,7 @@ export class Spacing extends Component<SpacingProps> {
 					},
 					className,
 				)}
+				{...rest}
 			></div>
 		);
 	}

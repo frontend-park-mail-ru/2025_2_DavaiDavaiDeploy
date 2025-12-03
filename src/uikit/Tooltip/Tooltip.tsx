@@ -7,6 +7,7 @@ interface TooltipProps {
 	placement?: 'top' | 'bottom' | 'left' | 'right';
 	getRootRef?: any;
 	className?: string;
+	[key: string]: any;
 }
 
 interface TooltipState {
@@ -25,6 +26,7 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
 			text,
 			getRootRef,
 			className,
+			...rest
 		} = this.props;
 
 		const { visible } = this.state;
@@ -35,6 +37,7 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
 				onMouseLeave={() => this.setState({ visible: false })}
 				className={styles.tooltipWrapper}
 				ref={getRootRef}
+				{...rest}
 			>
 				<div
 					className={clsx(
