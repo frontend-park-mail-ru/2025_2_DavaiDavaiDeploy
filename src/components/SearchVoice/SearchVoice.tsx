@@ -67,7 +67,10 @@ class SearchVoiceComponent extends Component<
 		try {
 			const stream = await navigator.mediaDevices.getUserMedia({
 				audio: {
-					channelCount: 1,
+					channelCount: {
+						ideal: 1,
+						max: 1,
+					},
 					sampleRate: 16000,
 					echoCancellation: true,
 					noiseSuppression: true,
