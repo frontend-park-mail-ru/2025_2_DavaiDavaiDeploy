@@ -6,6 +6,7 @@ import actionTypes from './actionTypes';
 
 interface InitialState {
 	loading: boolean;
+	voiceSearchIsWorking: boolean;
 	searchResult: ModelsSearchResponse | null;
 	error: string | null;
 }
@@ -15,6 +16,7 @@ interface InitialState {
  */
 const initialState: InitialState = {
 	loading: false,
+	voiceSearchIsWorking: false,
 	searchResult: null,
 	error: null,
 };
@@ -59,12 +61,14 @@ const searchReducer: Reducer = (
 			return {
 				...state,
 				searchResult: null,
+				voiceSearchIsWorking: false,
 			};
 
 		case actionTypes.VOICE_SEARCH_LOADED:
 			return {
 				...state,
 				loading: false,
+				voiceSearchIsWorking: false,
 				error: null,
 				voiceSearchResult: payload.result,
 			};
@@ -72,6 +76,12 @@ const searchReducer: Reducer = (
 			return {
 				...state,
 				voiceSearchResult: null,
+				voiceSearchIsWorking: false,
+			};
+		case actionTypes.VOICE_SEARCH_IS_WORKING:
+			return {
+				...state,
+				voiceSearchIsWorking: true,
 			};
 		default:
 			return state;

@@ -9,3 +9,7 @@ export const selectSearchResult: Selector = (
 export const selectVoiceSearchResult: Selector = (
 	state: State,
 ): ModelsSearchResponse => state.search.voiceSearchResult;
+
+export const selectVoiceIsWorking: Selector = (
+	state: State,
+): ModelsSearchResponse => state.search.voiceSearchIsWorking;

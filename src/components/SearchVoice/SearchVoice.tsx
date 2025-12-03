@@ -16,6 +16,8 @@ import { AppToast } from '../toastContainer/toastContainer';
 
 interface SearchVoiceProps {
 	getVoiceSearchResult: (searchWAV: Blob) => void;
+	setVoiceSearchIsWorking: () => void;
+	handleStopVoiceSearch: () => void;
 	className?: string;
 }
 
@@ -63,7 +65,9 @@ class SearchVoiceComponent extends Component<
 
 	handleStartRecording = async () => {
 		try {
-			const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+			const stream = await navigator.mediaDevices.getUserMedia({
+				audio: true,
+			});
 
 			const mediaRecorder = new MediaRecorder(stream, {
 				mimeType: 'audio/wav',
@@ -89,6 +93,7 @@ class SearchVoiceComponent extends Component<
 					type: 'audio/wav',
 				});
 
+				this.props.handleStopVoiceSearch();
 				this.props.getVoiceSearchResult(audioBlob);
 				this.cleanupRecording();
 			};
@@ -96,6 +101,7 @@ class SearchVoiceComponent extends Component<
 			mediaRecorder.start();
 		} catch {
 			this.setState({ microphoneState: MICROPHONE_STATES.INACTIVE });
+			this.props.handleStopVoiceSearch();
 			this.cleanupRecording();
 			AppToast.info('Разрешите доступ к микрофону');
 		}
@@ -113,11 +119,13 @@ class SearchVoiceComponent extends Component<
 		if (this.state.microphoneState === MICROPHONE_STATES.INACTIVE) {
 			this.setState({ microphoneState: MICROPHONE_STATES.ACTIVE });
 			this.handleStartRecording();
+			this.props.setVoiceSearchIsWorking();
 			return;
 		}
 
 		if (this.state.microphoneState === MICROPHONE_STATES.ACTIVE) {
 			this.setState({ microphoneState: MICROPHONE_STATES.LOADING });
+			this.props.handleStopVoiceSearch();
 			this.handleStopRecording();
 			this.setState({ microphoneState: MICROPHONE_STATES.INACTIVE });
 		}
@@ -139,6 +147,8 @@ class SearchVoiceComponent extends Component<
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getVoiceSearchResult: (searchWAV: Blob) =>
 		dispatch(actions.getVoiceSearchResultAction(searchWAV)),
+	setVoiceSearchIsWorking: () => dispatch(actions.setVoiceSearchIsWorking()),
+	handleStopVoiceSearch: () => dispatch(actions.stopVoiceSearch()),
 });
 
 export const SearchVoice = compose(connect(null, mapDispatchToProps))(
