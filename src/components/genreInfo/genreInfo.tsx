@@ -30,12 +30,16 @@ class GenreInfoComponent extends Component<
 	}
 
 	render() {
-		if (!this.props.genre && this.props.error) {
+		if (this.props.error) {
 			return (
 				<Title className={styles.err} level="2" weight="bold" color="accent">
 					Жанр не найден
 				</Title>
 			);
+		}
+
+		if (!this.props.genre) {
+			return <div />;
 		}
 
 		const { title, description, icon } = this.props.genre;
