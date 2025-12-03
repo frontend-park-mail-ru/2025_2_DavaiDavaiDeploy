@@ -10,6 +10,7 @@ interface ParagraphProps {
 	className?: string;
 	onClick?: (event: MouseEvent) => void;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class Paragraph extends Component<ParagraphProps> {
@@ -23,6 +24,7 @@ export class Paragraph extends Component<ParagraphProps> {
 			onClick,
 			children,
 			getRootRef,
+			...rest
 		} = this.props;
 
 		return (
@@ -48,6 +50,7 @@ export class Paragraph extends Component<ParagraphProps> {
 					},
 					className,
 				)}
+				{...rest}
 			>
 				{children}
 			</p>

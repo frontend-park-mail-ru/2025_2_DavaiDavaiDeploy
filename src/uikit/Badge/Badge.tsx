@@ -7,11 +7,19 @@ interface BadgeProps {
 	size?: 'm' | 's';
 	className?: string;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class Badge extends Component<BadgeProps> {
 	render() {
-		const { className, mode, children, getRootRef, size = 'm' } = this.props;
+		const {
+			className,
+			mode,
+			children,
+			getRootRef,
+			size = 'm',
+			...rest
+		} = this.props;
 
 		return (
 			<span
@@ -26,6 +34,7 @@ export class Badge extends Component<BadgeProps> {
 					},
 					className,
 				)}
+				{...rest}
 			>
 				{children}
 			</span>

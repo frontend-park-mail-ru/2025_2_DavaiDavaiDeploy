@@ -15,6 +15,7 @@ interface TextareaProps {
 	className?: string;
 	onChange: (value: string) => void;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class Textarea extends Component<TextareaProps> {
@@ -32,6 +33,7 @@ export class Textarea extends Component<TextareaProps> {
 			top,
 			bottom,
 			getRootRef,
+			...rest
 		} = this.props;
 
 		return (
@@ -40,6 +42,7 @@ export class Textarea extends Component<TextareaProps> {
 				className={styles.inputContainer}
 				direction="column"
 				align="start"
+				{...rest}
 			>
 				{top && (
 					<Headline level="9" className={styles.label}>

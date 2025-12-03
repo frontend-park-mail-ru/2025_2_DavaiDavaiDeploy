@@ -7,13 +7,27 @@
 	color: var(--color-accent);
 }
 
+.closed {
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(0);
+}
+
 .avatarContainer {
 	position: relative;
 
-	&:hover .avatarActions {
-		opacity: 1;
-		visibility: visible;
-		transform: translateY(0);
+	&:hover {
+		.avatarActions {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
+
+		.closed {
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(0);
+		}
 	}
 }
 

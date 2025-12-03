@@ -7,11 +7,12 @@ interface LogoProps {
 	level?: '7' | '8';
 	className?: string;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class Logo extends Component<LogoProps> {
 	render() {
-		const { className, level, getRootRef } = this.props;
+		const { className, level, getRootRef, ...rest } = this.props;
 
 		return (
 			<LogoSVG
@@ -24,6 +25,7 @@ export class Logo extends Component<LogoProps> {
 					},
 					className,
 				)}
+				{...rest}
 			/>
 		);
 	}

@@ -1,3 +1,4 @@
+import clsx from '@/modules/clsx';
 import { Component, createRef } from '@robocotik/react';
 import { Button } from '../Button/Button';
 import styles from './FileButton.module.scss';
@@ -7,6 +8,7 @@ interface FileButtonProps {
 	onChange: (event: Event) => void;
 	className?: string;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class FileButton extends Component<FileButtonProps> {
@@ -17,10 +19,14 @@ export class FileButton extends Component<FileButtonProps> {
 	};
 
 	render() {
-		const { onChange, accept } = this.props;
+		const { onChange, accept, className, getRootRef, ...rest } = this.props;
 
 		return (
-			<div className={styles.wrapper}>
+			<div
+				className={clsx(styles.wrapper, className)}
+				ref={getRootRef}
+				{...rest}
+			>
 				<Button
 					mode="primary"
 					size="xs"

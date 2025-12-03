@@ -10,12 +10,21 @@ interface AvatarProps {
 	level?: '6' | '7' | '8' | '9' | '10';
 	className?: string;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class Avatar extends Component<AvatarProps> {
 	render() {
-		const { className, src, children, alt, level, getRootRef, preview } =
-			this.props;
+		const {
+			className,
+			src,
+			children,
+			alt,
+			level,
+			getRootRef,
+			preview,
+			...rest
+		} = this.props;
 
 		let url = src;
 
@@ -39,6 +48,7 @@ export class Avatar extends Component<AvatarProps> {
 					},
 					className,
 				)}
+				{...rest}
 			>
 				{children}
 			</img>

@@ -12,6 +12,8 @@ import {
 	selectFeedbacks,
 	selectFilm,
 	selectFilmError,
+	selectFilmFeedbacksLoading,
+	selectFilmLoading,
 } from '@/redux/features/film/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
@@ -27,6 +29,8 @@ interface FilmPageProps {
 	getFilm: (id: string) => void;
 	getFeedbacks: (limit: number, offset: number, id: string) => void;
 	clearFilm: VoidFunction;
+	filmLoading: boolean;
+	filmFeedbacksLoading: boolean;
 }
 
 const FEEDBACKS_COUNT: number = 30;
@@ -34,15 +38,33 @@ const FEEDBACKS_COUNT: number = 30;
 class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 	onMount() {
 		const filmId = this.props.router.params.id;
-
 		this.props.getFilm(filmId);
-		this.props.getFeedbacks(FEEDBACKS_COUNT, 0, filmId);
+	}
+
+	onUpdate() {
+		if (
+			this.props.film?.is_out &&
+			!this.props.feedbacks &&
+			!this.props.filmFeedbacksLoading
+		) {
+			this.props.getFeedbacks(FEEDBACKS_COUNT, 0, this.props.router.params.id);
+		}
+
+		if (
+			this.props.film &&
+			this.props.film.id !== this.props.router.params.id &&
+			!this.props.filmLoading &&
+			!this.props.filmFeedbacksLoading
+		) {
+			this.props.clearFilm();
+			const filmId = this.props.router.params.id;
+			this.props.getFilm(filmId);
+			this.props.getFeedbacks(FEEDBACKS_COUNT, 0, filmId);
+		}
 	}
 
 	onUnmount() {
 		this.props.clearFilm();
-		const observer = this.state.observer as IntersectionObserver | undefined;
-		observer?.disconnect();
 	}
 
 	renderFeedbacks() {
@@ -94,6 +116,8 @@ const mapStateToProps = (state: State): Map => ({
 	filmError: selectFilmError(state),
 	feedbacks: selectFeedbacks(state),
 	feedbackError: selectFeedbackError(state),
+	filmLoading: selectFilmLoading(state),
+	filmFeedbacksLoading: selectFilmFeedbacksLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

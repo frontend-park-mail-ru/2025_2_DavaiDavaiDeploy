@@ -4,13 +4,13 @@ import styles from './IconButton.module.scss';
 
 interface IconButtonProps {
 	mode: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
-	disabled?: boolean;
 	className?: string;
 	onClick?: (event: MouseEvent) => void;
 	onMouseLeave?: any;
 	onMouseEnter?: any;
 	children?: any;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class IconButton extends Component<IconButtonProps> {
@@ -23,6 +23,7 @@ export class IconButton extends Component<IconButtonProps> {
 			onMouseEnter,
 			children,
 			getRootRef,
+			...rest
 		} = this.props;
 
 		return (
@@ -41,6 +42,7 @@ export class IconButton extends Component<IconButtonProps> {
 					},
 					className,
 				)}
+				{...rest}
 			>
 				{children}
 			</button>

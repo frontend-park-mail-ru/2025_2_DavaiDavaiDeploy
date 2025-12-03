@@ -1,4 +1,5 @@
 import Star from '@/assets/Star.svg?react';
+import clsx from '@/modules/clsx';
 import { Component } from '@robocotik/react';
 import { Flex } from '../Flex/Flex';
 import { Headline } from '../Headline/Headline';
@@ -9,18 +10,20 @@ interface RatingProps {
 	mode: 'low' | 'medium' | 'high';
 	className?: string;
 	getRootRef?: any;
+	[key: string]: any;
 }
 
 export class Rating extends Component<RatingProps> {
 	render() {
-		const { rating, mode, getRootRef } = this.props;
+		const { rating, mode, getRootRef, className, ...rest } = this.props;
 
 		return (
 			<Flex
-				className={styles.rating}
+				className={clsx(styles.rating, className)}
 				direction="row"
 				align="center"
 				getRootRef={getRootRef}
+				{...rest}
 			>
 				<Star className={styles[`star-${mode}`]} />
 				<Headline className={styles[`rating-${mode}`]} level="7">
