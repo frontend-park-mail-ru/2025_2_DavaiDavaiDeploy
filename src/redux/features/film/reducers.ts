@@ -3,7 +3,11 @@ import { mergeUnique } from '@/helpers/mergeUniqueHelper/mergeUniqueHelper';
 import type { Action } from '@/modules/redux/types/actions';
 import type { Reducer } from '@/modules/redux/types/reducers';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
+import type {
+	ModelsFilmFeedback,
+	ModelsFilmPage,
+	ModelsMainPageFilm,
+} from '@/types/models';
 import actionTypes from './actionTypes';
 
 interface InitialState {
@@ -20,6 +24,9 @@ interface InitialState {
 	addError: string | null;
 	deleteError: string | null;
 	is_out: boolean | null;
+	similarFilms: ModelsMainPageFilm[] | null;
+	similarLoading: boolean;
+	similarError: string | null;
 }
 
 /**
@@ -39,6 +46,9 @@ const initialState: InitialState = {
 	addError: null,
 	deleteError: null,
 	is_out: null,
+	similarFilms: null,
+	similarLoading: false,
+	similarError: null,
 };
 
 /**
@@ -150,6 +160,27 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 			return {
 				...state,
 				deleteError: payload.error,
+			};
+
+		case actionTypes.SIMILAR_LOADING:
+			return {
+				...state,
+				similarLoading: true,
+				similarError: null,
+			};
+		case actionTypes.SIMILAR_LOADED:
+			return {
+				...state,
+				similarLoading: false,
+				similarFilms: payload.films,
+				similarError: null,
+			};
+		case actionTypes.SIMILAR_ERROR:
+			return {
+				...state,
+				similarLoading: false,
+				similarError: payload.error,
+				similarFilms: null,
 			};
 		default:
 			return state;
