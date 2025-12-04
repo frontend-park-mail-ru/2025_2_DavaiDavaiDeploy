@@ -1,6 +1,8 @@
 import { FeedBack } from '@/components/feedBack/feedBack';
 import { FilmInfo } from '@/components/filmInfo/filmInfo';
+import { FilmsLine } from '@/components/filmsLine/filmsLine';
 import { Userfeedback } from '@/components/userFeedback/userFeedback';
+import clsx from '@/modules/clsx';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -14,9 +16,15 @@ import {
 	selectFilmError,
 	selectFilmFeedbacksLoading,
 	selectFilmLoading,
+	selectSimilarFilms,
+	selectSimilarFilmsLoading,
 } from '@/redux/features/film/selectors';
 import type { Map } from '@/types/map';
-import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
+import type {
+	ModelsFilmFeedback,
+	ModelsFilmPage,
+	ModelsMainPageFilm,
+} from '@/types/models';
 import { Flex, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import styles from './filmPage.module.scss';
@@ -31,6 +39,9 @@ interface FilmPageProps {
 	clearFilm: VoidFunction;
 	filmLoading: boolean;
 	filmFeedbacksLoading: boolean;
+	getSimilarFilms: (id: string) => void;
+	similarFilmsLoading: boolean;
+	similarFilms: ModelsMainPageFilm[] | null;
 }
 
 const FEEDBACKS_COUNT: number = 30;
@@ -39,6 +50,7 @@ class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 	onMount() {
 		const filmId = this.props.router.params.id;
 		this.props.getFilm(filmId);
+		this.props.getSimilarFilms(filmId);
 	}
 
 	onUpdate() {
@@ -54,12 +66,14 @@ class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 			this.props.film &&
 			this.props.film.id !== this.props.router.params.id &&
 			!this.props.filmLoading &&
-			!this.props.filmFeedbacksLoading
+			!this.props.filmFeedbacksLoading &&
+			!this.props.similarFilmsLoading
 		) {
 			this.props.clearFilm();
 			const filmId = this.props.router.params.id;
 			this.props.getFilm(filmId);
 			this.props.getFeedbacks(FEEDBACKS_COUNT, 0, filmId);
+			this.props.getSimilarFilms(filmId);
 		}
 	}
 
@@ -87,25 +101,37 @@ class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 		return (
 			<Flex className={styles.page} direction="column">
 				<FilmInfo film={this.props.film} error={this.props.filmError} />
-				{this.props.film && this.props.film.is_out && (
-					<Flex
-						className={styles.content}
-						direction="row"
-						align="start"
-						justify="between"
-					>
-						<Flex className={styles.left} direction="column">
-							<Flex className={styles.feedbacks} direction="column">
-								{this.renderFeedbacks()}
+				<Flex
+					className={clsx(styles.lowePart, {
+						[styles.dark]: !this.props.film?.is_out,
+					})}
+					direction="column"
+				>
+					<FilmsLine
+						films={this.props.similarFilms}
+						title="Если вам понравился этот фильм"
+						isDark={this.props.film?.is_out}
+					/>
+					{this.props.film && this.props.film.is_out && (
+						<Flex
+							className={styles.content}
+							direction="row"
+							align="start"
+							justify="between"
+						>
+							<Flex className={styles.left} direction="column">
+								<Flex className={styles.feedbacks} direction="column">
+									{this.renderFeedbacks()}
+								</Flex>
+							</Flex>
+							<Flex className={styles.right} direction="column">
+								<div class="wrapper">
+									<Userfeedback />
+								</div>
 							</Flex>
 						</Flex>
-						<Flex className={styles.right} direction="column">
-							<div class="wrapper">
-								<Userfeedback />
-							</div>
-						</Flex>
-					</Flex>
-				)}
+					)}
+				</Flex>
 			</Flex>
 		);
 	}
@@ -118,6 +144,8 @@ const mapStateToProps = (state: State): Map => ({
 	feedbackError: selectFeedbackError(state),
 	filmLoading: selectFilmLoading(state),
 	filmFeedbacksLoading: selectFilmFeedbacksLoading(state),
+	similarFilmsLoading: selectSimilarFilmsLoading(state),
+	similarFilms: selectSimilarFilms(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
@@ -125,6 +153,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	getFeedbacks: (limit: number, offset: number, id: string) =>
 		dispatch(actions.getFeedbacksAction(limit, offset, id)),
 	clearFilm: () => dispatch(actions.clearFilmAction()),
+	getSimilarFilms: (id: string) => dispatch(actions.getSimilarFilmsAction(id)),
 });
 
 export const FilmPage = compose(
