@@ -4,10 +4,21 @@
 	background-color: var(--color-bg);
 }
 
-.content {
+.lowePart {
 	background-color: var(--color-text);
-	gap: 3vw;
 	padding: var(--side-padding);
+	gap: 4.4rem;
+	padding-top: 4.4rem;
+	padding-bottom: 3rem;
+}
+
+.dark {
+	background: transparent;
+	padding-top: 2rem;
+}
+
+.content {
+	gap: 3vw;
 }
 
 .left {
@@ -26,14 +37,16 @@
 
 .left,
 .right {
-	margin-top: 4.4rem;
-	margin-bottom: 4rem;
 	flex: 1;
 }
 
 @media (max-width: 1024px) {
 	.page {
 		background: var(--color-bg-gradient);
+	}
+
+	.lowePart {
+		gap: 2vw;
 	}
 
 	.content {

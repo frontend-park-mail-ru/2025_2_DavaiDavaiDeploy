@@ -40,3 +40,6 @@ export const selectFilmFeedbacksLoading: Selector = (state: State): boolean =>
 export const selectSimilarFilms: Selector = (
 	state: State,
 ): ModelsMainPageFilm[] | null => state.film.similarFilms;
+
+export const selectSimilarFilmsLoading: Selector = (state: State): boolean =>
+	state.film.similarLoading;
