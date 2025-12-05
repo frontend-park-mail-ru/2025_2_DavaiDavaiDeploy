@@ -33,7 +33,8 @@
   "browserslist": [
     "defaults",
     "not op_mini all",
-    "not KaiOS > 0"
+    "not KaiOS > 0",
+    "not android 142"
   ],
   "keywords": [],
   "author": "",

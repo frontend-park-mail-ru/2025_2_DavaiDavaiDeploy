@@ -18,6 +18,7 @@ import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { isSwEnabled } from './consts/sw';
 import { PRODUCTION_URL } from './consts/urls.ts';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
+import { NotificationManager } from './modules/notifications/notificationManager';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import { Route } from './modules/router/route.tsx';
@@ -34,6 +35,7 @@ import { LoginPage } from './pages/loginPage/loginPage.tsx';
 import { RegisterPage } from './pages/registerPage/registerPage.tsx';
 import { SearchPage } from './pages/searchPage/searchPage.tsx';
 import { UserPage } from './pages/userPage/userPage.tsx';
+import notificationActions from './redux/features/notification/actions.ts';
 import actions from './redux/features/user/actions.ts';
 import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
@@ -70,11 +72,23 @@ window.addEventListener('offline', () => {
 interface AppProps {
 	user: ModelsUser;
 	checkUser: () => {};
+	requestNotificationPermission: () => {};
+	connectToNotifications: () => {};
+	disconnectFromNotifications: () => {};
 }
 
 class AppComponent extends Component<AppProps & WithRouterProps> {
 	onMount() {
 		this.props.checkUser();
+
+		if (
+			NotificationManager.isSupported() &&
+			Notification.permission === 'default'
+		) {
+			this.props.requestNotificationPermission();
+		}
+
+		this.props.connectToNotifications();
 	}
 
 	render() {
@@ -122,6 +136,12 @@ const mapStateToProps = (state: State): Map => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	checkUser: () => dispatch(actions.checkUserAction()),
+	requestNotificationPermission: () =>
+		dispatch(notificationActions.requestNotificationPermission()),
+	connectToNotifications: () =>
+		dispatch(notificationActions.connectToNotifications()),
+	disconnectFromNotifications: () =>
+		dispatch(notificationActions.disconnectFromNotifications()),
 });
 
 const App = compose(
