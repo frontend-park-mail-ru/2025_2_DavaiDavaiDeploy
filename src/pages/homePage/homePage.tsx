@@ -18,17 +18,12 @@ import styles from './homePage.module.scss';
 
 interface HomePageProps {
 	recommendations: ModelsMainPageFilm[] | null;
-	clearFilms: VoidFunction;
 	getReccomendations: VoidFunction;
 }
 
 export class HomePageComponent extends Component<HomePageProps> {
 	onMount() {
 		this.props.getReccomendations();
-	}
-
-	onUnmount() {
-		this.props.clearFilms();
 	}
 
 	render() {
@@ -58,7 +53,6 @@ const mapStateToProps = (state: State): Map => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	clearFilm: () => dispatch(actions.clearFilmsAction()),
 	getReccomendations: () => dispatch(actions.getRecommendationsAction()),
 });
 
