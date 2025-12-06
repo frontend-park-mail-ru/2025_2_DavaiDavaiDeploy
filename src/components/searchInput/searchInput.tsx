@@ -156,7 +156,7 @@ class SearchInputComponent extends Component<
 						<input
 							type="text"
 							ref={this.inputRef}
-							placeholder="Поиск фильмов, актеров..."
+							placeholder="Поиск 111"
 							value={this.state.searchRequest}
 							onInput={this.handleSearchRequestChange}
 							className={styles.input}
