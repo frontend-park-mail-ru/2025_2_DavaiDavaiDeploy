@@ -175,7 +175,7 @@ jobs:
             git fetch
             git reset --hard origin/${{ github.ref_name }}
 
-      - name: Build frontend
+      - name: Deploy to S3
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -186,7 +186,7 @@ jobs:
             
             source .env.stage
 
-            docker build -f docker/Dockerfile.stage \
+            docker build -f Dockerfile.stage \
             --target deploy \
             --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
             --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
@@ -194,10 +194,20 @@ jobs:
             --build-arg S3_BUCKET=$S3_BUCKET \
             --build-arg AWS_ENDPOINT=$AWS_ENDPOINT \
             -t frontend-stage:latest .
+
+      - name: Build frontend
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/frontend/stage
   
-            docker compose -f docker/docker-compose.stage.yml --env-file .env.stage down -v
-            docker compose --env-file .env.stage -f docker/docker-compose.stage.yml build --no-cache
-            docker compose --env-file .env.stage -f docker/docker-compose.stage.yml up -d
+            docker compose -f docker-compose.stage.yml --env-file .env.stage down -v
+            docker compose --env-file .env.stage -f docker-compose.stage.yml build --no-cache
+            docker compose --env-file .env.stage -f docker-compose.stage.yml up -d
+
 
   notify_success:
     name: Success Message
