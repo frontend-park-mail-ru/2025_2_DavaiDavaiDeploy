@@ -12,7 +12,7 @@ import { Component, createRef } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
 
-const ROOT_MARGIN = '100%';
+const ROOT_MARGIN = '200px';
 const INITIAL_DELAY = 400;
 
 interface FilmCardGridProps {
@@ -38,7 +38,7 @@ class FilmCardGridComponent extends Component<
 					this.loadMoreFilms();
 				}
 			},
-			{ root: null, rootMargin: ROOT_MARGIN, threshold: 0 },
+			{ rootMargin: ROOT_MARGIN },
 		);
 
 		setTimeout(() => {
