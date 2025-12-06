@@ -7,9 +7,12 @@ import actionTypes from './actionTypes';
 
 interface InitialState {
 	loading: boolean;
-	films: ModelsMainPageFilm[];
+	films: ModelsMainPageFilm[] | null;
 	error: string | null;
 	cursor: string | null;
+	recommendations: ModelsMainPageFilm[] | null;
+	recommendationsError: string | null;
+	recommendationsLoading: boolean;
 }
 
 /**
@@ -17,9 +20,12 @@ interface InitialState {
  */
 const initialState: InitialState = {
 	loading: false,
-	films: [],
+	films: null,
 	error: null,
 	cursor: null,
+	recommendations: null,
+	recommendationsError: null,
+	recommendationsLoading: false,
 };
 
 /**
@@ -50,12 +56,25 @@ const filmsReducer: Reducer = (state = initialState, action: Action): State => {
 				...state,
 				loading: false,
 				error: payload.error,
+				films: null,
 			};
 		case actionTypes.FILMS_CLEAR:
+			return initialState;
+		case actionTypes.RECOMMENDATIONS_LOADING:
 			return {
-				films: [],
-				error: null,
-				loading: false,
+				recommendationsLoading: true,
+				recommendationsError: null,
+			};
+		case actionTypes.RECOMMENDATIONS_LOADED:
+			return {
+				recommendations: payload.films,
+				recommendationsLoading: false,
+				recommendationsError: null,
+			};
+		case actionTypes.RECOMMENDATIONS_ERROR:
+			return {
+				recommendations: null,
+				recommendationsError: payload.error,
 			};
 		default:
 			return state;

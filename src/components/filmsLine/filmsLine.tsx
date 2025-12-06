@@ -9,18 +9,19 @@ interface FilmsLineProps {
 	films: ModelsMainPageFilm[] | null;
 	title: string;
 	isDark?: boolean;
+	className?: string;
 }
 
 export class FilmsLine extends Component<FilmsLineProps> {
 	render() {
-		const { films, title, isDark } = this.props;
+		const { films, title, isDark, className } = this.props;
 
 		if (!films) {
 			return <div />;
 		}
 
 		return (
-			<Flex className={styles.filmsLine} direction="column">
+			<Flex className={clsx(styles.filmsLine, className)} direction="column">
 				<Title
 					className={clsx(styles.title, { [styles.dark]: !!isDark })}
 					level="4"
