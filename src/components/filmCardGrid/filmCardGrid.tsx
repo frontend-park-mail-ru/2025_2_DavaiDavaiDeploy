@@ -59,7 +59,7 @@ class FilmCardGridComponent extends Component<
 						<FilmCard film={film} />
 					))}
 				</CardGrid>
-				<div ref={this.loadMoreTriggerRef} />
+				<div ref={this.loadMoreTriggerRef} className={styles.loadMoreTrigger} />
 			</Flex>
 		);
 	}
