@@ -7,7 +7,7 @@ import actionTypes from './actionTypes';
 
 interface InitialState {
 	loading: boolean;
-	films: ModelsMainPageFilm[] | null;
+	films: ModelsMainPageFilm[];
 	error: string | null;
 	cursor: string | null;
 	recommendations: ModelsMainPageFilm[] | null;
@@ -20,7 +20,7 @@ interface InitialState {
  */
 const initialState: InitialState = {
 	loading: false,
-	films: null,
+	films: [],
 	error: null,
 	cursor: null,
 	recommendations: null,
@@ -56,7 +56,7 @@ const filmsReducer: Reducer = (state = initialState, action: Action): State => {
 				...state,
 				loading: false,
 				error: payload.error,
-				films: null,
+				films: [],
 			};
 		case actionTypes.FILMS_CLEAR:
 			return initialState;
