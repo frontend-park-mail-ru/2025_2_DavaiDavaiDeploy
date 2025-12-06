@@ -13,7 +13,6 @@ import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
 
 const ROOT_MARGIN = '200px';
-const INITIAL_DELAY = 400;
 
 interface FilmCardGridProps {
 	films: ModelsMainPageFilm[];
@@ -30,15 +29,20 @@ class FilmCardGridComponent extends Component<
 	onMount() {
 		this.props.getFilms(this.props.cursor);
 
-		this.observer = new IntersectionObserver(this.loadMoreFilms, {
-			rootMargin: ROOT_MARGIN,
-		});
+		this.observer = new IntersectionObserver(
+			(entries) => {
+				const entry = entries[0];
 
-		setTimeout(() => {
-			if (this.loadMoreTriggerRef.current && this.observer) {
-				this.observer.observe(this.loadMoreTriggerRef.current);
-			}
-		}, INITIAL_DELAY);
+				if (entry.isIntersecting) {
+					this.loadMoreFilms();
+				}
+			},
+			{ rootMargin: ROOT_MARGIN },
+		);
+
+		if (this.loadMoreTriggerRef.current && this.observer) {
+			this.observer.observe(this.loadMoreTriggerRef.current);
+		}
 	}
 
 	onUnmount() {
@@ -54,10 +58,6 @@ class FilmCardGridComponent extends Component<
 	};
 
 	render() {
-		if (!this.props.films || this.props.films.length === 0) {
-			return <div />;
-		}
-
 		return (
 			<Flex className={styles.filmCardGrid} direction="column">
 				<Title className={styles.title} level="4" weight="bold">
