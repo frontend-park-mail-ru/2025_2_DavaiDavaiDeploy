@@ -28,8 +28,7 @@ class FilmCardGridComponent extends Component<
 		this.props.getFilms(this.props.cursor);
 
 		this.observer = new IntersectionObserver(this.loadMoreFilms, {
-			root: null,
-			rootMargin: '100px',
+			rootMargin: '200px',
 		});
 
 		if (this.loadMoreTriggerRef.current && this.observer) {
@@ -60,7 +59,7 @@ class FilmCardGridComponent extends Component<
 						<FilmCard film={film} />
 					))}
 				</CardGrid>
-				<div ref={this.loadMoreTriggerRef}>Load More...</div>
+				<div ref={this.loadMoreTriggerRef} />
 			</Flex>
 		);
 	}
