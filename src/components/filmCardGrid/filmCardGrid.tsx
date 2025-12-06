@@ -28,7 +28,8 @@ class FilmCardGridComponent extends Component<
 		this.props.getFilms(this.props.cursor);
 
 		this.observer = new IntersectionObserver(this.loadMoreFilms, {
-			threshold: 0.1,
+			root: null,
+			rootMargin: '100px',
 		});
 
 		if (this.loadMoreTriggerRef.current && this.observer) {
