@@ -22,6 +22,7 @@ export class TrailerModalComponent extends Component<
 					align="center"
 				>
 					<video
+						autoplay
 						preload:auto
 						controls
 						className={style.trailer}
