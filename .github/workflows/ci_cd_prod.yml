@@ -208,6 +208,17 @@ jobs:
             docker compose --env-file .env.production -f docker-compose.prod.yml build --no-cache
             docker compose --env-file .env.production -f docker-compose.prod.yml up -d
 
+      - name: Send failure notification
+              if: failure()
+              uses: PacificPromise/macos-telegram-action@main
+              with:
+                type: topic
+                message: |
+                  ❗️ Произошла ошибка во время деплоя
+
+                  🔗 Ссылка на пайплайн 🔗
+                  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
   notify_success:
     name: Success Message
     runs-on: ubuntu-latest
@@ -223,18 +234,3 @@ jobs:
 
             🔗 Ссылка 🔗
             ${{ secrets.PRODUCTION_URL || 'Отсутствует' }}
-
-  notify_failure:
-    name: Failure Message
-    if: ${{ needs.deploy.result == 'failure' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send Telegram Failure Message
-        uses: PacificPromise/macos-telegram-action@main
-        with:
-          type: topic
-          message: |
-            ❗️ Произошла ошибка во время деплоя
-
-            🔗 Ссылка на пайплайн 🔗
-            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
