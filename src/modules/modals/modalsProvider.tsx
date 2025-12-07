@@ -1,7 +1,3 @@
-import {
-	FavoritesModal,
-	type FavoritesModalProps,
-} from '@/components/favoritesModal/favoritesModal.tsx';
 import { Component } from '@robocotik/react';
 import {
 	LoginModal,
@@ -64,10 +60,6 @@ export class ModalsProvider extends Component {
 					<OTPModal
 						id={MODALS.OTP_MODAL}
 						{...((this.state.activeModalProps || {}) as OTPModalProps)}
-					/>
-					<FavoritesModal
-						id={MODALS.FAV_MODAL}
-						{...((this.state.activeModalProps || {}) as FavoritesModalProps)}
 					/>
 				</ModalRoot>
 			</ModalContext.Provider>
