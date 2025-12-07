@@ -262,6 +262,7 @@
 	.trailerPreviewMobile {
 		display: block;
 		margin-top: 2rem;
+		width: 60%;
 	}
 
 	.film {
@@ -403,5 +404,11 @@
 	.smallFavBtn {
 		width: 50%;
 		padding: 1rem 0.8rem;
+	}
+
+	.trailerPreviewMobile {
+		display: block;
+		margin-top: 2rem;
+		width: 90%;
 	}
 }
