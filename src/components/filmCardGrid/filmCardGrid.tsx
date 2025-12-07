@@ -12,8 +12,6 @@ import { Component, createRef } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
 
-const ROOT_MARGIN = '200px';
-
 interface FilmCardGridProps {
 	films: ModelsMainPageFilm[];
 	getFilms: (cursor: string) => void;
@@ -30,7 +28,7 @@ class FilmCardGridComponent extends Component<
 		this.props.getFilms(this.props.cursor);
 
 		this.observer = new IntersectionObserver(this.loadMoreFilms, {
-			rootMargin: ROOT_MARGIN,
+			rootMargin: '200px',
 		});
 
 		if (this.loadMoreTriggerRef.current && this.observer) {
@@ -61,10 +59,7 @@ class FilmCardGridComponent extends Component<
 						<FilmCard film={film} />
 					))}
 				</CardGrid>
-				<div
-					className={styles.loadMoreTrigger}
-					ref={this.loadMoreTriggerRef}
-				></div>
+				<div ref={this.loadMoreTriggerRef} className={styles.loadMoreTrigger} />
 			</Flex>
 		);
 	}
