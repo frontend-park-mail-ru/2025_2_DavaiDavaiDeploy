@@ -3,6 +3,8 @@ import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHel
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '@/modules/clsx';
+import { withModal } from '@/modules/modals/withModal';
+import type { WithModalProps } from '@/modules/modals/withModalProps';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import { Link } from '@/modules/router/link.tsx';
@@ -26,51 +28,34 @@ import styles from './favoritesFilmCard.module.scss';
 interface FavoritesFilmCardProps {
 	film: ModelsFavFilm;
 	deleteFromFavorites: (id: string) => {};
+	addToFavorites: (id: string) => {};
 }
 
 interface FavoritesFilmCardState {
-	isBlinking: boolean;
+	inFav: boolean;
 }
 
-const ANIMATION_DURATION = 2500;
-
 class FavoritesFilmCardComponent extends Component<
-	FavoritesFilmCardProps,
+	FavoritesFilmCardProps & WithModalProps,
 	FavoritesFilmCardState
 > {
 	state = {
-		isBlinking: false,
+		inFav: true,
 	};
 
-	timeout: NodeJS.Timeout | null = null;
-
-	handleDeletionFromFavorites = (event: MouseEvent) => {
+	handleChangeFavoriteStatus = (event: MouseEvent) => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (!this.timeout) {
-			this.setState({
-				isBlinking: true,
-			});
-
-			this.timeout = setTimeout(() => {
-				this.props.deleteFromFavorites(this.props.film.id);
-				this.setState({ isBlinking: false });
-			}, ANIMATION_DURATION);
-
+		if (this.state.inFav) {
+			this.setState({ inFav: false });
+			this.props.deleteFromFavorites(this.props.film.id);
 			return;
 		}
 
-		clearTimeout(this.timeout);
-		this.timeout = null;
-		this.setState({ isBlinking: false });
+		this.setState({ inFav: true });
+		this.props.addToFavorites(this.props.film.id);
 	};
-
-	onUnmount() {
-		if (this.timeout) {
-			clearTimeout(this.timeout);
-		}
-	}
 
 	render() {
 		const {
@@ -90,13 +75,7 @@ class FavoritesFilmCardComponent extends Component<
 
 		return (
 			<Link href={`/films/${id}`} className={styles.linkWrap}>
-				<Flex
-					className={clsx(styles.filmCard, {
-						[styles.blink]: this.state.isBlinking,
-					})}
-					direction="row"
-					align="center"
-				>
+				<Flex className={styles.filmCard} direction="row" align="center">
 					<div className={styles.imageContainer}>
 						<Image className={styles.image} src={image} alt={title} />
 						{ratingType && (
@@ -152,11 +131,11 @@ class FavoritesFilmCardComponent extends Component<
 					<IconButton
 						mode="secondary"
 						className={styles.iconBtn}
-						onClick={this.handleDeletionFromFavorites}
+						onClick={this.handleChangeFavoriteStatus}
 					>
 						<Favorite
 							className={clsx(styles.icon, {
-								[styles.removed]: this.state.isBlinking,
+								[styles.removed]: !this.state.inFav,
 							})}
 						/>
 					</IconButton>
@@ -169,9 +148,11 @@ class FavoritesFilmCardComponent extends Component<
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	deleteFromFavorites: (id: string) =>
 		dispatch(actions.deleteFromFavoritesAction(id)),
+	addToFavorites: (id: string) => dispatch(actions.addToFavoritesAction(id)),
 });
 
 export const FavoritesFilmCard = compose(
 	withRouter,
+	withModal,
 	connect(null, mapDispatchToProps),
 )(FavoritesFilmCardComponent);
