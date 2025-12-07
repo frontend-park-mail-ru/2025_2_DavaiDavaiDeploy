@@ -2,7 +2,7 @@ import Favorite from '@/assets/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import { MODALS } from '@/modules/modals/modals';
+import clsx from '@/modules/clsx';
 import { withModal } from '@/modules/modals/withModal';
 import type { WithModalProps } from '@/modules/modals/withModalProps';
 import { compose, connect } from '@/modules/redux';
@@ -28,20 +28,33 @@ import styles from './favoritesFilmCard.module.scss';
 interface FavoritesFilmCardProps {
 	film: ModelsFavFilm;
 	deleteFromFavorites: (id: string) => {};
+	addToFavorites: (id: string) => {};
+}
+
+interface FavoritesFilmCardState {
+	inFav: boolean;
 }
 
 class FavoritesFilmCardComponent extends Component<
-	FavoritesFilmCardProps & WithModalProps
+	FavoritesFilmCardProps & WithModalProps,
+	FavoritesFilmCardState
 > {
-	timeout: NodeJS.Timeout | null = null;
+	state = {
+		inFav: true,
+	};
 
-	handleDeletionFromFavorites = (event: MouseEvent) => {
+	handleChangeFavoriteStatus = (event: MouseEvent) => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		this.props.modal.open(MODALS.FAV_MODAL, {
-			onDelete: () => this.props.deleteFromFavorites(this.props.film.id),
-		});
+		if (this.state.inFav) {
+			this.setState({ inFav: false });
+			this.props.deleteFromFavorites(this.props.film.id);
+			return;
+		}
+
+		this.setState({ inFav: true });
+		this.props.addToFavorites(this.props.film.id);
 	};
 
 	render() {
@@ -118,9 +131,13 @@ class FavoritesFilmCardComponent extends Component<
 					<IconButton
 						mode="secondary"
 						className={styles.iconBtn}
-						onClick={this.handleDeletionFromFavorites}
+						onClick={this.handleChangeFavoriteStatus}
 					>
-						<Favorite className={styles.icon} />
+						<Favorite
+							className={clsx(styles.icon, {
+								[styles.removed]: !this.state.inFav,
+							})}
+						/>
 					</IconButton>
 				</Flex>
 			</Link>
@@ -131,6 +148,7 @@ class FavoritesFilmCardComponent extends Component<
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	deleteFromFavorites: (id: string) =>
 		dispatch(actions.deleteFromFavoritesAction(id)),
+	addToFavorites: (id: string) => dispatch(actions.addToFavoritesAction(id)),
 });
 
 export const FavoritesFilmCard = compose(
