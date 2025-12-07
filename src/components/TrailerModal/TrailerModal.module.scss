@@ -1,0 +1,29 @@
+.modalTrailer {
+	background-color: var(--color-light);
+	color: var(--color-text);
+	width: 60rem;
+	height: clamp(30rem, 65dvh, 40rem);
+	gap: 2rem;
+}
+
+.close {
+	top: 1rem;
+	right: 1rem;
+	position: fixed;
+	z-index: 10000;
+}
+
+.trailer {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+@media (max-width: 768px) {
+	.modalTrailer {
+		background-color: var(--color-light);
+		color: var(--color-text);
+		width: 100dvw;
+		height: 100dvh;
+	}
+}

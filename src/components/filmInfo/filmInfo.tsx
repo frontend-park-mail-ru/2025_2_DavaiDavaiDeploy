@@ -27,6 +27,7 @@ import {
 } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { FilmRating } from '../filmRating/filmRating';
+import { Trailer } from '../Trailer/Trailer';
 import styles from './filmInfo.module.scss';
 
 interface FilmInfoProps {
@@ -147,6 +148,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 							<Favorite className={styles.favIcon} />
 							<Headline level="7">Избранное</Headline>
 						</Button>
+						<Trailer className={styles.trailerPreviewPC} />
 					</Flex>
 
 					<Flex className={styles.info} direction="column" align="start">
@@ -253,6 +255,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 										<Favorite className={styles.favIcon} />
 										<Headline level="7">Избранное</Headline>
 									</Button>
+									<Trailer className={styles.trailerPreviewMobile} />
 								</Flex>
 
 								{description && (

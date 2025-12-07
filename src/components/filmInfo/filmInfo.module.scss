@@ -246,7 +246,24 @@
 	}
 }
 
+.trailerPreviewPC {
+	display: block;
+}
+
+.trailerPreviewMobile {
+	display: hidden;
+}
+
 @media (max-width: 1024px) {
+	.trailerPreviewPC {
+		display: none;
+	}
+
+	.trailerPreviewMobile {
+		display: block;
+		margin-top: 2rem;
+	}
+
 	.film {
 		margin-bottom: 1rem;
 		align-items: center;

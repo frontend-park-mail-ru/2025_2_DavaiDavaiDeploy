@@ -20,7 +20,7 @@ export class LoginModalComponent extends Component<
 	};
 	render() {
 		return (
-			<BaseModal>
+			<BaseModal hasClose={false}>
 				<Flex
 					className={style.modalLogout}
 					direction="column"
