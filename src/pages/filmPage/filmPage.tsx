@@ -44,7 +44,7 @@ interface FilmPageProps {
 	similarFilms: ModelsMainPageFilm[] | null;
 }
 
-const FEEDBACKS_COUNT: number = 30;
+const FEEDBACKS_COUNT: number = 100;
 
 class FilmPageComponent extends Component<FilmPageProps & WithRouterProps> {
 	onMount() {

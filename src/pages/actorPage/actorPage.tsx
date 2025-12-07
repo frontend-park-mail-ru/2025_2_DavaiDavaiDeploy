@@ -20,7 +20,7 @@ import { Component } from '@robocotik/react';
 import styles from './actorPage.module.scss';
 
 const OFFSET = 0;
-const FILM_COUNT = 50;
+const FILM_COUNT = 100;
 
 interface ActorPageProps {
 	clearActor: VoidFunction;
