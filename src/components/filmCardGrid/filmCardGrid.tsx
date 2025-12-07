@@ -1,3 +1,4 @@
+import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -12,14 +13,13 @@ import { Component, createRef } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
 
-const ROOT_MARGIN = '100%';
-const INITIAL_DELAY = 400;
-
 interface FilmCardGridProps {
 	films: ModelsMainPageFilm[];
 	getFilms: (cursor: string) => void;
 	cursor: string;
 }
+
+const THROTTLE_DELAY: number = 300;
 
 class FilmCardGridComponent extends Component<
 	FilmCardGridProps & WithRouterProps
@@ -30,22 +30,15 @@ class FilmCardGridComponent extends Component<
 	onMount() {
 		this.props.getFilms(this.props.cursor);
 
-		this.observer = new IntersectionObserver(
-			(entries) => {
-				const entry = entries[0];
+		const throttledLoadHandler = throttle(this.loadMoreFilms, THROTTLE_DELAY);
 
-				if (entry.isIntersecting) {
-					this.loadMoreFilms();
-				}
-			},
-			{ root: null, rootMargin: ROOT_MARGIN, threshold: 0 },
-		);
+		this.observer = new IntersectionObserver(throttledLoadHandler, {
+			rootMargin: '200px',
+		});
 
-		setTimeout(() => {
-			if (this.loadMoreTriggerRef.current && this.observer) {
-				this.observer.observe(this.loadMoreTriggerRef.current);
-			}
-		}, INITIAL_DELAY);
+		if (this.loadMoreTriggerRef.current && this.observer) {
+			this.observer.observe(this.loadMoreTriggerRef.current);
+		}
 	}
 
 	onUnmount() {
@@ -61,10 +54,6 @@ class FilmCardGridComponent extends Component<
 	};
 
 	render() {
-		if (!this.props.films || this.props.films.length === 0) {
-			return <div />;
-		}
-
 		return (
 			<Flex className={styles.filmCardGrid} direction="column">
 				<Title className={styles.title} level="4" weight="bold">
@@ -75,10 +64,7 @@ class FilmCardGridComponent extends Component<
 						<FilmCard film={film} />
 					))}
 				</CardGrid>
-				<div
-					className={styles.loadMoreTrigger}
-					ref={this.loadMoreTriggerRef}
-				></div>
+				<div ref={this.loadMoreTriggerRef} className={styles.loadMoreTrigger} />
 			</Flex>
 		);
 	}

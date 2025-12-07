@@ -9,6 +9,7 @@ interface InitialState {
 	favorites: ModelsFavFilm[] | null;
 	error: string | null;
 	deleteError: string | null;
+	addError: string | null;
 }
 
 /**
@@ -19,6 +20,7 @@ const initialState: InitialState = {
 	favorites: null,
 	error: null,
 	deleteError: null,
+	addError: null,
 };
 
 /**
@@ -55,16 +57,15 @@ const favoritesReducer: Reducer = (
 				error: payload.error,
 				favorites: null,
 			};
-		case actionTypes.DELETE_FROM_FAVORITES:
-			return {
-				...state,
-				favorites: payload && payload.films ? payload.films : null,
-				deleteError: null,
-			};
 		case actionTypes.DELETE_FROM_FAVORITES_ERROR:
 			return {
 				...state,
 				deleteError: payload.error,
+			};
+		case actionTypes.ADD_TO_FAVORITES_ERROR:
+			return {
+				...state,
+				addError: payload.error,
 			};
 		default:
 			return state;
