@@ -1,3 +1,4 @@
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -51,7 +52,7 @@ class GenreInfoComponent extends Component<
 				align="center"
 				direction="column"
 			>
-				<Image src={icon} alt={title} className={styles.title} />
+				<Image src={getImageURL(icon)} alt={title} className={styles.title} />
 				<Paragraph className={styles.description} level="8" align="center">
 					{description}
 				</Paragraph>

@@ -1,3 +1,4 @@
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store';
@@ -25,7 +26,7 @@ class CompilationWidgetCardComponent extends Component<
 		return (
 			<Link href={`/compilations/${id}`} className={styles.linkWrap}>
 				<Flex className={styles.compilationCard} align="center">
-					<Image className={styles.image} src={icon} alt={title} />
+					<Image className={styles.image} src={getImageURL(icon)} alt={title} />
 					<Subhead className={styles.description} level="11" align="left">
 						{description}
 					</Subhead>

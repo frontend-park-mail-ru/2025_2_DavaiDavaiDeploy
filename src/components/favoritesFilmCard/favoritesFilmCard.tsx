@@ -1,5 +1,6 @@
 import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '@/modules/clsx';
@@ -98,7 +99,11 @@ class FavoritesFilmCardComponent extends Component<
 					align="center"
 				>
 					<div className={styles.imageContainer}>
-						<Image className={styles.image} src={image} alt={title} />
+						<Image
+							className={styles.image}
+							src={getImageURL(image)}
+							alt={title}
+						/>
 						{ratingType && (
 							<Badge
 								mode={ratingType}

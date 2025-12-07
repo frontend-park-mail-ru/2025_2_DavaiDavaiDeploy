@@ -1,3 +1,4 @@
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Component, createRef, type Ref } from '@robocotik/react';
 import { formatRating } from '../../helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '../../helpers/ratingTypeHelper/ratingTypeHelper';
@@ -60,7 +61,11 @@ export class SearchSuggest extends Component<
 				key={`film-${id}`}
 			>
 				<Link className={styles.link} href={`/films/${id}`}>
-					<Image className={styles.image} src={cover} alt={title} />
+					<Image
+						className={styles.image}
+						src={getImageURL(cover)}
+						alt={title}
+					/>
 					<div className={styles.filmInfo}>
 						<div className={styles.titleRow}>
 							<h3>{title}</h3>
@@ -86,7 +91,11 @@ export class SearchSuggest extends Component<
 				key={`actor-${id}`}
 			>
 				<Link className={styles.link} href={`/actors/${id}`}>
-					<Image className={styles.image} src={photo} alt={russian_name} />
+					<Image
+						className={styles.image}
+						src={getImageURL(photo)}
+						alt={russian_name}
+					/>
 					<p className={styles.titleRow}>{russian_name}</p>
 				</Link>
 			</li>

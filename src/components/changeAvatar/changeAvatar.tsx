@@ -1,3 +1,4 @@
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
 import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
@@ -214,13 +215,12 @@ class ChangeAvatarComponent extends Component<
 							className={styles.avatar}
 							src={preview}
 							alt="Preview"
-							preview={true}
 						/>
 					) : (
 						<Avatar
 							level="6"
 							className={styles.avatar}
-							src={avatar}
+							src={getImageURL(avatar)}
 							alt="Аватар"
 						/>
 					)}

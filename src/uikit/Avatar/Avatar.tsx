@@ -1,12 +1,10 @@
 import { Component } from '@robocotik/react';
 import clsx from '../clsx';
-import { getImageURL } from '../helpers/getCDNImageHelper/getCDNImageHelper';
 import styles from './Avatar.module.scss';
 
 interface AvatarProps {
 	src?: string;
 	alt?: string;
-	preview?: boolean;
 	level?: '6' | '7' | '8' | '9' | '10';
 	className?: string;
 	getRootRef?: any;
@@ -15,26 +13,12 @@ interface AvatarProps {
 
 export class Avatar extends Component<AvatarProps> {
 	render() {
-		const {
-			className,
-			src,
-			children,
-			alt,
-			level,
-			getRootRef,
-			preview,
-			...rest
-		} = this.props;
-
-		let url = src;
-
-		if (!preview && src) {
-			url = getImageURL(src);
-		}
+		const { className, src, children, alt, level, getRootRef, ...rest } =
+			this.props;
 
 		return (
 			<img
-				src={url}
+				src={src}
 				alt={alt}
 				getRootRef={getRootRef}
 				className={clsx(

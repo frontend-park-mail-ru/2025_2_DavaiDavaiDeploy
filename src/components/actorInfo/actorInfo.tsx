@@ -1,5 +1,6 @@
 import { formatBirthInfo } from '@/helpers/formatBitrhInfoHelper/formatBitrhInfoHelper';
 import { formatHeight } from '@/helpers/formatHeightHelper/formatHeightHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import type { ModelsActorPage } from '@/types/models';
 import { Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
@@ -45,7 +46,7 @@ export class ActorInfo extends Component<ActorInfoProps> {
 			<Flex className={styles.actor} direction="row" align="start">
 				<Flex className={styles.media} align="center" justify="center">
 					<Image
-						src={photo}
+						src={getImageURL(photo)}
 						alt={russian_name || 'Photo'}
 						className={styles.cover}
 					/>

@@ -1,5 +1,6 @@
 import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDateForCalendar } from '@/helpers/formatDateForCalendarHelper/formatDateForCalendarHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import clsx from '@/modules/clsx';
 import { compose, connect } from '@/modules/redux';
@@ -65,7 +66,11 @@ class CalendarWidgetFilmCardComponent extends Component<
 							{number.toString()}
 						</Headline>
 						<div className={styles.imageContainer}>
-							<Image className={styles.image} src={cover} alt={title} />
+							<Image
+								className={styles.image}
+								src={getImageURL(cover)}
+								alt={title}
+							/>
 						</div>
 						<Flex className={styles.content} direction="column" align="start">
 							<Headline

@@ -1,4 +1,5 @@
 import Exit from '@/assets/img/exit.svg?react';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
@@ -31,12 +32,14 @@ export class UserAvatarComponent extends Component<
 				className={clsx(styles.avatarActions, this.props.className)}
 				direction="column"
 			>
-				<Avatar
-					level="7"
-					src={this.props.user?.avatar}
-					alt={this.props.user?.login}
-					className={styles.avatar}
-				/>
+				{this.props.user?.avatar && (
+					<Avatar
+						level="7"
+						src={getImageURL(this.props.user.avatar)}
+						alt={this.props.user?.login}
+						className={styles.avatar}
+					/>
+				)}
 
 				{this.props.user?.login && (
 					<Headline

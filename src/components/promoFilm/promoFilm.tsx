@@ -1,4 +1,5 @@
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { connect } from '@/modules/redux';
@@ -91,7 +92,11 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 						</Link>
 					</Flex>
 
-					<Image src={image} alt={title} className={styles.image} />
+					<Image
+						src={getImageURL(image)}
+						alt={title}
+						className={styles.image}
+					/>
 				</Flex>
 			</a>
 		);

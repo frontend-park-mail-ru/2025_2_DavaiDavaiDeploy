@@ -1,5 +1,4 @@
 import { Component } from '@robocotik/react';
-import { getImageURL } from '../helpers/getCDNImageHelper/getCDNImageHelper';
 
 interface ImageProps {
 	src?: string;
@@ -17,11 +16,10 @@ export class Image extends Component<ImageProps> {
 			return <div />;
 		}
 
-		const url = getImageURL(src);
 		return (
 			<img
 				alt={alt}
-				src={url}
+				src={src}
 				ref={getRootRef}
 				className={className}
 				{...rest}

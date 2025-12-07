@@ -1,5 +1,6 @@
 import Favorite from '@/assets/img/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
@@ -82,7 +83,11 @@ class CompilationPageFilmCardComponent extends Component<
 				>
 					<Flex className={styles.left} direction="row" align="center">
 						<div className={styles.imageContainer}>
-							<Image className={styles.image} src={image} alt={title} />
+							<Image
+								className={styles.image}
+								src={getImageURL(image)}
+								alt={title}
+							/>
 							{ratingType && (
 								<Badge
 									mode={ratingType}

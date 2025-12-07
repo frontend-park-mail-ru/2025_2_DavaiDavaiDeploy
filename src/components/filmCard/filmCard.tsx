@@ -1,3 +1,4 @@
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
@@ -20,7 +21,11 @@ export class FilmCard extends Component<FilmCardProps> {
 			<Flex className={styles.filmCard} direction="column">
 				<div className={styles.imageContainer}>
 					<Link href={`/films/${id}`}>
-						<Image className={styles.image} src={cover} alt={title} />
+						<Image
+							className={styles.image}
+							src={getImageURL(cover)}
+							alt={title}
+						/>
 						{ratingType && (
 							<Badge
 								mode={ratingType}
