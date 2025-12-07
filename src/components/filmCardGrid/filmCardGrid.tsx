@@ -1,3 +1,4 @@
+import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -18,6 +19,8 @@ interface FilmCardGridProps {
 	cursor: string;
 }
 
+const THROTTLE_DELAY: number = 300;
+
 class FilmCardGridComponent extends Component<
 	FilmCardGridProps & WithRouterProps
 > {
@@ -27,7 +30,9 @@ class FilmCardGridComponent extends Component<
 	onMount() {
 		this.props.getFilms(this.props.cursor);
 
-		this.observer = new IntersectionObserver(this.loadMoreFilms, {
+		const throttledLoadHandler = throttle(this.loadMoreFilms, THROTTLE_DELAY);
+
+		this.observer = new IntersectionObserver(throttledLoadHandler, {
 			rootMargin: '200px',
 		});
 
