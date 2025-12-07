@@ -148,7 +148,10 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 							<Favorite className={styles.favIcon} />
 							<Headline level="7">Избранное</Headline>
 						</Button>
-						<Trailer className={styles.trailerPreviewPC} />
+						<Trailer
+							src={this.props.film.poster}
+							className={styles.trailerPreviewPC}
+						/>
 					</Flex>
 
 					<Flex className={styles.info} direction="column" align="start">
@@ -255,7 +258,10 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 										<Favorite className={styles.favIcon} />
 										<Headline level="7">Избранное</Headline>
 									</Button>
-									<Trailer className={styles.trailerPreviewMobile} />
+									<Trailer
+										src={this.props.film.poster}
+										className={styles.trailerPreviewMobile}
+									/>
 								</Flex>
 
 								{description && (

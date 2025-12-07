@@ -1,3 +1,4 @@
+import { Image } from '@/uikit';
 import { Component } from '@robocotik/react';
 import clsx from '../../modules/clsx';
 import { MODALS } from '../../modules/modals/modals';
@@ -7,6 +8,7 @@ import styles from './Trailer.module.scss';
 
 interface TrailerComponentProps {
 	className?: string;
+	src?: string;
 }
 
 export class TrailerComponent extends Component<
@@ -20,10 +22,10 @@ export class TrailerComponent extends Component<
 	};
 
 	render() {
-		const { className, ...props } = this.props;
+		const { src, className, ...props } = this.props;
 		return (
-			<img
-				src=""
+			<Image
+				src={src ?? ''}
 				onClick={this.handleTrailerClick}
 				alt="Film Preview"
 				className={clsx(styles.trailerPreview, className)}

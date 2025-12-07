@@ -38,7 +38,11 @@ export class BaseModalComponent extends Component<
 			>
 				{hasClose && dismissButtonMode === 'outside' && (
 					<Close
-						className={clsx(style.close, this.props.closeClassName)}
+						className={clsx(
+							style.close,
+							style.closeOutside,
+							this.props.closeClassName,
+						)}
 						onClick={this.props.modal.hide}
 					/>
 				)}
@@ -48,7 +52,11 @@ export class BaseModalComponent extends Component<
 				>
 					{hasClose && dismissButtonMode === 'inside' && (
 						<Close
-							className={clsx(style.close, this.props.closeClassName)}
+							className={clsx(
+								style.close,
+								style.closeInner,
+								this.props.closeClassName,
+							)}
 							onClick={this.props.modal.hide}
 						/>
 					)}

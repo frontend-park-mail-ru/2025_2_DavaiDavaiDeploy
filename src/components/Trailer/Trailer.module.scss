@@ -1,5 +1,13 @@
 .trailerPreview {
-	height: 100%;
+	width: 90%;
+	object-position: top center;
+	object-fit: cover;
 	aspect-ratio: 2/1;
 	border-radius: var(--border-radius-l);
+	cursor: pointer;
+	transition: all 200ms;
+
+	&:hover {
+		transform: scale(1.03);
+	}
 }
