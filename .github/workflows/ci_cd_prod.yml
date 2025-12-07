@@ -209,15 +209,15 @@ jobs:
             docker compose --env-file .env.production -f docker-compose.prod.yml up -d
 
       - name: Send failure notification
-              if: failure()
-              uses: PacificPromise/macos-telegram-action@main
-              with:
-                type: topic
-                message: |
-                  ❗️ Произошла ошибка во время деплоя
+        if: failure()
+        uses: PacificPromise/macos-telegram-action@main
+        with:
+          type: topic
+          message: |
+            ❗️ Произошла ошибка во время деплоя
 
-                  🔗 Ссылка на пайплайн 🔗
-                  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            🔗 Ссылка на пайплайн 🔗
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   notify_success:
     name: Success Message
