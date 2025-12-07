@@ -62,17 +62,20 @@ const filmsReducer: Reducer = (state = initialState, action: Action): State => {
 			return initialState;
 		case actionTypes.RECOMMENDATIONS_LOADING:
 			return {
+				...state,
 				recommendationsLoading: true,
 				recommendationsError: null,
 			};
 		case actionTypes.RECOMMENDATIONS_LOADED:
 			return {
+				...state,
 				recommendations: payload.films,
 				recommendationsLoading: false,
 				recommendationsError: null,
 			};
 		case actionTypes.RECOMMENDATIONS_ERROR:
 			return {
+				...state,
 				recommendations: null,
 				recommendationsError: payload.error,
 			};

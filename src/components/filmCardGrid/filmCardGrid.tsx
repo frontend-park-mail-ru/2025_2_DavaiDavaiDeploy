@@ -60,7 +60,7 @@ class FilmCardGridComponent extends Component<
 					Все фильмы
 				</Title>
 				<CardGrid>
-					{this.props.films?.map((film) => (
+					{this.props.films.map((film) => (
 						<FilmCard film={film} />
 					))}
 				</CardGrid>
