@@ -95,8 +95,8 @@
 }
 
 .closeOutside {
-	top: 3rem;
-	right: 4rem;
+	top: calc(50dvh - clamp(30rem, 65dvh, 45rem) / 2 - 3rem);
+	right: calc(50dvw - clamp(45rem, 70dvw, 65rem) / 2 - 4rem);
 }
 
 @media (max-width: 768px) {
