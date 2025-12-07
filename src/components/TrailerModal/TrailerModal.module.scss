@@ -1,8 +1,8 @@
 .modalTrailer {
 	background-color: var(--color-light);
 	color: var(--color-text);
-	width: 60rem;
-	height: clamp(30rem, 65dvh, 40rem);
+	width: clamp(45rem, 70dvw, 65rem);
+	height: clamp(30rem, 65dvh, 45rem);
 	gap: 2rem;
 }
 
