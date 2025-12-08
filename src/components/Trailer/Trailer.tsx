@@ -1,3 +1,4 @@
+import Play from '@/assets/play.svg?react';
 import { Image } from '@/uikit';
 import { Component } from '@robocotik/react';
 import clsx from '../../modules/clsx';
@@ -5,7 +6,6 @@ import { MODALS } from '../../modules/modals/modals';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
 import styles from './Trailer.module.scss';
-
 interface TrailerComponentProps {
 	className?: string;
 	src?: string;
@@ -24,13 +24,22 @@ export class TrailerComponent extends Component<
 	render() {
 		const { src, className, ...props } = this.props;
 		return (
-			<Image
-				src={src ?? ''}
-				onClick={this.handleTrailerClick}
-				alt="Film Preview"
-				className={clsx(styles.trailerPreview, className)}
-				{...props}
-			/>
+			<div className={styles.previewContainer}>
+				<Image
+					src={src ?? ''}
+					onClick={this.handleTrailerClick}
+					alt="Film Preview"
+					className={clsx(styles.trailerPreview, className)}
+					{...props}
+				/>
+				<div className={styles.play}>
+					<Play />
+				</div>
+				<div className={styles.subText}>
+					<p>Трейлер</p>
+					<p>2 мин</p>
+				</div>
+			</div>
 		);
 	}
 }
