@@ -36,31 +36,26 @@ export class BaseModalComponent extends Component<
 				align="center"
 				justify="center"
 			>
-				{hasClose && dismissButtonMode === 'outside' && (
-					<Close
-						className={clsx(
-							style.close,
-							style.closeOutside,
-							this.props.closeClassName,
-						)}
-						onClick={this.props.modal.hide}
-					/>
-				)}
-				<div
-					className={style.modalContent}
-					onClick={(e) => e.stopPropagation()}
-				>
-					{hasClose && dismissButtonMode === 'inside' && (
+				<div className={style.wrapperChildren}>
+					{hasClose && (
 						<Close
 							className={clsx(
 								style.close,
-								style.closeInner,
+								{
+									[style.closeInner]: dismissButtonMode === 'inside',
+									[style.closeOutside]: dismissButtonMode === 'outside',
+								},
 								this.props.closeClassName,
 							)}
 							onClick={this.props.modal.hide}
 						/>
 					)}
-					{this.props.children}
+					<div
+						className={style.modalContent}
+						onClick={(e) => e.stopPropagation()}
+					>
+						{this.props.children}
+					</div>
 				</div>
 			</Flex>,
 			document.body,
