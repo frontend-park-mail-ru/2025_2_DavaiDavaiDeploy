@@ -37,7 +37,6 @@ export class TrailerComponent extends Component<
 				</div>
 				<div className={styles.subText}>
 					<p>Трейлер</p>
-					<p>2 мин</p>
 				</div>
 			</div>
 		);
