@@ -7,7 +7,6 @@ import {
 	OTPModal,
 	type OTPModalProps,
 } from '../../components/OTPModal/OTPModal';
-import { TestModal } from '../../components/testModal/testModal';
 import {
 	TrailerModal,
 	type TrailerModalProps,
@@ -56,10 +55,6 @@ export class ModalsProvider extends Component {
 					<LoginModal
 						id={MODALS.LOGIN_MODAL}
 						{...((this.state.activeModalProps || {}) as LoginModalProps)}
-					/>
-					<TestModal
-						id={MODALS.TEST_MODAL}
-						{...(this.state.activeModalProps || {})}
 					/>
 					<OTPModal
 						id={MODALS.OTP_MODAL}
