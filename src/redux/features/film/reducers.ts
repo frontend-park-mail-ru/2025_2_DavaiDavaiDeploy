@@ -97,12 +97,20 @@ const filmReducer: Reducer = (state = initialState, action: Action): State => {
 			return {
 				...state,
 				feedbackLoading: false,
-				feedbacks: mergeUnique(state.feedbacks, payload.feedbacks),
+				feedbacks: (
+					mergeUnique(
+						state.feedbacks,
+						payload.feedbacks,
+					) as ModelsFilmFeedback[]
+				).map((feedback) => ({
+					...feedback,
+					text: decode(feedback.text),
+					title: decode(feedback.title),
+				})),
 				userFeedback: payload.feedbacks[0]?.is_mine
 					? payload.feedbacks[0]
 					: null,
 			};
-
 		case actionTypes.FEEDBACK_ERROR:
 			return {
 				...state,
