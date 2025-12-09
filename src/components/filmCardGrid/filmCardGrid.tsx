@@ -1,4 +1,3 @@
-import { throttle } from '@/helpers/throttleHelper/throttleHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -10,6 +9,7 @@ import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { CardGrid, Flex, Title } from '@/uikit/index';
 import { Component, createRef } from '@robocotik/react';
+import { debounce } from '@sentry/core';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
 
@@ -19,7 +19,7 @@ interface FilmCardGridProps {
 	cursor: string;
 }
 
-const THROTTLE_DELAY: number = 300;
+const DEBOUNCE_DELAY: number = 300;
 
 class FilmCardGridComponent extends Component<
 	FilmCardGridProps & WithRouterProps
@@ -30,9 +30,9 @@ class FilmCardGridComponent extends Component<
 	onMount() {
 		this.props.getFilms(this.props.cursor);
 
-		const throttledLoadHandler = throttle(this.loadMoreFilms, THROTTLE_DELAY);
+		const debouncedLoadHandler = debounce(this.loadMoreFilms, DEBOUNCE_DELAY);
 
-		this.observer = new IntersectionObserver(throttledLoadHandler, {
+		this.observer = new IntersectionObserver(debouncedLoadHandler, {
 			rootMargin: '200px',
 		});
 
