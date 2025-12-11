@@ -9,8 +9,8 @@ import actions from '@/redux/features/calendar/actions';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompilation } from '@/types/models';
-import { Flex, Image, Subhead } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Flex, Image, Subhead } from 'ddd-ui-kit';
 import styles from './compilationWidgetCard.module.scss';
 
 interface CompilationWidgetCardProps {

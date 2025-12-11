@@ -23,6 +23,7 @@ import {
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Component } from '@robocotik/react';
 import {
 	Button,
 	Flex,
@@ -31,8 +32,7 @@ import {
 	Logo,
 	OTPInput,
 	Title,
-} from '@/uikit/index';
-import { Component } from '@robocotik/react';
+} from 'ddd-ui-kit';
 import styles from './loginPage.module.scss';
 
 interface LoginPageProps {
@@ -202,7 +202,9 @@ export class LoginPageNotConnected extends Component<
 									this.state.validationErrors.username ? 'error' : 'default'
 								}
 								value={this.state.username}
-								onChange={(value) => this.onFieldChange(value, 'username')}
+								onChange={(value: string) =>
+									this.onFieldChange(value, 'username')
+								}
 							/>
 							<PasswordInputField
 								mode="primary"

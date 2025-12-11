@@ -3,8 +3,8 @@ import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { Badge, Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Badge, Flex, Headline, Image, Subhead, Title } from 'ddd-ui-kit';
 import styles from './filmCard.module.scss';
 
 interface FilmCardProps {

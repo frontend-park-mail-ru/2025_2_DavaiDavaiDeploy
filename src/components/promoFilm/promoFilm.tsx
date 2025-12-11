@@ -10,6 +10,7 @@ import actions from '@/redux/features/promoFilm/actions';
 import { selectPromoFilm } from '@/redux/features/promoFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsPromoFilm } from '@/types/models';
+import { Component } from '@robocotik/react';
 import {
 	Badge,
 	Flex,
@@ -18,8 +19,7 @@ import {
 	Paragraph,
 	Subhead,
 	Title,
-} from '@/uikit/index';
-import { Component } from '@robocotik/react';
+} from 'ddd-ui-kit';
 import styles from './promoFilm.module.scss';
 
 interface PromoFilmProps {

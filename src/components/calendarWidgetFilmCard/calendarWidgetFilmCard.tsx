@@ -13,8 +13,8 @@ import actions from '@/redux/features/calendar/actions';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
-import { Button, Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Button, Flex, Headline, Image, Subhead, Title } from 'ddd-ui-kit';
 import styles from './calendarWidgetFilmCard.module.scss';
 
 interface CalendarWidgetFilmCardProps {

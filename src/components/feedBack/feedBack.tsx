@@ -6,6 +6,7 @@ import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRatingForFeedback } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import type { ModelsFilmFeedback } from '@/types/models';
+import { Component } from '@robocotik/react';
 import {
 	Avatar,
 	Flex,
@@ -14,8 +15,7 @@ import {
 	Rating,
 	Separator,
 	Subhead,
-} from '@/uikit/index';
-import { Component } from '@robocotik/react';
+} from 'ddd-ui-kit';
 import styles from './feedBack.module.scss';
 
 interface FeedBackProps {

@@ -2,8 +2,8 @@ import { UserAvatar } from '@/components/headerUserAvatar/headerUserAvatar';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import clsx from '@/modules/clsx';
 import type { ModelsUser } from '@/types/models.ts';
-import { Avatar, Flex } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Avatar, Flex } from 'ddd-ui-kit';
 import styles from './headerLoadedUser.module.scss';
 
 interface LoadedUserProps {

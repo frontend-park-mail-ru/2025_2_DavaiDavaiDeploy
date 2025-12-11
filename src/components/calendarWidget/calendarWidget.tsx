@@ -10,9 +10,9 @@ import actions from '@/redux/features/calendar/actions';
 import { selectCalendarFilms } from '@/redux/features/calendar/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
-import { Flex, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
 import { debounce } from '@sentry/core';
+import { Flex, Subhead, Title } from 'ddd-ui-kit';
 import { CalendarWidgetFilmCard } from '../calendarWidgetFilmCard/calendarWidgetFilmCard';
 import styles from './calendarWidget.module.scss';
 

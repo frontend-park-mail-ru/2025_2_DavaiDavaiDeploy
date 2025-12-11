@@ -2,8 +2,8 @@ import { formatBirthInfo } from '@/helpers/formatBitrhInfoHelper/formatBitrhInfo
 import { formatHeight } from '@/helpers/formatHeightHelper/formatHeightHelper';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import type { ModelsActorPage } from '@/types/models';
-import { Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Flex, Headline, Image, Subhead, Title } from 'ddd-ui-kit';
 import styles from './actorInfo.module.scss';
 
 interface ActorInfoProps {

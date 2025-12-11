@@ -1,7 +1,7 @@
 import { withModal } from '@/modules/modals/withModal';
 import type { WithModalProps } from '@/modules/modals/withModalProps';
-import { Flex } from '@/uikit/index';
 import { Component, createPortal } from '@robocotik/react';
+import { Flex } from 'ddd-ui-kit';
 import clsx from '../../modules/clsx';
 import style from './BaseModal.module.scss';
 

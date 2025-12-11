@@ -11,6 +11,7 @@ import { withRouter } from '@/modules/router/withRouter';
 import actions from '@/redux/features/favorites/actions';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
+import { Component } from '@robocotik/react';
 import {
 	Badge,
 	Flex,
@@ -20,8 +21,7 @@ import {
 	Paragraph,
 	Subhead,
 	Title,
-} from '@/uikit/index';
-import { Component } from '@robocotik/react';
+} from 'ddd-ui-kit';
 import styles from './favoritesFilmCard.module.scss';
 
 interface FavoritesFilmCardProps {

@@ -22,8 +22,8 @@ import {
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Button, Flex, FormItem, Headline, Logo, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Button, Flex, FormItem, Headline, Logo, Title } from 'ddd-ui-kit';
 import styles from './registerPage.module.scss';
 
 interface RegistrationPageProps {
@@ -205,7 +205,9 @@ export class RegisterPageNotConnected extends Component<
 									this.state.validationErrors.username ? 'error' : 'default'
 								}
 								value={this.state.username}
-								onChange={(value) => this.onFieldChange(value, 'username')}
+								onChange={(value: string) =>
+									this.onFieldChange(value, 'username')
+								}
 							/>
 
 							<PasswordInputField

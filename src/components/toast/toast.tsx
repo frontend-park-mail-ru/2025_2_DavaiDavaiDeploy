@@ -3,8 +3,8 @@ import Info from '@/assets/img/info.svg';
 import Success from '@/assets/img/success.svg';
 import type { ToastType } from '@/consts/toasts';
 import clsx from '@/modules/clsx';
-import { Flex, Headline } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Flex, Headline } from 'ddd-ui-kit';
 import styles from './toast.module.scss';
 
 interface ToastProps {

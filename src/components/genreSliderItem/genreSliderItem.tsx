@@ -1,8 +1,8 @@
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Link } from '@/modules/router/link';
 import type { ModelsGenre } from '@/types/models';
-import { Image } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Image } from 'ddd-ui-kit';
 import styles from './genreSliderItem.module.scss';
 
 interface GenreSliderItemProps {

@@ -1,5 +1,5 @@
-import { Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Title } from 'ddd-ui-kit';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import type { BaseModalProps } from '../BaseModal/BaseModal';

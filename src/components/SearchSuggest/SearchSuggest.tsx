@@ -1,5 +1,6 @@
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Component, createRef, type Ref } from '@robocotik/react';
+import { Badge, Headline, Image } from 'ddd-ui-kit';
 import { formatRating } from '../../helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '../../helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '../../modules/clsx';
@@ -8,7 +9,6 @@ import type {
 	ModelsMainPageActor,
 	ModelsMainPageFilm,
 } from '../../types/models';
-import { Badge, Headline, Image } from '../../uikit';
 import styles from './SearchSuggest.module.scss';
 
 interface SearchSuggestProps {
