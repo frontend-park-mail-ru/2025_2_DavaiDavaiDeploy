@@ -15,7 +15,7 @@ import { Component } from '@robocotik/react';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './genreCardGrid.module.scss';
 
-const FILM_COUNT: number = 50;
+const FILM_COUNT: number = 1000;
 const OFFSET: number = 0;
 
 interface GenreCardGridProps {

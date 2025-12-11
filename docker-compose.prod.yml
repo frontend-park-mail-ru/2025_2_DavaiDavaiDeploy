@@ -1,0 +1,14 @@
+services:
+  nginx:
+    container_name: frontend-prod
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      target: nginx
+    networks:
+      - ddd-network
+
+networks:
+  ddd-network:
+    external: true
+    name: ddd-network

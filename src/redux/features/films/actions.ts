@@ -83,8 +83,60 @@ const getFilmsAction: Action =
 		}
 	};
 
+const setRecommendationsLoadingAction = (): Action => {
+	return {
+		type: actionTypes.RECOMMENDATIONS_LOADING,
+	};
+};
+
+const returnRecommendationsAction = (data: ModelsMainPageFilm[]): Action => {
+	return {
+		type: actionTypes.RECOMMENDATIONS_LOADED,
+		payload: { films: data },
+	};
+};
+
+const returnRecommendationsErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.RECOMMENDATIONS_ERROR,
+		payload: { films: [], error: error },
+	};
+};
+
+const getRecommendationsAction: Action = () => async (dispatch: Dispatch) => {
+	dispatch(setRecommendationsLoadingAction());
+
+	try {
+		const response = await HTTPClient.get<ModelsMainPageFilm[]>(
+			'/users/recommendations',
+		);
+
+		dispatch(returnRecommendationsAction(response.data));
+	} catch (error: unknown) {
+		let errorMessage: string = 'Произошла ошибка';
+
+		if (error instanceof Error) {
+			errorMessage = error.message;
+		} else if (typeof error === 'string') {
+			errorMessage = error;
+		}
+
+		dispatch(returnRecommendationsErrorAction(errorMessage));
+
+		Sentry.captureException(new Error('Ошибка ручки рекомендаций'), {
+			tags: {
+				category: 'recommendations',
+			},
+			extra: {
+				error: errorMessage,
+			},
+		});
+	}
+};
+
 export default {
 	getFilmsAction,
+	getRecommendationsAction,
 	setFilmsLoadingAction,
 	returnFilmsAction,
 	returnFilmsErrorAction,

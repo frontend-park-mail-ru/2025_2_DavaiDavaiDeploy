@@ -1,0 +1,55 @@
+.filmsLine {
+	gap: 3.125rem;
+}
+
+.films {
+	gap: 2vw;
+}
+
+.title {
+	color: var(--color-text);
+}
+
+.dark {
+	color: var(--color-dark-text);
+}
+
+@media (max-width: 1400px) {
+	.films {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.films > :nth-child(n + 5) {
+		display: none;
+	}
+}
+
+@media (max-width: 1400px) {
+	.films {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.films > :nth-child(n + 5) {
+		display: none;
+	}
+}
+
+@media (max-width: 1024px) {
+	.title {
+		text-align: center;
+	}
+}
+
+@media (max-width: 768px) {
+	.films {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem 1rem;
+	}
+
+	.films > :nth-child(n + 5) {
+		display: none;
+	}
+}
