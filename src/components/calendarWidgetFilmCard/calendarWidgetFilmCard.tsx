@@ -2,7 +2,6 @@ import Favorite from '@/assets/favorite.svg?react';
 import { formatDateForCalendar } from '@/helpers/formatDateForCalendarHelper/formatDateForCalendarHelper';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
-import clsx from '@/modules/clsx';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store';
@@ -14,6 +13,7 @@ import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
 import { Button, Flex, Headline, Image, Subhead, Title } from 'ddd-ui-kit';
 import styles from './calendarWidgetFilmCard.module.scss';
 

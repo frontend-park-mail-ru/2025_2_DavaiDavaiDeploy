@@ -3,7 +3,6 @@ import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHel
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import clsx from '@/modules/clsx';
 import { withModal } from '@/modules/modals/withModal';
 import type { WithModalProps } from '@/modules/modals/withModalProps';
 import { compose, connect } from '@/modules/redux';
@@ -14,6 +13,7 @@ import actions from '@/redux/features/favorites/actions';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
 import {
 	Badge,
 	Flex,

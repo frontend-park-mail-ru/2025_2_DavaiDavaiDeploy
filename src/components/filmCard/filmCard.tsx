@@ -1,10 +1,10 @@
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import clsx from '@/modules/clsx';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
 import { Badge, Flex, Headline, Image, Subhead, Title } from 'ddd-ui-kit';
 import styles from './filmCard.module.scss';
 

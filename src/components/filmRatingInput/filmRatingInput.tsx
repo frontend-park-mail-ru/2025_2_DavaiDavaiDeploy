@@ -1,7 +1,6 @@
 import Star from '@/assets/Star.svg?react';
 import { RATING_COUNT } from '@/consts/rating.ts';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -9,6 +8,7 @@ import actions from '@/redux/features/film/actions';
 import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
 import { Flex, Title } from 'ddd-ui-kit';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';

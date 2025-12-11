@@ -2,7 +2,6 @@ import { FeedBack } from '@/components/feedBack/feedBack';
 import { FilmInfo } from '@/components/filmInfo/filmInfo';
 import { FilmsLine } from '@/components/filmsLine/filmsLine';
 import { Userfeedback } from '@/components/userFeedback/userFeedback';
-import clsx from '@/modules/clsx';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -26,6 +25,7 @@ import type {
 	ModelsMainPageFilm,
 } from '@/types/models';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
 import { Flex, Title } from 'ddd-ui-kit';
 import styles from './filmPage.module.scss';
 
