@@ -64,8 +64,16 @@ class FeedbackFormComponent extends Component<
 		});
 	};
 
-	handleTextChange = (value: string) => {
+	handleTextChange = (value: any) => {
 		let textErrorMessage = '';
+
+		if (typeof value !== 'string') {
+			if ('target' in value && typeof value.target.value === 'string') {
+				value = value.target.value;
+			} else {
+				return;
+			}
+		}
 
 		if (this.state.textErrorMessage !== '') {
 			const validation = validateFeedbackText(value);
