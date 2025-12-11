@@ -1,4 +1,4 @@
-import Exit from '@/assets/img/exit.svg?react';
+import Exit from '@/assets/exit.svg?react';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import clsx from '@/modules/clsx/index.ts';
 import { Link } from '@/modules/router/link.tsx';
