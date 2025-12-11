@@ -1,7 +1,7 @@
-import clsx from '@/modules/clsx';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { Flex, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
+import { Flex, Title } from 'ddd-ui-kit';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmsLine.module.scss';
 

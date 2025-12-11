@@ -1,8 +1,8 @@
 import Favorite from '@/assets/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import clsx from '@/modules/clsx';
 import { withModal } from '@/modules/modals/withModal';
 import type { WithModalProps } from '@/modules/modals/withModalProps';
 import { compose, connect } from '@/modules/redux';
@@ -12,6 +12,8 @@ import { withRouter } from '@/modules/router/withRouter';
 import actions from '@/redux/features/favorites/actions';
 import type { Map } from '@/types/map';
 import type { ModelsFavFilm } from '@/types/models';
+import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
 import {
 	Badge,
 	Flex,
@@ -21,8 +23,7 @@ import {
 	Paragraph,
 	Subhead,
 	Title,
-} from '@/uikit/index';
-import { Component } from '@robocotik/react';
+} from 'ddd-ui-kit';
 import styles from './favoritesFilmCard.module.scss';
 
 interface FavoritesFilmCardProps {
@@ -77,7 +78,11 @@ class FavoritesFilmCardComponent extends Component<
 			<Link href={`/films/${id}`} className={styles.linkWrap}>
 				<Flex className={styles.filmCard} direction="row" align="center">
 					<div className={styles.imageContainer}>
-						<Image className={styles.image} src={image} alt={title} />
+						<Image
+							className={styles.image}
+							src={getImageURL(image)}
+							alt={title}
+						/>
 						{ratingType && (
 							<Badge
 								mode={ratingType}

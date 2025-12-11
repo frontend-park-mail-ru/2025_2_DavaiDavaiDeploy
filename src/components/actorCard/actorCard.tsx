@@ -1,7 +1,8 @@
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageActor } from '@/types/models';
-import { Flex, Image, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Flex, Image, Title } from 'ddd-ui-kit';
 import styles from './actorCard.module.scss';
 
 interface ActorCardProps {
@@ -16,7 +17,11 @@ export class ActorCard extends Component<ActorCardProps> {
 			<Flex className={styles.actorCard} direction="column">
 				<div className={styles.imageContainer}>
 					<Link href={`/actors/${id}`}>
-						<Image className={styles.image} src={photo} alt={russian_name} />
+						<Image
+							className={styles.image}
+							src={getImageURL(photo)}
+							alt={russian_name}
+						/>
 					</Link>
 				</div>
 				<Flex className={styles.content} direction="column" align="center">

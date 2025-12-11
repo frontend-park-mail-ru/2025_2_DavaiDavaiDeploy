@@ -12,8 +12,8 @@ import actions from '@/redux/features/films/actions';
 import { selectRecommendations } from '@/redux/features/films/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { Flex } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Flex } from 'ddd-ui-kit';
 import styles from './homePage.module.scss';
 
 interface HomePageProps {

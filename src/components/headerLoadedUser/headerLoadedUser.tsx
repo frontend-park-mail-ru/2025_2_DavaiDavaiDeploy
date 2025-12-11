@@ -1,8 +1,9 @@
 import { UserAvatar } from '@/components/headerUserAvatar/headerUserAvatar';
-import clsx from '@/modules/clsx';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import type { ModelsUser } from '@/types/models.ts';
-import { Avatar, Flex } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
+import { Avatar, Flex } from 'ddd-ui-kit';
 import styles from './headerLoadedUser.module.scss';
 
 interface LoadedUserProps {
@@ -31,14 +32,16 @@ export class LoadedUser extends Component<LoadedUserProps, LoadedUserState> {
 		return (
 			<Flex className={styles.userInfo} align="center">
 				<div className={styles.avatarContainer}>
-					<Avatar
-						src={this.props.user?.avatar}
-						alt={'avatar'}
-						className={styles.avatar}
-						level="9"
-						onClick={this.handleAvatarClick}
-						onMouseEnter={this.handleOpen}
-					/>
+					{this.props.user?.avatar && (
+						<Avatar
+							src={getImageURL(this.props.user.avatar)}
+							alt={'avatar'}
+							className={styles.avatar}
+							level="9"
+							onClick={this.handleAvatarClick}
+							onMouseEnter={this.handleOpen}
+						/>
+					)}
 					<UserAvatar
 						user={this.props.user}
 						logoutUser={this.props.logoutUser}

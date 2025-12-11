@@ -1,5 +1,5 @@
-import { Button, Flex, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Button, Flex, Subhead, Title } from 'ddd-ui-kit';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
 import { BaseModal, type BaseModalProps } from '../BaseModal/BaseModal';
