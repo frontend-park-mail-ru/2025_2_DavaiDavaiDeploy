@@ -1,5 +1,5 @@
-import ArrowLeft from '@/assets/img/arrowLeft.svg?react';
-import ArrowRight from '@/assets/img/arrowRight.svg?react';
+import ArrowLeft from '@/assets/arrowLeft.svg?react';
+import ArrowRight from '@/assets/arrowRight.svg?react';
 import { NARROW_SCREEN_WIDTH, WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper.ts';
@@ -33,7 +33,7 @@ const DEBOUNCE_DELAY = 100;
 const MAX_SLIDE_CAPACITY = 7;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
-const FILM_COUNT: number = 50;
+const FILM_COUNT: number = 100;
 const SMALL_CARD_HEIGHT = 30;
 const BIG_CARD_HEIGHT = 50;
 

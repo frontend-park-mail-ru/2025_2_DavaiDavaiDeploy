@@ -1,5 +1,5 @@
-import Close from '@/assets/img/close.svg?react';
-import Loupe from '@/assets/img/loupe.svg?react';
+import Close from '@/assets/close.svg?react';
+import Loupe from '@/assets/loupe.svg?react';
 import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
@@ -13,6 +13,7 @@ import type { WithRouterProps } from '../../modules/router/types/withRouterProps
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import {
 	selectSearchResult,
+	selectVoiceIsWorking,
 	selectVoiceSearchResult,
 } from '../../redux/features/search/selectors';
 import type { ModelsSearchResponse } from '../../types/models';
@@ -33,6 +34,7 @@ interface SearchInputProps {
 	className: string;
 	hintResult: ModelsSearchResponse;
 	voiceSearchResult: ModelsSearchResponse;
+	isVoiceWorking: boolean;
 }
 
 interface SearchInputState {
@@ -159,6 +161,7 @@ class SearchInputComponent extends Component<
 							onInput={this.handleSearchRequestChange}
 							className={styles.input}
 							onKeyDown={this.handleKeyDown}
+							disabled={this.props.isVoiceWorking ? true : undefined}
 						></input>
 
 						<SearchVoice className={styles.loupeBtn} />
@@ -206,6 +209,7 @@ class SearchInputComponent extends Component<
 						onInput={this.handleSearchRequestChange}
 						className={styles.input}
 						onKeyDown={this.handleKeyDown}
+						disabled={this.props.isVoiceWorking ? true : undefined}
 					></input>
 
 					<IconButton
@@ -230,6 +234,7 @@ class SearchInputComponent extends Component<
 const mapStateToProps = (state: State): Map => ({
 	hintResult: selectSearchResult(state),
 	voiceSearchResult: selectVoiceSearchResult(state),
+	isVoiceWorking: selectVoiceIsWorking(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

@@ -1,4 +1,4 @@
-import Edit from '@/assets/img/edit.svg?react';
+import Edit from '@/assets/edit.svg?react';
 import { FeedBack } from '@/components/feedBack/feedBack.tsx';
 import { FeedbackForm } from '@/components/feedbackForm/feedbackForm.tsx';
 import { throttle } from '@/helpers/throttleHelper/throttleHelper';

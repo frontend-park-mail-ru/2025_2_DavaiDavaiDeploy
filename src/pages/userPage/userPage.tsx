@@ -24,8 +24,6 @@ interface UserPageProps {
 
 class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 	onMount() {
-		this.props.getFavorites();
-
 		if (this.props.router.params.anchor) {
 			const anchorElement = document.querySelector(
 				`#${this.props.router.params.anchor}`,
@@ -42,6 +40,8 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 				behavior: 'smooth',
 			});
 		}
+
+		this.props.getFavorites();
 	}
 
 	render() {
@@ -64,7 +64,7 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 					<Title className={styles.title} level="2" id="favorites">
 						Избранное
 					</Title>
-					{favoriteFilms && favoriteFilms.length == 0 && (
+					{(!favoriteFilms || (favoriteFilms && favoriteFilms.length == 0)) && (
 						<Headline className={styles.subtitle} level="7" align="center">
 							Похоже, вы ничего не добавили в избранное
 						</Headline>

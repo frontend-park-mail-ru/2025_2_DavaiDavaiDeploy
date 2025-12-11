@@ -16,7 +16,7 @@ interface CalendarPageProps {
 	getFilms: (limit: number, offset: number) => void;
 }
 
-const MAX_FILM_COUNT = 40;
+const MAX_FILM_COUNT = 1000;
 const OFFSET = 0;
 
 class CalendarPageComponent extends Component<CalendarPageProps> {

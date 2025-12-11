@@ -1,4 +1,4 @@
-import Star from '@/assets/img/Star.svg?react';
+import Star from '@/assets/Star.svg?react';
 import { RATING_COUNT } from '@/consts/rating.ts';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import clsx from '@/modules/clsx/index.ts';

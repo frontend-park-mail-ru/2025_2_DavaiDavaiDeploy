@@ -1,4 +1,4 @@
-import Star from '@/assets/img/Star.svg?react';
+import Star from '@/assets/Star.svg?react';
 import { formatRatingNumber } from '@/helpers/formatRatingNumberHelper/formatRatingNumberHelper';
 import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';

@@ -1,4 +1,4 @@
-import Arrow from '@/assets/img/arrowRight.svg?react';
+import Arrow from '@/assets/arrowRight.svg?react';
 import { WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';

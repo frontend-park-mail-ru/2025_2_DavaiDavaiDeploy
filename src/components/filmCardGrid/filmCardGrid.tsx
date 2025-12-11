@@ -8,18 +8,18 @@ import { selectCursor, selectFilms } from '@/redux/features/films/selectors.js';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Component, createRef } from '@robocotik/react';
+import { debounce } from '@sentry/core';
 import { CardGrid, Flex, Title } from 'ddd-ui-kit';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
-
-const ROOT_MARGIN = '100%';
-const INITIAL_DELAY = 400;
 
 interface FilmCardGridProps {
 	films: ModelsMainPageFilm[];
 	getFilms: (cursor: string) => void;
 	cursor: string;
 }
+
+const DEBOUNCE_DELAY: number = 300;
 
 class FilmCardGridComponent extends Component<
 	FilmCardGridProps & WithRouterProps
@@ -30,22 +30,15 @@ class FilmCardGridComponent extends Component<
 	onMount() {
 		this.props.getFilms(this.props.cursor);
 
-		this.observer = new IntersectionObserver(
-			(entries) => {
-				const entry = entries[0];
+		const debouncedLoadHandler = debounce(this.loadMoreFilms, DEBOUNCE_DELAY);
 
-				if (entry.isIntersecting) {
-					this.loadMoreFilms();
-				}
-			},
-			{ root: null, rootMargin: ROOT_MARGIN, threshold: 0 },
-		);
+		this.observer = new IntersectionObserver(debouncedLoadHandler, {
+			rootMargin: '200px',
+		});
 
-		setTimeout(() => {
-			if (this.loadMoreTriggerRef.current && this.observer) {
-				this.observer.observe(this.loadMoreTriggerRef.current);
-			}
-		}, INITIAL_DELAY);
+		if (this.loadMoreTriggerRef.current && this.observer) {
+			this.observer.observe(this.loadMoreTriggerRef.current);
+		}
 	}
 
 	onUnmount() {
@@ -61,10 +54,6 @@ class FilmCardGridComponent extends Component<
 	};
 
 	render() {
-		if (!this.props.films || this.props.films.length === 0) {
-			return <div />;
-		}
-
 		return (
 			<Flex className={styles.filmCardGrid} direction="column">
 				<Title className={styles.title} level="4" weight="bold">
@@ -75,10 +64,7 @@ class FilmCardGridComponent extends Component<
 						<FilmCard film={film} />
 					))}
 				</CardGrid>
-				<div
-					className={styles.loadMoreTrigger}
-					ref={this.loadMoreTriggerRef}
-				></div>
+				<div ref={this.loadMoreTriggerRef} className={styles.loadMoreTrigger} />
 			</Flex>
 		);
 	}

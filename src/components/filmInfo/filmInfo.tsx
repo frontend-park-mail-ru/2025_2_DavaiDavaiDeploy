@@ -1,4 +1,4 @@
-import Favorite from '@/assets/img/favorite.svg?react';
+import Favorite from '@/assets/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';

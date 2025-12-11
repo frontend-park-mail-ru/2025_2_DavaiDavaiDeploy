@@ -1,6 +1,6 @@
-import eyeHideSvg from '@/assets/img/eye_close.svg';
-import eyeShowSvg from '@/assets/img/eye_open.svg';
-import lock from '@/assets/img/lock.svg';
+import eyeHideSvg from '@/assets/eye_close.svg';
+import eyeShowSvg from '@/assets/eye_open.svg';
+import lock from '@/assets/lock.svg';
 import { Component } from '@robocotik/react';
 import { FormItem, IconButton } from 'ddd-ui-kit';
 import styles from './passwordInputField.module.scss';

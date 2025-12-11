@@ -10,6 +10,7 @@ import {
 	selectActor,
 	selectActorError,
 	selectActorFilms,
+	selectActorFilmsError,
 	selectActorFilmsLoading,
 	selectActorLoading,
 } from '@/redux/features/actor/selectors';
@@ -20,12 +21,13 @@ import { Flex } from 'ddd-ui-kit';
 import styles from './actorPage.module.scss';
 
 const OFFSET = 0;
-const FILM_COUNT = 50;
+const FILM_COUNT = 100;
 
 interface ActorPageProps {
 	clearActor: VoidFunction;
 	actor: ModelsActorPage | null;
 	error: string | null;
+	filmsError: string | null;
 	getActor: (id: string) => void;
 	films: ModelsMainPageFilm[];
 	getFilms: (limit: number, offset: number, id: string) => void;
@@ -45,7 +47,9 @@ class ActorPageComponent extends Component<ActorPageProps & WithRouterProps> {
 			this.props.actor &&
 			this.props.actor.id !== this.props.router.params.id &&
 			!this.props.actorLoading &&
-			!this.props.actorFilmsLoading
+			!this.props.actorFilmsLoading &&
+			!this.props.error &&
+			!this.props.filmsError
 		) {
 			this.props.clearActor();
 			const actorId = this.props.router.params.id;
@@ -78,6 +82,7 @@ const mapStateToProps = (state: State): Map => ({
 	error: selectActorError(state),
 	actorLoading: selectActorLoading(state),
 	actorFilmsLoading: selectActorFilmsLoading(state),
+	filmsError: selectActorFilmsError(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
