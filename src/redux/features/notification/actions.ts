@@ -63,54 +63,54 @@ const notificationWebSocketDisconnectedAction = (): Action => {
 };
 
 /**
- * Запрашивает разрешение на уведомления и подписывается на Push
+ * Запрашивает разрешение на уведомления
  */
 const requestNotificationPermission =
 	(): Action => async (dispatch: Dispatch) => {
 		try {
+			// ✅ Проверяем, не заблокированы ли уведомления
+			if (Notification.permission === 'denied') {
+				console.warn('[Notifications] Permission denied by user');
+				dispatch(notificationDenyAction());
+				return;
+			}
+
+			// ✅ Если уже разрешено - пропускаем запрос
+			if (Notification.permission === 'granted') {
+				console.log('[Notifications] Permission already granted');
+				dispatch(notificationGrantedAction());
+				return;
+			}
+
+			// ✅ Запрашиваем разрешение
 			const permission = await NotificationManager.requestPermission();
 
 			if (permission === 'granted') {
 				dispatch(notificationGrantedAction());
-
-				if (NotificationManager.isPushSupported()) {
-					const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
-					const subscription =
-						await NotificationManager.subscribeToPush(VAPID_PUBLIC_KEY);
-
-					await NotificationManager.sendSubscriptionToServer(subscription);
-				}
 			} else {
 				dispatch(notificationDenyAction());
 			}
-		} catch {
+		} catch (error) {
+			console.error('[Notifications] Failed to request permission:', error);
 			dispatch(notificationDenyAction());
 		}
 	};
 
 /**
- * Подключается к WebSocket для получения уведомлений
+ * Запускает показ тестовых уведомлений каждые 10 секунд
  */
 const connectToNotifications = (): Action => (dispatch: Dispatch) => {
-	NotificationManager.connectWebSocket((data: ModelsNotification) => {
-		dispatch(notificationReceivedAction(data));
-
-		if (document.visibilityState === 'visible') {
-			NotificationManager.showNotification(data.title, {
-				body: data.text,
-				tag: data.id,
-			});
-		}
-	});
-
+	console.log('[Notifications] Starting notification loop');
+	NotificationManager.startNotifications();
 	dispatch(notificationWebSocketConnectedAction());
 };
 
 /**
- * Отключается от WebSocket
+ * Останавливает показ уведомлений
  */
 const disconnectFromNotifications = (): Action => (dispatch: Dispatch) => {
-	NotificationManager.disconnect();
+	console.log('[Notifications] Stopping notification loop');
+	NotificationManager.stopNotifications();
 	dispatch(notificationWebSocketDisconnectedAction());
 };
 

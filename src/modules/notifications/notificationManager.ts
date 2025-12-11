@@ -1,13 +1,10 @@
-const RECONNECT_INTERVAL_MS = 60_000;
-const PING_INTERVAL_MS = 30_000;
-const MAX_RECONNECT_ATTEMPTS = 5;
-const WEB_SOCKET_URL = 'wss://ddfilms.online/api/films/ws';
+const NOTIFICATION_INTERVAL_MS = 10_000; // ✅ Уведомления каждые 10 секунд
 
 export class NotificationManager {
-	private static subscription: PushSubscription | null = null;
-	private static ws: WebSocket | null = null;
-	private static reconnectAttempts = 0;
-	private static pingInterval: ReturnType<typeof setInterval> | null = null;
+	private static subscription: PushSubscription | null = null; // ✅ Для Push API
+	private static notificationInterval: ReturnType<typeof setInterval> | null =
+		null;
+	private static notificationCount = 0;
 
 	/**
 	 * Проверяет поддержку уведомлений в браузере
@@ -79,83 +76,53 @@ export class NotificationManager {
 	}
 
 	/**
-	 * Подключается к WebSocket для получения уведомлений
+	 * Запускает показ тестовых уведомлений каждые 10 секунд
 	 */
-	static connectWebSocket(
-		onMessage: (data: {
-			id: string;
-			title: string;
-			text: string;
-			created_at: string;
-		}) => void,
-	): void {
-		if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-			return;
-		}
+	static async startNotifications(): Promise<void> {
+		// Останавливаем предыдущий интервал, если был
+		this.stopNotifications();
 
-		if (this.reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
-			return;
-		}
-
-		this.ws = new WebSocket(WEB_SOCKET_URL);
-
-		this.ws.onopen = () => {
-			this.reconnectAttempts = 0;
-			this.startPing();
-		};
-
-		this.ws.onmessage = (event) => {
-			if (event.data === 'pong') {
-				return;
-			}
-
+		// ✅ Регистрируем Service Worker перед началом
+		if ('serviceWorker' in navigator) {
 			try {
-				const data = JSON.parse(event.data);
-				onMessage(data);
-			} catch {
-				// Ignore parsing errors
+				await navigator.serviceWorker.register('/sw.js');
+				await navigator.serviceWorker.ready;
+				console.log('[Notifications] Service Worker registered');
+			} catch (error) {
+				console.error(
+					'[Notifications] Service Worker registration failed:',
+					error,
+				);
 			}
-		};
+		}
 
-		this.ws.onerror = (error) => {
-			// eslint-disable-next-line no-console
-			console.error('[WS] Error:', error);
-		};
+		this.notificationInterval = setInterval(() => {
+			this.notificationCount++;
 
-		this.ws.onclose = () => {
-			this.stopPing();
-			this.reconnectAttempts++;
-			setTimeout(() => this.connectWebSocket(onMessage), RECONNECT_INTERVAL_MS);
-		};
+			this.showNotification(`Уведомление #${this.notificationCount}`, {
+				body: `Это тестовое уведомление. Время: ${new Date().toLocaleTimeString()}`,
+				tag: `notification-${this.notificationCount}`,
+			});
+		}, NOTIFICATION_INTERVAL_MS);
+
+		console.log(
+			'[Notifications] Started showing notifications every 10 seconds',
+		);
 	}
 
 	/**
-	 * Запускает периодическую отправку ping-сообщений
+	 * Останавливает показ уведомлений
 	 */
-	private static startPing(): void {
-		this.stopPing();
-
-		this.pingInterval = setInterval(() => {
-			if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-				this.ws.send('ping');
-			} else {
-				this.stopPing();
-			}
-		}, PING_INTERVAL_MS);
-	}
-
-	/**
-	 * Останавливает отправку ping-сообщений
-	 */
-	private static stopPing(): void {
-		if (this.pingInterval) {
-			clearInterval(this.pingInterval);
-			this.pingInterval = null;
+	static stopNotifications(): void {
+		if (this.notificationInterval) {
+			clearInterval(this.notificationInterval);
+			this.notificationInterval = null;
+			console.log('[Notifications] Stopped');
 		}
 	}
 
 	/**
-	 * Показывает нативное уведомление
+	 * Показывает нативное уведомление (работает на ПК и мобильных)
 	 */
 	static async showNotification(
 		title: string,
@@ -171,12 +138,27 @@ export class NotificationManager {
 
 		const cdnAddress = import.meta.env.VITE_CDN_ADDRESS;
 
-		if (!this.isPushSupported() || document.visibilityState === 'visible') {
-			new Notification(title, {
-				icon: `${cdnAddress}/static/favicon/favicon-86x86.png`,
-				badge: `${cdnAddress}/static/favicon/favicon-32x32.png`,
-				...options,
-			});
+		const notificationOptions: NotificationOptions = {
+			icon: `${cdnAddress}/static/favicon/favicon-86x86.png`,
+			badge: `${cdnAddress}/static/favicon/favicon-32x32.png`,
+			requireInteraction: false,
+			...options,
+		};
+
+		// ✅ Используем Service Worker для показа уведомлений (работает на мобильных)
+		if ('serviceWorker' in navigator) {
+			try {
+				const registration = await navigator.serviceWorker.ready;
+				await registration.showNotification(title, notificationOptions);
+				console.log('[Notifications] Shown via Service Worker');
+			} catch (error) {
+				console.error('[Notifications] Service Worker failed:', error);
+				// ✅ Fallback на обычные уведомления (только для ПК)
+				new Notification(title, notificationOptions);
+			}
+		} else {
+			// ✅ Fallback для браузеров без Service Worker
+			new Notification(title, notificationOptions);
 		}
 	}
 
@@ -197,17 +179,5 @@ export class NotificationManager {
 		}
 
 		return outputArray;
-	}
-
-	/**
-	 * Отключается от WebSocket
-	 */
-	static disconnect(): void {
-		if (this.ws) {
-			this.stopPing();
-			this.ws.close(1000, 'Client disconnect');
-			this.ws = null;
-			this.reconnectAttempts = 0;
-		}
 	}
 }
