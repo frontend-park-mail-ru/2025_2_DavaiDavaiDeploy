@@ -253,7 +253,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         env:
-          CYPRESS_BASE_URL: ${{ secrets.PRODUCTION_URL }}
+          CYPRESS_BASE_URL: ${{ secrets.STAGE_URL }}
 
       - name: Generate Report
         if: always()
