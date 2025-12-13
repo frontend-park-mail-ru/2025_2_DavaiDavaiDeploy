@@ -139,6 +139,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 						</Flex>
 						<Button
 							mode="secondary"
+							data-test-id="fav-btn"
 							className={clsx(styles.favBtn, {
 								[styles.inFav]: is_liked,
 								[styles.notInFav]: !is_liked,
@@ -146,9 +147,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 							onClick={this.handleFavorites}
 						>
 							<Favorite className={styles.favIcon} />
-							<Headline level="7" data-test-id="fav-btn">
-								Избранное
-							</Headline>
+							<Headline level="7">Избранное</Headline>
 						</Button>
 					</Flex>
 
@@ -254,9 +253,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 										onClick={this.handleFavorites}
 									>
 										<Favorite className={styles.favIcon} />
-										<Headline level="7" data-test-id="fav-btn">
-											Избранное
-										</Headline>
+										<Headline level="7">Избранное</Headline>
 									</Button>
 								</Flex>
 

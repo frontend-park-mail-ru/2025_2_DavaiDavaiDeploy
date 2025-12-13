@@ -6,8 +6,18 @@ Cypress.Commands.add('favorites', (filmTitle: string) => {
 	allure.story('Successful adding to favorites');
 	allure.severity(allure.Severity.BLOCKER);
 
+	allure.step('Wait', () => {
+		cy.wait('@checkSuccess');
+	});
+
 	allure.step('Navigate to film page', () => {
 		cy.visit('/films/1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d');
+	});
+
+	allure.step('Wait for ', () => {
+		cy.wait('@filmWithData');
+		cy.wait('@similarWithData');
+		cy.wait('@feedbacksWithData');
 	});
 
 	allure.step('Add to favorites', () => {
@@ -17,6 +27,10 @@ Cypress.Commands.add('favorites', (filmTitle: string) => {
 
 	allure.step('Navigate to user page', () => {
 		cy.visit('/profile');
+	});
+
+	allure.step('Wait for login API call', () => {
+		cy.wait('@favoritesWithData');
 	});
 
 	allure.step('Verify login field matches user data', () => {

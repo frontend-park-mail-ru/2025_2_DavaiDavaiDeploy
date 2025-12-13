@@ -25,6 +25,7 @@ Cypress.Commands.add(
 		MockUtils.intercept(CommonMocks.search.withData);
 		MockUtils.intercept(CommonMocks.feedbacks.withData);
 		MockUtils.intercept(CommonMocks.favorites.withData);
+		MockUtils.intercept(CommonMocks.save.withData);
 
 		// Логин и регистрация всегда доступны
 		MockUtils.intercept(AuthMocks.login.success);
