@@ -146,7 +146,9 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 							onClick={this.handleFavorites}
 						>
 							<Favorite className={styles.favIcon} />
-							<Headline level="7">Избранное</Headline>
+							<Headline level="7" data-test-id="fav-btn">
+								Избранное
+							</Headline>
 						</Button>
 					</Flex>
 
@@ -252,7 +254,9 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 										onClick={this.handleFavorites}
 									>
 										<Favorite className={styles.favIcon} />
-										<Headline level="7">Избранное</Headline>
+										<Headline level="7" data-test-id="fav-btn">
+											Избранное
+										</Headline>
 									</Button>
 								</Flex>
 

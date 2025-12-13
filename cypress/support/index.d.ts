@@ -13,6 +13,7 @@ declare global {
 				password: string,
 			): Chainable<void>;
 			verifyProfile(user: Record<string, string>): Chainable<void>;
+			favorites(filmTitle: string): Chainable<void>;
 		}
 	}
 }

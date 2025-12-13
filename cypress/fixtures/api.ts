@@ -2,8 +2,8 @@
 export const AuthMocks = {
 	check: {
 		unauthorized: {
-			method: 'POST' as const,
-			url: '/api/auth/check/',
+			method: 'GET' as const,
+			url: '/api/auth/check',
 			response: {
 				statusCode: 401,
 				body: { message: 'Unauthorized', statusCode: 401 },
@@ -11,8 +11,8 @@ export const AuthMocks = {
 			alias: 'checkFailed',
 		},
 		authorized: {
-			method: 'POST' as const,
-			url: '/api/auth/check/',
+			method: 'GET' as const,
+			url: '/api/auth/check',
 			response: {
 				statusCode: 200,
 				body: {
