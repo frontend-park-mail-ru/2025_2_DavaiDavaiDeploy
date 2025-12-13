@@ -13,6 +13,7 @@ interface PasswordInputFieldProps {
 	placeholder?: string;
 	onChange: (value: string) => void;
 	errorMessage: string;
+	name?: string;
 }
 
 interface PasswordInputFieldState {
@@ -40,12 +41,14 @@ export class PasswordInputField extends Component<
 			placeholder,
 			errorMessage,
 			mode,
+			name,
 		} = this.props;
 
 		return (
 			<FormItem
 				mode={mode}
 				top={label}
+				name={name}
 				type={this.state.showPassword ? 'text' : 'password'}
 				placeholder={placeholder}
 				defaultValue={defaultValue}

@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"lib": ["es6", "dom"],
+		"sourceMap": true,
+		"types": ["cypress", "node"],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"target": "es2022",
+
+		"baseUrl": "./",
+		"paths": {
+			"fixtures/*": ["fixtures/*"]
+		}
+	},
+	"include": ["**/*.ts"]
+}
