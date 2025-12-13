@@ -97,20 +97,31 @@ const requestNotificationPermission =
 	};
 
 /**
- * Запускает показ тестовых уведомлений каждые 10 секунд
+ * Подключается к WebSocket для получения уведомлений
  */
 const connectToNotifications = (): Action => (dispatch: Dispatch) => {
-	console.log('[Notifications] Starting notification loop');
-	NotificationManager.startNotifications();
-	dispatch(notificationWebSocketConnectedAction());
+	console.log('[Redux] 🔌 Starting WebSocket connection...');
+	console.log('[Redux] NotificationManager available:', !!NotificationManager);
+
+	try {
+		NotificationManager.connectWebSocket((data: ModelsNotification) => {
+			console.log('[Redux] 📩 Dispatching notification:', data);
+			dispatch(notificationReceivedAction(data));
+		});
+
+		dispatch(notificationWebSocketConnectedAction());
+		console.log('[Redux] ✅ WebSocket connection initiated');
+	} catch (error) {
+		console.error('[Redux] ❌ Failed to connect WebSocket:', error);
+	}
 };
 
 /**
- * Останавливает показ уведомлений
+ * Отключается от WebSocket
  */
 const disconnectFromNotifications = (): Action => (dispatch: Dispatch) => {
-	console.log('[Notifications] Stopping notification loop');
-	NotificationManager.stopNotifications();
+	console.log('[Notifications] Disconnecting from WebSocket');
+	NotificationManager.disconnect();
 	dispatch(notificationWebSocketDisconnectedAction());
 };
 

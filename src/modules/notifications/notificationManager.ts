@@ -1,7 +1,29 @@
-const NOTIFICATION_INTERVAL_MS = 10_000; // ✅ Уведомления каждые 10 секунд
+const NOTIFICATION_INTERVAL_MS = 10_000; // ✅ Для тестовых уведомлений
+const RECONNECT_INTERVAL_MS = 5_000;
+const PING_INTERVAL_MS = 30_000; // ✅ Пинг каждые 30 секунд
+const MAX_RECONNECT_ATTEMPTS = 10;
+
+// ✅ Определяем WebSocket URL в зависимости от окружения
+const getWebSocketURL = (): string => {
+	// Для production используем полный URL
+	if (window.location.host === 'ddfilms.online') {
+		return 'wss://ddfilms.online/api/films/ws';
+	}
+
+	// Для localhost используем относительный путь (через Vite прокси)
+	const protocol = window.location.protocol === 'https:' ? 'wss:' : 'wss:';
+	const host = window.location.host;
+	return `${protocol}//${host}/api/films/ws`;
+};
+
+const WEB_SOCKET_URL = getWebSocketURL();
 
 export class NotificationManager {
-	private static subscription: PushSubscription | null = null; // ✅ Для Push API
+	private static subscription: PushSubscription | null = null;
+	private static ws: WebSocket | null = null;
+	private static reconnectAttempts = 0;
+	private static pingInterval: ReturnType<typeof setInterval> | null = null;
+	private static isConnecting = false;
 	private static notificationInterval: ReturnType<typeof setInterval> | null =
 		null;
 	private static notificationCount = 0;
@@ -118,6 +140,214 @@ export class NotificationManager {
 			clearInterval(this.notificationInterval);
 			this.notificationInterval = null;
 			console.log('[Notifications] Stopped');
+		}
+	}
+
+	/**
+	 * Подключается к WebSocket для получения уведомлений
+	 */
+	static connectWebSocket(onMessage: (data: any) => void): void {
+		console.log('[WS] 🔌 connectWebSocket called');
+		console.log('[WS] Current state:', {
+			isConnecting: this.isConnecting,
+			hasWebSocket: !!this.ws,
+			readyState: this.ws?.readyState,
+			reconnectAttempts: this.reconnectAttempts,
+		});
+
+		if (this.isConnecting) {
+			console.log('[WS] ⚠️ Connection already in progress, skipping');
+			return;
+		}
+
+		if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+			console.log('[WS] ✅ Already connected, skipping');
+			return;
+		}
+
+		if (this.reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+			console.error('[WS] ❌ Max reconnection attempts reached');
+			return;
+		}
+
+		try {
+			this.isConnecting = true;
+			console.log('[WS] 🚀 Starting connection to:', WEB_SOCKET_URL);
+			console.log(
+				'[WS] Attempt:',
+				this.reconnectAttempts + 1,
+				'/',
+				MAX_RECONNECT_ATTEMPTS,
+			);
+			console.log('[WS] Origin:', window.location.origin);
+			console.log('[WS] Has cookies:', !!document.cookie);
+
+			// ✅ WebSocket автоматически отправляет cookies для same-origin (DDFilmsCSRF, DDFilmsJWT)
+			this.ws = new WebSocket(WEB_SOCKET_URL);
+
+			console.log('[WS] WebSocket object created');
+			console.log(
+				'[WS] Initial readyState:',
+				this.ws.readyState,
+				'(0=CONNECTING, 1=OPEN, 2=CLOSING, 3=CLOSED)',
+			);
+			console.log('[WS] URL:', this.ws.url);
+			console.log('[WS] Protocol:', this.ws.protocol);
+
+			this.ws.onopen = () => {
+				console.log('[WS] ✅ Connected successfully!');
+				console.log('[WS] ReadyState:', this.ws?.readyState);
+				this.isConnecting = false;
+				this.reconnectAttempts = 0;
+				this.startPing();
+			};
+
+			this.ws.onmessage = (event) => {
+				console.log('[WS] ⬇️ RAW MESSAGE:', event.data);
+				console.log('[WS] Message type:', typeof event.data);
+				console.log('[WS] Message length:', event.data?.length);
+
+				// Игнорируем служебные текстовые сообщения
+				if (event.data === 'pong' || event.data === 'connected') {
+					console.log('[WS] 💬 Service message (text):', event.data);
+					return;
+				}
+
+				// Пытаемся распарсить JSON
+				try {
+					const data = JSON.parse(event.data);
+					console.log('[WS] ✅ Parsed JSON:', data);
+					console.log('[WS] Message keys:', Object.keys(data));
+
+					// Игнорируем служебные JSON сообщения
+					if (
+						data.type &&
+						['ping', 'pong', 'connected', 'auth', 'authenticated'].includes(
+							data.type,
+						)
+					) {
+						console.log('[WS] 💬 Service message (JSON type):', data.type);
+						return;
+					}
+
+					console.log('[WS] 🔔 NOTIFICATION MESSAGE:', data);
+
+					// Показываем уведомление
+					if (data.title && data.text) {
+						this.showNotification(data.title, {
+							body: data.text,
+							tag: data.id,
+							data: data.film_id ? { url: `/film/${data.film_id}` } : undefined,
+						});
+						console.log('[WS] ✅ Notification displayed');
+					} else {
+						console.warn('[WS] ⚠️ Message missing title or text:', data);
+					}
+
+					// Вызываем callback
+					onMessage(data);
+					console.log('[WS] ✅ Callback executed');
+				} catch (error) {
+					console.error('[WS] ❌ JSON parse error:', error);
+					console.error('[WS] Raw data:', event.data);
+				}
+			};
+
+			this.ws.onerror = (error) => {
+				console.error('[WS] ❌ Connection error:', error);
+				console.error('[WS] ReadyState on error:', this.ws?.readyState);
+				this.isConnecting = false;
+			};
+
+			this.ws.onclose = (event) => {
+				console.log('[WS] ⚠️ Connection closed', {
+					code: event.code,
+					reason: event.reason || '(no reason provided)',
+					wasClean: event.wasClean,
+				});
+				console.log(
+					'[WS] Close code meanings: 1000=Normal, 1006=Abnormal, 1011=Server error',
+				);
+
+				this.isConnecting = false;
+				this.stopPing();
+				this.reconnectAttempts++;
+
+				const delay = Math.min(
+					RECONNECT_INTERVAL_MS * Math.pow(2, this.reconnectAttempts - 1),
+					30_000,
+				);
+
+				console.log(
+					`[WS] Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})`,
+				);
+
+				setTimeout(() => this.connectWebSocket(onMessage), delay);
+			};
+		} catch (error) {
+			console.error('[WS] Failed to create WebSocket:', error);
+			this.isConnecting = false;
+			this.reconnectAttempts++;
+
+			const delay = Math.min(
+				RECONNECT_INTERVAL_MS * Math.pow(2, this.reconnectAttempts - 1),
+				30_000,
+			);
+
+			setTimeout(() => this.connectWebSocket(onMessage), delay);
+		}
+	}
+
+	/**
+	 * Запускает периодическую отправку ping-сообщений
+	 */
+	private static startPing(): void {
+		this.stopPing();
+
+		console.log('[WS] 🔄 Starting ping interval (every 30s)');
+
+		this.pingInterval = setInterval(() => {
+			if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+				console.log('[WS] ⬆️ Sending ping...');
+				try {
+					this.ws.send('ping');
+					console.log('[WS] ✅ Ping sent successfully');
+				} catch (error) {
+					console.error('[WS] ❌ Failed to send ping:', error);
+				}
+			} else {
+				console.warn(
+					'[WS] ⚠️ Cannot send ping - connection not open, readyState:',
+					this.ws?.readyState,
+				);
+				this.stopPing();
+			}
+		}, PING_INTERVAL_MS);
+
+		console.log('[WS] ✅ Ping interval started');
+	}
+
+	/**
+	 * Останавливает отправку ping-сообщений
+	 */
+	private static stopPing(): void {
+		if (this.pingInterval) {
+			clearInterval(this.pingInterval);
+			this.pingInterval = null;
+		}
+	}
+
+	/**
+	 * Отключается от WebSocket
+	 */
+	static disconnect(): void {
+		if (this.ws) {
+			console.log('[WS] Closing connection');
+			this.stopPing();
+			this.isConnecting = false;
+			this.ws.close(1000, 'Client disconnect');
+			this.ws = null;
+			this.reconnectAttempts = 0;
 		}
 	}
 
