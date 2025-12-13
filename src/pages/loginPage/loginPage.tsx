@@ -92,7 +92,14 @@ export class LoginPageNotConnected extends Component<
 		window.addEventListener('resize', this.handleResize);
 		const oneTap = new VKID.OneTap();
 		oneTap
-			.render({ container: this.OneTapContainer as unknown as HTMLElement })
+			.render({
+				container: this.OneTapContainer.current as HTMLElement,
+				showAlternativeLogin: true,
+				styles: {
+					borderRadius: 16,
+					height: 56,
+				},
+			})
 			.on(
 				VKID.OneTapInternalEvents.LOGIN_SUCCESS,
 				(payload: VKID.AuthResponse) => {
@@ -252,7 +259,7 @@ export class LoginPageNotConnected extends Component<
 							)}
 						</Flex>
 						<Flex className={styles.rightSide__actions} direction="column">
-							<button ref={this.OneTapContainer}></button>
+							<div ref={this.OneTapContainer}></div>
 							<Button
 								mode="primary"
 								onClick={this.handleLoginUser}

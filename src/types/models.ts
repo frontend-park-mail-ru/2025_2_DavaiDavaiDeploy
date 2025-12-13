@@ -239,3 +239,9 @@ export interface ModelsNotification {
 	text: string;
 	created_at: time;
 }
+
+export interface ModelsVKIDUser {
+	login: string;
+	avatar: string;
+	has_2fa: boolean;
+}
