@@ -1,7 +1,7 @@
 import * as allure from 'allure-js-commons';
 
 // Команда для логина
-Cypress.Commands.add('login', (login = 'user_login', password = '1234') => {
+Cypress.Commands.add('login', (login = 'userlogin', password = '123456') => {
 	allure.epic('Authentication');
 	allure.feature('User Login');
 	allure.story('Successful Login');
@@ -9,17 +9,6 @@ Cypress.Commands.add('login', (login = 'user_login', password = '1234') => {
 
 	allure.step('Navigate to login page', () => {
 		cy.visit('/login');
-	});
-
-	allure.step('Set localStorage flag for onboarding', () => {
-		cy.window().then((win) => {
-			win.localStorage.setItem('onb_shown', 'true');
-		});
-	});
-
-	allure.step('Click on login button to open form', () => {
-		allure.description('Enter valid credentials');
-		cy.get('[data-test-id="login"]').click();
 	});
 
 	allure.step('Fill login field', () => {

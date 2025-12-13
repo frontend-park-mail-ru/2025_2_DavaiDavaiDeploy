@@ -1,7 +1,7 @@
 describe('Авторизация и профиль пользователя', () => {
 	const TEST_USER = {
-		login: 'user_login',
-		password: '1234',
+		login: 'userlogin',
+		password: '123456',
 	};
 
 	beforeEach(() => {

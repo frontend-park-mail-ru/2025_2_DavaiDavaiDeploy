@@ -16,7 +16,7 @@ export const AuthMocks = {
 			response: {
 				statusCode: 200,
 				body: {
-					login: 'user_login',
+					login: 'userlogin',
 					avatar: 'avatars/default.png',
 					has_2fa: false,
 				},
@@ -28,11 +28,11 @@ export const AuthMocks = {
 	login: {
 		success: {
 			method: 'POST' as const,
-			url: '/api/auth/login/',
+			url: '/api/auth/signin',
 			response: {
 				statusCode: 200,
 				body: {
-					login: 'user_login',
+					login: 'userlogin',
 					avatar: 'avatars/default.png',
 					has_2fa: false,
 				},
@@ -41,7 +41,7 @@ export const AuthMocks = {
 		},
 		error: {
 			method: 'POST' as const,
-			url: '/api/auth/login/',
+			url: '/api/auth/signin',
 			response: {
 				statusCode: 400,
 				body: { message: 'Invalid credentials' },
@@ -53,11 +53,11 @@ export const AuthMocks = {
 	register: {
 		success: {
 			method: 'POST' as const,
-			url: '/api/auth/register/',
+			url: '/api/auth/signup/',
 			response: {
 				statusCode: 200,
 				body: {
-					login: 'user_login',
+					login: 'userlogin',
 					avatar: 'avatars/default.png',
 					has_2fa: false,
 				},
