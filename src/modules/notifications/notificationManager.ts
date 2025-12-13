@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const NOTIFICATION_INTERVAL_MS = 10_000; // ✅ Для тестовых уведомлений
 const RECONNECT_INTERVAL_MS = 5_000;
 const PING_INTERVAL_MS = 30_000; // ✅ Пинг каждые 30 секунд

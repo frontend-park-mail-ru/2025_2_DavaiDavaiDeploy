@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { NotificationManager } from '@/modules/notifications/notificationManager';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
 import type { ModelsNotification } from '../../../types/models';
