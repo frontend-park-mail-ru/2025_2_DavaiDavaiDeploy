@@ -24,7 +24,8 @@
     "lint:stylelint:fix": "npx stylelint \"**/*.css\" --fix --allow-empty-input",
     "prepare": "husky",
     "preview": "npm run build && vite preview",
-    "preview:stage": "npm run build:stage && vite preview"
+    "preview:stage": "npm run build:stage && vite preview",
+    "allure:generate": "npx allure generate allure-results --clean"
   },
   "repository": {
     "type": "git",
