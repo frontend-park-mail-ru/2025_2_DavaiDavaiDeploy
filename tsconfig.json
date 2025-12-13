@@ -25,6 +25,8 @@
 		"jsx": "react-jsx",
 		"jsxImportSource": "@robocotik/react",
 
+		"ignoreDeprecations": "6.0",
+
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["src/*"]
