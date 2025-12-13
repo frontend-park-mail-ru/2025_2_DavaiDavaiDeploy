@@ -1,9 +1,19 @@
 .whereToWatch {
 	background-color: var(--color-light);
+	margin-top: -2.5rem;
+	margin-bottom: -2.5rem;
+	border-radius: var(--border-radius-l);
+	box-shadow: 0 4px 12px rgb(0 0 0 / 80%);
+	gap: 2rem;
 }
 
 .icon {
 	width: 3rem;
+	transition: all 0.3 ease;
+
+	&:hover {
+		transform: scale(1.1);
+	}
 }
 
 .title {
@@ -12,4 +22,11 @@
 
 .link {
 	display: contents;
+}
+
+@media (max-width: 768px) {
+	.whereToWatch {
+		margin-top: -1.5rem;
+		margin-bottom: -1.5rem;
+	}
 }
