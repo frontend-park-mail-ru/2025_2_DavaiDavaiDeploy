@@ -28,6 +28,7 @@ import {
 	Title,
 } from 'ddd-ui-kit';
 import { FilmRating } from '../filmRating/filmRating';
+import { WhereToWatch } from '../whereToWatch/whereToWatch';
 import styles from './filmInfo.module.scss';
 
 interface FilmInfoProps {
@@ -95,6 +96,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 			poster,
 			is_liked,
 			is_out,
+			film_url,
 		} = this.props.film;
 
 		const formattedRating = formatRating(rating);
@@ -267,6 +269,8 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 								{is_out && <FilmRating film={this.props.film} />}
 							</Flex>
 						</Flex>
+
+						<WhereToWatch url={film_url} />
 
 						<Flex
 							className={styles.secondRow}

@@ -1,83 +1,15 @@
-.filmCard {
-	overflow: hidden;
-	text-align: center;
-	border-radius: 0.625rem;
-	transition: transform 0.3s ease;
-	width: 100%;
+.whereToWatch {
+	background-color: var(--color-light);
 }
 
-.imageContainer {
-	position: relative;
-	width: 100%;
-	height: 0;
-	padding-bottom: 140%;
-	transition: all 0.3s ease;
-	overflow: hidden;
-	border-radius: 0.625rem;
-	background: var(--color-deep-purple);
-}
-
-.image {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	filter: brightness(0.95);
-	transition: all 0.4s ease;
-}
-
-.imageContainer:hover .image {
-	transform: translateY(-0.125rem);
-	filter: brightness(1.2);
-}
-
-.content {
-	flex-grow: 1;
-	min-height: 3.75rem;
-	padding: 0.9375rem 0.625rem;
-	background-color: transparent;
-	width: 100%;
-	box-sizing: border-box;
-	flex-shrink: 0;
+.icon {
+	width: 3rem;
 }
 
 .title {
-	line-height: 1.3;
-	width: 100%;
-	max-width: 100%;
-	overflow-wrap: break-word;
-	word-break: normal;
-	hyphens: manual;
+	text-align: left;
 }
 
-.info {
-	margin-top: 0.375rem;
-}
-
-.rating,
-.rating-high,
-.rating-medium,
-.rating-low {
-	position: absolute;
-	top: 2.8%;
-	left: 4%;
-	border-radius: 0.3125rem;
-	z-index: 2;
-	display: inline-block;
-	padding: 0.35rem 0.77rem;
-	font-size: var(--font-size-l);
-}
-
-.dark {
-	color: var(--color-dark-text);
-}
-
-.imageContainer.dark {
-	background: hsl(240deg 14% 93%);
-}
-
-.info.dark {
-	opacity: 0.8;
+.link {
+	display: contents;
 }
