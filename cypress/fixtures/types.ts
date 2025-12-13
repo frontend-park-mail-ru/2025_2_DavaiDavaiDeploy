@@ -9,5 +9,5 @@ export interface RouteMock {
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 	url: string;
 	response: MockResponse;
-	alias?: string;
+	alias: string;
 }

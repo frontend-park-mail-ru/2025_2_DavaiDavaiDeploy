@@ -1,4 +1,4 @@
-import { AuthMocks, CommonMocks } from 'fixtures/api';
+import { AuthMocks, CommonMocks } from '../../fixtures/api';
 import { MockUtils } from '../utils/mock-utils';
 
 Cypress.Commands.add(

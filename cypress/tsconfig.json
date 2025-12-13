@@ -5,12 +5,7 @@
 		"types": ["cypress", "node"],
 		"module": "ESNext",
 		"moduleResolution": "bundler",
-		"target": "es2022",
-
-		"baseUrl": "./",
-		"paths": {
-			"fixtures/*": ["fixtures/*"]
-		}
+		"target": "es2022"
 	},
 	"include": ["**/*.ts"]
 }
