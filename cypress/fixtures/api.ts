@@ -53,7 +53,7 @@ export const AuthMocks = {
 	register: {
 		success: {
 			method: 'POST' as const,
-			url: '/api/auth/signup/',
+			url: '/api/auth/signup',
 			response: {
 				statusCode: 200,
 				body: {

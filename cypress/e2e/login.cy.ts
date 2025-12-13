@@ -11,5 +11,6 @@ describe('Авторизация и профиль пользователя', ()
 
 	it('Успешная авторизация и проверка данных профиля', () => {
 		cy.login(TEST_USER.login, TEST_USER.password);
+		cy.verifyProfile(TEST_USER);
 	});
 });
