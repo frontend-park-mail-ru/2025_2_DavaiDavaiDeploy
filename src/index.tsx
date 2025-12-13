@@ -11,6 +11,7 @@ import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
 import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
+import * as VKID from '@vkid/sdk';
 import 'ddd-ui-kit/dist/ddd-ui-kit.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
@@ -44,6 +45,14 @@ import actions from './redux/features/user/actions.ts';
 import { selectUser } from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
 import type { ModelsUser } from './types/models.ts';
+
+VKID.Config.init({
+	app: import.meta.env.VITE_VK_SDK_APP_ID,
+	redirectUrl: import.meta.env.VITE_VK_ID_REDIRECT_URL,
+	source: VKID.ConfigSource.LOWCODE,
+	scope: 'email',
+	responseMode: VKID.ConfigResponseMode.Callback,
+});
 
 if (sentryEnabled) {
 	Sentry.init({

@@ -23,7 +23,8 @@ import {
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Component } from '@robocotik/react';
+import { Component, createRef } from '@robocotik/react';
+import * as VKID from '@vkid/sdk';
 import {
 	Button,
 	Flex,
@@ -33,6 +34,7 @@ import {
 	OTPInput,
 	Title,
 } from 'ddd-ui-kit';
+import HTTPClient from '../../modules/HTTPClient';
 import styles from './loginPage.module.scss';
 
 interface LoginPageProps {
@@ -56,6 +58,7 @@ export class LoginPageNotConnected extends Component<
 		},
 		errorShown: false,
 	};
+	OneTapContainer = createRef<HTMLButtonElement>();
 
 	handleResize = () => {
 		if (window.innerWidth < 768) {
@@ -87,6 +90,29 @@ export class LoginPageNotConnected extends Component<
 	onMount() {
 		store.dispatch(actions.resetUserError());
 		window.addEventListener('resize', this.handleResize);
+		const oneTap = new VKID.OneTap();
+		oneTap
+			.render({ container: this.OneTapContainer as unknown as HTMLElement })
+			.on(
+				VKID.OneTapInternalEvents.LOGIN_SUCCESS,
+				(payload: VKID.AuthResponse) => {
+					const code = payload.code;
+					const deviceId = payload.device_id;
+					VKID.Auth.exchangeCode(code, deviceId)
+						.then(async (data) => {
+							const accessToken = data.access_token;
+							const body = {
+								access_token: accessToken,
+							};
+
+							await HTTPClient.post('/auth/vk', { data: body });
+						})
+						.catch(() => {
+							//eslint-disable-next-line no-console
+							console.log('exchangeCode error');
+						});
+				},
+			);
 	}
 
 	onUnmount() {
@@ -226,6 +252,7 @@ export class LoginPageNotConnected extends Component<
 							)}
 						</Flex>
 						<Flex className={styles.rightSide__actions} direction="column">
+							<button ref={this.OneTapContainer}></button>
 							<Button
 								mode="primary"
 								onClick={this.handleLoginUser}
