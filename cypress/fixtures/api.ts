@@ -101,12 +101,26 @@ export const CommonMocks = {
 		},
 		withData: {
 			method: 'GET' as const,
-			url: '/api/films/',
+			url: '/api/films/promo',
 			response: {
 				statusCode: 200,
-				body: [],
+				body: [
+					{
+						id: '2f3a4b5c-6d7e-8f9a-0b1c-2d3e4f5a6b7c',
+						image: 'posters/pic44.jpg',
+						title: 'Гарри Поттер и философский камень',
+						rating: 8.5,
+						short_description:
+							'Мальчик-сирота узнает, что он волшебник, и поступает в школу магии Хогвартс.',
+						year: 2001,
+						genre: 'Фэнтези',
+						duration: 152,
+						created_at: '0001-01-01T00:00:00Z',
+						updated_at: '0001-01-01T00:00:00Z',
+					},
+				],
 			},
-			alias: 'filmsWithData',
+			alias: 'promoWithData',
 		},
 	},
 
@@ -122,12 +136,12 @@ export const CommonMocks = {
 		},
 		withData: {
 			method: 'GET' as const,
-			url: '/api/films/',
+			url: '/api/compilations',
 			response: {
 				statusCode: 200,
 				body: [],
 			},
-			alias: 'filmsWithData',
+			alias: 'compilationsWithData',
 		},
 	},
 
@@ -140,12 +154,12 @@ export const CommonMocks = {
 		},
 		withData: {
 			method: 'GET' as const,
-			url: '/api/films/',
+			url: '/api/users/recommendations',
 			response: {
 				statusCode: 200,
 				body: [],
 			},
-			alias: 'filmsWithData',
+			alias: 'recommendationsWithData',
 		},
 	},
 
@@ -158,12 +172,12 @@ export const CommonMocks = {
 		},
 		withData: {
 			method: 'GET' as const,
-			url: '/api/films/',
+			url: '/api/films/calendar?count=6&offset=0',
 			response: {
 				statusCode: 200,
 				body: [],
 			},
-			alias: 'filmsWithData',
+			alias: 'calendarWithData',
 		},
 	},
 
@@ -181,7 +195,7 @@ export const CommonMocks = {
 				statusCode: 200,
 				body: [],
 			},
-			alias: 'filmsWithData',
+			alias: 'genresWithData',
 		},
 	},
 
