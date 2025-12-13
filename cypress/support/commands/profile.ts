@@ -7,12 +7,12 @@ Cypress.Commands.add('verifyProfile', (user) => {
 	allure.severity(allure.Severity.CRITICAL);
 
 	allure.step('Navigate to profile section', () => {
-		cy.get('[data-test-id="user-avatar-container"]').trigger('mouseover');
+		cy.get('[data-test-id="user-avatar-container"]').realHover();
 	});
 
 	allure.step('Verify login field matches user data', () => {
 		cy.get('h2[data-test-id="user-profile-login"]').should(
-			'have.value',
+			'have.text',
 			user.login,
 		);
 

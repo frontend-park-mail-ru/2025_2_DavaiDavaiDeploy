@@ -50,6 +50,7 @@
     "@sentry/vite-plugin": "^2.14.1",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
+    "cypress-real-events": "^1.15.0",
     "ddd-clsx": "^1.0.4",
     "ddd-ui-kit": "^1.1.0",
     "extendable-media-recorder": "^9.2.31",

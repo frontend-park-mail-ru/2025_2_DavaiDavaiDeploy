@@ -92,7 +92,7 @@ export const CommonMocks = {
 	promo: {
 		empty: {
 			method: 'GET' as const,
-			url: '/api/promo',
+			url: '/api/films/promo',
 			response: {
 				statusCode: 200,
 				body: [],
@@ -104,7 +104,7 @@ export const CommonMocks = {
 	compilations: {
 		empty: {
 			method: 'GET' as const,
-			url: '/api/compilations/',
+			url: '/api/compilations',
 			response: {
 				statusCode: 200,
 				body: [],
@@ -134,7 +134,7 @@ export const CommonMocks = {
 	genres: {
 		empty: {
 			method: 'GET' as const,
-			url: '/genres/?count=24&offset=0',
+			url: '/api/genres/?count=24&offset=0',
 			response: { statusCode: 200, body: [] },
 			alias: 'genresEmpty',
 		},

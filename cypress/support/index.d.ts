@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+///<reference types="cypress-real-events" />
 
 declare global {
 	namespace Cypress {
