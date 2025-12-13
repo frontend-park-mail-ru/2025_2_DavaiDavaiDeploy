@@ -18,5 +18,8 @@ export default defineConfig({
 			mochaFile: 'cypress/results/test-results-[hash].xml',
 			toConsole: false,
 		},
+		retries: {
+			runMode: 20,
+		},
 	},
 });

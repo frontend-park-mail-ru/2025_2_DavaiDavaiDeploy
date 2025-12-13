@@ -12,12 +12,19 @@ Cypress.Commands.add(
 		}
 
 		// Общие моки
-		MockUtils.intercept(CommonMocks.films.empty);
-		MockUtils.intercept(CommonMocks.promo.empty);
-		MockUtils.intercept(CommonMocks.compilations.empty);
-		MockUtils.intercept(CommonMocks.recommendations.empty);
-		MockUtils.intercept(CommonMocks.calendar.empty);
-		MockUtils.intercept(CommonMocks.genres.empty);
+		MockUtils.intercept(CommonMocks.films.withData);
+		MockUtils.intercept(CommonMocks.promo.withData);
+		MockUtils.intercept(CommonMocks.compilations.withData);
+		MockUtils.intercept(CommonMocks.recommendations.withData);
+		MockUtils.intercept(CommonMocks.calendar.withData);
+		MockUtils.intercept(CommonMocks.genres.withData);
+		MockUtils.intercept(CommonMocks.film.withData);
+		MockUtils.intercept(CommonMocks.feedback.withData);
+		MockUtils.intercept(CommonMocks.rating.withData);
+		MockUtils.intercept(CommonMocks.similar.withData);
+		MockUtils.intercept(CommonMocks.search.withData);
+		MockUtils.intercept(CommonMocks.feedbacks.withData);
+		MockUtils.intercept(CommonMocks.favorites.withData);
 
 		// Логин и регистрация всегда доступны
 		MockUtils.intercept(AuthMocks.login.success);
