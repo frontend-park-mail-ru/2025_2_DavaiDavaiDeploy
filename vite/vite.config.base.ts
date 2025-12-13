@@ -54,6 +54,11 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 			host: 'localhost',
 			port: 3000,
 			proxy: {
+				'/ws': {
+					target: env.VITE_PRODUCTION_API_URL,
+					changeOrigin: true,
+					ws: true,
+				},
 				'/api': {
 					target: env.VITE_PRODUCTION_API_URL,
 					changeOrigin: true,
