@@ -24,7 +24,7 @@ export class OTPModalComponent extends Component<
 	};
 	render() {
 		return (
-			<BaseModal closeOnOverlayClick={false}>
+			<BaseModal closeOnOverlayClick={false} closeOnEsc={false}>
 				<Flex
 					className={style.modalLogout}
 					direction="column"

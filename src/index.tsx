@@ -12,6 +12,7 @@ import * as VKID from '@vkid/sdk';
 import 'ddd-ui-kit/dist/ddd-ui-kit.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
+import Layout from './components/Layout/Layout';
 import {
 	AppToast,
 	ToastContainer,
@@ -118,7 +119,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 			this.props.router.path.startsWith('/register');
 
 		return (
-			<div class="layout">
+			<Layout>
 				<ToastContainer />
 				{!isAuthPageOpen && <Header />}
 				<Routes>
@@ -134,7 +135,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 					<Route href="/compilations/:id" component={<CompilationPage />} />
 				</Routes>
 				{!isAuthPageOpen && <Footer />}
-			</div>
+			</Layout>
 		);
 	}
 }
@@ -142,11 +143,11 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 class ProvidersLayout extends Component {
 	render() {
 		return (
-			<Provider store={store}>
-				<ModalsProvider>
+			<ModalsProvider>
+				<Provider store={store}>
 					<RouterProvider>{this.props.children}</RouterProvider>
-				</ModalsProvider>
-			</Provider>
+				</Provider>
+			</ModalsProvider>
 		);
 	}
 }

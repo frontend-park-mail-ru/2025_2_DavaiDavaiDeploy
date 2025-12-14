@@ -11,11 +11,28 @@ export interface BaseModalProps {
 
 interface BaseModalCurrentProps {
 	closeOnOverlayClick?: boolean;
+	closeOnEsc?: boolean;
 }
 
 export class BaseModalComponent extends Component<
 	WithModalProps & BaseModalCurrentProps
 > {
+	handleKeyDown = (event: KeyboardEvent) => {
+		const { closeOnEsc = true } = this.props;
+
+		if (closeOnEsc && event.key === 'Escape') {
+			this.props.modal.hide();
+		}
+	};
+
+	onMount() {
+		document.addEventListener('keydown', this.handleKeyDown);
+	}
+
+	onUnmount() {
+		document.removeEventListener('keydown', this.handleKeyDown);
+	}
+
 	render() {
 		const { closeOnOverlayClick = true } = this.props;
 		return createPortal(

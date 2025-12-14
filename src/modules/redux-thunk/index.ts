@@ -1,4 +1,3 @@
-import { createThunkMiddleware } from './createThunkMiddleware';
 import thunk from './thunk';
 
 /**
@@ -6,6 +5,5 @@ import thunk from './thunk';
  * @type {Object}
  */
 export default {
-	createThunkMiddleware,
 	thunk,
 };
