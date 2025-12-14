@@ -40,7 +40,10 @@ import { RegisterPage } from './pages/registerPage/registerPage.tsx';
 import { SearchPage } from './pages/searchPage/searchPage.tsx';
 import { UserPage } from './pages/userPage/userPage.tsx';
 import actions from './redux/features/user/actions.ts';
-import { selectIsAuthentificated } from './redux/features/user/selectors';
+import {
+	selectIsAuthentificated,
+	selectUser,
+} from './redux/features/user/selectors';
 import type { Map } from './types/map.ts';
 
 const LOAD_DELAY = 2000;
