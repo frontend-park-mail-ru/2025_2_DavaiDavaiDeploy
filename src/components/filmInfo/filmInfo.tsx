@@ -245,12 +245,15 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 									direction="column"
 									align="center"
 								>
-									{is_out && <FilmRating film={this.props.film} />}
+									{is_out && this.props.isAuthentificated && (
+										<FilmRating film={this.props.film} />
+									)}
 									<Button
 										mode="secondary"
 										className={clsx(styles.smallFavBtn, {
 											[styles.inFav]: is_liked,
 											[styles.notInFav]: !is_liked,
+											[styles.isAuth]: this.props.isAuthentificated,
 										})}
 										onClick={this.handleFavorites}
 									>
