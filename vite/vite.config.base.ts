@@ -58,6 +58,7 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 					target: env.VITE_PRODUCTION_API_URL,
 					changeOrigin: true,
 					rewrite: (path) => path.replace(/^\/api/, ''),
+					ws: true,
 				},
 			},
 		},

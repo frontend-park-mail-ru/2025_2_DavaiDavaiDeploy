@@ -19,6 +19,7 @@ import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { isSwEnabled } from './consts/sw';
 import { PRODUCTION_URL } from './consts/urls.ts';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
+import { NotificationManager } from './modules/notifications/notificationManager';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import { Route } from './modules/router/route.tsx';
@@ -36,9 +37,14 @@ import { RegisterPage } from './pages/registerPage/registerPage.tsx';
 import { SearchPage } from './pages/searchPage/searchPage.tsx';
 import { UserPage } from './pages/userPage/userPage.tsx';
 import actions from './redux/features/user/actions.ts';
-import { selectUser } from './redux/features/user/selectors.ts';
+import {
+	selectIsAuthentificated,
+	selectIsChecked,
+	selectUser,
+} from './redux/features/user/selectors';
 import type { Map } from './types/map.ts';
-import type { ModelsUser } from './types/models.ts';
+
+const LOAD_DELAY = 2000;
 
 if (sentryEnabled) {
 	Sentry.init({
@@ -69,16 +75,36 @@ window.addEventListener('offline', () => {
 });
 
 interface AppProps {
-	user: ModelsUser;
+	isAuthentificated: boolean;
+	isChecked: boolean;
 	checkUser: () => {};
 }
 
 class AppComponent extends Component<AppProps & WithRouterProps> {
 	onMount() {
 		this.props.checkUser();
+
+		if (
+			NotificationManager.isSupported() &&
+			Notification.permission === 'default'
+		) {
+			NotificationManager.requestPermission();
+		}
+
+		setTimeout(() => {
+			if (!this.props.isAuthentificated) {
+				return;
+			}
+
+			NotificationManager.connect();
+		}, LOAD_DELAY);
 	}
 
 	render() {
+		if (!this.props.isChecked) {
+			return <></>;
+		}
+
 		const isAuthPageOpen =
 			this.props.router.path.startsWith('/login') ||
 			this.props.router.path.startsWith('/register');
@@ -119,6 +145,8 @@ class ProvidersLayout extends Component {
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
+	isChecked: selectIsChecked(state),
+	isAuthentificated: selectIsAuthentificated(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

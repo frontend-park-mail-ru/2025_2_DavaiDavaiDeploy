@@ -233,3 +233,10 @@ export interface ModelsOTPUser {
 	has_2fa: boolean;
 	qrCode: string | null;
 }
+
+export interface ModelsNotification {
+	id: uuid;
+	title: string;
+	text: string;
+	created_at: time;
+}

@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"lib": ["es6", "dom"],
+		"sourceMap": true,
+		"types": ["cypress", "node", "cypress-real-events"],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"target": "es2022"
+	},
+	"include": ["**/*.ts"]
+}
