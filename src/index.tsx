@@ -1,6 +1,3 @@
-/* eslint-disable */
-// @ts-nocheck
-
 import 'reset-css/reset.css';
 
 import { compose, connect, Provider } from '@/modules/redux';
@@ -42,6 +39,7 @@ import { UserPage } from './pages/userPage/userPage.tsx';
 import actions from './redux/features/user/actions.ts';
 import {
 	selectIsAuthentificated,
+	selectIsChecked,
 	selectUser,
 } from './redux/features/user/selectors';
 import type { Map } from './types/map.ts';
@@ -63,7 +61,7 @@ if (isSwEnabled && 'serviceWorker' in navigator) {
 	window.addEventListener('load', () => {
 		navigator.serviceWorker
 			.register('/sw.js', { scope: '/' })
-
+			// eslint-disable-next-line no-console
 			.catch(console.log);
 	});
 }
@@ -78,6 +76,7 @@ window.addEventListener('offline', () => {
 
 interface AppProps {
 	isAuthentificated: boolean;
+	isChecked: boolean;
 	checkUser: () => {};
 }
 
@@ -91,10 +90,12 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 		) {
 			NotificationManager.requestPermission();
 		}
+
 		setTimeout(() => {
 			if (!this.props.isAuthentificated) {
 				return;
 			}
+
 			NotificationManager.connect();
 		}, LOAD_DELAY);
 	}
@@ -144,6 +145,7 @@ class ProvidersLayout extends Component {
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
+	isChecked: selectIsChecked(state),
 	isAuthentificated: selectIsAuthentificated(state),
 });
 
