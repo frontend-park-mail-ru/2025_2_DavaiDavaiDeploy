@@ -98,6 +98,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 			is_liked,
 			is_out,
 			film_url,
+			trailer_url,
 		} = this.props.film;
 
 		const formattedRating = formatRating(rating);
@@ -155,6 +156,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 						<Trailer
 							src={this.props.film.poster}
 							className={styles.trailerPreviewPC}
+							videoSrc={trailer_url}
 						/>
 					</Flex>
 
@@ -267,6 +269,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 									</Button>
 									<Trailer
 										src={this.props.film.poster}
+										videoSrc={trailer_url}
 										className={styles.trailerPreviewMobile}
 									/>
 								</Flex>
