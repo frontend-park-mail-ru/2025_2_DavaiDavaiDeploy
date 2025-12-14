@@ -195,6 +195,7 @@ export class RegisterPageNotConnected extends Component<
 							<FormItem
 								mode="primary"
 								top="Имя пользователя"
+								name="login"
 								defaultValue=""
 								before={
 									<img src={userSvg} alt="icon" className={styles.inputIcon} />
@@ -214,6 +215,7 @@ export class RegisterPageNotConnected extends Component<
 								mode="primary"
 								label="Пароль"
 								defaultValue=""
+								name="password"
 								placeholder="Введите пароль"
 								errorMessage={this.state.validationErrors.password}
 								value={this.state.password}
@@ -238,6 +240,7 @@ export class RegisterPageNotConnected extends Component<
 								className={styles.login__button}
 								size="m"
 								borderRadius="lg"
+								type="submit"
 							>
 								Зарегистрироваться
 							</Button>
