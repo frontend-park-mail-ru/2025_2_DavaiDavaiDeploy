@@ -93,7 +93,12 @@ class FavoritesFilmCardComponent extends Component<
 						)}
 					</div>
 					<Flex className={styles.content} direction="column" align="start">
-						<Title className={styles.title} level="5" align="left">
+						<Title
+							className={styles.title}
+							level="5"
+							align="left"
+							data-test-id="film-title"
+						>
 							{title}
 						</Title>
 						<Flex className={styles.info}>

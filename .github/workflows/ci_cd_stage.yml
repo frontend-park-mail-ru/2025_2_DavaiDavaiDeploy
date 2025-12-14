@@ -126,7 +126,6 @@ jobs:
             🔗 Ссылка на пайплайн 🔗
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-
   unit-tests:
     name: Unit tests
     runs-on: ubuntu-latest
@@ -219,12 +218,6 @@ jobs:
             🔗 Ссылка на пайплайн 🔗
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-
-  notify_success:
-    name: Success Message
-    runs-on: ubuntu-latest
-    needs: deploy
-    steps:
       - name: Send Telegram Success Message
         uses: PacificPromise/macos-telegram-action@main
         with:

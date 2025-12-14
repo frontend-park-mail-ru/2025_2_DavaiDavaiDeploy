@@ -71,7 +71,7 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 							</Flex>
 							<Flex className={styles.info} justify="between">
 								<Subhead className={styles.item} level="10" color="light">
-									{year.toString()}
+									{year?.toString()}
 								</Subhead>
 								<Subhead className={styles.item} level="10" color="light">
 									{genre}

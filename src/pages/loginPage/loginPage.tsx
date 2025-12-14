@@ -192,7 +192,6 @@ export class LoginPageNotConnected extends Component<
 							<FormItem
 								mode="primary"
 								top="Имя пользователя"
-								defaultValue=""
 								before={
 									<img src={userSvg} alt="icon" className={styles.inputIcon} />
 								}
@@ -205,6 +204,7 @@ export class LoginPageNotConnected extends Component<
 								onChange={(value: string) =>
 									this.onFieldChange(value, 'username')
 								}
+								name="login"
 							/>
 							<PasswordInputField
 								mode="primary"
@@ -214,6 +214,7 @@ export class LoginPageNotConnected extends Component<
 								placeholder="Введите пароль"
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
+								name="password"
 							/>
 
 							{this.hasOTP() && (
@@ -232,6 +233,7 @@ export class LoginPageNotConnected extends Component<
 								className={styles.login__button}
 								size="m"
 								borderRadius="lg"
+								type="submit"
 							>
 								Войти
 							</Button>

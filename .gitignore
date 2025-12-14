@@ -6,3 +6,5 @@ dist/
 .vite
 .env.production
 .env.local
+allure-results
+cypress/results

@@ -30,7 +30,11 @@ export class LoadedUser extends Component<LoadedUserProps, LoadedUserState> {
 
 	render() {
 		return (
-			<Flex className={styles.userInfo} align="center">
+			<Flex
+				className={styles.userInfo}
+				align="center"
+				data-test-id="user-avatar-container"
+			>
 				<div className={styles.avatarContainer}>
 					{this.props.user?.avatar && (
 						<Avatar

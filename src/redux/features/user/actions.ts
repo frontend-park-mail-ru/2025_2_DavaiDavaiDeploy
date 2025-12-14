@@ -168,6 +168,12 @@ const deleteUserAction = (userId: string | number): Action => {
 	};
 };
 
+const setIsCheckedAction = (): Action => {
+	return {
+		type: actionTypes.USER_CHECKED,
+	};
+};
+
 /**
  * Создает асинхронное действие для проверки авторизации пользователя.
  */
@@ -188,6 +194,8 @@ const checkUserAction = (): Action => async (dispatch: Dispatch) => {
 
 		dispatch(returnUserErrorAction(errorMessage));
 	}
+
+	dispatch(setIsCheckedAction());
 };
 
 /**
