@@ -131,7 +131,7 @@ const returnChangePasswordAction = (data: ModelsUser): Action => {
 const returnUserErrorAction = (error: string): Action => {
 	return {
 		type: actionTypes.USER_ERROR,
-		payload: { user: null, error: error },
+		payload: { error: error },
 	};
 };
 
@@ -473,7 +473,7 @@ const returnVKIDUserAction = (data: ModelsVKIDUser): Action => {
 const returnVKIDUserErrorAction = (error: string): Action => {
 	return {
 		type: actionTypes.VKID_USER_ERROR,
-		payload: { user: null, error: error },
+		payload: { error: error },
 	};
 };
 
