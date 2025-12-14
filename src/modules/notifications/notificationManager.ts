@@ -1,4 +1,5 @@
 const PING_INTERVAL_MS = 30_000;
+const WEBSOCKET_URL = 'wss://ddfilms.online/api/films/ws';
 
 interface NotificationData {
 	id: string;
@@ -34,19 +35,11 @@ export class NotificationManager {
 		});
 	}
 
-	static createURL() {
-		const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-		const host = window.location.host;
-		return `${protocol}//${host}/api/films/ws`;
-	}
-
 	/**
 	 * Подключается к WebSocket для получения уведомлений
 	 */
 	static connect(): void {
-		const wsUrl = this.createURL();
-
-		this.ws = new WebSocket(wsUrl);
+		this.ws = new WebSocket(WEBSOCKET_URL);
 
 		this.ws.onopen = () => {
 			this.startPing();
