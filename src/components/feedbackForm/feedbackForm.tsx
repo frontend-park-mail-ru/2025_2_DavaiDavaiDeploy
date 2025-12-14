@@ -139,7 +139,12 @@ class FeedbackFormComponent extends Component<
 						Редактирование
 					</Title>
 				)}
-				<Flex className={styles.header} align="center" direction="column">
+				<Flex
+					className={styles.header}
+					align="center"
+					direction="column"
+					data-test-id="rating-input"
+				>
 					<FilmRatingInput isDark={true} />
 				</Flex>
 
@@ -156,6 +161,7 @@ class FeedbackFormComponent extends Component<
 								? this.state.titleErrorMessage
 								: 'Придумайте короткий заголовок'
 						}
+						name="title"
 					/>
 
 					<Textarea
@@ -169,6 +175,7 @@ class FeedbackFormComponent extends Component<
 								? this.state.textErrorMessage
 								: 'Расскажите, что вы думаете о фильме - от 30 символов'
 						}
+						data-test-id="feedback-text-input"
 					/>
 				</Flex>
 
@@ -178,6 +185,7 @@ class FeedbackFormComponent extends Component<
 					onClick={this.handleSubmit}
 					borderRadius="l"
 					size="l"
+					data-test-id="feedback-btn"
 				>
 					Опубликовать
 				</Button>

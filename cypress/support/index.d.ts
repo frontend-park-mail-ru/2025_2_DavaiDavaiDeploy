@@ -10,6 +10,7 @@ declare global {
 			verifyProfile(user: Record<string, string>): Chainable<void>;
 			favorites(filmTitle: string): Chainable<void>;
 			search(request: string): Chainable<void>;
+			feedback(title: string, text: string, rating: string);
 		}
 	}
 }
