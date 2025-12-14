@@ -73,12 +73,30 @@ interface AppProps {
 	checkUser: () => {};
 }
 
-class AppComponent extends Component<AppProps & WithRouterProps> {
+type AppState = {
+	isLoaded: boolean;
+};
+
+class AppComponent extends Component<AppProps & WithRouterProps, AppState> {
+	state = {
+		isLoaded: false,
+	};
+
 	onMount() {
 		this.props.checkUser();
 	}
 
+	onUpdate() {
+		if (this.props.user && !this.state.isLoaded) {
+			this.setState({ isLoaded: true });
+		}
+	}
+
 	render() {
+		if (!this.state.isLoaded) {
+			return <></>;
+		}
+
 		const isAuthPageOpen =
 			this.props.router.path.startsWith('/login') ||
 			this.props.router.path.startsWith('/register');

@@ -1045,17 +1045,6 @@ export const CommonMocks = {
 				statusCode: 200,
 				body: [
 					{
-						id: '4c5d6e7f-8a9b-0c1d-2e3f-4a5b6c7d8e9f',
-						title: 'Список Шиндлера',
-						genre: 'Драмы',
-						year: 1993,
-						duration: 195,
-						image: 'films/pic22.png',
-						short_description:
-							'История немецкого промышленника, спасшего тысячи евреев во время Холокоста.',
-						rating: 9.4,
-					},
-					{
 						id: '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d',
 						title: 'Начало',
 						genre: 'Фантастика',
