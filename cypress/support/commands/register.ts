@@ -18,6 +18,10 @@ Cypress.Commands.add('register', (login = 'userlogin', password = '123456') => {
 		cy.get('input[name="password"]').type(password);
 	});
 
+	allure.step('Fill password field', () => {
+		cy.get('input[name="repeat-password"]').type(password);
+	});
+
 	allure.step('Submit login form', () => {
 		allure.description('Click login button');
 		cy.get('button[type="submit"]').click();

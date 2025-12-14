@@ -230,6 +230,7 @@ export class RegisterPageNotConnected extends Component<
 								onChange={(value) =>
 									this.onFieldChange(value, 'repeatPassword')
 								}
+								name="repeat-password"
 							/>
 						</Flex>
 						<Flex className={styles.rightSide__actions} direction="column">
