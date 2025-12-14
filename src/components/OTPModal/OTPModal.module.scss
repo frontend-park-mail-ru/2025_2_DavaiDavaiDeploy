@@ -9,8 +9,9 @@
 	background-color: var(--color-light);
 	color: var(--color-text);
 	width: 50rem;
-	height: 36rem;
+	height: 40rem;
 	padding: 4rem;
+	gap: 2rem;
 }
 
 .exitButton {
@@ -65,6 +66,6 @@
 		color: var(--color-text);
 		width: 80dvw;
 		height: 36rem;
-		padding: 4rem;
+		padding: 2rem;
 	}
 }

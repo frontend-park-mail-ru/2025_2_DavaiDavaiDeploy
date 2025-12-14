@@ -14,6 +14,7 @@
 	transition: all 0.3s ease;
 	overflow: hidden;
 	border-radius: 0.625rem;
+	background: var(--color-deep-purple);
 }
 
 .image {
@@ -67,4 +68,16 @@
 	display: inline-block;
 	padding: 0.35rem 0.77rem;
 	font-size: var(--font-size-l);
+}
+
+.dark {
+	color: var(--color-dark-text);
+}
+
+.imageContainer.dark {
+	background: hsl(240deg 14% 93%);
+}
+
+.info.dark {
+	opacity: 0.8;
 }

@@ -12,8 +12,8 @@ import {
 } from '@/redux/features/compilations/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompFilm, ModelsCompilation } from '@/types/models';
-import { Flex } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Flex } from 'ddd-ui-kit';
 import styles from './compilationPage.module.scss';
 
 interface CompilationPageProps {

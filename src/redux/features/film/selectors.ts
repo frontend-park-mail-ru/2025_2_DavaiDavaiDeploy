@@ -1,6 +1,10 @@
 import type { Selector } from '@/modules/redux/types/selectors';
 import type { State } from '@/modules/redux/types/store';
-import type { ModelsFilmFeedback, ModelsFilmPage } from '@/types/models';
+import type {
+	ModelsFilmFeedback,
+	ModelsFilmPage,
+	ModelsMainPageFilm,
+} from '@/types/models';
 
 /**
  * Селектор для получения списка фильма
@@ -26,3 +30,16 @@ export const selectUserFeedback: Selector = (
 
 export const selectIsOut: Selector = (state: State): boolean | null =>
 	state.film.film && state.film.film.is_out;
+
+export const selectFilmLoading: Selector = (state: State): boolean =>
+	state.film.filmLoading;
+
+export const selectFilmFeedbacksLoading: Selector = (state: State): boolean =>
+	state.film.feedbackLoading;
+
+export const selectSimilarFilms: Selector = (
+	state: State,
+): ModelsMainPageFilm[] | null => state.film.similarFilms;
+
+export const selectSimilarFilmsLoading: Selector = (state: State): boolean =>
+	state.film.similarLoading;

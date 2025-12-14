@@ -27,7 +27,7 @@
 	&::after {
 		content: '';
 		position: absolute;
-		top: 30vh;
+		top: 25vh;
 		left: 50%;
 		transform: translate(-50%, -50%) rotate(90deg);
 		width: 95vh;
@@ -113,7 +113,7 @@
 
 @media (max-width: 400px) {
 	.profile {
-		gap: 10rem;
+		gap: 6rem;
 	}
 
 	.page {

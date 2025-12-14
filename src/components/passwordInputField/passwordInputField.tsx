@@ -1,8 +1,8 @@
-import eyeHideSvg from '@/assets/img/eye_close.svg';
-import eyeShowSvg from '@/assets/img/eye_open.svg';
-import lock from '@/assets/img/lock.svg';
-import { FormItem, IconButton } from '@/uikit/index';
+import eyeHideSvg from '@/assets/eye_close.svg';
+import eyeShowSvg from '@/assets/eye_open.svg';
+import lock from '@/assets/lock.svg';
 import { Component } from '@robocotik/react';
+import { FormItem, IconButton } from 'ddd-ui-kit';
 import styles from './passwordInputField.module.scss';
 
 interface PasswordInputFieldProps {
@@ -13,6 +13,7 @@ interface PasswordInputFieldProps {
 	placeholder?: string;
 	onChange: (value: string) => void;
 	errorMessage: string;
+	name?: string;
 }
 
 interface PasswordInputFieldState {
@@ -40,12 +41,14 @@ export class PasswordInputField extends Component<
 			placeholder,
 			errorMessage,
 			mode,
+			name,
 		} = this.props;
 
 		return (
 			<FormItem
 				mode={mode}
 				top={label}
+				name={name}
 				type={this.state.showPassword ? 'text' : 'password'}
 				placeholder={placeholder}
 				defaultValue={defaultValue}

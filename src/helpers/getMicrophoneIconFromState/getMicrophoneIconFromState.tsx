@@ -1,9 +1,9 @@
-import Microphone from '@/assets/img/microphone.svg?react';
-import MicrophoneLoadingIcon from '@/assets/img/microphone_is_loading.svg?react';
-import MicrophoneActiveIcon from '@/assets/img/microphone_is_work.svg?react';
-import { Flex } from '@/uikit';
+import Microphone from '@/assets/microphone.svg?react';
+import MicrophoneLoadingIcon from '@/assets/microphone_is_loading.svg?react';
+import MicrophoneActiveIcon from '@/assets/microphone_is_work.svg?react';
+import clsx from 'ddd-clsx';
+import { Flex } from 'ddd-ui-kit';
 import { MICROPHONE_STATES } from '../../consts/microphone';
-import clsx from '../../modules/clsx';
 import styles from './getMicrophoneIconFromState.module.scss';
 
 export const getMicrophoneIconFromState = (

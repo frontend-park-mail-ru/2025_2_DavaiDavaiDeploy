@@ -21,6 +21,20 @@
 	}
 }
 
+.blink {
+	animation: blink 0.6s infinite alternate;
+}
+
+@keyframes blink {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0.4;
+	}
+}
+
 .imageContainer {
 	flex: 0 0 20%;
 	position: relative;
@@ -29,6 +43,7 @@
 	max-height: 270px;
 	max-width: 202px;
 	border-radius: var(--border-radius-l);
+	background: var(--color-deep-purple);
 }
 
 .image {
@@ -97,6 +112,10 @@
 	transition: all 0.3s ease;
 }
 
+.removed {
+	fill: transparent;
+}
+
 .iconBtn {
 	position: fixed;
 	top: 20px;
@@ -104,13 +123,11 @@
 	height: 3rem;
 	width: 3rem;
 	transition: all 0.3s ease;
+	cursor: pointer;
+	z-index: 10;
 
 	&:hover {
 		transform: scale(1.05);
-
-		.icon {
-			fill: transparent;
-		}
 	}
 }
 

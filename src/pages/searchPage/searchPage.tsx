@@ -16,8 +16,8 @@ import type {
 	ModelsVoiceSearchResponse,
 } from '@/types/models';
 
-import { CardGrid, Flex, Paragraph, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { CardGrid, Flex, Paragraph, Title } from 'ddd-ui-kit';
 import styles from './searchPage.module.scss';
 
 interface SearchPageProps {

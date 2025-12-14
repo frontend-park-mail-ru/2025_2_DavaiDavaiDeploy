@@ -76,9 +76,16 @@
 	}
 }
 
+.links {
+	gap: 0.5rem;
+	margin-bottom: 0.25rem;
+	margin-top: -0.35rem;
+}
+
 .avatarActionsLink {
 	font-size: var(--font-size-m);
 	position: relative;
+	width: 100%;
 }
 
 .avatarActionsLogin {
@@ -86,12 +93,12 @@
 	width: 100%;
 	max-width: 100%;
 	white-space: nowrap;
-	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
 .avatar {
 	margin: 0 auto;
+	margin-top: 0.25rem;
 }
 
 .line {
@@ -107,5 +114,6 @@
 @media (max-width: 768px) {
 	.avatarActionsLogin {
 		margin-block: 0;
+		margin-bottom: 0.5rem;
 	}
 }

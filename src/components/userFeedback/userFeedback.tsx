@@ -1,4 +1,4 @@
-import Edit from '@/assets/img/edit.svg?react';
+import Edit from '@/assets/edit.svg?react';
 import { FeedBack } from '@/components/feedBack/feedBack.tsx';
 import { FeedbackForm } from '@/components/feedbackForm/feedbackForm.tsx';
 import { throttle } from '@/helpers/throttleHelper/throttleHelper';
@@ -11,8 +11,8 @@ import { selectUserFeedback } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
-import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component, createRef } from '@robocotik/react';
+import { Flex, IconButton, Title } from 'ddd-ui-kit';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import styles from './userFeedback.module.scss';
 

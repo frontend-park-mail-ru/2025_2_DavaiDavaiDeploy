@@ -1,6 +1,7 @@
-import Favorite from '@/assets/img/favorite.svg?react';
+import Favorite from '@/assets/favorite.svg?react';
 import { formatDateForCalendar } from '@/helpers/formatDateForCalendarHelper/formatDateForCalendarHelper';
-import clsx from '@/modules/clsx';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store';
@@ -11,6 +12,8 @@ import actions from '@/redux/features/calendar/actions';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsFilmInCalendar } from '@/types/models';
+import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
 import {
 	Button,
 	Flex,
@@ -19,8 +22,7 @@ import {
 	Spacing,
 	Subhead,
 	Title,
-} from '@/uikit/index';
-import { Component } from '@robocotik/react';
+} from 'ddd-ui-kit';
 import styles from './calendarPageFilmCard.module.scss';
 
 interface CalendarPageFilmCardProps {
@@ -39,7 +41,9 @@ class CalendarPageFilmCardComponent extends Component<
 		event.stopPropagation();
 
 		if (!this.props.isAuthentificated) {
-			this.props.router.navigate('/login');
+			this.props.router.navigate(
+				getPathWithPath('login', this.props.router.path),
+			);
 		}
 
 		if (this.props.film.is_liked) {
@@ -77,7 +81,11 @@ class CalendarPageFilmCardComponent extends Component<
 							{number.toString()}
 						</Title>
 						<div className={styles.imageContainer}>
-							<Image className={styles.image} src={cover} alt={title} />
+							<Image
+								className={styles.image}
+								src={getImageURL(cover)}
+								alt={title}
+							/>
 						</div>
 						<Flex className={styles.content} direction="column" align="start">
 							<Flex

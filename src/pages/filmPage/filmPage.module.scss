@@ -4,15 +4,21 @@
 	background-color: var(--color-bg);
 }
 
-.loadMoreTrigger {
-	height: 0;
-	width: 0;
+.lowePart {
+	background-color: var(--color-text);
+	padding: var(--side-padding);
+	gap: 4.4rem;
+	padding-top: 4.4rem;
+	padding-bottom: 3rem;
+}
+
+.dark {
+	background: transparent;
+	padding-top: 2rem;
 }
 
 .content {
-	background-color: var(--color-text);
 	gap: 3vw;
-	padding: var(--side-padding);
 }
 
 .left {
@@ -31,14 +37,17 @@
 
 .left,
 .right {
-	margin-top: 4.4rem;
-	margin-bottom: 4rem;
 	flex: 1;
 }
 
 @media (max-width: 1024px) {
 	.page {
 		background: var(--color-bg-gradient);
+	}
+
+	.lowePart {
+		gap: 2vw;
+		margin-top: 3rem;
 	}
 
 	.content {
@@ -66,6 +75,11 @@
 
 	.feedback {
 		text-align: center;
+	}
+
+	.dark {
+		padding-top: 1rem;
+		margin-top: 0;
 	}
 }
 

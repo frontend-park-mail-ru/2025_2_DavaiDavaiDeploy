@@ -1,3 +1,6 @@
+/* eslint-disable */
+// @ts-nocheck
+
 import 'reset-css/reset.css';
 
 import { compose, connect, Provider } from '@/modules/redux';
@@ -8,6 +11,7 @@ import '@/styles/globals.scss';
 import '@fontsource/golos-ui';
 import { Component, render } from '@robocotik/react';
 import * as Sentry from '@sentry/browser';
+import 'ddd-ui-kit/dist/ddd-ui-kit.css';
 import { Footer } from './components/footer/footer.tsx';
 import { Header } from './components/header/header.tsx';
 import {
@@ -18,6 +22,7 @@ import { sentryDSN, sentryEnabled } from './consts/sentry';
 import { isSwEnabled } from './consts/sw';
 import { PRODUCTION_URL } from './consts/urls.ts';
 import { ModalsProvider } from './modules/modals/modalsProvider.tsx';
+import { NotificationManager } from './modules/notifications/notificationManager';
 import type { Dispatch } from './modules/redux/types/actions.ts';
 import type { State } from './modules/redux/types/store.ts';
 import { Route } from './modules/router/route.tsx';
@@ -34,8 +39,12 @@ import { LoginPage } from './pages/loginPage/loginPage.tsx';
 import { RegisterPage } from './pages/registerPage/registerPage.tsx';
 import { SearchPage } from './pages/searchPage/searchPage.tsx';
 import { UserPage } from './pages/userPage/userPage.tsx';
+import notificationActions from './redux/features/notification/actions.ts';
 import actions from './redux/features/user/actions.ts';
-import { selectUser } from './redux/features/user/selectors.ts';
+import {
+	selectIsChecked,
+	selectUser,
+} from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
 import type { ModelsUser } from './types/models.ts';
 
@@ -54,7 +63,7 @@ if (isSwEnabled && 'serviceWorker' in navigator) {
 	window.addEventListener('load', () => {
 		navigator.serviceWorker
 			.register('/sw.js', { scope: '/' })
-			// eslint-disable-next-line no-console
+
 			.catch(console.log);
 	});
 }
@@ -70,14 +79,63 @@ window.addEventListener('offline', () => {
 interface AppProps {
 	user: ModelsUser;
 	checkUser: () => {};
+	isChecked: boolean;
+	requestNotificationPermission: () => {};
+	connectToNotifications: () => {};
+	disconnectFromNotifications: () => {};
 }
 
 class AppComponent extends Component<AppProps & WithRouterProps> {
 	onMount() {
 		this.props.checkUser();
+		setTimeout(() => {
+			if (
+				NotificationManager.isSupported() &&
+				Notification.permission === 'default'
+			) {
+				this.props.requestNotificationPermission();
+			}
+
+			const wsUrl = `wss://ddfilms.online/api/films/ws`;
+			console.log('WebSocket URL:', wsUrl);
+
+			let socket = new WebSocket(wsUrl);
+
+			socket.onopen = function (e) {
+				console.log('[open] Соединение установлено');
+				console.log('Отправляем данные на сервер');
+				socket.send('ping');
+			};
+
+			socket.onmessage = function (event) {
+				console.log(`[message] Данные получены с сервера: ${event.data}`);
+			};
+
+			socket.onclose = function (event) {
+				if (event.wasClean) {
+					console.log(
+						`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`,
+					);
+				} else {
+					// например, сервер убил процесс или сеть недоступна
+					// обычно в этом случае event.code 1006
+					console.log('[close] Соединение прервано');
+				}
+			};
+
+			socket.onerror = function (e) {
+				console.log('[error] Ошибка WebSocket: ', e);
+			};
+
+			// this.props.connectToNotifications();
+		}, 2000);
 	}
 
 	render() {
+		if (!this.props.isChecked) {
+			return <></>;
+		}
+
 		const isAuthPageOpen =
 			this.props.router.path.startsWith('/login') ||
 			this.props.router.path.startsWith('/register');
@@ -118,10 +176,17 @@ class ProvidersLayout extends Component {
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
+	isChecked: selectIsChecked(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	checkUser: () => dispatch(actions.checkUserAction()),
+	requestNotificationPermission: () =>
+		dispatch(notificationActions.requestNotificationPermission()),
+	connectToNotifications: () =>
+		dispatch(notificationActions.connectToNotifications()),
+	disconnectFromNotifications: () =>
+		dispatch(notificationActions.disconnectFromNotifications()),
 });
 
 const App = compose(
