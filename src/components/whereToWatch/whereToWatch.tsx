@@ -13,18 +13,10 @@ export class WhereToWatch extends Component<WhereToWatchProps> {
 		const { url } = this.props;
 
 		if (url?.includes('rutube')) {
-			return (
-				<a href={url} className={styles.link}>
-					<Rutube className={styles.icon} />
-				</a>
-			);
+			return <Rutube className={styles.icon} />;
 		}
 
-		return (
-			<a href={url} className={styles.link}>
-				<VkIcon className={styles.icon} />
-			</a>
-		);
+		return <VkIcon className={styles.icon} />;
 	};
 
 	render() {
@@ -35,12 +27,19 @@ export class WhereToWatch extends Component<WhereToWatchProps> {
 		}
 
 		return (
-			<Flex className={styles.whereToWatch} direction="row" align="center">
-				<Title level="6" className={styles.title}>
-					Где посмотреть
-				</Title>
-				{this.renderIcon()}
-			</Flex>
+			<a
+				href={url}
+				rel="noopener noreferrer"
+				target="_blank"
+				className={styles.link}
+			>
+				<Flex className={styles.whereToWatch} direction="row" align="center">
+					<Title level="6" className={styles.title}>
+						Смотрите на
+					</Title>
+					{this.renderIcon()}
+				</Flex>
+			</a>
 		);
 	}
 }

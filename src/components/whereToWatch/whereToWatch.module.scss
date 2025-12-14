@@ -4,18 +4,19 @@
 	margin-bottom: -2.5rem;
 	border-radius: var(--border-radius-l);
 	box-shadow: 0 8px 16px -12px rgb(0 0 0 / 80%);
-	gap: 3rem;
+	gap: 1rem;
 	padding: 1rem 2rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+
+	&:hover {
+		transform: scale(1.05);
+	}
 }
 
 .icon {
 	width: 3rem;
 	height: 3rem;
-	transition: all 0.3s ease;
-
-	&:hover {
-		transform: scale(1.1);
-	}
 }
 
 .title {
