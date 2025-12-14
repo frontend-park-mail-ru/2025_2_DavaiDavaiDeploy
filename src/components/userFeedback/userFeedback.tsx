@@ -11,8 +11,8 @@ import { selectUserFeedback } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
-import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component, createRef } from '@robocotik/react';
+import { Flex, IconButton, Title } from 'ddd-ui-kit';
 import { getPathWithPath } from '../../helpers/getPathWithPath/getPathWithPath.ts';
 import styles from './userFeedback.module.scss';
 
@@ -118,7 +118,11 @@ class FeedbackFormComponent extends Component<
 			);
 		} else if (userFeedback) {
 			return (
-				<Flex className={styles.feedbackContainer} direction="column">
+				<Flex
+					className={styles.feedbackContainer}
+					direction="column"
+					data-test-id="user-feedback"
+				>
 					<Flex className={styles.header} direction="row" align="center">
 						<Title
 							className={styles.title}

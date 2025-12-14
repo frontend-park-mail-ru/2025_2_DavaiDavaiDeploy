@@ -3,7 +3,6 @@ import { formatRatingNumber } from '@/helpers/formatRatingNumberHelper/formatRat
 import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { State } from '@/modules/redux/types/store.ts';
 import { Link } from '@/modules/router/link.tsx';
@@ -11,8 +10,9 @@ import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmPage } from '@/types/models';
-import { Button, Flex, Paragraph, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
+import { Button, Flex, Paragraph, Subhead, Title } from 'ddd-ui-kit';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { FilmRatingInput } from '../filmRatingInput/filmRatingInput.tsx';
@@ -84,7 +84,11 @@ class FilmRatingComponent extends Component<
 								align="center"
 							>
 								<Star className={styles.userStarIcon} />
-								<Paragraph className={styles.userRatingTitle} level="8">
+								<Paragraph
+									className={styles.userRatingTitle}
+									level="8"
+									data-test-id="film-rating"
+								>
 									{this.props.userRating.toString()}
 								</Paragraph>
 							</Flex>

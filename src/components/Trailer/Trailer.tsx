@@ -1,7 +1,7 @@
 import Play from '@/assets/play.svg?react';
-import { Image } from '@/uikit';
 import { Component } from '@robocotik/react';
-import clsx from '../../modules/clsx';
+import clsx from 'ddd-clsx';
+import { Image } from 'ddd-ui-kit';
 import { MODALS } from '../../modules/modals/modals';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';

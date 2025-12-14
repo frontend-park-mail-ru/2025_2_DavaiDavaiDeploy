@@ -23,6 +23,7 @@ import {
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Component } from '@robocotik/react';
 import {
 	Button,
 	Flex,
@@ -31,8 +32,7 @@ import {
 	Logo,
 	OTPInput,
 	Title,
-} from '@/uikit/index';
-import { Component } from '@robocotik/react';
+} from 'ddd-ui-kit';
 import styles from './loginPage.module.scss';
 
 interface LoginPageProps {
@@ -192,7 +192,6 @@ export class LoginPageNotConnected extends Component<
 							<FormItem
 								mode="primary"
 								top="Имя пользователя"
-								defaultValue=""
 								before={
 									<img src={userSvg} alt="icon" className={styles.inputIcon} />
 								}
@@ -202,7 +201,10 @@ export class LoginPageNotConnected extends Component<
 									this.state.validationErrors.username ? 'error' : 'default'
 								}
 								value={this.state.username}
-								onChange={(value) => this.onFieldChange(value, 'username')}
+								onChange={(value: string) =>
+									this.onFieldChange(value, 'username')
+								}
+								name="login"
 							/>
 							<PasswordInputField
 								mode="primary"
@@ -212,6 +214,7 @@ export class LoginPageNotConnected extends Component<
 								placeholder="Введите пароль"
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
+								name="password"
 							/>
 
 							{this.hasOTP() && (
@@ -230,6 +233,7 @@ export class LoginPageNotConnected extends Component<
 								className={styles.login__button}
 								size="m"
 								borderRadius="lg"
+								type="submit"
 							>
 								Войти
 							</Button>

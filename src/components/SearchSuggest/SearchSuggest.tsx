@@ -1,13 +1,14 @@
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Component, createRef, type Ref } from '@robocotik/react';
+import clsx from 'ddd-clsx';
+import { Badge, Headline, Image } from 'ddd-ui-kit';
 import { formatRating } from '../../helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '../../helpers/ratingTypeHelper/ratingTypeHelper';
-import clsx from '../../modules/clsx';
 import { Link } from '../../modules/router/link';
 import type {
 	ModelsMainPageActor,
 	ModelsMainPageFilm,
 } from '../../types/models';
-import { Badge, Headline, Image } from '../../uikit';
 import styles from './SearchSuggest.module.scss';
 
 interface SearchSuggestProps {
@@ -60,10 +61,14 @@ export class SearchSuggest extends Component<
 				key={`film-${id}`}
 			>
 				<Link className={styles.link} href={`/films/${id}`}>
-					<Image className={styles.image} src={cover} alt={title} />
+					<Image
+						className={styles.image}
+						src={getImageURL(cover)}
+						alt={title}
+					/>
 					<div className={styles.filmInfo}>
 						<div className={styles.titleRow}>
-							<h3>{title}</h3>
+							<h3 data-test-id="search-film-title">{title}</h3>
 							{ratingType && (
 								<Badge mode={ratingType} className={styles.badge} size="s">
 									<Headline level="7">{formattedRating}</Headline>
@@ -86,7 +91,11 @@ export class SearchSuggest extends Component<
 				key={`actor-${id}`}
 			>
 				<Link className={styles.link} href={`/actors/${id}`}>
-					<Image className={styles.image} src={photo} alt={russian_name} />
+					<Image
+						className={styles.image}
+						src={getImageURL(photo)}
+						alt={russian_name}
+					/>
 					<p className={styles.titleRow}>{russian_name}</p>
 				</Link>
 			</li>

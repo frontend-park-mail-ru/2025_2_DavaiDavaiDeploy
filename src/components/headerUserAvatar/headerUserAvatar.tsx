@@ -1,9 +1,10 @@
 import Exit from '@/assets/exit.svg?react';
-import clsx from '@/modules/clsx/index.ts';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsUser } from '@/types/models.ts';
-import { Avatar, Flex, Headline, Separator } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
+import { Avatar, Flex, Headline, Separator } from 'ddd-ui-kit';
 import { MODALS } from '../../modules/modals/modals';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
@@ -31,12 +32,14 @@ export class UserAvatarComponent extends Component<
 				className={clsx(styles.avatarActions, this.props.className)}
 				direction="column"
 			>
-				<Avatar
-					level="7"
-					src={this.props.user?.avatar}
-					alt={this.props.user?.login}
-					className={styles.avatar}
-				/>
+				{this.props.user?.avatar && (
+					<Avatar
+						level="7"
+						src={getImageURL(this.props.user.avatar)}
+						alt={this.props.user?.login}
+						className={styles.avatar}
+					/>
+				)}
 
 				{this.props.user?.login && (
 					<Headline
@@ -44,6 +47,7 @@ export class UserAvatarComponent extends Component<
 						level="7"
 						color="accent"
 						align="center"
+						data-test-id="user-profile-login"
 					>
 						{this.props.user.login}
 					</Headline>

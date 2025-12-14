@@ -22,8 +22,8 @@ import {
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Button, Flex, FormItem, Headline, Logo, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Button, Flex, FormItem, Headline, Logo, Title } from 'ddd-ui-kit';
 import styles from './registerPage.module.scss';
 
 interface RegistrationPageProps {
@@ -205,9 +205,11 @@ export class RegisterPageNotConnected extends Component<
 									this.state.validationErrors.username ? 'error' : 'default'
 								}
 								value={this.state.username}
-								onChange={(value) => this.onFieldChange(value, 'username')}
+								onChange={(value: string) =>
+									this.onFieldChange(value, 'username')
+								}
+								name="login"
 							/>
-
 							<PasswordInputField
 								mode="primary"
 								label="Пароль"
@@ -216,6 +218,7 @@ export class RegisterPageNotConnected extends Component<
 								errorMessage={this.state.validationErrors.password}
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
+								name="password"
 							/>
 							<PasswordInputField
 								mode="primary"
@@ -227,6 +230,7 @@ export class RegisterPageNotConnected extends Component<
 								onChange={(value) =>
 									this.onFieldChange(value, 'repeatPassword')
 								}
+								name="repeat-password"
 							/>
 						</Flex>
 						<Flex className={styles.rightSide__actions} direction="column">
@@ -236,6 +240,7 @@ export class RegisterPageNotConnected extends Component<
 								className={styles.login__button}
 								size="m"
 								borderRadius="lg"
+								type="submit"
 							>
 								Зарегистрироваться
 							</Button>

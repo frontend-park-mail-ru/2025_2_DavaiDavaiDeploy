@@ -1,12 +1,12 @@
 import Close from '@/assets/close.svg?react';
 import Loupe from '@/assets/loupe.svg?react';
-import clsx from '@/modules/clsx/index.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import actions from '@/redux/features/search/actions.ts';
 import type { Map } from '@/types/map';
-import { Flex, IconButton } from '@/uikit/index';
 import { Component, createRef } from '@robocotik/react';
+import clsx from 'ddd-clsx';
+import { Flex, IconButton } from 'ddd-ui-kit';
 import { debounce } from '../../helpers/debounceHelper/debounceHelper';
 import type { State } from '../../modules/redux/types/store';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
@@ -160,6 +160,7 @@ class SearchInputComponent extends Component<
 							value={this.state.searchRequest}
 							onInput={this.handleSearchRequestChange}
 							className={styles.input}
+							name="search"
 							onKeyDown={this.handleKeyDown}
 							disabled={this.props.isVoiceWorking ? true : undefined}
 						></input>
@@ -170,6 +171,7 @@ class SearchInputComponent extends Component<
 							mode="tertiary"
 							className={styles.loupeBtn}
 							onClick={this.search}
+							data-test-id="loupe"
 						>
 							<Loupe className={styles.loupe} />
 						</IconButton>
@@ -204,6 +206,7 @@ class SearchInputComponent extends Component<
 					<input
 						type="text"
 						ref={this.inputRef}
+						name="search"
 						placeholder="Поиск фильмов, актеров..."
 						value={this.state.searchRequest}
 						onInput={this.handleSearchRequestChange}

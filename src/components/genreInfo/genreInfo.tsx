@@ -1,3 +1,4 @@
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -10,8 +11,8 @@ import {
 } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
-import { Flex, Image, Paragraph, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Flex, Image, Paragraph, Title } from 'ddd-ui-kit';
 import { withModal } from '../../modules/modals/withModal.tsx';
 import type { WithModalProps } from '../../modules/modals/withModalProps.ts';
 import styles from './genreInfo.module.scss';
@@ -51,7 +52,7 @@ class GenreInfoComponent extends Component<
 				align="center"
 				direction="column"
 			>
-				<Image src={icon} alt={title} className={styles.title} />
+				<Image src={getImageURL(icon)} alt={title} className={styles.title} />
 				<Paragraph className={styles.description} level="8" align="center">
 					{description}
 				</Paragraph>

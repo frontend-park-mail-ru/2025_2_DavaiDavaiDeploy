@@ -75,3 +75,50 @@ self.addEventListener('fetch', (event) => {
 
 	event.respondWith(networkFirst(event.request));
 });
+
+self.addEventListener('push', (event) => {
+	let data = { title: 'Новое уведомление', body: 'У вас новое сообщение' };
+
+	if (event.data) {
+		try {
+			data = event.data.json();
+		} catch {
+			data.body = event.data.text();
+		}
+	}
+
+	const options = {
+		body: data.body,
+		icon: '/assets/favicon/favicon-86x86.png',
+		badge: '/assets/favicon/favicon-32x32.png',
+		data: {
+			url: data.url || '/',
+		},
+		requireInteraction: false,
+		vibrate: [200, 100, 200],
+	};
+
+	event.waitUntil(self.registration.showNotification(data.title, options));
+});
+
+self.addEventListener('notificationclick', (event) => {
+	event.notification.close();
+
+	const urlToOpen = event.notification.data?.url || '/';
+
+	event.waitUntil(
+		self.clients
+			.matchAll({ type: 'window', includeUnclean: true })
+			.then((windowClients) => {
+				for (const client of windowClients) {
+					if (client.url === urlToOpen && 'focus' in client) {
+						return client.focus();
+					}
+				}
+
+				if (self.clients.openWindow) {
+					return self.clients.openWindow(urlToOpen);
+				}
+			}),
+	);
+});

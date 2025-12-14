@@ -1,4 +1,4 @@
-import clsx from '@/modules/clsx/index.ts';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper.ts';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -13,6 +13,8 @@ import {
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
+import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
 import {
 	Avatar,
 	Button,
@@ -21,8 +23,7 @@ import {
 	Subhead,
 	Switch,
 	Title,
-} from '@/uikit/index';
-import { Component } from '@robocotik/react';
+} from 'ddd-ui-kit';
 import { MODALS } from '../../modules/modals/modals';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
@@ -214,13 +215,12 @@ class ChangeAvatarComponent extends Component<
 							className={styles.avatar}
 							src={preview}
 							alt="Preview"
-							preview={true}
 						/>
 					) : (
 						<Avatar
 							level="6"
 							className={styles.avatar}
-							src={avatar}
+							src={getImageURL(avatar)}
 							alt="Аватар"
 						/>
 					)}

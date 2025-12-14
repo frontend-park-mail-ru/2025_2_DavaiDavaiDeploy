@@ -10,8 +10,8 @@ import {
 } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { CardGrid, Flex } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { CardGrid, Flex } from 'ddd-ui-kit';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './genreCardGrid.module.scss';
 

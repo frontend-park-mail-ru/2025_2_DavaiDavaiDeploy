@@ -8,8 +8,8 @@ import { selectUserRating } from '@/redux/features/film/selectors.ts';
 import { selectUser } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsFilmFeedback, ModelsUser } from '@/types/models.ts';
-import { Button, Flex, FormItem, Textarea, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Button, Flex, FormItem, Textarea, Title } from 'ddd-ui-kit';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';
 import { withRouter } from '../../modules/router/withRouter.tsx';
 import { FilmRatingInput } from '../filmRatingInput/filmRatingInput.tsx';
@@ -64,8 +64,16 @@ class FeedbackFormComponent extends Component<
 		});
 	};
 
-	handleTextChange = (value: string) => {
+	handleTextChange = (value: any) => {
 		let textErrorMessage = '';
+
+		if (typeof value !== 'string') {
+			if ('target' in value && typeof value.target.value === 'string') {
+				value = value.target.value;
+			} else {
+				return;
+			}
+		}
 
 		if (this.state.textErrorMessage !== '') {
 			const validation = validateFeedbackText(value);
@@ -131,7 +139,12 @@ class FeedbackFormComponent extends Component<
 						Редактирование
 					</Title>
 				)}
-				<Flex className={styles.header} align="center" direction="column">
+				<Flex
+					className={styles.header}
+					align="center"
+					direction="column"
+					data-test-id="rating-input"
+				>
 					<FilmRatingInput isDark={true} />
 				</Flex>
 
@@ -148,6 +161,7 @@ class FeedbackFormComponent extends Component<
 								? this.state.titleErrorMessage
 								: 'Придумайте короткий заголовок'
 						}
+						name="title"
 					/>
 
 					<Textarea
@@ -161,6 +175,7 @@ class FeedbackFormComponent extends Component<
 								? this.state.textErrorMessage
 								: 'Расскажите, что вы думаете о фильме - от 30 символов'
 						}
+						data-test-id="feedback-text-input"
 					/>
 				</Flex>
 
@@ -170,6 +185,7 @@ class FeedbackFormComponent extends Component<
 					onClick={this.handleSubmit}
 					borderRadius="l"
 					size="l"
+					data-test-id="feedback-btn"
 				>
 					Опубликовать
 				</Button>

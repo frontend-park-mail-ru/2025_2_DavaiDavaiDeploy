@@ -1,9 +1,9 @@
 import Favorite from '@/assets/favorite.svg?react';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import clsx from '@/modules/clsx';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
 import type { State } from '@/modules/redux/types/store';
@@ -14,6 +14,8 @@ import actions from '@/redux/features/calendar/actions';
 import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsCompFilm } from '@/types/models';
+import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
 import {
 	Badge,
 	Button,
@@ -23,8 +25,7 @@ import {
 	Paragraph,
 	Subhead,
 	Title,
-} from '@/uikit/index';
-import { Component } from '@robocotik/react';
+} from 'ddd-ui-kit';
 import styles from './compilationPageFilmCard.module.scss';
 
 interface CompilationPageFilmCardProps {
@@ -82,7 +83,11 @@ class CompilationPageFilmCardComponent extends Component<
 				>
 					<Flex className={styles.left} direction="row" align="center">
 						<div className={styles.imageContainer}>
-							<Image className={styles.image} src={image} alt={title} />
+							<Image
+								className={styles.image}
+								src={getImageURL(image)}
+								alt={title}
+							/>
 							{ratingType && (
 								<Badge
 									mode={ratingType}
