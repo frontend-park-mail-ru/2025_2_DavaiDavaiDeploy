@@ -13,6 +13,8 @@ interface InitialState {
 	newPasswordLoading: boolean;
 	newAvatarLoading: boolean;
 	isChecked: boolean;
+	VKIDError: string | null;
+	VKIDAuthentificated: boolean;
 }
 
 /**
@@ -28,6 +30,8 @@ const initialState: InitialState = {
 	newPasswordLoading: false,
 	newAvatarLoading: false,
 	isChecked: false,
+	VKIDError: null,
+	VKIDAuthentificated: false,
 };
 
 /**

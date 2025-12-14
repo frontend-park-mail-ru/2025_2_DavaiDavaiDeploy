@@ -1,7 +1,10 @@
 import { compose } from '@/modules/redux';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps';
 import { withRouter } from '@/modules/router/withRouter';
-import { selectVKIDError } from '@/redux/features/user/selectors';
+import {
+	selectVKIDAuthentificated,
+	selectVKIDError,
+} from '@/redux/features/user/selectors';
 import { Component } from '@robocotik/react';
 import { Button, Flex } from 'ddd-ui-kit';
 import { ERROR_CODES } from '../../consts/errorCodes';
@@ -30,28 +33,36 @@ export class VKIDModalComponent extends Component<
 	state = {
 		input: '',
 	};
+	interval: number | null = null;
 
 	onMount() {
 		this.props.handleClearError();
+
+		this.interval = window.setInterval(() => {
+			if (selectVKIDAuthentificated(store.getState())) {
+				this.props.router.navigate('/');
+				this.props.modal.hide();
+			}
+
+			if (selectVKIDError(store.getState()) === ERROR_CODES.BAD_REQUEST) {
+				AppToast.error(
+					vkidAuthorizationCodeToErrorHelper(ERROR_CODES.BAD_REQUEST),
+				);
+			}
+		}, 1000);
+	}
+
+	onUnmount() {
+		if (this.interval) {
+			clearInterval(this.interval);
+			this.interval = null;
+		}
 	}
 
 	handleSubmit = () => {
 		this.props.handleClearError();
 		this.props.onSubmit(this.props.access_token, this.state.input);
 	};
-
-	onUpdate() {
-		if (!selectVKIDError(store)) {
-			this.props.router.navigate('/');
-			this.props.modal.hide();
-		}
-
-		if (selectVKIDError(store) === ERROR_CODES.BAD_REQUEST) {
-			AppToast.error(
-				vkidAuthorizationCodeToErrorHelper(ERROR_CODES.BAD_REQUEST),
-			);
-		}
-	}
 
 	onInputChange = (e: Event) => {
 		const target = e.target as HTMLInputElement;

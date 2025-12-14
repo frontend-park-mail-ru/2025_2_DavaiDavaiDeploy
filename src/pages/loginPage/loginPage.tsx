@@ -151,7 +151,10 @@ export class LoginPageNotConnected extends Component<
 			this.setState({ errorShown: true });
 		}
 
-		if (this.props.VKIDError === ERROR_CODES.PRECONDITION_FAILED.toString()) {
+		if (
+			this.props.VKIDError &&
+			this.props.VKIDError === ERROR_CODES.PRECONDITION_FAILED.toString()
+		) {
 			this.props.modal.open(MODALS.VK_ID_MODAL, {
 				access_token: this.state.accessToken,
 				onSubmit: this.props.VKAuthLogin,
