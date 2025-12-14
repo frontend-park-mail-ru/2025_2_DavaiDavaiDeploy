@@ -15,14 +15,14 @@ export class WhereToWatch extends Component<WhereToWatchProps> {
 		if (url?.includes('rutube')) {
 			return (
 				<a href={url} className={styles.link}>
-					<VkIcon className={styles.icon} />{' '}
+					<Rutube className={styles.icon} />
 				</a>
 			);
 		}
 
 		return (
 			<a href={url} className={styles.link}>
-				<Rutube className={styles.icon} />
+				<VkIcon className={styles.icon} />
 			</a>
 		);
 	};

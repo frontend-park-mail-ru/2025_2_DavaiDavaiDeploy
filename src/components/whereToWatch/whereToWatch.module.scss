@@ -1,15 +1,17 @@
 .whereToWatch {
-	background-color: var(--color-light);
+	background-color: hsl(234deg 50% 26% / 50.1%);
 	margin-top: -2.5rem;
 	margin-bottom: -2.5rem;
 	border-radius: var(--border-radius-l);
-	box-shadow: 0 4px 12px rgb(0 0 0 / 80%);
-	gap: 2rem;
+	box-shadow: 0 8px 16px -12px rgb(0 0 0 / 80%);
+	gap: 3rem;
+	padding: 1rem 2rem;
 }
 
 .icon {
 	width: 3rem;
-	transition: all 0.3 ease;
+	height: 3rem;
+	transition: all 0.3s ease;
 
 	&:hover {
 		transform: scale(1.1);
