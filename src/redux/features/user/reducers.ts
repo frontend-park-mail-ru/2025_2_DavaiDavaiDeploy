@@ -71,7 +71,6 @@ export const userReducer: Reducer = (
 			return {
 				...state,
 				loading: true,
-				isChecked: true,
 				error: null,
 			};
 
@@ -178,6 +177,12 @@ export const userReducer: Reducer = (
 					error: payload.error,
 					twoFactorLoading: false,
 				},
+			};
+
+		case actionTypes.USER_CHECKED:
+			return {
+				...state,
+				isChecked: true,
 			};
 		default:
 			return state;
