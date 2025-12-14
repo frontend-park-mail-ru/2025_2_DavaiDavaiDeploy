@@ -44,8 +44,6 @@ import {
 } from './redux/features/user/selectors';
 import type { Map } from './types/map.ts';
 
-const LOAD_DELAY = 2000;
-
 if (sentryEnabled) {
 	Sentry.init({
 		dsn: sentryDSN,
@@ -90,14 +88,15 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 		) {
 			NotificationManager.requestPermission();
 		}
+	}
 
-		setTimeout(() => {
-			if (!this.props.isAuthentificated) {
-				return;
-			}
-
+	onUpdate(): void | Promise<void> {
+		if (
+			!NotificationManager.hasWSConnection() &&
+			this.props.isAuthentificated
+		) {
 			NotificationManager.connect();
-		}, LOAD_DELAY);
+		}
 	}
 
 	render() {
