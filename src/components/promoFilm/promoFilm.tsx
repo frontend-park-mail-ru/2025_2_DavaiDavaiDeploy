@@ -1,4 +1,5 @@
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
 import { connect } from '@/modules/redux';
@@ -9,6 +10,7 @@ import actions from '@/redux/features/promoFilm/actions';
 import { selectPromoFilm } from '@/redux/features/promoFilm/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsPromoFilm } from '@/types/models';
+import { Component } from '@robocotik/react';
 import {
 	Badge,
 	Flex,
@@ -17,8 +19,7 @@ import {
 	Paragraph,
 	Subhead,
 	Title,
-} from '@/uikit/index';
-import { Component } from '@robocotik/react';
+} from 'ddd-ui-kit';
 import styles from './promoFilm.module.scss';
 
 interface PromoFilmProps {
@@ -70,7 +71,7 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 							</Flex>
 							<Flex className={styles.info} justify="between">
 								<Subhead className={styles.item} level="10" color="light">
-									{year.toString()}
+									{year?.toString()}
 								</Subhead>
 								<Subhead className={styles.item} level="10" color="light">
 									{genre}
@@ -91,7 +92,11 @@ class PromoFilmComponent extends Component<PromoFilmProps> {
 						</Link>
 					</Flex>
 
-					<Image src={image} alt={title} className={styles.image} />
+					<Image
+						src={getImageURL(image)}
+						alt={title}
+						className={styles.image}
+					/>
 				</Flex>
 			</a>
 		);

@@ -1,5 +1,5 @@
-import { Flex, Paragraph } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Flex, Paragraph } from 'ddd-ui-kit';
 import { compose, connect } from '../../modules/redux';
 import type { State } from '../../modules/redux/types/store';
 import type { WithRouterProps } from '../../modules/router/types/withRouterProps.ts';

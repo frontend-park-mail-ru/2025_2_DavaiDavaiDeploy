@@ -3,7 +3,6 @@ import ArrowRight from '@/assets/arrowRight.svg?react';
 import { WIDE_SCREEN_WIDTH } from '@/consts/devices';
 import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { createPeriodFunction } from '@/helpers/periodStartHelper/periodStartHelper';
-import clsx from '@/modules/clsx';
 import { connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -11,8 +10,9 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenres } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
-import { Flex, IconButton, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
+import { Flex, IconButton, Title } from 'ddd-ui-kit';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
 import styles from './genreSlider.module.scss';
 

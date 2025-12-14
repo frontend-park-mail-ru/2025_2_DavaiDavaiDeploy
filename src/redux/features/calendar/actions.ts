@@ -16,7 +16,7 @@ const setCalendarLoadingAction = (): Action => {
 };
 
 /**
- * Возвращает успешно загруженные данные календаря
+ * Возвращает успешно загруженные данные для календаря
  */
 const returnCalendarAction = (data: ModelsFilmInCalendar[]): Action => {
 	return {

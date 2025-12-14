@@ -1,10 +1,11 @@
+import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
-import clsx from '@/modules/clsx';
 import { Link } from '@/modules/router/link.tsx';
 import type { ModelsMainPageFilm } from '@/types/models';
-import { Badge, Flex, Headline, Image, Subhead, Title } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
+import { Badge, Flex, Headline, Image, Subhead, Title } from 'ddd-ui-kit';
 import styles from './filmCard.module.scss';
 
 interface FilmCardProps {
@@ -25,7 +26,11 @@ export class FilmCard extends Component<FilmCardProps> {
 					className={clsx(styles.imageContainer, { [styles.dark]: !!isDark })}
 				>
 					<Link href={`/films/${id}`}>
-						<Image className={styles.image} src={cover} alt={title} />
+						<Image
+							className={styles.image}
+							src={getImageURL(cover)}
+							alt={title}
+						/>
 						{ratingType && (
 							<Badge
 								mode={ratingType}

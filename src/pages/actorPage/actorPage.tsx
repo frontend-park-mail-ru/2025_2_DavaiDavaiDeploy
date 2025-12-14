@@ -16,8 +16,8 @@ import {
 } from '@/redux/features/actor/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsActorPage, ModelsMainPageFilm } from '@/types/models';
-import { Flex } from '@/uikit/index';
 import { Component } from '@robocotik/react';
+import { Flex } from 'ddd-ui-kit';
 import styles from './actorPage.module.scss';
 
 const OFFSET = 0;
