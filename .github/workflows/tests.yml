@@ -119,6 +119,7 @@ jobs:
   send-telegramm-message:
     runs-on: ubuntu-latest
     needs: deploy-allure-report
+    if: always()
     permissions:
       contents: write
       pages: write

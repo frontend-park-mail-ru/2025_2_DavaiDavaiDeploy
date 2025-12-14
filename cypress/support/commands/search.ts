@@ -1,6 +1,6 @@
 import * as allure from 'allure-js-commons';
 
-Cypress.Commands.add('search', (login = 'userlogin', password = '123456') => {
+Cypress.Commands.add('search', (request = 'Начало') => {
 	allure.epic('Authentication');
 	allure.feature('User Login');
 	allure.story('Successful Login');
@@ -11,15 +11,7 @@ Cypress.Commands.add('search', (login = 'userlogin', password = '123456') => {
 	});
 
 	allure.step('Fill login field', () => {
-		cy.get('input[name="login"]').type(login);
-	});
-
-	allure.step('Fill password field', () => {
-		cy.get('input[name="password"]').type(password);
-	});
-
-	allure.step('Fill password field', () => {
-		cy.get('input[name="repeat-password"]').type(password);
+		cy.get('input[name="login"]').type(request);
 	});
 
 	allure.step('Submit login form', () => {

@@ -9,6 +9,7 @@ declare global {
 			register(login: string, password: string): Chainable<void>;
 			verifyProfile(user: Record<string, string>): Chainable<void>;
 			favorites(filmTitle: string): Chainable<void>;
+			search(request: string): Chainable<void>;
 		}
 	}
 }
