@@ -139,6 +139,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 						</Flex>
 						<Button
 							mode="secondary"
+							data-test-id="fav-btn"
 							className={clsx(styles.favBtn, {
 								[styles.inFav]: is_liked,
 								[styles.notInFav]: !is_liked,

@@ -47,6 +47,7 @@ export class UserAvatarComponent extends Component<
 						level="7"
 						color="accent"
 						align="center"
+						data-test-id="user-profile-login"
 					>
 						{this.props.user.login}
 					</Headline>

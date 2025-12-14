@@ -118,7 +118,11 @@ class FeedbackFormComponent extends Component<
 			);
 		} else if (userFeedback) {
 			return (
-				<Flex className={styles.feedbackContainer} direction="column">
+				<Flex
+					className={styles.feedbackContainer}
+					direction="column"
+					data-test-id="user-feedback"
+				>
 					<Flex className={styles.header} direction="row" align="center">
 						<Title
 							className={styles.title}

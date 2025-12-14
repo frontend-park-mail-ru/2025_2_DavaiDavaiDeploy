@@ -208,8 +208,8 @@ export class RegisterPageNotConnected extends Component<
 								onChange={(value: string) =>
 									this.onFieldChange(value, 'username')
 								}
+								name="login"
 							/>
-
 							<PasswordInputField
 								mode="primary"
 								label="Пароль"
@@ -218,6 +218,7 @@ export class RegisterPageNotConnected extends Component<
 								errorMessage={this.state.validationErrors.password}
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
+								name="password"
 							/>
 							<PasswordInputField
 								mode="primary"
@@ -229,6 +230,7 @@ export class RegisterPageNotConnected extends Component<
 								onChange={(value) =>
 									this.onFieldChange(value, 'repeatPassword')
 								}
+								name="repeat-password"
 							/>
 						</Flex>
 						<Flex className={styles.rightSide__actions} direction="column">
@@ -238,6 +240,7 @@ export class RegisterPageNotConnected extends Component<
 								className={styles.login__button}
 								size="m"
 								borderRadius="lg"
+								type="submit"
 							>
 								Зарегистрироваться
 							</Button>

@@ -10,9 +10,9 @@ interface ImportMetaEnv {
 	readonly VITE_PRODUCTION_URL: string;
 	readonly VITE_CDN_ADDRESS: string;
 	readonly VITE_RELEASE_VERSION: string;
-	readonly IS_SW_ENABLED: string;
-	readonly VITE_VK_SDK_APP_ID: string;
+	readonly VITE_VK_SDK_APP_ID: number;
 	readonly VITE_VK_ID_REDIRECT_URL: string;
+	readonly VITE_IS_SW_ENABLED: string;
 }
 
 interface ImportMeta {
