@@ -184,6 +184,34 @@ export const userReducer: Reducer = (
 				...state,
 				isChecked: true,
 			};
+		case actionTypes.VKID_USER_LOADED:
+			return {
+				...state,
+				user: {
+					...state.user,
+					...payload.user,
+				},
+				VKIDAuthentificated: true,
+				VKIDError: null,
+			};
+		case actionTypes.VKID_USER_ERROR:
+			return {
+				...state,
+				user: {
+					...state.user,
+				},
+				VKIDError: payload.error,
+				VKIDAuthentificated: false,
+			};
+
+		case actionTypes.VKID_USER_ERROR_CLEAR:
+			return {
+				...state,
+				user: {
+					...state.user,
+				},
+				VKIDError: null,
+			};
 		default:
 			return state;
 	}

@@ -447,6 +447,16 @@ const sendDeactivateOTP = (): Action => async (dispatch: Dispatch) => {
 };
 
 /**
+ * Создает действие для очистки VKID ошибки.
+ * @function
+ */
+const clearVKIDErrorAction = (): Action => {
+	return {
+		type: actionTypes.VKID_USER_ERROR_CLEAR,
+	};
+};
+
+/**
  * Создает действие для успешной загрузки данных пользователя.
  * @function
  */
@@ -471,14 +481,18 @@ const returnVKIDUserErrorAction = (error: string): Action => {
  * Создает асинхронное действие для регистрации нового пользователя.
  */
 const VKIDLoginUserAction =
-	(login: string, access_token: string): Action =>
+	(access_token: string, login?: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
 			const response = await HTTPClient.post<ModelsVKIDUser>('/auth/vk', {
-				data: {
-					login: login,
-					access_token: access_token,
-				},
+				data: login
+					? {
+							login: login,
+							access_token: access_token,
+						}
+					: {
+							access_token: access_token,
+						},
 			});
 
 			dispatch(returnVKIDUserAction(response.data));
@@ -499,6 +513,7 @@ const VKIDLoginUserAction =
 
 export default {
 	VKIDLoginUserAction,
+	clearVKIDErrorAction,
 	resetUserError,
 	registerUserAction,
 	loginUserAction,

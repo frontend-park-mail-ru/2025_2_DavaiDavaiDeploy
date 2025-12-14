@@ -19,6 +19,7 @@ import {
 	selectIsTwoFactorEnabled,
 	selectUser,
 	selectUserErrorNot401,
+	selectVKIDError,
 } from '@/redux/features/user/selectors.ts';
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
@@ -34,19 +35,24 @@ import {
 	OTPInput,
 	Title,
 } from 'ddd-ui-kit';
-import HTTPClient from '../../modules/HTTPClient';
+import { MODALS } from '../../modules/modals/modals';
+import { withModal } from '../../modules/modals/withModal';
+import type { WithModalProps } from '../../modules/modals/withModalProps';
 import styles from './loginPage.module.scss';
 
 interface LoginPageProps {
 	user: ModelsUser;
 	userError: string;
 	hasOTP: boolean;
+	VKIDError: string;
+	VKAuthLogin: (access_token: string, login?: string) => void;
+	clearVKIDError: () => void;
 	loginUser: (login: string, password: string) => void;
 	loginUserWithOTP: (login: string, password: string, otp: string) => void;
 }
 
 export class LoginPageNotConnected extends Component<
-	LoginPageProps & WithRouterProps
+	LoginPageProps & WithRouterProps & WithModalProps
 > {
 	state = {
 		username: '',
@@ -57,6 +63,7 @@ export class LoginPageNotConnected extends Component<
 			password: '',
 		},
 		errorShown: false,
+		accessToken: '',
 	};
 	OneTapContainer = createRef<HTMLButtonElement>();
 
@@ -107,16 +114,12 @@ export class LoginPageNotConnected extends Component<
 					const deviceId = payload.device_id;
 					VKID.Auth.exchangeCode(code, deviceId)
 						.then(async (data) => {
-							const accessToken = data.access_token;
-							const body = {
-								access_token: accessToken,
-							};
-
-							await HTTPClient.post('/auth/vk', { data: body });
+							this.state.accessToken = data.access_token;
+							this.props.VKAuthLogin(this.state.accessToken);
 						})
+
 						.catch(() => {
-							//eslint-disable-next-line no-console
-							console.log('exchangeCode error');
+							AppToast.error('Не удалось войти через ВКонтакте');
 						});
 				},
 			);
@@ -147,6 +150,14 @@ export class LoginPageNotConnected extends Component<
 		) {
 			AppToast.error(this.props.userError);
 			this.setState({ errorShown: true });
+		}
+
+		if (this.props.VKIDError === ERROR_CODES.PRECONDITION_FAILED.toString()) {
+			this.props.modal.open(MODALS.VK_ID_MODAL, {
+				access_token: this.state.accessToken,
+				onSubmit: this.props.VKAuthLogin,
+				handleClearError: this.props.clearVKIDError,
+			});
 		}
 	}
 
@@ -292,17 +303,21 @@ const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 	userError: selectUserErrorNot401(state),
 	hasOTP: selectIsTwoFactorEnabled(state),
+	VKIDError: selectVKIDError(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	loginUser: (login: string, password: string) =>
 		dispatch(actions.loginUserAction(login, password)),
-
 	loginUserWithOTP: (login: string, password: string, otp: string) =>
 		dispatch(actions.loginUserAction(login, password, otp)),
+	VKAuthLogin: (access_token: string, login?: string) =>
+		dispatch(actions.VKIDLoginUserAction(access_token, login)),
+	clearVKIDError: () => dispatch(actions.clearVKIDErrorAction()),
 });
 
 export const LoginPage = compose(
 	withRouter,
+	withModal,
 	connect(mapStateToProps, mapDispatchToProps),
 )(LoginPageNotConnected);

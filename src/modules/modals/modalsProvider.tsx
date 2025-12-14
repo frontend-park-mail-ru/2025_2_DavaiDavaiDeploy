@@ -9,7 +9,7 @@ import {
 } from '../../components/OTPModal/OTPModal';
 import {
 	VKIDModal,
-	type VKIDModalProps,
+	type VKIDModalExtraProps,
 } from '../../components/VKIDModal/VKIDModal';
 import { ModalRoot } from './modalRoot';
 import { MODALS } from './modals';
@@ -62,7 +62,7 @@ export class ModalsProvider extends Component {
 					/>
 					<VKIDModal
 						id={MODALS.VK_ID_MODAL}
-						{...((this.state.activeModalProps || {}) as VKIDModalProps)}
+						{...((this.state.activeModalProps || {}) as VKIDModalExtraProps)}
 					/>
 				</ModalRoot>
 			</ModalContext.Provider>
