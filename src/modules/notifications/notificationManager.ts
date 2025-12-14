@@ -56,6 +56,13 @@ export class NotificationManager {
 	}
 
 	/**
+	 * Проверка на наличие активного соединения WebSocket
+	 */
+	static hasWSConnection(): boolean {
+		return this.ws !== null;
+	}
+
+	/**
 	 * Показывает уведомление через Service Worker
 	 */
 	private static async showNotification(data: NotificationData): Promise<void> {
