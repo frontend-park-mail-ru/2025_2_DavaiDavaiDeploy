@@ -10,6 +10,8 @@ import type { Map } from '@/types/map';
 import { Component } from '@robocotik/react';
 import clsx from 'ddd-clsx';
 import { Button, Flex } from 'ddd-ui-kit';
+import { withModal } from '../../modules/modals/withModal';
+import type { WithModalProps } from '../../modules/modals/withModalProps';
 import { BaseModal, type BaseModalProps } from '../BaseModal/BaseModal';
 import styles from './VKIDModal.module.scss';
 
@@ -30,7 +32,11 @@ interface VKIDState {
 }
 
 export class VKIDModalComponent extends Component<
-	BaseModalProps & VKIDModalProps & WithRouterProps & VKIDModalExtraProps,
+	BaseModalProps &
+		VKIDModalProps &
+		WithRouterProps &
+		VKIDModalExtraProps &
+		WithModalProps,
 	VKIDState
 > {
 	state = {
@@ -50,6 +56,7 @@ export class VKIDModalComponent extends Component<
 	onUpdate() {
 		if (this.props.isVKIDAuthentificated && !this.props.VKIDError) {
 			this.props.router.navigate('/');
+			this.props.modal.hide();
 		}
 
 		if (!this.state.errorShown && this.props.VKIDError) {
@@ -115,5 +122,6 @@ const mapStateToProps = (state: State): Map => ({
 
 export const VKIDModal = compose(
 	withRouter,
+	withModal,
 	connect(mapStateToProps),
 )(VKIDModalComponent);

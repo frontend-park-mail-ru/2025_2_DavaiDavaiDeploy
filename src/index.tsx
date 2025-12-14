@@ -142,11 +142,11 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 class ProvidersLayout extends Component {
 	render() {
 		return (
-			<ModalsProvider>
-				<Provider store={store}>
+			<Provider store={store}>
+				<ModalsProvider>
 					<RouterProvider>{this.props.children}</RouterProvider>
-				</Provider>
-			</ModalsProvider>
+				</ModalsProvider>
+			</Provider>
 		);
 	}
 }
