@@ -67,7 +67,7 @@ export class VKIDModalComponent extends Component<
 					justify="end"
 					align="center"
 				>
-					<h1 className={styles.vkidTitle}>Введите логин</h1>
+					<h1 className={styles.vkidTitle}>Придумайте логин</h1>
 					<div className={styles.inputContainer}>
 						<input
 							value={this.state.input}
