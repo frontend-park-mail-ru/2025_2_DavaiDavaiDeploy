@@ -219,17 +219,17 @@ jobs:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   notify_success:
-      name: Success Message
-      runs-on: ubuntu-latest
-      needs: deploy
-      steps:
-        - name: Send Telegram Success Message
-          uses: PacificPromise/macos-telegram-action@main
-          with:
-            type: topic
-            message: |
-              🔔 Frontend (Stage)
-              ✅ Изменения успешно задеплоены
+    name: Success Message
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: Send Telegram Success Message
+        uses: PacificPromise/macos-telegram-action@main
+        with:
+          type: topic
+          message: |
+            🔔 Frontend (Stage)
+            ✅ Изменения успешно задеплоены
 
-              🔗 Ссылка 🔗
-               ${{ secrets.STAGE_URL || 'Отсутствует' }}
+            🔗 Ссылка 🔗
+              ${{ secrets.STAGE_URL || 'Отсутствует' }}

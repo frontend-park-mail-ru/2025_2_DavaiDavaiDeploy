@@ -160,6 +160,7 @@ class SearchInputComponent extends Component<
 							value={this.state.searchRequest}
 							onInput={this.handleSearchRequestChange}
 							className={styles.input}
+							name="search"
 							onKeyDown={this.handleKeyDown}
 							disabled={this.props.isVoiceWorking ? true : undefined}
 						></input>
@@ -204,6 +205,7 @@ class SearchInputComponent extends Component<
 					<input
 						type="text"
 						ref={this.inputRef}
+						name="search"
 						placeholder="Поиск фильмов, актеров..."
 						value={this.state.searchRequest}
 						onInput={this.handleSearchRequestChange}
