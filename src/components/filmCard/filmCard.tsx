@@ -48,6 +48,7 @@ export class FilmCard extends Component<FilmCardProps> {
 							weight="bold"
 							level="6"
 							align="center"
+							data-test-id="search-film-title"
 						>
 							{title}
 						</Title>
