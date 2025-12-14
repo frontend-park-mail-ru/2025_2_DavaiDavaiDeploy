@@ -61,7 +61,11 @@ export class FeedBack extends Component<FeedBackProps> {
 						</Subhead>
 					</Flex>
 					{formattedRating && ratingType && (
-						<Rating rating={formattedRating} mode={ratingType} />
+						<Rating
+							rating={formattedRating}
+							mode={ratingType}
+							data-test-id="film-feedback-rating"
+						/>
 					)}
 					{formattedDatetime && (
 						<Subhead
@@ -91,10 +95,16 @@ export class FeedBack extends Component<FeedBackProps> {
 						color="dark"
 						level="7"
 						weight="bold"
+						data-test-id="feedback-title"
 					>
 						{title}
 					</Headline>
-					<Paragraph className={styles.text} color="dark" level="8">
+					<Paragraph
+						className={styles.text}
+						data-test-id="feedback-text"
+						color="dark"
+						level="8"
+					>
 						{text}
 					</Paragraph>
 				</Flex>

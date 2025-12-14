@@ -1063,13 +1063,13 @@ export const CommonMocks = {
 
 	feedback: {
 		empty: {
-			method: 'GET' as const,
+			method: 'POST' as const,
 			url: '/api/films/1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d/feedback',
 			response: { statusCode: 200, body: [] },
 			alias: 'feedbackEmpty',
 		},
 		withData: {
-			method: 'GET' as const,
+			method: 'POST' as const,
 			url: '/api/films/1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d/feedback',
 			response: {
 				statusCode: 200,
@@ -1094,14 +1094,14 @@ export const CommonMocks = {
 
 	rating: {
 		empty: {
-			method: 'GET' as const,
-			url: '/api/users/saved',
+			method: 'POST' as const,
+			url: '/api/films/1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d/rating',
 			response: { statusCode: 200, body: [] },
 			alias: 'ratingEmpty',
 		},
 		withData: {
-			method: 'GET' as const,
-			url: '/api/users/saved',
+			method: 'POST' as const,
+			url: '/api/films/1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d/rating',
 			response: {
 				statusCode: 200,
 				body: {
@@ -1131,7 +1131,7 @@ export const CommonMocks = {
 			alias: 'saveEmpty',
 		},
 		withData: {
-			method: 'GET' as const,
+			method: 'POST' as const,
 			url: '/api/films/1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d/save',
 			response: {
 				statusCode: 200,
