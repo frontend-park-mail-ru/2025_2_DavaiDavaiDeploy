@@ -1,38 +1,37 @@
 import * as allure from 'allure-js-commons';
 
 Cypress.Commands.add('register', (login = 'userlogin', password = '123456') => {
-	allure.epic('Authentication');
-	allure.feature('User Login');
-	allure.story('Successful Login');
+	allure.epic('Регистрация');
+	allure.feature('Создание аккаунта');
+	allure.story('Успешная регистрация пользователя');
 	allure.severity(allure.Severity.BLOCKER);
 
-	allure.step('Navigate to login page', () => {
+	allure.step('Переход на страницу регистрации', () => {
 		cy.visit('/register');
 	});
 
-	allure.step('Fill login field', () => {
+	allure.step('Заполнение логина пользователя', () => {
 		cy.get('input[name="login"]').type(login);
 	});
 
-	allure.step('Fill password field', () => {
+	allure.step('Заполнение пароля пользователя', () => {
 		cy.get('input[name="password"]').type(password);
 	});
 
-	allure.step('Fill password field', () => {
+	allure.step('Заполнение подтверждения пароля пользователя', () => {
 		cy.get('input[name="repeat-password"]').type(password);
 	});
 
-	allure.step('Submit login form', () => {
-		allure.description('Click login button');
+	allure.step('Отправка формы регистрации', () => {
+		allure.description('Клик по кнопке регистрации');
 		cy.get('button[type="submit"]').click();
 	});
 
-	allure.step('Wait for login API call', () => {
+	allure.step('Ожидание ответа от API', () => {
 		cy.wait('@registerSuccess');
 	});
 
-	allure.step('Verify successful redirection to home page', () => {
-		allure.description('Verify successful redirection');
+	allure.step('Проверка успешного перенаправления на главную страницу', () => {
 		cy.url().should('include', '/');
 	});
 });

@@ -1,4 +1,4 @@
-describe('Авторизация и профиль пользователя', () => {
+describe('Авторизация', () => {
 	const TEST_USER = {
 		login: 'userlogin',
 		password: '123456',
@@ -9,7 +9,7 @@ describe('Авторизация и профиль пользователя', ()
 		cy.viewport(1920, 1080);
 	});
 
-	it('Успешная авторизация и проверка данных профиля', () => {
+	it('Успешная авторизация и проверка данных пользователя', () => {
 		cy.login(TEST_USER.login, TEST_USER.password);
 		cy.verifyProfile(TEST_USER);
 	});

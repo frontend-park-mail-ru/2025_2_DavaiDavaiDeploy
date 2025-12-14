@@ -1,4 +1,4 @@
-describe('Регистрация и профиль пользователя', () => {
+describe('Регистрация', () => {
 	const TEST_USER = {
 		login: 'userlogin',
 		password: '123456',
@@ -9,7 +9,7 @@ describe('Регистрация и профиль пользователя', ()
 		cy.viewport(1920, 1080);
 	});
 
-	it('Успешная авторизация и проверка данных профиля', () => {
+	it('Успешная регистрация и проверка данных пользователя', () => {
 		cy.register(TEST_USER.login, TEST_USER.password);
 		cy.verifyProfile(TEST_USER);
 	});

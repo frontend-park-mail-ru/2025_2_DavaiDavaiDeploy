@@ -1,21 +1,21 @@
 import * as allure from 'allure-js-commons';
 
 Cypress.Commands.add('verifyProfile', (user) => {
-	allure.epic('User Profile');
-	allure.feature('Profile Information');
-	allure.story('Verify Profile Data');
+	allure.epic('Профиль пользователя');
+	allure.feature('Информация профиля');
+	allure.story('Проверка данных пользователя');
 	allure.severity(allure.Severity.CRITICAL);
 
-	allure.step('Navigate to profile section', () => {
+	allure.step('Открытие меню с профилем', () => {
 		cy.get('[data-test-id="user-avatar-container"]').realHover();
 	});
 
-	allure.step('Verify login field matches user data', () => {
+	allure.step('Проверка соответствия логина пользователя', () => {
 		cy.get('h2[data-test-id="user-profile-login"]').should(
 			'have.text',
 			user.login,
 		);
 
-		allure.attachment('Expected Login', user.login, allure.ContentType.TEXT);
+		allure.attachment('Ожидаемый логин', user.login, allure.ContentType.TEXT);
 	});
 });
