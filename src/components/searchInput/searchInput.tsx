@@ -171,6 +171,7 @@ class SearchInputComponent extends Component<
 							mode="tertiary"
 							className={styles.loupeBtn}
 							onClick={this.search}
+							data-test-id="loupe"
 						>
 							<Loupe className={styles.loupe} />
 						</IconButton>
