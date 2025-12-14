@@ -36,7 +36,10 @@ import { RegisterPage } from './pages/registerPage/registerPage.tsx';
 import { SearchPage } from './pages/searchPage/searchPage.tsx';
 import { UserPage } from './pages/userPage/userPage.tsx';
 import actions from './redux/features/user/actions.ts';
-import { selectUser } from './redux/features/user/selectors.ts';
+import {
+	selectIsChecked,
+	selectUser,
+} from './redux/features/user/selectors.ts';
 import type { Map } from './types/map.ts';
 import type { ModelsUser } from './types/models.ts';
 
@@ -71,29 +74,16 @@ window.addEventListener('offline', () => {
 interface AppProps {
 	user: ModelsUser;
 	checkUser: () => {};
+	isChecked: boolean;
 }
 
-type AppState = {
-	isLoaded: boolean;
-};
-
-class AppComponent extends Component<AppProps & WithRouterProps, AppState> {
-	state = {
-		isLoaded: false,
-	};
-
+class AppComponent extends Component<AppProps & WithRouterProps> {
 	onMount() {
 		this.props.checkUser();
 	}
 
-	onUpdate() {
-		if (this.props.user && !this.state.isLoaded) {
-			this.setState({ isLoaded: true });
-		}
-	}
-
 	render() {
-		if (!this.state.isLoaded) {
+		if (!this.props.isChecked) {
 			return <></>;
 		}
 
@@ -137,6 +127,7 @@ class ProvidersLayout extends Component {
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
+	isChecked: selectIsChecked(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({

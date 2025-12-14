@@ -195,7 +195,6 @@ export class RegisterPageNotConnected extends Component<
 							<FormItem
 								mode="primary"
 								top="Имя пользователя"
-								name="login"
 								defaultValue=""
 								before={
 									<img src={userSvg} alt="icon" className={styles.inputIcon} />
@@ -209,17 +208,17 @@ export class RegisterPageNotConnected extends Component<
 								onChange={(value: string) =>
 									this.onFieldChange(value, 'username')
 								}
+								name="login"
 							/>
-
 							<PasswordInputField
 								mode="primary"
 								label="Пароль"
 								defaultValue=""
-								name="password"
 								placeholder="Введите пароль"
 								errorMessage={this.state.validationErrors.password}
 								value={this.state.password}
 								onChange={(value) => this.onFieldChange(value, 'password')}
+								name="password"
 							/>
 							<PasswordInputField
 								mode="primary"

@@ -11,7 +11,8 @@ interface InitialState {
 	passwordChangeError: string | null;
 	avatarChangeError: boolean;
 	newPasswordLoading: boolean;
-	newAvatarLoading: false;
+	newAvatarLoading: boolean;
+	isChecked: boolean;
 }
 
 /**
@@ -26,6 +27,7 @@ const initialState: InitialState = {
 	avatarChangeError: false,
 	newPasswordLoading: false,
 	newAvatarLoading: false,
+	isChecked: false,
 };
 
 /**
@@ -69,6 +71,7 @@ export const userReducer: Reducer = (
 			return {
 				...state,
 				loading: true,
+				isChecked: true,
 				error: null,
 			};
 
