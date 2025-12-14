@@ -101,7 +101,6 @@ export class LoginPageNotConnected extends Component<
 		oneTap
 			.render({
 				container: this.OneTapContainer.current as HTMLElement,
-				showAlternativeLogin: true,
 				styles: {
 					borderRadius: 16,
 					height: 56,
