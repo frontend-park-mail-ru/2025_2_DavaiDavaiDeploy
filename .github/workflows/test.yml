@@ -37,7 +37,7 @@ jobs:
 
   integration-tests-run:
     runs-on: ubuntu-latest
-    needs: deploy
+    needs: install-cache
     steps:
       - name: Checkout Commit
         uses: actions/checkout@master
