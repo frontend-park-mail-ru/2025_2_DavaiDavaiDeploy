@@ -6,25 +6,26 @@ Cypress.Commands.add('search', (request = 'Начало') => {
 	allure.story('Successful Login');
 	allure.severity(allure.Severity.BLOCKER);
 
-	allure.step('Navigate to login page', () => {
-		cy.visit('/register');
+	allure.step('Fill login field', () => {
+		cy.get('input[name="search"]').type(request);
 	});
 
-	allure.step('Fill login field', () => {
-		cy.get('input[name="login"]').type(request);
+	allure.step('Wait for login API call', () => {
+		cy.wait('@searchWithData');
+	});
+
+	allure.step('Verify login field matches user data', () => {
+		cy.get('h2[data-test-id="search-film-title"]').should('have.text', request);
+		allure.attachment('Expected Login', request, allure.ContentType.TEXT);
 	});
 
 	allure.step('Submit login form', () => {
 		allure.description('Click login button');
-		cy.get('button[type="submit"]').click();
+		cy.get('button[data-test-id="loupe"]').click();
 	});
 
-	allure.step('Wait for login API call', () => {
-		cy.wait('@registerSuccess');
-	});
-
-	allure.step('Verify successful redirection to home page', () => {
-		allure.description('Verify successful redirection');
-		cy.url().should('include', '/');
+	allure.step('Verify login field matches user data', () => {
+		cy.get('h2[data-test-id="search-film-title"]').should('have.text', request);
+		allure.attachment('Expected Login', request, allure.ContentType.TEXT);
 	});
 });
