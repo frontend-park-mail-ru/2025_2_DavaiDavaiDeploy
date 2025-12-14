@@ -39,14 +39,11 @@ import { LoginPage } from './pages/loginPage/loginPage.tsx';
 import { RegisterPage } from './pages/registerPage/registerPage.tsx';
 import { SearchPage } from './pages/searchPage/searchPage.tsx';
 import { UserPage } from './pages/userPage/userPage.tsx';
-import notificationActions from './redux/features/notification/actions.ts';
 import actions from './redux/features/user/actions.ts';
-import {
-	selectIsChecked,
-	selectUser,
-} from './redux/features/user/selectors.ts';
+import { selectIsAuthentificated } from './redux/features/user/selectors';
 import type { Map } from './types/map.ts';
-import type { ModelsUser } from './types/models.ts';
+
+const LOAD_DELAY = 2000;
 
 if (sentryEnabled) {
 	Sentry.init({
@@ -77,58 +74,26 @@ window.addEventListener('offline', () => {
 });
 
 interface AppProps {
-	user: ModelsUser;
+	isAuthentificated: boolean;
 	checkUser: () => {};
-	isChecked: boolean;
-	requestNotificationPermission: () => {};
-	connectToNotifications: () => {};
-	disconnectFromNotifications: () => {};
 }
 
 class AppComponent extends Component<AppProps & WithRouterProps> {
 	onMount() {
 		this.props.checkUser();
+
+		if (
+			NotificationManager.isSupported() &&
+			Notification.permission === 'default'
+		) {
+			NotificationManager.requestPermission();
+		}
 		setTimeout(() => {
-			if (
-				NotificationManager.isSupported() &&
-				Notification.permission === 'default'
-			) {
-				this.props.requestNotificationPermission();
+			if (!this.props.isAuthentificated) {
+				return;
 			}
-
-			const wsUrl = `wss://ddfilms.online/api/films/ws`;
-			console.log('WebSocket URL:', wsUrl);
-
-			let socket = new WebSocket(wsUrl);
-
-			socket.onopen = function (e) {
-				console.log('[open] Соединение установлено');
-				console.log('Отправляем данные на сервер');
-				socket.send('ping');
-			};
-
-			socket.onmessage = function (event) {
-				console.log(`[message] Данные получены с сервера: ${event.data}`);
-			};
-
-			socket.onclose = function (event) {
-				if (event.wasClean) {
-					console.log(
-						`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`,
-					);
-				} else {
-					// например, сервер убил процесс или сеть недоступна
-					// обычно в этом случае event.code 1006
-					console.log('[close] Соединение прервано');
-				}
-			};
-
-			socket.onerror = function (e) {
-				console.log('[error] Ошибка WebSocket: ', e);
-			};
-
-			// this.props.connectToNotifications();
-		}, 2000);
+			NotificationManager.connect();
+		}, LOAD_DELAY);
 	}
 
 	render() {
@@ -176,17 +141,11 @@ class ProvidersLayout extends Component {
 
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
-	isChecked: selectIsChecked(state),
+	isAuthentificated: selectIsAuthentificated(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	checkUser: () => dispatch(actions.checkUserAction()),
-	requestNotificationPermission: () =>
-		dispatch(notificationActions.requestNotificationPermission()),
-	connectToNotifications: () =>
-		dispatch(notificationActions.connectToNotifications()),
-	disconnectFromNotifications: () =>
-		dispatch(notificationActions.disconnectFromNotifications()),
 });
 
 const App = compose(
