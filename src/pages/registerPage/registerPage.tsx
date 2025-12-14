@@ -18,22 +18,31 @@ import actions from '@/redux/features/user/actions.ts';
 import {
 	selectUser,
 	selectUserError,
+	selectVKIDError,
 } from '@/redux/features/user/selectors.ts';
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
-import { Component } from '@robocotik/react';
+import { Component, createRef } from '@robocotik/react';
+import * as VKID from '@vkid/sdk';
 import { Button, Flex, FormItem, Headline, Logo, Title } from 'ddd-ui-kit';
+import { ERROR_CODES } from '../../consts/errorCodes';
+import { MODALS } from '../../modules/modals/modals';
+import { withModal } from '../../modules/modals/withModal';
+import type { WithModalProps } from '../../modules/modals/withModalProps';
 import styles from './registerPage.module.scss';
 
 interface RegistrationPageProps {
 	user: ModelsUser;
 	userError: string;
+	VKIDError: string;
 	registerUser: (login: string, password: string) => void;
+	VKAuthLogin: (access_token: string, login?: string) => void;
+	clearVKIDError: () => void;
 }
 
 export class RegisterPageNotConnected extends Component<
-	RegistrationPageProps & WithRouterProps
+	RegistrationPageProps & WithRouterProps & WithModalProps
 > {
 	state = {
 		username: '',
@@ -46,7 +55,9 @@ export class RegisterPageNotConnected extends Component<
 			repeatPassword: '',
 		},
 		errorShown: false,
+		accessToken: '',
 	};
+	OneTapContainer = createRef<HTMLButtonElement>();
 
 	handleResize = () => {
 		if (window.innerWidth < 768) {
@@ -59,6 +70,32 @@ export class RegisterPageNotConnected extends Component<
 	onMount() {
 		store.dispatch(actions.resetUserError());
 		window.addEventListener('resize', this.handleResize);
+		const oneTap = new VKID.OneTap();
+		oneTap
+			.render({
+				container: this.OneTapContainer.current as HTMLElement,
+				showAlternativeLogin: true,
+				styles: {
+					borderRadius: 16,
+					height: 56,
+				},
+			})
+			.on(
+				VKID.OneTapInternalEvents.LOGIN_SUCCESS,
+				(payload: VKID.AuthResponse) => {
+					const code = payload.code;
+					const deviceId = payload.device_id;
+					VKID.Auth.exchangeCode(code, deviceId)
+						.then(async (data) => {
+							this.state.accessToken = data.access_token;
+							this.props.VKAuthLogin(this.state.accessToken);
+						})
+
+						.catch(() => {
+							AppToast.error('Не удалось войти через ВКонтакте');
+						});
+				},
+			);
 	}
 
 	onUnmount() {
@@ -108,6 +145,14 @@ export class RegisterPageNotConnected extends Component<
 		) {
 			AppToast.error(this.props.userError);
 			this.setState({ errorShown: true });
+		}
+
+		if (this.props.VKIDError === ERROR_CODES.PRECONDITION_FAILED.toString()) {
+			this.props.modal.open(MODALS.VK_ID_MODAL, {
+				access_token: this.state.accessToken,
+				onSubmit: this.props.VKAuthLogin,
+				handleClearError: this.props.clearVKIDError,
+			});
 		}
 	}
 
@@ -234,6 +279,7 @@ export class RegisterPageNotConnected extends Component<
 							/>
 						</Flex>
 						<Flex className={styles.rightSide__actions} direction="column">
+							<div ref={this.OneTapContainer}></div>
 							<Button
 								mode="primary"
 								onClick={this.handleRegisterUser}
@@ -264,14 +310,19 @@ export class RegisterPageNotConnected extends Component<
 const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 	userError: selectUserError(state),
+	VKIDError: selectVKIDError(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 	registerUser: (login: string, password: string) =>
 		dispatch(actions.registerUserAction(login, password)),
+	VKAuthLogin: (access_token: string, login?: string) =>
+		dispatch(actions.VKIDLoginUserAction(access_token, login)),
+	clearVKIDError: () => dispatch(actions.clearVKIDErrorAction()),
 });
 
 export const RegisterPage = compose(
 	withRouter,
+	withModal,
 	connect(mapStateToProps, mapDispatchToProps),
 )(RegisterPageNotConnected);
