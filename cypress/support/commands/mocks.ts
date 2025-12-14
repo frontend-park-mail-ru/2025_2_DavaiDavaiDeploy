@@ -4,14 +4,15 @@ import { MockUtils } from '../utils/mock-utils';
 Cypress.Commands.add(
 	'setupAuthMocks',
 	(authState: 'authorized' | 'unauthorized') => {
-		// Аутентификация
 		if (authState === 'unauthorized') {
 			MockUtils.intercept(AuthMocks.check.unauthorized);
 		} else {
 			MockUtils.intercept(AuthMocks.check.authorized);
 		}
 
-		// Общие моки
+		MockUtils.intercept(AuthMocks.login.success);
+		MockUtils.intercept(AuthMocks.register.success);
+
 		MockUtils.intercept(CommonMocks.films.withData);
 		MockUtils.intercept(CommonMocks.promo.withData);
 		MockUtils.intercept(CommonMocks.compilations.withData);
@@ -26,9 +27,5 @@ Cypress.Commands.add(
 		MockUtils.intercept(CommonMocks.feedbacks.withData);
 		MockUtils.intercept(CommonMocks.favorites.withData);
 		MockUtils.intercept(CommonMocks.save.withData);
-
-		// Логин и регистрация всегда доступны
-		MockUtils.intercept(AuthMocks.login.success);
-		MockUtils.intercept(AuthMocks.register.success);
 	},
 );

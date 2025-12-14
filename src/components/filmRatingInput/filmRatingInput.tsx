@@ -60,6 +60,7 @@ class FilmRatingInputComponent extends Component<
 								this.leaveRating(number);
 							}}
 							level="5"
+							data-test-id={`rating-${number}-btn`}
 						>
 							{number.toString()}
 						</Title>

@@ -84,7 +84,11 @@ class FilmRatingComponent extends Component<
 								align="center"
 							>
 								<Star className={styles.userStarIcon} />
-								<Paragraph className={styles.userRatingTitle} level="8">
+								<Paragraph
+									className={styles.userRatingTitle}
+									level="8"
+									data-test-id="film-rating"
+								>
 									{this.props.userRating.toString()}
 								</Paragraph>
 							</Flex>
