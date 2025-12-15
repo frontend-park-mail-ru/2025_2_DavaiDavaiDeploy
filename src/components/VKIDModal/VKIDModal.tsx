@@ -24,6 +24,7 @@ export interface VKIDModalExtraProps {
 
 interface VKIDState {
 	input: string;
+	errorShown: boolean;
 }
 
 export class VKIDModalComponent extends Component<
@@ -32,6 +33,7 @@ export class VKIDModalComponent extends Component<
 > {
 	state = {
 		input: '',
+		errorShown: false,
 	};
 	interval: number | null = null;
 
@@ -44,10 +46,16 @@ export class VKIDModalComponent extends Component<
 				this.props.modal.hide();
 			}
 
-			if (selectvkidError(store.getState()) === ERROR_CODES.BAD_REQUEST) {
+			if (
+				selectvkidError(store.getState()) ===
+					vkidAuthorizationCodeToErrorHelper(ERROR_CODES.BAD_REQUEST) &&
+				this.state.errorShown === false
+			) {
 				AppToast.error(
 					vkidAuthorizationCodeToErrorHelper(ERROR_CODES.BAD_REQUEST),
 				);
+
+				this.setState({ errorShown: true });
 			}
 		}, 1000);
 	}
@@ -61,6 +69,7 @@ export class VKIDModalComponent extends Component<
 
 	handleSubmit = () => {
 		this.props.handleClearError();
+		this.setState({ errorShown: false });
 		this.props.onSubmit(this.props.access_token, this.state.input);
 	};
 
