@@ -153,11 +153,13 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 							<Favorite className={styles.favIcon} />
 							<Headline level="7">Избранное</Headline>
 						</Button>
-						<Trailer
-							src={this.props.film.poster}
-							className={styles.trailerPreviewPC}
-							videoSrc={trailer_url}
-						/>
+						{trailer_url && (
+							<Trailer
+								src={this.props.film.poster}
+								className={styles.trailerPreviewPC}
+								videoSrc={trailer_url}
+							/>
+						)}
 					</Flex>
 
 					<Flex className={styles.info} direction="column" align="start">
@@ -267,11 +269,13 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 										<Favorite className={styles.favIcon} />
 										<Headline level="7">Избранное</Headline>
 									</Button>
-									<Trailer
-										src={this.props.film.poster}
-										videoSrc={trailer_url}
-										className={styles.trailerPreviewMobile}
-									/>
+									{trailer_url && (
+										<Trailer
+											src={this.props.film.poster}
+											videoSrc={trailer_url}
+											className={styles.trailerPreviewMobile}
+										/>
+									)}
 								</Flex>
 
 								{description && (

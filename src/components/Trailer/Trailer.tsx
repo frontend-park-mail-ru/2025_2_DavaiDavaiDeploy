@@ -25,6 +25,7 @@ export class TrailerComponent extends Component<
 
 	render() {
 		const { src, className, ...props } = this.props;
+
 		return (
 			<div className={styles.previewContainer}>
 				<Image

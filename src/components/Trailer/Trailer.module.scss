@@ -32,7 +32,7 @@
 		left: 0;
 		right: 0;
 		height: 40%;
-		background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+		background: linear-gradient(to top, rgb(0 0 0 / 90%), transparent);
 		pointer-events: none;
 		z-index: 1;
 		border-radius: inherit;
@@ -58,7 +58,7 @@
 .subText {
 	position: absolute;
 	bottom: 0;
-	padding: 0 0.66rem 0.33rem;
+	padding: 0 0.66rem 0.5rem;
 	width: 100%;
 	display: flex;
 	justify-content: start;
@@ -71,6 +71,5 @@
 @media (max-width: 1024px) {
 	.previewContainer {
 		width: 80%;
-		margin-top: 2rem;
 	}
 }
