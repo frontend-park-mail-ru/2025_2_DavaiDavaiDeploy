@@ -54,6 +54,7 @@ export class VKIDModalComponent extends Component<
 		if (this.props.vkidAuthentificated) {
 			this.props.router.navigate('/');
 			this.props.modal.hide();
+			this.props.handleClearError();
 		}
 
 		if (
