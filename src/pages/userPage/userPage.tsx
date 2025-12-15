@@ -23,7 +23,7 @@ interface UserPageProps {
 	isAuthentificated: boolean;
 	favoriteFilms: ModelsFavFilm[];
 	getFavorites: VoidFunction;
-	vkidAuthentificated: boolean;
+	isVKIDAuthentificated: boolean;
 }
 
 class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
@@ -62,7 +62,7 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 				</Title>
 				<Flex className={styles.profile} direction="row" align="start">
 					<ChangeAvatar />
-					{!this.props.vkidAuthentificated && <ChangePassword />}
+					{!this.props.isVKIDAuthentificated && <ChangePassword />}
 				</Flex>
 				<Flex className={styles.favorites} direction="column" align="center">
 					<Title className={styles.title} level="2" id="favorites">
@@ -93,7 +93,7 @@ class UserPageComponent extends Component<UserPageProps & WithRouterProps> {
 const mapStateToProps = (state: State): Map => ({
 	isAuthentificated: selectIsAuthentificated(state),
 	favoriteFilms: selectFavorites(state),
-	vkidAuthentificated: selectVKIDAuthentificated(state),
+	isVKIDAuthentificated: selectVKIDAuthentificated(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
