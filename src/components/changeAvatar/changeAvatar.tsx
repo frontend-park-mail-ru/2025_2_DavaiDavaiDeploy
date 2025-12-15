@@ -10,6 +10,7 @@ import {
 	selectNewAvatarLoading,
 	selectOTPQRCode,
 	selectUser,
+	selectVKIDAuthentificated,
 } from '@/redux/features/user/selectors.ts';
 import type { Map } from '@/types/map';
 import type { ModelsUser } from '@/types/models.ts';
@@ -38,6 +39,7 @@ interface ChangeAvatarProps {
 	loading: boolean;
 	OTPActivated: boolean;
 	OTPLoading: boolean;
+	isVKIDAuthentificated: boolean;
 	OTPQR: string | null;
 	setAvatar: (file: File) => void;
 	activateOTP: () => void;
@@ -199,13 +201,15 @@ class ChangeAvatarComponent extends Component<
 							</Subhead>
 						</Flex>
 					</Flex>
-					<Flex className={styles.otp} align="center">
-						<Switch
-							onChange={this.handleToggleOTP}
-							checked={this.props.OTPActivated}
-						/>
-						<p className={styles.otpText}>Двухфакторная аутентификация</p>
-					</Flex>
+					{!this.props.isVKIDAuthentificated && (
+						<Flex className={styles.otp} align="center">
+							<Switch
+								onChange={this.handleToggleOTP}
+								checked={this.props.OTPActivated}
+							/>
+							<p className={styles.otpText}>Двухфакторная аутентификация</p>
+						</Flex>
+					)}
 				</Flex>
 
 				<Flex className={styles.changeAvatar} direction="column" align="center">
@@ -256,6 +260,7 @@ const mapStateToProps = (state: State): Map => ({
 	OTPQR: selectOTPQRCode(state),
 	error: selectAvatarChangeError(state),
 	loading: selectNewAvatarLoading(state),
+	isVKIDAuthentificated: selectVKIDAuthentificated(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
