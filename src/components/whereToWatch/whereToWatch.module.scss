@@ -1,0 +1,35 @@
+.whereToWatch {
+	background-color: hsl(234deg 50% 26% / 50.1%);
+	margin-top: -2.5rem;
+	margin-bottom: -2.5rem;
+	border-radius: var(--border-radius-l);
+	box-shadow: 0 8px 16px -12px rgb(0 0 0 / 80%);
+	gap: 1rem;
+	padding: 1rem 2rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+
+	&:hover {
+		transform: scale(1.05);
+	}
+}
+
+.icon {
+	width: 3rem;
+	height: 3rem;
+}
+
+.title {
+	text-align: left;
+}
+
+.link {
+	display: contents;
+}
+
+@media (max-width: 768px) {
+	.whereToWatch {
+		margin-top: -1.5rem;
+		margin-bottom: -1.5rem;
+	}
+}

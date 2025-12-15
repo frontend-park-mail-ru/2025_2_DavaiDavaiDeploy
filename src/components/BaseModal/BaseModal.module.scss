@@ -5,19 +5,23 @@
 	width: 100dvw;
 	height: 100dvh;
 	background: rgb(0 0 0 / 50%);
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	z-index: 1000;
 	opacity: 0;
 	animation: fadeIn 0.3s ease-out forwards;
 }
 
+.wrapperChildren {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 100dvw;
+	min-width: 40dvw;
+	max-height: 100dvh;
+}
+
 .modalContent {
 	border-radius: var(--border-radius-xl);
-	max-width: 90dvw;
-	min-width: 40dvw;
-	max-height: 80dvh;
 	overflow-y: auto;
 	position: relative;
 	z-index: 1001;
@@ -75,5 +79,33 @@
 	to {
 		transform: scale(0.8) translateY(-20px);
 		opacity: 0;
+	}
+}
+
+.close {
+	position: absolute;
+	transition: opacity 200ms;
+	cursor: pointer;
+	z-index: 1002;
+
+	&:hover {
+		opacity: 0.7;
+	}
+}
+
+.closeInner {
+	top: 2rem;
+	right: 2rem;
+}
+
+.closeOutside {
+	top: -3rem;
+	right: -4rem;
+}
+
+@media (max-width: 768px) {
+	.close {
+		top: 1rem;
+		right: 1rem;
 	}
 }

@@ -151,6 +151,7 @@ export interface ModelsFilmPage {
 	slogan?: string;
 	title: string;
 	trailer_url: string;
+	film_url: string;
 	user_rating?: number;
 	worldwide_fees: number;
 	year: number;

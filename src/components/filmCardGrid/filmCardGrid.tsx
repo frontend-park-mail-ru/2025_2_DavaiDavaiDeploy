@@ -1,3 +1,4 @@
+import { debounce } from '@/helpers/debounceHelper/debounceHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions.ts';
 import type { State } from '@/modules/redux/types/store.ts';
@@ -8,7 +9,6 @@ import { selectCursor, selectFilms } from '@/redux/features/films/selectors.js';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Component, createRef } from '@robocotik/react';
-import { debounce } from '@sentry/core';
 import { CardGrid, Flex, Title } from 'ddd-ui-kit';
 import { FilmCard } from '../filmCard/filmCard';
 import styles from './filmCardGrid.module.scss';
