@@ -10,6 +10,7 @@ import type { State } from '@/modules/redux/types/store';
 import { withRouter } from '@/modules/router/withRouter';
 import actions from '@/redux/features/films/actions';
 import { selectRecommendations } from '@/redux/features/films/selectors';
+import { selectIsAuthentificated } from '@/redux/features/user/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsMainPageFilm } from '@/types/models';
 import { Component } from '@robocotik/react';
@@ -19,10 +20,15 @@ import styles from './homePage.module.scss';
 interface HomePageProps {
 	recommendations: ModelsMainPageFilm[] | null;
 	getReccomendations: VoidFunction;
+	isAuthentificated: boolean;
 }
 
 export class HomePageComponent extends Component<HomePageProps> {
 	onMount() {
+		if (!this.props.isAuthentificated) {
+			return;
+		}
+
 		this.props.getReccomendations();
 	}
 
@@ -33,11 +39,13 @@ export class HomePageComponent extends Component<HomePageProps> {
 					<PromoFilm />
 					<GenreSlider />
 					<CompilationWidget />
-					<FilmsLine
-						films={this.props.recommendations}
-						title="Специально для вас"
-						className={styles.recs}
-					/>
+					{this.props.isAuthentificated && (
+						<FilmsLine
+							films={this.props.recommendations}
+							title="Специально для вас"
+							className={styles.recs}
+						/>
+					)}
 					<CalendarWidget />
 					<Flex className={styles.films} direction="column">
 						<FilmCardGrid />
@@ -50,6 +58,7 @@ export class HomePageComponent extends Component<HomePageProps> {
 
 const mapStateToProps = (state: State): Map => ({
 	recommendations: selectRecommendations(state),
+	isAuthentificated: selectIsAuthentificated(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
