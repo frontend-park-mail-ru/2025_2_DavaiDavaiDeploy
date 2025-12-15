@@ -115,9 +115,3 @@ html {
 	scrollbar-width: thin;
 	scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
 }
-
-.layout {
-	display: flex;
-	flex-direction: column;
-	min-height: 100dvh;
-}

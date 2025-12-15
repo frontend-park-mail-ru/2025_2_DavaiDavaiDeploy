@@ -52,7 +52,7 @@ export const baseViteConfig = defineConfig(({ mode }) => {
 		},
 		server: {
 			host: 'localhost',
-			port: 3000,
+			port: 80,
 			proxy: {
 				'/api': {
 					target: env.VITE_PRODUCTION_API_URL,

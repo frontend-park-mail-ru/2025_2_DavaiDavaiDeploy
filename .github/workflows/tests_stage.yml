@@ -181,6 +181,7 @@ jobs:
             
             📌 Branch: ${{ github.ref_name }}
             👤 Author: ${{ github.actor }}
+            ⚙️ Environment: Stage
       
             🧪 Total: ${{steps.parse-report.outputs.total}}
             ❌ Failed: ${{steps.parse-report.outputs.failed}}

@@ -234,6 +234,10 @@
 	}
 }
 
+.isAuth {
+	margin-top: 0;
+}
+
 .inFav {
 	.favIcon {
 		fill: var(--color-text);
@@ -246,7 +250,23 @@
 	}
 }
 
+.trailerPreviewPC {
+	display: block;
+}
+
+.trailerPreviewMobile {
+	display: hidden;
+}
+
 @media (max-width: 1024px) {
+	.trailerPreviewPC {
+		display: none;
+	}
+
+	.trailerPreviewMobile {
+		display: block;
+	}
+
 	.film {
 		margin-bottom: 1rem;
 		align-items: center;
@@ -386,5 +406,10 @@
 	.smallFavBtn {
 		width: 50%;
 		padding: 1rem 0.8rem;
+	}
+
+	.trailerPreviewMobile {
+		display: block;
+		width: 100%;
 	}
 }

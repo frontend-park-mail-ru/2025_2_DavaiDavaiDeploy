@@ -28,6 +28,8 @@ import {
 	Title,
 } from 'ddd-ui-kit';
 import { FilmRating } from '../filmRating/filmRating';
+import { Trailer } from '../Trailer/Trailer';
+import { WhereToWatch } from '../whereToWatch/whereToWatch';
 import styles from './filmInfo.module.scss';
 
 interface FilmInfoProps {
@@ -95,6 +97,8 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 			poster,
 			is_liked,
 			is_out,
+			film_url,
+			trailer_url,
 		} = this.props.film;
 
 		const formattedRating = formatRating(rating);
@@ -149,6 +153,13 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 							<Favorite className={styles.favIcon} />
 							<Headline level="7">Избранное</Headline>
 						</Button>
+						{trailer_url && (
+							<Trailer
+								src={this.props.film.poster}
+								className={styles.trailerPreviewPC}
+								videoSrc={trailer_url}
+							/>
+						)}
 					</Flex>
 
 					<Flex className={styles.info} direction="column" align="start">
@@ -243,18 +254,28 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 									direction="column"
 									align="center"
 								>
-									{is_out && <FilmRating film={this.props.film} />}
+									{is_out && this.props.isAuthentificated && (
+										<FilmRating film={this.props.film} />
+									)}
 									<Button
 										mode="secondary"
 										className={clsx(styles.smallFavBtn, {
 											[styles.inFav]: is_liked,
 											[styles.notInFav]: !is_liked,
+											[styles.isAuth]: this.props.isAuthentificated,
 										})}
 										onClick={this.handleFavorites}
 									>
 										<Favorite className={styles.favIcon} />
 										<Headline level="7">Избранное</Headline>
 									</Button>
+									{trailer_url && (
+										<Trailer
+											src={this.props.film.poster}
+											videoSrc={trailer_url}
+											className={styles.trailerPreviewMobile}
+										/>
+									)}
 								</Flex>
 
 								{description && (
@@ -268,6 +289,8 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 								{is_out && <FilmRating film={this.props.film} />}
 							</Flex>
 						</Flex>
+
+						<WhereToWatch url={film_url} />
 
 						<Flex
 							className={styles.secondRow}
