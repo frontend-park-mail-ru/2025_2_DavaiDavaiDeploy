@@ -56,8 +56,8 @@ export const selectOTPQRCode: Selector = (state: State): string | null =>
 export const selectIsChecked: Selector = (state: State): boolean =>
 	state.user.isChecked;
 
-export const selectVKIDError: Selector = (state: State): string | null =>
-	state.user.VKIDError;
+export const selectvkidError: Selector = (state: State): string | null =>
+	state.user.vkidError;
 
 export const selectVKIDAuthentificated: Selector = (state: State): boolean =>
 	state.user.VKIDAuthentificated;

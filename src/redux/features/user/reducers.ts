@@ -13,7 +13,7 @@ interface InitialState {
 	newPasswordLoading: boolean;
 	newAvatarLoading: boolean;
 	isChecked: boolean;
-	VKIDError: string | null;
+	vkidError: string | null;
 	VKIDAuthentificated: boolean;
 }
 
@@ -30,7 +30,7 @@ const initialState: InitialState = {
 	newPasswordLoading: false,
 	newAvatarLoading: false,
 	isChecked: false,
-	VKIDError: null,
+	vkidError: null,
 	VKIDAuthentificated: false,
 };
 
@@ -196,7 +196,7 @@ export const userReducer: Reducer = (
 					...payload.user,
 				},
 				VKIDAuthentificated: true,
-				VKIDError: null,
+				vkidError: null,
 			};
 		case actionTypes.VKID_USER_ERROR:
 			return {
@@ -204,7 +204,7 @@ export const userReducer: Reducer = (
 				user: {
 					...state.user,
 				},
-				VKIDError: payload.error,
+				vkidError: payload.error,
 				VKIDAuthentificated: false,
 			};
 
@@ -214,7 +214,7 @@ export const userReducer: Reducer = (
 				user: {
 					...state.user,
 				},
-				VKIDError: null,
+				vkidError: null,
 			};
 		default:
 			return state;

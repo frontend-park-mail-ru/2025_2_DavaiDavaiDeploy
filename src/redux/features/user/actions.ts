@@ -450,7 +450,7 @@ const sendDeactivateOTP = (): Action => async (dispatch: Dispatch) => {
  * Создает действие для очистки VKID ошибки.
  * @function
  */
-const clearVKIDErrorAction = (): Action => {
+const clearvkidErrorAction = (): Action => {
 	return {
 		type: actionTypes.VKID_USER_ERROR_CLEAR,
 	};
@@ -480,7 +480,7 @@ const returnVKIDUserErrorAction = (error: string): Action => {
 /**
  * Создает асинхронное действие для регистрации нового пользователя.
  */
-const VKIDLoginUserAction =
+const vkidLoginUserAction =
 	(access_token: string, login?: string): Action =>
 	async (dispatch: Dispatch) => {
 		try {
@@ -512,8 +512,8 @@ const VKIDLoginUserAction =
 	};
 
 export default {
-	VKIDLoginUserAction,
-	clearVKIDErrorAction,
+	vkidLoginUserAction,
+	clearvkidErrorAction,
 	resetUserError,
 	registerUserAction,
 	loginUserAction,

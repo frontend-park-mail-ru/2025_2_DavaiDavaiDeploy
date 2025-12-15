@@ -19,7 +19,7 @@ import {
 	selectIsTwoFactorEnabled,
 	selectUser,
 	selectUserErrorNot401,
-	selectVKIDError,
+	selectvkidError,
 } from '@/redux/features/user/selectors.ts';
 import { store } from '@/redux/store';
 import type { Map } from '@/types/map';
@@ -44,9 +44,9 @@ interface LoginPageProps {
 	user: ModelsUser;
 	userError: string;
 	hasOTP: boolean;
-	VKIDError: string;
-	VKAuthLogin: (access_token: string, login?: string) => void;
-	clearVKIDError: () => void;
+	vkidError: string;
+	vkAuthLogin: (access_token: string, login?: string) => void;
+	clearvkidError: () => void;
 	loginUser: (login: string, password: string) => void;
 	loginUserWithOTP: (login: string, password: string, otp: string) => void;
 }
@@ -65,7 +65,7 @@ export class LoginPageNotConnected extends Component<
 		errorShown: false,
 		accessToken: '',
 	};
-	OneTapContainer = createRef<HTMLButtonElement>();
+	oneTapContainer = createRef<HTMLButtonElement>();
 
 	handleResize = () => {
 		if (window.innerWidth < 768) {
@@ -100,7 +100,7 @@ export class LoginPageNotConnected extends Component<
 		const oneTap = new VKID.OneTap();
 		oneTap
 			.render({
-				container: this.OneTapContainer.current as HTMLElement,
+				container: this.oneTapContainer.current as HTMLElement,
 				styles: {
 					borderRadius: 16,
 					height: 56,
@@ -114,7 +114,7 @@ export class LoginPageNotConnected extends Component<
 					VKID.Auth.exchangeCode(code, deviceId)
 						.then(async (data) => {
 							this.state.accessToken = data.access_token;
-							this.props.VKAuthLogin(this.state.accessToken);
+							this.props.vkAuthLogin(this.state.accessToken);
 						})
 
 						.catch(() => {
@@ -152,13 +152,13 @@ export class LoginPageNotConnected extends Component<
 		}
 
 		if (
-			this.props.VKIDError &&
-			this.props.VKIDError === ERROR_CODES.PRECONDITION_FAILED.toString()
+			this.props.vkidError &&
+			this.props.vkidError === ERROR_CODES.PRECONDITION_FAILED.toString()
 		) {
 			this.props.modal.open(MODALS.VK_ID_MODAL, {
 				access_token: this.state.accessToken,
-				onSubmit: this.props.VKAuthLogin,
-				handleClearError: this.props.clearVKIDError,
+				onSubmit: this.props.vkAuthLogin,
+				handleClearError: this.props.clearvkidError,
 			});
 		}
 	}
@@ -273,7 +273,6 @@ export class LoginPageNotConnected extends Component<
 							)}
 						</Flex>
 						<Flex className={styles.rightSide__actions} direction="column">
-							<div ref={this.OneTapContainer}></div>
 							<Button
 								mode="primary"
 								onClick={this.handleLoginUser}
@@ -284,6 +283,7 @@ export class LoginPageNotConnected extends Component<
 							>
 								Войти
 							</Button>
+							<div ref={this.oneTapContainer}></div>
 							<div className={styles.register__button}>
 								У меня нет аккаунта.{' '}
 								<Link
@@ -305,7 +305,7 @@ const mapStateToProps = (state: State): Map => ({
 	user: selectUser(state),
 	userError: selectUserErrorNot401(state),
 	hasOTP: selectIsTwoFactorEnabled(state),
-	VKIDError: selectVKIDError(state),
+	vkidError: selectvkidError(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Map => ({
@@ -313,9 +313,9 @@ const mapDispatchToProps = (dispatch: Dispatch): Map => ({
 		dispatch(actions.loginUserAction(login, password)),
 	loginUserWithOTP: (login: string, password: string, otp: string) =>
 		dispatch(actions.loginUserAction(login, password, otp)),
-	VKAuthLogin: (access_token: string, login?: string) =>
-		dispatch(actions.VKIDLoginUserAction(access_token, login)),
-	clearVKIDError: () => dispatch(actions.clearVKIDErrorAction()),
+	vkAuthLogin: (access_token: string, login?: string) =>
+		dispatch(actions.vkidLoginUserAction(access_token, login)),
+	clearvkidError: () => dispatch(actions.clearvkidErrorAction()),
 });
 
 export const LoginPage = compose(

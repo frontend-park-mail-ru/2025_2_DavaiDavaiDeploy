@@ -3,7 +3,7 @@ import type { WithRouterProps } from '@/modules/router/types/withRouterProps';
 import { withRouter } from '@/modules/router/withRouter';
 import {
 	selectVKIDAuthentificated,
-	selectVKIDError,
+	selectvkidError,
 } from '@/redux/features/user/selectors';
 import { Component } from '@robocotik/react';
 import { Button, Flex } from 'ddd-ui-kit';
@@ -44,7 +44,7 @@ export class VKIDModalComponent extends Component<
 				this.props.modal.hide();
 			}
 
-			if (selectVKIDError(store.getState()) === ERROR_CODES.BAD_REQUEST) {
+			if (selectvkidError(store.getState()) === ERROR_CODES.BAD_REQUEST) {
 				AppToast.error(
 					vkidAuthorizationCodeToErrorHelper(ERROR_CODES.BAD_REQUEST),
 				);
