@@ -6,8 +6,10 @@ import {
 	selectvkidError,
 } from '@/redux/features/user/selectors';
 import { Component } from '@robocotik/react';
+import clsx from 'ddd-clsx';
 import { Button, Flex } from 'ddd-ui-kit';
 import { ERROR_CODES } from '../../consts/errorCodes';
+import { validateLogin } from '../../helpers/validateLogin/validateLogin';
 import { vkidAuthorizationCodeToErrorHelper } from '../../helpers/vkidAuthorizationCodeToErrorHelper/vkidAuthorizationCodeToErrorHelper';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
@@ -30,6 +32,7 @@ export interface VKIDModalProps {
 
 interface VKIDState {
 	input: string;
+	error: string;
 	errorShown: boolean;
 }
 
@@ -43,6 +46,7 @@ export class VKIDModalComponent extends Component<
 > {
 	state = {
 		input: '',
+		error: '',
 		errorShown: false,
 	};
 
@@ -70,13 +74,23 @@ export class VKIDModalComponent extends Component<
 
 	handleSubmit = () => {
 		this.props.handleClearError();
-		this.setState({ errorShown: false });
-		this.props.onSubmit(this.props.access_token, this.state.input);
+
+		if (!this.state.error) {
+			this.setState({ errorShown: false });
+			this.props.onSubmit(this.props.access_token, this.state.input);
+		}
 	};
 
 	onInputChange = (e: Event) => {
 		const target = e.target as HTMLInputElement;
 		this.setState({ input: target.value });
+		const { isValid, message } = validateLogin(target.value);
+
+		if (!isValid) {
+			this.setState({ error: message });
+		} else {
+			this.setState({ error: '' });
+		}
 	};
 
 	render() {
@@ -96,8 +110,13 @@ export class VKIDModalComponent extends Component<
 							name="login"
 							id="vkid-login"
 							onInput={this.onInputChange}
-							className={styles.vkidInput}
+							className={clsx(styles.vkidInput, {
+								[styles.inputError]: this.state.error,
+							})}
 						/>
+						{this.state.error && (
+							<p className={styles.error}>{this.state.error}</p>
+						)}
 					</div>
 					<Button
 						mode="primary"
