@@ -1,5 +1,6 @@
 export const MODALS = {
 	LOGIN_MODAL: 1,
-	OTP_MODAL: 2,
-	TRAILER_MODAL: 3,
+	TRAILER_MODAL: 2,
+	OTP_MODAL: 3,
+	VK_ID_MODAL: 4,
 } as const;

@@ -220,6 +220,7 @@ export interface ModelsUser {
 	login: string;
 	updated_at?: string;
 	version: number;
+	is_foreign: boolean;
 }
 
 export interface ModelsVoiceSearchResponse {
@@ -239,4 +240,10 @@ export interface ModelsNotification {
 	title: string;
 	text: string;
 	created_at: time;
+}
+
+export interface ModelsVKIDUser {
+	login: string;
+	avatar: string;
+	has_2fa: boolean;
 }

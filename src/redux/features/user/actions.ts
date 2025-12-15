@@ -5,8 +5,9 @@ import { registrationCodeToErrorHelper } from '@/helpers/registrationCodeToError
 import { storeAuthTokensFromResponse } from '@/helpers/storeAuthTokensFromResponse/storeAuthTokensFromResponse.ts';
 import HTTPClient from '@/modules/HTTPClient';
 import type { Action, Dispatch } from '@/modules/redux/types/actions';
-import type { ModelsUser } from '@/types/models';
+import type { ModelsUser, ModelsVKIDUser } from '@/types/models';
 import * as Sentry from '@sentry/browser';
+import { vkidAuthorizationCodeToErrorHelper } from '../../../helpers/vkidAuthorizationCodeToErrorHelper/vkidAuthorizationCodeToErrorHelper';
 import actionTypes from './actionTypes';
 
 const DEFAULT_ERROR_MESSAGE = 'Произошла ошибка';
@@ -130,7 +131,7 @@ const returnChangePasswordAction = (data: ModelsUser): Action => {
 const returnUserErrorAction = (error: string): Action => {
 	return {
 		type: actionTypes.USER_ERROR,
-		payload: { user: null, error: error },
+		payload: { error: error },
 	};
 };
 
@@ -445,7 +446,75 @@ const sendDeactivateOTP = (): Action => async (dispatch: Dispatch) => {
 	}
 };
 
+/**
+ * Создает действие для очистки VKID ошибки.
+ * @function
+ */
+const clearvkidErrorAction = (): Action => {
+	return {
+		type: actionTypes.VKID_USER_ERROR_CLEAR,
+	};
+};
+
+/**
+ * Создает действие для успешной загрузки данных пользователя.
+ * @function
+ */
+const returnVKIDUserAction = (data: ModelsVKIDUser): Action => {
+	return {
+		type: actionTypes.VKID_USER_LOADED,
+		payload: { user: data, error: null },
+	};
+};
+
+/**
+ * Создает действие для обработки ошибки загрузки пользователя.
+ */
+const returnVKIDUserErrorAction = (error: string): Action => {
+	return {
+		type: actionTypes.VKID_USER_ERROR,
+		payload: { error: error },
+	};
+};
+
+/**
+ * Создает асинхронное действие для входа по VK ID
+ */
+const vkidLoginUserAction =
+	(access_token: string, login?: string): Action =>
+	async (dispatch: Dispatch) => {
+		try {
+			const response = await HTTPClient.post<ModelsVKIDUser>('/auth/vk', {
+				data: login
+					? {
+							login: login,
+							access_token: access_token,
+						}
+					: {
+							access_token: access_token,
+						},
+			});
+
+			storeAuthTokensFromResponse(response);
+			dispatch(returnVKIDUserAction(response.data));
+		} catch (error: unknown) {
+			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
+
+			if (error instanceof Error) {
+				errorMessage = vkidAuthorizationCodeToErrorHelper(
+					error.cause as number,
+				);
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			}
+
+			dispatch(returnVKIDUserErrorAction(errorMessage));
+		}
+	};
+
 export default {
+	vkidLoginUserAction,
+	clearvkidErrorAction,
 	resetUserError,
 	registerUserAction,
 	loginUserAction,

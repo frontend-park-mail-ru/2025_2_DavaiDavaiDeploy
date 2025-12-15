@@ -15,23 +15,26 @@ interface BaseModalCurrentProps {
 	hasClose?: boolean;
 	dismissButtonMode?: 'inside' | 'outside';
 	closeClassName?: string;
+	closeOnEsc?: boolean;
 }
 
 export class BaseModalComponent extends Component<
 	WithModalProps & BaseModalCurrentProps
 > {
 	handleKeyDown = (event: KeyboardEvent) => {
-		if (event.key === 'Escape') {
+		const { closeOnEsc = true } = this.props;
+
+		if (closeOnEsc && event.key === 'Escape') {
 			this.props.modal.hide();
 		}
 	};
 
 	onMount() {
-		window.addEventListener('keydown', this.handleKeyDown);
+		document.addEventListener('keydown', this.handleKeyDown);
 	}
 
 	onUnmount() {
-		window.removeEventListener('keydown', this.handleKeyDown);
+		document.removeEventListener('keydown', this.handleKeyDown);
 	}
 
 	render() {

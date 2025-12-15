@@ -8,9 +8,15 @@ import {
 	type OTPModalProps,
 } from '../../components/OTPModal/OTPModal';
 import {
+	VKIDModal,
+	type VKIDModalExtraProps,
+} from '../../components/VKIDModal/VKIDModal';
+
+import {
 	TrailerModal,
 	type TrailerModalProps,
 } from '../../components/TrailerModal/TrailerModal';
+
 import { ModalRoot } from './modalRoot';
 import { MODALS } from './modals';
 import { ModalContext } from './modalsContext.ts';
@@ -60,6 +66,12 @@ export class ModalsProvider extends Component {
 						id={MODALS.OTP_MODAL}
 						{...((this.state.activeModalProps || {}) as OTPModalProps)}
 					/>
+
+					<VKIDModal
+						id={MODALS.VK_ID_MODAL}
+						{...((this.state.activeModalProps || {}) as VKIDModalExtraProps)}
+					/>
+
 					<TrailerModal
 						id={MODALS.TRAILER_MODAL}
 						{...((this.state.activeModalProps || {}) as TrailerModalProps)}
