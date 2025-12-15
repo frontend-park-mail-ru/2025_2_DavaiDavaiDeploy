@@ -478,7 +478,7 @@ const returnVKIDUserErrorAction = (error: string): Action => {
 };
 
 /**
- * Создает асинхронное действие для регистрации нового пользователя.
+ * Создает асинхронное действие для входа по VK ID
  */
 const vkidLoginUserAction =
 	(access_token: string, login?: string): Action =>
@@ -495,6 +495,7 @@ const vkidLoginUserAction =
 						},
 			});
 
+			storeAuthTokensFromResponse(response);
 			dispatch(returnVKIDUserAction(response.data));
 		} catch (error: unknown) {
 			let errorMessage: string = DEFAULT_ERROR_MESSAGE;
