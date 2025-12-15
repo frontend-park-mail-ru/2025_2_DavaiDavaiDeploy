@@ -28,6 +28,7 @@ import {
 	Title,
 } from 'ddd-ui-kit';
 import { FilmRating } from '../filmRating/filmRating';
+import { Trailer } from '../Trailer/Trailer';
 import { WhereToWatch } from '../whereToWatch/whereToWatch';
 import styles from './filmInfo.module.scss';
 
@@ -97,6 +98,7 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 			is_liked,
 			is_out,
 			film_url,
+			trailer_url,
 		} = this.props.film;
 
 		const formattedRating = formatRating(rating);
@@ -151,6 +153,13 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 							<Favorite className={styles.favIcon} />
 							<Headline level="7">Избранное</Headline>
 						</Button>
+						{trailer_url && (
+							<Trailer
+								src={this.props.film.poster}
+								className={styles.trailerPreviewPC}
+								videoSrc={trailer_url}
+							/>
+						)}
 					</Flex>
 
 					<Flex className={styles.info} direction="column" align="start">
@@ -260,6 +269,13 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 										<Favorite className={styles.favIcon} />
 										<Headline level="7">Избранное</Headline>
 									</Button>
+									{trailer_url && (
+										<Trailer
+											src={this.props.film.poster}
+											videoSrc={trailer_url}
+											className={styles.trailerPreviewMobile}
+										/>
+									)}
 								</Flex>
 
 								{description && (
