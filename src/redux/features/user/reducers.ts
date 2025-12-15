@@ -54,6 +54,7 @@ export const userReducer: Reducer = (
 				...state,
 				loading: false,
 				user: payload.user,
+				VKIDAuthentificated: payload.user.is_foreign,
 			};
 		case actionTypes.USER_UPDATE:
 			return {

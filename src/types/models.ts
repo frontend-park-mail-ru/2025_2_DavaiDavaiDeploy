@@ -220,6 +220,7 @@ export interface ModelsUser {
 	login: string;
 	updated_at?: string;
 	version: number;
+	is_foreign: boolean;
 }
 
 export interface ModelsVoiceSearchResponse {
