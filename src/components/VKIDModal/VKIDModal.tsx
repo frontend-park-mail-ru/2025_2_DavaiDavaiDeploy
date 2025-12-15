@@ -81,7 +81,7 @@ export class VKIDModalComponent extends Component<
 
 	render() {
 		return (
-			<BaseModal closeOnOverlayClick={false}>
+			<BaseModal hasClose={false} closeOnOverlayClick={false}>
 				<Flex
 					className={styles.VKIDmodal}
 					direction="column"
@@ -96,7 +96,6 @@ export class VKIDModalComponent extends Component<
 							name="login"
 							id="vkid-login"
 							onInput={this.onInputChange}
-							placeholder='Введите логин (например, "ivanov")'
 							className={styles.vkidInput}
 						/>
 					</div>
