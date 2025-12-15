@@ -1,37 +1,14 @@
 import { CalendarWidget } from '@/components/calendarWidget/calendarWidget';
 import { CompilationWidget } from '@/components/compilationWidget/compilationWidget';
 import { FilmCardGrid } from '@/components/filmCardGrid/filmCardGrid';
-import { FilmsLine } from '@/components/filmsLine/filmsLine';
 import { GenreSlider } from '@/components/genreSlider/genreSlider';
 import { PromoFilm } from '@/components/promoFilm/promoFilm';
-import { compose, connect } from '@/modules/redux';
-import type { Dispatch } from '@/modules/redux/types/actions';
-import type { State } from '@/modules/redux/types/store';
-import { withRouter } from '@/modules/router/withRouter';
-import actions from '@/redux/features/films/actions';
-import { selectRecommendations } from '@/redux/features/films/selectors';
-import { selectIsAuthentificated } from '@/redux/features/user/selectors';
-import type { Map } from '@/types/map';
-import type { ModelsMainPageFilm } from '@/types/models';
+import { Recommendations } from '@/components/recommendations/recommendations';
 import { Component } from '@robocotik/react';
 import { Flex } from 'ddd-ui-kit';
 import styles from './homePage.module.scss';
 
-interface HomePageProps {
-	recommendations: ModelsMainPageFilm[] | null;
-	getReccomendations: VoidFunction;
-	isAuthentificated: boolean;
-}
-
-export class HomePageComponent extends Component<HomePageProps> {
-	onMount() {
-		if (!this.props.isAuthentificated) {
-			return;
-		}
-
-		this.props.getReccomendations();
-	}
-
+export class HomePage extends Component {
 	render() {
 		return (
 			<Flex className={styles.page} direction="column">
@@ -39,13 +16,7 @@ export class HomePageComponent extends Component<HomePageProps> {
 					<PromoFilm />
 					<GenreSlider />
 					<CompilationWidget />
-					{this.props.isAuthentificated && (
-						<FilmsLine
-							films={this.props.recommendations}
-							title="Специально для вас"
-							className={styles.recs}
-						/>
-					)}
+					<Recommendations />
 					<CalendarWidget />
 					<Flex className={styles.films} direction="column">
 						<FilmCardGrid />
@@ -55,17 +26,3 @@ export class HomePageComponent extends Component<HomePageProps> {
 		);
 	}
 }
-
-const mapStateToProps = (state: State): Map => ({
-	recommendations: selectRecommendations(state),
-	isAuthentificated: selectIsAuthentificated(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch): Map => ({
-	getReccomendations: () => dispatch(actions.getRecommendationsAction()),
-});
-
-export const HomePage = compose(
-	withRouter,
-	connect(mapStateToProps, mapDispatchToProps),
-)(HomePageComponent);
