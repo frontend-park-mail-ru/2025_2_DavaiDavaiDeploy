@@ -31,3 +31,5 @@
 [Деплой](https://ddfilms.online)
 
 [Figma](https://www.figma.com/design/jR26e56TaU1xmJP69bHDtj/DDD--%D0%9A%D0%B8%D0%BD%D0%BE%D0%BF%D0%BE%D0%B8%D1%81%D0%BA-?node-id=0-1&t=buNv5zOHlfm1X8R4-1)
+
+[ddd-ui-kit storybook](https://storybook.ddfilms.online)
