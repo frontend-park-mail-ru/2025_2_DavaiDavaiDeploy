@@ -1,4 +1,4 @@
-import { compose } from '@/modules/redux';
+import { compose, connect } from '@/modules/redux';
 import type { WithRouterProps } from '@/modules/router/types/withRouterProps';
 import { withRouter } from '@/modules/router/withRouter';
 import {
@@ -11,7 +11,8 @@ import { ERROR_CODES } from '../../consts/errorCodes';
 import { vkidAuthorizationCodeToErrorHelper } from '../../helpers/vkidAuthorizationCodeToErrorHelper/vkidAuthorizationCodeToErrorHelper';
 import { withModal } from '../../modules/modals/withModal';
 import type { WithModalProps } from '../../modules/modals/withModalProps';
-import { store } from '../../redux/store';
+import type { State } from '../../modules/redux/types/store';
+import type { Map } from '../../types/map';
 import { BaseModal, type BaseModalProps } from '../BaseModal/BaseModal';
 import { AppToast } from '../toastContainer/toastContainer';
 import styles from './VKIDModal.module.scss';
@@ -22,48 +23,47 @@ export interface VKIDModalExtraProps {
 	handleClearError: () => void;
 }
 
+export interface VKIDModalProps {
+	vkidError: string;
+	vkidAuthentificated: boolean;
+}
+
 interface VKIDState {
 	input: string;
 	errorShown: boolean;
 }
 
 export class VKIDModalComponent extends Component<
-	BaseModalProps & WithRouterProps & VKIDModalExtraProps & WithModalProps,
+	BaseModalProps &
+		WithRouterProps &
+		VKIDModalExtraProps &
+		VKIDModalProps &
+		WithModalProps,
 	VKIDState
 > {
 	state = {
 		input: '',
 		errorShown: false,
 	};
-	interval: number | null = null;
 
 	onMount() {
 		this.props.handleClearError();
-
-		this.interval = window.setInterval(() => {
-			if (selectVKIDAuthentificated(store.getState())) {
-				this.props.router.navigate('/');
-				this.props.modal.hide();
-			}
-
-			if (
-				selectvkidError(store.getState()) ===
-					vkidAuthorizationCodeToErrorHelper(ERROR_CODES.BAD_REQUEST) &&
-				this.state.errorShown === false
-			) {
-				AppToast.error(
-					vkidAuthorizationCodeToErrorHelper(ERROR_CODES.BAD_REQUEST),
-				);
-
-				this.setState({ errorShown: true });
-			}
-		}, 1000);
 	}
 
-	onUnmount() {
-		if (this.interval) {
-			clearInterval(this.interval);
-			this.interval = null;
+	onUpdate() {
+		if (this.props.vkidAuthentificated) {
+			this.props.router.navigate('/');
+			this.props.modal.hide();
+		}
+
+		if (
+			this.props.vkidError ===
+				vkidAuthorizationCodeToErrorHelper(ERROR_CODES.BAD_REQUEST) &&
+			this.state.errorShown === false
+		) {
+			AppToast.error(this.props.vkidError);
+
+			this.setState({ errorShown: true });
 		}
 	}
 
@@ -115,4 +115,13 @@ export class VKIDModalComponent extends Component<
 	}
 }
 
-export const VKIDModal = compose(withRouter, withModal)(VKIDModalComponent);
+const mapStateToProps = (state: State): Map => ({
+	vkidError: selectvkidError(state),
+	vkidAuthentificated: selectVKIDAuthentificated(state),
+});
+
+export const VKIDModal = compose(
+	withRouter,
+	withModal,
+	connect(mapStateToProps),
+)(VKIDModalComponent);
