@@ -19,7 +19,7 @@ export class TrailerComponent extends Component<
 > {
 	handleTrailerClick = () => {
 		this.props.modal.open(MODALS.TRAILER_MODAL, {
-			videoSrc: getImageURL('trailers/trailer1.mov'),
+			videoSrc: getImageURL(this.props.videoSrc),
 		});
 	};
 
