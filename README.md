@@ -2,6 +2,10 @@
 
 Репозиторий команды "Davai Davai Deploy". Проект: Кинопоиск
 
+[![Integration tests Prod](https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy/actions/workflows/tests_prod.yml/badge.svg)](https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy/actions/workflows/tests_prod.yml)
+
+[![Lint and Build](https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy/actions/workflows/pr_lint.yml/badge.svg)](https://github.com/frontend-park-mail-ru/2025_2_DavaiDavaiDeploy/actions/workflows/pr_lint.yml)
+
 ### Участники команды
 
 1. [Старкин Александр](https://github.com/Robocotik)
@@ -32,4 +36,4 @@
 
 [Figma](https://www.figma.com/design/jR26e56TaU1xmJP69bHDtj/DDD--%D0%9A%D0%B8%D0%BD%D0%BE%D0%BF%D0%BE%D0%B8%D1%81%D0%BA-?node-id=0-1&t=buNv5zOHlfm1X8R4-1)
 
-[ddd-ui-kit storybook](https://storybook.ddfilms.online)
+[Storybook](https://storybook.ddfilms.online)
