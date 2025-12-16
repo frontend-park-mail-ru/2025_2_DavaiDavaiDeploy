@@ -2,6 +2,7 @@
 	background-color: var(--color-light);
 	color: var(--color-text);
 	width: 100%;
+	min-width: 40rem;
 	height: 25rem;
 	padding: 4rem;
 }
@@ -28,11 +29,18 @@
 
 .inputContainer {
 	width: 100%;
+	height: 5rem;
+	min-height: 5rem;
+	display: flex;
+	flex-direction: column;
+	position: relative;
 }
 
 .error {
 	color: var(--color-error);
 	font-size: var(--font-size-xs);
+	text-wrap: wrap;
+	width: 100%;
 }
 
 .inputError {
@@ -42,14 +50,27 @@
 .vkidTitle {
 	font-size: var(--font-size-2xl);
 	margin-bottom: 6rem;
+	text-align: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 450px) {
+	.vkidTitle {
+		margin-bottom: 4rem;
+	}
+
 	.VKIDmodal {
-		background-color: var(--color-light);
-		color: var(--color-text);
-		width: 100%;
-		height: 25rem;
-		padding: 4rem;
+		min-width: 25rem;
+		padding-inline: 2rem;
+	}
+
+	.vkidButton {
+		margin-top: 1rem;
+	}
+}
+
+@media (max-width: 450px) {
+	.VKIDmodal {
+		min-width: 20rem;
+		max-width: 20rem;
 	}
 }
