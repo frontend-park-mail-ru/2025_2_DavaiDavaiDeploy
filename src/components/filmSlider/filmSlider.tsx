@@ -28,7 +28,7 @@ interface FilmSliderState {
 	debounceResizeHandler: (ev?: Event | undefined) => void;
 }
 
-const MIN_SLIDE_CAPACITY = 3;
+const MIN_SLIDE_CAPACITY = 2;
 const DEBOUNCE_DELAY = 100;
 const MAX_SLIDE_CAPACITY = 7;
 const AUTO_SLIDE_DURATION = 7000;
@@ -83,7 +83,7 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 	state: FilmSliderState = {
 		curFilm: 0,
 		slideCapacity: getSlideCapacityFromWidth(window.innerWidth),
-		cardHeight: SMALL_CARD_HEIGHT,
+		cardHeight: 0,
 		active: false,
 		windowHeight: window.innerHeight,
 		debounceResizeHandler: () => {},
@@ -139,7 +139,11 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 			this.setState({ active: false });
 		}
 
-		if (this.props.films.length > 1 && !this.state.active) {
+		if (this.props.films.length == 1 && this.state.cardHeight == 0) {
+			this.handleResize();
+		}
+
+		if (this.props.films.length >= MIN_SLIDE_CAPACITY && !this.state.active) {
 			this.handleResize();
 		}
 	}
