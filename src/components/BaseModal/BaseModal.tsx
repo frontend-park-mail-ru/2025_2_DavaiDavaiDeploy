@@ -16,6 +16,7 @@ interface BaseModalCurrentProps {
 	dismissButtonMode?: 'inside' | 'outside';
 	closeClassName?: string;
 	closeOnEsc?: boolean;
+	modalClassname?: string;
 }
 
 export class BaseModalComponent extends Component<
@@ -68,7 +69,7 @@ export class BaseModalComponent extends Component<
 						/>
 					)}
 					<div
-						className={style.modalContent}
+						className={clsx(style.modalContent, this.props.modalClassname)}
 						onClick={(e) => e.stopPropagation()}
 					>
 						{this.props.children}
