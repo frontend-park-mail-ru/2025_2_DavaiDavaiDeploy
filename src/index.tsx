@@ -95,6 +95,7 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 		alert(
 			`NotificationManager.isSupported: ${NotificationManager.isSupported()}`,
 		);
+
 		alert(`Notification.permission: ${Notification.permission.toString()}`);
 		alert(`'Notification' in window: ${'Notification' in window}`);
 		alert(`'serviceWorker' in navigator: ${'serviceWorker' in navigator}`);
