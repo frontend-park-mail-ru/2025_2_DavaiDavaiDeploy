@@ -30,14 +30,7 @@ export class FilmCard extends Component<FilmCardProps> {
 						<Image
 							className={styles.image}
 							src={getImageURL(cover)}
-							onError={(e: Event) => {
-								const target = e.target as HTMLImageElement | null;
-
-								if (target) {
-									target.src = DEFAULT_COVER;
-									target.onerror = null;
-								}
-							}}
+							fallbackSRC={DEFAULT_COVER}
 							alt={title}
 						/>
 						{ratingType && (

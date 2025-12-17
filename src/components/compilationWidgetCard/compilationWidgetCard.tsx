@@ -30,14 +30,7 @@ class CompilationWidgetCardComponent extends Component<
 					<Image
 						className={styles.image}
 						src={getImageURL(icon)}
-						onError={(e: Event) => {
-							const target = e.target as HTMLImageElement | null;
-
-							if (target) {
-								target.src = DEFAULT_COVER;
-								target.onerror = null;
-							}
-						}}
+						fallbackSRC={DEFAULT_COVER}
 						alt={title}
 					/>
 					<Subhead className={styles.description} level="11" align="left">

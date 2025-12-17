@@ -65,14 +65,7 @@ export class SearchSuggest extends Component<
 					<Image
 						className={styles.image}
 						src={getImageURL(cover)}
-						onError={(e: Event) => {
-							const target = e.target as HTMLImageElement | null;
-
-							if (target) {
-								target.src = DEFAULT_COVER;
-								target.onerror = null;
-							}
-						}}
+						fallbackSRC={DEFAULT_COVER}
 						alt={title || 'Cover'}
 					/>
 					<div className={styles.filmInfo}>

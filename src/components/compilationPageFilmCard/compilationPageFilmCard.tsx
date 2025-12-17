@@ -87,14 +87,7 @@ class CompilationPageFilmCardComponent extends Component<
 							<Image
 								className={styles.image}
 								src={getImageURL(image)}
-								onError={(e: Event) => {
-									const target = e.target as HTMLImageElement | null;
-
-									if (target) {
-										target.src = DEFAULT_COVER;
-										target.onerror = null;
-									}
-								}}
+								fallbackSRC={DEFAULT_COVER}
 								alt={title}
 							/>
 							{ratingType && (
