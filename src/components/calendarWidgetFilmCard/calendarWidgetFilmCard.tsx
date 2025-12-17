@@ -1,4 +1,5 @@
 import Favorite from '@/assets/favorite.svg?react';
+import { DEFAULT_COVER } from '@/consts/defaultImage';
 import { formatDateForCalendar } from '@/helpers/formatDateForCalendarHelper/formatDateForCalendarHelper';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { getPathWithPath } from '@/helpers/getPathWithPath/getPathWithPath';
@@ -69,6 +70,7 @@ class CalendarWidgetFilmCardComponent extends Component<
 							<Image
 								className={styles.image}
 								src={getImageURL(cover)}
+								fallbackSRC={DEFAULT_COVER}
 								alt={title}
 							/>
 						</div>

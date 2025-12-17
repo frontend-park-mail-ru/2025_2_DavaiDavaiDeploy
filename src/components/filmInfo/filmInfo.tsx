@@ -1,4 +1,5 @@
 import Favorite from '@/assets/favorite.svg?react';
+import { DEFAULT_COVER } from '@/consts/defaultImage';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { formatMoney } from '@/helpers/formatMoneyHelper/formatMoneyHelper';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
@@ -129,11 +130,11 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 					>
 						<Flex className={styles.media} align="start" justify="center">
 							<Image
-								src={getImageURL(cover)}
-								alt={title || 'Cover'}
 								className={styles.cover}
+								src={getImageURL(cover)}
+								fallbackSRC={DEFAULT_COVER}
+								alt={title || 'Cover'}
 							/>
-
 							{formattedRating && ratingType && (
 								<Badge
 									mode={ratingType}

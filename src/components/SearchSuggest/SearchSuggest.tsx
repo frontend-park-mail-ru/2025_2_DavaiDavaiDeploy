@@ -1,3 +1,4 @@
+import { DEFAULT_COVER } from '@/consts/defaultImage';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { Component, createRef, type Ref } from '@robocotik/react';
 import clsx from 'ddd-clsx';
@@ -64,7 +65,8 @@ export class SearchSuggest extends Component<
 					<Image
 						className={styles.image}
 						src={getImageURL(cover)}
-						alt={title}
+						fallbackSRC={DEFAULT_COVER}
+						alt={title || 'Cover'}
 					/>
 					<div className={styles.filmInfo}>
 						<div className={styles.titleRow}>

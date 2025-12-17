@@ -1,4 +1,5 @@
 import Favorite from '@/assets/favorite.svg?react';
+import { DEFAULT_COVER } from '@/consts/defaultImage';
 import { formatDuration } from '@/helpers/durationFormatHelper/durationFormatHelper';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
@@ -81,6 +82,7 @@ class FavoritesFilmCardComponent extends Component<
 						<Image
 							className={styles.image}
 							src={getImageURL(image)}
+							fallbackSRC={DEFAULT_COVER}
 							alt={title}
 						/>
 						{ratingType && (
