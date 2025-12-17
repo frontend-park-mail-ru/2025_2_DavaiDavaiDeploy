@@ -36,7 +36,7 @@
 }
 
 .rightSide__inputFields {
-	gap: 1.875rem;
+	gap: 1.4rem;
 	width: 100%;
 	position: relative;
 }
@@ -49,8 +49,8 @@
 
 .rightSide__titles {
 	text-align: left;
-	padding-top: 6rem;
-	padding-bottom: 4rem;
+	padding-top: 5rem;
+	padding-bottom: 3rem;
 }
 
 .login__button {
@@ -170,6 +170,6 @@
 
 	.rightSide__inputFields {
 		margin-block: auto;
-		gap: clamp(1.5rem, 1dvh, 1rem);
+		gap: clamp(1rem, 1dvh, 1.5rem);
 	}
 }
