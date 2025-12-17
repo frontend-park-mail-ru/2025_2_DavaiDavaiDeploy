@@ -14,7 +14,7 @@ export class TrailerModalComponent extends Component<
 > {
 	render() {
 		return (
-			<BaseModal dismissButtonMode="outside">
+			<BaseModal modalClassname={style.baseModal} dismissButtonMode="outside">
 				<Flex
 					className={style.modalTrailer}
 					direction="column"

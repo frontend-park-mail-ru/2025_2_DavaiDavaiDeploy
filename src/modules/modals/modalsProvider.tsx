@@ -32,10 +32,13 @@ export class ModalsProvider extends Component {
 
 	open = (id: number, props: object) => {
 		this.setState({ activeModal: id, activeModalProps: props });
+		document.body.style.overflow = 'hidden';
+		document.body.style.position = 'fixed';
 	};
 	hide = () => {
 		this.setState({ isClosing: true });
-
+		document.body.style.overflow = 'auto';
+		document.body.style.position = 'static';
 		setTimeout(() => {
 			this.setState({
 				activeModal: null,
