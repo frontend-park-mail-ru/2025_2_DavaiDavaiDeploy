@@ -83,7 +83,7 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 	state: FilmSliderState = {
 		curFilm: 0,
 		slideCapacity: getSlideCapacityFromWidth(window.innerWidth),
-		cardHeight: SMALL_CARD_HEIGHT,
+		cardHeight: 0,
 		active: false,
 		windowHeight: window.innerHeight,
 		debounceResizeHandler: () => {},
@@ -137,6 +137,10 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 			this.state.active
 		) {
 			this.setState({ active: false });
+		}
+
+		if (this.props.films.length == 1 && this.state.cardHeight == 0) {
+			this.handleResize();
 		}
 
 		if (this.props.films.length >= MIN_SLIDE_CAPACITY && !this.state.active) {
