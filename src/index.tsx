@@ -92,6 +92,13 @@ class AppComponent extends Component<AppProps & WithRouterProps> {
 	onMount() {
 		this.props.checkUser();
 
+		alert(
+			`NotificationManager.isSupported: ${NotificationManager.isSupported()}`,
+		);
+		alert(`Notification.permission: ${Notification.permission.toString()}`);
+		alert(`'Notification' in window: ${'Notification' in window}`);
+		alert(`'serviceWorker' in navigator: ${'serviceWorker' in navigator}`);
+
 		if (
 			NotificationManager.isSupported() &&
 			Notification.permission === 'default'
