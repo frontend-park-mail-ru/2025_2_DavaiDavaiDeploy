@@ -1,3 +1,4 @@
+import { DEFAULT_COVER } from '@/consts/defaultImage';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { compose, connect } from '@/modules/redux';
 import type { Dispatch } from '@/modules/redux/types/actions';
@@ -26,7 +27,19 @@ class CompilationWidgetCardComponent extends Component<
 		return (
 			<Link href={`/compilations/${id}`} className={styles.linkWrap}>
 				<Flex className={styles.compilationCard} align="center">
-					<Image className={styles.image} src={getImageURL(icon)} alt={title} />
+					<Image
+						className={styles.image}
+						src={getImageURL(icon)}
+						onError={(e: Event) => {
+							const target = e.target as HTMLImageElement | null;
+
+							if (target) {
+								target.src = DEFAULT_COVER;
+								target.onerror = null;
+							}
+						}}
+						alt={title}
+					/>
 					<Subhead className={styles.description} level="11" align="left">
 						{description}
 					</Subhead>

@@ -1,3 +1,4 @@
+import { DEFAULT_COVER } from '@/consts/defaultImage';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
 import { formatRating } from '@/helpers/ratingFormatHelper/ratingFormatHelper';
 import { getRatingType } from '@/helpers/ratingTypeHelper/ratingTypeHelper';
@@ -29,6 +30,14 @@ export class FilmCard extends Component<FilmCardProps> {
 						<Image
 							className={styles.image}
 							src={getImageURL(cover)}
+							onError={(e: Event) => {
+								const target = e.target as HTMLImageElement | null;
+
+								if (target) {
+									target.src = DEFAULT_COVER;
+									target.onerror = null;
+								}
+							}}
 							alt={title}
 						/>
 						{ratingType && (
