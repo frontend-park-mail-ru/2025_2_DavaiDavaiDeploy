@@ -63,6 +63,8 @@ class FilmInfoComponent extends Component<FilmInfoProps & WithRouterProps> {
 		}
 
 		this.props.addToFavorites(film.id);
+
+		void Notification.requestPermission();
 	};
 
 	render() {
