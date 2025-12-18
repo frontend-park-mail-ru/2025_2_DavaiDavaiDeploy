@@ -39,7 +39,7 @@ const AUTO_SLIDE_RESTART_DURATION = 30000;
 const FILM_COUNT: number = 100;
 const SMALL_CARD_HEIGHT = 30;
 const BIG_CARD_HEIGHT = 50;
-const MIN_SWIPE_DISTANCE = 50;
+const MIN_SWIPE_DISTANCE = 100;
 const SWIPE_DEBOUNCE_DELAY = 10;
 
 function getSlideCapacityFromWidth(width: number) {
