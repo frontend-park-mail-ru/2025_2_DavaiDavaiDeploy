@@ -94,8 +94,8 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 		debounceResizeHandler: () => {},
 		autoSlider: null,
 		inactivityTimer: null,
-		touchStartX: 0,
-		touchEndX: 0,
+		touchStartX: -1,
+		touchEndX: -1,
 	};
 
 	sliderRef = createRef<HTMLElement>();
@@ -201,11 +201,18 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 	};
 
 	handleTouchmove = (event: TouchEvent) => {
-		event.preventDefault();
+		if (event.cancelable) {
+			event.preventDefault();
+		}
+
 		this.setState({ touchEndX: event.touches[0].clientX });
 	};
 
 	handleTouchend = () => {
+		if (this.state.touchStartX == -1 || this.state.touchEndX == -1) {
+			return;
+		}
+
 		const distance = Math.abs(this.state.touchStartX - this.state.touchEndX);
 
 		if (distance < MIN_SWIPE_DISTANCE) {
@@ -214,10 +221,11 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 
 		if (this.state.touchStartX < this.state.touchEndX) {
 			this.prev();
-			return;
+		} else {
+			this.next();
 		}
 
-		this.next();
+		this.setState({ touchEndX: -1, touchStartX: -1 });
 	};
 
 	handleResize = () => {
