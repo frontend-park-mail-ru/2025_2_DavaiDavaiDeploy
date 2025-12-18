@@ -347,7 +347,7 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 		const slider = this.sliderRef.current;
 		const slides = this.slideRefMap.map((ref) => ref.current);
 
-		if (slider && slides.length > 0) {
+		if (slider) {
 			slider.style.height = getSliderHeight(slider, slides) + 'px';
 		}
 
