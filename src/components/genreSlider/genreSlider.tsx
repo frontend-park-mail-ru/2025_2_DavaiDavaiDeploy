@@ -10,7 +10,7 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenres } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component, createRef } from '@robocotik/react';
 import clsx from 'ddd-clsx';
 import { Flex, IconButton, Title } from 'ddd-ui-kit';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
@@ -34,12 +34,15 @@ interface GenreSliderState {
 		stop: VoidFunction;
 	};
 	inactivityTimer: NodeJS.Timeout | null;
+	touchStartX: number;
+	touchEndX: number;
 }
 
 const THROTTLE_DELAY = 100;
 const ANIMATION_DURATION = 350;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
+const MIN_SWIPE_DISTANCE = 50;
 
 class GenreSliderComponent extends Component<
 	GenreSliderProps,
@@ -54,7 +57,11 @@ class GenreSliderComponent extends Component<
 		debounceResizeHandler: () => {},
 		autoSlider: null,
 		inactivityTimer: null,
+		touchStartX: 0,
+		touchEndX: 0,
 	};
+
+	sliderContainer = createRef<HTMLElement>();
 
 	onMount() {
 		this.props.getGenres();
@@ -81,12 +88,72 @@ class GenreSliderComponent extends Component<
 		);
 
 		this.state.autoSlider.start();
+
+		this.sliderContainer.current?.addEventListener(
+			'touchstart',
+			this.handleTouchstart,
+			false,
+		);
+
+		this.sliderContainer.current?.addEventListener(
+			'touchmove',
+			this.handleTouchmove,
+			false,
+		);
+
+		this.sliderContainer.current?.addEventListener(
+			'touchend',
+			this.handleTouchend,
+			false,
+		);
 	}
 
 	onUnmount() {
 		window.removeEventListener('resize', this.state.debounceResizeHandler);
 		this.state.autoSlider?.stop();
+		this.sliderContainer.current?.removeEventListener(
+			'touchstart',
+			this.handleTouchstart,
+			false,
+		);
+
+		this.sliderContainer.current?.removeEventListener(
+			'touchmove',
+			this.handleTouchmove,
+			false,
+		);
+
+		this.sliderContainer.current?.removeEventListener(
+			'touchend',
+			this.handleTouchend,
+			false,
+		);
 	}
+
+	handleTouchstart = (event: TouchEvent) => {
+		this.onSliderClick();
+		this.setState({ touchStartX: event.touches[0].clientX });
+	};
+
+	handleTouchmove = (event: TouchEvent) => {
+		event.preventDefault();
+		this.setState({ touchEndX: event.touches[0].clientX });
+	};
+
+	handleTouchend = () => {
+		const distance = Math.abs(this.state.touchStartX - this.state.touchEndX);
+
+		if (distance < MIN_SWIPE_DISTANCE) {
+			return;
+		}
+
+		if (this.state.touchStartX < this.state.touchEndX) {
+			this.onPrevBtnClick();
+			return;
+		}
+
+		this.onNextBtnClick();
+	};
 
 	handleResize = () => {
 		const width = window.innerWidth;
@@ -202,6 +269,7 @@ class GenreSliderComponent extends Component<
 					className={styles.container}
 					direction="row"
 					onClick={this.onSliderClick}
+					ref={this.sliderContainer}
 				>
 					<div className={clsx(styles.slider, animationClass)}>
 						{visibleGenres.map((genre) => (
