@@ -10,7 +10,7 @@ import actions from '@/redux/features/genre/actions';
 import { selectGenres } from '@/redux/features/genre/selectors';
 import type { Map } from '@/types/map';
 import type { ModelsGenre } from '@/types/models';
-import { Component } from '@robocotik/react';
+import { Component, createRef } from '@robocotik/react';
 import clsx from 'ddd-clsx';
 import { Flex, IconButton, Title } from 'ddd-ui-kit';
 import { GenreSliderItem } from '../genreSliderItem/genreSliderItem';
@@ -34,12 +34,16 @@ interface GenreSliderState {
 		stop: VoidFunction;
 	};
 	inactivityTimer: NodeJS.Timeout | null;
+	touchStartX: number;
+	touchEndX: number;
 }
 
 const THROTTLE_DELAY = 100;
 const ANIMATION_DURATION = 350;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
+const MIN_SWIPE_DISTANCE = 50;
+const DEBOUNCE_DELAY = 10;
 
 class GenreSliderComponent extends Component<
 	GenreSliderProps,
@@ -54,7 +58,11 @@ class GenreSliderComponent extends Component<
 		debounceResizeHandler: () => {},
 		autoSlider: null,
 		inactivityTimer: null,
+		touchStartX: 0,
+		touchEndX: 0,
 	};
+
+	sliderRef = createRef<HTMLElement>();
 
 	onMount() {
 		this.props.getGenres();
@@ -81,12 +89,72 @@ class GenreSliderComponent extends Component<
 		);
 
 		this.state.autoSlider.start();
+
+		this.sliderRef.current?.addEventListener(
+			'touchstart',
+			this.handleTouchstart,
+			false,
+		);
+
+		this.sliderRef.current?.addEventListener(
+			'touchmove',
+			debounce(this.handleTouchmove, DEBOUNCE_DELAY),
+			false,
+		);
+
+		this.sliderRef.current?.addEventListener(
+			'touchend',
+			this.handleTouchend,
+			false,
+		);
 	}
 
 	onUnmount() {
 		window.removeEventListener('resize', this.state.debounceResizeHandler);
 		this.state.autoSlider?.stop();
+		this.sliderRef.current?.removeEventListener(
+			'touchstart',
+			this.handleTouchstart,
+			false,
+		);
+
+		this.sliderRef.current?.removeEventListener(
+			'touchmove',
+			debounce(this.handleTouchmove, DEBOUNCE_DELAY),
+			false,
+		);
+
+		this.sliderRef.current?.removeEventListener(
+			'touchend',
+			this.handleTouchend,
+			false,
+		);
 	}
+
+	handleTouchstart = (event: TouchEvent) => {
+		this.onSliderClick();
+		this.setState({ touchStartX: event.touches[0].clientX });
+	};
+
+	handleTouchmove = (event: TouchEvent) => {
+		event.preventDefault();
+		this.setState({ touchEndX: event.touches[0].clientX });
+	};
+
+	handleTouchend = () => {
+		const distance = Math.abs(this.state.touchStartX - this.state.touchEndX);
+
+		if (distance < MIN_SWIPE_DISTANCE) {
+			return;
+		}
+
+		if (this.state.touchStartX < this.state.touchEndX) {
+			this.onPrevBtnClick();
+			return;
+		}
+
+		this.onNextBtnClick();
+	};
 
 	handleResize = () => {
 		const width = window.innerWidth;
@@ -184,12 +252,6 @@ class GenreSliderComponent extends Component<
 	};
 
 	render() {
-		const { genres } = this.props;
-
-		if (!genres || !genres.length) {
-			return <div />;
-		}
-
 		const visibleGenres = this.getVisibleGenres();
 		const animationClass = this.getClass();
 
@@ -203,7 +265,10 @@ class GenreSliderComponent extends Component<
 					direction="row"
 					onClick={this.onSliderClick}
 				>
-					<div className={clsx(styles.slider, animationClass)}>
+					<div
+						className={clsx(styles.slider, animationClass)}
+						ref={this.sliderRef}
+					>
 						{visibleGenres.map((genre) => (
 							<GenreSliderItem genre={genre} />
 						))}

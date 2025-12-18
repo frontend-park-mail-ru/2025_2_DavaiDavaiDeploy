@@ -26,9 +26,12 @@ interface FilmSliderState {
 	};
 	inactivityTimer: NodeJS.Timeout | null;
 	debounceResizeHandler: (ev?: Event | undefined) => void;
+	touchStartX: number;
+	touchEndX: number;
 }
 
-const MIN_SLIDE_CAPACITY = 2;
+const MIN_SLIDE_CAPACITY = 3;
+const MIN_ACTIVE_SLIDE_CAPACITY = 2;
 const DEBOUNCE_DELAY = 100;
 const MAX_SLIDE_CAPACITY = 7;
 const AUTO_SLIDE_DURATION = 7000;
@@ -36,6 +39,8 @@ const AUTO_SLIDE_RESTART_DURATION = 30000;
 const FILM_COUNT: number = 100;
 const SMALL_CARD_HEIGHT = 30;
 const BIG_CARD_HEIGHT = 50;
+const MIN_SWIPE_DISTANCE = 100;
+const SWIPE_DEBOUNCE_DELAY = 10;
 
 function getSlideCapacityFromWidth(width: number) {
 	if (width > WIDE_SCREEN_WIDTH) {
@@ -48,7 +53,7 @@ function getSlideCapacityFromWidth(width: number) {
 }
 
 function getIsActive(slideCapacity: number) {
-	return slideCapacity >= MIN_SLIDE_CAPACITY;
+	return slideCapacity >= MIN_ACTIVE_SLIDE_CAPACITY;
 }
 
 function getCardHeight(slideCapacity: number) {
@@ -89,12 +94,15 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 		debounceResizeHandler: () => {},
 		autoSlider: null,
 		inactivityTimer: null,
+		touchStartX: -1,
+		touchEndX: -1,
 	};
 
 	sliderRef = createRef<HTMLElement>();
 	slideRefMap = Array.from({ length: FILM_COUNT }, () =>
 		createRef<HTMLElement>(),
 	);
+	sliderContainerRef = createRef<HTMLElement>();
 
 	onMount() {
 		const debounceResizeHandler = debounce(this.handleResize, DEBOUNCE_DELAY);
@@ -115,6 +123,24 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 		if (this.state.active) {
 			autoSlider.start();
 		}
+
+		this.sliderContainerRef.current?.addEventListener(
+			'touchstart',
+			this.handleTouchstart,
+			false,
+		);
+
+		this.sliderContainerRef.current?.addEventListener(
+			'touchmove',
+			debounce(this.handleTouchmove, SWIPE_DEBOUNCE_DELAY),
+			false,
+		);
+
+		this.sliderContainerRef.current?.addEventListener(
+			'touchend',
+			this.handleTouchend,
+			false,
+		);
 	}
 
 	onUnmount() {
@@ -129,6 +155,24 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 		if (this.state.inactivityTimer) {
 			clearTimeout(this.state.inactivityTimer);
 		}
+
+		this.sliderContainerRef.current?.removeEventListener(
+			'touchstart',
+			this.handleTouchstart,
+			false,
+		);
+
+		this.sliderContainerRef.current?.removeEventListener(
+			'touchmove',
+			debounce(this.handleTouchmove, SWIPE_DEBOUNCE_DELAY),
+			false,
+		);
+
+		this.sliderContainerRef.current?.removeEventListener(
+			'touchend',
+			this.handleTouchend,
+			false,
+		);
 	}
 
 	onUpdate() {
@@ -143,10 +187,46 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 			this.handleResize();
 		}
 
-		if (this.props.films.length >= MIN_SLIDE_CAPACITY && !this.state.active) {
+		if (
+			this.props.films.length >= MIN_ACTIVE_SLIDE_CAPACITY &&
+			!this.state.active
+		) {
 			this.handleResize();
 		}
 	}
+
+	handleTouchstart = (event: TouchEvent) => {
+		this.onSliderClick();
+		this.setState({ touchStartX: event.touches[0].clientX });
+	};
+
+	handleTouchmove = (event: TouchEvent) => {
+		if (event.cancelable) {
+			event.preventDefault();
+		}
+
+		this.setState({ touchEndX: event.touches[0].clientX });
+	};
+
+	handleTouchend = () => {
+		if (this.state.touchStartX == -1 || this.state.touchEndX == -1) {
+			return;
+		}
+
+		const distance = Math.abs(this.state.touchStartX - this.state.touchEndX);
+
+		if (distance < MIN_SWIPE_DISTANCE) {
+			return;
+		}
+
+		if (this.state.touchStartX < this.state.touchEndX) {
+			this.prev();
+		} else {
+			this.next();
+		}
+
+		this.setState({ touchEndX: -1, touchStartX: -1 });
+	};
 
 	handleResize = () => {
 		const width = window.innerWidth;
@@ -273,13 +353,13 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 
 	render() {
 		if (this.props.films.length === 0) {
-			return <div />;
+			return <div ref={this.sliderContainerRef} />;
 		}
 
 		const slider = this.sliderRef.current;
 		const slides = this.slideRefMap.map((ref) => ref.current);
 
-		if (slider && slides.length > 0) {
+		if (slider) {
 			slider.style.height = getSliderHeight(slider, slides) + 'px';
 		}
 
@@ -313,7 +393,12 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 							<ArrowRight alt="Следующий" className={styles.nextBtnIcon} />
 						</IconButton>
 					)}
-					<Flex className={styles.container} justify="center" align="start">
+					<Flex
+						className={styles.container}
+						justify="center"
+						align="start"
+						getRootRef={this.sliderContainerRef}
+					>
 						{this.props.films.map((film, i) => (
 							<div
 								key={film.id}
