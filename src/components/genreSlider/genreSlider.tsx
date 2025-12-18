@@ -62,7 +62,7 @@ class GenreSliderComponent extends Component<
 		touchEndX: 0,
 	};
 
-	slider = createRef<HTMLElement>();
+	sliderRef = createRef<HTMLElement>();
 
 	onMount() {
 		this.props.getGenres();
@@ -90,19 +90,19 @@ class GenreSliderComponent extends Component<
 
 		this.state.autoSlider.start();
 
-		this.slider.current?.addEventListener(
+		this.sliderRef.current?.addEventListener(
 			'touchstart',
 			this.handleTouchstart,
 			false,
 		);
 
-		this.slider.current?.addEventListener(
+		this.sliderRef.current?.addEventListener(
 			'touchmove',
 			debounce(this.handleTouchmove, DEBOUNCE_DELAY),
 			false,
 		);
 
-		this.slider.current?.addEventListener(
+		this.sliderRef.current?.addEventListener(
 			'touchend',
 			this.handleTouchend,
 			false,
@@ -112,19 +112,19 @@ class GenreSliderComponent extends Component<
 	onUnmount() {
 		window.removeEventListener('resize', this.state.debounceResizeHandler);
 		this.state.autoSlider?.stop();
-		this.slider.current?.removeEventListener(
+		this.sliderRef.current?.removeEventListener(
 			'touchstart',
 			this.handleTouchstart,
 			false,
 		);
 
-		this.slider.current?.removeEventListener(
+		this.sliderRef.current?.removeEventListener(
 			'touchmove',
 			debounce(this.handleTouchmove, DEBOUNCE_DELAY),
 			false,
 		);
 
-		this.slider.current?.removeEventListener(
+		this.sliderRef.current?.removeEventListener(
 			'touchend',
 			this.handleTouchend,
 			false,
@@ -267,7 +267,7 @@ class GenreSliderComponent extends Component<
 				>
 					<div
 						className={clsx(styles.slider, animationClass)}
-						ref={this.slider}
+						ref={this.sliderRef}
 					>
 						{visibleGenres.map((genre) => (
 							<GenreSliderItem genre={genre} />

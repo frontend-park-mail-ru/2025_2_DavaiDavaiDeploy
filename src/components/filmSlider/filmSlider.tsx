@@ -30,7 +30,8 @@ interface FilmSliderState {
 	touchEndX: number;
 }
 
-const MIN_SLIDE_CAPACITY = 2;
+const MIN_SLIDE_CAPACITY = 3;
+const MIN_ACTIVE_SLIDE_CAPACITY = 2;
 const DEBOUNCE_DELAY = 100;
 const MAX_SLIDE_CAPACITY = 7;
 const AUTO_SLIDE_DURATION = 7000;
@@ -52,7 +53,7 @@ function getSlideCapacityFromWidth(width: number) {
 }
 
 function getIsActive(slideCapacity: number) {
-	return slideCapacity >= MIN_SLIDE_CAPACITY;
+	return slideCapacity >= MIN_ACTIVE_SLIDE_CAPACITY;
 }
 
 function getCardHeight(slideCapacity: number) {
@@ -101,6 +102,7 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 	slideRefMap = Array.from({ length: FILM_COUNT }, () =>
 		createRef<HTMLElement>(),
 	);
+	sliderContainerRef = createRef<HTMLElement>();
 
 	onMount() {
 		const debounceResizeHandler = debounce(this.handleResize, DEBOUNCE_DELAY);
@@ -122,19 +124,19 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 			autoSlider.start();
 		}
 
-		this.sliderRef.current?.addEventListener(
+		this.sliderContainerRef.current?.addEventListener(
 			'touchstart',
 			this.handleTouchstart,
 			false,
 		);
 
-		this.sliderRef.current?.addEventListener(
+		this.sliderContainerRef.current?.addEventListener(
 			'touchmove',
 			debounce(this.handleTouchmove, SWIPE_DEBOUNCE_DELAY),
 			false,
 		);
 
-		this.sliderRef.current?.addEventListener(
+		this.sliderContainerRef.current?.addEventListener(
 			'touchend',
 			this.handleTouchend,
 			false,
@@ -154,19 +156,19 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 			clearTimeout(this.state.inactivityTimer);
 		}
 
-		this.sliderRef.current?.removeEventListener(
+		this.sliderContainerRef.current?.removeEventListener(
 			'touchstart',
 			this.handleTouchstart,
 			false,
 		);
 
-		this.sliderRef.current?.removeEventListener(
+		this.sliderContainerRef.current?.removeEventListener(
 			'touchmove',
 			debounce(this.handleTouchmove, SWIPE_DEBOUNCE_DELAY),
 			false,
 		);
 
-		this.sliderRef.current?.removeEventListener(
+		this.sliderContainerRef.current?.removeEventListener(
 			'touchend',
 			this.handleTouchend,
 			false,
@@ -185,7 +187,10 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 			this.handleResize();
 		}
 
-		if (this.props.films.length >= MIN_SLIDE_CAPACITY && !this.state.active) {
+		if (
+			this.props.films.length >= MIN_ACTIVE_SLIDE_CAPACITY &&
+			!this.state.active
+		) {
 			this.handleResize();
 		}
 	}
@@ -376,7 +381,12 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 							<ArrowRight alt="Следующий" className={styles.nextBtnIcon} />
 						</IconButton>
 					)}
-					<Flex className={styles.container} justify="center" align="start">
+					<Flex
+						className={styles.container}
+						justify="center"
+						align="start"
+						getRootRef={this.sliderContainerRef}
+					>
 						{this.props.films.map((film, i) => (
 							<div
 								key={film.id}
