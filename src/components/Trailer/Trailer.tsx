@@ -1,5 +1,6 @@
 import Play from '@/assets/play.svg?react';
 import { getImageURL } from '@/helpers/getCDNImageHelper/getCDNImageHelper';
+import { getVideoURL } from '@/helpers/getCDNVideoHelper/getCDNVideoHelper';
 import { Component } from '@robocotik/react';
 import clsx from 'ddd-clsx';
 import { Image } from 'ddd-ui-kit';
@@ -19,7 +20,7 @@ export class TrailerComponent extends Component<
 > {
 	handleTrailerClick = () => {
 		this.props.modal.open(MODALS.TRAILER_MODAL, {
-			videoSrc: getImageURL(this.props.videoSrc),
+			videoSrc: getVideoURL(this.props.videoSrc),
 		});
 	};
 
