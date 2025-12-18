@@ -345,7 +345,7 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 
 	render() {
 		if (this.props.films.length === 0) {
-			return <div />;
+			return <div ref={this.sliderContainerRef} />;
 		}
 
 		const slider = this.sliderRef.current;
