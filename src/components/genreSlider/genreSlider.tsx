@@ -43,7 +43,7 @@ const ANIMATION_DURATION = 350;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
 const MIN_SWIPE_DISTANCE = 50;
-const DEBOUNCE_DELAY = 50;
+const DEBOUNCE_DELAY = 10;
 
 class GenreSliderComponent extends Component<
 	GenreSliderProps,

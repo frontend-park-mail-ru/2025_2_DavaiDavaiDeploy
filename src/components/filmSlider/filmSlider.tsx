@@ -26,6 +26,8 @@ interface FilmSliderState {
 	};
 	inactivityTimer: NodeJS.Timeout | null;
 	debounceResizeHandler: (ev?: Event | undefined) => void;
+	touchStartX: number;
+	touchEndX: number;
 }
 
 const MIN_SLIDE_CAPACITY = 2;
@@ -36,6 +38,8 @@ const AUTO_SLIDE_RESTART_DURATION = 30000;
 const FILM_COUNT: number = 100;
 const SMALL_CARD_HEIGHT = 30;
 const BIG_CARD_HEIGHT = 50;
+const MIN_SWIPE_DISTANCE = 50;
+const SWIPE_DEBOUNCE_DELAY = 10;
 
 function getSlideCapacityFromWidth(width: number) {
 	if (width > WIDE_SCREEN_WIDTH) {
@@ -89,6 +93,8 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 		debounceResizeHandler: () => {},
 		autoSlider: null,
 		inactivityTimer: null,
+		touchStartX: 0,
+		touchEndX: 0,
 	};
 
 	sliderRef = createRef<HTMLElement>();
@@ -115,6 +121,24 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 		if (this.state.active) {
 			autoSlider.start();
 		}
+
+		this.sliderRef.current?.addEventListener(
+			'touchstart',
+			this.handleTouchstart,
+			false,
+		);
+
+		this.sliderRef.current?.addEventListener(
+			'touchmove',
+			debounce(this.handleTouchmove, SWIPE_DEBOUNCE_DELAY),
+			false,
+		);
+
+		this.sliderRef.current?.addEventListener(
+			'touchend',
+			this.handleTouchend,
+			false,
+		);
 	}
 
 	onUnmount() {
@@ -129,6 +153,24 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 		if (this.state.inactivityTimer) {
 			clearTimeout(this.state.inactivityTimer);
 		}
+
+		this.sliderRef.current?.removeEventListener(
+			'touchstart',
+			this.handleTouchstart,
+			false,
+		);
+
+		this.sliderRef.current?.removeEventListener(
+			'touchmove',
+			debounce(this.handleTouchmove, SWIPE_DEBOUNCE_DELAY),
+			false,
+		);
+
+		this.sliderRef.current?.removeEventListener(
+			'touchend',
+			this.handleTouchend,
+			false,
+		);
 	}
 
 	onUpdate() {
@@ -147,6 +189,31 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 			this.handleResize();
 		}
 	}
+
+	handleTouchstart = (event: TouchEvent) => {
+		this.onSliderClick();
+		this.setState({ touchStartX: event.touches[0].clientX });
+	};
+
+	handleTouchmove = (event: TouchEvent) => {
+		event.preventDefault();
+		this.setState({ touchEndX: event.touches[0].clientX });
+	};
+
+	handleTouchend = () => {
+		const distance = Math.abs(this.state.touchStartX - this.state.touchEndX);
+
+		if (distance < MIN_SWIPE_DISTANCE) {
+			return;
+		}
+
+		if (this.state.touchStartX < this.state.touchEndX) {
+			this.prev();
+			return;
+		}
+
+		this.next();
+	};
 
 	handleResize = () => {
 		const width = window.innerWidth;
@@ -272,10 +339,6 @@ export class FilmSlider extends Component<FilmSliderProps, FilmSliderState> {
 	};
 
 	render() {
-		if (this.props.films.length === 0) {
-			return <div />;
-		}
-
 		const slider = this.sliderRef.current;
 		const slides = this.slideRefMap.map((ref) => ref.current);
 
