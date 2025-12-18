@@ -61,7 +61,7 @@ class GenreSliderComponent extends Component<
 		touchEndX: 0,
 	};
 
-	sliderContainer = createRef<HTMLElement>();
+	slider = createRef<HTMLElement>();
 
 	onMount() {
 		this.props.getGenres();
@@ -89,19 +89,19 @@ class GenreSliderComponent extends Component<
 
 		this.state.autoSlider.start();
 
-		this.sliderContainer.current?.addEventListener(
+		this.slider.current?.addEventListener(
 			'touchstart',
 			this.handleTouchstart,
 			false,
 		);
 
-		this.sliderContainer.current?.addEventListener(
+		this.slider.current?.addEventListener(
 			'touchmove',
 			this.handleTouchmove,
 			false,
 		);
 
-		this.sliderContainer.current?.addEventListener(
+		this.slider.current?.addEventListener(
 			'touchend',
 			this.handleTouchend,
 			false,
@@ -111,19 +111,19 @@ class GenreSliderComponent extends Component<
 	onUnmount() {
 		window.removeEventListener('resize', this.state.debounceResizeHandler);
 		this.state.autoSlider?.stop();
-		this.sliderContainer.current?.removeEventListener(
+		this.slider.current?.removeEventListener(
 			'touchstart',
 			this.handleTouchstart,
 			false,
 		);
 
-		this.sliderContainer.current?.removeEventListener(
+		this.slider.current?.removeEventListener(
 			'touchmove',
 			this.handleTouchmove,
 			false,
 		);
 
-		this.sliderContainer.current?.removeEventListener(
+		this.slider.current?.removeEventListener(
 			'touchend',
 			this.handleTouchend,
 			false,
@@ -251,12 +251,6 @@ class GenreSliderComponent extends Component<
 	};
 
 	render() {
-		const { genres } = this.props;
-
-		if (!genres || !genres.length) {
-			return <div />;
-		}
-
 		const visibleGenres = this.getVisibleGenres();
 		const animationClass = this.getClass();
 
@@ -269,9 +263,11 @@ class GenreSliderComponent extends Component<
 					className={styles.container}
 					direction="row"
 					onClick={this.onSliderClick}
-					ref={this.sliderContainer}
 				>
-					<div className={clsx(styles.slider, animationClass)}>
+					<div
+						className={clsx(styles.slider, animationClass)}
+						ref={this.slider}
+					>
 						{visibleGenres.map((genre) => (
 							<GenreSliderItem genre={genre} />
 						))}
