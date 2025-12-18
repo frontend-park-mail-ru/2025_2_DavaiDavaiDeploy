@@ -43,6 +43,7 @@ const ANIMATION_DURATION = 350;
 const AUTO_SLIDE_DURATION = 7000;
 const AUTO_SLIDE_RESTART_DURATION = 30000;
 const MIN_SWIPE_DISTANCE = 50;
+const DEBOUNCE_DELAY = 50;
 
 class GenreSliderComponent extends Component<
 	GenreSliderProps,
@@ -97,7 +98,7 @@ class GenreSliderComponent extends Component<
 
 		this.slider.current?.addEventListener(
 			'touchmove',
-			this.handleTouchmove,
+			debounce(this.handleTouchmove, DEBOUNCE_DELAY),
 			false,
 		);
 
@@ -119,7 +120,7 @@ class GenreSliderComponent extends Component<
 
 		this.slider.current?.removeEventListener(
 			'touchmove',
-			this.handleTouchmove,
+			debounce(this.handleTouchmove, DEBOUNCE_DELAY),
 			false,
 		);
 
