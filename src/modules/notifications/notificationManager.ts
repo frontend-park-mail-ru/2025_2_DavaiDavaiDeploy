@@ -9,6 +9,12 @@ interface NotificationData {
 	scheduled_at: string;
 }
 
+interface NotificationNotSecuredPassword {
+	text: string;
+}
+
+const NOT_SECURED_PASSWORD_TEXT = 'Password found';
+
 export class NotificationManager {
 	private static ws: WebSocket | null = null;
 	private static pingInterval: ReturnType<typeof setInterval> | null = null;
@@ -36,6 +42,24 @@ export class NotificationManager {
 	}
 
 	/**
+	 * Вызывает уведомление с нужнми параметрами
+	 */
+	static async notificationReducer(event: MessageEvent) {
+		const data = JSON.parse(event.data);
+
+		if (data?.text && data?.text === NOT_SECURED_PASSWORD_TEXT) {
+			this.showNotification(
+				data as NotificationNotSecuredPassword,
+				'Пароль не безопасен, пожалуйста, смените его',
+			);
+
+			return;
+		}
+
+		this.showNotification(data as NotificationData, data.title);
+	}
+
+	/**
 	 * Подключается к WebSocket для получения уведомлений
 	 */
 	static connect(): void {
@@ -46,8 +70,7 @@ export class NotificationManager {
 		};
 
 		this.ws.onmessage = (event: MessageEvent) => {
-			const data: NotificationData = JSON.parse(event.data);
-			this.showNotification(data);
+			this.notificationReducer(event);
 		};
 
 		this.ws.onclose = () => {
@@ -65,7 +88,10 @@ export class NotificationManager {
 	/**
 	 * Показывает уведомление через Service Worker
 	 */
-	private static async showNotification(data: NotificationData): Promise<void> {
+	private static async showNotification(
+		data: NotificationData | NotificationNotSecuredPassword,
+		title: string,
+	): Promise<void> {
 		if (Notification.permission !== 'granted') {
 			return;
 		}
@@ -77,18 +103,18 @@ export class NotificationManager {
 			body: data.text,
 			icon: iconUrl,
 			badge: iconUrl,
-			tag: data.id,
+			tag: 'id' in data ? data.id : '1252',
 			data: {
-				url: `/films/${data.film_id}`,
+				url: 'film_id' in data ? `/films/${data.film_id}` : '/',
 			},
 			requireInteraction: false,
 		};
 
 		if ('serviceWorker' in navigator) {
 			const registration = await navigator.serviceWorker.ready;
-			await registration.showNotification(data.title, options);
+			await registration.showNotification(title, options);
 		} else {
-			new Notification(data.title, options);
+			new Notification(title, options);
 		}
 	}
 
