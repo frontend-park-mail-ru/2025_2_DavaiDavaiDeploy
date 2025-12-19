@@ -63,7 +63,7 @@ export class NotificationManager {
 	}
 
 	/**
-	 * Показывает уведомление через Service Worker
+	 * Показываем уведомление через Service Worker
 	 */
 	private static async showNotification(data: NotificationData): Promise<void> {
 		if (Notification.permission !== 'granted') {

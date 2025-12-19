@@ -55,6 +55,10 @@
 	}
 }
 
+.modalTitle {
+	text-align: center;
+}
+
 @media (max-width: 768px) {
 	.modalLogout {
 		background-color: var(--color-light);
